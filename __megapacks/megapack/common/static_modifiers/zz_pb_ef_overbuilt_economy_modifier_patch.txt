@@ -1,0 +1,25 @@
+#############################################
+# pb+ef: Extend E&F "Overbuilt Economy" debuff
+#
+# E&F applies `overbuilt_economy_modifier` to the (remapped) construction sector
+# with a negative multiplier, reducing manufacture_stock output.
+#
+# In pb+ef we also want this debuff to reduce PSC construction goods output.
+#############################################
+
+REPLACE_OR_CREATE:overbuilt_economy_modifier = { # Construction Bubble
+	icon = gfx/interface/icons/timed_modifier_icons/overbuilt_economy_modifier.dds
+
+	# E&F: stocks issuance output (negative value so that negative multiplier increases output)
+	# When speculative_share_2_penality is negative (e.g., -50), this becomes: (-0.01) * (-50) = +0.5 (increases output)
+	goods_output_manufacture_stock_mult = -0.01
+
+	# PSC: construction goods output (positive value, so negative multiplier decreases output)
+	# When speculative_share_2_penality is negative (e.g., -50), this becomes: (0.01) * (-50) = -0.5 (decreases output)
+	goods_output_wood_construction_mult = 0.01
+	goods_output_iron_construction_mult = 0.01
+	goods_output_steel_construction_mult = 0.01
+	goods_output_arc_welded_construction_mult = 0.01
+	goods_output_concrete_construction_mult = 0.01
+}
+

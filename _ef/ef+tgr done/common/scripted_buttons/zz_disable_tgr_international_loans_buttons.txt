@@ -1,0 +1,13 @@
+########################################
+# Disable TheGreatRevision "International Loans" module buttons when used with E&F
+########################################
+
+REPLACE_OR_CREATE:tgr_loans_button_1 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_2 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_3 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_4 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_5 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_6 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_7 = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:tgr_loans_button_8 = { visible = { always = no } possible = { always = no } }
+

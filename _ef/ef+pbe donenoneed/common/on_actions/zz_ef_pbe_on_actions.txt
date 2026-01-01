@@ -1,0 +1,23 @@
+# E&F + PowerBlocksExpanded (PBE) compatch
+# Goal: merge conflicting vanilla hook(s) so both mods keep working when loaded together.
+#
+# Primary conflict:
+# - Both mods define `on_monthly_pulse_country`, so whichever loads last overwrites the other.
+# - We merge the on_actions list to run both sequences.
+
+on_monthly_pulse_country = {
+	on_actions = {
+		# PBE: weekly-ish dynamic modifier handler (runs 4x per month via delays)
+		kates_dynamic_modifier_on_action
+		delay = { days = 7 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 14 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 21 }
+		kates_dynamic_modifier_on_action
+
+		# E&F: finance system monthly maintenance
+		ef_on_monthly_pulse_country
+	}
+}
+

@@ -1,0 +1,29 @@
+
+# E&F adds investment score for `bg_ef_private_construction` on financial_district.
+# Our unified building is `building_construction_sector` in `bg_construction`,
+# so we add a parallel score entry targeting `bg_construction`.
+
+INJECT:building_financial_district = {
+	investment_scores = {
+		bg_construction_score = {
+			group = "bg_construction"
+			score = {
+				value = 0.25
+				
+				if = {
+					limit = { has_law = law_type:law_traditionalism }
+					multiply = 0.1
+				}	
+				else_if = {
+					limit = { has_law = law_type:law_industry_banned }
+					multiply = 0.5
+				}	
+				else_if = {
+					limit = { has_law = law_type:law_agrarianism }
+					multiply = 0.75
+				}				
+			}
+		}
+	}
+}
+

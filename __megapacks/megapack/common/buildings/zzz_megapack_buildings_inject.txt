@@ -1,0 +1,250 @@
+# Bauxite Mine
+
+INJECT:building_bauxite_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Copper Mine
+
+INJECT:building_copper_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Common Ores Mine
+
+INJECT:building_commonores_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Advanced Ores Mine
+
+INJECT:building_advancedores_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Natural Gas Extraction
+
+INJECT:building_natural_gas_rig = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Rare Earths Mine
+
+INJECT:building_rare_earths_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Publishing Industry
+
+INJECT:building_elgar_opera = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+
+######################
+
+# Alloys Plant
+
+INJECT:building_alloys_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Electronics Industry
+
+INJECT:building_electronics_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Battery Industry
+
+INJECT:building_battery_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Chip Foundry
+
+INJECT:building_processors_foundry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Robotics Industry
+
+INJECT:building_robotics_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Aircraft Industry
+
+INJECT:building_aircraft_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Pharmaceutics Industry
+
+INJECT:building_pharmaceuticals_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Hydroponic Farms
+
+INJECT:building_hydroponic = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Water Plant
+
+INJECT:building_water_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Renewable Energy Power Plant
+
+INJECT:building_renewable_energy_power_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_hydroelectric_power_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Geothermal Power Plant
+
+INJECT:building_geothermal_power_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Office
+
+INJECT:building_office = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Software Industry
+
+INJECT:building_software_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_interactive_media_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Telecommunications
+
+INJECT:building_telecommunications_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Data Center
+
+INJECT:building_datacenter_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# E-Commerce Logistic Building
+
+INJECT:building_ecommerce_logistics = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+
+
+INJECT:building_airport = {
+	production_method_groups = {
+		pmg_tourism_airport
+		# E&F
+		pmg_market_liquidity
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Silver mines
+
+INJECT:building_silver_mine = {
+	production_method_groups = {
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+#Gold mines
+
+INJECT:building_gold_mines = {
+	production_method_groups = {
+		pmg_data_optimization_primary_sector #T&R
+	}
+}

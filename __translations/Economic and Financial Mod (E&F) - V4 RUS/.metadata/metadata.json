@@ -1,0 +1,13 @@
+{
+  "name" : "Economic and Financial Mod (E&F) - V4 RUS",
+	"id" : "3520140574",
+  "version" : "v4.1.1",
+  "supported_game_version" : "1.12.*",
+  "short_description" : "",
+  "picture" : "thumbnail.png",
+  "tags" : [],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

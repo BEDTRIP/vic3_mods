@@ -1,0 +1,334 @@
+﻿l_russian:
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  #      ██╗ ██████╗ ██╗   ██╗██████╗ ███╗   ██╗ █████╗ ██╗         ███████╗███╗   ██╗████████╗██████╗ ██╗   ██╗
+  #      ██║██╔═══██╗██║   ██║██╔══██╗████╗  ██║██╔══██╗██║         ██╔════╝████╗  ██║╚══██╔══╝██╔══██╗╚██╗ ██╔╝
+  #      ██║██║   ██║██║   ██║██████╔╝██╔██╗ ██║███████║██║         █████╗  ██╔██╗ ██║   ██║   ██████╔╝ ╚████╔╝
+  # ██   ██║██║   ██║██║   ██║██╔══██╗██║╚██╗██║██╔══██║██║         ██╔══╝  ██║╚██╗██║   ██║   ██╔══██╗  ╚██╔╝
+  # ╚█████╔╝╚██████╔╝╚██████╔╝██║  ██║██║ ╚████║██║  ██║███████╗    ███████╗██║ ╚████║   ██║   ██║  ██║   ██║
+  #  ╚════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝    ╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  international_reserve_currency_1:0 "Международная резервная валюта"
+
+  je_group_ef:0 "Экономика и Финансы"
+
+  ################################
+  #Introduction CB et FC
+  ################################
+ 
+  bank_je_central_1:0 "Закон об учреждении центрального банка" 
+  bank_je_central_1_reason:0 "Центральный банк позволяет унифицировать и централизовать выпуск монет и банкнот — ключевой этап экономического развития любого государства.\n \n Центральный банк автоматически появится, когда ВВП страны превысит 5 миллионов, либо когда будет открыта технология «Центральный банк»."
+  
+  financial_center_je_1:0 "Разрешение на учреждение фондовой биржи"
+  financial_center_je_1_reason:0 "Центральный банк позволяет унифицировать и централизовать выпуск монет и банкнот — ключевой этап экономического развития любого государства.\n \n Центральный банк автоматически появится, когда ВВП страны превысит 5 миллионов, либо когда будет открыта технология «Центральный банк»."
+
+##########################
+#financial_center_je
+##########################
+ 
+  concept_building_urban_center_lvl_by_base_rate_desc:1 "Максимальный уровень [GetBuildingType('building_construction_sector').GetName] определяется количеством [GetBuildingType('building_urban_center').GetName] в стране и значением [concept_base_rate_percentage]. При [concept_base_rate_percentage] 1% (или ниже) максимальный уровень равен суммарному уровню [GetBuildingType('building_urban_center').GetName]. При [concept_base_rate_percentage] 10% максимальный уровень [GetBuildingType('building_construction_sector').GetName] равен 1."
+
+  concept_maximum_pcs_capacity_desc:0 "[concept_maximum_pcs_capacity]: теоретический максимальный уровень [GetBuildingType('building_construction_sector').GetName], который способна поддерживать национальная экономика. Этот предел определяется суммарным уровнем городских центров по стране с поправкой на фактор (1 – базовая ставка).\n\n Низкая базовая ставка повышает эффективность строительной системы и позволяет работать большему числу [GetBuildingType('building_construction_sector').GetName], тогда как высокая базовая ставка снижает эту ёмкость.\n\n Если фактическое число строй. секторов превышает этот порог, избыточные сектора будут стагнировать или закрываться из‑за недостатка кредита и финансирования строительства."
+
+  financial_center_je_2:0 "Офис финансовой стабильности (ОФС)"
+  financial_center_je_2_reason:0 "#l > Стабильность финансового сектора: #! \n\n #b Спекулятивный рынок#! в настоящее время составляет #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#! от национального #b [concept_gdp]#!.\n\nЧем больше доля [concept_gdp], приходящаяся на спекулятивный рынок, тем сильнее надувается пузырь по следующей модели:\n\n #U - 0–10% → напряжение резко снижается (−3)\n - 10–20% → напряжение снижается (−2)\n - 20–30% → небольшое снижение (−1)\n - 30–40% → небольшое увеличение (+1)\n - 40–50% → заметный рост (+2)\n - 50%+ → быстрый рост пузыря (+3)#!\n\n#b Текущие последствия:#!\n - Снижение доступной [concept_construction] (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Замедление темпа инноваций (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Снижение целевой [concept_prosperity] для [concept_company] (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Потеря национального престижа (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n\nЕсли пузырь достигнет #b 100%#! прогресса, страну поразит #b крупный финансовый крах#!.\n\n#l > Стабильность строительного сектора: #!\n\n [GetBuildingType('building_construction_sector').GetName] отражает общий спрос на проекты [concept_construction] со стороны государства, частных лиц и [concept_company] разного масштаба.\n\n У мощности [GetBuildingType('building_construction_sector').GetName] есть теоретический максимум — суммарный спрос населения на [concept_construction].\n \n Поэтому существует прямая связь между уровнем [concept_urbanization] в штатах страны и максимальной ёмкостью [GetBuildingType('building_construction_sector').GetName].\n \n [concept_base_rate_percentage], устанавливаемая Центральным банком, выступает множителем, связывающим эти переменные. Следовательно, теоретический максимум ёмкости [GetBuildingType('building_construction_sector').GetName] равен:\n \n #v Суммарный уровень [GetBuildingType('building_urban_center').GetName] × (1 - Базовая ставка × 10)#!\n \n #lore \"Чем выше [concept_base_rate_percentage], тем сильнее сжимается строительный сектор. И наоборот, при низкой [concept_base_rate_percentage] [GetBuildingType('building_construction_sector').GetName] достигает максимального потенциала спроса — равного сумме уровней [GetBuildingType('building_urban_center').GetName] по всем штатам.\"#! \n \n #b Текущие значения:#!\n - Уровень [GetBuildingType('building_construction_sector').GetName] в стране: #p [GetPlayer.MakeScope.ScriptValue('building_construction_sector_lvl')]#!\n - Суммарный уровень [GetBuildingType('building_urban_center').GetName]: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')]#!\n - Текущая [concept_base_rate_percentage]: #p [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!\n - Теоретический максимум уровня строй. секторов: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#! #b (то есть [GetPlayer.MakeScope.ScriptValue('base_rate_to_pcs_factor')|%] от [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')])#!\n \n Если суммарный уровень [GetBuildingType('building_construction_sector').GetName] превышает этот теоретический максимум из‑за рыночных условий, страна входит в состояние #v Перестроенной экономики#!.\n \n В состоянии «Перестроенной экономики» прогресс‑бар будет увеличиваться на #U +1#! каждый месяц, а процент заполнения будет напрямую задавать отрицательный модификатор выпуска финансовых продуктов.\n \n И наоборот: пока текущий уровень [GetBuildingType('building_construction_sector').GetName] ниже максимума, вы можете просить частный сектор строить больше — в обмен на экономические уступки."
+ 
+  economic_sentiment_index_base_1_button:1 "#b 5 [GetBuildingType('building_construction_sector').GetName]#!"
+  economic_sentiment_index_base_1_button_desc: "Попросить частный сектор инвестировать в новые [GetBuildingType('building_construction_sector').GetName]. По стране будет построено несколько таких секторов.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования государства."
+  economic_sentiment_index_base_1_button_tt: "#b Индекс экономических настроений#! должен быть выше #b 1#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('economic_sentiment_index_base_JE_fixe')|D+]#!)"
+
+  economic_sentiment_index_base_3_button:1 "#b 10 [GetBuildingType('building_construction_sector').GetName]#!"
+  economic_sentiment_index_base_3_button_desc: "Попросить частный сектор инвестировать в новые [GetBuildingType('building_construction_sector').GetName]. По стране будет построено несколько таких секторов.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования государства."
+  economic_sentiment_index_base_3_button_tt: "#b Индекс экономических настроений#! должен быть выше #b 2#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('economic_sentiment_index_base_JE_fixe')|D+]#!)"
+
+  economic_sentiment_index_base_5_button:1 "#b 20 [GetBuildingType('building_construction_sector').GetName]#!"
+  economic_sentiment_index_base_5_button_desc: "Попросить частный сектор инвестировать в новые [GetBuildingType('building_construction_sector').GetName]. По стране будет построено несколько таких секторов.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования государства."
+  economic_sentiment_index_base_5_button_tt: "#b Индекс экономических настроений#! должен быть выше #b 3#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('economic_sentiment_index_base_JE_fixe')|D+]#!)"
+
+  #speculative
+  speculative_share_1_button:1 "#b Запрет иностранных финансовых продуктов#!"
+  speculative_share_1_button_desc: "После принятия иностранные финансовые продукты больше не могут импортироваться или потребляться финансовыми центрами. Это снижает производство паевых фондов и уменьшает спекулятивную долю в ВВП страны.\n#b Требуется, чтобы прогресс спекулятивного пузыря превышал 10%.#!"
+  speculative_share_1_button_tt: "#b Прогресс спекулятивного пузыря#! должен быть выше #b 10%#!. (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+
+  speculative_share_2_button:1 "#b Закон о регулировании фондовой биржи#!"
+  speculative_share_2_button_desc: "Этот закон вводит более жёсткий надзор за операциями на фондовом рынке, ограничивая спекулятивную торговлю и рискованные инвестиции. Сдерживая краткосрочные спекуляции, он снижает спрос на финансовые продукты и постепенно замедляет рост паевых фондов.\n#B Требуется, чтобы прогресс спекулятивного пузыря превышал 20% и чтобы спрос на финансовые продукты в финансовых центрах был сокращён на 25%.#!"
+  speculative_share_2_button_tt: "#b Прогресс спекулятивного пузыря#! должен быть выше #b 20%#!. (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+
+  speculative_share_3_button:1 "#b Указ об ужесточении кредита и валютных операций#!"
+  speculative_share_3_button_desc: "Правительство вводит жёсткие ограничения на кредит и финансовые обмены, чтобы сдержать перегрев рынка. Эта мера напрямую сокращает спрос на финансовые продукты вдвое, резко снижая производство паевых фондов и спекулятивный рост.\n#b Требуется, чтобы прогресс спекулятивного пузыря превышал 40% и чтобы спрос на финансовые продукты в финансовых центрах был сокращён на 50%.#!"
+  speculative_share_3_button_tt: "#b Прогресс спекулятивного пузыря#! должен быть выше #b 40%#!. (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+
+  speculative_share_4_button:1 "#b Экстренный указ о приостановке финансовых рынков#!"
+  speculative_share_4_button_desc: "В ответ на критический спекулятивный кризис правительство приостанавливает все основные операции на финансовых рынках. Импорт и обмен финансовых товаров замораживаются, производство паевых фондов останавливается, а пузырь принудительно сдувается. Этот экстренный указ, стабилизируя экономику, может вызвать временную рецессию.\n#b Требуется, чтобы прогресс спекулятивного пузыря превышал 60% и чтобы спрос на финансовые продукты в финансовых центрах был сокращён на 75%.#!"
+  speculative_share_4_button_tt: "#b Прогресс спекулятивного пузыря#! должен быть выше #b 60%#!. (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+
+  speculative_share_5_button:1 "#b Стимулирование финансового сектора#!" #5 [GetBuildingType('building_financial_centre').GetName]
+  speculative_share_5_button_desc: "Попросить частный сектор инвестировать в новые #b 5 уровней [GetBuildingType('building_financial_centre').GetName]#!. Определённое количество таких центров будет построено по всей стране.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования правительства."
+  speculative_share_5_button_tt_1: "Спекулятивный пузырь ниже 20% (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+  speculative_share_5_button_tt_2: "Уровень главного финансового центра ниже 5000 (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('bg_financial_centre_lvl')]#!)"
+  speculative_share_5_button_tt_3: "Средства частных банков превышают 20% денежной массы (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_pourcent')|%|]#!)"
+  speculative_share_5_button_tt_4: "Доля спекулятивного рынка в [concept_gdp] ниже 30% (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#!)"
+
+  speculative_share_6_button:1 "#b План развития рынка#!" #5 [GetBuildingType('building_financial_centre').GetName]
+  speculative_share_6_button_desc: "Попросить частный сектор инвестировать в новые #b 10 уровней [GetBuildingType('building_financial_centre').GetName]#!. Определённое количество таких центров будет построено по всей стране.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования правительства."
+  speculative_share_6_button_tt_1: "Спекулятивный пузырь ниже 15% (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+  speculative_share_6_button_tt_2: "Уровень главного финансового центра ниже 5000 (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('bg_financial_centre_lvl')]#!)"
+  speculative_share_6_button_tt_3: "Средства частных банков превышают 20% денежной массы (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_pourcent')|%|]#!)"
+  speculative_share_6_button_tt_4: "Доля спекулятивного рынка в [concept_gdp] ниже 22.5% (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#!)"
+
+  speculative_share_7_button:1 "#b Программа спекулятивной экспансии#!" #5 [GetBuildingType('building_financial_centre').GetName]
+  speculative_share_7_button_desc: "Попросить частный сектор инвестировать в новые #b 15 уровней [GetBuildingType('building_financial_centre').GetName]#!. Определённое количество таких центров будет построено по всей стране.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования правительства."
+  speculative_share_7_button_tt_1: "Спекулятивный пузырь ниже 10% (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+  speculative_share_7_button_tt_2: "Уровень главного финансового центра ниже 5000 (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('bg_financial_centre_lvl')]#!)"
+  speculative_share_7_button_tt_3: "Средства частных банков превышают 20% денежной массы (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_pourcent')|%|]#!)"
+  speculative_share_7_button_tt_4: "Доля спекулятивного рынка в [concept_gdp] ниже 15% (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#!)"
+
+  speculative_share_8_button:1 "#b Глобальное господство в финансах#!" #5 [GetBuildingType('building_financial_centre').GetName]
+  speculative_share_8_button_desc: "Попросить частный сектор инвестировать в новые #b 20 уровней [GetBuildingType('building_financial_centre').GetName]#!. Определённое количество таких центров будет построено по всей стране.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования правительства."
+  speculative_share_8_button_tt_1: "Спекулятивный пузырь ниже 5% (Сейчас: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%)"
+  speculative_share_8_button_tt_2: "Уровень главного финансового центра ниже 5000 (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('bg_financial_centre_lvl')]#!)"
+  speculative_share_8_button_tt_3: "Средства частных банков превышают 20% денежной массы (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_pourcent')|%|]#!)"
+  speculative_share_8_button_tt_4: "Доля спекулятивного рынка в [concept_gdp] ниже 7.5% (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#!)"
+ 
+  speculative_share_9_button:1 "#b Стимул спроса на строительство #!"
+  speculative_share_9_button_desc: "Правительство пытается стимулировать частное строительство, снижая базовую ставку. Это приведёт к строительству #b 5 [GetBuildingType('building_construction_sector').GetName]#!. Однако чрезмерный рост может привести к «перестроенной экономике»."
+  speculative_share_9_button_tt_1: "Уровень «перестроенной экономики» равен 0 (текущее значение: #b [GetPlayer.MakeScope.Var('speculative_share_2').GetValue]%#!)"
+  speculative_share_9_button_tt_2: "Суммарный уровень [GetBuildingType('building_construction_sector').GetName] #b [GetPlayer.MakeScope.ScriptValue('building_construction_sector_lvl')]#! + #b 5#! от стимула ниже теоретического предела #b [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!"
+  speculative_share_9_button_tt_3: "[concept_base_rate_percentage] ниже #b 12%#! и выше #b 1.10%#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!)"
+  #speculative_share_9_button_tt_4: "Доля спекулятивного рынка в [concept_gdp] ниже 7.5% (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')|%|]#!)"
+  speculative_share_9_button_tt_effect_1: "Базовая ставка будет снижена на #b 1%#! и не сможет изменяться в течение #b 1 года#!."
+  #speculative_share_9_button_tt_effect_2: "Сумма #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_10_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')] будет заблокирована в государственном фонде. Эту денежную массу нельзя будет изменить."
+
+  speculative_share_10_button:1 "#b Программа частной инфраструктуры #!"
+  speculative_share_10_button_desc: "Правительство стремится стимулировать частное строительство, снижая базовую ставку, что приведёт к строительству #b 10 [GetBuildingType('building_construction_sector').GetName]#!. Этот проект создаст денежную массу #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_10_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')], соответствующую #b 2%#! средств частных банков, умноженных на коэффициент редкости строительных секторов #b (коэффициент редкости: [GetPlayer.MakeScope.ScriptValue('rarity_factor')|D])#!. Чрезмерная монетарная экспансия может дестабилизировать валюту и привести к «перестроенной экономике»."
+  speculative_share_10_button_tt_1: "Уровень «перестроенной экономики» равен 0 (текущее значение: #b [GetPlayer.MakeScope.Var('speculative_share_2').GetValue]%#!)"
+  speculative_share_10_button_tt_2: "Суммарный уровень [GetBuildingType('building_construction_sector').GetName] #b [GetPlayer.MakeScope.ScriptValue('building_construction_sector_lvl')]#! + #b 10#! от стимула ниже теоретического предела #b [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!"
+  speculative_share_10_button_tt_3: "[concept_base_rate_percentage] ниже #b 12%#! и выше #b 2.10%#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!)"
+  speculative_share_10_button_tt_effect_1: "Базовая ставка будет снижена на #b 2%#! и не сможет изменяться в течение #b 1 года#!."
+  speculative_share_10_button_tt_effect_2: "Сумма #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_10_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')] будет заблокирована в государственном фонде. Эту денежную массу нельзя будет изменить."
+
+  speculative_share_11_button:1 "#b Городской импульс развития #!"
+  speculative_share_11_button_desc: "Правительство стремится стимулировать частное строительство, снижая базовую ставку, что приведёт к строительству #b 15 [GetBuildingType('building_construction_sector').GetName]#!. Этот проект создаст денежную массу #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_15_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')], соответствующую #b 5%#! средств частных банков, умноженных на коэффициент редкости строительных секторов #b (коэффициент редкости: [GetPlayer.MakeScope.ScriptValue('rarity_factor')|D])#!. Чрезмерная монетарная экспансия может дестабилизировать валюту и привести к «перестроенной экономике»."
+  speculative_share_11_button_tt_1: "Уровень «перестроенной экономики» равен 0 (текущее значение: #b [GetPlayer.MakeScope.Var('speculative_share_2').GetValue]%#!)"
+  speculative_share_11_button_tt_2: "Суммарный уровень [GetBuildingType('building_construction_sector').GetName] #b [GetPlayer.MakeScope.ScriptValue('building_construction_sector_lvl')]#! + #b 15#! от стимула ниже теоретического предела #b [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!"
+  speculative_share_11_button_tt_3: "[concept_base_rate_percentage] ниже #b 12%#! и выше #b 3.10%#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!)"
+  speculative_share_11_button_tt_effect_1: "Базовая ставка будет снижена на #b 3%#! и не сможет изменяться в течение #b 1 года#!."
+  speculative_share_11_button_tt_effect_2: "Сумма #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_15_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')] будет заблокирована в государственном фонде. Эту денежную массу нельзя будет изменить."
+
+  speculative_share_12_button:1 "#b Закон об экономике, ведомой строительством #!"
+  speculative_share_12_button_desc: "Правительство стремится стимулировать частное строительство, снижая базовую ставку, что приведёт к строительству #b 20 [GetBuildingType('building_construction_sector').GetName]#!. Этот проект создаст денежную массу #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_20_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')], соответствующую #b 12%#! средств частных банков, умноженных на коэффициент редкости строительных секторов #b (коэффициент редкости: [GetPlayer.MakeScope.ScriptValue('rarity_factor')|D])#!. Чрезмерная монетарная экспансия может дестабилизировать валюту и привести к «перестроенной экономике»."
+  speculative_share_12_button_tt_1: "Уровень «перестроенной экономики» равен 0 (текущее значение: #b [GetPlayer.MakeScope.Var('speculative_share_2').GetValue]%#!)"
+  speculative_share_12_button_tt_2: "Суммарный уровень [GetBuildingType('building_construction_sector').GetName] #b [GetPlayer.MakeScope.ScriptValue('building_construction_sector_lvl')]#! + #b 20#! от стимула ниже теоретического предела #b [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!"
+  speculative_share_12_button_tt_3: "[concept_base_rate_percentage] ниже #b 12%#! и выше #b 4.10%#! (текущее значение: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!)"
+  speculative_share_12_button_tt_effect_1: "Базовая ставка будет снижена на #b 4%#! и не сможет изменяться в течение #b 1 года#!."
+  speculative_share_12_button_tt_effect_2: "Сумма #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_20_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')] будет заблокирована в государственном фонде. Эту денежную массу нельзя будет изменить."
+ 
+  status_central_bank_1: "При отсутствии централизованной денежной системы страна опирается на разрозненный набор способов обмена. Бартер, устаревшие местные монеты и смесь иностранных валют обращаются бок о бок, подчёркивая фрагментированное состояние экономики."
+  status_central_bank_2: "После открытия технологии «Валютный стандарт» в разных штатах страны обращаются различные виды банкнот без какой-либо централизованной унификации"
+
+  # status_financial_center_1: "Доверие инвесторов стремительно растёт, рынки процветают, а частный капитал свободно перетекает во все отрасли. Экономика излучает стабильность и рост."
+  # status_financial_center_2: "Экономическая обстановка уверенная. Частные банки расширяют свои портфели, а общество воспринимает рынок как надёжный и прибыльный."
+  # status_financial_center_3: "В целом экономика остаётся здоровой, хотя некоторые инвесторы начинают действовать осторожнее. Рост продолжается, но появляются признаки волатильности."
+  # status_financial_center_4: "Экономическая уверенность умеренная. Инвестиции остаются стабильными, но неопределённость начинает влиять на финансовые решения."
+  # status_financial_center_5: "Рынок колеблется. Частные инвесторы становятся более разборчивыми, а общий экономический настрой нейтрален, балансируя между оптимизмом и осторожностью."
+  # status_financial_center_6: "Уверенность ослабевает. Инвесторы переходят к оборонительной позиции, а условия кредитования начинают ужесточаться по мере распространения сомнений на рынках."
+  # status_financial_center_7: "Экономические настроения напряжённые. Частное финансирование замедляется, и растут спекуляции о устойчивости текущих темпов роста."
+  # status_financial_center_8: "Доверие инвесторов резко упало. Отток капитала и рыночные коррекции нарушают финансовую стабильность."
+  # status_financial_center_9: "Страна сталкивается с серьёзным экономическим спадом. Банки ограничивают кредитование, промышленность страдает, а рынками правит страх."
+  # status_financial_center_10: "Надвигается полномасштабный финансовый крах. Инвесторов охватывает паника, кредит иссяк, и экономическая система балансирует на грани провала."
+
+
+  status_financial_center_je_1: "Без технологии «Фондовая биржа» финансовая система страны остаётся примитивной: лишь несколько частных компаний работают по принципам акционерных обществ"
+
+  status_financial_center_je_2: "Всё больше частных компаний теперь полагаются на выпуск акций для финансирования своих предприятий. [GetBuildingType('building_financial_centre').GetName] станет идеальным местом, где предприниматели и инвесторы смогут встречаться и обмениваться капиталом."
+
+  currency_standards_progress_bar: "Разблокировать технологию [GetTechnology('currency_standards').GetName|l]"
+  currency_standards_progress_bar_desc: "Разблокировать технологию [GetTechnology('currency_standards').GetName|l]: #v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#! ([JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|D] @gdp! /2.5M @gdp!)"
+
+  central_banking_progress_bar: "Разблокировать технологию [GetTechnology('central_banking').GetName|l]"
+  central_banking_progress_bar_desc: "Разблокировать технологию [GetTechnology('central_banking').GetName|l]: #v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#! ([JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|D] @gdp! /5M @gdp!)"
+
+  stock_exchange_progress_bar: "Разблокировать технологию [GetTechnology('stock_exchange').GetName|l]"
+  stock_exchange_progress_bar_desc: "Разблокировать технологию [GetTechnology('stock_exchange').GetName|l]: #v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#! ([JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|D] @gdp! /2.5M @gdp!)"
+
+  financial_center_progress_bar: "Разблокировать технологию [GetTechnology('financial_center').GetName|l]"
+  financial_center_progress_bar_desc: "Разблокировать технологию [GetTechnology('financial_center').GetName|l]: #v [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]#! ([JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)|D] @gdp! /5M @gdp!)"
+
+
+  financial_center_progress_bar: "Индекс экономических настроений"
+  financial_center_progress_bar_desc: "Индекс экономических настроений: #v #b #n -5#!/ [GetPlayer.MakeScope.ScriptValue('economic_sentiment_index_base_JE_fixe')|D] /#p +5#!#!#!"
+
+  speculative_share_progress_bar: "Прогресс спекулятивного пузыря"
+  speculative_share_progress_bar_desc: "#v Прогресс спекулятивного пузыря: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue]%#!"
+
+  overbuilt_economy_progress_bar: "Прогресс перегретой экономики"
+  overbuilt_economy_progress_bar_desc: "#v Прогресс перегретой экономики: [GetPlayer.MakeScope.Var('speculative_share_2').GetValue]%#!"
+
+  speculative_bubble_modifier:0 "Спекулятивный пузырь"
+  speculative_bubble_character_modifier:0 "Персонаж: спекулятивный пузырь"
+  overbuilt_economy_modifier:0 "Перегретая экономика"
+  speculative_share_modifier_1:0 "Запрет иностранных финансовых продуктов"
+  speculative_share_modifier_2:0 "Закон о регулировании фондовой биржи"
+  speculative_share_modifier_3:0 "Указ об ужесточении кредитно-валютных условий"
+  speculative_share_modifier_4:0 "Чрезвычайный указ о приостановке финансового рынка"
+  speculative_share_modifier_5:0 "Указ о частных инвестициях"
+  speculative_share_modifier_6:0 "Блокировка монетарного расширения"
+
+  status_speculative_share_1_5:0 "Финансы: #n Спекулятивный всплеск#! — рынок в состоянии эйфории. Потоки частного капитала выходят за любые разумные пределы, системный пузырь уже здесь."
+  status_speculative_share_1_4:0 "Финансы: #O Перегретый рынок#! — финансовая активность взлетает, спекулятивные инвестиции опережают реальное производство."
+  status_speculative_share_1_3:0 "Финансы: #U Напряжённый рынок#! — спекуляции растут в приемлемых пределах, но финансовые центры всё сильнее доминируют в экономике."
+  status_speculative_share_1_2:0 "Финансы: #green Здоровое расширение#! — умеренная спекулятивная активность поддерживает промышленный рост и торговлю."
+  status_speculative_share_1_1:0 "Финансы: #green Стабильный рынок#! — капитал действует осторожно, спекуляции минимальны."
+
+  status_speculative_share_2_5:0 "\n Строительство: #n Бум сверхстроительства#! — частный капитал заполняет строительный сектор.
+  status_speculative_share_2_4:0 "\n Строительство: #O Перегрев строительства#! — спекулятивные проекты множатся. Спрос остаётся высоким, но прибыльность и стабильность начинают снижаться."
+  status_speculative_share_2_3:0 "\n Строительство: #U Динамичное расширение#! — строительная активность высока, её подпитывают инвестиции и уверенность."
+  status_speculative_share_2_2:0 "\n Строительство: #green Здоровое развитие#! — сбалансированные темпы строительства поддерживают экономический прогресс и занятость без серьёзных рисков."
+  status_speculative_share_2_1:0 "\n Строительство: #green Строительство: Спящий сектор#! — инвестиции стагнируют. Немногие проекты доходят до завершения, и строительная отрасль остаётся бездействующей."
+
+  #####################
+  #latin_monetary_union
+  #####################
+
+  # latin_monetary_union_je_1: "Конвенция Латинского монетного союза"
+  # latin_monetary_union_je_1_reason: "The Convention on the Latin Union Latine a pour objectif l’établissement d’une alliance monétaire régionale, fondée par la France, la Belgique, la Suisse et l’Italie.\n Cet accord instaure des standards communs pour les pièces d’or et d’argent, permettant aux monnaies des États membres de circuler librement dans l’ensemble de l’Union.\n\n Une fois l’entrée au journal complétée, l’objectif final est la signature d’un traité monétaire d’une durée de vingt ans entre #v la France#!, puissance initiatrice, et les #v pays participants#!.\n\n Ce traité établit un cadre monétaire commun dans lequel les États s’engagent à respecter les normes définies par la France.\n\n les pays signatére du traiter verons:\n - le taux de change or/argent fixé selon les valeur en vigeur en france\n - le standart monetaire sera fixé sur le standart monetaire français (peut importe le standart actuel)\n\n afin avec les année la valeur de la monaie de ces different pays tendron vers une valeur commune. \n\n Nombre actuel de pays dans la convention: #p [GetPlayer.MakeScope.ScriptValue('latin_monetary_union_country_in_debat')+]#!"
+ 
+  latin_monetary_union_je_1: "Конвенция Латинского монетного союза"
+  latin_monetary_union_je_1_reason: "Конвенция Латинского союза направлена на создание регионального валютного альянса, основанного Францией, Бельгией, Швейцарией и Италией.\n Это соглашение устанавливает единые стандарты для золотых и серебряных монет, позволяя валютам государств-участников свободно обращаться по всей территории Союза.\n\n После завершения этой записи журнала конечной целью станет подписание двадцатилетнего валютного договора между #v Францией#!, державой-инициатором, и #v странами-участницами#!.\n\n Этот договор задаёт единые денежные рамки, в которых государства обязуются соблюдать стандарты, определённые Францией.\n\n Страны, подписывающие договор, получат:\n - соотношение обмена золото/серебро, фиксированное по значениям, действующим во Франции\n - денежный стандарт, приведённый в соответствие с французским денежным стандартом (независимо от текущего стандарта)\n\n таким образом, с годами стоимость валют этих разных стран будет стремиться к общему значению.\n\n Текущее количество стран в конвенции: #p [GetPlayer.MakeScope.ScriptValue('latin_monetary_union_country_in_debat')+]#!"
+
+  latin_monetary_union_je_1_desc.1: "Франция инициировала обсуждения Латинского союза"
+  latin_monetary_union_je_1_desc.2: "конвенция длилась более 6 лет"
+  latin_monetary_union_je_1_desc.3: "[SCOPE.sC('target_country').GetName] подписывает #v Договор Латинского монетного союза.#!"
+  
+  status_latin_monetary_union_je_1: "В настоящее время к конвенции присоединились:"
+  status_latin_monetary_union_je_2: "#v $FRA$#!"
+  status_latin_monetary_union_je_3: "- #v $BEL$#!"
+  status_latin_monetary_union_je_4: "- #v $SWI$#!"
+  status_latin_monetary_union_je_5: "- #v $SAR$#!"
+  status_latin_monetary_union_je_6: "- #v $PAR$#!"
+  status_latin_monetary_union_je_7: "- #v $MOD$#!"
+  status_latin_monetary_union_je_8: "- #v $LUC$#!"
+  status_latin_monetary_union_je_9: "- #v $TUS$#!"
+  status_latin_monetary_union_je_10: "- #v $PAP$#!"
+  status_latin_monetary_union_je_11: "- #v $SIC$#!"
+  status_latin_monetary_union_je_12: "- #v $GRE$#!"
+  status_latin_monetary_union_je_13: "- #v $ITA$#!" 
+  status_latin_monetary_union_je_14: "- #v [ROOT.GetCountry.GetNameNoFormatting]#!" 
+ 
+latin_monetary_union_progress_bar: "Количество лет дебатов"
+latin_monetary_union_progress_bar_desc: "Количество лет дебатов: [JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)] Год(лет) / 6 лет — [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]"
+
+latin_monetary_union_1_button: "Выйти из конвенции"
+latin_monetary_union_1_button_desc: "Вы выходите из конвенции. Вы по-прежнему сможете наблюдать за ходом формирования валютного союза, но больше не будете считаться среди стран-подписантов, когда переговоры подойдут к завершению."
+
+latin_monetary_union_2_button: "Снова вступить в конвенцию"
+latin_monetary_union_2_button_desc: "Вы решаете снова вступить в конвенцию и быть засчитанным среди стран-подписантов по её завершении."
+
+  #####################
+  #scandinavian_monetary_union
+  #####################
+
+  scandinavian_monetary_union_je_1: "Конвенция Скандинавского монетного союза"
+  scandinavian_monetary_union_je_1_reason: "Конвенция Скандинавского монетного союза направлена на создание регионального валютного альянса, построенного вокруг общего золотого стандарта.\n Это соглашение стремится ввести единые спецификации для чеканки монет и денежно-кредитной политики, позволяя валютам подписавших государств постепенно сближаться к единой системе.\n\n После завершения этой записи журнала конечной целью станет подписание долгосрочного валютного договора между #v державой-инициатором#! и #v участвующими государствами#!.\n\n В рамках этого договора страны-подписанты обязуются принять закон #v [GetLawType('law_gold_standard').GetName]#! и [concept_money_value_target_real], определённый инициатором конвенции.\n\n Государства-подписанты будут:\n – принимать коэффициент конвертации в золото ([concept_money_value_target_real]), установленный инициатором;\n – приводить свою денежную систему к стандарту инициатора (#v Закон [GetLawType('law_gold_standard').GetName]#!), независимо от прежнего режима.\n\n Со временем стоимость их валют будет сходиться к общему золотому ориентиру.\n\n Текущее количество стран, участвующих в конвенции: #p [GetPlayer.MakeScope.ScriptValue('scandinavian_monetary_union_country_in_debat')+]#!"
+  
+  #scandinavian_monetary_union_je_1_desc.1: ""
+  scandinavian_monetary_union_je_1_desc.2: "конвенция длилась более 3 лет"
+  scandinavian_monetary_union_je_1_desc.3: "[SCOPE.sC('target_country').GetName] подписывает #v Договор Скандинавского монетного союза.#!"
+  scandinavian_monetary_union_je_1_desc.4: "Больше не существует действительного инициатора, способного довести конвенцию до завершения"
+  scandinavian_monetary_union_je_1_desc.5: "Если переговоры провалятся, они завершатся, и вы потеряете статус инициатора."
+ 
+  status_scandinavian_monetary_union_je_1: "В настоящее время к конвенции присоединились:"
+  status_scandinavian_monetary_union_je_2: "#v $SWE$#!"
+  status_scandinavian_monetary_union_je_3: "#v $DEN$#!"
+  status_scandinavian_monetary_union_je_4: "#v $NOR$#!"  
+ 
+  status_scandinavian_monetary_union_je_5: "- #v $SWE$#!"
+  status_scandinavian_monetary_union_je_6: "- #v $DEN$#!"
+  status_scandinavian_monetary_union_je_7: "- #v $NOR$#!"  
+
+  status_scandinavian_monetary_union_je_8: "- #v [ROOT.GetCountry.GetNameNoFormatting]#!" 
+
+  scandinavian_monetary_union_progress_bar: "Количество лет дебатов"
+  scandinavian_monetary_union_progress_bar_desc: "Количество лет дебатов: [JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)] Год(лет)/3 года - [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]"
+
+  scandinavian_monetary_union_1_button: "Выйти из конвенции"
+  scandinavian_monetary_union_1_button_desc: "Вы выходите из конвенции: вы всё ещё сможете видеть ход формирования валютного союза, но больше не будете среди стран-подписантов, когда конвенция достигнет завершения."
+
+  scandinavian_monetary_union_2_button: "Снова вступить в конвенцию"
+  scandinavian_monetary_union_2_button_desc: "Вы решаете снова вступить в конвенцию и быть засчитанным среди стран-подписантов по её завершении."
+ 
+
+  silver_crisis_progress_bar:0 "Длительность серебряного кризиса"
+  silver_crisis_progress_bar_desc:0 "Время, прошедшее с начала #v Серебряного кризиса#!: #v [JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)] Год(лет)#!"
+
+
+  #####################
+  #silver_crisis
+  #####################
+
+  silver_crisis_je_1: "Серебряный кризис"
+  # silver_crisis_je_1_reason: "The sharp collapse of the global price de l’argent, amorcée par les réformes monétaires de 1873, provoque une déstabilisation progressive de tous les États dont la monnaie repose sur le #v bimétallisme#! ou l’#v étalon-argent#!.\n\nAu fur et à mesure que l’écart entre la parité légale et le prix international du métal blanc se creuse, notre système monétaire devient vulnérable à l’arbitrage, à la fuite de l’or et à une perte généralisée de confiance.\n\nCe journal d’événements représente l’évolution de cette #v crise monétaire mondiale#! : l’effondrement de la valeur de l’argent, les attaques contre les réserves nationales, les pressions politiques internes et l’instabilité grandissante qui en découle.\n\nTant que notre pays maintiendra une monnaie basée sur l’argent – qu’il s’agisse de l’#v étalon-argent#! pur ou du #v bimétallisme#! – nous serons exposés à ces tensions croissantes.\n\nL’objectif final de ce journal est la transition vers un #v étalon-or#! stable, mettant fin à l’instabilité structurelle causée par l’effondrement de l’argent.\n\nActuellement, ce journal d’événements s’applique à tous les États utilisant l’argent comme base de leur système monétaire."
+  silver_crisis_je_1_reason: "Резкий обвал мировой цены на серебро, вызванный денежными реформами США 1873 года #v (The Coinage Act of 1873)#!, постепенно дестабилизирует все государства, чьи валюты опираются на #v биметаллизм#! или #v серебряный стандарт#!.\n\nПо мере того как разрыв между официальным паритетом и международной стоимостью серебра растёт, наша денежная система становится всё более уязвимой к арбитражу, оттоку золота и общему падению доверия.\n\nЭта запись журнала отражает развитие этой #v глобальной валютной кризисной ситуации#!: падение стоимости серебра, атаки на национальные резервы, внутреннее политическое давление и последующий рост нестабильности.\n\nПока наша страна сохраняет валюту, основанную на серебре — будь то #v серебряный стандарт#! или #v биметаллический режим#! — мы будем оставаться подвержены этим нарастающим напряжениям.\n\nКонечная цель этого журнала — переход к стабильному #v золотому стандарту#!, который положит конец структурной нестабильности, вызванной обесценением серебра.\n\nЭта запись журнала в настоящее время применяется ко всем государствам, использующим серебро как основу своей денежной системы."
+
+  silver_crisis_je_1_desc.1: "В США был принят Coinage Act 1873 года"
+
+  #####################
+  #bank_central JE
+  #####################
+ 
+  bank_central_currency_JE_dollar_united_states_dollar: "ТЕКСТ"
+  bank_central_currency_JE_dollar_united_states_dollar_reason: "ТЕКСТ"
+
+  status_bank_central_currency_JE_1: "Текущий стандарт: #b [Localize('fiat_standard_name')]#! [GetPlayer.GetCustom('currency_good')]"
+  status_bank_central_currency_JE_2: "Текущий стандарт: #b [Localize('silver_standard_name')]#! @silver!"
+  status_bank_central_currency_JE_3: "Текущий стандарт: #b [Localize('bimetallism_standard_name')]#! @bimetallism!"
+  status_bank_central_currency_JE_4: "Текущий стандарт: #b [Localize('gold_standard_name')]#! @gold!"
+  status_bank_central_currency_JE_5: "Текущий стандарт: #b [Localize('gold_exchange_standard_name')]#! @bimetallism!"
+
+ 
+  bank_je_central_peso_mexican_peso: "Серебряный орёл"
+
+  ################################
+  #pb+ef: Модификаторы выпуска строительных товаров
+  ################################
+  
+  goods_output_wood_construction_mult:0 "Выпуск @wood_construction! Деревянной стройки зданий"
+  goods_output_wood_construction_mult_desc:0 "Бонус или штраф к количеству производимой @wood_construction! Деревянной стройки зданиями"
+  
+  goods_output_iron_construction_mult:0 "Выпуск @iron_construction! Железной стройки зданий"
+  goods_output_iron_construction_mult_desc:0 "Бонус или штраф к количеству производимой @iron_construction! Железной стройки зданиями"
+  
+  goods_output_steel_construction_mult:0 "Выпуск @steel_construction! Стальной стройки зданий"
+  goods_output_steel_construction_mult_desc:0 "Бонус или штраф к количеству производимой @steel_construction! Стальной стройки зданиями"
+  
+  goods_output_arc_welded_construction_mult:0 "Выпуск @arc_welded_construction! Дугосварочной стройки зданий"
+  goods_output_arc_welded_construction_mult_desc:0 "Бонус или штраф к количеству производимой @arc_welded_construction! Дугосварочной стройки зданиями"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

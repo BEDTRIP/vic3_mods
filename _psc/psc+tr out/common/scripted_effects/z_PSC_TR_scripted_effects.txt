@@ -1,0 +1,296 @@
+﻿#Scope: Building
+REPLACE:set_new_point_conversion_method = {
+    if = {
+        limit = {
+            has_active_production_method = pm_wooden_buildings
+            NOT = {
+                state = {
+                    b:building_construction_regulator = {
+                        has_active_production_method = pm_wood_point_conversion
+                    }
+                }
+            }
+        }
+        state = {
+            activate_production_method = {
+                building_type = building_construction_regulator
+                production_method = pm_wood_point_conversion
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_active_production_method = pm_iron_frame_buildings
+            NOT = {
+                state = {
+                    b:building_construction_regulator = {
+                        has_active_production_method = pm_iron_point_conversion
+                    }
+                }
+            }
+        }
+        state = {
+            activate_production_method = {
+                building_type = building_construction_regulator
+                production_method = pm_iron_point_conversion
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_active_production_method = pm_steel_frame_buildings
+            NOT = {
+                state = {
+                    b:building_construction_regulator = {
+                        has_active_production_method = pm_steel_point_conversion
+                    }
+                }
+            }
+        }
+        state = {
+            activate_production_method = {
+                building_type = building_construction_regulator
+                production_method = pm_steel_point_conversion
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_active_production_method = pm_arc_welded_buildings
+            NOT = {
+                state = {
+                    b:building_construction_regulator = {
+                        has_active_production_method = pm_arc_welded_point_conversion
+                    }
+                }
+            }
+        }
+        state = {
+            activate_production_method = {
+                building_type = building_construction_regulator
+                production_method = pm_arc_welded_point_conversion
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_active_production_method = pm_prefabricated_concrete_buildings
+            NOT = {
+                state = {
+                    b:building_construction_regulator = {
+                        has_active_production_method = pm_concrete_point_conversion
+                    }
+                }
+            }
+        }
+        state = {
+            activate_production_method = {
+                building_type = building_construction_regulator
+                production_method = pm_concrete_point_conversion
+            }
+        }
+    }
+}
+
+#Scope: State
+REPLACE:set_new_regulator_point_conversion_method = {
+    if = {
+        limit = {
+            has_building = building_construction_sector
+            b:building_construction_sector = {
+                has_active_production_method = pm_wooden_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 4
+        }
+    }
+    else_if = {
+        limit = {
+            has_building = building_construction_sector
+            b:building_construction_sector = {
+                has_active_production_method = pm_iron_frame_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 3
+        }
+    }
+    else_if = {
+        limit = {
+            has_building = building_construction_sector
+            b:building_construction_sector = {
+                has_active_production_method = pm_steel_frame_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 2
+        }
+    }
+    else_if = {
+        limit = {
+            has_building = building_construction_sector
+            b:building_construction_sector = {
+                has_active_production_method = pm_arc_welded_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 1
+        }
+    }
+    else_if = {
+        limit = {
+            has_building = building_construction_sector
+            b:building_construction_sector = {
+                has_active_production_method = pm_prefabricated_concrete_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 0
+        }
+    }
+    else_if = {
+        limit = {
+            owner = {
+                has_technology_researched = prefabricated_concrete_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 0
+        }
+    }
+    else_if = {
+        limit = {
+            owner = {
+                has_technology_researched = arc_welding
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 1
+        }
+    }
+    else_if = {
+        limit = {
+            owner = {
+                has_technology_researched = steel_frame_buildings
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 2
+        }
+    }
+    else_if = {
+        limit = {
+            owner = {
+                has_technology_researched = urban_planning
+            }
+        }
+        set_variable = {
+            name = production_method_chosen
+            value = 3
+        }
+    }
+    else = {
+        set_variable = {
+            name = production_method_chosen
+            value = 4
+        }
+    }
+}
+
+#Scope: Country
+REPLACE:set_point_conversion_method_from_tech = {
+    if = {
+        limit = {
+            has_technology_researched = prefabricated_concrete_buildings
+        }
+        every_scope_state = {
+            if = {
+                limit = {
+                    NOR = {
+                        has_building = building_construction_sector
+                        b:building_construction_regulator = {
+                            has_active_production_method = pm_prefabricated_concrete_buildings
+                        }
+                    }
+                }
+                activate_production_method = {
+                    building_type = building_construction_regulator
+                    production_method = pm_concrete_point_conversion
+                }
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_technology_researched = arc_welding
+        }
+        every_scope_state = {
+            if = {
+                limit = {
+                    NOR = {
+                        has_building = building_construction_sector
+                        b:building_construction_regulator = {
+                            has_active_production_method = pm_arc_welded_point_conversion
+                        }
+                    }
+                }
+                activate_production_method = {
+                    building_type = building_construction_regulator
+                    production_method = pm_arc_welded_point_conversion
+                }
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_technology_researched = steel_frame_buildings
+        }
+        every_scope_state = {
+            if = {
+                limit = {
+                    NOR = {
+                        has_building = building_construction_sector
+                        b:building_construction_regulator = {
+                            has_active_production_method = pm_steel_point_conversion
+                        }
+                    }               
+                }
+                activate_production_method = {
+                    building_type = building_construction_regulator
+                    production_method = pm_steel_point_conversion
+                }
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_technology_researched = urban_planning
+        }
+        every_scope_state = {
+            if = {
+                limit = {
+                    NOR = {
+                        has_building = building_construction_sector
+                        b:building_construction_regulator = {
+                            has_active_production_method = pm_iron_point_conversion
+                        }
+                    }
+                }
+                activate_production_method = {
+                    building_type = building_construction_regulator
+                    production_method = pm_iron_point_conversion
+                }
+            }
+        }
+    }
+
+}

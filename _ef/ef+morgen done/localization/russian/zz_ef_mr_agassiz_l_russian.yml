@@ -1,0 +1,5 @@
+l_russian:
+ agassiz.100.s: "Серебро."
+ je_agassiz_find_silver_project: "Поиск серебра"
+ je_agassiz_find_silver_project_reason: "$je_agassiz_find_coal_project_reason$"
+

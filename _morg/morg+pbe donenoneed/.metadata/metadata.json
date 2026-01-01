@@ -1,0 +1,31 @@
+{
+  "name": "ComPatch Morgenroete + Power Blocs Expanded",
+  "id": "3582029087",
+  "version": "0.1.0",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for Morgenroete + Power Blocs Expanded",
+  "picture": "thumbnail.png",
+  "tags": [
+    "compatibility",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Morgenroete",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Power Blocs Expanded",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

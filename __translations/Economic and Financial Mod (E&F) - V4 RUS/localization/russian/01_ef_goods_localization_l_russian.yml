@@ -1,0 +1,162 @@
+﻿l_russian:
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  #  ██████╗  ██████╗  ██████╗ ██████╗ ███████╗
+  # ██╔════╝ ██╔═══██╗██╔═══██╗██╔══██╗██╔════╝
+  # ██║  ███╗██║   ██║██║   ██║██║  ██║███████╗
+  # ██║   ██║██║   ██║██║   ██║██║  ██║╚════██║
+  # ╚██████╔╝╚██████╔╝╚██████╔╝██████╔╝███████║
+  #  ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  popneed_currency:0 "Займы"
+  popneed_financial_products:0 "Финансовый продукт"
+
+  ################################
+  # Currencies
+  ################################
+
+  # Dinar
+  dinar_c:0 "Динар"
+  dinar_algerian_dinar_c:0 "Алжирский динар"
+  dinar_iraqi_dinar_c:0 "Иракский динар"
+  dinar_libyan_dinar_c:0 "Ливийский динар"
+  dinar_moroccan_dirham_c:0 "Марокканский дирхам"
+  dinar_omanian_rial_c:0 "Оманский риал"
+  dinar_qiran_c:0 "Киран"
+  dinar_saudi_riyal_c:0 "Саудовский риял"
+  dinar_serbian_dinar_c:0 "Сербский динар"
+  dinar_tunisian_dinar_c:0 "Тунисский динар"
+  dinar_yugoslav_dinar_c:0 "Югославский динар"
+
+  # Dollar
+  dollar_australian_dollar_c:0 "Австралийский доллар"
+  dollar_canadian_dollar_c:0 "Канадский доллар"
+  dollar_caribbean_dollar_c:0 "Карибский доллар"
+  dollar_confederate_states_dollar_c:0 "Доллар Конфедеративных Штатов"
+  dollar_liberian_dollar_c:0 "Либерийский доллар"
+  dollar_new_zealand_dollar_c:0 "Новозеландский доллар"
+  dollar_sierra_leonean_dollar_c:0 "Доллар Сьерра-Леоне"
+  dollar_united_states_dollar_c:0 "Доллар США"
+
+  # Eco
+  eco_ariary_c:0 "Ариари"
+  eco_central_african_eco_c:0 "Центральноафриканский эко"
+  eco_east_african_eco_c:0 "Восточноафриканский эко"
+  eco_ethiopian_birr_c:0 "Эфиопский быр"
+  eco_ghanaian_pound_c:0 "Ганский фунт"
+  eco_nigerian_naira_c:0 "Нигерийская найра"
+  eco_south_african_rand_c:0 "Южноафриканский ранд"
+  eco_tuareg_ouguiya_c:0 "Туарегский угия"
+  eco_west_african_eco_c:0 "Западноафриканский эко"
+
+  # Franc
+  franc_belgian_franc_c:0 "Бельгийский франк"
+  franc_french_franc_c:0 "Французский франк"
+  franc_luxembourgish_franc_c:0 "Люксембургский франк"
+  franc_swiss_franc_c:0 "Швейцарский франк"
+
+  # Gulden
+  gulden_c:0 "Гульден"
+  gulden_bavarian_gulden_c:0 "Баварский гульден"
+  gulden_florin_c:0 "Флорин"
+  gulden_hungarian_forint_c:0 "Венгерский форинт"
+  gulden_indies_guilder_c:0 "Голландский гульден Ост-Индии"
+  gulden_south_german_gulden_c:0 "Южногерманский гульден"
+
+  # Krone
+  krone_czech_koruna_c:0 "Чешская крона"
+  krone_danish_krone_c:0 "Датская крона"
+  krone_estonian_kroon_c:0 "Эстонская крона"
+  krone_icelandic_krona_c:0 "Исландская крона"
+  krone_norwegian_krone_c:0 "Норвежская крона"
+  krone_slovak_koruna_c:0 "Словацкая крона"
+  krone_swedish_krona_c:0 "Шведская крона"
+
+  # Leon
+  leon_leu_c:0 "Лей"
+  leon_lev_c:0 "Лев"
+
+  # Lira
+  lira_c:0 "Лира"
+  lira_ducato_c:0 "Дукат"
+  lira_ottoman_lira_c:0 "Османская лира"
+  lira_scudo_pontificio_c:0 "Понтификский скудо"
+  lira_scudo_sardo_c:0 "Сардинский скудо"
+  lira_toscane_lira_c:0 "Тосканская лира"
+
+  # Mark
+  mark_c:0 "Марка"
+  mark_finnish_markka_c:0 "Финская марка"
+
+  # Peso
+  peso_c:0 "Песо"
+  peso_argentine_peso_c:0 "Аргентинское песо"
+  peso_bolivien_peso_c:0 "Боливийское песо"
+  peso_chilean_peso_c:0 "Чилийское песо"
+  peso_colombian_peso_c:0 "Колумбийское песо"
+  peso_costa_rican_colon_c:0 "Коста-риканский колон"
+  peso_cuban_peso_c:0 "Кубинское песо"
+  peso_ecuadorian_peso_c:0 "Эквадорское песо"
+  peso_el_salvador_colon_c:0 "Сальвадорский колон"
+  peso_guatemalan_quetzal_c:0 "Гватемальский кетсаль"
+  peso_honduran_lempira_c:0 "Гондурасская лемпира"
+  peso_mexican_peso_c:0 "Мексиканское песо"
+  peso_nicaraguan_cordoba_c:0 "Никарагуанская кордоба"
+  peso_paraguayan_peso_c:0 "Парагвайское песо"
+  peso_philippine_peso_c:0 "Филиппинское песо"
+  peso_sol_de_oro_c:0 "Соль де Оро"
+  peso_uruguayan_peso_c:0 "Уругвайское песо"
+  peso_venezuelan_peso_c:0 "Венесуэльское песо"
+
+  # Pound
+  pound_egyptian_pound_c:0 "Египетский фунт"
+  pound_irish_pound_c:0 "Ирландский фунт"
+  pound_sterling_c:0 "Фунт стерлингов"
+
+  # Real
+  real_c:0 "Реал"
+  real_brazilian_real_c:0 "Бразильский реал"
+
+  # Rupee
+  rupee_indian_rupee_c:0 "Индийская рупия"
+  rupee_indonesian_rupiah_c:0 "Индонезийская рупия"
+
+  # Special
+  spe_baht_c:0 "Бат"
+  spe_dong_c:0 "Донг"
+  spe_drachma_c:0 "Драхма"
+  spe_korean_won_c:0 "Корейская вона"
+  spe_latvian_lats_c:0 "Латвийский лат"
+  spe_lithuanian_litas_c:0 "Литовский лит"
+  spe_peseta_c:0 "Песета"
+  spe_ruble_c:0 "Рубль"
+  spe_uni_c:0 "Уни"
+  spe_yen_c:0 "Йена"
+  spe_yuan_c:0 "Юань"
+  spe_zloti_c:0 "Злоты"
+
+  # Thaler
+  thaler_hannoveraner_thaler_c:0 "Ганноверский талер"
+  thaler_prussian_thaler_c:0 "Прусский талер"
+  thaler_saxon_thaler_c:0 "Саксонский талер"
+
+  ################################
+  ## Financial product
+  ################################
+
+  bond:0 "Облигация"
+  war_bond:0 "Военная облигация"
+  paper_gold:0 "Бумажное золото"
+  railroad_stock:0 "Железнодорожные акции"
+  agricultural_stock:0 "Сельскохозяйственные акции"
+  manufacture_stock:0 "Промышленные акции"
+  mining_stock:0 "Горнодобывающие акции"

@@ -1,0 +1,13 @@
+﻿l_russian:
+
+# Silver mine
+pmg_mining_equipment_building_silver_mine:0 "Горнодобывающее оборудование"
+      pm_electric_fueled_pump_building_silver_mine:0 "Электрический насос"
+      pm_heavy_machineries_building_silver_mine:0 "Тяжёлая техника"
+      pm_autonomous_and_remote_ops_building_silver_mine:0 "Автономные и дистанционные операции"
+
+# Gold mine
+pmg_mining_equipment_building_gold_mine:0 "Горнодобывающее оборудование"
+    pm_electric_fueled_pump_building_gold_mine:0 "Электрический насос"
+    pm_heavy_machineries_building_gold_mine:0 "Тяжёлая техника"
+    pm_autonomous_and_remote_ops_building_gold_mine:0 "Автономные и дистанционные операции"

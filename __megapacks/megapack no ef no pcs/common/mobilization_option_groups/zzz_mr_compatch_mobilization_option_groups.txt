@@ -1,0 +1,38 @@
+﻿REPLACE:air_reconaissance = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = 2
+}
+REPLACE:aircrafts = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = 2
+}
+
+REPLACE:air_support = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = 1
+}
+
+REPLACE:tactical_weapons = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = 0
+}
+
+REPLACE:extra = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = 0
+}
+
+REPLACE:electronic_support = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = -1
+}
+
+REPLACE:nuclear_weapons = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = -2
+}
+
+REPLACE:remote_support = {
+    icon = "gfx/interface/icons/generic_icons/generic_concept_icon.dds"
+    weight = -2
+}

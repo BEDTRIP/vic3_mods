@@ -1,0 +1,28 @@
+﻿l_russian:
+
+  #################### IG ATTRACTION: TOOLTIPS ON LAW CHANGE ####################
+  bureaucrats_pb_ig_attracted_to_intelligentsia_1_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('academics').GetName]"
+  bureaucrats_pb_ig_attracted_to_intelligentsia_2_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('aristocrats').GetName]"
+  bureaucrats_pb_ig_attracted_to_intelligentsia_3_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('bureaucrats').GetName]"
+  bureaucrats_pb_ig_attracted_to_intelligentsia_4_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('capitalists').GetName]"
+  bureaucrats_pb_ig_attracted_to_intelligentsia_5_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('clergymen').GetName]"
+  bureaucrats_pb_ig_attracted_to_intelligentsia_6_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('clerks').GetName]"
+  bureaucrats_pb_ig_attracted_to_intelligentsia_7_tt: "Группа [GetInterestGroupVariant('ig_intelligentsia',GetPlayer).GetNameWithCountryVariant] будет привлекать больше представителей типа населения [GetPopType('engineers').GetName]"
+  
+  
+  #################### IG ATTRACTION: LAWS ####################
+  APPOINTED_BUREAUCRATS_LAW: "[GetLawType('law_appointed_bureaucrats').GetName] [concept_law]"  
+  
+  
+  
+  #################### IG ATTRACTION: TECHNOLOGIES ####################
+  YES_EGALITARIANISM:0 "Открыта [concept_technology|l] #v $labor_movement$#!"
+  YES_LABOR_MOVEMENT:0 "Открыта [concept_technology|l] #v $labor_movement$#!"
+  YES_SOCIALISM:0 "Открыта [concept_technology|l] #v $socialism$#!"
+  
+  
+
+
+
+
+

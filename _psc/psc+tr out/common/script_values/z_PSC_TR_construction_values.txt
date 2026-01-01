@@ -1,0 +1,92 @@
+﻿#Scope: State
+REPLACE:sum_construction_types_production = {
+	sg:wood_construction = {
+		value = state_goods_production
+	}
+	sg:iron_construction = {
+		add = state_goods_production
+	}
+	sg:steel_construction = {
+		add = state_goods_production
+	}
+	sg:arc_welded_construction = { 
+		add = state_goods_production
+	}
+	sg:concrete_construction = {
+		add = state_goods_production
+	}
+}
+
+#Scope: Country
+REPLACE:calculate_construction_sector_max_level = {
+	value = 0
+	if = {
+		limit = {
+			has_technology_researched = urbanization
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_technology_researched = urban_planning
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_technology_researched = modern_sewerage
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_technology_researched = steel_frame_buildings
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_technology_researched = elevator
+		}
+		add = 5
+	}
+    if = {
+        limit = {
+            has_technology_researched = prefabricated_concrete_buildings
+        }
+        add = 5
+    }
+}
+
+# Scope: State
+REPLACE:calculate_state_construction_base_price = {
+	b:building_construction_regulator = {
+		if = {
+			limit = {
+				has_active_production_method = pm_wood_point_conversion
+			}
+			value = wood_construction_good_base_price
+		}
+		else_if = {
+			limit = {
+				has_active_production_method = pm_iron_point_conversion
+			}
+			value = iron_construction_good_base_price
+		}
+		else_if = {
+			limit = {
+				has_active_production_method = pm_steel_point_conversion
+			}
+			value = steel_construction_good_base_price
+		}
+		else_if = {
+            limit = {
+                has_active_production_method = pm_arc_welded_point_conversion
+            }
+			value = arc_welded_construction_good_base_price
+		}
+        else = { #concrete active
+            value = concrete_construction_good_base_price
+        }
+	}
+}

@@ -1,0 +1,364 @@
+﻿l_russian:
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  # ██╗      █████╗ ██╗    ██╗
+  # ██║     ██╔══██╗██║    ██║
+  # ██║     ███████║██║ █╗ ██║
+  # ██║     ██╔══██║██║███╗██║
+  # ███████╗██║  ██║╚███╔███╔╝
+  # ╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  ################################
+  # Monetary Policy
+  ################################
+  lawgroup_monetary_policy: "Денежно-кредитная политика"
+
+  law_no_monetary_policy: "Без монетарной\nполитики"
+  law_revaluation: "Ревальвация"
+  law_revaluation_50: "Ревальвация 50%"
+  law_revaluation_75: "Ревальвация 75%"
+  law_revaluation_100: "Ревальвация 100%"
+  law_devaluation: "Девальвация"
+  law_devaluation_50: "Девальвация 50%"
+  law_devaluation_75: "Девальвация 75%"
+  law_devaluation_100: "Девальвация 100%"
+  law_war_economy: "Военная экономика"
+
+  # Desc :
+  law_no_monetary_policy_desc: "Нет заданной траектории для национальной валюты."
+  law_revaluation_desc: "Увеличение стоимости национальной валюты по отношению к золоту."
+  law_devaluation_desc: "Снижение стоимости национальной валюты по отношению к золоту."
+  law_war_economy_desc: "Законы, преобразующие национальную экономику в военную."
+
+  law_revaluation_25_desc: "Ревальвация национальной валюты за счёт сокращения производства на 25%"
+  law_revaluation_50_desc: "Ревальвация национальной валюты за счёт сокращения производства на 50%"
+  law_revaluation_75_desc: "Ревальвация национальной валюты за счёт сокращения производства на 75%"
+  law_revaluation_100_desc: "Ревальвация национальной валюты за счёт сокращения производства на 100%"
+
+  law_devaluation_25_desc: "Девальвация национальной валюты за счёт увеличения производства на 25%"
+  law_devaluation_50_desc: "Девальвация национальной валюты за счёт увеличения производства на 50%"
+  law_devaluation_75_desc: "Девальвация национальной валюты за счёт увеличения производства на 75%"
+  law_devaluation_100_desc: "Девальвация национальной валюты за счёт увеличения производства на 100%"
+
+  ################################
+  # Monetary Value Indexing
+  ################################
+  lawgroup_monetary_system: "Денежная система"
+
+  law_no_monetary_system: "Без денежной системы"
+  law_fiat_standard: "Фиатный стандарт"
+  law_silver_standard: "Серебряный стандарт"
+  law_bimetallism_standard: "Биметаллизм"
+  law_gold_standard: "Золотой стандарт"
+  law_gold_exchange_standard: "Золотой обменный стандарт"
+  law_floating_exchange_rates: "Плавающий валютный курс" 
+
+  law_no_monetary_system_icon: "Фиатный стандарт"
+  law_fiat_standard_icon: "@fiat_standard!"
+  law_silver_standard_icon: "@silver_standard!"
+  law_bimetallism_standard_icon: "@bimetallism_standard!"
+  law_gold_standard_icon: "@gold_standard!"
+  law_gold_exchange_standard_icon: "@gold_exchange_standard!"
+
+  # Desc :
+  law_no_monetary_system_desc: "Нет денежной системы."
+  law_fiat_standard_desc: "В фиатной денежной системе валюта не обеспечена запасами драгоценных металлов. Её стоимость определяется исключительно доверием общества и авторитетом государства-эмитента. Такая модель зависит от способности государства поддерживать экономическую стабильность и доверие к валюте, что позволяет гибко проводить денежную политику, но также подвергает систему рискам девальвации при потере доверия. В отличие от систем, основанных на золоте или серебре, фиатная валюта не гарантирует конвертацию в физические ресурсы."
+
+  law_silver_standard_desc: "В серебряной денежной системе валюта обеспечена серебряными резервами, а её стоимость привязана к определённому количеству этого драгоценного металла. Государство-эмитент гарантирует конвертацию валюты в серебро, что обеспечивает определённую стабильность денежной стоимости. Однако такая система ограничивает гибкость денежной политики, поскольку объём денежной массы напрямую зависит от доступных серебряных резервов."
+
+  law_bimetallism_standard_desc: "В денежной системе, основанной на биметаллизме, для обеспечения стоимости валюты используются как золото, так и серебро. Государство-эмитент гарантирует конвертацию валюты в эти два металла по фиксированному соотношению, что способствует стабильности за счёт диверсификации средств сбережения. Однако биметаллизм уязвим к колебаниям относительных цен на золото и серебро, что может привести к денежным дисбалансам и усложнить управление экономической политикой."
+
+  law_gold_standard_desc: "Золотой стандарт — это денежная система, при которой стоимость валюты страны напрямую связана с определённым количеством золота. В такой системе денежные единицы могут быть конвертированы в фиксированное количество золота и наоборот. Золотой стандарт исторически использовался для обеспечения стабильности валюты и доверия к её стоимости. Однако в XX веке он был в основном заменён более гибкими денежными системами."
+  law_gold_exchange_standard_desc: "Золотой обменный стандарт — денежная система, возникшая как разновидность золотого стандарта. Она действовала в межвоенный период, особенно после Первой мировой войны и до принятия Бреттон-Вудской системы. В рамках золотого обменного стандарта страны держали резервы не только в золоте, но и в иностранных валютах, прежде всего в долларах США, которые были конвертируемы в золото. Это обеспечивало большую гибкость в международной торговле и финансах, так как страны могли хранить резервы в смеси золота и ключевых иностранных валют. Однако система столкнулась с трудностями, включая дефицит золота, что привело к её корректировке и в итоге к переходу на Бреттон-Вудскую систему после Второй мировой войны."
+  law_floating_exchange_rates_desc: "Система плавающих валютных курсов — это денежная система, при которой стоимость валют определяется спросом и предложением на валютных рынках. В отличие от фиксированных курсов, где правительства или центральные банки устанавливают стоимость своей валюты по отношению к другой, плавающие курсы позволяют валютам свободно колебаться в зависимости от рыночных условий."
+
+  ################################
+  # Sovereign Money
+  ################################
+  lawgroup_currency_type: "Суверенная валюта"
+
+  # Currency :
+  law_no_market_liquidity: "Нет рыночной ликвидности"
+
+  # Dinar
+  law_dinar_currency: "Динар"
+  law_dinar_algerian_dinar_currency: "Алжирский динар"
+  law_dinar_iraqi_dinar_currency: "Иракский динар"
+  law_dinar_libyan_dinar_currency: "Ливийский динар"
+  law_dinar_moroccan_dirham_currency: "Марокканский дирхам"
+  law_dinar_omanian_rial_currency: "Оманский риал"
+  law_dinar_qiran_currency: "Киран"
+  law_dinar_saudi_riyal_currency: "Саудовский риял"
+  law_dinar_serbian_dinar_currency: "Сербский динар"
+  law_dinar_tunisian_dinar_currency: "Тунисский динар"
+  law_dinar_yugoslav_dinar_currency: "Югославский динар"
+
+  # Dollar
+  law_dollar_australian_dollar_currency: "Австралийский доллар"
+  law_dollar_canadian_dollar_currency: "Канадский доллар"
+  law_dollar_caribbean_dollar_currency: "Карибский доллар"
+  law_dollar_confederate_states_dollar_currency: "Доллар Конфедеративных Штатов"
+  law_dollar_liberian_dollar_currency: "Либерийский доллар"
+  law_dollar_new_zealand_dollar_currency: "Новозеландский доллар"
+  law_dollar_sierra_leonean_dollar_currency: "Доллар Сьерра-Леоне"
+  law_dollar_united_states_dollar_currency: "Доллар США"
+
+  # Eco
+  law_eco_ariary_currency: "Ариари"
+  law_eco_central_african_eco_currency: "Центральноафриканский эко"
+  law_eco_east_african_eco_currency: "Восточноафриканский эко"
+  law_eco_ethiopian_birr_currency: "Эфиопский быр"
+  law_eco_ghanaian_pound_currency: "Ганский фунт"
+  law_eco_nigerian_naira_currency: "Нигерийская найра"
+  law_eco_south_african_rand_currency: "Южноафриканский ранд"
+  law_eco_tuareg_ouguiya_currency: "Туарегский угия"
+  law_eco_west_african_eco_currency: "Западноафриканский эко"
+
+  # Franc
+  law_franc_belgian_franc_currency: "Бельгийский франк"
+  law_franc_french_franc_currency: "Французский франк"
+  law_franc_luxembourgish_franc_currency: "Люксембургский франк"
+  law_franc_swiss_franc_currency: "Швейцарский франк"
+
+  # Gulden
+  law_gulden_currency: "Гульден"
+  law_gulden_bavarian_gulden_currency: "Баварский гульден"
+  law_gulden_florin_currency: "Флорин"
+  law_gulden_hungarian_forint_currency: "Венгерский форинт"
+  law_gulden_indies_guilder_currency: "Голландский гульден Ост-Индии"
+  law_gulden_south_german_gulden_currency: "Южногерманский гульден"
+
+  # Krone
+  law_krone_czech_koruna_currency: "Чешская крона"
+  law_krone_danish_krone_currency: "Датская крона"
+  law_krone_estonian_kroon_currency: "Эстонская крона"
+  law_krone_icelandic_krona_currency: "Исландская крона"
+  law_krone_norwegian_krone_currency: "Норвежская крона"
+  law_krone_slovak_koruna_currency: "Словацкая крона"
+  law_krone_swedish_krona_currency: "Шведская крона"
+
+  # Leon
+  law_leon_leu_currency: "Лей"
+  law_leon_lev_currency: "Лев"
+
+  # Lira
+  law_lira_currency: "Лира"
+  law_lira_ducato_currency: "Дукат"
+  law_lira_ottoman_lira_currency: "Османская лира"
+  law_lira_scudo_pontificio_currency: "Понтификский скудо"
+  law_lira_scudo_sardo_currency: "Сардинский скудо"
+  law_lira_toscane_lira_currency: "Тосканская лира"
+
+  # Mark
+  law_mark_currency: "Марка"
+  law_mark_finnish_markka_currency: "Финская марка"
+
+  # Peso
+  law_peso_currency: "Песо"
+  law_peso_argentine_peso_currency: "Аргентинское песо"
+  law_peso_bolivien_peso_currency: "Боливийское песо"
+  law_peso_chilean_peso_currency: "Чилийское песо"
+  law_peso_colombian_peso_currency: "Колумбийское песо"
+  law_peso_costa_rican_colon_currency: "Коста-риканский колон"
+  law_peso_cuban_peso_currency: "Кубинское песо"
+  law_peso_ecuadorian_peso_currency: "Эквадорское песо"
+  law_peso_el_salvador_colon_currency: "Сальвадорский колон"
+  law_peso_guatemalan_quetzal_currency: "Гватемальский кетсаль"
+  law_peso_honduran_lempira_currency: "Гондурасская лемпира"
+  law_peso_mexican_peso_currency: "Мексиканское песо"
+  law_peso_nicaraguan_cordoba_currency: "Никарагуанская кордоба"
+  law_peso_paraguayan_peso_currency: "Парагвайское песо"
+  law_peso_philippine_peso_currency: "Филиппинское песо"
+  law_peso_sol_de_oro_currency: "Соль де Оро"
+  law_peso_uruguayan_peso_currency: "Уругвайское песо"
+  law_peso_venezuelan_peso_currency: "Венесуэльское песо"
+
+  # Pound
+  law_pound_egyptian_pound_currency: "Египетский фунт"
+  law_pound_irish_pound_currency: "Ирландский фунт"
+  law_pound_sterling_currency: "Фунт стерлингов"
+
+  # Real
+  law_real_currency: "Реал"
+  law_real_brazilian_real_currency: "Бразильский реал"
+
+  # Rupee
+  law_rupee_indian_rupee_currency: "Индийская рупия"
+  law_rupee_indonesian_rupiah_currency: "Индонезийская рупия"
+
+  # Special
+  law_spe_baht_currency: "Бат"
+  law_spe_dong_currency: "Донг"
+  law_spe_drachma_currency: "Драхма"
+  law_spe_korean_won_currency: "Вона"
+  law_spe_latvian_lats_currency: "Латвийский лат"
+  law_spe_lithuanian_litas_currency: "Литовский лит"
+  law_spe_peseta_currency: "Песета"
+  law_spe_ruble_currency: "Рубль"
+  law_spe_uni_currency: "Уни"
+  law_spe_yen_currency: "Йена"
+  law_spe_yuan_currency: "Юань"
+  law_spe_zloti_currency: "Злоты"
+
+  # Thaler
+  law_thaler_hannoveraner_thaler_currency: "Ганноверский талер"
+  law_thaler_prussian_thaler_currency: "Прусский талер"
+  law_thaler_saxon_thaler_currency: "Саксонский талер"
+
+  # Desc :
+  law_no_market_liquidity_desc: "У вас нет национальной валюты."
+  law_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_algerian_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_iraqi_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_libyan_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_moroccan_dirham_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_omanian_rial_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_qiran_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_saudi_riyal_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_serbian_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_tunisian_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dinar_yugoslav_dinar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_australian_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_canadian_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_caribbean_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_confederate_states_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_liberian_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_new_zealand_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_sierra_leonean_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_dollar_united_states_dollar_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_ariary_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_central_african_eco_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_east_african_eco_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_ethiopian_birr_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_ghanaian_pound_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_nigerian_naira_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_south_african_rand_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_tuareg_ouguiya_currency_desc: "Сильному государству - сильная валюта."
+  law_eco_west_african_eco_currency_desc: "Сильному государству - сильная валюта."
+  law_franc_belgian_franc_currency_desc: "Сильному государству - сильная валюта."
+  law_franc_french_franc_currency_desc: "Сильному государству - сильная валюта."
+  law_franc_luxembourgish_franc_currency_desc: "Сильному государству - сильная валюта."
+  law_franc_swiss_franc_currency_desc: "Сильному государству - сильная валюта."
+  law_gulden_currency_desc: "Сильному государству - сильная валюта."
+  law_gulden_bavarian_gulden_currency_desc: "Сильному государству - сильная валюта."
+  law_gulden_florin_currency_desc: "Сильному государству - сильная валюта."
+  law_gulden_hungarian_forint_currency_desc: "Сильному государству - сильная валюта."
+  law_gulden_indies_guilder_currency_desc: "Сильному государству - сильная валюта."
+  law_gulden_south_german_gulden_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_czech_koruna_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_danish_krone_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_estonian_kroon_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_icelandic_krona_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_norwegian_krone_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_slovak_koruna_currency_desc: "Сильному государству - сильная валюта."
+  law_krone_swedish_krona_currency_desc: "Сильному государству - сильная валюта."
+  law_leon_leu_currency_desc: "Сильному государству - сильная валюта."
+  law_leon_lev_currency_desc: "Сильному государству - сильная валюта."
+  law_lira_currency_desc: "Сильному государству - сильная валюта."
+  law_lira_ducato_currency_desc: "Сильному государству - сильная валюта."
+  law_lira_ottoman_lira_currency_desc: "Сильному государству - сильная валюта."
+  law_lira_scudo_pontificio_currency_desc: "Сильному государству - сильная валюта."
+  law_lira_scudo_sardo_currency_desc: "Сильному государству - сильная валюта."
+  law_lira_toscane_lira_currency_desc: "Сильному государству - сильная валюта."
+  law_mark_currency_desc: "Сильному государству - сильная валюта."
+  law_mark_finnish_markka_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_argentine_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_bolivien_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_chilean_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_colombian_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_costa_rican_colon_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_cuban_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_ecuadorian_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_el_salvador_colon_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_guatemalan_quetzal_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_honduran_lempira_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_mexican_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_nicaraguan_cordoba_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_paraguayan_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_philippine_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_sol_de_oro_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_uruguayan_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_peso_venezuelan_peso_currency_desc: "Сильному государству - сильная валюта."
+  law_pound_egyptian_pound_currency_desc: "Сильному государству - сильная валюта."
+  law_pound_irish_pound_currency_desc: "Сильному государству - сильная валюта."
+  law_pound_sterling_currency_desc: "Сильному государству - сильная валюта."
+  law_real_currency_desc: "Сильному государству - сильная валюта."
+  law_real_brazilian_real_currency_desc: "Сильному государству - сильная валюта."
+  law_rupee_indian_rupee_currency_desc: "Сильному государству - сильная валюта."
+  law_rupee_indonesian_rupiah_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_baht_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_dong_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_drachma_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_korean_won_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_latvian_lats_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_lithuanian_litas_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_peseta_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_ruble_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_uni_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_yen_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_yuan_currency_desc: "Сильному государству - сильная валюта."
+  law_spe_zloti_currency_desc: "Сильному государству - сильная валюта."
+  law_thaler_hannoveraner_thaler_currency_desc: "Сильному государству - сильная валюта."
+  law_thaler_prussian_thaler_currency_desc: "Сильному государству - сильная валюта."
+  law_thaler_saxon_thaler_currency_desc: "Сильному государству - сильная валюта."
+
+
+  lawgroup_bimetalism_ratio: "Биметаллическое соотношение"
+  lawgroup_bimetalism_ratio_desc: "Определяет установленное законом соотношение конверсии между золотом и серебром в биметаллической денежной системе. Выбранное соотношение влияет на обращение монет, арбитраж, стабильность валюты и баланс между металлическими резервами. Несоответствие между юридическим соотношением и мировым рыночным соотношением может привести к исчезновению металлов из обращения или к переполнению монетного двора, вызывая денежные кризисы."
+
+
+  law_bimetallic_ratio_no: "Без фиксированного соотношения"
+  law_bimetallic_ratio_10: "Биметаллическое соотношение 10:1"
+  law_bimetallic_ratio_15: "Биметаллическое соотношение 15:1"
+  law_bimetallic_ratio_20: "Биметаллическое соотношение 20:1"
+
+  law_bimetallic_ratio_no_desc: "Правительство не устанавливает никакого фиксированного соотношения конверсии между золотом и серебром. Чеканка следует рыночным оценкам, позволяя относительной цене обоих металлов свободно колебаться. Хотя это избегает арбитражных искажений, валюта становится более подверженной волатильности при расхождении цен на металлы."
+  
+  law_bimetallic_ratio_10_desc: "Золото юридически оценивается в десять раз дороже серебра. Это сильно отдает предпочтение золоту перед серебром, стабилизируя валюту ценой вытеснения серебра из обращения. Исторически связано со сторонниками «твёрдых денег»: такое соотношение снижает инфляцию, но может создавать денежный дефицит в периоды нехватки золота."
+
+  law_bimetallic_ratio_15_desc: "Золото юридически оценивается в пятнадцать раз дороже серебра. Сбалансированное соотношение, близкое к международным нормам, этот подход поддерживает обращение обоих металлов и отражает классический биметаллический стандарт XIX века. Хотя он более стабилен, всё же сохраняется риск арбитража, когда мировые рынки отклоняются от юридического соотношения."
+
+  law_bimetallic_ratio_20_desc: "Золото юридически оценивается в двадцать раз дороже серебра. Соотношение в пользу серебра, расширяющее денежную массу, часто поддерживаемое аграрными или популистскими движениями. Это может стимулировать рост в период экономических трудностей, но несёт риск притока серебра, инфляции и исчезновения золотых резервов."
+
+
+  law_external_exchange_standard: "Внешний валютный стандарт"
+  law_external_exchange_standard_desc: "Эта денежная система привязывает страну к внешней власти или союзу, требуя принятия валюты, чья паритетность и конвертируемость определяются за пределами её границ. Государство не может свободно корректировать денежно-кредитную политику и должно следовать правилам обмена, требованиям к резервам и правовым стандартам, установленным сюзеренным государством или союзом общей валюты."
+
+
+
+
+
+  ################################
+  # External Monetary Policy
+  ################################
+  lawgroup_external_monetary_policy: "Внешняя денежно-кредитная политика"
+
+  law_no_external_monetary_policy: "Без внешней денежно-кредитной политики"
+  law_desactive_bc: "Центральный банк отключён"
+  law_customs_union_limit_20: "Лимит таможенного союза 20%"
+  law_protectora_limit_30: "Лимит протектората 30%"
+  law_dominion_limit_50: "Лимит доминиона 50%"
+  law_puppet_limit_75: "Лимит марионетки 75%"
+
+  # Desc :
+  lawgroup_external_monetary_policy_desc: "Внешняя денежно-кредитная политика"
+  law_no_external_monetary_policy_desc: "Без внешней денежно-кредитной политики"
+  law_desactive_bc_desc: "Центральный банк отключён"
+  law_customs_union_limit_20_desc: "Лимит таможенного союза 20%"
+  law_protectora_limit_30_desc: "Лимит протектората 30%"
+  law_dominion_limit_50_desc: "Лимит доминиона 50%"
+  law_puppet_limit_75_desc: "Лимит марионетки 75%"
+
+
+
+

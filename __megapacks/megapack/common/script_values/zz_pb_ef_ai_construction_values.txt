@@ -1,0 +1,29 @@
+## AI helpers for PSC construction-goods chain in pb+ef
+##
+## Uses PSC construction goods:
+## - wood_construction / iron_construction / steel_construction / arc_welded_construction
+##
+## `market_goods_pricier` is the relative price deviation above base (e.g. 0.20 = +20%).
+
+REPLACE_OR_CREATE:market_construction_goods_pricier_avg = {
+	value = 0
+	add = market.mg:wood_construction.market_goods_pricier
+	add = market.mg:iron_construction.market_goods_pricier
+	add = market.mg:steel_construction.market_goods_pricier
+	add = market.mg:arc_welded_construction.market_goods_pricier
+	add = market.mg:concrete_construction.market_goods_pricier
+
+	# sanity clamp (prevents runaway ai_value)
+	min = 0
+	max = 1
+}
+
+REPLACE_OR_CREATE:ai_construction_sector_price_pressure_bonus = {
+	# If construction goods are overpriced more than the country's construction spending level,
+	# increase AI desire to build construction sectors (they produce those goods in PSC chain).
+	value = market_construction_goods_pricier_avg
+
+	min = 0
+	multiply = 10000
+}
+

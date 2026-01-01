@@ -1,0 +1,187 @@
+﻿l_russian:
+
+# decisions
+
+	zw_auto_pm_add_je: "$je_zw_auto_pm$"
+	zw_auto_pm_add_je_desc: "Добавить $je_zw_auto_pm$ в журнал"
+
+# journal entries
+
+	je_zw_auto_pm: "Управление Производственными Методами"
+	je_zw_auto_pm_reason: "Улучшить или скорректировать наши производственные методы."
+
+# scripted buttons
+
+	# auto_pm_num_3
+
+	zw_auto_pm_num_3_button: "Быстрое обновление"
+	zw_auto_pm_num_3_button_desc: ""
+	zw_auto_pm_num_3_button_effect: "До #yellow #b трёх#!#! зданий одного #yellow #b типа#!#! могут менять производственные методы каждый месяц."
+
+	# electrification 
+
+	zw_auto_pm_electric_button: "Электрификация"
+	zw_auto_pm_electric_button_desc: ""
+	zw_auto_pm_electric_button_effect: "Разрешить #white #b электрификацию#!#! производственных методов."
+
+	# industry
+
+	zw_auto_pm_building_food_industry_button: "$building_food_industry$"
+	zw_auto_pm_building_food_industry_button_desc: ""
+	zw_auto_pm_building_food_industry_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_food_industry$#!#!."
+
+	zw_auto_pm_building_textile_mill_button: "$building_textile_mill$"
+	zw_auto_pm_building_textile_mill_button_desc: ""
+	zw_auto_pm_building_textile_mill_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_textile_mill$#!#!."
+
+	zw_auto_pm_building_furniture_manufactory_button: "$building_furniture_manufactory$"
+	zw_auto_pm_building_furniture_manufactory_button_desc: ""
+	zw_auto_pm_building_furniture_manufactory_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_furniture_manufactory$#!#!."
+
+	zw_auto_pm_building_glassworks_button: "$building_glassworks$"
+	zw_auto_pm_building_glassworks_button_desc: ""
+	zw_auto_pm_building_glassworks_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_glassworks$#!#!."
+
+	zw_auto_pm_building_tooling_workshop_button: "$building_tooling_workshop$"
+	zw_auto_pm_building_tooling_workshop_button_desc: ""
+	zw_auto_pm_building_tooling_workshop_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_tooling_workshop$#!#!."
+
+	zw_auto_pm_building_paper_mill_button: "$building_paper_mill$"
+	zw_auto_pm_building_paper_mill_button_desc: ""
+	zw_auto_pm_building_paper_mill_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_paper_mill$#!#!."
+
+	zw_auto_pm_building_chemical_plant_button: "$building_chemical_plant$"
+	zw_auto_pm_building_chemical_plant_button_desc: ""
+	zw_auto_pm_building_chemical_plant_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_chemical_plant$#!#!."
+
+	zw_auto_pm_building_explosives_factory_button: "$building_explosives_factory$"
+	zw_auto_pm_building_explosives_factory_button_desc: ""
+	zw_auto_pm_building_explosives_factory_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_explosives_factory$#!#!."
+
+	zw_auto_pm_building_synthetics_plant_button: "$building_synthetics_plant$"
+	zw_auto_pm_building_synthetics_plant_button_desc: ""
+	zw_auto_pm_building_synthetics_plant_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_synthetics_plant$#!#!."
+
+	zw_auto_pm_building_steel_mill_button: "$building_steel_mill$"
+	zw_auto_pm_building_steel_mill_button_desc: ""
+	zw_auto_pm_building_steel_mill_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_steel_mill$#!#!."
+
+	zw_auto_pm_building_motor_industry_button: "$building_motor_industry$"
+	zw_auto_pm_building_motor_industry_button_desc: ""
+	zw_auto_pm_building_motor_industry_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_motor_industry$#!#!."
+
+	zw_auto_pm_building_automotive_industry_button: "$building_automotive_industry$"
+	zw_auto_pm_building_automotive_industry_button_desc: ""
+	zw_auto_pm_building_automotive_industry_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_automotive_industry$#!#!."
+
+	zw_auto_pm_building_electrics_industry_button: "$building_electrics_industry$"
+	zw_auto_pm_building_electrics_industry_button_desc: ""
+	zw_auto_pm_building_electrics_industry_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_electrics_industry$#!#!."
+
+	zw_auto_pm_building_shipyard_button: "$building_shipyard$"
+	zw_auto_pm_building_shipyard_button_desc: ""
+	zw_auto_pm_building_shipyard_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_shipyard$#!#!."
+
+	zw_auto_pm_building_military_shipyard_button: "$building_military_shipyard$"
+	zw_auto_pm_building_military_shipyard_button_desc: ""
+	zw_auto_pm_building_military_shipyard_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_military_shipyard$#!#!."
+
+	# military industries
+
+	zw_auto_pm_building_arms_industry_button: "$building_arms_industry$"
+	zw_auto_pm_building_arms_industry_button_desc: ""
+	zw_auto_pm_building_arms_industry_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_arms_industry$#!#!."
+
+	zw_auto_pm_building_artillery_foundry_button: "$building_artillery_foundry$"
+	zw_auto_pm_building_artillery_foundry_button_desc: ""
+	zw_auto_pm_building_artillery_foundry_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_artillery_foundry$#!#!."
+
+	zw_auto_pm_building_munition_plant_button: "$building_munition_plant$"
+	zw_auto_pm_building_munition_plant_button_desc: ""
+	zw_auto_pm_building_munition_plant_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_munition_plant$#!#!."
+
+	# farms
+
+	zw_auto_pm_building_group_farms_button: "$bg_agriculture$"
+	zw_auto_pm_building_group_farms_button_desc: ""
+	zw_auto_pm_building_group_farms_button_effect: "Улучшить или скорректировать производственные методы #white #b $bg_agriculture$#!#!."
+
+	# ranch
+
+	zw_auto_pm_building_livestock_ranch_button: "$building_livestock_ranch$"
+	zw_auto_pm_building_livestock_ranch_button_desc: ""
+	zw_auto_pm_building_livestock_ranch_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_livestock_ranch$#!#!."
+
+	# mines
+
+	zw_auto_pm_building_group_mines_button: "$bg_mining$"
+	zw_auto_pm_building_group_mines_button_desc: ""
+	zw_auto_pm_building_group_mines_button_effect: "Улучшить или скорректировать производственные методы #white #b $bg_mining$#!#!."
+
+	# plantations
+
+	zw_auto_pm_building_group_plantations_button: "$bg_plantations$"
+	zw_auto_pm_building_group_plantations_button_desc: ""
+	zw_auto_pm_building_group_plantations_button_effect: "Улучшить или скорректировать производственные методы #white #b $bg_plantations$#!#!."
+
+	# misc
+
+	zw_auto_pm_building_logging_camp_button: "$building_logging_camp$"
+	zw_auto_pm_building_logging_camp_button_desc: ""
+	zw_auto_pm_building_logging_camp_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_logging_camp$#!#!."
+
+	zw_auto_pm_building_rubber_plantation_button: "$building_rubber_plantation$"
+	zw_auto_pm_building_rubber_plantation_button_desc: ""
+	zw_auto_pm_building_rubber_plantation_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_rubber_plantation$#!#!."
+
+	zw_auto_pm_building_fishing_wharf_button: "$building_fishing_wharf$"
+	zw_auto_pm_building_fishing_wharf_button_desc: ""
+	zw_auto_pm_building_fishing_wharf_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_fishing_wharf$#!#!."
+
+	zw_auto_pm_building_whaling_station_button: "$building_whaling_station$"
+	zw_auto_pm_building_whaling_station_button_desc: ""
+	zw_auto_pm_building_whaling_station_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_whaling_station$#!#!."
+
+	zw_auto_pm_building_oil_rig_button: "$building_oil_rig$"
+	zw_auto_pm_building_oil_rig_button_desc: ""
+	zw_auto_pm_building_oil_rig_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_oil_rig$#!#!."
+
+	# urban
+
+	zw_auto_pm_building_urban_center_button: "$building_urban_center$"
+	zw_auto_pm_building_urban_center_button_desc: ""
+	zw_auto_pm_building_urban_center_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_urban_center$#!#!."
+
+	zw_auto_pm_building_art_academy_button: "$building_art_academy$"
+	zw_auto_pm_building_art_academy_button_desc: ""
+	zw_auto_pm_building_art_academy_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_art_academy$#!#!."
+
+	zw_auto_pm_building_power_plant_button: "$building_power_plant$"
+	zw_auto_pm_building_power_plant_button_desc: ""
+	zw_auto_pm_building_power_plant_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_power_plant$#!#!."
+
+	# government
+
+	zw_auto_pm_building_port_button: "$building_port$"
+	zw_auto_pm_building_port_button_desc: ""
+	zw_auto_pm_building_port_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_port$#!#!."
+
+	zw_auto_pm_building_government_administration_button: "$building_government_administration$"
+	zw_auto_pm_building_government_administration_button_desc: ""
+	zw_auto_pm_building_government_administration_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_government_administration$#!#!."
+
+	zw_auto_pm_building_university_button: "$building_university$"
+	zw_auto_pm_building_university_button_desc: ""
+	zw_auto_pm_building_university_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_university$#!#!."
+
+	# infras
+
+	zw_auto_pm_building_railway_button: "$building_railway$"
+	zw_auto_pm_building_railway_button_desc: ""
+	zw_auto_pm_building_railway_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_railway$#!#!."
+
+	# construction
+
+	zw_auto_pm_building_construction_sector_button: "$building_construction_sector$"
+	zw_auto_pm_building_construction_sector_button_desc: ""
+	zw_auto_pm_building_construction_sector_button_effect: "Улучшить или скорректировать производственные методы #white #b $building_construction_sector$#!#!."

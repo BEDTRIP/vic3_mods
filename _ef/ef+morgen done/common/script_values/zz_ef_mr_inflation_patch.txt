@@ -1,0 +1,264 @@
+### E&F + Morgenroete ComPatch (Vic3 1.12)
+### Make E&F inflation scripted values account for Morgenroete goods.
+
+# NOTE: We override only the specific scripted values we need, to keep the compatch minimal.
+
+# ------------------------
+# Consumer goods inflation
+# ------------------------
+inflation_on_consumer_goods = {
+	add = {
+		market = {
+			mg:grain = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fish = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fabric = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:clothes = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:furniture = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:paper = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:services = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:transportation = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:porcelain = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:meat = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fruit = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:wine = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tea = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tobacco = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:opium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:automobiles = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:telephones = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:radios = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:luxury_clothes = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:luxury_furniture = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fine_art = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+
+			# Morgenroete goods
+			mg:air_travel = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:elgar_music = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:manzoni_prints = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:elgar_instruments = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:grain.market_goods_buy_orders
+		add = market.mg:fish.market_goods_buy_orders
+		add = market.mg:fabric.market_goods_buy_orders
+		add = market.mg:clothes.market_goods_buy_orders
+		add = market.mg:furniture.market_goods_buy_orders
+		add = market.mg:paper.market_goods_buy_orders
+		add = market.mg:services.market_goods_buy_orders
+		add = market.mg:transportation.market_goods_buy_orders
+		add = market.mg:porcelain.market_goods_buy_orders
+		add = market.mg:meat.market_goods_buy_orders
+		add = market.mg:fruit.market_goods_buy_orders
+		add = market.mg:wine.market_goods_buy_orders
+		add = market.mg:tea.market_goods_buy_orders
+		add = market.mg:tobacco.market_goods_buy_orders
+		add = market.mg:opium.market_goods_buy_orders
+		add = market.mg:automobiles.market_goods_buy_orders
+		add = market.mg:telephones.market_goods_buy_orders
+		add = market.mg:radios.market_goods_buy_orders
+		add = market.mg:luxury_clothes.market_goods_buy_orders
+		add = market.mg:luxury_furniture.market_goods_buy_orders
+		add = market.mg:fine_art.market_goods_buy_orders
+
+		# Morgenroete goods
+		add = market.mg:air_travel.market_goods_buy_orders
+		add = market.mg:elgar_music.market_goods_buy_orders
+		add = market.mg:manzoni_prints.market_goods_buy_orders
+		add = market.mg:elgar_instruments.market_goods_buy_orders
+	}
+}
+
+# ------------------------
+# Raw materials inflation
+# ------------------------
+inflation_on_raw_material = {
+	add = {
+		market = {
+			mg:silk = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:dye = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:sulfur = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:iron = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:lead = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:rubber = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+
+			# Morgenroete goods
+			mg:good_uranium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:silk.market_goods_buy_orders
+		add = market.mg:dye.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+		add = market.mg:sulfur.market_goods_buy_orders
+		add = market.mg:iron.market_goods_buy_orders
+		add = market.mg:lead.market_goods_buy_orders
+		add = market.mg:rubber.market_goods_buy_orders
+
+		# Morgenroete goods
+		add = market.mg:good_uranium.market_goods_buy_orders
+	}
+}
+

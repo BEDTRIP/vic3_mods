@@ -1,0 +1,62 @@
+##############################
+# E&F + Morgenroete ComPatch #
+# Agassiz: add Silver support#
+##############################
+
+# E&F silver mine support for Agassiz "find new vein" projects
+agassiz_can_find_silver_vein_trigger = {
+	any_scope_building = {
+		is_building_type = building_silver_mine
+		level > 0
+		NOT = {
+			has_modifier = agassiz_building_production_mult_modifier
+		}
+	}
+}
+
+# Extend "can find new vein" to include silver
+agassiz_can_find_new_vein_trigger = {
+	OR = {
+		agassiz_can_find_coal_vein_trigger = yes
+		agassiz_can_find_iron_vein_trigger = yes
+		agassiz_can_find_lead_vein_trigger = yes
+		agassiz_can_find_sulfur_vein_trigger = yes
+		agassiz_can_find_gold_vein_trigger = yes
+		agassiz_can_find_uranium_vein_trigger = yes
+		agassiz_can_find_silver_vein_trigger = yes
+	}
+}
+
+# Checks for active projects of the Naturalist (include silver)
+agassiz_geologist_project_active_trigger = {
+	OR = {
+		has_journal_entry = je_agassiz_geological_research
+		has_variable = agassiz_volcano_expedition_active_var
+		has_journal_entry = je_agassiz_find_coal_project
+		has_journal_entry = je_agassiz_find_iron_project
+		has_journal_entry = je_agassiz_find_lead_project
+		has_journal_entry = je_agassiz_find_sulfur_project
+		has_journal_entry = je_agassiz_find_gold_project
+		has_journal_entry = je_agassiz_find_uranium_project
+		has_journal_entry = je_agassiz_find_silver_project
+		has_journal_entry = je_agassiz_find_oil_project
+		has_journal_entry = je_agassiz_mid_atlantic_ridge
+	}
+}
+
+# Checks for active projects of the Naturalist (busy geologist) (include silver)
+agassiz_geologist_project_with_busy_geologist_active_trigger = {
+	OR = {
+		has_variable = agassiz_volcano_expedition_active_var
+		has_journal_entry = je_agassiz_find_coal_project
+		has_journal_entry = je_agassiz_find_iron_project
+		has_journal_entry = je_agassiz_find_lead_project
+		has_journal_entry = je_agassiz_find_sulfur_project
+		has_journal_entry = je_agassiz_find_gold_project
+		has_journal_entry = je_agassiz_find_uranium_project
+		has_journal_entry = je_agassiz_find_silver_project
+		has_journal_entry = je_agassiz_find_oil_project
+		has_journal_entry = je_agassiz_mid_atlantic_ridge
+	}
+}
+

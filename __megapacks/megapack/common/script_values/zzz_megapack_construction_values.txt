@@ -1,0 +1,101 @@
+﻿#Scope: State
+REPLACE:sum_construction_types_production = {
+	sg:wood_construction = {
+		value = state_goods_production
+	}
+	sg:iron_construction = {
+		add = state_goods_production
+	}
+	sg:steel_construction = {
+		add = state_goods_production
+	}
+	sg:arc_welded_construction = { 
+		add = state_goods_production
+	}
+	sg:concrete_construction = {
+		add = state_goods_production
+	}
+}
+
+#Scope: Country
+REPLACE:calculate_construction_sector_max_level = {
+	value = 0
+	if = {
+		limit = {
+			has_technology_researched = urbanization
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_technology_researched = urban_planning
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_technology_researched = modern_sewerage
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_technology_researched = steel_frame_buildings
+		}
+		add = 5
+	}
+	if = {
+		limit = {
+			has_technology_researched = elevator
+		}
+		add = 5
+	}
+    if = {
+        limit = {
+            has_technology_researched = prefabricated_concrete_buildings
+        }
+        add = 5
+    }
+}
+
+#############################################
+# pb+ef: PSC scope fix
+# Fixes startup spam:
+#   has_active_production_method [ Wrong scope for trigger: none, expected building ]
+# coming from PSC/common/script_values/PSC_construction_values.txt:678/684/690
+#
+# Root cause: `b:building_construction_regulator = { has_active_production_method = ... }`
+# is evaluated even in states without that building, producing an empty (none) building scope.
+#############################################
+
+REPLACE_OR_CREATE:calculate_state_construction_base_price = {
+	# Default to the regulator's default PM (pm_wood_point_conversion) when regulator is missing / not initialized yet.
+	value = wood_construction_good_base_price
+
+	# Only inspect production methods if the regulator building exists in this state.
+	if = {
+		limit = { has_building = building_construction_regulator }
+		b:building_construction_regulator = {
+			if = {
+				limit = { has_active_production_method = pm_wood_point_conversion }
+				value = wood_construction_good_base_price
+			}
+			else_if = {
+				limit = { has_active_production_method = pm_iron_point_conversion }
+				value = iron_construction_good_base_price
+			}
+			else_if = {
+				limit = { has_active_production_method = pm_steel_point_conversion }
+				value = steel_construction_good_base_price
+			}
+			else_if = {
+				limit = { has_active_production_method = pm_arc_welded_point_conversion }
+				value = arc_welded_construction_good_base_price
+			}
+			else = { #concrete active
+				value = concrete_construction_good_base_price
+			}
+		}
+	}
+}
+

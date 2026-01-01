@@ -1,0 +1,13 @@
+﻿l_russian:
+
+  # E&F tech localization fixes (some entries are missing/misplaced upstream)
+  private_liquidity_provision:0 "Частное предоставление ликвидности"
+  private_liquidity_provision_desc:0 "Частные банки активно обеспечивают финансовую систему краткосрочной ликвидностью, сглаживая напряжение на рынках и поддерживая кредитные потоки вне прямого вмешательства центрального банка.\n\n#bold Эффект E&F:#! Увеличивает долю долга Центрального банка, которая может использоваться для валютного покрытия, на +15 п.п. (с 15% до 30%)."
+
+  advanced_interbank_refinancing:0 "Продвинутое межбанковское рефинансирование"
+  advanced_interbank_refinancing_desc:0 "Продвинутая система межбанковского рефинансирования позволяет банкам получать ликвидность через структурированные межбанковские рынки, повышая финансовую стабильность, оборот капитала и устойчивость к кризисам.\n\n#bold Эффект E&F:#! Дополнительно увеличивает долю долга Центрального банка, которая может использоваться для валютного покрытия, на +15 п.п. (с 30% до 45%)."
+
+  # Alias (in case another mod/merge uses this tech id by mistake)
+  advanced_afterbank_refinancing:0 "$advanced_interbank_refinancing$"
+  advanced_afterbank_refinancing_desc:0 "$advanced_interbank_refinancing_desc$"
+

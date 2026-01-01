@@ -1,0 +1,621 @@
+﻿l_russian:
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  # ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗        ███╗   ███╗███████╗████████╗██╗  ██╗ ██████╗ ██████╗ ███████╗
+  # ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║        ████╗ ████║██╔════╝╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██╔════╝
+  # ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██╔██╗ ██║        ██╔████╔██║█████╗     ██║   ███████║██║   ██║██║  ██║███████╗
+  # ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   ██║██║   ██║██║╚██╗██║        ██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║   ██║██║  ██║╚════██║
+  # ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████╗██║ ╚═╝ ██║███████╗   ██║   ██║  ██║╚██████╔╝██████╔╝███████║
+  # ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  # ################################
+  # ## Publicly traded PM
+  # ################################
+
+  # pmg_ownership_building_manufacturing_company:0 "Publicly Traded - Industrial Company"
+  # pmg_ownership_building_agricultural_company:0 "Publicly Traded - Industrial Company"
+  # pmg_ownership_building_mining_company:0 "Publicly Traded - Mining Company"
+  # pmg_ownership_building_railway_company:0 "Publicly Traded - Railway Company"
+
+  # pm_no_publicly_traded_building:0 "No Publicly Traded"
+  # pm_no_publicly_traded_building_mine:0 "No Publicly Traded"
+  # pm_no_publicly_traded_building_ralway:0 "No Publicly Traded"
+
+  # pm_publicly_traded_building:0 "Publicly Traded - Industrial Company "
+  # pm_publicly_traded_building_mine:0 "Publicly Traded - Mining Company"
+  # pm_publicly_traded_building_railway:0 "Publicly Traded - Railway Company"
+
+  ################################
+  ## War industry PM
+  ################################
+  # pm_government_aid_building_arms_industry_0:0 "Artillery Industry Requisition"
+  # pm_government_aid_building_arms_industry_1:0 "Rifles Industry Requisition"
+  # pm_government_aid_building_munition_industry:0 "Munition Plans Industry Requisition"
+  # pm_government_aid_building_tank_industry:0 "War Machine Industry Requisition"
+  # pm_government_aid_building_shipbuilding_industry:0 "Shipbuilding Industry Requisition"
+
+  ################################
+  ## private construction
+  ################################
+  pmg_base_building_private_construction_sector:0 "Частный строительный сектор"
+  pm_wooden_buildings_private:0 "Деревянные сооружения"
+  pm_iron_frame_buildings_private:0 "Сооружения с чугунными рамами"
+  pm_steel_frame_buildings_private:0 "Сооружения со стальными рамами"
+  pm_arc_welded_buildings_private:0 "Сварные сооружения"
+
+
+
+  ################################
+  ## private construction
+  ################################
+
+  pmg_mining_equipment_building_silver_mine:0 "Горное оборудование"
+  pm_picks_and_shovels_building_silver_mine:0 "Кирки и лопаты"
+  pm_atmospheric_engine_pump_building_silver_mine:0 "Пароатмосферный насос"
+  pm_condensing_engine_pump_building_silver_mine:0 "Паровой насос с конденсатором"
+  pm_diesel_pump_building_silver_mine:0 "Дизельный насос"
+
+  pmg_explosives_building_silver_mine:0 "Взрывчатка"
+  pm_nitroglycerin_building_silver_mine:0 "Нитроглицерин"
+  pm_dynamite_building_silver_mine:0 "Динамит"
+
+  pmg_steam_automation_building_silver_mine:1 "$pmg_steam_automation$"
+  pm_steam_donkey_building_silver_mine:0 "Паровик"
+
+  pmg_train_automation_building_silver_mine:1 "$pmg_train_automation$"
+
+
+
+
+
+
+  ################################
+  ## Industry currrency issued PM
+  ################################
+  pmg_currency_type:0 "Выпускаемая валюта"
+
+  # Dinar
+  pm_currency_dinar_currency:0 "Динар"
+  pm_currency_dinar_algerian_dinar_currency:0 "Алжирский динар"
+  pm_currency_dinar_iraqi_dinar_currency:0 "Иракский динар"
+  pm_currency_dinar_libyan_dinar_currency:0 "Ливийский динар"
+  pm_currency_dinar_moroccan_dirham_currency:0 "Марокканский дирхам"
+  pm_currency_dinar_omanian_rial_currency:0 "Оманский риал"
+  pm_currency_dinar_qiran_currency:0 "Киран"
+  pm_currency_dinar_saudi_riyal_currency:0 "Саудовский риял"
+  pm_currency_dinar_serbian_dinar_currency:0 "Сербский динар"
+  pm_currency_dinar_tunisian_dinar_currency:0 "Тунисский динар"
+  pm_currency_dinar_yugoslav_dinar_currency:0 "Югославский динар"
+
+  # Dollar
+  pm_currency_dollar_australian_dollar_currency:0 "Австралийский доллар"
+  pm_currency_dollar_canadian_dollar_currency:0 "Канадский доллар"
+  pm_currency_dollar_caribbean_dollar_currency:0 "Карибский доллар"
+  pm_currency_dollar_confederate_states_dollar_currency:0 "Доллар Конфедеративных Штатов"
+  pm_currency_dollar_liberian_dollar_currency:0 "Либерийский доллар"
+  pm_currency_dollar_new_zealand_dollar_currency:0 "Новозеландский доллар"
+  pm_currency_dollar_sierra_leonean_dollar_currency:0 "Доллар Сьерра-Леоне"
+  pm_currency_dollar_united_states_dollar_currency:0 "Доллар США"
+
+  # Eco
+  pm_currency_eco_ariary_currency:0 "Ариари"
+  pm_currency_eco_central_african_eco_currency:0 "Центральноафриканский эко"
+  pm_currency_eco_east_african_eco_currency:0 "Восточноафриканский эко"
+  pm_currency_eco_ethiopian_birr_currency:0 "Эфиопский быр"
+  pm_currency_eco_ghanaian_pound_currency:0 "Ганский фунт"
+  pm_currency_eco_nigerian_naira_currency:0 "Нигерийская найра"
+  pm_currency_eco_south_african_rand_currency:0 "Южноафриканский ранд"
+  pm_currency_eco_tuareg_ouguiya_currency:0 "Туарегский угия"
+  pm_currency_eco_west_african_eco_currency:0 "Западноафриканский эко"
+
+  # Franc
+  pm_currency_franc_belgian_franc_currency:0 "Бельгийский франк"
+  pm_currency_franc_french_franc_currency:0 "Французский франк"
+  pm_currency_franc_luxembourgish_franc_currency:0 "Люксембургский франк"
+  pm_currency_franc_swiss_franc_currency:0 "Швейцарский франк"
+
+  # Gulden
+  pm_currency_gulden_currency:0 "Гульден"
+  pm_currency_gulden_bavarian_gulden_currency:0 "Баварский гульден"
+  pm_currency_gulden_florin_currency:0 "Флорин"
+  pm_currency_gulden_hungarian_forint_currency:0 "Венгерский форинт"
+  pm_currency_gulden_indies_guilder_currency:0 "Голландский гульден Ост-Индии"
+  pm_currency_gulden_south_german_gulden_currency:0 "Южногерманский гульден"
+
+  # Krone
+  pm_currency_krone_czech_koruna_currency:0 "Чешская крона"
+  pm_currency_krone_danish_krone_currency:0 "Датская крона"
+  pm_currency_krone_estonian_kroon_currency:0 "Эстонская крона"
+  pm_currency_krone_icelandic_krona_currency:0 "Исландская крона"
+  pm_currency_krone_norwegian_krone_currency:0 "Норвежская крона"
+  pm_currency_krone_slovak_koruna_currency:0 "Словацкая крона"
+  pm_currency_krone_swedish_krona_currency:0 "Шведская крона"
+
+  # Leon
+  pm_currency_leon_leu_currency:0 "Лей"
+  pm_currency_leon_lev_currency:0 "Лев"
+
+  # Lira
+  pm_currency_lira_currency:0 "Лира"
+  pm_currency_lira_ducato_currency:0 "Дукат"
+  pm_currency_lira_ottoman_lira_currency:0 "Османская лира"
+  pm_currency_lira_scudo_pontificio_currency:0 "Папский скудо"
+  pm_currency_lira_scudo_sardo_currency:0 "Сардинский скудо"
+  pm_currency_lira_toscane_lira_currency:0 "Тосканская лира"
+
+  # Mark
+  pm_currency_mark_currency:0 "Марка"
+  pm_currency_mark_finnish_markka_currency:0 "Финская марка"
+
+  # Peso
+  pm_currency_peso_currency:0 "Песо"
+  pm_currency_peso_argentine_peso_currency:0 "Аргентинское песо"
+  pm_currency_peso_bolivien_peso_currency:0 "Боливийское песо"
+  pm_currency_peso_chilean_peso_currency:0 "Чилийское песо"
+  pm_currency_peso_colombian_peso_currency:0 "Колумбийское песо"
+  pm_currency_peso_costa_rican_colon_currency:0 "Костариканский колон"
+  pm_currency_peso_cuban_peso_currency:0 "Кубинское песо"
+  pm_currency_peso_ecuadorian_peso_currency:0 "Эквадорское песо"
+  pm_currency_peso_el_salvador_colon_currency:0 "Сальвадорский колон"
+  pm_currency_peso_guatemalan_quetzal_currency:0 "Гватемальский кетсаль"
+  pm_currency_peso_honduran_lempira_currency:0 "Гондурасская лемпира"
+  pm_currency_peso_mexican_peso_currency:0 "Мексиканское песо"
+  pm_currency_peso_nicaraguan_cordoba_currency:0 "Никарагуанская кордоба"
+  pm_currency_peso_paraguayan_peso_currency:0 "Парагвайское песо"
+  pm_currency_peso_philippine_peso_currency:0 "Филиппинское песо"
+  pm_currency_peso_sol_de_oro_currency:0 "Соль де Оро"
+  pm_currency_peso_uruguayan_peso_currency:0 "Уругвайское песо"
+  pm_currency_peso_venezuelan_peso_currency:0 "Венесуэльское песо"
+
+  # Pound
+  pm_currency_pound_egyptian_pound_currency:0 "Египетский фунт"
+  pm_currency_pound_irish_pound_currency:0 "Ирландский фунт"
+  pm_currency_pound_sterling_currency:0 "Фунт стерлингов"
+
+  # Real
+  pm_currency_real_currency:0 "Реал"
+  pm_currency_real_brazilian_real_currency:0 "Бразильский реал"
+
+  # Rupee
+  pm_currency_rupee_indian_rupee_currency:0 "Индийская рупия"
+  pm_currency_rupee_indonesian_rupiah_currency:0 "Индонезийская рупия"
+
+  # Special
+  pm_currency_spe_baht_currency:0 "Бат"
+  pm_currency_spe_dong_currency:0 "Донг"
+  pm_currency_spe_drachma_currency:0 "Драхма"
+  pm_currency_spe_korean_won_currency:0 "Корейская вона"
+  pm_currency_spe_latvian_lats_currency:0 "Латвийский лат"
+  pm_currency_spe_lithuanian_litas_currency:0 "Литовский лит"
+  pm_currency_spe_peseta_currency:0 "Песета"
+  pm_currency_spe_ruble_currency:0 "Рубль"
+  pm_currency_spe_uni_currency:0 "Уни"
+  pm_currency_spe_yen_currency:0 "Йена"
+  pm_currency_spe_yuan_currency:0 "Юань"
+  pm_currency_spe_zloti_currency:0 "Злоты"
+
+  # Thaler
+  pm_currency_thaler_hannoveraner_thaler_currency:0 "Ганноверский талер"
+  pm_currency_thaler_prussian_thaler_currency:0 "Прусский талер"
+  pm_currency_thaler_saxon_thaler_currency:0 "Саксонский талер"
+
+  ################################
+  ## Industry market liquidity PM :
+  ################################
+
+  pmg_market_liquidity:0 "Ликвидность рынка"
+
+  pm_no_market_liquidity:0 "Нет ликвидности рынка"
+
+
+  # Dinar
+  pm_market_liquidity_dinar_currency:0 "Динар"
+  pm_market_liquidity_dinar_algerian_dinar_currency:0 "Алжирский динар"
+  pm_market_liquidity_dinar_iraqi_dinar_currency:0 "Иракский динар"
+  pm_market_liquidity_dinar_libyan_dinar_currency:0 "Ливийский динар"
+  pm_market_liquidity_dinar_moroccan_dirham_currency:0 "Марокканский дирхам"
+  pm_market_liquidity_dinar_omanian_rial_currency:0 "Оманский риал"
+  pm_market_liquidity_dinar_qiran_currency:0 "Киран"
+  pm_market_liquidity_dinar_saudi_riyal_currency:0 "Саудовский риял"
+  pm_market_liquidity_dinar_serbian_dinar_currency:0 "Сербский динар"
+  pm_market_liquidity_dinar_tunisian_dinar_currency:0 "Тунисский динар"
+  pm_market_liquidity_dinar_yugoslav_dinar_currency:0 "Югославский динар"
+
+  # Dollar
+  pm_market_liquidity_dollar_australian_dollar_currency:0 "Австралийский доллар"
+  pm_market_liquidity_dollar_canadian_dollar_currency:0 "Канадский доллар"
+  pm_market_liquidity_dollar_caribbean_dollar_currency:0 "Карибский доллар"
+  pm_market_liquidity_dollar_confederate_states_dollar_currency:0 "Доллар Конфедеративных Штатов"
+  pm_market_liquidity_dollar_liberian_dollar_currency:0 "Либерийский доллар"
+  pm_market_liquidity_dollar_new_zealand_dollar_currency:0 "Новозеландский доллар"
+  pm_market_liquidity_dollar_sierra_leonean_dollar_currency:0 "Доллар Сьерра-Леоне"
+  pm_market_liquidity_dollar_united_states_dollar_currency:0 "Доллар США"
+
+  # Eco
+  pm_market_liquidity_eco_ariary_currency:0 "Ариари"
+  pm_market_liquidity_eco_central_african_eco_currency:0 "Центральноафриканский эко"
+  pm_market_liquidity_eco_east_african_eco_currency:0 "Восточноафриканский эко"
+  pm_market_liquidity_eco_ethiopian_birr_currency:0 "Эфиопский быр"
+  pm_market_liquidity_eco_ghanaian_pound_currency:0 "Ганский фунт"
+  pm_market_liquidity_eco_nigerian_naira_currency:0 "Нигерийская найра"
+  pm_market_liquidity_eco_south_african_rand_currency:0 "Южноафриканский ранд"
+  pm_market_liquidity_eco_tuareg_ouguiya_currency:0 "Туарегский угия"
+  pm_market_liquidity_eco_west_african_eco_currency:0 "Западноафриканский эко"
+
+  # Franc
+  pm_market_liquidity_franc_belgian_franc_currency:0 "Бельгийский франк"
+  pm_market_liquidity_franc_french_franc_currency:0 "Французский франк"
+  pm_market_liquidity_franc_luxembourgish_franc_currency:0 "Люксембургский франк"
+  pm_market_liquidity_franc_swiss_franc_currency:0 "Швейцарский франк"
+
+  # Gulden
+  pm_market_liquidity_gulden_currency:0 "Гульден"
+  pm_market_liquidity_gulden_bavarian_gulden_currency:0 "Баварский гульден"
+  pm_market_liquidity_gulden_florin_currency:0 "Флорин"
+  pm_market_liquidity_gulden_hungarian_forint_currency:0 "Венгерский форинт"
+  pm_market_liquidity_gulden_indies_guilder_currency:0 "Голландский гульден Ост-Индии"
+  pm_market_liquidity_gulden_south_german_gulden_currency:0 "Южногерманский гульден"
+
+  # Krone
+  pm_market_liquidity_krone_czech_koruna_currency:0 "Чешская крона"
+  pm_market_liquidity_krone_danish_krone_currency:0 "Датская крона"
+  pm_market_liquidity_krone_estonian_kroon_currency:0 "Эстонская крона"
+  pm_market_liquidity_krone_icelandic_krona_currency:0 "Исландская крона"
+  pm_market_liquidity_krone_norwegian_krone_currency:0 "Норвежская крона"
+  pm_market_liquidity_krone_slovak_koruna_currency:0 "Словацкая крона"
+  pm_market_liquidity_krone_swedish_krona_currency:0 "Шведская крона"
+
+  # Leon
+  pm_market_liquidity_leon_leu_currency:0 "Лей"
+  pm_market_liquidity_leon_lev_currency:0 "Лев"
+
+  # Lira
+  pm_market_liquidity_lira_currency:0 "Лира"
+  pm_market_liquidity_lira_ducato_currency:0 "Дукат"
+  pm_market_liquidity_lira_ottoman_lira_currency:0 "Османская лира"
+  pm_market_liquidity_lira_scudo_pontificio_currency:0 "Папский скудо"
+  pm_market_liquidity_lira_scudo_sardo_currency:0 "Сардинский скудо"
+  pm_market_liquidity_lira_toscane_lira_currency:0 "Тосканская лира"
+
+  # Mark
+  pm_market_liquidity_mark_currency:0 "Марка"
+  pm_market_liquidity_mark_finnish_markka_currency:0 "Финская марка"
+
+  # Peso
+  pm_market_liquidity_peso_currency:0 "Песо"
+  pm_market_liquidity_peso_argentine_peso_currency:0 "Аргентинское песо"
+  pm_market_liquidity_peso_bolivien_peso_currency:0 "Боливийское песо"
+  pm_market_liquidity_peso_chilean_peso_currency:0 "Чилийское песо"
+  pm_market_liquidity_peso_colombian_peso_currency:0 "Колумбийское песо"
+  pm_market_liquidity_peso_costa_rican_colon_currency:0 "Костариканский колон"
+  pm_market_liquidity_peso_cuban_peso_currency:0 "Кубинское песо"
+  pm_market_liquidity_peso_ecuadorian_peso_currency:0 "Эквадорское песо"
+  pm_market_liquidity_peso_el_salvador_colon_currency:0 "Сальвадорский колон"
+  pm_market_liquidity_peso_guatemalan_quetzal_currency:0 "Гватемальский кетсаль"
+  pm_market_liquidity_peso_honduran_lempira_currency:0 "Гондурасская лемпира"
+  pm_market_liquidity_peso_mexican_peso_currency:0 "Мексиканское песо"
+  pm_market_liquidity_peso_nicaraguan_cordoba_currency:0 "Никарагуанская кордоба"
+  pm_market_liquidity_peso_paraguayan_peso_currency:0 "Парагвайское песо"
+  pm_market_liquidity_peso_philippine_peso_currency:0 "Филиппинское песо"
+  pm_market_liquidity_peso_sol_de_oro_currency:0 "Соль де Оро"
+  pm_market_liquidity_peso_uruguayan_peso_currency:0 "Уругвайское песо"
+  pm_market_liquidity_peso_venezuelan_peso_currency:0 "Венесуэльское песо"
+
+  # Pound
+  pm_market_liquidity_pound_egyptian_pound_currency:0 "Египетский фунт"
+  pm_market_liquidity_pound_irish_pound_currency:0 "Ирландский фунт"
+  pm_market_liquidity_pound_sterling_currency:0 "Фунт стерлингов"
+
+  # Real
+  pm_market_liquidity_real_currency:0 "Реал"
+  pm_market_liquidity_real_brazilian_real_currency:0 "Бразильский реал"
+
+  # Rupee
+  pm_market_liquidity_rupee_indian_rupee_currency:0 "Индийская рупия"
+  pm_market_liquidity_rupee_indonesian_rupiah_currency:0 "Индонезийская рупия"
+
+  # Special
+  pm_market_liquidity_spe_baht_currency:0 "Бат"
+  pm_market_liquidity_spe_dong_currency:0 "Донг"
+  pm_market_liquidity_spe_drachma_currency:0 "Драхма"
+  pm_market_liquidity_spe_korean_won_currency:0 "Корейская вона"
+  pm_market_liquidity_spe_latvian_lats_currency:0 "Латвийский лат"
+  pm_market_liquidity_spe_lithuanian_litas_currency:0 "Литовский лит"
+  pm_market_liquidity_spe_peseta_currency:0 "Песета"
+  pm_market_liquidity_spe_ruble_currency:0 "Рубль"
+  pm_market_liquidity_spe_uni_currency:0 "Уни"
+  pm_market_liquidity_spe_yen_currency:0 "Йена"
+  pm_market_liquidity_spe_yuan_currency:0 "Юань"
+  pm_market_liquidity_spe_zloti_currency:0 "Злоты"
+
+  # Thaler
+  pm_market_liquidity_thaler_hannoveraner_thaler_currency:0 "Ганноверский талер"
+  pm_market_liquidity_thaler_prussian_thaler_currency:0 "Прусский талер"
+  pm_market_liquidity_thaler_saxon_thaler_currency:0 "Саксонский талер"
+
+  ################################
+  ## Reserve currency PM :
+  ################################
+
+  # pmg_base_currency:0 "Base Currency"
+  # pm_no_base_currency:0 "No Base Currency"
+  # pm_base_currency_gbr_currency:0 "Sterling"
+
+  ################################
+  ## Bank PM :
+  ################################
+
+  pmg_stock_exchange:0 "Фондовая биржа"
+  pm_stock_exchange:0 "Торговля акциями"
+  pmg_market_operations:0 "Рыночные операции"
+  pm_no_open_market_operations:0 "Нет операций на открытом рынке"
+  pm_r_railroad_stock:0 "Покупка железнодорожных акций"
+  pm_r_agricultural_stock:0 "Покупка сельскохозяйственных акций"
+  pm_r_mining_stock:0 "Покупка горнодобывающих акций"
+  pm_r_manufacture_stock:0 "Покупка промышленных акций"
+
+  pmg_minting_type:0 "Тип чеканки"
+  pmg_monetary_policy:0 "Денежная политика"
+  pm_bank:0 "Банк"
+  pm_revaluation:0 "Ревальвация"
+  pm_devaluation:0 "Девальвация"
+  pm_no_gold_standard:0 "Нет золотого стандарта"
+  pm_gold_standard:0 "Золотой стандарт"
+  pm_gold_exchange_standard_bank_money_currency:0 "Золотой обменный стандарт"
+  pm_external_exchange_standard_bank_money_currency:0 "Стандарт внешнего обмена"
+  pm_reserve_currency:0 "Фонд облигаций"
+  pm_no_monetary_policy:0 "Нет денежной политики"
+
+  pmg_mining_stock:0 "Акционерный капитал"
+  pm_mining_stock:0 "Выпущенные акции"
+  pmg_agricultural_stock:0 "Акционерный капитал"
+  pm_agricultural_stock:0 "Выпущенные акции"
+  pmg_railroad_stock:0 "Акционерный капитал"
+  pm_railroad_stock:0 "Выпущенные акции"
+  pmg_war_economy:0 "Военная экономика"
+  pm_no_war_bond:0 "Нет военной экономики"
+  pm_war_bond:0 "Военная облигация"
+
+  pm_devaluation_bank_money_currency:0 "Девальвация"
+  pm_revaluation_bank_money_currency:0 "Ревальвация"
+
+
+  pm_fiat_standard_bank_money_currency:0 "Фиатный стандарт"
+  pm_silver_standard_bank_money_currency:0 "Серебряный стандарт"
+  pm_bimetallism_standard_bank_money_currency:0 "Биметаллический стандарт"
+  pm_gold_standard_bank_money_currency:0 "Золотой стандарт"
+  pm_no_gold_standard_bank_money_currency:0 "Нет золотого стандарта"
+  pm_reserve_currency_bank_money_currency:0 "Резервная валюта"
+
+  pm_no_currency_type:0 "Нет выпускаемой валюты"
+
+  pm_revaluation_25:0 "Ревальвация 25%"
+  pm_revaluation_50:0 "Ревальвация 50%"
+  pm_revaluation_75:0 "Ревальвация 75%"
+  pm_revaluation_100:0 "Ревальвация 100%"
+
+  pm_devaluation_25:0 "Девальвация 25%"
+  pm_devaluation_50:0 "Девальвация 50%"
+  pm_devaluation_75:0 "Девальвация 75%"
+  pm_devaluation_100:0 "Девальвация 100%"
+
+  pmg_additional_production_method:0 "Дополнительные методы производства"
+  pm_no_additional_production_method:0 "Нет дополнительных методов производства"
+  pm_desactive_bc:0 "Деактивация центрального банка"
+  pm_customs_union_limit_20:0 "Лимит для таможенного союза 20%"
+  pm_protectora_limit_30:0 "Лимит для протектората 30%"
+  pm_dominion_limit_50:0 "Лимит для доминиона 50%"
+  pm_puppet_limit_75:0 "Лимит длямарионетки 75%"
+
+  pmg_bond_production:0 "Методы производства облигаций"
+  pm_no_bond_production:0 "Нет производства облигаций"
+  pm_bond_production:0 "Производство облигаций"
+
+  pmg_no_gold_standard:0 "Нет золотого стандарта"
+  pm_no_money_production:0 "Нет производства денег"
+  pm_money_production:0 "Производство денег"
+
+  ################################
+  ## Financial center PM :
+  ################################
+
+  pmg_bond_exchange:0 "Облигационный фонд"
+  pm_bond_exchange:0 "Обмен облигаций"
+
+  pmg_manufacture_stock_exchange:0 "Акции промышленности"
+  pm_no_manufacture_stock_exchange:0 "Без фондовой биржи (промышленность)"
+  pm_manufacture_stock_exchange:0 "Фондовая биржа (промышленность)"
+
+  pmg_mining_stock_exchange:0 "Акции горнодобычи"
+  pm_no_mining_stock_exchange:0 "Без фондовой биржи (горнодобыча)"
+  pm_mining_stock_exchange:0 "Фондовая биржа (горнодобыча)"
+
+  pmg_agricultural_stock_exchange:0 "Акции сельского хозяйства"
+  pm_no_agricultural_stock_exchange:0 "Без фондовой биржи (сельское хозяйство)"
+  pm_agricultural_stock_exchange:0 "Фондовая биржа (сельское хозяйство)"
+
+  pmg_railroad_stock_exchange:0 "Акции железных дорог"
+  pm_no_railroad_stock_exchange:0 "Без фондовой биржи (железные дороги)"
+  pm_railroad_stock_exchange:0 "Фондовая биржа (железные дороги)"
+
+  ################################
+  ## Generic for no error :
+  ################################
+
+  pm_grain_0:0 "Пусто"
+  pm_store_grain_1:0 "Пусто"
+  pm_release_grain_1:0 "Пусто"
+  pmg_stockpile_wood:0 "Пусто"
+  pm_wood_0:0 "Пусто"
+  pm_store_wood_1:0 "Пусто"
+  pm_release_wood_1:0 "Пусто"
+  pmg_stockpile_coal:0 "Пусто"
+  pm_coal_0:0 "Пусто"
+  pm_store_coal_1:0 "Пусто"
+  pm_release_coal_1
+  pmg_stockpile_iron:0 "Пусто"
+  pm_iron_0:0 "Пусто"
+  pm_store_iron_1:0 "Пусто"
+  pm_release_iron_1:0 "Пусто"
+  pmg_stockpile_sulfur:0 "Пусто"
+  pm_sulfur_0:0 "Пусто"
+  pm_store_sulfur_1:0 "Пусто"
+  pm_release_sulfur_1:0 "Пусто"
+  pmg_stockpile_lead:0 "Пусто"
+  pm_lead_0:0 "Пусто"
+  pm_store_lead_1:0 "Пусто"
+  pm_release_lead_1:0 "Пусто"
+  pmg_stockpile_oil:0 "Пусто"
+  pm_oil_0:0 "Пусто"
+  pm_store_oil_1:0 "Пусто"
+  pm_release_oil_1:0 "Пусто"
+  pmg_stockpile_dye:0 "Пусто"
+  pm_dye_0:0 "Пусто"
+  pm_store_dye_1:0 "Пусто"
+  pm_release_dye_1:0 "Пусто"
+  pmg_stockpile_silk:0 "Пусто"
+  pm_silk_0:0 "Пусто"
+  pm_store_silk_1:0 "Пусто"
+  pm_release_silk_1:0 "Пусто"
+  pmg_stockpile_rubber:0 "Пусто"
+  pm_rubber_0:0 "Пусто"
+  pm_store_rubber_1:0 "Пусто"
+  pm_release_rubber_1:0 "Пусто"
+  pmg_stockpile_ammunition:0 "Пусто"
+  pm_ammunition_0:0 "Пусто"
+  pm_store_ammunition_1:0 "Пусто"
+  pm_release_ammunition_1:0 "Пусто"
+  pmg_stockpile_small_arms:0 "Пусто"
+  pm_small_arms_0:0 "Пусто"
+  pm_store_small_arms_1:0 "Пусто"
+  pm_release_small_arms_1:0 "Пусто"
+  pmg_stockpile_artillery:0 "Пусто"
+  pm_artillery_0:0 "Пусто"
+  pm_store_artillery_1:0 "Пусто"
+  pm_release_artillery_1:0 "Пусто"
+  pmg_stockpile_tanks:0 "Пусто"
+  pm_tanks_0:0 "Пусто"
+  pm_store_tanks_1:0 "Пусто"
+  pm_release_tanks_1:0 "Пусто"
+  pmg_stockpile_aeroplanes:0 "Пусто"
+  pm_aeroplanes_0:0 "Пусто"
+  pm_store_aeroplanes_1:0 "Пусто"
+  pm_release_aeroplanes_1:0 "Пусто"
+  pmg_stockpile_manowars:0 "Пусто"
+  pm_manowars_0:0 "Пусто"
+  pm_store_manowars_1:0 "Пусто"
+  pm_release_manowars_1:0 "Пусто"
+  pmg_stockpile_ironclads:0 "Пусто"
+  pm_ironclads_0:0 "Пусто"
+  pm_store_ironclads_1:0 "Пусто"
+  pm_release_ironclads_1:0 "Пусто"
+
+
+
+pmg_subject_currency_type:0 "Внешняя валюта"
+
+pm_no_subject_currency_type:0 "Нет внешней валюты"
+pm_subject_currency_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_algerian_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_iraqi_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_libyan_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_moroccan_dirham_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_omanian_rial_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_qiran_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_saudi_riyal_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_serbian_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_tunisian_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dinar_yugoslav_dinar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_australian_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_canadian_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_caribbean_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_confederate_states_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_liberian_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_new_zealand_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_sierra_leonean_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_dollar_united_states_dollar_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_ariary_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_central_african_eco_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_east_african_eco_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_ethiopian_birr_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_ghanaian_pound_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_nigerian_naira_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_south_african_rand_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_tuareg_ouguiya_currency:0 "Внешняя валюта"
+pm_subject_currency_eco_west_african_eco_currency:0 "Внешняя валюта"
+pm_subject_currency_franc_belgian_franc_currency:0 "Внешняя валюта"
+pm_subject_currency_franc_french_franc_currency:0 "Внешняя валюта"
+pm_subject_currency_franc_luxembourgish_franc_currency:0 "Внешняя валюта"
+pm_subject_currency_franc_swiss_franc_currency:0 "Внешняя валюта"
+pm_subject_currency_gulden_currency:0 "Внешняя валюта"
+pm_subject_currency_gulden_bavarian_gulden_currency:0 "Внешняя валюта"
+pm_subject_currency_gulden_florin_currency:0 "Внешняя валюта"
+pm_subject_currency_gulden_hungarian_forint_currency:0 "Внешняя валюта"
+pm_subject_currency_gulden_indies_guilder_currency:0 "Внешняя валюта"
+pm_subject_currency_gulden_south_german_gulden_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_czech_koruna_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_danish_krone_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_estonian_kroon_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_icelandic_krona_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_norwegian_krone_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_slovak_koruna_currency:0 "Внешняя валюта"
+pm_subject_currency_krone_swedish_krona_currency:0 "Внешняя валюта"
+pm_subject_currency_leon_leu_currency:0 "Внешняя валюта"
+pm_subject_currency_leon_lev_currency:0 "Внешняя валюта"
+pm_subject_currency_lira_currency:0 "Внешняя валюта"
+pm_subject_currency_lira_ducato_currency:0 "Внешняя валюта"
+pm_subject_currency_lira_ottoman_lira_currency:0 "Внешняя валюта"
+pm_subject_currency_lira_scudo_pontificio_currency:0 "Внешняя валюта"
+pm_subject_currency_lira_scudo_sardo_currency:0 "Внешняя валюта"
+pm_subject_currency_lira_toscane_lira_currency:0 "Внешняя валюта"
+pm_subject_currency_mark_currency:0 "Внешняя валюта"
+pm_subject_currency_mark_finnish_markka_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_argentine_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_bolivien_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_chilean_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_colombian_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_costa_rican_colon_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_cuban_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_ecuadorian_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_el_salvador_colon_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_guatemalan_quetzal_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_honduran_lempira_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_mexican_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_nicaraguan_cordoba_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_paraguayan_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_philippine_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_sol_de_oro_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_uruguayan_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_peso_venezuelan_peso_currency:0 "Внешняя валюта"
+pm_subject_currency_pound_egyptian_pound_currency:0 "Внешняя валюта"
+pm_subject_currency_pound_irish_pound_currency:0 "Внешняя валюта"
+pm_subject_currency_pound_sterling_currency:0 "Внешняя валюта"
+pm_subject_currency_real_currency:0 "Внешняя валюта"
+pm_subject_currency_real_brazilian_real_currency:0 "Внешняя валюта"
+pm_subject_currency_rupee_indian_rupee_currency:0 "Внешняя валюта"
+pm_subject_currency_rupee_indonesian_rupiah_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_baht_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_dong_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_drachma_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_korean_won_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_latvian_lats_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_lithuanian_litas_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_peseta_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_ruble_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_uni_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_yen_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_yuan_currency:0 "Внешняя валюта"
+pm_subject_currency_spe_zloti_currency:0 "Внешняя валюта"
+pm_subject_currency_thaler_hannoveraner_thaler_currency:0 "Внешняя валюта"
+pm_subject_currency_thaler_prussian_thaler_currency:0 "Внешняя валюта"
+pm_subject_currency_thaler_saxon_thaler_currency:0 "Внешняя валюта"

@@ -1,0 +1,51 @@
+﻿# Publishing Industry
+
+INJECT:building_elgar_opera = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_manzoni_publishing_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Instrument Workshops
+
+INJECT:building_instrument_workshops = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Mendelejev Rubber & Oil
+
+#Hydrogenation Plants
+INJECT:building_mendelejew_hydrogenation_plants = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Synthetic Rubber Factory
+INJECT:building_mendelejew_synthetic_rubber_factory = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Airport
+
+INJECT:building_airport = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}

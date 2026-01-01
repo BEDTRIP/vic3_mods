@@ -1,0 +1,43 @@
+﻿l_russian:
+
+  #################### TOOLTIP #################### 
+  greener_grass_campaign_events_1_tt: "Поддержание активного указа в этом штате будет продолжать стимулировать миграцию каждые 6 месяцев."  
+  greener_grass_campaign_events_2_tt: "Колониальное переселение будет работать только для неинкорпорированных штатов."  
+  greener_grass_campaign_events_3_tt: "Часть местного населения была сегрегирована в специальные округа штата, чтобы освободить место для национальных поселенцев, но многие из них погибли из‑за последовавшего насилия."  
+
+  #################### DECREES ####################
+  decree_greener_grass_campaign_great_revision:0 "Колониальное переселение"
+  decree_greener_grass_campaign_great_revision_desc:0 "Продвигайте штат как привлекательное место для миграции наших поселенцев. Этот указ запустит событие, которое каждые 6 месяцев будет перемещать часть населения в выбранный неинкорпорированный штат."
+  
+  decree_population_replacement_great_revision:0 "Колониальная сегрегация"
+  decree_population_replacement_great_revision_desc:0 "Поощряет репрессивную политику, чтобы вынудить местное население покинуть штат и освободить место для национальных поселенцев."
+
+  decree_encourage_service_industry:0 "Поощрять сектор услуг"
+  decree_encourage_service_industry_desc:0 "Продвигайте государственный сектор через специальные меры, чтобы повысить его производительность."
+
+  #################### EVENTS #################### 
+  greener_grass_campaign_events.1:0 "Миграционная кампания"
+  greener_grass_campaign_events.1.t:0 "Миграционная кампания"
+  greener_grass_campaign_events.1.desc:0 "Миграционная кампания"
+  greener_grass_campaign_events.1.d:0 "После принятия нашего указа, стимулирующего миграцию в наш неинкорпорированный штат в регионе [SCOPE.sCountry('move_to_state').GetAdjective] [SCOPE.sState('move_to_state').GetStateRegion.GetName], многие люди из нашей страны переезжают туда. Это усилит наши колонизационные усилия."
+  greener_grass_campaign_events.1.f:0 "'Новая земля... там, за морем. За этой безбрежной синевой нам маячит новое будущее, лучшая жизнь. Обещаю тебе, любовь моя... Там мы начнём новую главу нашей жизни'."
+  greener_grass_campaign_events.1.a:0 "Новая богатая и плодородная земля для нашей нации!"
+  #greener_grass_campaign_events.1.b:0 "."
+  #greener_grass_campaign_events.1.c:0 "."
+  
+  greener_grass_campaign_events.2:0 "Колониальная сегрегация"
+  greener_grass_campaign_events.2.t:0 "Колониальная сегрегация"
+  greener_grass_campaign_events.2.desc:0 "Колониальная сегрегация"
+  greener_grass_campaign_events.2.d:0 "Полицейские силы в регионе [SCOPE.sCountry('state_pop_replacement').GetAdjective] [SCOPE.sState('state_pop_replacement').GetStateRegion.GetName] успешно начали процесс выселения, но многие местные жители яростно сопротивляются этому принудительному переселению."
+  greener_grass_campaign_events.2.f:0 "'И они ещё смеют сопротивляться? Они должны благодарить нас за то, что мы несём процветание и прогресс в эти пустынные земли! А как же НАША свобода решать, что делать с землями, которые мы только что завоевали?'."
+  greener_grass_campaign_events.2.a:0 "Эти бедные деревенщины не знают, что лучше для нации."
+  #greener_grass_campaign_events.1.b:0 "."
+  #greener_grass_campaign_events.1.c:0 "."
+
+
+  
+
+
+
+
+

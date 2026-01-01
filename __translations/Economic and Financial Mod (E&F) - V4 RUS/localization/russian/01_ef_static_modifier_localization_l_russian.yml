@@ -1,0 +1,524 @@
+﻿l_russian:
+
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  # ███╗   ███╗ ██████╗ ██████╗ ██╗███████╗██╗███████╗██████╗ ███████╗
+  # ████╗ ████║██╔═══██╗██╔══██╗██║██╔════╝██║██╔════╝██╔══██╗██╔════╝
+  # ██╔████╔██║██║   ██║██║  ██║██║█████╗  ██║█████╗  ██████╔╝███████╗
+  # ██║╚██╔╝██║██║   ██║██║  ██║██║██╔══╝  ██║██╔══╝  ██╔══██╗╚════██║
+  # ██║ ╚═╝ ██║╚██████╔╝██████╔╝██║██║     ██║███████╗██║  ██║███████║
+  # ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+  #modifier_part
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+  #####################################################################################################################
+
+  modifier_desactive_building:0 "Окупированная область"
+  silver_mine_max_level:0 "Максимальный уровень серебряных рудников"
+
+  modifier_desactive_building:0 "Окупированная область"
+  country_credit_note_mult:0 "Мультипликатор страны"
+  country_credit_note_add:0 "Добавление страны"
+  country_credit_note_add_desc:0 "Увеличение общего рейтинга страны на +0.5 за уровень учреждения"
+  country_credit_note_mult_desc:0 "Увеличение общего рейтинга страны на 5% за уровень учреждения"
+  financial_product_by_trade_route_mult:0 "Финансовый продукт по торговому маршруту"
+  financial_product_by_trade_route_mult_desc:0 "Представляет общую долю конкретного типа финансового продукта, который может быть включён в заказ продажи через импорт"
+
+
+  rise_base_rate:0 "Повышение базовой ставки"
+  down_base_rate:0 "Снижение базовой ставки"
+
+  devaluation_currency_target:0 "Девальвация целевого денежного значения"
+  revaluation_currency_target:0 "Ревальвация целевого денежного значения"
+ 
+
+  currency_demande:0 "Спрос на валюту"
+  ################################
+  #building:
+  ################################
+
+  building_silver_mine_throughput_add:0 "$building_silver_mine$ строит [concept_throughput]"
+
+
+  modifier_desactive_bank:0 "Банк заморожен"
+  leading_currency_type:0 "Тип ведущей валюты"
+
+  devaluation_currency_25:0 "Девальвация 25%"
+  devaluation_currency_50:0 "Девальвация 50%"
+  devaluation_currency_75:0 "Девальвация 75%"
+  devaluation_currency_100:0 "Девальвация 100%"
+
+  revaluation_currency_25:0 "Ревальвация 25%"
+  revaluation_currency_50:0 "Ревальвация 50%"
+  revaluation_currency_75:0 "Ревальвация 75%"
+  revaluation_currency_100:0 "Ревальвация 100%"
+
+  devaluation_currency_25_small:0 "@devaluation_txt! 25%"
+  devaluation_currency_50_small:0 "@devaluation_txt! 50%"
+  devaluation_currency_75_small:0 "@devaluation_txt! 75%"
+  devaluation_currency_100_small:0 "@devaluation_txt! 100%"
+
+  revaluation_currency_25_small:0 "@revaluation_txt! 25%"
+  revaluation_currency_50_small:0 "@revaluation_txt! 50%"
+  revaluation_currency_75_small:0 "@revaluation_txt! 75%"
+  revaluation_currency_100_small:0 "@revaluation_txt! 100%"
+
+  devaluation_txt_prev:0 "Нет инфляции по денежной политике, если базовая цена товара [GetPlayer.GetCustom('currency_name')] [GetPlayer.GetCustom('currency_good')] выше #n 50%#! (Фактически: [GetPlayer.MakeScope.ScriptValue('currency_market_goods_lake_ratio')|%|-]) или в дефиците"
+
+  customs_union_limit_20:0  "Лимит для таможенного союза 20%"
+  protectora_limit_30:0 "Лимит для протектората 30%"
+  dominion_limit_50:0   "Лимит для доминиона 75%"
+  other_subject_type_limit_50:0 "Лимит для других типов субъектов 50%"
+  puppet_limit_75:0  "Лимит для марионетки 75%"
+
+  release_grain_1:0 "Выпуск зерна"
+  store_grain_1:0 "Складирование зерна"
+  release_wood_1:0 "Выпуск древесины"
+  store_wood_1:0 "Складирование древесины"
+  release_coal_1:0 "Выпуск угля"
+  store_coal_1:0 "Складирование угля"
+  release_iron_1:0 "Выпуск железа"
+  store_iron_1:0 "Складирование железа"
+  release_sulfur_1:0 "Выпуск серы"
+  store_sulfur_1:0 "Складирование серы"
+  release_lead_1:0 "Выпуск свинца"
+  store_lead_1:0 "Складирование свинца"
+  release_oil_1:0 "Выпуск нефти"
+  store_oil_1:0 "Складирование нефти"
+  release_dye_1:0 "Выпуск красителя"
+  store_dye_1:0 "Складирование красителя"
+  release_silk_1:0 "Выпуск шелка"
+  store_silk_1:0 "Складирование шелка"
+  release_rubber_1:0 "Выпуск резины"
+  store_rubber_1:0 "Складирование резины"
+  release_ammunition_1:0 "Выпуск боеприпасов"
+  store_ammunition_1:0 "Складирование боеприпасов"
+  release_small_arms_1:0 "Выпуск оружия"
+  store_small_arms_1:0 "Складирование оружия"
+  release_artillery_1:0 "Выпуск артиллерии"
+  store_artillery_1:0 "Складирование артиллерии"
+  release_tanks_1:0 "Выпуск танков"
+  store_tanks_1:0 "Складирование танков"
+  release_aeroplanes_1:0 "Выпуск самолётов"
+  store_aeroplanes_1:0 "Складирование самолётов"
+  release_manowars_1:0 "Выпуск манёвров"
+  store_manowars_1:0 "Складирование манёвров"
+  release_ironclads_1:0 "Выпуск бронированных машин"
+  store_ironclads_1:0 "Складирование бронированных машин"
+
+
+  mutual_fund_supply:0 "Предложение взаимных фондов"
+  bond_deemande:0 "Спрос на облигации"
+  manufacture_stock_deemande:0 "Спрос на промышленные акции"
+  agricultural_stock_deemande:0 "Спрос на сельскохозяйственные акции"
+  mining_stock_deemande:0 "Спрос на добывающие акции"
+  railroad_stock_deemande:0 "Спрос на железнодорожные акции"
+
+
+  goods_input_railroad_stock_mult:0 "Мультипликатор железнодорожных акций"
+  goods_input_mining_stock_mult:0 "Мультипликатор гррнодобывающих акций"
+  goods_input_agricultural_stock_mult:0 "Мультипликатор сельскохозяйственных акций"
+  goods_input_bond_mult:0 "Мультипликатор облигаций"
+  goods_input_manufacture_stock_mult:0 "Мультипликатор промышленных акций"
+  goods_output_mutual_funds_mult:0 "Мультипликатор взаимных фондов"
+
+  state_building_financial_centre_max_level_add:0 "Максимальный уровень финансового центра"
+  state_building_financial_centre_max_level_add_desc:0 "Максимальный уровень финансового центра"
+
+  state_building_financial_centre_arg_max_level_add:0 "Максимальный уровень Bolsa de Comercio de Buenos Aires"
+  state_building_financial_centre_arg_max_level_add_desc:0 "Максимальный уровень Bolsa de Comercio de Buenos Aires"
+
+  state_building_financial_centre_aus_max_level_add:0 "Максимальный уровень Wiener Börse"
+  state_building_financial_centre_aus_max_level_add_desc:0 "Максимальный уровень Wiener Börse"
+
+  state_building_financial_centre_bav_max_level_add:0 "Максимальный уровень Münchener Börse"
+  state_building_financial_centre_bav_max_level_add_desc:0 "Максимальный уровень Münchener Börse"
+
+  state_building_financial_centre_bel_max_level_add:0 "Максимальный уровень Bourse de Bruxelles"
+  state_building_financial_centre_bel_max_level_add_desc:0 "Максимальный уровень Bourse de Bruxelles"
+
+  state_building_financial_centre_bic_max_level_add:0 "Максимальный уровень Bombay Stock Exchange"
+  state_building_financial_centre_bic_max_level_add_desc:0 "Максимальный уровень Bombay Stock Exchange"
+
+  state_building_financial_centre_brz_max_level_add:0 "Максимальный уровень Brasil Bolsa Balcão"
+  state_building_financial_centre_brz_max_level_add_desc:0 "Максимальный уровень Brasil Bolsa Balcão"
+
+  state_building_financial_centre_chi_max_level_add:0 "Максимальный уровень Shanghai Sharebrokers' Association"
+  state_building_financial_centre_chi_max_level_add_desc:0 "Максимальный уровень Shanghai Sharebrokers' Association"
+
+  state_building_financial_centre_chl_max_level_add:0 "Максимальный уровень Bolsa de Comercio de Santiago"
+  state_building_financial_centre_chl_max_level_add_desc:0 "Максимальный уровень Bolsa de Comercio de Santiago"
+
+  state_building_financial_centre_den_max_level_add:0 "Максимальный уровень Københavns Fondsbørs"
+  state_building_financial_centre_den_max_level_add_desc:0 "Максимальный уровень Københavns Fondsbørs"
+
+  state_building_financial_centre_dei_max_level_add:0 "Максимальный уровень Beurs van Batavia"
+  state_building_financial_centre_dei_max_level_add_desc:0 "Максимальный уровень Beurs van Batavia"
+
+  state_building_financial_centre_egy_max_level_add:0 "Максимальный уровень Khedive Stock Exchange"
+  state_building_financial_centre_egy_max_level_add_desc:0 "Максимальный уровень Khedive Stock Exchange"
+
+  state_building_financial_centre_fra_max_level_add:0 "Максимальный уровень Bourse de Paris"
+  state_building_financial_centre_fra_max_level_add_desc:0 "Максимальный уровень Bourse de Paris"
+
+  state_building_financial_centre_frm_max_level_add:0 "Максимальный уровень Frankfurter Wertpapierbörse"
+  state_building_financial_centre_frm_max_level_add_desc:0 "Максимальный уровень Frankfurter Wertpapierbörse"
+
+  state_building_financial_centre_gbr_max_level_add:0 "Максимальный уровень London Stock Exchange"
+  state_building_financial_centre_gbr_max_level_add_desc:0 "Максимальный уровень London Stock Exchange"
+
+  state_building_financial_centre_gbr_2_max_level_add:0 "Максимальный уровень Manchester Stock Exchange"
+  state_building_financial_centre_gbr_2_max_level_add_desc:0 "Максимальный уровень Manchester Stock Exchange"
+
+  state_building_financial_centre_gre_max_level_add:0 "Максимальный уровень Χρηματιστήριο Αθηνών"
+  state_building_financial_centre_gre_max_level_add_desc:0 "Максимальный уровень Χρηματιστήριο Αθηνών"
+
+  state_building_financial_centre_hkh_max_level_add:0 "Максимальный уровень Hong Kong Stock Exchange"
+  state_building_financial_centre_hkh_max_level_add_desc:0 "Максимальный уровень Hong Kong Stock Exchange"
+
+  state_building_financial_centre_han_max_level_add:0 "Максимальный уровень Börse Hannover"
+  state_building_financial_centre_han_max_level_add_desc:0 "Максимальный уровень Börse Hannover"
+
+  state_building_financial_centre_ita_max_level_add:0 "Максимальный уровень Borsa Italiana"
+  state_building_financial_centre_ita_max_level_add_desc:0 "Максимальный уровень Borsa Italiana"
+
+  state_building_financial_centre_jap_max_level_add:0 "Максимальный уровень Tokyo Stock Exchange"
+  state_building_financial_centre_jap_max_level_add_desc:0 "Максимальный уровень Tokyo Stock Exchange"
+
+  state_building_financial_centre_mex_max_level_add:0 "Максимальный уровень Bolsa de Valores de México"
+  state_building_financial_centre_mex_max_level_add_desc:0 "Максимальный уровень Bolsa de Valores de México"
+
+  state_building_financial_centre_net_max_level_add:0 "Максимальный уровень Beurs van Amsterdam"
+  state_building_financial_centre_net_max_level_add_desc:0 "Максимальный уровень Beurs van Amsterdam"
+
+  state_building_financial_centre_nsw_max_level_add:0 "Максимальный уровень Australian Securities Exchange"
+  state_building_financial_centre_nsw_max_level_add_desc:0 "Максимальный уровень Australian Securities Exchange"
+
+  state_building_financial_centre_ont_max_level_add:0 "Максимальный уровень Toronto Stock Exchange"
+  state_building_financial_centre_ont_max_level_add_desc:0 "Максимальный уровень Toronto Stock Exchange"
+
+  state_building_financial_centre_peu_max_level_add:0 "Максимальный уровень Bolsa de Valores de Lima"
+  state_building_financial_centre_peu_max_level_add_desc:0 "Максимальный уровень Bolsa de Valores de Lima"
+
+  state_building_financial_centre_por_max_level_add:0 "Максимальный уровень Bolsa de Valores de Lisboa"
+  state_building_financial_centre_por_max_level_add_desc:0 "Максимальный уровень Bolsa de Valores de Lisboa"
+
+  state_building_financial_centre_pru_max_level_add:0 "Максимальный уровень Börse zu Berlin"
+  state_building_financial_centre_pru_max_level_add_desc:0 "Максимальный уровень Börse zu Berlin"
+
+  state_building_financial_centre_que_max_level_add:0 "Максимальный уровень Bourse de Montréal"
+  state_building_financial_centre_que_max_level_add_desc:0 "Максимальный уровень Bourse de Montréal"
+
+  state_building_financial_centre_rus_max_level_add:0 "Максимальный уровень Санкт-Петербургской биржы"
+  state_building_financial_centre_rus_max_level_add_desc:0 "Максимальный уровень Санкт-Петербургской биржы"
+
+  state_building_financial_centre_saf_max_level_add:0 "Максимальный уровень Johannesburg Stock Exchange"
+  state_building_financial_centre_saf_max_level_add_desc:0 "Максимальный уровень Johannesburg Stock Exchange"
+
+  state_building_financial_centre_sar_max_level_add:0 "Максимальный уровень Borsa di Cagliari"
+  state_building_financial_centre_sar_max_level_add_desc:0 "Максимальный уровень Borsa di Cagliari"
+
+  state_building_financial_centre_sic_max_level_add:0 "Максимальный уровень Borsa di Napoli"
+  state_building_financial_centre_sic_max_level_add_desc:0 "Максимальный уровень Borsa di Napoli"
+
+  state_building_financial_centre_spa_max_level_add:0 "Максимальный уровень Bolsa de Madrid"
+  state_building_financial_centre_spa_max_level_add_desc:0 "Максимальный уровень Bolsa de Madrid"
+
+  state_building_financial_centre_swe_max_level_add:0 "Максимальный уровень Stockholmsbörsen"
+  state_building_financial_centre_swe_max_level_add_desc:0 "Максимальный уровень Stockholmsbörsen"
+
+  state_building_financial_centre_swi_max_level_add:0 "Максимальный уровень Bourses de Genève"
+  state_building_financial_centre_swi_max_level_add_desc:0 "Максимальный уровень Bourses de Genève"
+
+  state_building_financial_centre_tur_max_level_add:0 "Максимальный уровень İstanbul Menkul Kıymetler Borsası"
+  state_building_financial_centre_tur_max_level_add_desc:0 "Максимальный уровень İstanbul Menkul Kıymetler Borsası"
+
+  state_building_financial_centre_tus_max_level_add:0 "Максимальный уровень Borsa di Toscana"
+  state_building_financial_centre_tus_max_level_add_desc:0 "Максимальный уровень Borsa di Toscana"
+
+  state_building_financial_centre_uru_max_level_add:0 "Максимальный уровень Bolsa de Valores de Montevideo"
+  state_building_financial_centre_uru_max_level_add_desc:0 "Максимальный уровень Bolsa de Valores de Montevideo"
+
+  state_building_financial_centre_usa_max_level_add:0 "Максимальный уровень New York Stock Exchange"
+  state_building_financial_centre_usa_max_level_add_desc:0 "Максимальный уровень New York Stock Exchange"
+
+  state_building_financial_centre_usa_2_max_level_add:0 "Максимальный уровень Chicago Stock Exchange"
+  state_building_financial_centre_usa_2_max_level_add_desc:0 "Максимальный уровень Chicago Stock Exchange"
+
+  state_building_financial_centre_sax_max_level_add:0 "Максимальный уровень Sächsische Börse"
+  state_building_financial_centre_sax_max_level_add_desc:0 "Максимальный уровень Sächsische Börse"
+
+  state_building_silver_mine_max_level_add:0 "Максимальный уровень серебряных рудников"
+  state_building_silver_mine_max_level_add_desc:0 "Максимальный уровень серебряных рудников"
+
+  ################################
+  #country:
+  ################################
+
+  inflation_country:0 "Инфляция"
+  deflation_country:0 "Дефляция"
+
+  reference_currency:0 "Эталонная валюта"
+  reference_currency_no:0 "Эталонная валюта"
+
+  central_bank_bankruptcy_country:0 "Банкротство ЦБ"
+  currency_crisis_country:0 "Валютный кризис"
+  economic_crisis_country:0 "Экономический кризис"
+  financial_crash_country:0 "Финансовый крах"
+  economic_instability:0 "Экономическая нестабильность"
+
+  weak_currency:0 "Слабая валюта"
+  balanced_currency:0 "Сбалансированная\nвалюта"
+  strong_currency:0 "Сильная валюта"
+  extreme_weak_currency:0 "Сверх слабая валюта"
+
+  money_value_in_gold:0 "Стоимость денег (в золоте @gold!)"
+  compare_to_the_average:0 "В сравнении со средним"
+  money_value_median:0 "Средняя стоимость денег"
+  modifier_currency_value:0 "Сила валюты"
+
+  1_25_median:0 "(> 1.25 Среднее)"
+ # 1_25_median_0_75
+  0_75_median:0 "(< 0.75 Среднее)"
+
+  modifier_on_import_trade_route:0 "Модификатор\nторгового маршрута\nпо импорту"
+  modifier_on_import_trade_route_desc:0 "[GetPlayer.MakeScope.ScriptValue('difference_with_average_gold_exchange_rate_currencies_revers')|%|+=]\nпреимущество по импорту"
+  modifier_on_export_trade_route:0 "Модификатор\nторгового маршрута\nпо экспорту"
+  modifier_on_export_trade_route_desc:0 "[GetPlayer.MakeScope.ScriptValue('difference_with_average_gold_exchange_rate_currencies_revers_normalized')|%|=+]\nпреимущество по экспорту"
+
+
+  economic_instability_txt:0 "Счётчик экономической нестабильности увеличивается на 1 за каждый кризис, который происходит. Если он достигает 2 или более, он запускает все кризисы, которые зарегистрировали одно или более инцидентов."
+
+
+  economic_instability_count:0 "Счётчик экономической\nнестабильности"
+  country_bankruptcy:0 "Банкротство страны"
+  central_bank_bankruptcy:0 "Банкротство ЦБ"
+  currency_crisis:0 "Валютный кризис"
+  disabled_trade_routes:0 "Отключённые торговые маршруты"
+
+  current_status:0 "Текущий статус"
+  current_crisis:0 "Текущий кризис"
+  nothing_status:0 "Текущий статус отсутствует"
+  nothing_crisis:0 "Текущий кризис отсутствует"
+
+  foreign_exchange_controls:0 "Контроль валютного рынка"
+  monetary_systeme_transition:0 "Переход к денежной системе"
+  new_currency:0 "Введение новой валюты"
+
+  global_monetary_reference:0 "Глобальный денежный эталон"
+  global_financial_power:0 "Глобальная финансовая мощь"
+
+  insufficient_currency_production:0 "Недостаточное производство валюты"
+
+  has_financial_center:0 "Есть финансовый центр"
+  has_central_bank:0 "Есть центральный банк"
+  has_national_stockpile:0 "Есть национальный резерв"
+
+  country_credit_rating_AAA:0 "Рейтинг кредитоспособности AAA"
+  country_credit_rating_AA:0 "Рейтинг кредитоспособности AA"
+  country_credit_rating_A:0 "Рейтинг кредитоспособности A"
+  country_credit_rating_BBB:0 "Рейтинг кредитоспособности BBB"
+  country_credit_rating_BB:0 "Рейтинг кредитоспособности BB"
+  country_credit_rating_B:0 "Рейтинг кредитоспособности B"
+  country_credit_rating_CCC:0 "Рейтинг кредитоспособности CCC"
+  country_credit_rating_CC:0 "Рейтинг кредитоспособности CC"
+  country_credit_rating_C:0 "Рейтинг кредитоспособности C"
+  country_credit_rating_D:0 "Рейтинг кредитоспособности D"
+
+  interest_at_the_central_bank:0 "Процент в центральном банке"
+  interest_from_foreign_debt_investment:0 "Процент от инвестиций во внешний долг"
+
+  buy_bond_1:0 "Процент за 10 лет (Слот 1)"
+  buy_bond_2:0 "Процент за 10 лет (Слот 2)"
+  buy_bond_3:0 "Процент за 10 лет (Слот 3)"
+  buy_bond_4:0 "Процент за 10 лет (Слот 4)"
+  buy_bond_5:0 "Процент за 10 лет (Слот 5)"
+  buy_bond_6:0 "Процент за 5 лет (Слот 6)"
+  buy_bond_7:0 "Процент за 5 лет (Слот 7)"
+  buy_bond_8:0 "Процент за 5 лет (Слот 8)"
+  buy_bond_9:0 "Процент за 5 лет (Слот 9)"
+  buy_bond_10:0 "Процент за 5 лет (Слот 10)"
+
+  ai_buy_bond_1:0 "Процент за 10 лет (Слот 1)"
+  ai_buy_bond_2:0 "Процент за 10 лет (Слот 2)"
+  ai_buy_bond_3:0 "Процент за 10 лет (Слот 3)"
+  ai_buy_bond_4:0 "Процент за 10 лет (Слот 4)"
+  ai_buy_bond_5:0 "Процент за 10 лет (Слот 5)"
+  ai_buy_bond_6:0 "Процент за 5 лет (Слот 6)"
+  ai_buy_bond_7:0 "Процент за 5 лет (Слот 7)"
+  ai_buy_bond_8:0 "Процент за 5 лет (Слот 8)"
+  ai_buy_bond_9:0 "Процент за 5 лет (Слот 9)"
+  ai_buy_bond_10:0 "Процент за 5 лет (Слот 10)"
+
+   dinar_leading_currency_type:0 "Отношение к динару"
+  dinar_algerian_dinar_leading_currency_type:0 "Отношение к алжирскому динару"
+  dinar_iraqi_dinar_leading_currency_type:0 "Отношение к иракскому динару"
+  dinar_libyan_dinar_leading_currency_type:0 "Отношение к ливийскому динару"
+  dinar_moroccan_dirham_leading_currency_type:0 "Отношение к марокканскому дирхаму"
+  dinar_omanian_rial_leading_currency_type:0 "Отношение к оманскому риалу"
+  dinar_qiran_leading_currency_type:0 "Отношение к кирану"
+  dinar_saudi_riyal_leading_currency_type:0 "Отношение к саудовскому риялу"
+  dinar_serbian_dinar_leading_currency_type:0 "Отношение к сербскому динару"
+  dinar_tunisian_dinar_leading_currency_type:0 "Отношение к тунисскому динару"
+  dinar_yugoslav_dinar_leading_currency_type:0 "Отношение к югославскому динару"
+  dollar_australian_dollar_leading_currency_type:0 "Отношение к австралийскому доллару"
+  dollar_canadian_dollar_leading_currency_type:0 "Отношение к канадскому доллару"
+  dollar_caribbean_dollar_leading_currency_type:0 "Отношение к карибскому доллару"
+  dollar_confederate_states_dollar_leading_currency_type:0 "Отношение к доллару Конфедерации"
+  dollar_liberian_dollar_leading_currency_type:0 "Отношение к либерийскому доллару"
+  dollar_new_zealand_dollar_leading_currency_type:0 "Отношение к новозеландскому доллару"
+  dollar_sierra_leonean_dollar_leading_currency_type:0 "Отношение к доллару Сьерра-Леоне"
+  dollar_united_states_dollar_leading_currency_type:0 "Отношение к доллару США"
+  eco_ariary_leading_currency_type:0 "Отношение к ариари"
+  eco_central_african_eco_leading_currency_type:0 "Отношение к центральноафриканскому эко"
+  eco_east_african_eco_leading_currency_type:0 "Отношение к восточноафриканскому эко"
+  eco_ethiopian_birr_leading_currency_type:0 "Отношение к эфиопскому быру"
+  eco_ghanaian_pound_leading_currency_type:0 "Отношение к ганскому фунту"
+  eco_nigerian_naira_leading_currency_type:0 "Отношение к нигерийской найре"
+  eco_south_african_rand_leading_currency_type:0 "Отношение к южноафриканскому ранду"
+  eco_tuareg_ouguiya_leading_currency_type:0 "Отношение к туарегскому угия"
+  eco_west_african_eco_leading_currency_type:0 "Отношение к западноафриканскому эко"
+  franc_belgian_franc_leading_currency_type:0 "Отношение к бельгийскому франку"
+  franc_french_franc_leading_currency_type:0 "Отношение к французскому франку"
+  franc_luxembourgish_franc_leading_currency_type:0 "Отношение к люксембургскому франку"
+  franc_swiss_franc_leading_currency_type:0 "Отношение к швейцарскому франку"
+  gulden_leading_currency_type:0 "Отношение к гульдену"
+  gulden_bavarian_gulden_leading_currency_type:0 "Отношение к баварскому гульдену"
+  gulden_florin_leading_currency_type:0 "Отношение к флорину"
+  gulden_hungarian_forint_leading_currency_type:0 "Отношение к венгерскому форинту"
+  gulden_indies_guilder_leading_currency_type:0 "Отношение к голландскому гульдену"
+  gulden_south_german_gulden_leading_currency_type:0 "Отношение к южногерманскому гульдену"
+  krone_czech_koruna_leading_currency_type:0 "Отношение к чешской кроне"
+  krone_danish_krone_leading_currency_type:0 "Отношение к датской кроне"
+  krone_estonian_kroon_leading_currency_type:0 "Отношение к эстонской кроне"
+  krone_icelandic_krona_leading_currency_type:0 "Отношение к исландской кроне"
+  krone_norwegian_krone_leading_currency_type:0 "Отношение к норвежской кроне"
+  krone_slovak_koruna_leading_currency_type:0 "Отношение к словацкой кроне"
+  krone_swedish_krona_leading_currency_type:0 "Отношение к шведской кроне"
+  leon_leu_leading_currency_type:0 "Отношение к лею"
+  leon_lev_leading_currency_type:0 "Отношение к леву"
+  lira_leading_currency_type:0 "Отношение к лире"
+  lira_ducato_leading_currency_type:0 "Отношение к дукату"
+  lira_ottoman_lira_leading_currency_type:0 "Отношение к османской лире"
+  lira_scudo_pontificio_leading_currency_type:0 "Отношение к скудо Понтифицио"
+  lira_scudo_sardo_leading_currency_type:0 "Отношение к скудо Сардо"
+  lira_toscane_lira_leading_currency_type:0 "Отношение к тосканской лире"
+  mark_leading_currency_type:0 "Отношение к марке"
+  mark_finnish_markka_leading_currency_type:0 "Отношение к финской марке"
+  peso_leading_currency_type:0 "Отношение к песо"
+  peso_argentine_peso_leading_currency_type:0 "Отношение к аргентинскому песо"
+  peso_bolivien_peso_leading_currency_type:0 "Отношение к боливийскому песо"
+  peso_chilean_peso_leading_currency_type:0 "Отношение к чилийскому песо"
+  peso_colombian_peso_leading_currency_type:0 "Отношение к колумбийскому песо"
+  peso_costa_rican_colon_leading_currency_type:0 "Отношение к коста-риканскому колону"
+  peso_cuban_peso_leading_currency_type:0 "Отношение к кубинскому песо"
+  peso_ecuadorian_peso_leading_currency_type:0 "Отношение к эквадорскому песо"
+  peso_el_salvador_colon_leading_currency_type:0 "Отношение к сальвадорскому колону"
+  peso_guatemalan_quetzal_leading_currency_type:0 "Отношение к гватемальскому кетсалю"
+  peso_honduran_lempira_leading_currency_type:0 "Отношение к гондурасской лемпире"
+  peso_mexican_peso_leading_currency_type:0 "Отношение к мексиканскому песо"
+  peso_nicaraguan_cordoba_leading_currency_type:0 "Отношение к никарагуанской кордобе"
+  peso_paraguayan_peso_leading_currency_type:0 "Отношение к парагвайскому песо"
+  peso_philippine_peso_leading_currency_type:0 "Отношение к филиппинскому песо"
+  peso_sol_de_oro_leading_currency_type:0 "Отношение к соль де оро"
+  peso_uruguayan_peso_leading_currency_type:0 "Отношение к уругвайскому песо"
+  peso_venezuelan_peso_leading_currency_type:0 "Отношение к венесуэльскому песо"
+  pound_egyptian_pound_leading_currency_type:0 "Отношение к египетскому фунту"
+  pound_irish_pound_leading_currency_type:0 "Отношение к ирландскому фунту"
+  pound_sterling_leading_currency_type:0 "Отношение к фунту стерлингов"
+  real_leading_currency_type:0 "Отношение к реалу"
+  real_brazilian_real_leading_currency_type:0 "Отношение к бразильскому реалу"
+  rupee_indian_rupee_leading_currency_type:0 "Отношение к индийской рупии"
+  rupee_indonesian_rupiah_leading_currency_type:0 "Отношение к индонезийской рупии"
+  spe_baht_leading_currency_type:0 "Отношение к бату"
+  spe_dong_leading_currency_type:0 "Отношение к донгу"
+  spe_drachma_leading_currency_type:0 "Отношение к драхме"
+  spe_korean_won_leading_currency_type:0 "Отношение к корейской воне"
+  spe_latvian_lats_leading_currency_type:0 "Отношение к латвийскому латy"
+  spe_lithuanian_litas_leading_currency_type:0 "Отношение к литовскому литу"
+  spe_peseta_leading_currency_type:0 "Отношение к песете"
+  spe_ruble_leading_currency_type:0 "Отношение к рублю"
+  spe_uni_leading_currency_type:0 "Отношение к уни"
+  spe_yen_leading_currency_type:0 "Отношение к йене"
+  spe_yuan_leading_currency_type:0 "Отношение к юаню"
+  spe_zloti_leading_currency_type:0 "Отношение к злотому"
+  thaler_hannoveraner_thaler_leading_currency_type:0 "Отношение к ганноверскому талеру"
+  thaler_prussian_thaler_leading_currency_type:0 "Отношение к прусскому талеру"
+  thaler_saxon_thaler_leading_currency_type:0 "Отношение к саксонскому талеру"
+
+  ################################
+  #state:
+  ################################
+
+  central_bank_place:0 "Местоположение центрального банка"
+  central_bank_historic_place:0 "Историческое местоположение центрального банка"
+
+  financial_center_place:0 "Местоположение финансового центра"
+  financial_center_historic_place:0 "Историческое местоположение финансового центра"
+  financial_center_place_spe:0 "Местоположение финансового центра (спец)"
+
+  national_stockpile_place:0 "Местоположение национального резерва"
+  national_stockpile_historic_place:0 "Историческое местоположение национального резерва"
+
+  ################################
+  #building:
+  ################################
+  economic_crisis:0 "Экономический\nкризис"
+  financial_crash:0 "Финансовый крах"
+
+  #########################################################################################################################################################################################
+  #########################################################################################################################################################################################
+  #########################################################################################################################################################################################
+  #########################################################################################################################################################################################
+
+  # ███████╗████████╗ ██████╗  ██████╗██╗  ██╗██████╗ ██╗██╗     ██╗███╗   ██╗ ██████╗      ██████╗  ██████╗  ██████╗ ██████╗ ███████╗
+  # ██╔════╝╚══██╔══╝██╔═══██╗██╔════╝██║ ██╔╝██╔══██╗██║██║     ██║████╗  ██║██╔════╝     ██╔════╝ ██╔═══██╗██╔═══██╗██╔══██╗██╔════╝
+  # ███████╗   ██║   ██║   ██║██║     █████╔╝ ██████╔╝██║██║     ██║██╔██╗ ██║██║  ███╗    ██║  ███╗██║   ██║██║   ██║██║  ██║███████╗
+  # ╚════██║   ██║   ██║   ██║██║     ██╔═██╗ ██╔═══╝ ██║██║     ██║██║╚██╗██║██║   ██║    ██║   ██║██║   ██║██║   ██║██║  ██║╚════██║
+  # ███████║   ██║   ╚██████╔╝╚██████╗██║  ██╗██║     ██║███████╗██║██║ ╚████║╚██████╔╝    ╚██████╔╝╚██████╔╝╚██████╔╝██████╔╝███████║
+  # ╚══════╝   ╚═╝    ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝      ╚═════╝  ╚═════╝  ╚═════╝ ╚═════╝ ╚══════╝
+
+  #########################################################################################################################################################################################
+  #########################################################################################################################################################################################
+  #########################################################################################################################################################################################
+  #########################################################################################################################################################################################
+
+storing_grain:0 "Запасание зерна"
+releasing_grain:0 "Выпуск зерна"
+storing_wood:0 "Запасание древесины"
+releasing_wood:0 "Выпуск древесины"
+storing_coal:0 "Запасание угля"
+releasing_coal:0 "Выпуск угля"
+storing_iron:0 "Запасание железа"
+releasing_iron:0 "Выпуск железа"
+storing_sulfur:0 "Запасание серы"
+releasing_sulfur:0 "Выпуск серы"
+storing_lead:0 "Запасание свинца"
+releasing_lead:0 "Выпуск свинца"
+storing_oil:0 "Запасание нефти"
+releasing_oil:0 "Выпуск нефти"
+storing_dye:0 "Запасание красителей"
+releasing_dye:0 "Выпуск красителей"
+storing_silk:0 "Запасание шёлка"
+releasing_silk:0 "Выпуск шёлка"
+storing_rubber:0 "Запасание каучука"
+releasing_rubber:0 "Выпуск каучука"
+storing_ammunition:0 "Запасание боеприпасов"
+releasing_ammunition:0 "Выпуск боеприпасов"
+storing_small_arms:0 "Запасание стрелкового оружия"
+releasing_small_arms:0 "Выпуск стрелкового оружия"
+storing_artillery:0 "Запасание артиллерии"
+releasing_artillery:0 "Выпуск артиллерии"
+storing_tanks:0 "Запасание танков"
+releasing_tanks:0 "Выпуск танков"
+storing_aeroplanes:0 "Запасание самолётов"
+releasing_aeroplanes:0 "Выпуск самолётов"
+storing_manowars:0 "Запасание линейных кораблей"
+releasing_manowars:0 "Выпуск линейных кораблей"
+storing_ironclads:0 "Запасание броненосцев"
+releasing_ironclads:0 "Выпуск броненосцев"
+ 

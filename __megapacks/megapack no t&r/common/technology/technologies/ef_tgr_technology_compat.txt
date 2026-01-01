@@ -1,0 +1,182 @@
+########################################
+# E&F + TheGreatRevision (TGR) - Tech compatibility merge
+# Goal: keep E&F finance hooks while preserving TGR trade/loans modifiers where applicable.
+########################################
+
+REPLACE_OR_CREATE:banking = {
+	era = era_1
+	texture = "gfx/interface/icons/invention_icons/banking.dds"
+	category = society
+
+	unlocking_technologies = {
+		international_trade
+		centralization
+	}
+
+	modifier = {
+		country_minting_mult = 0.1
+		country_loan_interest_rate_add = -0.02
+		state_max_trade_advantage_from_capacity_add = 0.05
+	}
+
+	on_researched = {
+		add_technology_researched = currency_standards
+	}
+
+	ai_weight = {
+		value = 1.5 # Important in general
+	}
+}
+
+REPLACE_OR_CREATE:central_banking = {
+	era = era_2 #era_1
+	texture = "gfx/interface/icons/invention_icons/central_banking.dds"
+	category = society
+
+	modifier = {
+		country_minting_mult = 0.1
+		country_loan_interest_rate_add = -0.04
+		state_max_trade_advantage_from_capacity_add = 0.05
+		country_institution_economic_central_bank_max_investment_add = 1
+	}
+
+	unlocking_technologies = {
+		banking
+	}
+
+	on_researched = {
+		add_technology_researched = currency_standards
+		add_technology_researched = metalique_standard
+		if = {
+			limit = {
+				is_invalid_country = no
+				is_revolutionary = no
+				or = {
+					is_valid_country = yes
+					gdp_view >= 1
+					is_player = yes
+				}
+			}
+			introduction_new_currency = yes
+		}
+	}
+
+	ai_weight = {
+		value = 1000
+	}
+}
+
+REPLACE_OR_CREATE:mutual_funds = {
+	era = era_3
+	texture = "gfx/interface/icons/invention_icons/mutual_funds.dds"
+	category = society
+
+	modifier = {
+		country_minting_mult = 0.1
+		country_loan_interest_rate_add = -0.02
+		state_max_trade_advantage_from_capacity_add = 0.05
+	}
+
+	unlocking_technologies = {
+		joint_stock_companies
+		central_banking
+		postal_savings
+	}
+
+	ai_weight = {
+		value = 1
+	}
+}
+
+REPLACE_OR_CREATE:joint_stock_companies = {
+	era = era_2
+	texture = "gfx/interface/icons/invention_icons/joint_stock_companies.dds"
+	category = society
+
+	modifier = {
+		country_max_companies_add = 1
+		state_market_access_price_impact = 0.05
+		state_urbanization_per_level_mult = -0.1
+	}
+
+	unlocking_technologies = {
+		banking
+		corporate_charters
+		stock_exchange
+		financial_center
+	}
+
+	ai_weight = {
+		value = 3 # important tech
+	}
+}
+
+REPLACE_OR_CREATE:investment_banks = {
+	era = era_3
+	texture = "gfx/interface/icons/invention_icons/investment_banks.dds"
+	category = society
+
+	modifier = {
+		country_max_companies_add = 1
+		country_free_charters_add = 1
+		state_import_advantage_mult = 0.25
+		state_urbanization_per_level_mult = -0.15
+		financial_product_by_trade_route_mult = 0.25
+	}
+
+	unlocking_technologies = {
+		joint_stock_companies
+		mutual_funds
+		central_banking
+		postal_savings
+	}
+
+	ai_weight = {
+		value = 2 # important tech
+	}
+}
+
+REPLACE_OR_CREATE:international_exchange_standards = {
+	# Should increase trade power maybe
+	era = era_4
+	texture = "gfx/interface/icons/invention_icons/international_exchange_standards.dds"
+	category = society
+
+	modifier = {
+		country_minting_mult = 0.1
+		country_loan_interest_rate_add = -0.02
+		state_max_trade_advantage_from_capacity_add = 0.05
+		financial_product_by_trade_route_mult = 0.25
+	}
+
+	unlocking_technologies = {
+		debt_currency_exchange_regime
+		mutual_funds
+	}
+
+	ai_weight = {
+		value = 1
+	}
+}
+
+REPLACE_OR_CREATE:modern_financial_instruments = {
+	era = era_5
+	texture = "gfx/interface/icons/invention_icons/modern_financial_instruments.dds"
+	category = society
+
+	modifier = {
+		country_minting_mult = 0.1
+		country_loan_interest_rate_add = -0.02
+		country_government_dividends_efficiency_add = 0.05
+		financial_product_by_trade_route_mult = 0.25
+	}
+
+	unlocking_technologies = {
+		international_exchange_standards
+	}
+
+	ai_weight = {
+		value = 1
+	}
+}
+

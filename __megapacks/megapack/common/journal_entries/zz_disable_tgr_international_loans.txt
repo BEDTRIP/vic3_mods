@@ -1,0 +1,21 @@
+########################################
+# Disable TheGreatRevision "International Loans" module when used with E&F
+########################################
+
+REPLACE_OR_CREATE:je_international_loans = {
+	icon = "gfx/interface/icons/invention_icons/mutual_funds.dds"
+	group = je_group_internal_affairs
+
+	is_shown_when_inactive = {
+		always = no
+	}
+
+	visible = {
+		always = no
+	}
+
+	possible = {
+		always = no
+	}
+}
+

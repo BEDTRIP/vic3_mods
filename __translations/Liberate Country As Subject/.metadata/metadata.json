@@ -1,0 +1,13 @@
+{
+  "name" : "Liberate Country As Subject",
+	"id" : "3519250829",
+  "version" : "1.12",
+  "supported_game_version" : "1.12.*",
+  "short_description" : "Gives the option via an event to turn liberated countries into a subject",
+  "picture" : "thumbnail.png",
+  "tags" : [],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

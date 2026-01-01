@@ -1,0 +1,10 @@
+﻿#building_gold_mine
+REPLACE_OR_CREATE:ai_buy_building_gold_mine_2 = {
+	random_scope_state = {
+		create_building={
+			building= building_construction_sector
+			level    = $FC_SIZE$
+			reserves=1
+		}
+	}
+}

@@ -1,0 +1,52 @@
+{
+  "name": "MegaComPatch TGR + MR + T&R + PBE",
+  "id": "",
+  "version": "1.12.2",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for The Great Revision (TGR) + Morgenröte + Tech & Res + Kuromi + Power Blocs Expanded (merged common/GUI/on_actions). Load after all.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "compatibility",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Kuromi AI",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Morgenröte",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Tech & Res",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Power Blocs Expanded",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

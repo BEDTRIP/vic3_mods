@@ -1,0 +1,13 @@
+{
+  "name" : "Auto-Apply Automation PMs RUS",
+	"id" : "",
+  "version" : "1.12",
+  "supported_game_version" : "1.12.*",
+  "short_description" : "",
+  "picture" : "thumbnail.png",
+  "tags" : [],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

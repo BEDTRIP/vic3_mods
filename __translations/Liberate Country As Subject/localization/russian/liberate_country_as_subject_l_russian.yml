@@ -1,0 +1,12 @@
+﻿l_russian:
+    release_as_puppet_events.2t:0 "Судьба [SCOPE.sCountry('target_vassal').GetName]"
+    release_as_puppet_events.2desc:0 "[SCOPE.sCountry('target_vassal').GetNameNoFormatting] в настоящее время находится под нашей оккупацией. Остаётся вопрос: каким будет их правительство в будущем?"
+    release_as_puppet_events.2f:0 "«То, что кажется щедростью, часто лишь замаскированное честолюбие — пренебрегающее малым ради великого.»#!#!\n\n— Франсуа, герцог де Ларошфуко, Максимы, 1665"
+    release_as_puppet_events.2a:0 "Мы возьмём решительный контроль над их внутренними делами."
+    release_as_puppet_events.2b:0 "Мы будем контролировать их."
+    release_as_puppet_events.2c:0 "Мы будем их защищать."
+    release_as_puppet_events.2g:0 "Они войдут в нашу сферу влияния."
+    release_as_puppet_events.2d:0 "Они станут свободными."
+    release_as_puppet_events.2dlabel:0 "[SCOPE.sCountry('target_vassal').GetName] остаётся независимым"
+    release_as_puppet_events.2blabel:0 "[SCOPE.sCountry('target_vassal').GetName] становится нашим [concept_vassal]"
+    release_as_puppet_events.2glabel:0 "[SCOPE.sCountry('target_vassal').GetName] присоединяется к [SCOPE.GetRootScope.GetCountry.GetPowerBloc.GetName]"

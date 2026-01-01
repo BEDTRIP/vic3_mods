@@ -1,0 +1,168 @@
+# Era 1
+
+# Era 2
+
+REPLACE:curtiss_tourism_tech = {
+
+	era = era_2
+	texture = "gfx/interface/icons/invention_icons/curtiss_tourism_tech.dds"
+	category = society
+	
+	unlocking_technologies = {
+		corporate_charters
+		colonization
+	}
+
+	modifier = {
+		country_free_charters_add = 1
+	}
+
+	ai_weight = {
+		value = 1
+	}
+}
+
+REPLACE:panum_antitoxins_tech = {
+	# Treatment for Diphteria and Scarlet
+	era = era_4
+	texture = "gfx/interface/icons/invention_icons/panum_antitoxins_tech.dds"
+	category = society
+
+	unlocking_technologies = {
+		malaria_prevention
+	}
+
+	modifier = {
+		state_mortality_mult = -0.02
+		state_harvest_condition_panum_diphteria_condition_impact_mult = -0.25
+		state_harvest_condition_panum_scarlet_condition_impact_mult = -0.25
+		state_harvest_condition_panum_polio_condition_impact_mult = -0.25
+	}
+
+	ai_weight = {
+		value = 1
+	}
+} #DONE Aggiunto per panum
+
+# Era 5
+
+REPLACE:vikelas_international_sports_tech = {
+	# 
+	era = era_5
+	texture = "gfx/interface/icons/invention_icons/vikelas_international_sports_tech.dds"
+	category = society
+
+	unlocking_technologies = {
+		organized_sports
+		international_organizations
+	}
+
+	modifier = {
+		country_influence_mult = 0.05
+		country_improve_relations_speed_mult = 0.05
+		country_infamy_decay_mult = 0.05
+	}
+
+	ai_weight = {
+		value = 1
+
+		#Morgenröte: added this part
+		if = {
+			limit = { 
+				exists = c:FRA
+				c:FRA = ROOT 
+			}
+			add = 1 #Pierre de Coubertin
+		}
+
+		if = {
+			limit = { 
+				exists = c:GRE
+				c:GRE = ROOT 
+			}
+			add = 1 #Greece should at least try to host the Games
+		}
+		
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = vikelas_ioc_founded_var
+				}
+				game_date >= 1890.1.1 #Should be keen to invent organized sports before 1896
+			}
+			add = 0.5
+		}
+
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = vikelas_ioc_founded_var
+				}
+				game_date >= 1895.1.1 #Historical Games in 1896
+			}
+			add = 0.5
+		}
+
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = vikelas_ioc_founded_var
+				}
+				game_date >= 1900.1.1 #Hurry!
+			}
+			add = 1
+		}
+	}
+}
+
+REPLACE:elgar_mass_culture_tech = {
+	# Unlocks late romantic orchestra for opera
+	# Jazz events
+	era = era_5
+	texture = "gfx/interface/icons/invention_icons/elgar_mass_culture_tech.dds"
+	category = society
+	
+	modifier = {
+	}
+	
+	unlocking_technologies = {
+		elgar_art_deco_tech
+		elgar_neoclassicism_tech
+		elgar_new_objectivity_tech
+	}
+
+	ai_weight = {
+		value = 0 #Should not research
+	}
+}
+
+REPLACE:verrier_nuclear_physics_tech = {
+	# Unlocks Einstein Events
+	era = era_5
+	texture = "gfx/interface/icons/invention_icons/verrier_nuclear_physics_tech.dds"
+	category = production
+
+	unlocking_technologies = {
+		verrier_radioactivity_tech
+	}
+
+	modifier = {
+		building_group_bg_power_throughput_add = 0.05
+	}
+
+	ai_weight = {
+		value = 2 
+
+		if = {
+			limit = { 
+				OR = {
+					c:ITA ?= ROOT
+					c:USA ?= ROOT
+				}
+				
+			}
+			add = 2 #Fermi-Szilard-etc
+		}		
+	}
+	
+}

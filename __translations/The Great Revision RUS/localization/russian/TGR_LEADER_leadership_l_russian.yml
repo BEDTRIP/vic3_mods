@@ -1,0 +1,149 @@
+﻿l_russian:
+  #################### CHARACTER INTERACTION: ALERTS ####################
+  alert_no_propaganda_campaign_in_use_name: "Вы можете использовать #green;bold; Пропагандистскую кампанию#!"
+  alert_no_propaganda_campaign_in_use_desc: "Вы можете использовать взаимодействие персонажа, чтобы начать #yellow;bold; Пропагандистскую кампанию#! против [concept_leader]."
+  alert_no_propaganda_campaign_in_use_hint: "Откройте панель «Политика» и используйте это взаимодействие, чтобы #green;bold; Увеличить#! влияние и привлекательность группы интересов."
+  alert_no_propaganda_campaign_in_use_action: "Панель правительства"
+  
+  alert_no_discredit_campaign_in_use_name: "Вы можете использовать #red;bold; Кампанию по дискредитации#!"
+  alert_no_discredit_campaign_in_use_desc: "Вы можете использовать взаимодействие персонажа, чтобы начать #yellow;bold; Кампанию по дискредитации#! против [concept_leader]."
+  alert_no_discredit_campaign_in_use_hint: "Откройте панель «Политика» и используйте это взаимодействие, чтобы #red;bold; Уменьшить#! влияние и привлекательность группы интересов."
+  alert_no_discredit_campaign_in_use_action: "Панель правительства"
+  
+  #################### CHARACTER INTERACTION: TOOLTIPS ON INTERACTION ####################
+  #grant_leadership_to_politician:0 "Назначить лидером партии"
+  resign_from_office_politician:0 "Сложить полномочия лидера партии"  
+  resign_from_office_politician_tt: "Этот персонаж откажется от лидерства в партии, оставив группу интересов под руководством другого персонажа. Идеология нового лидера будет зависеть от давления, которое группа интересов испытывает со стороны политических движений."  
+  resign_from_office_politician_2_tt: "[SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] откажется от лидерства в партии" 
+  
+  #################### CHARACTER INTERACTION: IDEOLOGY TOOLTIPS ####################
+  ideology_moderate_tt: "[GetIdeology('ideology_moderate').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_reformer_tt: "[GetIdeology('ideology_reformer').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_liberal_leader_tt: "[GetIdeology('ideology_liberal_leader').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_radical_tt: "[GetIdeology('ideology_radical').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_pacifist_tt: "[GetIdeology('ideology_pacifist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_communist_tt: "[GetIdeology('ideology_communist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_royalist_tt: "[GetIdeology('ideology_royalist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_traditionalist_tt: "[GetIdeology('ideology_traditionalist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_market_liberal_tt: "[GetIdeology('ideology_market_liberal').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_sovereignist_leader_tt: "[GetIdeology('ideology_sovereignist_leader').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_social_democrat_tt: "[GetIdeology('ideology_social_democrat').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_authoritarian_tt: "[GetIdeology('ideology_authoritarian').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_corporatist_leader_tt: "[GetIdeology('ideology_corporatist_leader').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_land_reformer_tt: "[GetIdeology('ideology_land_reformer').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_ethno_nationalist_tt: "[GetIdeology('ideology_ethno_nationalist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_theocrat_tt: "[GetIdeology('ideology_theocrat').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_jingoist_leader_tt: "[GetIdeology('ideology_jingoist_leader').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_protectionist_tt: "[GetIdeology('ideology_protectionist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_integralist_tt: "[GetIdeology('ideology_integralist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_slaver_tt: "[GetIdeology('ideology_slaver').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_luddite_tt: "[GetIdeology('ideology_luddite').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_vanguardist_tt: "[GetIdeology('ideology_vanguardist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]." 
+
+  #################### CHARACTER INTERACTION: TECHNOLOGY TOOLTIP ####################
+  socialism_vanguardist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('socialism').GetName] станет доступен новый [GetIdeology('ideology_vanguardist').GetName] [concept_politician]." 
+  socialism_communist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('socialism').GetName] станет доступен новый [GetIdeology('ideology_communist').GetName] [concept_politician]." 
+  labor_movement_social_democrat_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('labor_movement').GetName] станет доступен новый [GetIdeology('ideology_social_democrat').GetName] [concept_politician]." 
+  ethno_nationalist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('nationalism').GetName] станет доступен новый [GetIdeology('ideology_ethno_nationalist').GetName] [concept_politician]." 
+  corporatist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('corporatism').GetName] станет доступен новый [GetIdeology('ideology_corporatist_leader').GetName] [concept_politician]." 
+  ideology_market_liberal_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('stock_exchange').GetName] станет доступен новый [GetIdeology('ideology_market_liberal').GetName] [concept_politician]." 
+  ideology_protectionist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('stock_exchange').GetName] станет доступен новый [GetIdeology('ideology_protectionist').GetName] [concept_politician]." 
+  ideology_liberal_leader_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('egalitarianism').GetName] станет доступен новый [GetIdeology('ideology_liberal_leader').GetName] [concept_politician]." 
+  ideology_radical_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('egalitarianism').GetName] станет доступен новый [GetIdeology('ideology_radical').GetName] [concept_politician]." 
+  
+  #################### CHARACTER INTERACTION: TITLE INTERACTION ####################
+  found_movement: "Создать политическое движение" 
+  
+  politician_progaganda_campaign_pro: "Начать пропагандистскую кампанию"  
+  politician_progaganda_campaign_against: "Начать кампанию по дискредитации"
+  politician_progaganda_campaign_agitator_activism: "Организовать демонстрацию"    
+ 
+  politician_progaganda_campaign_pro_tt: "Начните пропагандистскую кампанию, чтобы повысить популярность этого персонажа; в зависимости от приложенных усилий результат будет более или менее значительным."  
+  politician_progaganda_campaign_against_tt: "Начните пропагандистскую кампанию, чтобы дискредитировать этого персонажа; в зависимости от приложенных усилий результат будет более или менее значительным."  
+  politician_progaganda_campaign_agitator_activism_tt: "Организует политическую демонстрацию на площадях главных городов, повышая поддержку и активизм движения."
+  
+  #################### MODIFIERS ####################
+  great_revision_politician_progaganda_campaign_pro_alert:0 "Использована пропагандистская кампания"
+  great_revision_politician_progaganda_campaign_against_alert:0 "Использована кампания по дискредитации"
+  
+  great_revision_politician_progaganda_campaign_pro:0 "Пропагандистская кампания"
+  great_revision_politician_progaganda_campaign_against:0 "Кампания по дискредитации"
+  
+  great_revision_politician_progaganda_campaign_pro_success_1:0 "Оратор масс"
+  great_revision_politician_progaganda_campaign_pro_success_interest_group_1:0 "Оратор масс"
+  
+  great_revision_politician_progaganda_campaign_pro_success_2:0 "Политический оператор"
+  great_revision_politician_progaganda_campaign_pro_success_interest_group_2:0 "Политический оператор"
+  
+  great_revision_politician_progaganda_campaign_pro_success_3:0 "Противоречивая речь"
+  great_revision_politician_progaganda_campaign_pro_success_interest_group_3:0 "Противоречивая речь"
+  great_revision_politician_progaganda_campaign_pro_success_legittimacy:0 "Злоупотребление служебными полномочиями"
+  
+  great_revision_politician_progaganda_campaign_against_success_1:0 "Персонаж дискредитирован"
+  great_revision_politician_progaganda_campaign_against_success_interest_group_1:0 "Персонаж дискредитирован"
+  
+  great_revision_politician_progaganda_campaign_against_success_2:0 "Фабрика грязи"
+  great_revision_politician_progaganda_campaign_against_success_interest_group_2:0 "Фабрика грязи"
+  
+  great_revision_politician_progaganda_campaign_agitator_activism:0 "Политический активист"
+  great_revision_politician_progaganda_campaign_political_movement_activism_1:0 "Движение укреплено"
+  great_revision_politician_progaganda_campaign_political_movement_activism_2:0 "Политическая агитация"
+  
+  #################### EVENTS ####################
+  politician_progaganda_campaign.1:0 "Пропагандистская кампания"
+  politician_progaganda_campaign.1.t:0 "Пропагандистская кампания"
+  politician_progaganda_campaign.1.desc:0 "Пропагандистская кампания"
+  politician_progaganda_campaign.1.d:0 "Начата кампания по повышению популярности [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName]. Теперь нам нужно выбрать: действовать по созидательному пути или придерживаться более агрессивной стратегии."
+  politician_progaganda_campaign.1.f:0 "'Именно так, мой друг. Я говорю это здесь и не отрицаю этого: [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] — тот политик, который нам нужен, нужный человек в нужное время!'\n\n\"Разве он не слишком уж экзальтирован, чтобы взять бразды правления партией?'\n\n\'С чего ты вообще это взял?'\n\n\'Друг... на днях он буквально начал с того, что сказал: я приведу МОЮ партию к величию, ведя нашу нацию... во благо Империи... э-э, то есть Республики..'"
+  politician_progaganda_campaign.1.a:0 "Пусть [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] использует свою диалектику, обращаясь к толпе."
+  politician_progaganda_campaign.1.b:0 "[SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] должен сосредоточить речь на проблемах, которые терзают нашу страну."
+  politician_progaganda_campaign.1.c:0 "Использовать выступление [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName], чтобы укрепить влияние нашей партии в правительстве, даже если это будет выглядеть как проявление силы."
+  
+  politician_progaganda_campaign_country.1:0 "Партия теряет доверие"
+  politician_progaganda_campaign_country.1.t:0 "Партия теряет доверие"
+  politician_progaganda_campaign_country.1.desc:0 "Партия теряет доверие"
+  politician_progaganda_campaign_country.1.d:0 "Кампания по повышению популярности [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] сработала, но злоупотребление нашим политическим влиянием привело к тому, что партия потеряла доверие в глазах общественного мнения."
+  politician_progaganda_campaign_country.1.f:0 "'Именно так, мой друг. Я говорю это здесь и не отрицаю этого: [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] — тот политик, который нам нужен, нужный человек в нужное время!'\n\n\"Разве он не слишком уж экзальтирован, чтобы взять бразды правления партией?'\n\n\'С чего ты вообще это взял?'\n\n\'Друг... на днях он буквально начал с того, что сказал: я приведу МОЮ партию к величию, ведя нашу нацию... во благо Империи... э-э, то есть Республики..'"
+  politician_progaganda_campaign_country.1.a:0 "Небольшая цена за укрепление нашей власти.."
+  
+  politician_progaganda_campaign.2:0 "Кампания по дискредитации"
+  politician_progaganda_campaign.2.t:0 "Кампания по дискредитации"
+  politician_progaganda_campaign.2.desc:0 "Кампания по дискредитации"
+  politician_progaganda_campaign.2.d:0 "[SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] стал слишком неудобной фигурой для нашей страны; пришло время сделать так, чтобы за ним больше не шли."
+  politician_progaganda_campaign.2.f:0 "Грязь, грязь, грязь — Я ОБОЖАЮ грязь, особенно когда швыряю её людям в лицо."
+  politician_progaganda_campaign.2.a:0 "Начнём кампанию по очернению против [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName]."
+  politician_progaganda_campaign.2.b:0 "Этого недостаточно! Сделайте так, чтобы даже его мать больше не хотела иметь с ним ничего общего!"
+  
+  politician_progaganda_campaign.3:0 "Революционная кампания"
+  politician_progaganda_campaign.3.t:0 "Революционная кампания"
+  politician_progaganda_campaign.3.desc:0 "Революционная кампания"
+  politician_progaganda_campaign.3.d:0 "[SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] поднял массы против установленного порядка, надеясь изменить политический курс страны."
+  politician_progaganda_campaign.3.f:0 "'Что за толпа собралась у здания правительства?'\n\n\'Да брось, это будет очередной парад накануне национального праздника, у нас есть вещи поважнее'\n\n\'Ну, может и так... Но все эти красные флаги меня не убеждают...'"
+  politician_progaganda_campaign.3.a:0 "Проследим, чтобы [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] получил достаточно поддержки для подачи петиции правительству."
+  politician_progaganda_campaign.3.b:0 "Сейчас не время для умеренности: революция грядёт! И мы возглавим её!"
+  
+  politician_progaganda_campaign.4:0 "Политическое движение"
+  politician_progaganda_campaign.4.t:0 "Политическое движение"
+  politician_progaganda_campaign.4.desc:0 "Политическое движение"
+  politician_progaganda_campaign.4.d:0 "Политическая активность [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] смогла собрать поддержку значительной части населения. Теперь нам нужно решить: объединить толпы под новым движением или пожинать плоды этой кампании."
+  politician_progaganda_campaign.4.f:0 "'Что за толпа собралась у здания правительства?'\n\n\'Да брось, это будет очередной парад накануне национального праздника, у нас есть вещи поважнее'\n\n\'Ну, может и так... Но все эти красные флаги меня не убеждают...'"
+  politician_progaganda_campaign.4.a:0 "Политическая кампания началась!"
+  politician_progaganda_campaign.4.b:0 "Партия извлечёт из этого выгоду!"
+  
+  politician_progaganda_campaign.5:0 "Новый лидер партии"
+  politician_progaganda_campaign.5.t:0 "Новый лидер партии"
+  politician_progaganda_campaign.5.desc:0 "Новый лидер партии"
+  politician_progaganda_campaign.5.d:0 "Череда неудач [SCOPE.sCharacter('great_revision_propaganda_leader').GetFullName] привела к тому, что партия больше не поддерживает текущий политический курс. Самые влиятельные члены призывают к смене руководства."
+  politician_progaganda_campaign.5.f:0 "Партия созвала чрезвычайное собрание, чтобы решить, кто поведёт группу к новому политическому курсу, но не все члены были единодушны, и разные крылья партии хотели выбрать своё направление.\n\n\Кто поведёт [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName] в следующую политическую эпоху?"
+  politician_progaganda_campaign.5.a:0 "Систему реформирует #yellow;bold; радикальное крыло#!"
+  politician_progaganda_campaign.5.b:0 "#yellow;bold; Реформистское крыло#! возглавит партию!"
+  politician_progaganda_campaign.5.c:0 "Нам нужно умеренное и #yellow;bold; центристское#! руководство."
+  politician_progaganda_campaign.5.g:0 "#yellow;bold; Консервативное крыло#! восстановит порядок и стабильность."
+  politician_progaganda_campaign.5.e:0 "Настало время для #yellow;bold; реакционного#! руководства!"
+  
+  
+
+
+
+
+

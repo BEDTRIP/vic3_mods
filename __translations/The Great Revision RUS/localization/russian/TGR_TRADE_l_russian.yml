@@ -1,0 +1,71 @@
+﻿l_russian:
+
+  ########################### TGR PRODUCTION & TRADE: MODIFIERS  #######################################
+  #ai_production_event_modifier_import:0 "Государственные субсидии на импорт"
+  #ai_production_event_modifier_export:0 "Государственные субсидии на экспорт"
+  #small_subsidies_import:0 "Небольшие стимулы для импорта"
+  #big_subsidies_import:0 "Крупные стимулы для импорта"
+  #small_subsidies_export:0 "Небольшие стимулы для экспорта"
+  #big_subsidies_export:0 "Крупные стимулы для экспорта"
+  #ai_production_event_modifier_desc:0 "Субсидии, выплачиваемые государством в качестве компенсации за упущенную прибыль торговых центров"
+  
+  ########################### TGR PRODUCTION & TRADE: TOOLTIPS  #######################################
+  #remove_subsidies_import_tt:0 "Субсидии на импорт будут отменены"
+  #remove_subsidies_export_tt:0 "Субсидии на экспорт будут отменены"
+  
+  ########################### TGR PRODUCTION & TRADE: JE  #######################################
+  #tgr_trade_subsidies:0 "Торговые субсидии"
+  #tgr_trade_subsidies_status:0 "Как правительство, мы можем предоставлять денежные стимулы [GetBuildingType('building_trade_center').GetName], чтобы они могли продолжать торговлю, даже если торговые маршруты становятся нерентабельными. Это обеспечит нашу #red;bold; цепочку поставок#! или нашу #red;bold; конкурентоспособность экспорта#!."
+  #tgr_trade_subsidies_reason:0 "Торговля — это кровь экономики, и иногда прибыль не является единственной целью. У торговли с разными странами может быть множество интересов: по стратегическим причинам, чтобы поддерживать хорошие отношения, или просто чтобы снабжать союзника или торгового партнёра.\n\nИИ будет выбирать торговую политику в соответствии с действующим законом.\nЕсли у #blue;bold; ИИ#! действует [GetLawType('law_protectionism').GetName] [concept_law], он установит #blue;bold; $je_tgr_small_subsidies_import_button$#! и #blue;bold; $je_tgr_small_subsidies_export_button$#!.\nЕсли же у #blue;bold; ИИ#! действует [GetLawType('law_mercantilism').GetName] [concept_law] или [GetLawType('law_free_trade').GetName] [concept_law], он установит только #blue;bold; $je_tgr_big_subsidies_export_button$#!"
+  
+  ########################### TGR PRODUCTION & TRADE: BUTTONS  #######################################
+  #je_tgr_no_subsidies_import_button:0 "Без субсидий на импорт"
+  #je_tgr_no_subsidies_export_button:0 "Без субсидий на экспорт"
+  #je_tgr_small_subsidies_import_button:0 "Небольшие субсидии на импорт"
+  #je_tgr_small_subsidies_export_button:0 "Небольшие субсидии на экспорт"
+  #je_tgr_big_subsidies_import_button:0 "Крупные субсидии на импорт"
+  #je_tgr_big_subsidies_export_button:0 "Крупные субсидии на экспорт"
+  
+  #je_tgr_no_subsidies_import_button_name:0 "Без субсидий на импорт"
+  #je_tgr_no_subsidies_import_button_desc:0 ""
+  #je_tgr_no_subsidies_export_button_name:0 "Без субсидий на экспорт"
+  #je_tgr_no_subsidies_export_button_desc:0 ""
+  #je_tgr_small_subsidies_import_button_name:0 "Небольшие субсидии на импорт"
+  #je_tgr_small_subsidies_import_button_desc:0 ""
+  #je_tgr_small_subsidies_export_button_name:0 "Небольшие субсидии на экспорт"
+  #je_tgr_small_subsidies_export_button_desc:0 ""
+  #je_tgr_big_subsidies_import_button_name:0 "Крупные субсидии на импорт"
+  #je_tgr_big_subsidies_import_button_desc:0 ""
+  #je_tgr_big_subsidies_export_button_name:0 "Крупные субсидии на экспорт"
+  #je_tgr_big_subsidies_export_button_desc:0 ""
+  
+  ########################### TGR PRODUCTION & TRADE: EVENTS  #######################################
+  ai_production_event.1:0 "The Great Revision: Международная торговля"
+  ai_production_event.1.t:0 "The Great Revision: Международная торговля"
+  ai_production_event.1.d:0 "#yellow;bold; The Great Revision#! вносит множество изменений в торговлю, делая ИИ способным управлять сложными стратегиями специализации экономики."
+  ai_production_event.1.f:0 "Используя The Great Revision, вы заметите, что каждая страна следует определённой экономической стратегии, нацеленной на специализацию в конкретных секторах.\n\nЭто приведёт к тому, что государства будут торговать друг с другом, специализируясь на экспорте своей продукции и импорте сырья. Можно ожидать, что мировой ВВП вырастет, и каждая нация будет лучше развивать свою экономику.\n\nНаслаждайтесь #yellow;bold; The Great Revision#!!"
+  ai_production_event.1.a:0 "Дайте мне играть!"
+  
+  ########################### TGR PRODUCTION & TRADE: COMPANY NAME  #######################################
+  company_russian_american_company: "Новая индустрия" # Alt. Rossiysko-Amerikanskaya Kompaniya
+  company_mantero_seta: "Конфиндустрия Италии"
+  company_philips: "Нидерландский конгломерат"
+  company_ong_lung_sheng_tea_company: "Чай и зерно «Онг Лун Шэн»"
+  company_ong_lung_sheng_tea_company_heaven_kingdom: "Чай и зерно «Тайпин»"
+  
+  ########################### TGR PRODUCTION & TRADE: LOCALIZATION  #######################################
+  pm_refrigerated_storage_building_livestock_ranch:0 "Железнодорожные склады"
+  pm_refrigerated_storage_building_fishing_wharf:0 "Железнодорожные склады"
+  
+  ########################### TGR PRODUCTION & TRADE: MODIFIERS  #######################################
+  great_revision_uk_start_company:0 "Компания Гудзонова залива"
+  great_revision_brazil_argentina_economy_starter:0 "Система воскресных школ"
+
+  
+  
+  
+
+
+
+
+

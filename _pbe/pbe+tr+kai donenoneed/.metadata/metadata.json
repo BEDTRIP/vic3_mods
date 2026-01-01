@@ -1,0 +1,13 @@
+{
+  "name": "ComPatch Tech & Res + Power Blocks Expanded",
+  "id": "3637697167",
+  "version": "1.12.2",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for TechRes+Kuromi + Power Blocks Expanded (common/ merges)",
+  "tags": [],
+  "relationships": [],
+  "picture": "thumbnail.png",
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

@@ -1,0 +1,6 @@
+﻿l_russian:
+ REDUCE_TAXATION_TT: "Снизить $BUDGET_TAXATION_LEVEL$\n\n$DECREASE_TAXATION_INSTRUCTIONS$"
+ INCREASE_TAXATION_TT: "Повысить $BUDGET_TAXATION_LEVEL$\n\n$INCREASE_TAXATION_INSTRUCTIONS$"
+ CURRENT_TAXATION_TT: "Текущий процент налогообложения"
+ INCREASE_TAXATION_INSTRUCTIONS: "#instruction Щёлкните#!, чтобы #v повысить на 1%#!; #i $SHORTCUT_KEY_MOD_shift$Щёлкните#! — на #v 5%#!; #i $SHORTCUT_KEY_MOD_ctrl$Щёлкните#! — на #v 10%#!\n"
+ DECREASE_TAXATION_INSTRUCTIONS: "#instruction Щёлкните#!, чтобы #v снизить на 1%#!; #i $SHORTCUT_KEY_MOD_shift$Щёлкните#! — на #v 5%#!; #i $SHORTCUT_KEY_MOD_ctrl$Щёлкните#! — на #v 10%#!\n"

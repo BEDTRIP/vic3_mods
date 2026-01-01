@@ -1,0 +1,400 @@
+### E&F + Morgenroete ComPatch (Vic3 1.12)
+### Add E&F financial PM groups to Morgenroete custom buildings
+
+INJECT:building_agassiz_volcano_observatory = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_douglas_alpine_club = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_dubois_national_park = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_dubois_zoo = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_almshouse = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_arch = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_arts = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_bamiyan = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_campanile = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_canalization = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_dom = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_fountain = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_gotthard = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_gyeong = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_health = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_hospital = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_luna = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_moistero = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_mole = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_neuschwanstein = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_palacio = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_parade = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_park = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_people_forum = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_people_monument = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_people_palace = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_petra = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_potala = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_prison = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_sagrada = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_saxon = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_school = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_science = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_sports = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_statue = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_gaudi_summer = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_instrument_workshops = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_klimt_gallery = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_lepsius_archaeological_museum = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_manzoni_library = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+#INJECT:building_manzoni_publishing_industry = {
+#	production_method_groups = {
+#		pmg_market_liquidity #E&F
+#		pmg_data_optimization_primary_sector #T&R
+#		pmg_private_ownership_manufacture_stock
+#	}
+#}
+
+INJECT:building_mendelejew_hydrogenation_plants = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_mendelejew_synthetic_rubber_factory = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_mr_lyme_regis_cliff = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_mr_steamboat_rock = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_panum_asylum = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_panum_red_cross = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_panum_tuberculosis_sanatorium = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_rapanui_moai = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+#INJECT:building_uranium_mine = {
+#	production_method_groups = {
+#		pmg_market_liquidity #E&F
+#		pmg_data_optimization_primary_sector #T&R
+#		pmg_private_ownership_mining_stock
+#	}
+#}
+
+INJECT:building_verrier_observatory = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_vikelas_aiacr = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_vikelas_circuit = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_vikelas_fifa = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_vikelas_ioc = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+INJECT:building_vikelas_sports = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+

@@ -1,0 +1,259 @@
+### E&F + Morgenroete ComPatch (Vic3 1.12)
+### Extend E&F "private ownership production stocks" logic to Morgenroete buildings.
+
+# Called from the yearly pulse (see override below).
+mr_private_ownership_production_stocks = {
+	every_scope_state = {
+
+		########## MORGENROETE
+		# building_airport (manufacture stock)
+		if = {
+			limit = {
+				has_building = building_airport
+				b:building_airport = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_airport
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_airport
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_airport
+				b:building_airport = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_airport
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_airport
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_uranium_mine (mining stock)
+		if = {
+			limit = {
+				has_building = building_uranium_mine
+				b:building_uranium_mine = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_uranium_mine
+					production_method = pm_no_private_ownership_mining_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_uranium_mine
+				production_method = pm_private_ownership_majority_mining_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_uranium_mine
+				b:building_uranium_mine = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_uranium_mine
+					production_method = pm_private_ownership_majority_mining_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_uranium_mine
+				production_method = pm_no_private_ownership_mining_stock
+			}
+		}
+
+		# building_elgar_opera (manufacture stock)
+		if = {
+			limit = {
+				has_building = building_elgar_opera
+				b:building_elgar_opera = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_elgar_opera
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_elgar_opera
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_elgar_opera
+				b:building_elgar_opera = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_elgar_opera
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_elgar_opera
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_instrument_workshops (manufacture stock)
+		if = {
+			limit = {
+				has_building = building_instrument_workshops
+				b:building_instrument_workshops = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_instrument_workshops
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_instrument_workshops
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_instrument_workshops
+				b:building_instrument_workshops = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_instrument_workshops
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_instrument_workshops
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_manzoni_publishing_industry (manufacture stock)
+		if = {
+			limit = {
+				has_building = building_manzoni_publishing_industry
+				b:building_manzoni_publishing_industry = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_manzoni_publishing_industry
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_manzoni_publishing_industry
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_manzoni_publishing_industry
+				b:building_manzoni_publishing_industry = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_manzoni_publishing_industry
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_manzoni_publishing_industry
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_mendelejew_hydrogenation_plants (manufacture stock)
+		if = {
+			limit = {
+				has_building = building_mendelejew_hydrogenation_plants
+				b:building_mendelejew_hydrogenation_plants = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_mendelejew_hydrogenation_plants
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_mendelejew_hydrogenation_plants
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_mendelejew_hydrogenation_plants
+				b:building_mendelejew_hydrogenation_plants = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_mendelejew_hydrogenation_plants
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_mendelejew_hydrogenation_plants
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_mendelejew_synthetic_rubber_factory (manufacture stock)
+		if = {
+			limit = {
+				has_building = building_mendelejew_synthetic_rubber_factory
+				b:building_mendelejew_synthetic_rubber_factory = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_mendelejew_synthetic_rubber_factory
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_mendelejew_synthetic_rubber_factory
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_mendelejew_synthetic_rubber_factory
+				b:building_mendelejew_synthetic_rubber_factory = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_mendelejew_synthetic_rubber_factory
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_mendelejew_synthetic_rubber_factory
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+	}
+}
+
+# Override: extend E&F yearly pulse so it also runs the Morgenroete private-ownership switch.
+financial_center_ef_on_yearly_pulse_country = {
+	private_ownership_production_stocks = yes
+	mr_private_ownership_production_stocks = yes
+	financial_center_production_methods = yes
+	ai_buy_central_bank_debt = yes
+	sovereign_bond_yields = yes
+	bond_maturity_on_action = yes
+	financial_crash_count_reset_condition = yes
+}
+

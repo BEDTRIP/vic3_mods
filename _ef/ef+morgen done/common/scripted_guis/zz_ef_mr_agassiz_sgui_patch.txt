@@ -1,0 +1,235 @@
+##############################
+# E&F + Morgenroete ComPatch #
+# Agassiz: Silver GUI support#
+##############################
+
+# Replace the ore vein button to include E&F silver mine + silver JE
+mr_geologist_ore_vein_button_sgui = {
+	scope = country
+	saved_scopes = {
+		chosen_building
+	}
+	is_shown = {
+		NOR = {
+			has_journal_entry = je_agassiz_find_coal_project
+			has_journal_entry = je_agassiz_find_iron_project
+			has_journal_entry = je_agassiz_find_lead_project
+			has_journal_entry = je_agassiz_find_sulfur_project
+			has_journal_entry = je_agassiz_find_gold_project
+			has_journal_entry = je_agassiz_find_uranium_project
+			has_journal_entry = je_agassiz_find_silver_project
+		}
+	}
+	is_valid = {
+		custom_tooltip = {
+			text = MR_ALREADY_CHOOSING_BUILDING_TRIGGER_TT
+			NOT = {
+				has_variable = agassiz_improve_mine_project_building_choser_var
+			}
+		}
+		custom_tooltip = {
+			text = MR_GEOLOGIST_ACTIVE_TRIGGER_TT
+			dubois_has_active_geologist = yes
+		}
+		mr_gui_has_geology_tech_trigger = yes
+		custom_tooltip = {
+			text = MR_GEOLOGIST_FIND_ORE_TRIGGER_TT
+			agassiz_can_find_new_vein_trigger = yes
+		}
+	}
+	effect = {
+		if = {
+			limit = { is_ai = yes }
+			ordered_scope_building = {
+				position = 0 # We only want the first one here
+				limit = {
+					level > 0
+					OR = {
+						is_building_type = building_coal_mine
+						is_building_type = building_iron_mine
+						is_building_type = building_lead_mine
+						is_building_type = building_sulfur_mine
+						is_building_type = building_gold_mine
+						is_building_type = building_uranium_mine
+						is_building_type = building_silver_mine # E&F
+					}
+					NOT = { has_modifier = agassiz_building_production_mult_modifier }
+				}
+				order_by = earnings
+				save_scope_as = chosen_building
+			}
+			if = {
+				limit = { scope:chosen_building = { is_building_type = building_coal_mine } }
+				add_journal_entry = { type = je_agassiz_find_coal_project target = scope:chosen_building }
+				je:je_agassiz_find_coal_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_small }
+				}
+			}
+			else_if = {
+				limit = { scope:chosen_building = { is_building_type = building_iron_mine } }
+				add_journal_entry = { type = je_agassiz_find_iron_project target = scope:chosen_building }
+				je:je_agassiz_find_iron_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_small }
+				}
+			}
+			else_if = {
+				limit = { scope:chosen_building = { is_building_type = building_lead_mine } }
+				add_journal_entry = { type = je_agassiz_find_lead_project target = scope:chosen_building }
+				je:je_agassiz_find_lead_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_very_small }
+				}
+			}
+			else_if = {
+				limit = { scope:chosen_building = { is_building_type = building_sulfur_mine } }
+				add_journal_entry = { type = je_agassiz_find_sulfur_project target = scope:chosen_building }
+				je:je_agassiz_find_sulfur_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_very_small }
+				}
+			}
+			else_if = {
+				limit = { scope:chosen_building = { is_building_type = building_gold_mine } }
+				add_journal_entry = { type = je_agassiz_find_gold_project target = scope:chosen_building }
+				je:je_agassiz_find_gold_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium }
+				}
+			}
+			else_if = {
+				limit = { scope:chosen_building = { is_building_type = building_uranium_mine } }
+				add_journal_entry = { type = je_agassiz_find_uranium_project target = scope:chosen_building }
+				je:je_agassiz_find_uranium_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium }
+				}
+			}
+			else_if = {
+				limit = { scope:chosen_building = { is_building_type = building_silver_mine } }
+				add_journal_entry = { type = je_agassiz_find_silver_project target = scope:chosen_building }
+				je:je_agassiz_find_silver_project = {
+					add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium }
+				}
+			}
+			if = {
+				limit = { has_variable = agassiz_geologist_var }
+				var:agassiz_geologist_var ?= { set_character_busy_and_immortal = yes }
+			}
+		}
+		else = {
+			clear_variable_list = agassiz_improve_mine_buildings_variable_list
+			ordered_scope_building = {
+				limit = {
+					level > 0
+					OR = {
+						is_building_type = building_coal_mine
+						is_building_type = building_iron_mine
+						is_building_type = building_lead_mine
+						is_building_type = building_sulfur_mine
+						is_building_type = building_gold_mine
+						is_building_type = building_uranium_mine
+						is_building_type = building_silver_mine # E&F
+					}
+					NOT = { has_modifier = agassiz_building_production_mult_modifier }
+				}
+				order_by = earnings
+				check_range_bounds = no
+				root = {
+					add_to_variable_list = {
+						name = agassiz_improve_mine_buildings_variable_list
+						target = prev
+					}
+				}
+			}
+			set_variable = agassiz_improve_mine_project_building_choser_var
+		}
+	}
+	ai_is_valid = { always = yes }
+	ai_chance = { base = 10 }
+	ai_frequency = 4
+}
+
+# Replace stop button to include silver JE
+mr_geologist_ore_vein_stop_button_sgui = {
+	scope = country
+	is_shown = {
+		OR = {
+			has_journal_entry = je_agassiz_find_coal_project
+			has_journal_entry = je_agassiz_find_iron_project
+			has_journal_entry = je_agassiz_find_lead_project
+			has_journal_entry = je_agassiz_find_sulfur_project
+			has_journal_entry = je_agassiz_find_gold_project
+			has_journal_entry = je_agassiz_find_uranium_project
+			has_journal_entry = je_agassiz_find_silver_project
+		}
+	}
+	is_valid = {
+		NOT = { has_variable = agassiz_stop_geologist_improving_project_var }
+		OR = {
+			has_journal_entry = je_agassiz_find_coal_project
+			has_journal_entry = je_agassiz_find_iron_project
+			has_journal_entry = je_agassiz_find_lead_project
+			has_journal_entry = je_agassiz_find_sulfur_project
+			has_journal_entry = je_agassiz_find_gold_project
+			has_journal_entry = je_agassiz_find_uranium_project
+			has_journal_entry = je_agassiz_find_silver_project
+		}
+	}
+	effect = {
+		custom_tooltip = {
+			text = mr_geologist_ore_vein_stop_effect_tt
+			set_variable = agassiz_stop_geologist_improving_project_var
+		}
+	}
+}
+
+# Replace the "choose building" action in the mine selection window to include silver mine.
+mr_improve_mine_window_chose_button_sgui = {
+	scope = country
+	saved_scopes = {
+		chosen_building
+	}
+	effect = {
+		if = {
+			limit = { scope:chosen_building = { is_building_type = building_coal_mine } }
+			add_journal_entry = { type = je_agassiz_find_coal_project target = scope:chosen_building }
+			je:je_agassiz_find_coal_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_small } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_small } }
+		}
+		else_if = {
+			limit = { scope:chosen_building = { is_building_type = building_iron_mine } }
+			add_journal_entry = { type = je_agassiz_find_iron_project target = scope:chosen_building }
+			je:je_agassiz_find_iron_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_small } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_small } }
+		}
+		else_if = {
+			limit = { scope:chosen_building = { is_building_type = building_lead_mine } }
+			add_journal_entry = { type = je_agassiz_find_lead_project target = scope:chosen_building }
+			je:je_agassiz_find_lead_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_very_small } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_very_small } }
+		}
+		else_if = {
+			limit = { scope:chosen_building = { is_building_type = building_sulfur_mine } }
+			add_journal_entry = { type = je_agassiz_find_sulfur_project target = scope:chosen_building }
+			je:je_agassiz_find_sulfur_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_very_small } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_very_small } }
+		}
+		else_if = {
+			limit = { scope:chosen_building = { is_building_type = building_gold_mine } }
+			add_journal_entry = { type = je_agassiz_find_gold_project target = scope:chosen_building }
+			je:je_agassiz_find_gold_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium } }
+		}
+		else_if = {
+			limit = { scope:chosen_building = { is_building_type = building_uranium_mine } }
+			add_journal_entry = { type = je_agassiz_find_uranium_project target = scope:chosen_building }
+			je:je_agassiz_find_uranium_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium } }
+		}
+		else_if = {
+			limit = { scope:chosen_building = { is_building_type = building_silver_mine } }
+			add_journal_entry = { type = je_agassiz_find_silver_project target = scope:chosen_building }
+			je:je_agassiz_find_silver_project ?= { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium } }
+			show_as_tooltip = { add_modifier = { name = agassiz_ore_search_cost_modifier multiplier = money_amount_multiplier_medium } }
+		}
+		remove_variable = agassiz_improve_mine_project_building_choser_var
+		var:agassiz_geologist_var = { set_character_busy_and_immortal = yes }
+	}
+}
+

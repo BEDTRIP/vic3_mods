@@ -1,0 +1,14 @@
+########################################
+# E&F + TheGreatRevision (TGR) - Defines compatibility
+# This file is meant to be loaded after both mods to avoid "last loaded wins" issues.
+########################################
+
+NEconomy = {
+	# TGR trade rework expects narrower price swings than E&F defaults.
+	# Keep TGR value here, but also keep E&F's shortage/reserve tuning.
+	PRICE_RANGE = 0.85
+
+	GOODS_SHORTAGE_PENALTY_MAX = 0.9
+	GOLD_RESERVE_RETURNS_FACTOR = 0.0001
+}
+

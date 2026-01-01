@@ -1,0 +1,30 @@
+﻿l_english:
+
+ je_agassiz_find_commonores_project: "Find Common Ores" #T&F
+ je_agassiz_find_bauxite_project: "find Bauxite" #T&R
+ je_agassiz_find_copper_project: "Find Copper" #T&R
+ je_agassiz_find_rare_earths_project: "Find Rare Earths" #T&R
+ je_agassiz_find_advancedores_project: "Find Advanced Ores" #T&R
+ je_agassiz_find_gas_project: "Find Gas" #T&R
+ je_group_agassiz_geology: "Morgenröte: [concept_agassiz_geology]"
+ je_geologist_dies_tt: "Dr. [ROOT.Var('agassiz_geologist_var').GetCharacter.GetLastName] dies"
+
+ ### 2.3.1 ###
+
+ je_agassiz_find_coal_project_reason: "Your [concept_agassiz_geologist] Dr. [ROOT.Var('agassiz_geologist_var').GetCharacter.GetLastName] is feverishly searching ore veins in the [JournalEntry.GetTarget.GetBuilding.GetName] in [JournalEntry.GetTarget.GetBuilding.GetState.GetName].\n$mr_divider_for_je$\nThe project will get progress every month. Once the progress reaches [JournalEntry.GetTotalGoalValue|V0] the building will receive the new modifier.\n$mr_divider_for_je$\nCurrent monthly progress: #underline #tooltip:[GetRawTextTooltipTag('agassiz_monthly_geologist_improvement_progress_var_tt')] [GetPlayer.MakeScope.GetVariable('agassiz_monthly_geologist_improvement_progress_var').GetValue|2+] #!#!" #Please replace
+ je_agassiz_find_iron_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace
+ je_agassiz_find_lead_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace
+ je_agassiz_find_sulfur_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace
+ je_agassiz_find_gold_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace
+ je_agassiz_find_uranium_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace
+ je_agassiz_find_commonores_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace #T&F
+ je_agassiz_find_bauxite_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace #T&R
+ je_agassiz_find_copper_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace #T&R
+ je_agassiz_find_rare_earths_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace #T&R
+ je_agassiz_find_advancedores_project_reason: "$je_agassiz_find_coal_project_reason$" #Please replace #T&R
+ je_agassiz_find_oil_project_reason: "Your [concept_agassiz_geologist] Dr. [ROOT.Var('agassiz_geologist_var').GetCharacter.GetLastName] is feverishly searching for oil deposits in the [JournalEntry.GetTarget.GetBuilding.GetName] in [JournalEntry.GetTarget.GetBuilding.GetState.GetName]\n$mr_divider_for_je$\nThe project will get progress every month. Once the progress reaches [JournalEntry.GetTotalGoalValue|V0] the building will receive the new modifier.\n$mr_divider_for_je$\nCurrent monthly progress: #underline #tooltip:[GetRawTextTooltipTag('agassiz_monthly_geologist_improvement_progress_var_tt')] [GetPlayer.MakeScope.GetVariable('agassiz_monthly_geologist_improvement_progress_var').GetValue|2+] #!#!" #Please replace
+ je_agassiz_find_gas_project_reason: "$je_agassiz_find_oil_project_reason$" #Please replace #T&R
+ agassiz_building_has_production_modifier_tt: "[JournalEntry.GetTarget.GetBuilding.GetName] has the #V $agassiz_building_production_mult_modifier$#! modifier." #Please replace
+
+ agassiz_building_has_production_modifier_2_tt: "[JournalEntry.GetTarget.GetBuilding.GetName] has the #V $agassiz_building_production_2_mult_modifier$#! modifier."
+

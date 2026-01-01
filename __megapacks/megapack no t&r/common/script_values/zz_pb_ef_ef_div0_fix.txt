@@ -1,0 +1,171 @@
+#############################################
+# pb+ef: fix E&F Div/0 in financial modifiers
+# - E&F divides by building_financial_num (can be 0)
+# - E&F divides by base_demande_*_fix (can be 0)
+#############################################
+
+REPLACE_OR_CREATE:target_demand_bond_ajusted = {
+	value = target_demand_bond
+	subtract = market.mg:bond.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_bond_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_bond_fix > 0 }
+		value = target_demand_bond_ajusted
+		subtract = base_demande_bond_fix
+		divide = base_demande_bond_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_manufacture_stock_ajusted = {
+	value = target_demand_manufacture_stock
+	subtract = market.mg:manufacture_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_manufacture_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_manufacture_stock_fix > 0 }
+		value = target_demand_manufacture_stock_ajusted
+		subtract = base_demande_manufacture_stock_fix
+		divide = base_demande_manufacture_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_agricultural_stock_ajusted = {
+	value = target_demand_agricultural_stock
+	subtract = market.mg:agricultural_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_agricultural_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_agricultural_stock_fix > 0 }
+		value = target_demand_agricultural_stock_ajusted
+		subtract = base_demande_agricultural_stock_fix
+		divide = base_demande_agricultural_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_mining_stock_ajusted = {
+	value = target_demand_mining_stock
+	subtract = market.mg:mining_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_mining_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_mining_stock_fix > 0 }
+		value = target_demand_mining_stock_ajusted
+		subtract = base_demande_mining_stock_fix
+		divide = base_demande_mining_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_railroad_stock_ajusted = {
+	value = target_demand_railroad_stock
+	subtract = market.mg:railroad_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_railroad_stock_fix > 0 }
+		value = target_demand_railroad_stock_ajusted
+		subtract = base_demande_railroad_stock_fix
+		divide = base_demande_railroad_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+

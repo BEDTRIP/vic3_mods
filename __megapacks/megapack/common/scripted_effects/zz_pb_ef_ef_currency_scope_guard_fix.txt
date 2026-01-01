@@ -1,0 +1,134 @@
+#############################################
+# pb+ef: E&F scope guards (reduce script spam)
+# Fixes errors after unpausing like:
+# - Undefined event target 'seller'
+# - Event target link 'scope' returned an unset scope
+# coming from E&F currency arbitrage logic running on monthly pulse.
+#
+# Root cause: `sell_currency_privat_bank` can run when the private-bank list is empty,
+# so `save_scope_as = seller` never happens, but later code still dereferences scope:seller.
+# Also, `central_bank_site` may be unset but dereferenced.
+#############################################
+
+REPLACE_OR_CREATE:sell_currency_privat_bank = {
+	#scope:
+	root = {
+		save_scope_as = buyer
+		every_scope_state = {
+			if = {
+				limit = {
+					has_modifier = central_bank_historic_place
+					is_capital = yes
+				}
+				save_scope_as = central_bank_site
+			}
+		}
+	}
+
+	sell_currency_privat_bank_variable_list = {
+		currency = $currency$
+	}
+
+	random_in_list = {
+		variable = sell_currency_privat_bank_variable_list_ordered #private bank
+		save_scope_as = seller
+	}
+
+	# Guard: if the list was empty, we won't have a seller; abort cleanly.
+	if = {
+		limit = { NOT = { exists = scope:seller } }
+	}
+	else = {
+		scope:seller.owner = {
+			save_scope_as = seller_country
+		}
+
+		#mecha
+		if = {
+			limit = {
+				exists = scope:buyer
+				scope:buyer = {
+					has_law = law_type:law_$currency$_currency
+				}
+			}
+
+			# Only run if we have a seller.
+			if = {
+				limit = { exists = scope:seller }
+				sell_private_bank_reserve_currency = {
+					currency = $currency$
+				}
+			}
+
+			scope:buyer = {
+				#gold
+				if = {
+					limit = {
+						law_$currency$_monetary_system_GS_GES_trigger = yes
+					}
+					set_variable = {
+						name = sell_arbitrage_value_in_metal
+						value = {
+							add = var:sell_arbitrage_value_10_in_currency
+							multiply = money_value
+						}
+					}
+
+					if = {
+						limit = {
+							var:sell_arbitrage_value_in_metal < gold_state_native_for_stockpile
+							exists = scope:central_bank_site
+						}
+						scope:central_bank_site = {
+							change_variable = {
+								name = gold_state_1
+								subtract = scope:buyer.var:sell_arbitrage_value_in_metal
+							}
+
+							change_variable = {
+								name = stockpiling_$currency$_state_1
+								add = scope:buyer.var:sell_arbitrage_value_10_in_currency
+							}
+						}
+					}
+
+					private_bank_gold_gain = yes
+				}
+				#silver
+				if = {
+					limit = {
+						law_$currency$_monetary_system_SS_BS_trigger = yes
+					}
+					set_variable = {
+						name = sell_arbitrage_value_in_metal
+						value = {
+							add = var:sell_arbitrage_value_10_in_currency
+							multiply = money_value
+						}
+					}
+
+					if = {
+						limit = {
+							var:sell_arbitrage_value_in_metal < silver_state_native_for_stockpile
+							exists = scope:central_bank_site
+						}
+						scope:central_bank_site = {
+							change_variable = {
+								name = silver_state_1
+								subtract = scope:buyer.var:sell_arbitrage_value_in_metal
+							}
+
+							change_variable = {
+								name = stockpiling_$currency$_state_1
+								add = scope:buyer.var:sell_arbitrage_value_10_in_currency
+							}
+						}
+					}
+
+					private_bank_silver_gain = yes
+				}
+			}
+		}
+	}
+}
+

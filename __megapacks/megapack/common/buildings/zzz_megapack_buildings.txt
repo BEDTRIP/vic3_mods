@@ -1,0 +1,248 @@
+REPLACE:building_automotive_industry = {
+	building_group = bg_industry_heavy
+	icon = "gfx/interface/icons/building_icons/vehicles_industry.dds"
+	city_type = city
+	levels_per_mesh = 5
+
+	unlocking_technologies = {
+		combustion_engine
+	}
+
+	production_method_groups = {
+		pmg_automobile_production
+		pmg_tanks
+		pmg_automation_building_automotive_industry
+		pmg_data_optimization_heavy_industry
+
+		# E&F
+		pmg_market_liquidity
+		pmg_private_ownership_manufacture_stock
+	}
+
+	required_construction = construction_cost_very_high
+
+	possible = {
+		owner = {
+			NOT = {
+				OR = {
+					has_law = law_type:law_industry_banned
+					has_law = law_type:law_extraction_economy
+				}
+			}
+		}
+	}
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_heavy_industry.dds"
+}
+
+REPLACE:building_synthetics_plant = {
+	aliases = { building_synthetics_plants }
+	building_group = bg_industry_light
+	icon = "gfx/interface/icons/building_icons/synthetics_plants.dds"
+	city_type = city
+	levels_per_mesh = 5
+
+	unlocking_technologies = {
+		distillation
+	}
+
+	production_method_groups = {
+		pmg_cosmetics
+		pmg_automation_building_synthetics_plant
+		pmg_data_optimization_heavy_industry
+
+		# E&F
+		pmg_market_liquidity
+		pmg_private_ownership_manufacture_stock
+	}
+
+	required_construction = construction_cost_very_high
+
+	possible = {
+		owner = {
+			NOT = {
+				OR = {
+					has_law = law_type:law_industry_banned
+					has_law = law_type:law_extraction_economy
+				}
+			}
+		}
+	}
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_heavy_industry.dds"
+}
+
+# Publishing Industry (REPLACE NEEDED SINCE WE MERGE NEW PMS FROM BOTH MODS)
+REPLACE:building_manzoni_publishing_industry = {
+	building_group = bg_light_industry
+	icon = "gfx/interface/icons/building_icons/building_manzoni_publishing_industry.dds"
+	city_type = city
+
+	levels_per_mesh = 50
+
+	unlocking_technologies = {
+		mass_communication
+	}
+
+	production_method_groups = { #DONE Aggiunti 2 nuovi metodi di produzione di Tech & Res
+		manzoni_pmg_communication #communication
+		manzoni_pmg_building_publishing_industry_automation #Automation
+		pmg_broadcast_media_industry #Broadcast Industry
+		pmg_digital_media_industry #Digital Media Industry		
+		manzoni_pmg_publisher #Publisher
+		manzoni_pmg_newspaper #Newspaper
+		pmg_data_optimization_heavy_industry
+
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+	
+	can_build_government = {
+		has_building = building_urban_center				
+	}
+
+	can_build_private = {
+		has_building = building_urban_center				
+	}
+
+	required_construction = construction_cost_very_high #DONE Avendoi più importanza ho portato da medium ad high il costo di produzione
+
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"
+}
+
+#Uranium Mine (REPLACE NEEDED TO MERGE BOTH MODS)
+REPLACE:building_uranium_mine = {
+	building_group = bg_uranium_mining
+	icon = "gfx/interface/icons/building_icons/building_curie_uranium_mine.dds"
+	city_type = mine
+	levels_per_mesh = 50
+	ignore_stateregion_max_level = yes #TODO Non so se rimuovere o no questa riga, la lascio per sicurezza
+	required_construction = construction_cost_medium
+	terrain_manipulator = mining
+	has_max_level = yes
+
+	unlocking_technologies = {
+		verrier_modern_physics_tech
+	}
+
+	production_method_groups = {
+		pmg_curie_mining_equipment_building_uranium_mine
+		pmg_curie_explosives_building_uranium_mine
+		pmg_curie_steam_automation_building_uranium_mine
+		pmg_curie_train_automation_building_uranium_mine
+		pmg_data_optimization_primary_sector
+
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+
+	possible = {
+        OR = {
+        modifier:state_building_uranium_mine_max_level_add > 0
+		has_modifier = curie_uranium_ressources_modifier
+		owner = {
+			NOT = {
+				OR = {
+					has_law = law_type:law_mining_strategic
+					has_law = law_type:law_polluting_mining_banned
+				}
+			}
+		} #DONE Aggiunto per rendere compatibile la miniera di uranio alle nuove leggi sul nucleare
+		}
+    }
+
+    potential = {
+		OR = {
+        modifier:state_building_uranium_mine_max_level_add > 0
+		has_modifier = curie_uranium_ressources_modifier
+		}
+    }
+
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_mining.dds"
+}
+
+# Power Plant (REPLACE NEEDED TO ADJUST AI VALUE)
+REPLACE:building_power_plant = {
+	building_group = bg_power
+	icon = "gfx/interface/icons/building_icons/power_plant.dds"
+	levels_per_mesh = 50
+
+	city_type = city
+
+	unlocking_technologies = {
+		electrical_generation
+	}
+
+	production_method_groups = {
+		pmg_base_building_power_plant
+		pmg_automation_building_power_plant
+		pmg_refining_building_power_plant
+		pmg_data_optimization_light_industry
+
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+
+	required_construction = construction_cost_medium
+
+	ai_value = {
+		value = 2000
+
+		# Need 1 level of Power Plants everywhere as its a local good and a prerequisite to enabling electricity PMs to begin with
+		if = {
+			limit = {
+				NOR = {
+					has_building = building_power_plant
+					any_scope_building = {
+						is_building_type = building_power_plant
+						is_under_construction = yes
+					}
+				}
+			}
+			add = 3000
+		}
+
+		if = {
+			limit = {
+				owner = {
+					# Leader Producers of Oil and Gas, or rich oil middle east countries will still use traditional power plants more
+					NOR = {
+						leading_producer_of = g:oil
+						leading_producer_of = g:gas
+						# Some countries also
+						is_in_geographic_region = geographic_region_middle_east
+						c:VNZ ?= this
+						c:RUS ?= this
+					}
+					OR = {
+						AND = {
+							has_technology_researched = wind_turbines
+							NOT = { has_law = law_type:law_no_protection }
+						}
+						has_technology_researched = urban_sustainability
+					}
+				}
+			}
+			add = -1000
+		}
+	}
+
+	possible = {
+		owner = {
+			NOR = {
+				has_law_or_variant = law_type:law_industry_banned
+				has_law = law_type:law_active_restoration
+			} 
+		}
+	}
+	
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds"
+}

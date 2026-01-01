@@ -1,0 +1,13 @@
+﻿l_english:
+
+# Silver mine
+pmg_mining_equipment_building_silver_mine:0 "Mining Equipment"
+      pm_electric_fueled_pump_building_silver_mine:0 "Electric Fueled Pump"
+      pm_heavy_machineries_building_silver_mine:0 "Heavy Machineries"
+      pm_autonomous_and_remote_ops_building_silver_mine:0 "A&R Operations"
+
+# Gold mine
+pmg_mining_equipment_building_gold_mine:0 "Mining Equipment"
+    pm_electric_fueled_pump_building_gold_mine:0 "Electric Fueled Pump"
+    pm_heavy_machineries_building_gold_mine:0 "Heavy Machineries"
+    pm_autonomous_and_remote_ops_building_gold_mine:0 "A&R Operations"

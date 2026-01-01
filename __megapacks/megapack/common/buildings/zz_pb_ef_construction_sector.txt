@@ -1,0 +1,91 @@
+
+# Unify construction sector:
+# - keep PSC chain (construction goods -> regulator -> construction points)
+# - add E&F currency drain via pmg_market_liquidity
+#
+# NOTE: this is based on PSC's REPLACE of building_construction_sector.
+
+REPLACE:building_construction_sector = {
+	building_group = bg_construction
+	icon = "gfx/interface/icons/building_icons/construction_camp.dds"
+	city_type = city
+	levels_per_mesh = 5
+	
+	ai_nationalization_desire = 0.25
+
+	unlocking_technologies = {
+		urbanization
+	}
+	production_method_groups = {
+		pmg_base_building_construction_sector
+		# E&F: currency-as-liquidity layer (selected via laws, PMs defined in E&F)
+		pmg_market_liquidity
+	}
+	
+	# Credit: KuromiAK for this construction sector weighting
+	# Construction sector should generally be preferred over other equal-priority spending items
+	ai_value = {
+		value = 2500
+		
+		# Prefer states with iron
+		if = {
+			limit = {
+				has_potential_resource = building_iron_mine
+			}
+			add = 500
+		}
+
+		# Kickstart: if this is the capital state and it has no construction sector (and none is being built), strongly prefer building one.
+		if = {
+			limit = {
+				is_capital = yes
+				NOR = {
+					has_building = building_construction_sector
+					any_scope_building = {
+						is_building_type = building_construction_sector
+						is_under_construction = yes
+					}
+				}
+			}
+			add = 100000
+		}
+
+		# If construction goods are overpriced on the market more than the country's chosen construction spending level,
+		# give AI extra incentive to build construction sectors (they produce construction goods in PSC chain).
+		add = ai_construction_sector_price_pressure_bonus
+
+		# Encourage first sector
+		if = {
+			limit = {
+				NOT = {
+					has_building = building_construction_sector
+				}
+			}
+			add = 1000
+			add = {
+				value = gdp
+				divide = 3000
+			}
+		}
+
+		if = {
+			limit = {
+				owner.building_ef_private_construction_lvl > owner.building_urban_center_lvl_by_base_rate
+			}
+			divide = 2
+		}
+	}
+
+	required_construction = construction_cost_very_low
+	ownership_type = self
+
+	# Limit total Construction Sectors by the (E&F) Urban Center-based cap.
+	# NOTE: `can_build_private` is evaluated in a non-building scope, so `level` is invalid here.
+	# We rely on E&F script_values; in pb+ef we remap `building_ef_private_construction_lvl` to sum `building_construction_sector`.
+	can_build_private = {
+		owner.building_ef_private_construction_lvl <= owner.building_urban_center_lvl_by_base_rate
+	}
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"
+}
+

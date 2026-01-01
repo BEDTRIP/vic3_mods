@@ -1,0 +1,13 @@
+﻿l_english:
+
+  # E&F tech localization fixes (some entries are missing/misplaced upstream)
+  private_liquidity_provision:0 "Private Liquidity Provision"
+  private_liquidity_provision_desc:0 "Private banks actively provide short-term liquidity to the financial system, smoothing market tensions and supporting credit flows outside direct central bank intervention.\n\n#bold E&F effect:#! Increases the share of Central Bank debt that can be used for currency coverage by +15 percentage points (from 15% to 30%)."
+
+  advanced_interbank_refinancing:0 "Advanced Interbank Refinancing"
+  advanced_interbank_refinancing_desc:0 "An advanced interbank refinancing framework allows banks to access liquidity through structured interbank markets, improving financial stability, capital circulation, and crisis resilience.\n\n#bold E&F effect:#! Further increases the share of Central Bank debt that can be used for currency coverage by +15 percentage points (from 30% to 45%)."
+
+  # Alias (in case another mod/merge uses this tech id by mistake)
+  advanced_afterbank_refinancing:0 "$advanced_interbank_refinancing$"
+  advanced_afterbank_refinancing_desc:0 "$advanced_interbank_refinancing_desc$"
+

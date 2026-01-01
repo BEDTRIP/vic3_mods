@@ -1,0 +1,20 @@
+# source: Tech & Res:t&r/common/on_actions/ztr_on_actions.txt | PBE:common/on_actions/kates_power_bloc_on_actions.txt
+# change: merged on_monthly_pulse_country to keep both mods' hooks
+
+on_monthly_pulse_country = {
+	on_actions = {
+		# Tech & Res
+		un_intervention_on_monthly_pulse_country
+		yeet_pops_on_monthly_pulse_country
+
+		# Power Blocks Expanded (spread over month)
+		kates_dynamic_modifier_on_action
+		delay = { days = 7 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 14 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 21 }
+		kates_dynamic_modifier_on_action
+	}
+}
+

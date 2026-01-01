@@ -1,0 +1,23 @@
+{
+  "name" : "Tech&Res + MR ComPatch",
+  "id" : "tech.res.Morgen",
+  "version" : "1.5'",
+  "supported_game_version" : "1.12.*",
+  "short_description" : "ComPatch between Morgenröte and Tech & Res mods.",
+  "tags" : [
+        "Economy And Buildings",
+        "Expansion",
+        "Map",
+        "Pops",
+        "Technologies",
+        "Gameplay",
+        "Historical",
+        "Total Conversion",
+        "Warfare",
+        "1.12"
+    ],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

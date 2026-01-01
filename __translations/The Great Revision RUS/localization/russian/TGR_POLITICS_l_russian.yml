@@ -1,0 +1,401 @@
+﻿l_russian:
+
+  #################### MODIFIERS ####################
+  building_group_bg_technology_tax_mult:0 "Налоговый доход от университетских зданий"
+  building_group_bg_technology_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от университетских зданий"
+  
+  building_group_bg_military_tax_mult:0 "Налоговый доход от военных зданий"
+  building_group_bg_military_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от военных зданий"
+  
+  building_group_bg_bureaucracy_throughput_add:0 "$bg_bureaucracy$ [concept_throughput]"
+  building_group_bg_bureaucracy_throughput_add_desc:0 "Бонус или штраф как к входным ресурсам, так и к выходной продукции $bg_bureaucracy$"
+
+  building_group_bg_consumer_goods_tax_mult:0 "Налоговый доход от потребительских зданий"
+  building_group_bg_consumer_goods_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от потребительских зданий:\n-Пищевые производства\n-Текстильные фабрики\n-Бумажные фабрики\n-Мебельные мануфактуры\n-Стекольные заводы"
+  building_group_bg_consumer_goods_throughput_add:0 "$bg_consumer_goods$ [concept_throughput]"
+  building_group_bg_consumer_goods_throughput_add_desc:0 "Бонус или штраф как к входным ресурсам, так и к выходной продукции $bg_consumer_goods$:\n-Пищевые производства\n-Текстильные фабрики\n-Бумажные фабрики\n-Мебельные мануфактуры\n-Стекольные заводы"
+
+  building_group_bg_industry_light_tax_mult:0 "Налоговый доход от зданий лёгкой промышленности"
+  building_group_bg_industry_light_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от зданий лёгкой промышленности:\n-Мастерские по производству инструментов\n-Химические заводы\n-Заводы синтетики\n-Моторостроение\n-Верфи"
+  building_group_bg_industry_light_throughput_add:0 "$bg_industry_light$ [concept_throughput]"
+  building_group_bg_industry_light_throughput_add_desc:0 "Бонус или штраф как к входным ресурсам, так и к выходной продукции $bg_industry_light$:\n-Мастерские по производству инструментов\n-Химические заводы\n-Заводы синтетики\n-Моторостроение\n-Верфи"
+
+  building_group_bg_industry_heavy_tax_mult:0 "Налоговый доход от зданий тяжёлой промышленности"
+  building_group_bg_industry_heavy_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от зданий тяжёлой промышленности:\n-Завод взрывчатых веществ\n-Сталелитейные заводы\n-Военные верфи\n-Промышленность военных машин\n-Оружейная промышленность\n-Артиллерийские литейные\n-Заводы боеприпасов\n-Электротехническая промышленность"
+  building_group_bg_industry_heavy_throughput_add:0 "$bg_industry_heavy$ [concept_throughput]"
+  building_group_bg_industry_heavy_throughput_add_desc:0 "Бонус или штраф как к входным ресурсам, так и к выходной продукции $bg_industry_heavy$:\n-Завод взрывчатых веществ\n-Сталелитейные заводы\n-Военные верфи\n-Промышленность военных машин\n-Оружейная промышленность\n-Артиллерийские литейные\n-Заводы боеприпасов\n-Электротехническая промышленность"
+
+  ministry_great_revision:0 "Закон о политике министерств"
+ 
+  country_institution_incentive_primary_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_incentive_primary$"
+  country_institution_incentive_primary_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_incentive_primary$"
+
+  country_institution_incentive_secondary_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_incentive_secondary$"
+  country_institution_incentive_secondary_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_incentive_secondary$"
+
+  country_institution_incentive_tertiary_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_incentive_tertiary$"
+  country_institution_incentive_tertiary_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_incentive_tertiary$"
+  
+  country_institution_incentive_public_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_incentive_public$"
+  country_institution_incentive_public_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_incentive_public$"
+  
+  country_institution_pension_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_pension$"
+  country_institution_pension_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_pension$"
+  
+  country_institution_salary_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_salary$"
+  country_institution_salary_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_salary$"
+ 
+  country_institution_foreign_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_foreign$"
+  country_institution_foreign_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_foreign$"
+
+  country_institution_administration_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_administration$"
+  country_institution_administration_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_administration$"
+  
+  country_institution_propaganda_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_propaganda$"
+  country_institution_propaganda_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_propaganda$"
+   
+  country_institution_information_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_information$"
+  country_institution_information_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_information$"
+  
+  country_institution_environment_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_environment$"
+  country_institution_environment_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_environment$"
+  
+  country_institution_defense_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_defense$"
+  country_institution_defense_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_defense$" 
+  
+  bg_consumer_goods:0 "Потребительские здания" 
+  bg_industry_light:0 "Здания лёгкой промышленности" 
+  bg_industry_heavy:0 "Здания тяжёлой промышленности" 
+
+  country_shopkeepers_pol_str_mult:1 "[concept_political_strength] у $shopkeepers$"
+  country_shopkeepers_pol_str_mult_desc:1 "Увеличение или уменьшение [concept_political_strength] у $shopkeepers$"
+  
+  country_clerks_pol_str_mult:1 "[concept_political_strength] у $clerks$"
+  country_clerks_pol_str_mult_desc:1 "Увеличение или уменьшение [concept_political_strength] у $clerks$"
+  
+  state_aristocrats_consumption_multiplier_add: "Потребление товаров для [GetPopType('aristocrats').GetName]"
+  state_aristocrats_consumption_multiplier_add_desc: "Бонус или штраф к потреблению товаров для [GetPopType('aristocrats').GetName]"
+ 
+  state_capitalists_consumption_multiplier_add: "Потребление товаров для [GetPopType('capitalists').GetName]"
+  state_capitalists_consumption_multiplier_add_desc: "Бонус или штраф к потреблению товаров для [GetPopType('capitalists').GetName]"
+  
+  #################### TOOLTIPS ####################
+  enact_law_economic_incentives_industry_manufactoring_desc:0 "Здания, которые получат бонусы:\n-Пищевые производства\n-Текстильные фабрики\n-Бумажные фабрики\n-Мебельные мануфактуры\n-Стекольные заводы"
+  enact_law_economic_incentives_industry_light_desc:0 "Здания, которые получат бонусы:\n-Мастерские по производству инструментов\n-Химические заводы\n-Заводы синтетики\n-Моторостроение\n-Верфи"
+  enact_law_economic_incentives_industry_heavy_desc:0 "Здания, которые получат бонусы:\n-Завод взрывчатых веществ\n-Сталелитейные заводы\n-Военные верфи\n-Промышленность военных машин\n-Оружейная промышленность\n-Артиллерийские литейные\n-Заводы боеприпасов\n-Электротехническая промышленность"
+
+  enact_law_consumption_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 1\nПодушный налог: с 0 -> 0\nНалог на доход: с 0 -> 0\nНалог на дивиденды: с 0 -> 0"
+  enact_law_land_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 10\nПодушный налог: с 0 -> 0\nНалог на доход: с 0 -> 2\nНалог на дивиденды: с 0 -> 0"
+  enact_law_per_capita_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 7\nПодушный налог: с 0 -> 10\nНалог на доход: с 0 -> 4\nНалог на дивиденды: с 0 -> 0"
+  enact_law_income_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 5\nПодушный налог: с 0 -> 8\nНалог на доход: с 0 -> 10\nНалог на дивиденды: с 0 -> 8"
+  enact_law_dividend_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 5\nПодушный налог: с 0 -> 8\nНалог на доход: с 0 -> 8\nНалог на дивиденды: с 0 -> 10"
+
+  
+  #################### DECREES ####################
+  decree_greener_grass_campaign_great_revision:0 "Усиленная кампания «Зеленее трава»"
+  decree_greener_grass_campaign_great_revision_desc:0 "Продвигайте регион как привлекательное место для переселения с помощью усиленной кампании стимулов"
+  
+  decree_encourage_service_industry:0 "Поощрять сектор услуг"
+  decree_encourage_service_industry_desc:0 "Продвигать государственный сектор с помощью целевых мер, чтобы повысить его производительность."
+
+  
+  #################### IDEOLOGIES ####################
+  ideology_tax_department_armed_forces:0 "Фискальная реформа"
+  ideology_tax_department_armed_forces_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_devout:0 "Фискальная реформа"
+  ideology_tax_department_devout_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_industrialist:0 "Фискальная реформа"
+  ideology_tax_department_industrialist_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_intelligentsia:0 "Фискальная реформа"
+  ideology_tax_department_intelligentsia_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_landowners:0 "Фискальная реформа"
+  ideology_tax_department_landowners_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_petty_bourgeoisie:0 "Фискальная реформа"
+  ideology_tax_department_petty_bourgeoisie_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_rural_folk:0 "Фискальная реформа"
+  ideology_tax_department_rural_folk_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+  ideology_tax_department_trade_unions:0 "Фискальная реформа"
+  ideology_tax_department_trade_unions_desc:0 "Поскольку эта группа считает, что правительство должно облагать налогами своих граждан."
+ 
+  ideology_government_armed_forces:0 "Государственная политика"
+  ideology_government_armed_forces_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_devout:0 "Государственная политика"
+  ideology_government_devout_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_industrialist:0 "Государственная политика"
+  ideology_government_industrialist_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_intelligentsia:0 "Государственная политика"
+  ideology_government_intelligentsia_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_landowners:0 "Государственная политика"
+  ideology_government_landowners_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_petty_bourgeoisie:0 "Государственная политика"
+  ideology_government_petty_bourgeoisie_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_rural_folk:0 "Государственная политика"
+  ideology_government_rural_folk_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+  ideology_government_trade_unions:0 "Государственная политика"
+  ideology_government_trade_unions_desc:0 "Поскольку эта группа считает, какую политику должно проводить правительство."
+
+  
+  
+  #################### COMPANY HQ: PRODUCTION METHOD ####################
+  pm_company_headquarter_capitalist_owned: "В собственности капиталистов"
+  pm_company_headquarter_aristocrats_owned: "В собственности аристократов"
+  
+
+  ########################## ISTITUTIONS #########################
+  institution_pension:0 "Министерство социального обеспечения"
+  institution_pension_desc:0 "Государственные пенсии для людей, достигших пенсионного возраста."
+  
+  institution_salary:0 "Министерство труда"
+  institution_salary_desc:0 "Национальный трудовой договор устанавливает различные уровни регулирования, закрепляя права работников, улучшая зарплаты и рабочее время."
+  
+  institution_incentive_primary:0 "Министерство национальных инвестиций — аграрный сектор"
+  institution_incentive_primary_desc:0 "Департамент национальных инвестиций будет стимулировать нашу экономику с помощью фискальной и экономической политики."
+
+  institution_incentive_secondary:0 "Министерство национальных инвестиций — ресурсный сектор"
+  institution_incentive_secondary_desc:0 "Департамент национальных инвестиций будет стимулировать нашу экономику с помощью фискальной и экономической политики."
+
+  institution_incentive_tertiary:0 "Министерство национальных инвестиций — промышленный сектор"
+  institution_incentive_tertiary_desc:0 "Департамент национальных инвестиций будет стимулировать нашу экономику с помощью фискальной и экономической политики."
+  
+  institution_incentive_public:0 "Министерство национальных инвестиций — государственный сектор"
+  institution_incentive_public_desc:0 "Департамент национальных инвестиций будет стимулировать нашу экономику с помощью фискальной и экономической политики."
+  
+  institution_foreign:0 "Министерство иностранных дел"
+  institution_foreign_desc:0 "Министерство иностранных дел создаст посольства в зарубежных странах для обеспечения дипломатических отношений."
+ 
+  institution_administration:0 "Министерство государственного управления"
+  institution_administration_desc:0 "Государственная администрация — основа нашего общества; без неё мы не сможем организовать нацию."
+
+  institution_propaganda:0 "Министерство пропаганды"
+  institution_propaganda_desc:0 "Чтобы контролировать массы, нам нужен централизованный институт, который гарантирует, что любые голоса несогласных будут заглушены."
+
+  institution_information:0 "Министерство информации"
+  institution_information_desc:0 "Каждой уважающей себя демократической стране нужна система, обеспечивающая корректный поток информации и гарантирующая уважение права голоса каждого гражданина."
+  
+  institution_environment:0 "Министерство окружающей среды"
+  institution_environment_desc:0 "Важно, чтобы здоровой была не только экономика страны, но и её земля и окружающий воздух. Долг правительства — сохранять и защищать их."
+  
+  institution_defense:0 "Министерство обороны"
+  institution_defense_desc:0 "Пока мы спокойно спим по ночам, наши дети защищают нас от опасностей за пределами границ. Они — хранители нашего спокойствия."
+
+  institution_colonial_affairs:0 "Министерство колониальных дел"
+  institution_social_security:0 "Министерство благосостояния"
+  institution_workplace_safety:0 "Министерство охраны труда"
+  institution_schools:0 "Министерство образования"
+  institution_police:0 "Министерство общественной безопасности"
+  institution_health_system:0 "Министерство здравоохранения"
+  institution_home_affairs:0 "Министерство внутренних дел"
+  institution_environment:0 "Министерство окружающей среды"
+  institution_defense:0 "Министерство обороны"
+
+  ########################## LAWS GROUP #########################
+  lawgroup_tax_department: "Фискальная реформа"
+  lawgroup_tax_department_desc: "Национальный институт, занимающийся сбором налогов с граждан."
+  
+  lawgroup_social_security: "Социальное обеспечение"
+  lawgroup_social_security_desc: "Национальный институт, обеспечивающий социальную защиту для людей, вышедших на пенсию."
+  
+  lawgroup_retirement_age: "Политика пенсионного возраста"
+  lawgroup_retirement_age_desc: "Законы, регулирующие вступление в силу пенсионного возраста."
+  
+  lawgroup_salary_regulation: "Регулирование заработной платы"
+  lawgroup_salary_regulation_desc: "Государство устанавливает различные правила, чтобы обеспечить справедливую оплату труда работников или повысить конкурентоспособность экономики."
+  
+  lawgroup_foreign_policy: "Внешняя политика"
+  lawgroup_foreign_policy_desc: "Сила нации видна во всём, но особенно — во внешней политике."
+ 
+  lawgroup_economic_incentives_primary: "Инвестиции в сельское хозяйство"
+  lawgroup_economic_incentives_primary_desc: "Специальная экономическая политика может помочь нам лучше направлять экономику в будущее."
+
+  lawgroup_economic_incentives_secondary: "Инвестиции в ресурсы"
+  lawgroup_economic_incentives_secondary_desc: "Специальная экономическая политика может помочь нам лучше направлять экономику в будущее."
+
+  lawgroup_economic_incentives_tertiary: "Инвестиции в промышленность"
+  lawgroup_economic_incentives_tertiary_desc: "Специальная экономическая политика может помочь нам лучше направлять экономику в будущее."
+  
+  lawgroup_economic_incentives_public: "Государственные инвестиции"
+  lawgroup_economic_incentives_public_desc: "Специальная экономическая политика может помочь нам лучше направлять экономику в будущее."
+
+  lawgroup_working_hours: "Рабочие часы"
+  lawgroup_working_hours_desc: "Государство может вводить политику регулирования рабочего времени."
+  
+  lawgroup_environment: "Нормы загрязнения"
+  lawgroup_environment_desc: "Важно, чтобы здоровой была не только экономика страны, но и её земля и окружающий воздух. Долг правительства — сохранять и защищать их."
+  
+  lawgroup_separation_of_powers: "Разделение властей"
+  lawgroup_separation_of_powers_desc: "Принцип разделения властей функционально разграничивает несколько видов государственной власти, тем самым сохраняя целостность каждой из них."
+  
+  lawgroup_distribution_of_power: "Структура правительства"
+  lawgroup_distribution_of_power_desc: "Как политическая власть распределяется между государственными институтами. Определяет, перед кем подотчётен глава государства."
+  
+  lawgroup_election_system: "Избирательная система"
+  lawgroup_election_system_desc: "Определяет, имеют ли граждане право голоса, что даёт власть прямого представительства в органах власти."
+
+  lawgroup_centralization: "Централизация"
+  lawgroup_centralization_desc: "Как правительство решает управлять собственными бюрократическими процессами и какую степень автономии оно желает предоставить отдельным штатам."
+
+  ########################## LAWS TITLE #########################  
+  law_consumption_fiscal_reform: "Фискальная реформа потребительских товаров"
+  law_land_fiscal_reform: "Фискальная реформа землевладения"
+  law_per_capita_fiscal_reform: "Фискальная реформа подушного налогообложения"
+  law_income_fiscal_reform: "Фискальная реформа доходов и прибыли"
+  law_dividend_fiscal_reform: "Фискальная реформа прогрессивного налогообложения"
+  
+  law_old_age_pension: "Национальные переговоры"
+  
+  law_no_pension: "Без пенсионных выплат"
+  law_minimum_pension: "Пенсия по старости"
+  law_medium_pension: "Выплаты социального обеспечения"
+  law_modern_pension: "Национальный институт социального обеспечения"
+  
+  law_no_retirement_age: "Без пенсионного возраста"
+  law_retirement_age_inability_to_work: "Неспособность к труду"
+  law_retirement_after_contribution: "Выход на пенсию после взносов"
+  law_retirement_standard_retirement_age: "Стандартный пенсионный возраст"
+  
+  law_no_salary_regulation: "Без регулирования зарплат"
+  law_salary_competitive_economy: "Регулирование в интересах бизнеса"
+  law_salary_minimum_safety: "Стандартное регулирование зарплат"
+  law_salary_national_contract: "Регулирование в интересах работников"
+  
+  foreign_policy_no_focus: "Без особого фокуса"
+  foreign_policy_diplomatic_embassies: "Дипломатические посольства"
+  foreign_policy_authoritarian_representation: "Укрепление международного имиджа"
+  foreign_policy_military_expansionism: "Военный экспансионизм"
+  foreign_policy_foreign_investments: "Привлечение иностранных инвесторов"
+  
+  economic_incentives_no_focus_primary: "Без стимулирующего фокуса"
+  economic_incentives_no_focus_secondary: "Без стимулирующего фокуса"
+  economic_incentives_no_focus_tertiary: "Без стимулирующего фокуса"
+  economic_incentives_no_focus_public: "Без стимулирующего фокуса"
+  economic_incentives_agricolture: "Инвестиции в сельское хозяйство"
+  economic_incentives_plantation: "Инвестиции в плантации"
+  economic_incentives_fishing: "Инвестиции в рыболовство"
+  economic_incentives_extracting_mining: "Инвестиции в добычу (шахты)"
+  economic_incentives_extracting_logging: "Инвестиции в лесозаготовки"
+  economic_incentives_extracting_oil: "Инвестиции в добычу нефти"
+  economic_incentives_industry_manufactoring: "Инвестиции в производство"
+  economic_incentives_industry_light: "Инвестиции в лёгкую промышленность"
+  economic_incentives_industry_heavy: "Инвестиции в тяжёлую промышленность"
+  economic_incentives_services: "Инвестиции в сферу услуг"
+  economic_incentives_university: "Инвестиции в государственный сектор"
+  economic_incentives_military: "Инвестиции в военный сектор"
+  
+  law_unregulated_work_time: "Нерегулируемое рабочее время"
+  law_token_time_regulations: "12-часовой рабочий день"
+  law_limited_work_hours: "10-часовой рабочий день"
+  law_protected_leisure: "8-часовой рабочий день"
+  
+  law_no_environment_regulations: "Без норм загрязнения"
+  law_minimum_environment_regulations: "Минимальные нормы загрязнения"
+  law_standard_environment_regulations: "Стандартные нормы загрязнения"
+  law_eco_environment_regulations: "Экологичные нормы загрязнения" 
+  #law_free_trade: "Pro-Specialization Market" 
+  law_protectionism: "Политика стабильного снабжения"
+  
+  law_economic_decentralism: "Экономическая децентрализация" 
+  law_administrative_decentralism: "Административная децентрализация" 
+  law_local_autonomies: "Местные автономии" 
+  law_administrative_centralism: "Административная централизация" 
+  law_economic_centralism: "Экономическая централизация" 
+  
+  #law_tgr_no_separation: "No Separation" 
+  #law_tgr_mixed_separation: "Partial Separation" 
+  #law_tgr_total_separation: "Total Separation" 
+  
+  #law_tgr_plutocracy: "Plutocratic Administration"
+  #law_tgr_administrative_teocracy: "Theocratic Administration" 
+  #law_tgr_statist_bureaucracy: "Bureaucratic Administration"
+  #law_autocracy:0 "Military Administration"
+  #law_oligarchy:0 "Oligarchic Administration"
+  #law_technocracy: "Technocratic Administration"
+  #law_anarchy:0 "Regional Administration" 
+  
+  #tgr_no_election: "No Election" 
+
+  ########################## LAWS DESCRIPTION #########################
+  law_consumption_fiscal_reform_desc: "Фискальная реформа, которая будет облагать налогом только потребление товаров, оставляя доходы, дивиденды и другие регрессивные налоги без изменений."
+  law_land_fiscal_reform_desc: "Эта фискальная реформа применит новый метод налогообложения, включая налоги с аграрного сектора в национальные доходы."
+  law_per_capita_fiscal_reform_desc: "С приходом индустриализации многие люди переезжают в большие города. Эта фискальная реформа введёт новый единый налог, применяемый к каждому взрослому работнику."
+  law_income_fiscal_reform_desc: "Эта фискальная реформа введёт новые налоги, рассчитываемые в процентах от доходов и дивидендов от экономической деятельности, применяя более низкие уровни налогообложения для компаний по сравнению с населением."
+  law_dividend_fiscal_reform_desc: "Новая фискальная система реформирует структуру налогообложения, позволяя населению платить налоги в соответствии с их платежеспособностью."
+  
+  law_old_age_pension_desc: "С новым регулированием в вопросах прав работников профсоюзы могут вести переговоры с группами производственных секторов, чтобы обеспечить справедливое обращение с работниками в период их занятости."
+  
+  law_no_pension_desc: "Государство не предоставляет никакой защиты после выхода на пенсию по старости."
+  law_minimum_pension_desc: "Часть зарплаты работников удерживается для выплаты пенсий предыдущему поколению. Таким образом государство помогает пожилым людям минимальной субсидией для удовлетворения базовых потребностей."
+  law_medium_pension_desc: "Государство удерживает часть зарплаты работников в качестве взноса, чтобы обеспечить им пенсию по достижении пенсионного возраста."
+  law_modern_pension_desc: "Национальный институт социального обеспечения — главный орган государства, который обеспечивает национальную пенсию всем людям, достигшим пенсионного возраста."
+  
+  law_no_retirement_age_desc: "Государство не применяет никаких мер для тех, кто больше не пригоден к работе."
+  law_retirement_age_inability_to_work_desc: "Государство вводит возможность выхода на пенсию для тех, кто больше не пригоден к работе по состоянию здоровья"
+  law_retirement_after_contribution_desc: "Государство регулирует выход на пенсию для тех, кто в течение жизни уплачивал взносы социального обеспечения."
+  law_retirement_standard_retirement_age_desc: "Выход на пенсию регулируется на основе возраста, а также количества взносов, которые человек уплатил в течение своей жизни."
+  
+  law_no_salary_regulation_desc: "Наша нация не применяет никакой особой политики для регулирования рынка труда."
+  law_salary_competitive_economy_desc: "Чтобы стимулировать иностранных инвесторов открывать бизнес в нашей стране, мы обеспечиваем привлекательность нашей экономики благодаря специальной политике в интересах бизнеса."
+  law_salary_minimum_safety_desc: "Государство вводит стандартное регулирование, чтобы найти верный баланс между потребностями работников и конкурентоспособной экономикой."
+  law_salary_national_contract_desc: "Мы должны установить жёсткую и конкретную политику, чтобы интересы крупных компаний не подрывали благополучие наших граждан."
+  
+  foreign_policy_no_focus_desc: "Наша внешнеполитическая повестка не имеет конкретного фокуса, оставляя нам поиск баланса между приоритетами."
+  foreign_policy_diplomatic_embassies_desc: "В современную эпоху важно выстраивать хорошие отношения с другими странами — близкими и далёкими — чтобы обеспечить правильный баланс на глобальной шахматной доске."
+  foreign_policy_authoritarian_representation_desc: "Нашей стране слишком долго уделяли недостаточно внимания в мировых делах. Мы должны укрепить своё правительство и репутацию, чтобы занять заметное место среди Великих держав."
+  foreign_policy_military_expansionism_desc: "Неважно, насколько страна влиятельна или богата. Армии всегда будут решающим фактором в мировых делах. Укрепление нашей армии гарантирует, что нас будут бояться и уважать как внутри, так и за пределами нашей нации."
+  #foreign_policy_foreign_investments_desc: "In a World that is becoming increasingly globalized, it is of fundamental importance to be able to establish as many economic and commercial links with other countries. Having economic influence on other countries also means having political influence, but opening ourselves up to the world could also leave us open to other external Powers."
+  foreign_policy_foreign_investments_desc: "Мы не можем расширять нашу экономику в одиночку. Нам нужно стимулировать иностранных инвесторов приносить свой капитал в нашу страну. Так мы обеспечим непрерывный и стабильный рост, но открытость миру также может сделать нас уязвимыми к влиянию крупных внешних держав."
+  
+  economic_incentives_no_focus_primary_desc: "Мы не задаём никаких конкретных стимулов для нашей экономики"
+  economic_incentives_no_focus_secondary_desc: "Мы не задаём никаких конкретных стимулов для нашей экономики"
+  economic_incentives_no_focus_tertiary_desc: "Мы не задаём никаких конкретных стимулов для нашей экономики"
+  economic_incentives_no_focus_public_desc: "Мы не задаём никаких конкретных стимулов для нашей экономики"
+  economic_incentives_agricolture_desc: "Богатство нации рождается из её земли. Обещая дополнительные налоговые льготы в аграрном секторе, мы стимулируем частных лиц инвестировать свой капитал в нашу территорию."
+  economic_incentives_plantation_desc: "Богатая и плодородная земля позволяет нам полностью использовать доступные пространства для строительства новых плантаций. Мы поощряем частный сектор инвестировать, вводя налоговые льготы в этом секторе."
+  economic_incentives_fishing_desc: "Наша великая нация расположена в географически выгодном районе для рыболовства. Благоприятные течения и богатая морская фауна позволяют нам в полной мере использовать это богатство. Нам нужны лишь люди, готовые вкладывать деньги в этот сектор."
+  economic_incentives_extracting_mining_desc: "Огромные природные залежи на нашей территории позволяют добывать избыток ресурсов, который можно как экспортировать, так и использовать в нашей экономике. Мы вводим новые налоговые льготы, чтобы побудить инвесторов открывать новые шахты."
+  economic_incentives_extracting_logging_desc: "Огромные природные залежи на нашей территории позволяют добывать избыток ресурсов, который можно как экспортировать, так и использовать в нашей экономике. Мы вводим новые налоговые льготы, чтобы побудить инвесторов открывать новые шахты."
+  economic_incentives_extracting_oil_desc: "Огромные природные залежи на нашей территории позволяют добывать избыток ресурсов, который можно как экспортировать, так и использовать в нашей экономике. Мы вводим новые налоговые льготы, чтобы побудить инвесторов открывать новые шахты."
+  economic_incentives_industry_manufactoring_desc: "Индустриализация пришла. Новые технологии позволяют нам значительно увеличить производство и вместе с ним — прибыль. Мы вкладываем как можно больше ресурсов в сектор, чтобы всё сильнее расширять наш рынок."
+  economic_incentives_industry_light_desc: "Индустриализация пришла. Новые технологии позволяют нам значительно увеличить производство и вместе с ним — прибыль. Мы вкладываем как можно больше ресурсов в сектор, чтобы всё сильнее расширять наш рынок."
+  economic_incentives_industry_heavy_desc: "Индустриализация пришла. Новые технологии позволяют нам значительно увеличить производство и вместе с ним — прибыль. Мы вкладываем как можно больше ресурсов в сектор, чтобы всё сильнее расширять наш рынок."
+  economic_incentives_services_desc: "Первая фаза индустриализации принесла процветание и богатство. Но теперь появляется всё больше новых сфер, где ценность ума превосходит ценность силы. Родились новые профессии, и с ростом уровня жизни нашей экономике всё больше нужны специализированные работники. Мы поощряем этот новый сектор, обещая налоговые льготы новым инвесторам."
+  economic_incentives_university_desc: "Для роста нашей экономики нужны высококвалифицированные кадры. Мы должны инвестировать в государственный сектор, чтобы каждое новое поколение было способнее предыдущего."
+  economic_incentives_military_desc: "В эти трудные времена военный сектор становится всё более важным. Мы должны защитить нашу нацию, поощряя людей вступать в нашу армию." 
+  
+  law_unregulated_work_time_desc: "Нерегулируемое рабочее время"
+  law_token_time_regulations_desc: "12-часовой рабочий день"
+  law_limited_work_hours_desc: "10-часовой рабочий день"
+  law_protected_leisure_desc: "8-часовой рабочий день"
+  
+  law_no_environment_regulations_desc: "Без норм загрязнения"
+  law_minimum_environment_regulations_desc: "Минимальные нормы загрязнения"
+  law_standard_environment_regulations_desc: "Стандартные нормы загрязнения"
+  law_eco_environment_regulations_desc: "Экологичные нормы загрязнения"
+  
+  law_protectionism_desc: "Эта торговая политика направлена на обеспечение стабильных и конкурентоспособных рыночных цен, поощряя поставки с зарубежных рынков."
+  
+  law_economic_decentralism_desc: "Каждый штат обладает полной автономией в управлении и расходах, а также возможностью самостоятельно инициировать и финансировать новые проекты на своей территории." 
+  law_administrative_decentralism_desc: "Отдельные штаты получают право самостоятельно управлять бюрократическими процессами нации при минимальном надзоре со стороны центральных властей." 
+  law_local_autonomies_desc: "Эта форма правления обеспечивает штатам ограниченную способность принимать решения, но всегда под контролем центрального правительства." 
+  law_administrative_centralism_desc: "Все бюрократические и административные процессы ведутся государственными учреждениями под прямым контролем центрального аппарата." 
+  law_economic_centralism_desc: "Отдельные штаты не обладают экономической автономией, и вся денежно-финансовая деятельность находится под прямым надзором центрального правительства." 
+  
+  #law_tgr_no_separation_desc: "There is no separation of powers. The operational, judicial and legislative system is in the hands of the head of state." 
+  #law_tgr_mixed_separation_desc: "The State grants a partial separation of powers, which gives a limited form of autonomy to the institutions." 
+  #law_tgr_total_separation_desc: "The separation of powers is total, which provides a wide flexibility and control between the various state bodies." 
+  
+  #law_tgr_plutocracy_desc: "Form of government where power is concentrated in the hands of the richest and wealthiest people in the nation." 
+  #law_tgr_administrative_teocracy_desc: "Form of government where state administrations are run under the close supervision of the clergy." 
+  #law_tgr_statist_bureaucracy_desc: "Form of government where bureaucrats represent the new ruling class of society, and power is concentrated in political council bodies." 
+  #law_autocracy_desc: "The decision-making body of the head of state is shared with a council body whose members come from the various military branches of the army."
+  #law_oligarchy_desc: "The Head of State shares power and responsibility with a small group of powerful, unelected individuals."
+  #law_technocracy_desc: "The nation is governed by an appointed council of men of reason and ability."
+  #law_anarchy_desc: "Local communities govern their own affairs and send representatives to serve limited terms on larger cooperative councils. With no formal hierarchies, central authority is difficult to exercise."
+  
+  #tgr_no_election_desc: "The country does not have any kind of election in place." 
+  
+  
+
+
+
+
+

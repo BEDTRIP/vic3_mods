@@ -1,0 +1,19 @@
+### PSC (Private Construction Sector) + PBE (Power Blocks Expanded) compatibility
+### Purpose: merge `on_monthly_pulse` hooks so neither mod loses its scheduled logic.
+
+on_monthly_pulse = {
+	on_actions = {
+		# PSC: triggers its own weekly construction demand/spending scheduler
+		set_construction_weekly_on_action
+
+		# PBE: weekly global handler (run immediately + 7/14/21 day delays)
+		kates_weekly_global_on_action
+		delay = { days = 7 }
+		kates_weekly_global_on_action
+		delay = { days = 14 }
+		kates_weekly_global_on_action
+		delay = { days = 21 }
+		kates_weekly_global_on_action
+	}
+}
+

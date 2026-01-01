@@ -1,0 +1,48 @@
+# MegaPack (E&F + Morgenröte + Tech&Res+Kuromi + PBE + TGR)
+# Purpose: merged root on_actions so no "last one wins" inside this mod.
+#
+# This file must be the ONLY place in megapack that defines:
+# - on_monthly_pulse
+# - on_monthly_pulse_country
+#
+
+on_monthly_pulse = {
+	on_actions = {
+		# Morgenröte
+		mr_on_monthly_pulse
+		mr_on_weekly_pulse
+
+		# Power Blocs Expanded (weekly handler, executed 4 times per month)
+		kates_weekly_global_on_action
+		delay = { days = 7 }
+		kates_weekly_global_on_action
+		delay = { days = 14 }
+		kates_weekly_global_on_action
+		delay = { days = 21 }
+		kates_weekly_global_on_action
+	}
+}
+
+on_monthly_pulse_country = {
+	on_actions = {
+		# Morgenröte
+		mr_on_monthly_pulse_country
+
+		# Tech & Res
+		un_intervention_on_monthly_pulse_country
+		yeet_pops_on_monthly_pulse_country
+
+		# E&F (finance system monthly maintenance)
+		ef_on_monthly_pulse_country
+
+		# Power Blocs Expanded (dynamic modifiers update, executed 4 times per month)
+		kates_dynamic_modifier_on_action
+		delay = { days = 7 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 14 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 21 }
+		kates_dynamic_modifier_on_action
+	}
+}
+

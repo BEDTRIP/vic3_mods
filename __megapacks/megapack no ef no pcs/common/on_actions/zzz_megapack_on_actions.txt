@@ -1,0 +1,49 @@
+###############################
+# COMPATCH: MR + PBE (1.12.*) #
+###############################
+#
+# Purpose:
+# - Merge conflicting root on_actions from Morgenroete + Power Blocs Expanded
+#
+# Sources:
+# - Morgenrote: Morgenrote/morgen/common/on_actions/mr_on_actions.txt
+# - PBE:       PowerBlocksExpanded/common/on_actions/kates_power_bloc_on_actions.txt
+#
+
+on_monthly_pulse = {
+	on_actions = {
+		# Morgenroete
+		mr_on_monthly_pulse
+		mr_on_weekly_pulse
+
+		# Power Blocs Expanded (weekly handler, executed 4 times per month)
+		kates_weekly_global_on_action
+		delay = { days = 7 }
+		kates_weekly_global_on_action
+		delay = { days = 14 }
+		kates_weekly_global_on_action
+		delay = { days = 21 }
+		kates_weekly_global_on_action
+	}
+}
+
+on_monthly_pulse_country = {
+	on_actions = {
+		# Morgenroete
+		mr_on_monthly_pulse_country
+
+		# Tech & Res
+		un_intervention_on_monthly_pulse_country
+		yeet_pops_on_monthly_pulse_country
+
+		# Power Blocs Expanded (dynamic modifiers update, executed 4 times per month)
+		kates_dynamic_modifier_on_action
+		delay = { days = 7 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 14 }
+		kates_dynamic_modifier_on_action
+		delay = { days = 21 }
+		kates_dynamic_modifier_on_action
+	}
+}
+

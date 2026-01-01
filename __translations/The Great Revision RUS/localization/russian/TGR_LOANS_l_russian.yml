@@ -1,0 +1,177 @@
+﻿l_russian:
+
+########################### JOURNAL ENTRIES: TICKBOX  #######################################
+great_revision_loans_unticked: "@simple_box!"
+great_revision_loans_ticked: "@green_checkmark_box!"
+
+########################### DIPLOMATIC ACTIONS  #######################################
+apply_for_a_loan: "Запросить международный заем"
+apply_for_a_loan_desc: "[concept_diplomatic_pact], заключаемый одной [concept_country] с другой [concept_country], который позволяет первой стране получить #yellow;bold; международный заем#!."
+apply_for_a_loan_action_propose_name: "Начать $Request International Loan$"
+apply_for_a_loan_proposal_notification_name: "Запрос на #yellow;bold; международный заем#!."
+apply_for_a_loan_proposal_notification_desc: "Мы получили запрос на #yellow;bold; международный заем#!."
+apply_for_a_loan_proposal_declined_name: "#yellow;bold; Международный заем#! отклонен."
+apply_for_a_loan_proposal_declined_desc: "Они отклонили наш запрос на #yellow;bold; международный заем#!."
+apply_for_a_loan_proposal_accepted_name: "Запрос на #yellow;bold; международный заем#! был принят."
+apply_for_a_loan_proposal_accepted_desc: "Скоро мы получим ответ с условиями и требованиями."
+
+issue_a_loan: "Выдать международный заем"
+issue_a_loan_desc: "[concept_diplomatic_pact], заключаемый одной [concept_country] с другой [concept_country], который позволяет первой стране выдать #yellow;bold; международный заем#!."
+issue_a_loan_action_propose_name: "Начать $Issue International Loan$"
+issue_a_loan_proposal_notification_name: "Предложение #yellow;bold; международного займа#!."
+issue_a_loan_proposal_notification_desc: "Мы получили предложение #yellow;bold; международного займа#!."
+issue_a_loan_proposal_declined_name: "#yellow;bold; Международный заем#! отклонен."
+issue_a_loan_proposal_declined_desc: "Они отклонили наше предложение #yellow;bold; международного займа#!."
+issue_a_loan_proposal_accepted_name: "Запрос на #yellow;bold; международный заем#! был принят."
+issue_a_loan_proposal_accepted_desc: "Скоро мы получим ответ с условиями и требованиями."
+
+########################### JOURNAL ENTRIES: DESCRIPTION  #######################################
+je_international_loans: "Международные займы"
+je_international_loans_reason: "С наступлением нового века важность #bold; финансового сектора#! становится все очевиднее. Доступ к займам позволит нам активнее инвестировать в нашу экономику.\nНо чтобы получить выгодный [concept_credit], мы должны обеспечить нашей стране репутацию надежной — как #b внутри страны#!, так и #b на международной арене#!.\n\nНачальная #red;bold; национальная процентная ставка#! составляет #red;bold; 25%#!, однако каждая #green;bold; переменная#!, которую вы выполните, снизит процентную ставку. Стабильные #b правительство#! и #b экономика#! гарантируют, что мы сможем занимать деньги на выгодных условиях.\n\n#b #green;bold; Переменные#!, уменьшающие #red;bold; национальную процентную ставку#!:\n#bold; Законы#!\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_no_slavery_countries_checkbox')] Принят [concept_law] [GetLawType('law_slavery_banned').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_economic_system_checkbox')] НЕ принят [concept_law] [GetLawType('law_traditionalism').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_trade_policy_checkbox')] НЕ принят [concept_law] [GetLawType('law_isolationism').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_communist_countries_checkbox')] НЕ принят [concept_law] [GetLawType('law_cooperative_ownership').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_no_autocratic_countries_checkbox')] НЕ принят [concept_law] [GetLawType('law_autocracy').GetName]\n\n#bold; Экономика#!\n• #green;bold; -3%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_positive_cash_reserve_checkbox')] Национальные [concept_gold_reserves] > 25%\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_positive_cashflow_checkbox')] Положительный фиксированный недельный доход\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_positive_investment_pool_cashflow_checkbox')] Недельный чистый доход [concept_investment_pool] > 50k \n• #green;bold; -2%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_debt_checkbox')] Всего [concept_loans] < 25%\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_gdp_ranking_checkbox')] [concept_gdp] в топ-10\n\n#bold; Политика#!\n• #green;bold; -2%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_legittimacy_checkbox')] [concept_legitimacy] > 90\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_infamy_checkbox')] [concept_infamy] < 25\n• #green;bold; -2%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_political_movement_radicalism_checkbox')] НЕТ ни одного [concept_political_movement] с [concept_activism] > 25%\n• #green;bold; -3%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_is_at_war_checkbox')] [ROOT.GetCountry.GetNameNoFlag] НЕ находится в состоянии войны\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_country_radicals_checkbox')] В любом [concept_state_region] в [ROOT.GetCountry.GetNameNoFlag] < 20% [concept_turmoil]"
+
+########################### JOURNAL ENTRIES: PROGRESS BAR  #######################################
+je_international_loans_progress_bar: "Базовая #red;bold; национальная процентная ставка#!"
+je_international_loans_progress_bar_desc: "#white;bold; Национальная процентная ставка#!"
+
+
+########################### JOURNAL ENTRIES: PROGRESS BAR VARIABLES DESCRIPTION  #######################################
+je_international_loans_progress_bar_variable_0: "Стандартная #red;bold; национальная процентная ставка#!"
+je_international_loans_progress_bar_variable_1: "Принят [concept_law] [GetLawType('law_slavery_banned').GetName]"
+je_international_loans_progress_bar_variable_2: "Принят [concept_law] [GetLawType('law_traditionalism').GetName]"
+je_international_loans_progress_bar_variable_3: "Принят [concept_law] [GetLawType('law_isolationism').GetName]"
+je_international_loans_progress_bar_variable_4: "Принят [concept_law] [GetLawType('law_cooperative_ownership').GetName]"
+je_international_loans_progress_bar_variable_5: "Принят [concept_law] [GetLawType('law_autocracy').GetName]"
+je_international_loans_progress_bar_variable_6: "Национальные [concept_gold_reserves] > 25%"
+je_international_loans_progress_bar_variable_7: "Положительный фиксированный недельный доход"
+je_international_loans_progress_bar_variable_8: "[ROOT.GetCountry.GetNameNoFlag] Имеет недельный чистый доход [concept_investment_pool] > 50k"
+je_international_loans_progress_bar_variable_9: "Всего [concept_loans] < 25%"
+je_international_loans_progress_bar_variable_10: "[concept_gdp] в топ-10"
+je_international_loans_progress_bar_variable_11: "[ROOT.GetCountry.GetNameNoFlag] Имеет [concept_legitimacy] > 90"
+je_international_loans_progress_bar_variable_12: "[ROOT.GetCountry.GetNameNoFlag] Имеет [concept_infamy] < 25"
+je_international_loans_progress_bar_variable_13: "НЕТ ни одного [concept_political_movement] с [concept_activism] > 25%"
+je_international_loans_progress_bar_variable_14: "[ROOT.GetCountry.GetNameNoFlag] НЕ находится в состоянии войны"
+je_international_loans_progress_bar_variable_15: "В любом [concept_state_region] в [ROOT.GetCountry.GetNameNoFlag] < 20% [concept_turmoil]"
+je_international_loans_progress_bar_variable_16: "Издан #yellow;bold; Закон о банковском соглашении#!"
+je_international_loans_progress_bar_variable_17: "Издан #yellow;bold; Закон об интервенционизме#!"
+je_international_loans_progress_bar_variable_18: "Выпущены #yellow;bold; малые государственные облигации#!"
+je_international_loans_progress_bar_variable_19: "Выпущены #yellow;bold; крупные государственные облигации#!"
+je_international_loans_progress_bar_variable_20: "Учрежден #yellow;bold; кредитный департамент#!"
+je_international_loans_progress_bar_variable_21: "Учрежден #yellow;bold; долговой департамент#!"
+je_international_loans_progress_bar_variable_22: "Издано #yellow;bold; Поощрение внутренних инвестиций#!"
+je_international_loans_progress_bar_variable_23: "Издано #yellow;bold; Поощрение внутреннего потребления#!"
+
+
+
+########################### JOURNAL ENTRIES: BUTTONS & TOOLTIPS  #######################################
+tgr_loans_button_1: "Принять #yellow;bold; Закон о банковском соглашении#!"
+tgr_loans_button_1_desc: "Дает уступки частным банкам, чтобы получить доступ к субсидированному займу."
+tgr_loans_button_1_modifier_tooltip: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -2%#!."
+
+tgr_loans_button_4: "Принять #yellow;bold; Закон об интервенционизме#!"
+tgr_loans_button_4_desc: "Чтобы сократить неэффективность частного сектора, этот указ позволит государству вмешиваться более напрямую — ценой введения некоторых ограничений для частного сектора."
+tgr_loans_button_4_modifier_tooltip_1: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -2%#!."
+
+tgr_loans_button_7: "Поощрять внутренние #green;bold; инвестиции#!"
+tgr_loans_button_7_desc: "Чтобы стимулировать внутренний рост, мы можем поощрять малых и крупных инвесторов не держать капитал без дела, а вкладывать его во внутренний рынок."
+tgr_loans_button_7_modifier_tooltip_1: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -1%#!."
+
+tgr_loans_button_8: "Поощрять внутреннее #green;bold; потребление#!"
+tgr_loans_button_8_desc: "Мы можем ограничить экономический рост, усложнив инвестиции в новые проекты. Это перенаправит капитал из инвестиций в рост внутреннего потребления."
+tgr_loans_button_8_modifier_tooltip_1: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -1%#!."
+
+tgr_loans_button_2: "Выпустить #bold; малые#! #yellow;bold; государственные облигации#!"
+tgr_loans_button_2_desc: "Использует инструменты Центрального банка для выпуска облигаций с целью финансирования государственного аппарата"
+tgr_loans_button_2_modifier_tooltip_1: "Вы получите заем, равный #green;bold; 5%#! стоимости вашего [concept_gdp], распределенный на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от вашей #red;bold; национальной процентной ставки#!."
+tgr_loans_button_2_modifier_tooltip_2: "Это действие повысит #red;bold; национальную процентную ставку#! на #red;bold; 2%#!."
+
+tgr_loans_button_6: "Выпустить #bold; крупные#! #yellow;bold; государственные облигации#!"
+tgr_loans_button_6_desc: "Использует инструменты Центрального банка для выпуска облигаций с целью финансирования государственного аппарата"
+tgr_loans_button_6_modifier_tooltip_1: "Вы получите заем, равный #green;bold; 10%#! стоимости вашего [concept_gdp], распределенный на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от вашей #red;bold; национальной процентной ставки#!."
+tgr_loans_button_6_modifier_tooltip_2: "Это действие повысит #red;bold; национальную процентную ставку#! на #red;bold; 5%#!."
+
+tgr_loans_button_3: "Учредить #yellow;bold; Кредитный департамент#!"
+tgr_loans_button_3_desc: "Использует излишек ваших [concept_gold_reserves], чтобы давать деньги взаймы другой стране."
+tgr_loans_button_3_modifier_tooltip_1: "Открывает на 10 лет [concept_diplomatic_action] #yellow;bold; Issue a loan#!, позволяющее выдавать международный заем другой стране."
+tgr_loans_button_3_modifier_tooltip_2: "Сумма займа будет равна #green;bold; 10%#! стоимости #yellow;bold; их#! [concept_gdp], распределенной на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от #yellow;bold; их#! #red;bold; национальной процентной ставки#!."
+tgr_loans_button_3_modifier_tooltip_3: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -2%#!."
+
+tgr_loans_button_5: "Учредить #yellow;bold; Долговой департамент#!"
+tgr_loans_button_5_desc: "Учреждает государственное ведомство, ответственное за управление международными займами."
+tgr_loans_button_5_modifier_tooltip_1: "Открывает на 10 лет [concept_diplomatic_action] #yellow;bold; Apply for a loan#!, позволяющее получать международный заем у других стран."
+tgr_loans_button_5_modifier_tooltip_2: "Сумма займа будет равна #green;bold; 10%#! стоимости #yellow;bold; их#! [concept_gdp], распределенной на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от #yellow;bold; вашей#! #red;bold; национальной процентной ставки#!."
+tgr_loans_button_5_modifier_tooltip_3: "Это действие повысит #red;bold; национальную процентную ставку#! на #red;bold; 5%#!."
+
+great_revision_gdp_rank: "Нахождение [concept_gdp] в топ-20"
+
+
+########################### JOURNAL ENTRIES: MODIFIERS  #######################################
+great_revision_international_loans_credit_rating_modifier: "Национальная процентная ставка"
+
+tgr_loans_button_1_modifier: "Принят Закон о банковском соглашении"
+
+tgr_loans_button_4_modifier: "Принят Закон об интервенционизме"
+
+tgr_loans_button_7_modifier: "Поощряются внутренние инвестиции"
+
+tgr_loans_button_8_modifier: "Поощряется внутреннее потребление"
+
+tgr_loans_button_2_modifier: "Выпущены малые государственные облигации"
+tgr_loans_button_2_interest_modifier: "Погашение малых государственных облигаций"
+
+tgr_loans_button_6_modifier: "Выпущены крупные государственные облигации"
+tgr_loans_button_6_interest_modifier: "Погашение крупных государственных облигаций"
+
+tgr_loans_button_3_modifier_trigger: "Учрежден кредитный департамент"
+tgr_loans_button_3_modifier_trigger_expired: "Получен международный заем"
+tgr_loans_button_3_interest_modifier_receiver: "Погашение международного займа"
+tgr_loans_button_3_interest_modifier_lender: "Доход от международного займа"
+
+tgr_loans_button_5_modifier_trigger: "Учрежден долговой департамент"
+tgr_loans_button_5_modifier_trigger_expired: "Выдан международный заем"
+tgr_loans_button_5_interest_modifier_applicant: "Погашение международного займа"
+tgr_loans_button_5_interest_modifier_issuer: "Доход от международного займа"
+
+########################### EVENTS ###########################
+international_loans_event.1:0 "Предложение #yellow;bold; международного займа#!"
+international_loans_event.1.t:0 "Предложение #yellow;bold; международного займа#!"
+international_loans_event.1.d:0 "[SCOPE.sCountry('possible_lender').GetName] прибыл(а) к нам с визитом, чтобы предложить заем, который мы можем использовать для нашей дальнейшей экономической политики."
+international_loans_event.1.f:0 "'Не знаю, друг мой. Здесь каждому что-то нравится, а что-то нет. Ты уверен, что мы сможем заставить буржуазных свиней согласиться?'\n\n'Не волнуйся, как говорит мудрец: нравственность терпит поражение, когда запах больших денег сильнее самой нравственности'."
+international_loans_event.1.a:0 "Добро пожаловать, мы готовы подписать соглашение!"
+international_loans_event.1.b:0 "Нам это неинтересно"
+
+international_loans_event.2:0 "Предложение #yellow;bold; международного займа#! — принято"
+international_loans_event.2.t:0 "Предложение #yellow;bold; международного займа#! — принято"
+international_loans_event.2.d:0 "[SCOPE.sCountry('possible_receiver').GetName] принял(а) соглашение. Это закладывает основу для долгосрочного сотрудничества."
+international_loans_event.2.f:0 "'Не знаю, друг мой. Здесь каждому что-то нравится, а что-то нет. Ты уверен, что мы сможем заставить буржуазных свиней согласиться?'\n\n'Не волнуйся, как говорит мудрец: нравственность терпит поражение, когда запах больших денег сильнее самой нравственности'."
+international_loans_event.2.a:0 "Это соглашение обеспечит нам важный денежный поток в долгосрочной перспективе."
+international_loans_event.2.b:0 "Эти условия нам не подходят. Попробуем обратиться к другой организации."
+
+international_loans_event.3:0 "Предложение #yellow;bold; международного займа#! — отклонено"
+international_loans_event.3.t:0 "Предложение #yellow;bold; международного займа#! — отклонено"
+international_loans_event.3.d:0 "[SCOPE.sCountry('possible_receiver').GetName] вежливо отказал(а) подписывать соглашение, но дипломатический визит прошел успешно."
+international_loans_event.3.f:0 "'Не знаю, друг мой. Здесь каждому что-то нравится, а что-то нет. Ты уверен, что мы сможем заставить буржуазных свиней согласиться?'\n\n'Не волнуйся, как говорит мудрец: нравственность терпит поражение, когда запах больших денег сильнее самой нравственности'."
+international_loans_event.3.a:0 "Как же они собираются привлечь капитал, необходимый для инвестиций?"
+international_loans_event.3.b:0 "Эти условия нам не подходят. Попробуем обратиться к другой организации."
+
+international_loans_event.4:0 "Заявка на #yellow;bold; международный заем#!"
+international_loans_event.4.t:0 "Заявка на #yellow;bold; международный заем#!"
+international_loans_event.4.d:0 "[SCOPE.sCountry('possible_applicant').GetName] прибыл(а) к нам с визитом, чтобы предложить подать заявку на заем у нашего правительства."
+international_loans_event.4.f:0 "'Не знаю, друг мой. Здесь каждому что-то нравится, а что-то нет. Ты уверен, что мы сможем заставить буржуазных свиней согласиться?'\n\n'Не волнуйся, как говорит мудрец: нравственность терпит поражение, когда запах больших денег сильнее самой нравственности'."
+international_loans_event.4.a:0 "Добро пожаловать, мы готовы подписать соглашение!"
+international_loans_event.4.b:0 "Нам нужны НАШИ деньги!"
+
+international_loans_event.5:0 "Заявка на #yellow;bold; международный заем#! — принято"
+international_loans_event.5.t:0 "Заявка на #yellow;bold; международный заем#! — принято"
+international_loans_event.5.d:0 "[SCOPE.sCountry('possible_issuer').GetName] принял(а) соглашение. Это закладывает основу для долгосрочного сотрудничества."
+international_loans_event.5.f:0 "'Не знаю, друг мой. Здесь каждому что-то нравится, а что-то нет. Ты уверен, что мы сможем заставить буржуазных свиней согласиться?'\n\n'Не волнуйся, как говорит мудрец: нравственность терпит поражение, когда запах больших денег сильнее самой нравственности'."
+international_loans_event.5.a:0 "Это соглашение даст нам важное вливание капитала."
+international_loans_event.5.b:0 "Эти условия нам не подходят. Попробуем обратиться к другой организации."
+
+international_loans_event.6:0 "Заявка на #yellow;bold; международный заем#! — отклонено"
+international_loans_event.6.t:0 "Заявка на #yellow;bold; международный заем#! — отклонено"
+international_loans_event.6.d:0 "[SCOPE.sCountry('possible_issuer').GetName] вежливо отказал(а) подписывать соглашение, но дипломатический визит прошел успешно."
+international_loans_event.6.f:0 "'Не знаю, друг мой. Здесь каждому что-то нравится, а что-то нет. Ты уверен, что мы сможем заставить буржуазных свиней согласиться?'\n\n'Не волнуйся, как говорит мудрец: нравственность терпит поражение, когда запах больших денег сильнее самой нравственности'."
+international_loans_event.6.a:0 "Как мы будем платить жалованье нашим солдатам?"
+
+
+

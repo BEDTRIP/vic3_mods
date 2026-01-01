@@ -1,0 +1,36 @@
+########################################
+# Disable TheGreatRevision "International Loans" module diplomatic actions when used with E&F
+########################################
+
+REPLACE_OR_CREATE:issue_a_loan = {
+	groups = { general }
+	requires_approval = yes
+	should_notify_third_parties = yes
+
+	selectable = { always = no }
+	potential = { always = no }
+	possible = { always = no }
+
+	ai = {
+		accept_score = {
+			value = -9999
+		}
+	}
+}
+
+REPLACE_OR_CREATE:apply_for_a_loan = {
+	groups = { general }
+	requires_approval = yes
+	should_notify_third_parties = yes
+
+	selectable = { always = no }
+	potential = { always = no }
+	possible = { always = no }
+
+	ai = {
+		accept_score = {
+			value = -9999
+		}
+	}
+}
+

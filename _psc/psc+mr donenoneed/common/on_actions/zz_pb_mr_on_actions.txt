@@ -1,0 +1,14 @@
+### PSC (Private Construction Sector) + Morgenrote compatibility
+### Purpose: merge `on_monthly_pulse` hooks so neither mod loses its scheduled logic.
+
+on_monthly_pulse = {
+	on_actions = {
+		# PSC: triggers its own weekly construction demand/spending scheduler
+		set_construction_weekly_on_action
+
+		# MR: monthly/weekly maintenance hooks
+		mr_on_monthly_pulse
+		mr_on_weekly_pulse
+	}
+}
+

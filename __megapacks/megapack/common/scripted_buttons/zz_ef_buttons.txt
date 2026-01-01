@@ -1,0 +1,274 @@
+﻿
+REPLACE_OR_CREATE:speculative_share_9_button = { #count = 5/12mois 
+	name = "speculative_share_9_button"
+	desc = "speculative_share_9_button_desc"
+
+	visible = {
+		var:speculative_share_1 < 20
+	}
+	possible = {  
+		NOT = {
+			has_modifier = speculative_share_modifier_5 
+		}
+		has_modifier = has_financial_center 
+		custom_tooltip = {
+			text = speculative_share_5_button_tt_1 
+			var:speculative_share_1 < 20  
+		}  
+		custom_tooltip = {
+			text = speculative_share_9_button_tt_1 
+			var:speculative_share_2 = 0
+		}  
+		custom_tooltip = {
+			text = speculative_share_9_button_tt_2
+			pcs_construction_sector_headroom_by_base_rate >= 4
+		}  
+		custom_tooltip = {
+			text = speculative_share_9_button_tt_3
+			base_rate_percentage_decimal < 12
+			base_rate_percentage_decimal > 1.10
+		}  
+		#is_player = yes
+	}
+
+	effect = { 
+		while = {
+			count = 5 
+			random_scope_state = { 
+				start_privately_funded_building_construction = building_construction_sector
+			}
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_5
+			months = 12
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_6 #Monetary Expansion Lock
+			months = 12
+		}
+		custom_tooltip = {
+			text = speculative_share_9_button_tt_effect_1 
+		}   
+		# custom_tooltip = {
+		# 	text = speculative_share_9_button_tt_effect_2 
+		# }   
+		if = { #protection de l'IA
+			limit = {
+				is_player = yes
+			}  
+			change_variable = {
+				name = base_rate_percentage
+				subtract =  0.01
+			}  
+			add_modifier = {
+				name = down_base_rate
+				months = 6
+			}
+		}   
+	} 
+
+	ai_chance = {
+		value = 1000
+	}
+} 
+REPLACE_OR_CREATE:speculative_share_10_button = { #count = 10/18mois 
+	name = "speculative_share_10_button"
+	desc = "speculative_share_10_button_desc" 
+
+	visible = {
+		var:speculative_share_1 < 20
+	}
+	possible = {  
+		NOT = {
+			has_modifier = speculative_share_modifier_5 
+		}
+		has_modifier = has_financial_center 
+		custom_tooltip = {
+			text = speculative_share_5_button_tt_1 
+			var:speculative_share_1 < 20  
+		}  
+		custom_tooltip = {
+			text = speculative_share_10_button_tt_1 
+			var:speculative_share_2 = 0
+		}  
+		custom_tooltip = {
+			text = speculative_share_10_button_tt_2
+			pcs_construction_sector_headroom_by_base_rate >= 9
+		}  
+		custom_tooltip = {
+			text = speculative_share_10_button_tt_3
+			base_rate_percentage_decimal < 12
+			base_rate_percentage_decimal > 2.10
+		}  
+		#is_player = yes
+	}
+
+	effect = { 
+		while = {
+			count = 10
+			random_scope_state = { 
+				start_privately_funded_building_construction = building_construction_sector
+			}
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_5
+			months = 12
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_6 #Monetary Expansion Lock
+			months = 12
+		}
+		custom_tooltip = {
+			text = speculative_share_10_button_tt_effect_1 
+		}   
+		custom_tooltip = {
+			text = speculative_share_10_button_tt_effect_2 
+		}   
+		change_variable = {
+			name = base_rate_percentage
+			subtract =  0.02
+		}  
+		add_modifier = {
+			name = down_base_rate
+			months = 6
+		}
+		change_variable = {
+			name = government_loan
+			subtract = private_bank_funds_proportion_by_psc_10_by_rarity
+		}   
+	}
+} 
+REPLACE_OR_CREATE:speculative_share_11_button = { #count = 15/24mois 
+	name = "speculative_share_11_button"
+	desc = "speculative_share_11_button_desc"
+
+	visible = {
+		var:speculative_share_1 < 20
+	}
+	possible = {  
+		NOT = {
+			has_modifier = speculative_share_modifier_5 
+		}
+		has_modifier = has_financial_center 
+		custom_tooltip = {
+			text = speculative_share_5_button_tt_1 
+			var:speculative_share_1 < 20  
+		}  
+		custom_tooltip = {
+			text = speculative_share_11_button_tt_1 
+			var:speculative_share_2 = 0
+		}  
+		custom_tooltip = {
+			text = speculative_share_11_button_tt_2
+			pcs_construction_sector_headroom_by_base_rate >= 14
+		}  
+		custom_tooltip = {
+			text = speculative_share_11_button_tt_3
+			base_rate_percentage_decimal < 12
+			base_rate_percentage_decimal > 3.10
+		}  
+		#is_player = yes
+	}
+
+	effect = { 
+		while = {
+			count = 15
+			random_scope_state = { 
+				start_privately_funded_building_construction = building_construction_sector
+			}
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_5
+			months = 12
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_6 #Monetary Expansion Lock
+			months = 12
+		}
+		custom_tooltip = {
+			text = speculative_share_11_button_tt_effect_1 
+		}   
+		custom_tooltip = {
+			text = speculative_share_11_button_tt_effect_2 
+		}   
+		change_variable = {
+			name = base_rate_percentage
+			subtract =  0.03
+		}  
+		add_modifier = {
+			name = down_base_rate
+			months = 6
+		}
+		change_variable = {
+			name = government_loan
+			subtract = private_bank_funds_proportion_by_psc_15_by_rarity
+		}   
+	}
+}
+REPLACE_OR_CREATE:speculative_share_12_button = { #count = 20/30mois
+	name = "speculative_share_12_button"
+	desc = "speculative_share_12_button_desc"
+
+	visible = {
+		var:speculative_share_1 < 20
+	}
+	possible = {  
+		NOT = {
+			has_modifier = speculative_share_modifier_5 
+		}
+		has_modifier = has_financial_center 
+		custom_tooltip = {
+			text = speculative_share_5_button_tt_1 
+			var:speculative_share_1 < 20  
+		}  
+		custom_tooltip = {
+			text = speculative_share_12_button_tt_1 
+			var:speculative_share_2 = 0
+		}  
+		custom_tooltip = {
+			text = speculative_share_12_button_tt_2
+			pcs_construction_sector_headroom_by_base_rate >= 19
+		}  
+		custom_tooltip = {
+			text = speculative_share_12_button_tt_3
+			base_rate_percentage_decimal < 12
+			base_rate_percentage_decimal > 4.10
+		}  
+		#is_player = yes
+	}
+
+	effect = { 
+		while = {
+			count = 20
+			random_scope_state = { 
+				start_privately_funded_building_construction = building_construction_sector
+			}
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_5
+			months = 12
+		} 
+		add_modifier = {
+			name = speculative_share_modifier_6 #Monetary Expansion Lock
+			months = 12
+		}
+		custom_tooltip = {
+			text = speculative_share_12_button_tt_effect_1 
+		}   
+		custom_tooltip = {
+			text = speculative_share_12_button_tt_effect_2 
+		}   
+		change_variable = {
+			name = base_rate_percentage
+			subtract =  0.04
+		}   
+		add_modifier = {
+			name = down_base_rate
+			months = 6
+		}
+		change_variable = {
+			name = government_loan
+			subtract = private_bank_funds_proportion_by_psc_20_by_rarity
+		}   
+	}
+}

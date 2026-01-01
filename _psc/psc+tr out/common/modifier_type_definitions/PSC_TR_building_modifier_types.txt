@@ -1,0 +1,14 @@
+﻿goods_output_concrete_construction_add={
+	decimals=1
+	color=good
+	game_data={
+		ai_value=0
+	}
+}
+goods_input_concrete_construction_add={
+	decimals=1
+	color=bad
+	game_data={
+		ai_value=0
+	}
+}

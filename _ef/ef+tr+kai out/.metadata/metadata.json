@@ -1,0 +1,12 @@
+{
+  "name" : "Tech & Res + E&F Compatch",
+  "id" : "tech.res.e&f",
+  "version" : "1.5'",
+  "supported_game_version" : "1.12.*",
+  "short_description" : "Tech & Res Compatch with E&F.",
+  "tags" : [],
+  "relationships" : [],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

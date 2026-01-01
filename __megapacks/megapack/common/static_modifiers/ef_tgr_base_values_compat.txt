@@ -1,0 +1,20 @@
+ ########################################
+# E&F + TheGreatRevision (TGR) - Static modifiers compatibility
+# Both mods INJECT into base_values. This compatch (loaded last) "pins" the intended final values.
+########################################
+
+INJECT:base_values = {
+	# E&F: negative minting baseline for its financial system
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
+	country_minting_add = -500
+
+	# TGR POLITICS: higher baseline pools
+	country_bureaucracy_add = 200
+	country_authority_add = 200
+	country_influence_add = 200
+
+	# TGR TRADE: company baseline tweaks
+	country_company_throughput_bonus_add = 0.40
+	country_company_construction_efficiency_bonus_add = -0.05
+}
+

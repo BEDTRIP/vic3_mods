@@ -1,0 +1,13 @@
+{
+  "name": "ComPatch Tech&Res + Kuromi + The Great Revision",
+  "id": "",
+  "version": "1.12.2",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for Tech & Res + Kuromi AI + The Great Revision (common/ merges). Load after all three.",
+  "picture": "thumbnail.png",
+  "tags": [],
+  "relationships": [],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

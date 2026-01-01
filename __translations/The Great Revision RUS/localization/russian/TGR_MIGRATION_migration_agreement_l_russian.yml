@@ -1,0 +1,96 @@
+﻿l_russian:
+
+  #################### DIPLOMATIC PACT #################### 
+  migration_agreement: "Миграционное соглашение"
+  migration_agreement_desc: "[concept_diplomatic_pact], в рамках которого две страны договариваются облегчать и поощрять перемещение людей из одной страны в другую. Страна, которая хочет привлечь население, выплачивает принимающей стране сумму денег в качестве платы за отправку новых мигрантов."
+  migration_agreement_article_short_desc: "Установить благоприятную миграционную политику для вашей [concept_country]"
+
+  migration_agreement_action_propose_name: "Предложить миграционное соглашение"
+  migration_agreement_action_break_name: "Разорвать миграционное соглашение"
+  
+  migration_agreement_proposal_accepted_name: "Миграционное соглашение принято"
+  migration_agreement_proposal_accepted_desc: "Наше предложение заключить миграционное соглашение было принято."
+  migration_agreement_proposal_notification_name: "Миграционное соглашение"
+  migration_agreement_proposal_notification_desc: "[INITIATOR_COUNTRY.GetName] предлагает заключить #bold миграционное соглашение#! с нашей [concept_country]."
+  
+  concept_migration_agreement: "Миграционное соглашение"
+  
+  concept_migration_agreement:0 "Миграционное соглашение"
+  concept_migration_agreements:0 "Миграционные соглашения"
+  concept_migration_agreement_short:0 "Соглашение"
+  concept_migration_agreements_short:0 "Соглашения"
+  concept_migration_agreement_desc:3 "[concept_diplomatic_pact], в рамках которого две страны договариваются облегчать и поощрять перемещение людей из одной страны в другую. Страна, которая хочет привлечь население, выплачивает принимающей стране сумму денег в качестве платы за отправку новых мигрантов."
+  concept_migration_agreement_desc:1 "[concept_diplomatic_pact], в рамках которого две страны договариваются облегчать и поощрять перемещение людей из одной страны в другую. Страна, которая хочет привлечь население, выплачивает принимающей стране сумму денег в качестве платы за отправку новых мигрантов."
+
+  DIPLOMATIC_ACCEPTANCE_NUM_MIGRATION_AGREEMENT:1 "Количество [SCOPE.GetRootScope.GetCountry.GetAdjectiveNoFormatting] [Concept('concept_migration_agreement','$concept_migration_agreement$')]"
+  num_diplomatic_pacts_less_than:1 "Количество #bold миграционных соглашений#! больше #bold 1#!"
+  
+  #################### MODIFIER #################### 
+  migration_agreement_modifier_pull: "Миграционное соглашение: привлечение мигрантов"  
+  migration_agreement_modifier_push: "Миграционное соглашение: отправка мигрантов"
+  migration_agreement_delay_modifier: "Задержка в приёме мигрантов"  
+  migration_agreement_modifier_attraction_state: "Прибывающие мигранты"   
+  
+  #################### TOOLTIP #################### 
+  migration_agreement_10_tt: "Каждые 6 месяцев будет возможность начать массовую миграцию из любой страны, с которой у вас заключено миграционное соглашение."  
+  migration_agreement_1_tt: "Кампания по приёму откладывается на один год, что соответствующим образом влияет на наш престиж"   
+  migration_agreement_2_tt:1 "[GetLawGroup('lawgroup_migration').GetName] и [GetLawGroup('lawgroup_citizenship').GetName] [Concept('concept_law', '$concept_laws$')] в $concept_country$ должны разрешать $concept_migration$."
+  migration_agreement_3_tt:1 "Если же по этому событию новая миграция не начнётся, значит текущие [Concept('concept_law', '$concept_laws$')] не допускают перемещения этих конкретных групп населения, в особенности [GetLawGroup('lawgroup_migration').GetName]."
+  migration_agreement_4_tt:1 "Если массовая миграция началась, но вы не получаете новых иммигрантов, значит привлекательность миграции в штате, где началась массовая миграция, ниже необходимой. Её можно повысить с помощью [GetDecreeType('decree_greener_grass_campaign').GetName] [concept_decree]."
+ 
+ 
+  #################### EVENTS #################### 
+ 
+  #TEMPLATE
+  #migration_agreement.10:0 "Funding Foreign Lobby"
+  #migration_agreement.10.t:0 "Funding Foreign Lobby"
+  #migration_agreement.10.desc:0 "Funding Foreign Lobby"
+  #migration_agreement.10.d:0 "main description"
+  #migration_agreement.10.f:0 "secondary description in grey."
+  #migration_agreement.10.a:0 "option A."
+  #migration_agreement.10.b:0 "option B."
+  #migration_agreement.10.c:0 "option C."
+  
+  migration_agreement.10:0 "Миграционное соглашение"
+  migration_agreement.10.t:0 "Миграционное соглашение"
+  migration_agreement.10.desc:0 "Миграционное соглашение"
+  migration_agreement.10.d:0 "Мы подписали соглашение о миграции. Мы ожидаем, что в течение года новые группы людей переедут в нашу страну."
+  migration_agreement.10.f:0 "'Так и есть! Если мы стимулируем привоз дешёвой рабочей силы из какой-нибудь богом забытой, далёкой страны, мы сможем нанимать их и экономить на труде!'\n\n\'Не думаю, что мы справимся в одиночку — нужно, чтобы этот проект закрепился на общенациональном уровне.'\n\n\'Не беспокойся, я знаю нужных людей в министерстве. Оставь это мне.'"
+  migration_agreement.10.a:0 "Людей мы нашли — теперь нужно найти инвесторов!"
+  migration_agreement.10.b:0 "вариант B."
+  migration_agreement.10.c:0 "вариант C."
+  
+  migration_agreement.11:0 "Конец миграционного соглашения"
+  migration_agreement.11.t:0 "Конец миграционного соглашения"
+  migration_agreement.11.desc:0 "Конец миграционного соглашения"
+  migration_agreement.11.d:0 "Подписанное соглашение о миграции не было продлено. Наши страны больше не будут пользоваться прежним договором о миграционной политике."
+  migration_agreement.11.f:0 "'В конце концов, как и любовь, удача и многие другие прекрасные вещи, всё заканчивается... в любом случае... вернёмся к работе.'"
+  migration_agreement.11.a:0 "Какая жалость..."
+  migration_agreement.11.b:0 "вариант B."
+  migration_agreement.11.c:0 "вариант C."
+  
+  migration_agreement_campaign.1:0 "Въезд мигрантов"
+  migration_agreement_campaign.1.t:0 "Въезд мигрантов"
+  migration_agreement_campaign.1.desc:0 "Въезд мигрантов"
+  migration_agreement_campaign.1.d:0 "После подписания этого очень выгодного соглашения с [SCOPE.sCountry('migration_agreement_country_event_2').GetName] пришло время начать подготовку к приёму новых мигрантов."
+  migration_agreement_campaign.1.f:0 "'Миграция большого числа людей — дело непростое, мой друг. Нужно строить новое жильё. Каждого человека нужно идентифицировать, и самое главное — остерегаться внутренних беспорядков, которые могут возникнуть. Будем надеяться, что всё пройдёт хорошо.'"
+  migration_agreement_campaign.1.a:0 "Выделить средства на приём!"
+  migration_agreement_campaign.1.b:0 "Мы ещё не готовы к приёму — придётся отложить въезд мигрантов."
+  migration_agreement_campaign.1.c:0 "вариант C."
+  
+  migration_agreement_campaign.2:0 "Новые соседи, рабочие и налоги!"
+  migration_agreement_campaign.2.t:0 "Новые соседи, рабочие и налоги!"
+  migration_agreement_campaign.2.desc:0 "Новые соседи, рабочие и налоги!"
+  migration_agreement_campaign.2.d:0 "Новая кампания, хотя и дорогостоящая, принесла плоды. Потоки групп людей из [SCOPE.sCountry('migration_country').GetName] пересекают наши границы, готовые поселиться в нашей стране. Это большой успех!"
+  migration_agreement_campaign.2.f:0 "Прибыли новые люди, и открылся новый завод. Всё прошло по плану! Поблагодари от нашего имени нашего человека в министерстве. А теперь... За работу!"
+  migration_agreement_campaign.2.a:0 "Добро пожаловать, друзья!"
+  migration_agreement_campaign.2.b:0 "вариант B."
+  migration_agreement_campaign.2.c:0 "вариант C."
+
+
+  
+
+
+
+
+

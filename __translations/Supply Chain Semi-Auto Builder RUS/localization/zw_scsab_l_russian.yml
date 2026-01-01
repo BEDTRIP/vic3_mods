@@ -1,0 +1,404 @@
+﻿#l_braz_por:
+#l_english:
+#l_french:
+#l_german:
+#l_japanese:
+#l_korean:
+#l_polish:
+l_russian:
+#l_simp_chinese:
+#l_spanish:
+#l_turkish:
+
+# decisions
+
+	zw_expand_buildings_add_je: "$je_zw_expand_buildings$"
+	zw_expand_buildings_add_je_desc: "Добавляет $je_zw_expand_buildings$ в журнал."
+
+# journal entries
+
+	je_zw_expand_buildings: "Управление цепочками поставок"
+	je_zw_expand_buildings_reason: "Расширьте существующие здания в указанных цепочках поставок и планируйте строительство новых железных дорог и электростанций, чтобы обеспечить достаточную инфраструктуру и подачу энергии."
+
+# Build New Railways
+
+	zw_build_new_railway_button: "[ROOT.GetCountry.GetCustom('zw_build_new_railway_button_cl')]"
+	zw_build_new_railway_button_cl_1: "#gold @green_checkmark_box!Построить новые железные дороги#!"
+	zw_build_new_railway_button_cl_2: "@simple_box!Построить новые железные дороги"
+	zw_build_new_railway_button_desc: ""
+	zw_build_new_railway_button_effect: "$zw_build_new_railway_button_effect_breakdown_01$$zw_build_new_railway_button_effect_breakdown_02$$zw_build_new_railway_button_effect_breakdown_03$$zw_build_new_railway_button_effect_breakdown_04$$zw_build_new_railway_button_effect_breakdown_05$$zw_build_new_railway_button_effect_breakdown_06$$zw_build_new_railway_button_effect_breakdown_07$"
+
+	zw_build_new_railway_button_effect_breakdown_01: "Постепенно стройте новые железные дороги в регионах, где #white #b нет#!#! железной дороги.\n\nНовые железные дороги будут строиться только в регионах, которые соответствуют следующим условиям:"
+	zw_build_new_railway_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Выполнено хотя бы одно из условий:#!"
+	zw_build_new_railway_button_effect_breakdown_03: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[concept_infrastructure] < [concept_infrastructure_usage] + 3#!"
+	zw_build_new_railway_button_effect_breakdown_04: "#indent_newline:8 \n$EFFECT_LIST_BULLET$Выполнены все следующие условия:#!"
+	zw_build_new_railway_button_effect_breakdown_05: "#indent_newline:12 \n$EFFECT_LIST_BULLET$@transportation!$transportation$[concept_local_price] >= 120%[concept_base_price]#!"
+	zw_build_new_railway_button_effect_breakdown_06: "#indent_newline:12 \n$EFFECT_LIST_BULLET$Есть [GetBuildingType('building_urban_center').GetName]#!"
+	zw_build_new_railway_button_effect_breakdown_07: "\n\n#white #b Чем больше инфраструктуры требуется региону, тем выше будет приоритет его выбора при планировании новой железной дороги. Регионы, в которых использование инфраструктуры превышает лимит, получат дополнительный приоритет.#!#!"
+
+# Expand Railways
+
+	zw_expand_building_railway_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_railway_button_cl')]"
+	zw_expand_building_railway_button_cl_1: "#gold @green_checkmark_box!Расширить железные дороги#!"
+	zw_expand_building_railway_button_cl_2: "@simple_box!Расширить железные дороги"
+	zw_expand_building_railway_button_desc: ""
+	zw_expand_building_railway_button_effect: "$zw_expand_building_railway_button_effect_breakdown_01$$zw_expand_building_railway_button_effect_breakdown_02$$zw_expand_building_railway_button_effect_breakdown_03$$zw_expand_building_railway_button_effect_breakdown_04$$zw_expand_building_railway_button_effect_breakdown_05$$zw_expand_building_railway_button_effect_breakdown_06$$zw_expand_building_railway_button_effect_breakdown_07$$zw_expand_building_railway_button_effect_breakdown_08$$zw_expand_building_railway_button_effect_breakdown_09$$zw_expand_building_railway_button_effect_breakdown_10$$zw_expand_building_railway_button_effect_breakdown_11$$zw_expand_building_railway_button_effect_breakdown_12$"
+
+	zw_expand_building_railway_button_effect_breakdown_01: "Расширьте существующие железные дороги, соответствующие следующим условиям:"
+	zw_expand_building_railway_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[concept_occupancy] >= 0.95#!"
+	zw_expand_building_railway_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$$TRIGGER_IS_UNDER_CONSTRUCTION_NOT$#!"
+	zw_expand_building_railway_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Выполнено хотя бы одно из условий:#!"
+	zw_expand_building_railway_button_effect_breakdown_05: "#indent_newline:8 \n$EFFECT_LIST_BULLET$Выполнены все следующие условия:#!"
+	zw_expand_building_railway_button_effect_breakdown_06: "#indent_newline:12 \n$EFFECT_LIST_BULLET$@transportation!$transportation$[concept_local_price] >= 115% [concept_base_price]#!"
+	zw_expand_building_railway_button_effect_breakdown_07: "#indent_newline:12 \n$EFFECT_LIST_BULLET$$TRIGGER_BUILDING_HAS_GOODS_SHORTAGE_NOT$#!"
+	zw_expand_building_railway_button_effect_breakdown_08: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[concept_infrastructure] < [concept_infrastructure_usage] + 10#!"
+	zw_expand_building_railway_button_effect_breakdown_09: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Выполнено хотя бы одно из условий:#!"
+	zw_expand_building_railway_button_effect_breakdown_10: "#indent_newline:8 \n$EFFECT_LIST_BULLET$$IS_SUBSIDIZED$#!"
+	zw_expand_building_railway_button_effect_breakdown_11: "#indent_newline:8 \n$EFFECT_LIST_BULLET$$concept_building_balance_profit$ > 0#!"
+	zw_expand_building_railway_button_effect_breakdown_12: "\n\n#white #b Чем больше требуется инфраструктуры или @transportation! транспорта в регионе, тем больше уровней железной дороги может быть добавлено в очередь строительства.#!#!"
+
+# limit_max_added_levels_railway
+
+	zw_limit_max_added_levels_railway_button: "[ROOT.GetCountry.GetCustom('zw_limit_max_added_levels_railway_button_cl')]"
+	zw_limit_max_added_levels_railway_button_cl_1: "#gold @green_checkmark_box! Ограничить расширенные уровни @transportation!#!"
+	zw_limit_max_added_levels_railway_button_cl_2: "@simple_box! Ограничить расширенные уровни @transportation!"
+	zw_limit_max_added_levels_railway_button_desc: ""
+	zw_limit_max_added_levels_railway_button_effect: "Ограничить максимальное количество расширенных уровней для железной дороги за один раз.\n\nЕсли максимальные расширенные уровни не заданы, требуемые уровни всегда будут добавляться в очередь строительства #white #b сразу#!#!.\n\nДорогая транспортировка ожидается на ранних этапах индустриализации при отсутствии передовых технологий для железных дорог. #white #b Рекомендуется ограничивать количество расширенных уровней для железных дорог и электростанций за один раз до получения более продвинутых технологий#!#!, чтобы избежать перепроизводства транспорта и не игнорировать другие важные цепочки поставок из-за длинной очереди строительства."
+
+# change_max_added_levels_railway
+
+	zw_change_max_added_levels_railway_button: "[ROOT.GetCountry.GetCustom('zw_change_max_added_levels_railway_button_cl')]"
+	zw_change_max_added_levels_railway_button_cl_1: "#gold @arrow_up_up!@arrow_down_down! Расширенные уровни @transportation!#!"
+	zw_change_max_added_levels_railway_button_cl_2: "@arrow_up_up!@arrow_down_down! Расширенные уровни @transportation!"
+	zw_change_max_added_levels_railway_button_desc: ""
+	zw_change_max_added_levels_railway_button_effect_1: "Изменить максимальное количество расширенных уровней для железной дороги за один раз.\n\nТекущий: #yellow #b [ROOT.Var('zw_var_max_added_levels_railway').GetValue]#!#! (1~10)"
+	zw_change_max_added_levels_railway_button_effect_2: "Мы #white #b не ограничили#!#! максимальное количество расширенных уровней."
+
+# Build New Power Plants
+
+	zw_build_new_power_plant_button: "[ROOT.GetCountry.GetCustom('zw_build_new_power_plant_button_cl')]"
+	zw_build_new_power_plant_button_cl_1: "#gold @green_checkmark_box! Строить новые электростанции#!"
+	zw_build_new_power_plant_button_cl_2: "@simple_box! Строить новые электростанции"
+	zw_build_new_power_plant_button_desc: ""
+	zw_build_new_power_plant_button_effect: "Постепенно строить новые электростанции в регионах, где #white #b нет#!#! электростанций, но есть [GetBuildingType('building_urban_center').GetName].\n\n#white #b Чем более урбанизирован регион, тем выше приоритет будет у него при планировании новой электростанции.#!#!"
+
+# Expand Power Plants
+
+	zw_expand_building_power_plant_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_power_plant_button_cl')]"
+	zw_expand_building_power_plant_button_cl_1: "#gold @green_checkmark_box! Расширить электростанции#!"
+	zw_expand_building_power_plant_button_cl_2: "@simple_box! Расширить электростанции"
+	zw_expand_building_power_plant_button_desc: ""
+	zw_expand_building_power_plant_button_effect: "$zw_expand_building_power_plant_button_effect_breakdown_01$$zw_expand_building_power_plant_button_effect_breakdown_02$$zw_expand_building_power_plant_button_effect_breakdown_03$$zw_expand_building_power_plant_button_effect_breakdown_04$$zw_expand_building_power_plant_button_effect_breakdown_05$$zw_expand_building_power_plant_button_effect_breakdown_06$$zw_expand_building_power_plant_button_effect_breakdown_07$$zw_expand_building_power_plant_button_effect_breakdown_08$$zw_expand_building_power_plant_button_effect_breakdown_09$$zw_expand_building_power_plant_button_effect_breakdown_10$"
+
+	zw_expand_building_power_plant_button_effect_breakdown_01: "Расширить существующие электростанции, которые соответствуют следующим условиям:"
+	zw_expand_building_power_plant_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[concept_occupancy] >= 0.95#!"
+	zw_expand_building_power_plant_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$$TRIGGER_IS_UNDER_CONSTRUCTION_NOT$#!"
+	zw_expand_building_power_plant_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$$TRIGGER_BUILDING_HAS_GOODS_SHORTAGE_NOT$#!"
+	zw_expand_building_power_plant_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$@electricity!$electricity$[concept_local_price] >= 115% [concept_base_price]#!"
+	zw_expand_building_power_plant_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[concept_market_access] = 100%#!"
+	zw_expand_building_power_plant_button_effect_breakdown_07: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Выполнено хотя бы одно из следующих условий:#!"
+	zw_expand_building_power_plant_button_effect_breakdown_08: "#indent_newline:8 \n$EFFECT_LIST_BULLET$$IS_SUBSIDIZED$#!"
+	zw_expand_building_power_plant_button_effect_breakdown_09: "#indent_newline:8 \n$EFFECT_LIST_BULLET$$concept_building_balance_profit$ > 0#!"
+	zw_expand_building_power_plant_button_effect_breakdown_10: "\n\n#white #b Чем больше @electricity! электроэнергии требуется региону, тем больше уровней электростанции может быть добавлено в очередь строительства.#!#!"
+
+# limit_max_added_levels_power_plant
+
+	zw_limit_max_added_levels_power_plant_button: "[ROOT.GetCountry.GetCustom('zw_limit_max_added_levels_power_plant_button_cl')]"
+	zw_limit_max_added_levels_power_plant_button_cl_1: "#gold @green_checkmark_box! Ограничить уровни расширения @electricity!#!"
+	zw_limit_max_added_levels_power_plant_button_cl_2: "@simple_box! Ограничить уровни расширения @electricity!"
+	zw_limit_max_added_levels_power_plant_button_desc: ""
+	zw_limit_max_added_levels_power_plant_button_effect: "Ограничить максимальные уровни расширения электростанции за один раз.\n\nЕсли максимальный уровень не установлен, все необходимые уровни будут добавлены в очередь строительства сразу.\n\nДорогая электроэнергия ожидается, когда наша страна ещё находится на ранней стадии индустриализации и не обладает передовыми технологиями для электростанций. #white #b Рекомендуется ограничивать максимальные уровни расширения электростанций за один раз, пока мы не получим более передовые технологии#!#!, чтобы избежать перепроизводства электроэнергии при переходе на продвинутые методы производства и не игнорировать важные цепочки поставок из-за длинной очереди строительства."
+
+# change_max_added_levels_power_plant
+
+	zw_change_max_added_levels_power_plant_button: "[ROOT.GetCountry.GetCustom('zw_change_max_added_levels_power_plant_button_cl')]"
+	zw_change_max_added_levels_power_plant_button_cl_1: "#gold @arrow_up_up!@arrow_down_down! Уровни расширения @electricity!#!"
+	zw_change_max_added_levels_power_plant_button_cl_2: "@arrow_up_up!@arrow_down_down! Уровни расширения @electricity!"
+	zw_change_max_added_levels_power_plant_button_desc: ""
+	zw_change_max_added_levels_power_plant_button_effect_1: "Изменить максимальные уровни расширения электростанции за один раз.\n\nТекущий: #yellow #b [ROOT.Var('zw_var_max_added_levels_power_plant').GetValue]#!#! (1~10)"
+	zw_change_max_added_levels_power_plant_button_effect_2: "Мы #white #b не установили#!#! ограничение на максимальные уровни расширения."
+
+# construction_sector
+
+	zw_increase_more_construction_sectors_button: "@arrow_up_up![ROOT.GetCountry.GetCustom('zw_more_construction_sectors_button_cl')]"
+	zw_increase_more_construction_sectors_button_desc: ""
+	zw_increase_more_construction_sectors_button_effect_1: "Увеличить максимальное количество строительных секторов, которое может быть построено за один раз$zw_text_more_construction_sectors$$zw_text_more_construction_sectors_max_no$"
+	zw_increase_more_construction_sectors_button_effect_2: "Увеличить максимальное количество строительных секторов, которое может быть построено за один раз$zw_text_more_construction_sectors$$zw_text_more_construction_sectors_max_yes$"
+
+	zw_decrease_more_construction_sectors_button: "@arrow_down_down![ROOT.GetCountry.GetCustom('zw_more_construction_sectors_button_cl')]"
+	zw_decrease_more_construction_sectors_button_desc: ""
+	zw_decrease_more_construction_sectors_button_effect_1: "Уменьшить максимальное количество строительных секторов, которое может быть построено за один раз$zw_text_more_construction_sectors$$zw_text_more_construction_sectors_max_yes$"
+	zw_decrease_more_construction_sectors_button_effect_2: "Уменьшить максимальное количество строительных секторов, которое может быть построено за один раз$zw_text_more_construction_sectors$$zw_text_more_construction_sectors_max_no$"
+
+	zw_more_construction_sectors_button_cl_1: "#gold Строительный сектор#!"
+	zw_more_construction_sectors_button_cl_2: "Строительный сектор"
+
+	zw_text_more_construction_sectors: "$zw_text_more_construction_sectors_01$$zw_text_more_construction_sectors_02$$zw_text_more_construction_sectors_03$$zw_text_more_construction_sectors_04$$zw_text_more_construction_sectors_05$$zw_text_more_construction_sectors_06$$zw_text_more_construction_sectors_07$$zw_text_more_construction_sectors_08$$zw_text_more_construction_sectors_09$$zw_text_more_construction_sectors_10$$zw_text_more_construction_sectors_11$"
+	zw_text_more_construction_sectors_01: "\n\nЕсли [concept_gold_reserves] и $zw_text_more_construction_sectors_budget$ позволяют, мы будем строить больше строительных секторов. Бюджет оценивается дважды в год."
+	zw_text_more_construction_sectors_02: "\n\nСтроительные секторы будут строиться только в областях, соответствующих этим условиям:"
+	zw_text_more_construction_sectors_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Достаточно рабочей силы#!"
+	zw_text_more_construction_sectors_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Доступ к рынку не ниже 85%#!"
+	zw_text_more_construction_sectors_05: "\n\nОбласти, соответствующие этим условиям, будут в приоритете:"
+	zw_text_more_construction_sectors_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Заселённые области#!"
+	zw_text_more_construction_sectors_07: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Есть подходящие ресурсы#!"
+	zw_text_more_construction_sectors_08: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Достаточный доступ к рынку#!"
+	zw_text_more_construction_sectors_09: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Высокая эффективность строительства#!"
+	zw_text_more_construction_sectors_10: "\n\nСтроительные секторы будут построены в #v #b не более#!#! чем 5 областях за один раз."
+	zw_text_more_construction_sectors_11: "\n\nИз-за колебаний бюджета и стоимости строительства товаров, автоматическое строительство строительных секторов не рекомендуется, когда #v #b размер страны мал#!#!, чтобы избежать сильной финансовой волатильности. При #v #b дефиците рабочей силы#!#! это также не рекомендуется.\n\nКогда строительные секторы переходят на более продвинутый производственный метод, рекомендуется в первую очередь увеличивать строительную мощность за счёт #v #b улучшения производственных методов#!#!, если только нет значительного дефицита строительной мощности и острой нехватки строительных товаров, необходимых для улучшения."
+
+	zw_text_more_construction_sectors_max_no: "\n\nЧтобы избежать резких колебаний цен на строительные товары, рекомендуется устанавливать меньший максимум, когда #v #b размер рынка мал#!#!.\n\n#v #b Текущий максимум:#!#! #yellow #b 0#!#!\n#red #b Строительные секторы не будут строиться автоматически.#!#!"
+
+	zw_text_more_construction_sectors_max_yes: "\n\nЧтобы избежать резких колебаний цен на строительные товары, рекомендуется устанавливать меньший максимум, когда #v #b размер рынка мал#!#!.\n\n#v #b Текущий максимум:#!#! #yellow #b [ROOT.Var('zw_var_more_construction_sectors').GetValue]#!#!\n#green #b Мы будем строить больше строительных секторов, когда условия позволяют.#!#!"
+
+	zw_text_more_construction_sectors_budget: "#tooltip:[GetPlayer.GetTooltipTag],zw_text_more_construction_sectors_budget_tooltip_text $zw_text_more_construction_sectors_budget_tooltip$#!"
+
+	zw_text_more_construction_sectors_budget_tooltip: "#tooltippable Бюджет#!"
+
+	zw_text_more_construction_sectors_budget_tooltip_text: "Бюджет = Национальный фиксированный чистый доход - Общий доход инвестиционного пула - Стоимость строительных товаров\n\nМожно строить уровней = Бюджет / Стоимость одного уровня\n\nСледует построить уровней = Можно строить уровней - Уровней в строительстве\n\nКоличество «следует построить» не превысит установленный нами максимум.\n\nБюджет будет оцениваться только при выполнении этих условий:#indent_newline:4 \n$EFFECT_LIST_BULLET$Относительные золотые резервы выше порога золотых резервов\n$EFFECT_LIST_BULLET$Нет простаивающего строительства#!"
+
+# construction_sector_gold_reserves
+
+	zw_increase_more_construction_sectors_gold_reserves_button: "@arrow_up_up![ROOT.GetCountry.GetCustom('zw_more_construction_sectors_gold_reserves_button_cl')]"
+	zw_increase_more_construction_sectors_gold_reserves_button_desc: ""
+	zw_increase_more_construction_sectors_gold_reserves_button_effect_1: "Увеличить порог золотых резервов для строительства большего числа строительных секторов.$zw_text_more_construction_sectors_gold_reserves$$zw_text_more_construction_sectors_gold_reserves_max_no$"
+	zw_increase_more_construction_sectors_gold_reserves_button_effect_2: "Увеличить порог золотых резервов для строительства большего числа строительных секторов.$zw_text_more_construction_sectors_gold_reserves$$zw_text_more_construction_sectors_gold_reserves_max_yes$"
+
+	zw_decrease_more_construction_sectors_gold_reserves_button: "@arrow_down_down![ROOT.GetCountry.GetCustom('zw_more_construction_sectors_gold_reserves_button_cl')]"
+	zw_decrease_more_construction_sectors_gold_reserves_button_desc: ""
+	zw_decrease_more_construction_sectors_gold_reserves_button_effect_1: "Уменьшить порог золотых резервов для строительства большего числа строительных секторов.$zw_text_more_construction_sectors_gold_reserves$$zw_text_more_construction_sectors_gold_reserves_max_yes$"
+	zw_decrease_more_construction_sectors_gold_reserves_button_effect_2: "Уменьшить порог золотых резервов для строительства большего числа строительных секторов.$zw_text_more_construction_sectors_gold_reserves$$zw_text_more_construction_sectors_gold_reserves_max_no$"
+
+	zw_text_more_construction_sectors_gold_reserves: "\n\nСтроительные секторы будут автостроиться только когда относительные золотые резервы #v #b выше#!#! этого значения."
+	zw_text_more_construction_sectors_gold_reserves_max_no: "\n\n#v #b Текущий порог золотых резервов: #!#!#yellow #b Без ограничений#!#!\n#red #b Пожалуйста, следите за балансом доходов и контролем долга.#!#!"
+	zw_text_more_construction_sectors_gold_reserves_max_yes: "\n\n#v #b Текущий порог золотых резервов: #!#!#yellow #b [ROOT.Var('zw_var_more_construction_sectors_gold_reserves').GetValue]#!#!"
+
+	zw_more_construction_sectors_gold_reserves_button_cl_1: "#gold Порог золотых резервов#!"
+	zw_more_construction_sectors_gold_reserves_button_cl_2: "Порог золотых резервов"
+
+# Incorporated States
+
+	zw_develop_incorporated_states_button: "[ROOT.GetCountry.GetCustom('zw_develop_incorporated_states_button_cl')]"
+	zw_develop_incorporated_states_button_cl_1: "#gold @green_checkmark_box! Включенные области#!"
+	zw_develop_incorporated_states_button_cl_2: "@simple_box! Включенные области"
+	zw_develop_incorporated_states_button_desc: ""
+	zw_develop_incorporated_states_button_effect: "Развивать только включенные области."
+
+# Expand Supply Chains
+
+	zw_expand_building_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_button_cl')]"
+	zw_expand_building_button_cl_1: "#gold @green_checkmark_box! Расширить цепочки поставок#!"
+	zw_expand_building_button_cl_2: "@simple_box! Расширить цепочки поставок"
+	zw_expand_building_button_desc: ""
+	zw_expand_building_button_effect: "$zw_expand_building_button_effect_breakdown_01$$zw_expand_building_button_effect_breakdown_02$$zw_expand_building_button_effect_breakdown_03$$zw_expand_building_button_effect_breakdown_04$$zw_expand_building_button_effect_breakdown_05$$zw_expand_building_button_effect_breakdown_06$$zw_expand_building_button_effect_breakdown_07$"
+
+	zw_expand_building_button_effect_breakdown_01: "Расширить существующие здания выбранных цепочек поставок."
+	zw_expand_building_button_effect_breakdown_02: "\n\nРасширяться могут только здания, соответствующие этим условиям:"
+	zw_expand_building_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$$concept_building_balance_profit$ > 0#!"
+	zw_expand_building_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[concept_occupancy] >= 0.95#!"
+	zw_expand_building_button_effect_breakdown_05: "\n\nЧем прибыльнее здание, тем выше приоритет и больше уровней строительства оно получит."
+	zw_expand_building_button_effect_breakdown_06: "\n\nЗдания с [concept_shortage] ресурсов или с [concept_market_access] ниже 100% получат намного более низкий приоритет."
+	zw_expand_building_button_effect_breakdown_07: "\n\nОбщее количество новых строительств будет ограничено разумными пределами в зависимости от уже идущих строительств, производственной мощности, технологий и экономической системы, чтобы мы могли быстрее реагировать на изменения на рынке."
+
+# labor_threshold
+
+	zw_increase_labor_threshold_button: "@arrow_up_up! [ROOT.GetCountry.GetCustom('zw_labor_threshold_button_cl')]"
+	zw_increase_labor_threshold_button_desc: ""
+	zw_increase_labor_threshold_button_effect_1: "Увеличить порог по рабочей силе в области при #white #b расширении цепочек поставок#!#!.$zw_text_labor_threshold$\n\nТекущий порог по рабочей силе: #yellow #b [ROOT.Var('zw_var_labor_threshold').GetValue|*]#!#!"
+	zw_increase_labor_threshold_button_effect_2: "Увеличить порог по рабочей силе в области при #white #b расширении цепочек поставок#!#!.$zw_text_labor_threshold$\n\nТекущий порог по рабочей силе: #yellow #b Без ограничения#!#!"
+
+	zw_decrease_labor_threshold_button: "@arrow_down_down! [ROOT.GetCountry.GetCustom('zw_labor_threshold_button_cl')]"
+	zw_decrease_labor_threshold_button_desc: ""
+	zw_decrease_labor_threshold_button_effect_1: "Уменьшить порог по рабочей силе в области при #white #b расширении цепочек поставок#!#!.$zw_text_labor_threshold$\n\nТекущий порог по рабочей силе: #yellow #b [ROOT.Var('zw_var_labor_threshold').GetValue|*]#!#!"
+	zw_decrease_labor_threshold_button_effect_2: "Уменьшить порог по рабочей силе в области при #white #b расширении цепочек поставок#!#!.$zw_text_labor_threshold$\n\nТекущий порог по рабочей силе: #yellow #b Без ограничения#!#!"
+
+	zw_text_labor_threshold: "$zw_text_labor_threshold_01$$zw_text_labor_threshold_02$$zw_text_labor_threshold_03$$zw_text_labor_threshold_04$"
+	zw_text_labor_threshold_01: "\n\nРабочая сила области = Крестьяне + Безработные"
+	zw_text_labor_threshold_02: "\n\nЕсли порог задан, только области с числом рабочих выше этого порога будут рассматриваться при расширении цепочек, и максимальные уровни расширения также будут ограничены."
+	zw_text_labor_threshold_03: "\n\nЕсли порог не задан, в качестве порога будет использоваться только занятость зданий. Это поощряет непрерывный поток рабочей силы в более продуктивные отрасли, вытесняя устаревшие, и оптимизирует промышленную структуру страны. Также это обеспечивает наличие рабочих мест для иммигрантов. Такой подход предпочтителен при наличии #white #b крупной экономики#!#! и #white #b высокой строительной мощности#!#!."
+	zw_text_labor_threshold_04: "\n\nЕсли порог установлен, это предотвращает трату строительных мощностей на области с недостатком рабочей силы. Такой подход предпочтителен при наличии #white #b малой экономики#!#! и #white #b ограниченной строительной мощности#!#!."
+
+	zw_labor_threshold_button_cl_1: "#gold Порог по рабочей силе#!"
+	zw_labor_threshold_button_cl_2: "Порог по рабочей силе"
+
+# increase/decrease_added_constructions
+
+	zw_increase_added_constructions_button: "@arrow_up_up! [ROOT.GetCountry.GetCustom('zw_added_constructons_button_cl')]"
+	zw_increase_added_constructions_button_desc: ""
+	zw_increase_added_constructions_button_effect: "Увеличить максимальное количество новых строительных контор при #white #b расширении цепочек поставок#!#!.\n\nТекущий множитель максимального числа строительных контор: #yellow #b [ROOT.GetCountry.GetCustom('zw_added_constructons_cl')]#!#!\n\nЗначение по умолчанию — 1. Если установить 2, максимальное количество будет в 2 раза больше стандартного.\n\nОбщее количество строительных контор будет ограничено в разумных пределах с учётом текущих строек, строительной мощности, технологий и экономической системы, чтобы оперативно реагировать на изменения на рынке.\n\n#white #b Если доход из частного инвестиционного пула слишком мал для покрытия частного строительства, допустимого по текущей экономической системе#!#!, можно увеличить государственные строительства, чтобы не терять строительные очки при наличии бюджета.\n\n#white #b Обратите внимание: это не изменяет долю частного строительства, определённую экономической системой, а только количество добавляемых строительных контор за раз.#!#!"
+
+	zw_decrease_added_constructions_button: "@arrow_down_down! [ROOT.GetCountry.GetCustom('zw_added_constructons_button_cl')]"
+	zw_decrease_added_constructions_button_desc: ""
+	zw_decrease_added_constructions_button_effect: "Уменьшить максимальное количество новых строительных контор при #white #b расширении цепочек поставок#!#!.\n\nТекущий множитель максимального числа строительных контор: #yellow #b [ROOT.GetCountry.GetCustom('zw_added_constructons_cl')]#!#!\n\nЗначение по умолчанию — 1. Если установить 0.5, максимум составит 50% от стандартного.\n\nОбщее количество строительных контор будет ограничено в разумных пределах с учётом текущих строек, строительной мощности, технологий и экономической системы, чтобы оперативно реагировать на изменения на рынке.\n\n#white #b Если бюджет правительства не позволяет строить достаточно объектов#!#!, можно уменьшить количество государственных строительств для снижения расходов.\n\n#white #b Обратите внимание: это не изменяет долю частного строительства, определённую экономической системой, а только количество добавляемых строительных контор за раз.#!#!"
+
+	zw_added_constructons_cl_1: "[ROOT.Var('zw_var_added_constructions').GetValue]"
+	zw_added_constructons_cl_2: "1"
+
+	zw_added_constructons_button_cl_1: "#gold Макс. число строительных контор#!"
+	zw_added_constructons_button_cl_2: "Макс. число строительных контор"
+
+# Expand Supply Chains: Machines
+
+	zw_expand_building_machine_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_machine_button_cl')]"
+	zw_expand_building_machine_button_cl_1: "#gold @green_checkmark_box! Машиностроение#!"
+	zw_expand_building_machine_button_cl_2: "@simple_box! Машиностроение"
+	zw_expand_building_machine_button_desc: ""
+	zw_expand_building_machine_button_effect: "$zw_expand_building_machine_button_effect_breakdown_01$$zw_expand_building_machine_button_effect_breakdown_02$$zw_expand_building_machine_button_effect_breakdown_03$$zw_expand_building_machine_button_effect_breakdown_04$$zw_expand_building_machine_button_effect_breakdown_05$$zw_expand_building_machine_button_effect_breakdown_06$$zw_expand_building_machine_button_effect_breakdown_07$$zw_expand_building_machine_button_effect_breakdown_08$$zw_expand_building_machine_button_effect_breakdown_09$$zw_expand_building_machine_button_effect_breakdown_10$$zw_expand_building_machine_button_effect_breakdown_11$"
+
+	zw_expand_building_machine_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_machine_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_logging_camp').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_coal_mine').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_iron_mine').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_rubber_plantation').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_oil_rig').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_07: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_tooling_workshop').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_08: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_steel_mill').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_09: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_motor_industry').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_10: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_automotive_industry').GetName]#!"
+	zw_expand_building_machine_button_effect_breakdown_11: "\n\n#white #b Цепочка поставок машиностроения — основа нашей индустриализации. Всегда рекомендуется уделять ей повышенное внимание.#!#!"
+
+# Expand Supply Chains: Food
+
+	zw_expand_building_food_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_food_button_cl')]"
+	zw_expand_building_food_button_cl_1: "#gold @green_checkmark_box! Продукты питания#!"
+	zw_expand_building_food_button_cl_2: "@simple_box! Продукты питания"
+	zw_expand_building_food_button_desc: ""
+	zw_expand_building_food_button_effect: "$zw_expand_building_food_button_effect_breakdown_01$$zw_expand_building_food_button_effect_breakdown_02$$zw_expand_building_food_button_effect_breakdown_03$$zw_expand_building_food_button_effect_breakdown_04$$zw_expand_building_food_button_effect_breakdown_05$$zw_expand_building_food_button_effect_breakdown_06$$zw_expand_building_food_button_effect_breakdown_07$$zw_expand_building_food_button_effect_breakdown_08$$zw_expand_building_food_button_effect_breakdown_09$$zw_expand_building_food_button_effect_breakdown_10$$zw_expand_building_food_button_effect_breakdown_11$$zw_expand_building_food_button_effect_breakdown_12$"
+
+	zw_expand_building_food_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_food_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_rye_farm').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_wheat_farm').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_rice_farm').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_maize_farm').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_millet_farm').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_07: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_livestock_ranch').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_08: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_sugar_plantation').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_09: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_banana_plantation').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_10: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_fishing_wharf').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_11: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_whaling_station').GetName]#!"
+	zw_expand_building_food_button_effect_breakdown_12: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_food_industry').GetName]#!"
+
+# Expand Supply Chains: Consumer Goods
+
+	zw_expand_building_clothes_furniture_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_clothes_furniture_button_cl')]"
+	zw_expand_building_clothes_furniture_button_cl_1: "#gold @green_checkmark_box! Потребительские товары#!"
+	zw_expand_building_clothes_furniture_button_cl_2: "@simple_box! Потребительские товары"
+	zw_expand_building_clothes_furniture_button_desc: ""
+	zw_expand_building_clothes_furniture_button_effect: "$zw_expand_building_clothes_furniture_button_effect_breakdown_01$$zw_expand_building_clothes_furniture_button_effect_breakdown_02$$zw_expand_building_clothes_furniture_button_effect_breakdown_03$$zw_expand_building_clothes_furniture_button_effect_breakdown_04$$zw_expand_building_clothes_furniture_button_effect_breakdown_05$$zw_expand_building_clothes_furniture_button_effect_breakdown_06$$zw_expand_building_clothes_furniture_button_effect_breakdown_07$$zw_expand_building_clothes_furniture_button_effect_breakdown_08$$zw_expand_building_clothes_furniture_button_effect_breakdown_09$$zw_expand_building_clothes_furniture_button_effect_breakdown_10$$zw_expand_building_clothes_furniture_button_effect_breakdown_11$"
+
+	zw_expand_building_clothes_furniture_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_logging_camp').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_cotton_plantation').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_silk_plantation').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_furniture_manufactory').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_textile_mill').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_07: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_synthetics_plant').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_08: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если исследована технология [GetTechnology('lathe').GetName]：#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_09: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_dye_plantation').GetName]#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_10: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если исследована технология [GetTechnology('vulcanization').GetName]：#!"
+	zw_expand_building_clothes_furniture_button_effect_breakdown_11: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_rubber_plantation').GetName]#!"
+
+# Expand Supply Chains: Glassworks
+
+	zw_expand_building_glassworks_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_glassworks_button_cl')]"
+	zw_expand_building_glassworks_button_cl_1: "#gold @green_checkmark_box! Стекло и фарфор#!"
+	zw_expand_building_glassworks_button_cl_2: "@simple_box! Стекло и фарфор"
+	zw_expand_building_glassworks_button_desc: ""
+	zw_expand_building_glassworks_button_effect: "$zw_expand_building_glassworks_button_effect_breakdown_01$$zw_expand_building_glassworks_button_effect_breakdown_02$$zw_expand_building_glassworks_button_effect_breakdown_03$$zw_expand_building_glassworks_button_effect_breakdown_04$$zw_expand_building_glassworks_button_effect_breakdown_05$$zw_expand_building_glassworks_button_effect_breakdown_06$$zw_expand_building_glassworks_button_effect_breakdown_07$$zw_expand_building_glassworks_button_effect_breakdown_08$$zw_expand_building_glassworks_button_effect_breakdown_09$"
+
+	zw_expand_building_glassworks_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_glassworks_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_dye_plantation').GetName]#!"
+	zw_expand_building_glassworks_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_glassworks').GetName]#!"
+	zw_expand_building_glassworks_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если технология [GetTechnology('crystal_glass').GetName] не исследована:#!"
+	zw_expand_building_glassworks_button_effect_breakdown_05: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_logging_camp').GetName]#!"
+	zw_expand_building_glassworks_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если исследована технология [GetTechnology('lathe').GetName]:#!"
+	zw_expand_building_glassworks_button_effect_breakdown_07: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_lead_mine').GetName]#!"
+	zw_expand_building_glassworks_button_effect_breakdown_08: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если исследована технология [GetTechnology('plastics').GetName]:#!"
+	zw_expand_building_glassworks_button_effect_breakdown_09: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_oil_rig').GetName]#!"
+
+# Expand Supply Chains: Chemicals
+
+	zw_expand_building_chemical_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_chemical_button_cl')]"
+	zw_expand_building_chemical_button_cl_1: "#gold @green_checkmark_box! Химикаты#!"
+	zw_expand_building_chemical_button_cl_2: "@simple_box! Химикаты"
+	zw_expand_building_chemical_button_desc: ""
+	zw_expand_building_chemical_button_effect: "$zw_expand_building_chemical_button_effect_breakdown_01$$zw_expand_building_chemical_button_effect_breakdown_02$$zw_expand_building_chemical_button_effect_breakdown_03$$zw_expand_building_chemical_button_effect_breakdown_04$$zw_expand_building_chemical_button_effect_breakdown_05$$zw_expand_building_chemical_button_effect_breakdown_06$$zw_expand_building_chemical_button_effect_breakdown_07$$zw_expand_building_chemical_button_effect_breakdown_08$$zw_expand_building_chemical_button_effect_breakdown_09$$zw_expand_building_chemical_button_effect_breakdown_10$$zw_expand_building_chemical_button_effect_breakdown_11$$zw_expand_building_chemical_button_effect_breakdown_12$"
+
+	zw_expand_building_chemical_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_chemical_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_logging_camp').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_iron_mine').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_sulfur_mine').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_paper_mill').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_chemical_plant').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_07: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_explosives_factory').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_08: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если исследована технология [GetTechnology('chemical_bleaching').GetName]:#!"
+	zw_expand_building_chemical_button_effect_breakdown_09: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_dye_plantation').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_10: "#indent_newline:4 \n$EFFECT_LIST_BULLET$Если исследована технология [GetTechnology('nitrogen_fixation').GetName]:#!"
+	zw_expand_building_chemical_button_effect_breakdown_11: "#indent_newline:8 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_oil_rig').GetName]#!"
+	zw_expand_building_chemical_button_effect_breakdown_12: "\n\n#white #b Цепочка поставок химикатов — основа нашей индустриализации. Ей всегда стоит уделять особое внимание.#!#!"
+
+# Expand Supply Chains: Electrics
+
+	zw_expand_building_electrics_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_electrics_button_cl')]"
+	zw_expand_building_electrics_button_cl_1: "#gold @green_checkmark_box! Электроника#!"
+	zw_expand_building_electrics_button_cl_2: "@simple_box! Электроника"
+	zw_expand_building_electrics_button_desc: ""
+	zw_expand_building_electrics_button_effect: "$zw_expand_building_electrics_button_effect_breakdown_01$$zw_expand_building_electrics_button_effect_breakdown_02$$zw_expand_building_electrics_button_effect_breakdown_03$$zw_expand_building_electrics_button_effect_breakdown_04$$zw_expand_building_electrics_button_effect_breakdown_05$"
+
+	zw_expand_building_electrics_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_electrics_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_iron_mine').GetName]#!"
+	zw_expand_building_electrics_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_lead_mine').GetName]#!"
+	zw_expand_building_electrics_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_rubber_plantation').GetName]#!"
+	zw_expand_building_electrics_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_electrics_industry').GetName]#!"
+
+# Expand Supply Chains: Cash Crops
+
+	zw_expand_building_plantations_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_plantations_button_cl')]"
+	zw_expand_building_plantations_button_cl_1: "#gold @green_checkmark_box! Товарные культуры#!"
+	zw_expand_building_plantations_button_cl_2: "@simple_box! Товарные культуры"
+	zw_expand_building_plantations_button_desc: ""
+	zw_expand_building_plantations_button_effect: "$zw_expand_building_plantations_button_effect_breakdown_01$$zw_expand_building_plantations_button_effect_breakdown_02$$zw_expand_building_plantations_button_effect_breakdown_03$$zw_expand_building_plantations_button_effect_breakdown_04$$zw_expand_building_plantations_button_effect_breakdown_05$$zw_expand_building_plantations_button_effect_breakdown_06$"
+
+	zw_expand_building_plantations_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_plantations_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_coffee_plantation').GetName]#!"
+	zw_expand_building_plantations_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_tea_plantation').GetName]#!"
+	zw_expand_building_plantations_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_tobacco_plantation').GetName]#!"
+	zw_expand_building_plantations_button_effect_breakdown_05: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_vineyard').GetName]#!"
+	zw_expand_building_plantations_button_effect_breakdown_06: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_opium_plantation').GetName]#!"
+
+# Expand Supply Chains: Shipbuilding
+
+	zw_expand_building_shipyards_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_shipyards_button_cl')]"
+	zw_expand_building_shipyards_button_cl_1: "#gold @green_checkmark_box! Судостроение#!"
+	zw_expand_building_shipyards_button_cl_2: "@simple_box! Судостроение"
+	zw_expand_building_shipyards_button_desc: ""
+	zw_expand_building_shipyards_button_effect: "$zw_expand_building_shipyards_button_effect_breakdown_01$$zw_expand_building_shipyards_button_effect_breakdown_02$$zw_expand_building_shipyards_button_effect_breakdown_03$"
+
+	zw_expand_building_shipyards_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_shipyards_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_shipyards').GetName]#!"
+	zw_expand_building_shipyards_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_military_shipyards').GetName]#!"
+
+# Expand Supply Chains: Military Goods
+
+	zw_expand_building_military_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_military_button_cl')]"
+	zw_expand_building_military_button_cl_1: "#gold @green_checkmark_box! Военные товары#!"
+	zw_expand_building_military_button_cl_2: "@simple_box! Военные товары"
+	zw_expand_building_military_button_desc: ""
+	zw_expand_building_military_button_effect: "$zw_expand_building_military_button_effect_breakdown_01$$zw_expand_building_military_button_effect_breakdown_02$$zw_expand_building_military_button_effect_breakdown_03$$zw_expand_building_military_button_effect_breakdown_04$"
+
+	zw_expand_building_military_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_military_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_arms_industry').GetName]#!"
+	zw_expand_building_military_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_artillery_foundry').GetName]#!"
+	zw_expand_building_military_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_munition_plant').GetName]#!"
+
+# Expand Supply Chains: Other
+
+	zw_expand_building_other_button: "[ROOT.GetCountry.GetCustom('zw_expand_building_other_button_cl')]"
+	zw_expand_building_other_button_cl_1: "#gold @green_checkmark_box! Прочее#!"
+	zw_expand_building_other_button_cl_2: "@simple_box! Прочее"
+	zw_expand_building_other_button_desc: ""
+	zw_expand_building_other_button_effect: "$zw_expand_building_other_button_effect_breakdown_01$$zw_expand_building_other_button_effect_breakdown_02$$zw_expand_building_other_button_effect_breakdown_03$$zw_expand_building_other_button_effect_breakdown_04$"
+
+	zw_expand_building_other_button_effect_breakdown_01: "Включает следующие здания:"
+	zw_expand_building_other_button_effect_breakdown_02: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_gold_mine').GetName]#!"
+	zw_expand_building_other_button_effect_breakdown_03: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_art_academy').GetName]#!"
+	zw_expand_building_other_button_effect_breakdown_04: "#indent_newline:4 \n$EFFECT_LIST_BULLET$[GetBuildingType('building_port').GetName]#!"

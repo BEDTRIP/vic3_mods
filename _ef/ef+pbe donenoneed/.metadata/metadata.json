@@ -1,0 +1,31 @@
+{
+  "name": "ComPatch E&F + Power Blocks Expanded",
+  "id": "3637386955",
+  "version": "1.12.2",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Power Blocs Expanded (PBE)",
+  "picture": "thumbnail.png",
+  "tags": [
+    "compatibility",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "[1.12] Power Blocs Expanded",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

@@ -1,0 +1,42 @@
+#############################################
+# pb+ef: Modifier type definitions for PSC construction goods multipliers
+#
+# PSC defines only _add modifiers for construction goods, but we need _mult
+# for the overbuilt_economy_modifier to work properly.
+#############################################
+
+goods_output_wood_construction_mult={
+	decimals=1
+	color=good
+	percent=yes
+	game_data={
+		ai_value=0
+	}
+}
+
+goods_output_iron_construction_mult={
+	decimals=1
+	color=good
+	percent=yes
+	game_data={
+		ai_value=0
+	}
+}
+
+goods_output_steel_construction_mult={
+	decimals=1
+	color=good
+	percent=yes
+	game_data={
+		ai_value=0
+	}
+}
+
+goods_output_arc_welded_construction_mult={
+	decimals=1
+	color=good
+	percent=yes
+	game_data={
+		ai_value=0
+	}
+}

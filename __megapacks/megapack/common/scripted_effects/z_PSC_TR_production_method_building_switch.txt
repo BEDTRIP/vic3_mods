@@ -1,0 +1,40 @@
+﻿REPLACE:production_method_building_switch = {
+    switch = {
+        trigger = $production_methods$
+        0 = {
+            create_building = {
+                building = building_construction_regulator
+                level = $level$
+                activate_production_methods = {pm_concrete_point_conversion}
+            }
+        }
+        1 = {
+            create_building = {
+                building = building_construction_regulator
+                level = $level$
+                activate_production_methods = {pm_arc_welded_point_conversion}
+            }
+        }
+        2 = {
+            create_building = {
+                building = building_construction_regulator
+                level = $level$
+                activate_production_methods = {pm_steel_point_conversion}
+            }
+        }
+        3 = {
+            create_building = {
+                building = building_construction_regulator
+                level = $level$
+                activate_production_methods = {pm_iron_point_conversion}
+            }
+        }
+        4 = {
+            create_building = {
+                building = building_construction_regulator
+                level = $level$
+                activate_production_methods = {pm_wood_point_conversion}
+            }
+        }
+    }
+}

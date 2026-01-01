@@ -1,0 +1,124 @@
+
+# UI/UX patch: make PSC point-conversion PMs look like construction-sector PMs in UI.
+# Reason: budget/overview uses AccessConstructionSpeeds which is tied to CONSTRUCTION_CAMP_BUILDING
+# (PSC sets it to building_construction_regulator), so the UI will show regulator PMs.
+
+REPLACE:pm_wood_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/wooden_buildings.dds"
+	is_default = yes
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_wood_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+	unlocking_production_methods = {
+		pm_wood_point_conversion
+	}
+}
+
+REPLACE:pm_iron_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/iron_frame_buildings.dds"
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_iron_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+
+	unlocking_production_methods = {
+		pm_iron_point_conversion
+	}
+}
+
+REPLACE:pm_steel_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/steel_frame_buildings.dds"
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_steel_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+
+	unlocking_production_methods = {
+		pm_steel_point_conversion
+	}
+}
+
+REPLACE:pm_arc_welded_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/arc_welded_buildings.dds"
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_arc_welded_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+
+	unlocking_production_methods = {
+		pm_arc_welded_point_conversion
+	}
+}
+
+REPLACE_OR_CREATE:pm_concrete_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/construction_bureaucrats.dds"
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_concrete_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+
+	unlocking_production_methods = {
+		pm_concrete_point_conversion
+	}
+}

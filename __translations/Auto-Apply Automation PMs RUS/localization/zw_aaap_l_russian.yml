@@ -1,0 +1,57 @@
+﻿l_russian:
+
+# decisions
+
+	zw_auto_pm_automation_add_je: "$je_zw_auto_pm_automation$"
+	zw_auto_pm_automation_add_je_desc: "Добавляет \"$je_zw_auto_pm_automation$\" в журнал"
+
+# journal entries
+
+	je_zw_auto_pm_automation: "Управление Автоматизацией Производства"
+	je_zw_auto_pm_automation_reason: "Автоматизировать наш производственный процесс."
+
+# scripted buttons
+
+	# Basic Automation
+
+	zw_auto_pm_automation_basic_button: "@green_checkmark! Базовая автоматизация"
+	zw_auto_pm_automation_basic_button_effect: "[ROOT.GetCountry.GetNameNoFlag] будет #white #b постепенно#!#! внедрять #white #b базовые#!#! методы автоматизированного производства в подходящих областях."
+	zw_auto_pm_automation_basic_button_desc: ""
+
+	zw_auto_pm_automation_basic_undo_button: "@red_cross! Базовая автоматизация"
+	zw_auto_pm_automation_basic_undo_button_effect: "Прекратить внедрение дополнительных базовых методов автоматизации."
+	zw_auto_pm_automation_basic_undo_button_desc: ""
+
+	# Electrical Automation
+
+	zw_auto_pm_automation_electric_button: "@green_checkmark! Электрическая автоматизация"
+	zw_auto_pm_automation_electric_button_effect: "[ROOT.GetCountry.GetNameNoFlag] будет #white #b постепенно#!#! внедрять #white #b электрические#!#! методы автоматизированного производства в подходящих областях."
+	zw_auto_pm_automation_electric_button_desc: ""
+
+	zw_auto_pm_automation_electric_undo_button: "@red_cross! Электрическая автоматизация"
+	zw_auto_pm_automation_electric_undo_button_effect: "Прекратить внедрение дополнительных электрических методов автоматизации."
+	zw_auto_pm_automation_electric_undo_button_desc: ""
+
+	# Oil Automation
+
+	zw_auto_pm_automation_oil_button: "@green_checkmark! Нефтяная автоматизация"
+	zw_auto_pm_automation_oil_button_effect: "[ROOT.GetCountry.GetNameNoFlag] будет #white #b постепенно#!#! внедрять #white #b нефтяные#!#! методы автоматизированного производства в подходящих областях."
+	zw_auto_pm_automation_oil_button_desc: ""
+
+	zw_auto_pm_automation_oil_undo_button: "@red_cross! Нефтяная автоматизация"
+	zw_auto_pm_automation_oil_undo_button_effect: "Прекратить внедрение автоматизированных методов, использующих нефть."
+	zw_auto_pm_automation_oil_undo_button_desc: ""
+
+	# Rail Transportation
+
+	zw_auto_pm_transportation_button: "@green_checkmark! Железнодорожные перевозки"
+	zw_auto_pm_transportation_button_effect: "[ROOT.GetCountry.GetNameNoFlag] будет #white #b постепенно#!#! внедрять #white #b железнодорожные перевозки#!#! в производстве в подходящих областях."
+	zw_auto_pm_transportation_button_desc: ""
+
+	zw_auto_pm_transportation_undo_button: "@red_cross! Железнодорожные перевозки"
+	zw_auto_pm_transportation_undo_button_effect: "Прекратить внедрение дополнительных железнодорожных перевозок в производстве."
+	zw_auto_pm_transportation_undo_button_desc: ""
+
+# custom tooltips
+
+ 	zw_require_basic_automation_tt: "Включена базовая автоматизация"

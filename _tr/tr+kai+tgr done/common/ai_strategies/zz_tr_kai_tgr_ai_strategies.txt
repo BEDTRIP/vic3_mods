@@ -1,0 +1,104 @@
+# ComPatch: Tech & Res + Kuromi + TGR
+# Kuromi AI is loaded last among the three, so its REPLACE strategies win.
+# These two strategies miss Tech&Res resource goods; we restore them to improve AI handling of new resources.
+
+REPLACE:ai_strategy_resource_expansion = {
+	icon = "gfx/interface/icons/ai_strategy_icons/resource_expansion.dds"
+
+	type = administrative
+
+	building_group_weights = {
+		bg_rubber = 1.5
+		bg_oil_extraction = 1.5
+		bg_mining = 1.5
+		bg_logging = 1.5
+	}
+
+	goods_stances = {
+		coal = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = coal } } }
+		iron = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = iron } } }
+		oil = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = oil } } }
+		lead = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = lead } } }
+		wood = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = wood } } }
+		hardwood = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = hardwood } } }
+		sulfur = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = sulfur } } }
+		rubber = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = rubber } } }
+
+		# Tech&Res new resources
+		good_uranium = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = good_uranium } } }
+		bauxite = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = bauxite } } }
+		copper = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = copper } } }
+		commonores = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = commonores } } }
+		advancedores = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = advancedores } } }
+		rare_earths = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = rare_earths } } }
+		gas = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = gas } } }
+	}
+
+	possible = {
+		always = yes
+	}
+
+	weight = {
+		value = 20
+
+		# Scaling with literacy 10-30%
+		multiply = {
+			value = literacy_rate
+			add = -0.10
+			divide = 0.20
+			min = 0
+			max = 1
+		}
+	}
+}
+
+REPLACE:ai_strategy_colonial_extraction = {
+    icon = "gfx/interface/icons/ai_strategy_icons/resource_expansion.dds"
+
+    type = administrative
+    building_group_weights = {
+        bg_rubber = 1.5
+        bg_oil_extraction = 1.5
+        bg_mining = 1.5
+        bg_logging = 1.5
+        bg_plantations = 1.5
+    }
+
+    goods_stances = {
+        coal = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = coal } } }
+        iron = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = iron } } }
+        oil = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = oil } } }
+        lead = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = lead } } }
+        wood = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = wood } } }
+        hardwood = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = hardwood } } }
+        sulfur = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = sulfur } } }
+        fruit = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = fruit } } }
+        fabric = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = fabric } } }
+        sugar = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = sugar } } }
+        coffee = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = coffee } } }
+        tea = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = tea } } }
+        opium = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = opium } } }
+        tobacco = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = tobacco } } }
+        dye = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = dye } } }
+        silk = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = silk } } }
+        rubber = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = rubber } } }
+
+		# Tech&Res new resources
+		good_uranium = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = good_uranium } } }
+		bauxite = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = bauxite } } }
+		copper = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = copper } } }
+		commonores = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = commonores } } }
+		advancedores = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = advancedores } } }
+		rare_earths = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = rare_earths } } }
+		gas = { stance = wants_export trigger = { kai_has_high_supply = { GOODS = gas } } }
+    }
+    possible = {
+    	is_subject = yes
+		country_is_colonial_or_company = yes
+    }
+
+    weight = {
+        value = 100
+    }
+}
+

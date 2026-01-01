@@ -1,0 +1,2627 @@
+﻿# This file was fully copied from E&F v4.1.1 (30.12.2025)
+# with building_ef_private_construction replaced by building_construction_sector
+
+BUILDINGS = {
+	every_country = {
+
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+
+		#  ██████╗███████╗███╗   ██╗████████╗██████╗  █████╗ ██╗         ██████╗  █████╗ ███╗   ██╗██╗  ██╗
+		# ██╔════╝██╔════╝████╗  ██║╚══██╔══╝██╔══██╗██╔══██╗██║         ██╔══██╗██╔══██╗████╗  ██║██║ ██╔╝
+		# ██║     █████╗  ██╔██╗ ██║   ██║   ██████╔╝███████║██║         ██████╔╝███████║██╔██╗ ██║█████╔╝
+		# ██║     ██╔══╝  ██║╚██╗██║   ██║   ██╔══██╗██╔══██║██║         ██╔══██╗██╔══██║██║╚██╗██║██╔═██╗
+		# ╚██████╗███████╗██║ ╚████║   ██║   ██║  ██║██║  ██║███████╗    ██████╔╝██║  ██║██║ ╚████║██║  ██╗
+		#  ╚═════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+
+		if = {
+			limit = {
+				or = {
+					#c:FRM ?= this
+					# c:LUX ?= this
+					# c:PAR ?= this
+					# c:MOD ?= this
+					# c:LUC ?= this
+					c:TUS ?= this
+   					c:SPA ?= this
+					c:POR ?= this
+ 					c:NET ?= this
+  					c:SAR ?= this
+					c:PER ?= this
+					c:TUR ?= this
+					c:SWI ?= this
+					c:BEL ?= this
+					c:SWE ?= this
+					c:DEN ?= this
+					c:GRE ?= this
+					c:SAX ?= this
+					c:BAV ?= this
+					c:HAN ?= this
+					c:SIC ?= this
+					c:PAP ?= this
+					c:MEX ?= this
+					c:BRZ ?= this
+					c:QUE ?= this
+					c:ONT ?= this
+					#c:WUR ?= this
+					c:FIN ?= this
+					c:DEI ?= this
+					c:NSW ?= this
+					c:BOL ?= this
+					c:NPU ?= this
+				}
+			}
+			initialize_historic_macro_facilities_bc = {
+				CTRL_BANK_SITE = capital
+				BANK_BLDG_TYPE = building_bank
+				CB_SIZE        = 5
+			}
+		}
+
+		if = {
+			limit = {
+				or = {
+					c:FRA ?= this
+					c:GBR ?= this
+					c:AUS ?= this
+					c:PRU ?= this
+					c:BIC ?= this
+					c:CHI ?= this
+					c:USA ?= this
+					c:RUS ?= this
+				}
+			}
+			initialize_historic_macro_facilities_bc = {
+				CTRL_BANK_SITE = capital
+				BANK_BLDG_TYPE = building_bank
+				CB_SIZE        = 20
+			}
+		}
+
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+
+		# ███╗   ██╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗ █████╗ ██╗             ███████╗████████╗ ██████╗  ██████╗██╗  ██╗██████╗ ██╗██╗     ███████╗
+		# ████╗  ██║██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║██╔══██╗██║             ██╔════╝╚══██╔══╝██╔═══██╗██╔════╝██║ ██╔╝██╔══██╗██║██║     ██╔════╝
+		# ██╔██╗ ██║███████║   ██║   ██║██║   ██║██╔██╗ ██║███████║██║             ███████╗   ██║   ██║   ██║██║     █████╔╝ ██████╔╝██║██║     █████╗
+		# ██║╚██╗██║██╔══██║   ██║   ██║██║   ██║██║╚██╗██║██╔══██║██║             ╚════██║   ██║   ██║   ██║██║     ██╔═██╗ ██╔═══╝ ██║██║     ██╔══╝
+		# ██║ ╚████║██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║██║  ██║███████╗███████╗███████║   ██║   ╚██████╔╝╚██████╗██║  ██╗██║     ██║███████╗███████╗
+		# ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   ╚═╝    ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚══════╝
+
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+		#####################################################################################################################################################
+
+		if = {
+			limit = {
+				or = {
+					c:FRA ?= this
+					c:GBR ?= this
+					c:AUS ?= this
+					c:PRU ?= this
+					c:NET ?= this
+					c:CHI ?= this
+					c:BEL ?= this
+					c:USA ?= this
+					c:RUS ?= this
+				}
+			}
+			initialize_historic_macro_facilities_ns = {
+				STOCKPILE_SITE = capital
+			}
+		}
+
+		################################################################################################################################
+		################################################################################################################################
+		################################################################################################################################
+		################################################################################################################################
+
+		#  ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗  ██████╗ ███╗   ██╗██╗   ██╗
+		# ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔════╝ ████╗  ██║╚██╗ ██╔╝
+		# ██║     ██║   ██║██╔████╔██║██████╔╝███████║██║  ███╗██╔██╗ ██║ ╚████╔╝
+		# ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██║   ██║██║╚██╗██║  ╚██╔╝
+		# ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║╚██████╔╝██║ ╚████║   ██║
+		#  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝
+
+        ################################################################################################################################
+        ################################################################################################################################
+        ################################################################################################################################
+        ################################################################################################################################
+
+
+		if = {
+			limit = {
+				c:GBR ?= this
+			}
+			add_company = company_type:company_BankofEngland
+			add_company = company_type:company_LloydsBank
+			add_company = company_type:company_barclaysBank
+			add_company = company_type:company_NationalWestminsterBank
+			add_company = company_type:company_RoyalBankOfScotland
+			add_company = company_type:company_Rothschild_Bank_gbr
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+
+			company:company_BankofEngland = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOME_COUNTIES
+			}
+			company:company_LloydsBank = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOME_COUNTIES
+			}
+			company:company_barclaysBank = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOME_COUNTIES
+			}
+			company:company_NationalWestminsterBank = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOME_COUNTIES
+			}
+			company:company_RoyalBankOfScotland = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_LOWLANDS
+			}
+			company:company_Rothschild_Bank_gbr = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOME_COUNTIES
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOME_COUNTIES
+			}
+		}
+		if = {
+			limit = {
+				c:FRA ?= this
+			}
+			add_company = company_type:company_BanqueDeFrance
+			add_company = company_type:company_Rothschild_Bank_fra
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_BanqueDeFrance = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ILE_DE_FRANCE
+			}
+			company:company_Rothschild_Bank_fra = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ILE_DE_FRANCE
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ILE_DE_FRANCE
+			}
+		}
+		if = {
+			limit = {
+				c:USA ?= this
+			}
+			add_company = company_type:company_BankWellsFargo
+			add_company = company_type:company_BankAmericanExpress
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_BankWellsFargo = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_NEW_YORK
+			}
+			company:company_BankAmericanExpress = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_NEW_YORK
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_NEW_YORK
+			}
+		}
+		if = {
+			limit = {
+				c:RUS ?= this
+			}
+			add_company = company_type:company_StateBankRussianEmpire
+			add_company = company_type:company_basic_gold_mining_rus
+			company:company_StateBankRussianEmpire = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_INGRIA
+			}
+			company:company_basic_gold_mining_rus = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_INGRIA
+			}
+		}
+		if = {
+			limit = {
+				c:PRU ?= this
+			}
+			add_company = company_type:company_PreussischeSeehandlung
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_PreussischeSeehandlung = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_BRANDENBURG
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_BRANDENBURG
+			}
+		}
+		if = {
+			limit = {
+				c:FRM ?= this
+			}
+			add_company = company_type:company_Rothschild_Bank_ger
+			company:company_Rothschild_Bank_ger = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HESSE
+			}
+		}
+		if = {
+			limit = {
+				c:BAV ?= this
+			}
+			add_company = company_type:company_BayerischeHypothekenUndWechselBank
+			company:company_BayerischeHypothekenUndWechselBank = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_BAVARIA
+			}
+		}
+		if = {
+			limit = {
+				c:AUS ?= this
+			}
+			add_company = company_type:company_OesterreichischeCreditAnstalt
+			add_company = company_type:company_Rothschild_Bank_aus
+			company:company_OesterreichischeCreditAnstalt = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_AUSTRIA
+			}
+			company:company_Rothschild_Bank_aus = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_AUSTRIA
+			}
+		}
+		if = {
+			limit = {
+				c:NET ?= this
+			}
+			add_company = company_type:company_DeNederlandscheBank
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_DeNederlandscheBank = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_HOLLAND
+			}
+		}
+		if = {
+			limit = {
+				c:SPA ?= this
+			}
+			add_company = company_type:company_BankofSpain
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_BankofSpain = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_NEW_CASTILE
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_NEW_CASTILE
+			}
+		}
+		if = {
+			limit = {
+				c:TUR ?= this
+			}
+			add_company = company_type:company_OttomanBank
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_OttomanBank = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_EASTERN_THRACE
+			}
+		}
+		if = {
+			limit = {
+				c:CHI ?= this
+			}
+			add_company = company_type:company_BankIBC
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_BankIBC = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_SUZHOU
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_SUZHOU
+			}
+		}
+		if = {
+			limit = {
+				c:POR ?= this
+			}
+			add_company = company_type:company_Bank_Ultramarino
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_Bank_Ultramarino = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ESTREMADURA
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ESTREMADURA
+			}
+		}
+		if = {
+			limit = {
+				c:BEL ?= this
+			}
+			add_company = company_type:company_SocieteGeneraledeBelgique
+			company:company_SocieteGeneraledeBelgique = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_FLANDERS
+			}
+		}
+		if = {
+			limit = {
+				c:SWI ?= this
+			}
+			add_company = company_type:company_Bankenverein
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_Bankenverein = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_EAST_SWITZERLAND
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_EAST_SWITZERLAND
+			}
+		}
+		if = {
+			limit = {
+				c:SWE ?= this
+			}
+			add_company = company_type:company_HandelsBanken
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_HandelsBanken = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_SVEALAND
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_SVEALAND
+			}
+		}
+		if = {
+			limit = {
+				c:DEN ?= this
+			}
+			add_company = company_type:company_LandmandsBanken
+			company:company_LandmandsBanken = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ZEALAND
+			}
+		}
+		if = {
+			limit = {
+				c:SIC ?= this
+			}
+			add_company = company_type:company_Rothschild_Bank_ita
+			company:company_Rothschild_Bank_ita = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_CAMPANIA
+			}
+		}
+		if = {
+			limit = {
+				c:PER ?= this
+			}
+			add_company = company_type:company_ImperialBankofPersia
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_ImperialBankofPersia = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_IRAKAJEMI
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_IRAKAJEMI
+			}
+		}
+		# if = {
+		# 	limit = {
+		# 		c:GRE ?= this
+		# 	}
+		# 	add_company = company_type:company_bankofgreec
+		# }
+		if = {
+			limit = {
+				c:MEX ?= this
+			}
+			add_company = company_type:company_bancodelondresmexico
+			add_company = company_type:company_basic_silver_mining_mex
+			company:company_bancodelondresmexico = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_MEXICO
+			}
+			company:company_basic_silver_mining_mex = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_MEXICO
+			}
+		}
+		if = {
+			limit = {
+				c:BRZ ?= this
+			}
+			add_company = company_type:company_BancoMercantil
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_BancoMercantil = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_RIO_DE_JANEIRO
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_RIO_DE_JANEIRO
+			}
+		}
+		if = {
+			limit = {
+				c:CHL ?= this
+			}
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_SANTIAGO
+			}
+		}
+		if = {
+			limit = {
+				c:ARG ?= this
+			}
+			add_company = company_type:company_BancoProvincia
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_BancoProvincia = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_BUENOS_AIRES
+			}
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_BUENOS_AIRES
+			}
+		}
+		if = {
+			limit = {
+				c:BOL ?= this
+			}
+			add_company = company_type:company_basic_gold_and_silver_mining_2
+			company:company_basic_gold_and_silver_mining_2 = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_LA_PAZ
+			}
+		}
+		if = {
+			limit = {
+				c:QUE ?= this
+			}
+			add_company = company_type:company_BankOfMontreal
+			company:company_BankOfMontreal = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_QUEBEC
+			}
+		}
+		if = {
+			limit = {
+				c:ONT ?= this
+			}
+			add_company = company_type:company_RoyalBankofCanada
+			company:company_RoyalBankofCanada = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_ONTARIO
+			}
+		}
+		if = {
+			limit = {
+				c:NSW ?= this
+			}
+			add_company = company_type:company_ColonialBankOfAustralia
+			company:company_ColonialBankOfAustralia = {
+				set_company_establishment_date = 1830.1.1
+				set_company_state_region = s:STATE_NEW_SOUTH_WALES
+			}
+		}
+	}
+
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+
+	# ███████╗██╗███╗   ██╗ █████╗ ███╗   ██╗ ██████╗██╗ █████╗ ██╗          ██████╗███████╗███╗   ██╗████████╗███████╗██████╗
+	# ██╔════╝██║████╗  ██║██╔══██╗████╗  ██║██╔════╝██║██╔══██╗██║         ██╔════╝██╔════╝████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+	# █████╗  ██║██╔██╗ ██║███████║██╔██╗ ██║██║     ██║███████║██║         ██║     █████╗  ██╔██╗ ██║   ██║   █████╗  ██████╔╝
+	# ██╔══╝  ██║██║╚██╗██║██╔══██║██║╚██╗██║██║     ██║██╔══██║██║         ██║     ██╔══╝  ██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+	# ██║     ██║██║ ╚████║██║  ██║██║ ╚████║╚██████╗██║██║  ██║███████╗    ╚██████╗███████╗██║ ╚████║   ██║   ███████╗██║  ██║
+	# ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+
+
+
+
+	#AUS
+	s:STATE_AUSTRIA={
+		region_state:AUS={
+			create_building={
+				building="building_financial_centre_aus"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_aus
+						country="c:AUS"
+						levels=1
+					}
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_BOHEMIA={
+		region_state:AUS={
+			create_building={
+				building="building_coal_mine"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_iron_mine"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_VENETIA={
+		region_state:AUS={
+			create_building={
+				building="building_sulfur_mine"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_STYRIA={
+		region_state:AUS={
+			create_building={
+				building="building_lead_mine"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#BAV
+	s:STATE_BAVARIA={
+		region_state:BAV={
+			create_building={
+				building="building_financial_centre_bav"
+				add_ownership={
+					company={
+						type=company_BayerischeHypothekenUndWechselBank
+						country="c:BAV"
+						levels=5
+					}
+					company={
+						type=company_Rothschild_Bank_aus
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_aus
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#BEL
+	s:STATE_FLANDERS={
+		region_state:BEL={
+			create_building={
+				building="building_financial_centre_bel"
+				add_ownership={
+					company={
+						type=company_SocieteGeneraledeBelgique
+						country="c:BEL"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_SocieteGeneraledeBelgique
+						country="c:BEL"
+						levels=4
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#DEN
+	s:STATE_ZEALAND={
+		region_state:DEN={
+			create_building={
+				building="building_financial_centre_den"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_gbr
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_gbr
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+
+
+	#FRA
+	s:STATE_ILE_DE_FRANCE={
+		region_state:FRA={
+			create_building={
+				building="building_financial_centre_fra"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_fra
+						country="c:FRA"
+						levels=5
+					}
+					company={
+						type=company_BanqueDeFrance
+						country="c:FRA"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_fra
+						country="c:FRA"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#FRM
+	s:STATE_HESSE={
+		region_state:FRM={
+			create_building={
+				building="building_financial_centre_frm"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_POMERANIA={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_WESTPHALIA={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ANHALT={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_RHINELAND={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_NORTH_RHINE={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_BRANDENBURG={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_RUHR={
+		region_state:PRU={
+			create_building={
+				building="building_railway"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#GBR
+	s:STATE_HOME_COUNTIES={
+		region_state:GBR={
+			create_building={
+				building="building_financial_centre_gbr"
+				add_ownership={
+					company={
+						type=company_BankofEngland
+						country="c:GBR"
+						levels=5
+					}
+					company={
+						type=company_LloydsBank
+						country="c:GBR"
+						levels=5
+					}
+					company={
+						type=company_barclaysBank
+						country="c:GBR"
+						levels=5
+					}
+					company={
+						type=company_NationalWestminsterBank
+						country="c:GBR"
+						levels=5
+					}
+					company={
+						type=company_RoyalBankOfScotland
+						country="c:GBR"
+						levels=5
+					}
+					company={
+						type=company_Rothschild_Bank_gbr
+						country="c:GBR"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_gbr
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#ITA
+	s:STATE_LOMBARDY={
+		region_state:AUS={
+			create_building={
+				building="building_financial_centre_ita"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_aus
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_aus
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#NET
+	s:STATE_HOLLAND={
+		region_state:NET={
+			create_building={
+				building="building_financial_centre_net"
+				add_ownership={
+					company={
+						type=company_DeNederlandscheBank
+						country="c:NET"
+						levels=11
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_DeNederlandscheBank
+						country="c:NET"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#NSW
+	s:STATE_NEW_SOUTH_WALES={
+		region_state:NSW={
+			create_building={
+				building="building_financial_centre_nsw"
+				add_ownership={
+					company={
+						type=company_barclaysBank
+						country="c:GBR"
+						levels=1
+					}
+					company={
+						type=company_ColonialBankOfAustralia
+						country="c:NSW"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_gbr
+						country="c:GBR"
+						levels=1
+					}
+					company={
+						type=company_ColonialBankOfAustralia
+						country="c:NSW"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#ONT
+	s:STATE_ONTARIO={
+		region_state:ONT={
+			create_building={
+				building="building_financial_centre_ont"
+				add_ownership={
+					company={
+						type=company_barclaysBank
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_barclaysBank
+						country="c:GBR"
+						levels=1
+					}
+					company={
+						type=company_BankOfMontreal
+						country="c:ONT"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#POR
+	s:STATE_ESTREMADURA={
+		region_state:POR={
+			create_building={
+				building="building_financial_centre_por"
+				add_ownership={
+					company={
+						type=company_Bank_Ultramarino
+						country="c:POR"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Bank_Ultramarino
+						country="c:POR"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#PRU
+	s:STATE_BRANDENBURG={
+		region_state:PRU={
+			create_building={
+				building="building_financial_centre_pru"
+				add_ownership={
+					company={
+						type=company_PreussischeSeehandlung
+						country="c:PRU"
+						levels=1
+					}
+				}
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ger
+						country="c:FRM"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_PreussischeSeehandlung
+						country="c:PRU"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#QUE
+	s:STATE_QUEBEC={
+		region_state:QUE={
+			create_building={
+				building="building_financial_centre_que"
+				add_ownership={
+					company={
+						type=company_barclaysBank
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_gbr
+						country="c:GBR"
+						levels=1
+					}
+					company={
+						type=company_RoyalBankofCanada
+						country="c:QUE"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#RUS
+	s:STATE_INGRIA={
+		region_state:RUS={
+			create_building={
+				building="building_financial_centre_rus"
+				add_ownership={
+					company={
+						type=company_StateBankRussianEmpire
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_StateBankRussianEmpire
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_KIEV={
+		region_state:RUS={
+			create_building={
+				building="building_livestock_ranch"
+				add_ownership={
+					company={
+						type=company_StateBankRussianEmpire
+						country="c:RUS"
+						levels=30
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_wheat_farm"
+				add_ownership={
+					company={
+						type=company_StateBankRussianEmpire
+						country="c:RUS"
+						levels=30
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#SIC
+	s:STATE_CAMPANIA={
+		region_state:SIC={
+			create_building={
+				building="building_financial_centre_sic"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ita
+						country="c:SIC"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_Rothschild_Bank_ita
+						country="c:SIC"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#SPA
+	s:STATE_NEW_CASTILE={
+		region_state:SPA={
+			create_building={
+				building="building_financial_centre_spa"
+				add_ownership={
+					company={
+						type=company_BankofSpain
+						country="c:SPA"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_BankofSpain
+						country="c:SPA"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#USA
+	s:STATE_NEW_YORK={
+		region_state:USA={
+			create_building={
+				building="building_financial_centre_usa"
+				add_ownership={
+					company={
+						type=company_BankWellsFargo
+						country="c:USA"
+						levels=3
+					}
+				}
+				add_ownership={
+					company={
+						type=company_BankAmericanExpress
+						country="c:USA"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_construction_sector"
+				add_ownership={
+					company={
+						type=company_BankWellsFargo
+						country="c:USA"
+						levels=2
+					}
+				}
+				add_ownership={
+					company={
+						type=company_BankAmericanExpress
+						country="c:USA"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#TUR
+	s:STATE_EASTERN_THRACE={
+		region_state:TUR={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_OttomanBank
+						country="c:TUR"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#SWE
+	s:STATE_SVEALAND={
+		region_state:SWE={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_HandelsBanken
+						country="c:SWE"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#DEN
+	s:STATE_JUTLAND={
+		region_state:DEN={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_LandmandsBanken
+						country="c:DEN"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#QUE
+	s:STATE_QUEBEC={
+		region_state:QUE={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_BankOfMontreal
+						country="c:QUE"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#ONT
+	s:STATE_ONTARIO={
+		region_state:ONT={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_RoyalBankofCanada
+						country="c:ONT"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	#ONT
+	s:STATE_NEW_SOUTH_WALES={
+		region_state:NSW={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_ColonialBankOfAustralia
+						country="c:NSW"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+
+
+
+
+
+	# #BOL Pb de tech mi avec les mine
+	# s:STATE_LA_PAZ={
+	# 	region_state:BOL={
+	# 		create_building={
+	# 			building="building_financial_centre"
+	# 			add_ownership={
+	# 				country={
+	# 					country="c:BOL"
+	# 					levels=5
+	# 				}
+	# 			}
+	# 			reserves=1
+	# 		}
+	# 	}
+	# }
+	#NPU
+	s:STATE_LIMA={
+		region_state:NPU={
+			create_building={
+				building="building_financial_centre_peu"
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	every_country = {
+		if = {
+			limit = {
+				or = {
+					c:FRM ?= this
+					c:TUS ?= this
+					c:FRA ?= this
+					c:GBR ?= this
+					c:AUS ?= this
+					c:SPA ?= this
+					c:POR ?= this
+					c:PRU ?= this
+					c:NET ?= this
+					c:BIC ?= this
+					c:CHI ?= this
+					c:SAR ?= this
+					c:PER ?= this
+					c:TUR ?= this
+					c:SWI ?= this
+					c:BEL ?= this
+					c:SWE ?= this
+					c:DEN ?= this
+					c:GRE ?= this
+					c:SAX ?= this
+					c:BAV ?= this
+					c:HAN ?= this
+					c:SIC ?= this
+					c:PAP ?= this
+					c:MEX ?= this
+					c:BRZ ?= this
+					c:QUE ?= this
+					c:ONT ?= this
+					c:FIN ?= this
+					c:DEI ?= this
+					c:NSW ?= this
+					c:USA ?= this
+					c:RUS ?= this
+
+
+					c:BOL ?= this
+					c:NPU ?= this
+
+					c:ARG ?= this
+					c:PER ?= this
+				}
+			}
+			add_technology_researched = financial_center
+			add_technology_researched = stock_exchange
+			financial_center_modifier = yes
+		}
+	}
+
+
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+
+	# ███╗   ███╗██╗███╗   ██╗███████╗███████╗
+	# ████╗ ████║██║████╗  ██║██╔════╝██╔════╝
+	# ██╔████╔██║██║██╔██╗ ██║█████╗  ███████╗
+	# ██║╚██╔╝██║██║██║╚██╗██║██╔══╝  ╚════██║
+	# ██║ ╚═╝ ██║██║██║ ╚████║███████╗███████║
+	# ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝
+
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+	################################################################################################################################
+
+	#GBR
+	s:STATE_NORTHERN_CAPE={
+		region_state:SAF={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ONTARIO={
+		region_state:HBC={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+		region_state:ONT={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_MYSORE={
+		region_state:MYS={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_BOMBAY={
+		region_state:BIC={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+		region_state:SAT={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+		region_state:KHP={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:GBR"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#USA
+	s:STATE_MONTANA={
+		region_state:USA={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:USA"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_COLORADO={
+		region_state:USA={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:USA"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#MEX
+	s:STATE_OAXACA={
+		region_state:MEX={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_silver_mining_mex
+						country="c:MEX"
+						levels=13
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:MEX"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_BAJIO={
+		region_state:MEX={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_silver_mining_mex
+						country="c:MEX"
+						levels=12
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_silver_mining_mex
+						country="c:MEX"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:MEX"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ZACATECAS={
+		region_state:MEX={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_silver_mining_mex
+						country="c:MEX"
+						levels=15
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:MEX"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_CHIHUAHUA={
+		region_state:MEX={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_bancodelondresmexico #company_basic_silver_mining_mex
+						country="c:MEX"
+						levels=9
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:MEX"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#CHL
+	s:STATE_SANTIAGO={
+		region_state:CHL={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:CHL"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:CHL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#ARG
+	s:STATE_TUCUMAN={
+		region_state:ARG={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:ARG"
+						levels=1
+					}
+					company={
+						type=company_BancoProvincia
+						country="c:ARG"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:ARG"
+						levels=1
+					}
+					company={
+						type=company_BancoProvincia
+						country="c:ARG"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_BancoProvincia
+						country="c:ARG"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:ARG"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#BOL
+	s:STATE_LA_PAZ={
+		region_state:BOL={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=13
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+			#building_financial_centre
+			create_building={
+				building="building_financial_centre"
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_JUJUY={
+		region_state:BOL={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=13
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ANTOFAGASTA={
+		region_state:BOL={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=13
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_AREQUIPA={
+		region_state:SPU={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=13
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_POTOSI={
+		region_state:BOL={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=20
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ICA={
+		region_state:SPU={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_CAJAMARCA={
+		region_state:NPU={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BOL"
+						levels=10
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				activate_production_methods={ "pm_trade_center_trade_quantity_normal" }
+				add_ownership={
+					country={
+						country="c:BOL"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#BRZ
+	s:STATE_RIO_DE_JANEIRO={
+		region_state:BRZ={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_BancoMercantil
+						country="c:BRZ"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+
+		}
+	}
+	s:STATE_MINAS_GERAIS={
+		region_state:BRZ={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_BancoDoBrasil
+						country="c:BRZ"
+						levels=1
+					}
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BRZ"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:BRZ"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#SPA
+	s:STATE_ANDALUSIA={
+		region_state:SPA={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:SPA"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#POR
+	s:STATE_BEIRA={
+		region_state:POR={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:POR"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ESTREMADURA={
+		region_state:POR={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:POR"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#FRA
+	s:STATE_RHONE={
+		region_state:FRA={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:FRA"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#SWI
+	s:STATE_EAST_SWITZERLAND={
+		region_state:SWI={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:SWI"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_WEST_SWITZERLAND={
+		region_state:SWI={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_Bankenverein
+						country="c:SWI"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:SWI"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_Bankenverein
+						country="c:SWI"
+						levels=4
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#AUS
+	s:STATE_SICILY={
+		region_state:SIC={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_OesterreichischeCreditAnstalt
+						country="c:AUS"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#PRU
+	s:STATE_SAXONY={
+		region_state:SAX={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_PreussischeSeehandlung
+						country="c:PRU"
+						levels=1
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_PreussischeSeehandlung
+						country="c:PRU"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:PRU"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:PRU"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_BRANDENBURG={
+		region_state:PRU={
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:PRU"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#RUS
+	s:STATE_URALSK={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				activate_production_methods = {
+					pm_picks_and_shovels_building_silver_mine
+					pm_no_explosives
+					pm_no_steam_automation
+					pm_road_carts
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_UFA={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_URAL={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=6
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_TOBOLSK={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=6
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_SURGUT={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=6
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_YAKUTSK={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_OKHOTSK={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_KAMCHATKA={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_CHUKOTKA={
+		region_state:RUS={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_CHELYABINSK={
+		region_state:RUS={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_ARKHANGELSK={
+		region_state:RUS={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_GREATER_CAUCASUS={
+		region_state:RUS={
+			create_building={
+				building="building_gold_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_mining_rus
+						country="c:RUS"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#CHI
+	s:STATE_YUNNAN={
+		region_state:CHI={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_BankIBC
+						country="c:CHI"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_GUIZHOU={
+		region_state:CHI={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:CHI"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+	s:STATE_SICHUAN={
+		region_state:CHI={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:CHI"
+						levels=5
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+
+	#PER
+	s:STATE_KERMAN={
+		region_state:PER={
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:PER"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_silver_mine"
+				add_ownership={
+					company={
+						type=company_ImperialBankofPersia
+						country="c:PER"
+						levels=3
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_basic_gold_and_silver_mining_2
+						country="c:PER"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+			create_building={
+				building="building_trade_center"
+				add_ownership={
+					company={
+						type=company_ImperialBankofPersia
+						country="c:PER"
+						levels=2
+					}
+				}
+				reserves=1
+			}
+		}
+	}
+}
