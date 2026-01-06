@@ -1,3 +1,30 @@
 *.bank
 *.dds
 *.tga
+
+# Ignore vic3
+.vanillaVIC3/**
+
+# Ignore E&F folder except сводка_ef.md
+E&F/**
+!E&F/сводка_ef.md
+
+# Ignore Morgenrote folder except сводка_mr.md
+Morgenrote/**
+!Morgenrote/сводка_mr.md
+
+# Ignore PowerBlocksExpanded folder except сводка_pbe.md
+PowerBlocksExpanded/**
+!PowerBlocksExpanded/сводка_pbe.md
+
+# Ignore PSC folder except README.md
+PSC/**
+!PSC/сводка_psc.md
+
+# Ignore TechRes+Kuromi folder except сводка_tr_kai.md
+TechRes+Kuromi/**
+!TechRes+Kuromi/сводка_tr_kai.md
+
+# Ignore TheGreatRevision folder except сводка_tgr.md
+TheGreatRevision/**
+!TheGreatRevision/сводка_tgr.md
