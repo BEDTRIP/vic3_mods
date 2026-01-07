@@ -30,4 +30,4 @@ This is a merge of [url=https://steamcommunity.com/workshop/filedetails/?id=3585
 [list]
 [*]This mod is a merge patch. If you use additional mods that also replace the same files, you may need another (more specific) merge patch.
 [/list]
-
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

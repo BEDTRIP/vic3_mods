@@ -51,3 +51,4 @@ This compatch is made to solve that problem. PSC mod turns construction sectors 
 [*]It will conflict with other mods that heavily overwrite the same areas (especially [i]common/buildings[/i], [i]common/scripted_buttons[/i], [i]common/journal_entries[/i], [i]common/script_values[/i]).
 [/list]
 
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

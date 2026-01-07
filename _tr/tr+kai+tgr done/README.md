@@ -34,3 +34,4 @@
 [*]This is a [b]compatibility patch[/b], not a rebalance on its own: it only overrides what’s needed to resolve conflicts.
 [*]No changes were required in [b]events/[/b] and [b]gui/[/b] for these mods (no overlaps / duplicate IDs found), so this patch focuses on [b]common/[/b].
 [/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

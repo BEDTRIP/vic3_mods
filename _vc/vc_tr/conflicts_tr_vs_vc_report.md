@@ -1,0 +1,448 @@
+# T&R vs VC — conflict report (heuristic)
+
+- T&R root: `C:/Users/Andrey/Projects/vic3_mods/TechRes+Kuromi/t&r`
+- VC root: `C:/Users/Andrey/Projects/vic3_mods/Victorian Century`
+
+## How to read this report
+
+- **File path overlaps**: identical relative file paths in both mods. This is a **hard conflict**: the later-loaded mod replaces the earlier one's file.
+- **Identifier-level duplicates**: same script key / localization key / event id used by both mods (even if file paths differ). This is a heuristic and may include a few false positives.
+
+## file path overlaps (hard conflicts by load order)
+
+- Total overlapping files: **0**
+- (no overlapping relative file paths detected)
+
+## common/*: duplicate top-level keys (identifier-level)
+
+### common/buy_packages — 90 duplicates
+- `wealth_10`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_11`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_12`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_13`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_14`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_15`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_16`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_17`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_18`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_19`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_20`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_21`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_22`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_23`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_24`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_25`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_26`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_27`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_28`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_29`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_30`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_31`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_32`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_33`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_34`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_35`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_36`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_37`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_38`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_39`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_40`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_41`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_42`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_43`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_44`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_45`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_46`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_47`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_48`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_49`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_50`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_51`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_52`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_53`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_54`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_55`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_56`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_57`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_58`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_59`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_60`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_61`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_62`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_63`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_64`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_65`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_66`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_67`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_68`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_69`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_70`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_71`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_72`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_73`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_74`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_75`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_76`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_77`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_78`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_79`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_80`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_81`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_82`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_83`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_84`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_85`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_86`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_87`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_88`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_89`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_90`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_91`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_92`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_93`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_94`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_95`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_96`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_97`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_98`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_99`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+
+### common/company_types — 32 duplicates
+- `company_anglo_persian_oil`
+  - T&R: `common/company_types/ztr_companies_soi.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_armstrong_whitworth`
+  - T&R: `common/company_types/ztr_companies_great_britain.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_basf`
+  - T&R: `common/company_types/ztr_companies_germany.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_bolckow_vaughan`
+  - T&R: `common/company_types/ztr_companies_great_britain.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_branobel`
+  - T&R: `common/company_types/ztr_companies_russia.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_ccci`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_east_india_company`
+  - T&R: `common/company_types/ztr_companies_asia.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_ericsson`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_fcm`
+  - T&R: `common/company_types/ztr_companies_france.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_fiat`
+  - T&R: `common/company_types/ztr_companies_italy.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_ford_motor`
+  - T&R: `common/company_types/ztr_companies_usa.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_franco_belge`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_general_electric`
+  - T&R: `common/company_types/ztr_companies_usa.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_ilva`
+  - T&R: `common/company_types/ztr_companies_italy.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_imperial_arsenal`
+  - T&R: `common/company_types/ztr_companies_asia.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_jingdezhen`
+  - T&R: `common/company_types/ztr_companies_china.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_john_cockerill`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_john_hughes`
+  - T&R: `common/company_types/ztr_companies_russia.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_kaiping_mining`
+  - T&R: `common/company_types/ztr_companies_china.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_krupp`
+  - T&R: `common/company_types/ztr_companies_germany.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_mitsubishi`
+  - T&R: `common/company_types/ztr_companies_japan.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_nederlandse_petroleum`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_philips`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_rheinmetall`
+  - T&R: `common/company_types/ztr_companies_germany.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_romanian_star`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_schneider_creusot`
+  - T&R: `common/company_types/ztr_companies_france.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_siemens_and_halske`
+  - T&R: `common/company_types/ztr_companies_germany.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_skoda`
+  - T&R: `common/company_types/ztr_companies_austria_hungary.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_standard_oil`
+  - T&R: `common/company_types/ztr_companies_usa.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_turkish_petroleum`
+  - T&R: `common/company_types/ztr_companies_soi.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_united_fruit`
+  - T&R: `common/company_types/ztr_companies_usa.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_us_steel`
+  - T&R: `common/company_types/ztr_companies_usa.txt`
+  - VC: `common/company_types/joi_companies.txt`
+
+### common/defines — 1 duplicates
+- `NPops`
+  - T&R: `common/defines/ztr_defines.txt`
+  - VC: `common/defines/joi_defines.txt`
+
+### common/modifier_type_definitions — 1 duplicates
+- `goods_output_grain_mult`
+  - T&R: `common/modifier_type_definitions/ztr_new_goods_modifier_types.txt`
+  - VC: `common/modifier_type_definitions/joi_modifier_types.txt`
+
+### common/on_actions — 2 duplicates
+- `on_monthly_pulse_country`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+  - VC: `common/on_actions/headlines_on_actions.txt`
+  - VC: `common/on_actions/joi_code_on_actions.txt`
+- `on_yearly_pulse_country`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+  - VC: `common/on_actions/modlc_on_actions_monthly.txt`
+
+### common/pop_needs — 10 duplicates
+- `popneed_basic_food`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_communication`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_free_movement`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_heating`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_household_items`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_intoxicants`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_leisure`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_luxury_drinks`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_luxury_food`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_luxury_items`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+
+### common/technology/technologies — 1 duplicates
+- `organized_sports`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+  - VC: `common/technology/technologies/joi_society.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

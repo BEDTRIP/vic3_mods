@@ -8,3 +8,4 @@
 - The Great Revision RUS
 
 --- другие ваши моды ---
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

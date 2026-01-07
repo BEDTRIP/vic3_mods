@@ -1,0 +1,89 @@
+# Merge TGR + VC pulses so neither side is lost.
+# Load order: TGR -> VC -> vc_tgr.
+
+# Root = Country
+on_monthly_pulse_country = {
+	# TGR monthly events
+	events = {
+		great_revision_events.1
+		great_revision_events.2
+		great_revision_events.4
+		great_revision_events.15
+		great_revision_events.17
+
+		great_revision_german_unification.3
+		great_revision_german_unification.5
+
+		great_revision_italian_unification.6
+		great_revision_italian_unification.17
+		great_revision_italian_unification.18
+		great_revision_italian_unification.19
+	}
+
+	# VC monthly random events + VC monthly sub-actions
+	random_events = { # 人物事件
+		25 = 0
+		2 = joi_great_man.1
+		1 = joi_great_man.2
+		1 = joi_great_man.3
+		1 = joi_great_man.4
+		1 = joi_great_man.5
+		1 = joi_great_man.6
+		1 = joi_great_man.7
+		1 = joi_great_man.8
+		1 = joi_great_man.9
+		1 = joi_great_man.10
+		1 = joi_great_man.11
+		1 = joi_great_man.12
+		1 = joi_great_man.13
+		1 = joi_great_man.14
+		1 = joi_great_man.15
+		1 = joi_great_man.16
+		1 = joi_great_man.17
+		1 = joi_great_man.18
+		1 = joi_great_man.19
+		1 = joi_great_man.20
+		1 = joi_great_man.21
+		1 = joi_great_man.22
+		1 = joi_flavor_gbr.129	# 亚历山大的葬礼
+		1 = joi_flavor_gbr.130	# 阿尔伯特的葬礼
+	}
+
+	on_actions = {
+		# VC headlines system
+		headlines_action
+
+		# VC monarchy chains
+		joi_gbr_monarchy_action
+		joi_pru_monarchy_action
+	}
+}
+
+on_yearly_pulse_country = {
+	# TGR yearly events
+	events = {
+		great_revision_events.3
+		great_revision_events.6
+		great_revision_events.7
+		great_revision_events.8
+		great_revision_events.12
+		great_revision_events.13
+		great_revision_events.14
+		great_revision_events.16
+
+		great_revision_german_unification.4
+
+		great_revision_italian_unification.13
+		great_revision_italian_unification.14
+
+		ai_production_event.2
+		gain_ideology_pol.1
+	}
+
+	# VC on_yearly_pulse_country content (file name says monthly, but it is wired here)
+	on_actions = { # delay ensures events won't fire simultaneously
+		mod_lc_monthly_events
+		delay = { days = 4 }
+	}
+}
+

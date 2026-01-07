@@ -1,0 +1,9 @@
+# Victorian Century replaces company_standard_oil; E&F injects extra prestige goods into it.
+
+INJECT:company_standard_oil = {
+	possible_prestige_goods = {
+		mining_stock_usa
+		prestige_good_usa_oil
+	}
+}
+

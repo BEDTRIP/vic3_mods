@@ -27,3 +27,4 @@
 [list]
 [*]This patch is intentionally minimal and only touches [i]common/diplomatic_actions/force_regime_change[/i]. If you have other mods that also change Power Bloc diplomatic actions, you may need an additional merge patch.
 [/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

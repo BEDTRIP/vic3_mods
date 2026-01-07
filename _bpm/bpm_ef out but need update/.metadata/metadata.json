@@ -1,0 +1,31 @@
+{
+  "name": "ComPatch BPM + E&F",
+  "id": "",
+  "version": "1.12.x",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for Better Politics Mod (BPM) + Economic and Financial Mod (E&F).",
+  "picture": "thumbnail.png",
+  "tags": [
+    "compatibility",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "2932134122",
+      "display_name": "Better Politics Mod",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data" : {
+    "multiplayer_synchronized" : true
+  }
+}

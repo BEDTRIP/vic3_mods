@@ -22,3 +22,4 @@ Also makes these released countries inherit your laws, not the laws of the count
 AI will always choose the independence option. I might change this if there’s demand for it.
 
 Don’t forget to check out my other mods!
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

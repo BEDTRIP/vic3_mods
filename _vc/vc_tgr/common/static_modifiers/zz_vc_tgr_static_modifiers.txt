@@ -1,0 +1,7 @@
+# Victorian Century replaces base_values; TGR needs its inject restored.
+
+INJECT:base_values = {
+	country_company_throughput_bonus_add = 0.40
+	country_company_construction_efficiency_bonus_add = -0.05
+}
+

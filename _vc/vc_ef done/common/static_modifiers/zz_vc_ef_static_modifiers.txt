@@ -1,0 +1,7 @@
+# Victorian Century replaces base_values; E&F needs this injected back in.
+
+INJECT:base_values = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
+	country_minting_add = -500
+}
+

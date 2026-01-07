@@ -67,4 +67,4 @@ Compatibility patch for using [b]Economic and Financial (E&F)[/b] together with 
 [list]
 [*]If you use other UI mods that also replace [i]gui/budget_panel.gui[/i], you will need an additional UI merge patch.
 [/list]
-
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

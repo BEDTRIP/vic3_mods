@@ -46,3 +46,4 @@
 [*]This patch is designed to be [b]minimal[/b] and only overrides what’s needed for integration.
 [*]It does [b]not[/b] guarantee compatibility with other mods that also heavily edit the same [b]common/[/b] areas.
 [/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

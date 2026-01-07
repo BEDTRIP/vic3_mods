@@ -1,0 +1,43 @@
+# BPM + E&F ComPatch — technology compatibility
+# Goal: ensure E&F finance tech hooks survive when BPM is loaded after E&F.
+#
+# Primary conflict:
+# - Both mods do `REPLACE:currency_standards` (BPM tweaks era/modifiers; E&F uses it to auto-activate fiat law + finance progression).
+# - With load order E&F -> BPM, BPM would overwrite E&F and E&F's monetary system breaks.
+#
+# This patch re-applies E&F's `currency_standards` definition after BPM.
+
+REPLACE:currency_standards = {
+	# Unlocks Payroll Tax - Income Taxation Law
+	era = era_2 #era_1
+	texture = "gfx/interface/icons/invention_icons/currency_standards.dds"
+	category = society
+
+	unlocking_technologies = {
+		banking
+	}
+
+	on_researched = {
+		if  = {
+			limit = {
+				not = {
+					or = {
+						has_technology_researched = central_banking
+						has_technology_researched = metalique_standard
+					}
+				}
+			}
+			activate_law = law_type:law_fiat_standard
+		}
+	}
+
+	ai_weight = {
+		value = 3 # Very important in general
+
+		if = {
+			limit = { has_journal_entry = je_sick_man_bureaucracy }
+			add = 20
+		}
+	}
+}
+
