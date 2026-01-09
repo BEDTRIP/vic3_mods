@@ -1,0 +1,295 @@
+
+#mining_stock
+
+REPLACE:pm_diesel_pump_building_silver_mine = {
+	texture = "gfx/interface/icons/production_method_icons/diesel_pump.dds"
+
+	unlocking_technologies = {
+		compression_ignition
+	}
+	
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 15
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_tools_add = 20
+			goods_input_light_fuel_add = 3
+			
+			# output goods
+			goods_output_silver_add = 85 #90 is SO much high, literaly more productive than diesel pump gold mine
+		}
+
+		level_scaled = {
+			building_employment_shopkeepers_add = 500
+			building_employment_laborers_add = 2250
+			building_employment_machinists_add = 1500
+			building_employment_engineers_add = 750
+		}
+	}
+}
+
+pm_electric_fueled_pump_building_silver_mine = {
+	texture = "gfx/interface/icons/production_method_icons/electric_fueled_pump.dds"
+
+	unlocking_technologies = {
+		thermal_cracking
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 20
+		}
+	}
+	
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_electricity_add = 5 #150
+			goods_input_electroniccomponents_add = 2 #160
+			goods_input_tools_add = 20 #400
+			goods_input_light_fuel_add = 5 #350 #1060
+			
+			# output goods
+			goods_output_silver_add = 95 #2700
+		}
+
+		level_scaled = {
+			building_employment_laborers_add = 2000 #1640/4250=0.38
+			building_employment_machinists_add = 1000
+			building_employment_engineers_add = 750
+			building_employment_shopkeepers_add = 500
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+pm_heavy_machineries_building_silver_mine = {
+	texture = "gfx/interface/icons/production_method_icons/advanced_mining_systems.dds"
+
+	unlocking_technologies = {
+		heavy_machinery
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 20
+		}
+	}
+	
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_electricity_add = 10 #150
+			goods_input_electroniccomponents_add = 3 #160
+			goods_input_robotics_add = 7 #400
+			goods_input_engines_add = 5
+			goods_input_light_fuel_add = 5 #350 #1060
+			
+			# output goods
+			goods_output_silver_add = 105 #2700
+		}
+
+		level_scaled = {
+			building_employment_laborers_add = 2000 #2340/4250=0.55
+			building_employment_machinists_add = 1000
+			building_employment_engineers_add = 750
+			building_employment_shopkeepers_add = 500
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+pm_autonomous_and_remote_ops_building_silver_mine = {
+	texture = "gfx/interface/icons/production_method_icons/pm_autonomous_and_remote_ops_mining.dds"
+
+	unlocking_technologies = {
+		autonomous_and_remote_ops_mining
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 15
+		}
+	}
+	
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_electricity_add = 10 #150
+			goods_input_processors_add = 2 #160
+			goods_input_robotics_add = 12 #400
+			goods_input_telecommunications_add = 10
+			goods_input_engines_add = 5
+			goods_input_light_fuel_add = 5 #350 #1060
+			
+			# output goods
+			goods_output_silver_add = 115 #2700
+		}
+
+		level_scaled = {
+			building_employment_laborers_add = 2000 #2340/4250=0.55
+			building_employment_machinists_add = 750
+			building_employment_engineers_add = 500
+			building_employment_shopkeepers_add = 250
+			building_employment_academics_add = 250
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+#Gold Mines
+
+REPLACE:pm_diesel_pump_building_gold_mine = {
+	texture = "gfx/interface/icons/production_method_icons/diesel_pump.dds"
+
+	unlocking_technologies = {
+		compression_ignition
+	}
+	
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 15
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_tools_add = 20
+			goods_input_light_fuel_add = 3
+			
+			# output goods
+			goods_output_gold_add = 30
+		}
+
+		level_scaled = {
+			building_employment_shopkeepers_add = 500
+			building_employment_laborers_add = 2250
+			building_employment_machinists_add = 1500
+			building_employment_engineers_add = 750
+		}
+	}
+}
+
+pm_electric_fueled_pump_building_gold_mine = {
+	texture = "gfx/interface/icons/production_method_icons/electric_fueled_pump.dds"
+
+	unlocking_technologies = {
+		thermal_cracking
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 10
+		}
+	}
+	
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_electricity_add = 5 
+			goods_input_electroniccomponents_add = 2 
+			goods_input_tools_add = 20 
+			goods_input_light_fuel_add = 5 
+			
+			# output goods
+			goods_output_gold_add = 35
+			goods_output_silver_add = 5
+		}
+
+		level_scaled = {
+			building_employment_laborers_add = 2000 
+			building_employment_machinists_add = 1000
+			building_employment_engineers_add = 750
+			building_employment_shopkeepers_add = 500
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+pm_heavy_machineries_building_gold_mine = {
+	texture = "gfx/interface/icons/production_method_icons/advanced_mining_systems.dds"
+
+	unlocking_technologies = {
+		heavy_machinery
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 20
+		}
+	}
+	
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_electricity_add = 10 
+			goods_input_electroniccomponents_add = 3 #160
+			goods_input_robotics_add = 7 #400
+			goods_input_engines_add = 5
+			goods_input_light_fuel_add = 5 #350 #1060
+			
+			# output goods
+			goods_output_gold_add = 45
+			goods_output_silver_add = 5
+		}
+
+		level_scaled = {
+			building_employment_laborers_add = 2000 
+			building_employment_machinists_add = 750
+			building_employment_engineers_add = 1250
+			building_employment_shopkeepers_add = 500
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+pm_autonomous_and_remote_ops_building_gold_mine = {
+	texture = "gfx/interface/icons/production_method_icons/pm_autonomous_and_remote_ops_mining.dds"
+
+	unlocking_technologies = {
+		autonomous_and_remote_ops_mining
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_pollution_generation_add = 15
+		}
+	}
+	
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_electricity_add = 10 #150
+			goods_input_processors_add = 2 #160
+			goods_input_robotics_add = 12 #400
+			goods_input_telecommunications_add = 10
+			goods_input_engines_add = 5
+			goods_input_light_fuel_add = 5 #350 #1060
+			
+			# output goods
+			goods_output_gold_add = 50 #2700
+			goods_output_silver_add = 5
+		}
+
+		level_scaled = {
+			building_employment_laborers_add = 2000 #2340/4250=0.55
+			building_employment_machinists_add = 750
+			building_employment_engineers_add = 500
+			building_employment_shopkeepers_add = 250
+			building_employment_academics_add = 250
+		}
+	}
+
+	required_input_goods = electricity
+}

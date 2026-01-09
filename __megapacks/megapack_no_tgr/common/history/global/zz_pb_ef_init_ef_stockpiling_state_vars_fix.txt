@@ -1,0 +1,85 @@
+#############################################
+# pb+ef: init E&F state vars to avoid "var not set" spam
+#
+# E&F stockpiling logic compares state vars like:
+#   var:stockpiling_bond_var_state_1 > 0
+# for many states. If the variable is missing, Vic3 logs:
+# - Failed to fetch variable ... due to not being set
+# - Invalid left side during comparison 'var'
+#
+# We initialize the relevant variables to 0 for all states at game start.
+#############################################
+
+GLOBAL = {
+	# Also initialize globally for states without an owner (uncolonized/etc).
+	every_scope_state = {
+		# E&F financial-center stockpile transfer vars
+		if = {
+			limit = { NOT = { has_variable = stockpiling_bond_var_state_1 } }
+			set_variable = { name = stockpiling_bond_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_manufacture_stock_var_state_1 } }
+			set_variable = { name = stockpiling_manufacture_stock_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_agricultural_stock_var_state_1 } }
+			set_variable = { name = stockpiling_agricultural_stock_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_mining_stock_var_state_1 } }
+			set_variable = { name = stockpiling_mining_stock_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_railroad_stock_var_state_1 } }
+			set_variable = { name = stockpiling_railroad_stock_var_state_1 value = 0 }
+		}
+
+		# Common markers used by E&F stockpile transfer code
+		if = {
+			limit = { NOT = { has_variable = financial_center_site_var } }
+			set_variable = { name = financial_center_site_var value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = looted_state } }
+			set_variable = { name = looted_state value = 0 }
+		}
+	}
+
+	every_country = {
+		every_scope_state = {
+			# E&F financial-center stockpile transfer vars
+			if = {
+				limit = { NOT = { has_variable = stockpiling_bond_var_state_1 } }
+				set_variable = { name = stockpiling_bond_var_state_1 value = 0 }
+			}
+			if = {
+				limit = { NOT = { has_variable = stockpiling_manufacture_stock_var_state_1 } }
+				set_variable = { name = stockpiling_manufacture_stock_var_state_1 value = 0 }
+			}
+			if = {
+				limit = { NOT = { has_variable = stockpiling_agricultural_stock_var_state_1 } }
+				set_variable = { name = stockpiling_agricultural_stock_var_state_1 value = 0 }
+			}
+			if = {
+				limit = { NOT = { has_variable = stockpiling_mining_stock_var_state_1 } }
+				set_variable = { name = stockpiling_mining_stock_var_state_1 value = 0 }
+			}
+			if = {
+				limit = { NOT = { has_variable = stockpiling_railroad_stock_var_state_1 } }
+				set_variable = { name = stockpiling_railroad_stock_var_state_1 value = 0 }
+			}
+
+			# Common markers used by E&F stockpile transfer code
+			if = {
+				limit = { NOT = { has_variable = financial_center_site_var } }
+				set_variable = { name = financial_center_site_var value = 0 }
+			}
+			if = {
+				limit = { NOT = { has_variable = looted_state } }
+				set_variable = { name = looted_state value = 0 }
+			}
+		}
+	}
+}
+

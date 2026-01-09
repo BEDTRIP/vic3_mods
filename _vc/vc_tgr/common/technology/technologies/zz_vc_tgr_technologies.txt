@@ -1,0 +1,152 @@
+# VC + TGR compatch — technology merges
+# Goal: keep VC on_researched scripting while preserving TGR institution unlock capacity.
+
+REPLACE_OR_CREATE:human_rights = { # VC base + TGR institution caps
+	era = era_3
+	texture = "gfx/interface/icons/invention_icons/human_rights.dds"
+	category = society
+	on_researched = {
+		if = {
+			limit = {
+				NOT = { has_variable = mutual_funds_researched }
+			}
+			set_variable = mutual_funds_researched
+		}
+
+		if = {
+			limit = {
+				OR = {
+					has_law = law_type:law_freedom_of_conscience
+					has_law = law_type:law_total_separation
+				}
+			}
+			ig:ig_devout = {
+				if = {
+					limit = { has_ideology = ideology:ideology_moralist }
+					remove_ideology = ideology_moralist
+					add_ideology = ideology_inclusiveness
+				}
+			}
+		}
+		if = { # change UK-specific
+			limit = {
+				OR = {
+					has_law = law_type:law_freedom_of_conscience
+					has_law = law_type:law_total_separation
+				}
+			}
+			ig:ig_devout = {
+				if = {
+					limit = { has_ideology = ideology:ideology_british_anglicanism }
+					remove_ideology = ideology_british_anglicanism
+					add_ideology = ideology_ecumenical_anglicanism
+				}
+			}
+		}
+		if = { # change US-specific
+			limit = {
+				OR = {
+					has_law = law_type:law_freedom_of_conscience
+					has_law = law_type:law_total_separation
+				}
+			}
+			ig:ig_devout = {
+				if = {
+					limit = { has_ideology = ideology:ideology_puritan }
+					remove_ideology = ideology_puritan
+					add_ideology = ideology_puritan_ecumenical
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = need_ideology_english_enlightlism }
+				OR = {
+					has_law = law_type:law_wealth_voting
+					has_law = law_type:law_census_voting
+					has_law = law_type:law_universal_suffrage
+				}
+			}
+			ig:ig_petty_bourgeoisie = {
+				if = {
+					limit = { has_ideology = ideology:ideology_reactionary }
+					remove_ideology = ideology_reactionary
+					add_ideology = ideology_enlightlism
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law = law_type:law_right_of_assembly
+					has_law = law_type:law_protected_speech
+				}
+			}
+			ig:ig_petty_bourgeoisie = {
+				if = {
+					limit = { has_ideology = ideology:ideology_patriotic }
+					remove_ideology = ideology_patriotic
+					add_ideology = ideology_patriotism
+				}
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law = law_type:law_wealth_voting
+					has_law = law_type:law_census_voting
+					has_law = law_type:law_universal_suffrage
+				}
+			}
+			ig:ig_petty_bourgeoisie = {
+				if = {
+					limit = { has_ideology = ideology:ideology_reactionary }
+					remove_ideology = ideology_reactionary
+					add_ideology = ideology_english_enlightlism
+				}
+			}
+		}
+	}
+
+	modifier = {
+		# VC
+		country_institution_social_security_max_investment_add = 1
+		building_minimum_wage_mult = 0.1
+
+		# TGR: human_rights also increases these institution caps
+		country_institution_pension_max_investment_add = 1
+		country_institution_salary_max_investment_add = 1
+	}
+
+	unlocking_technologies = {
+		egalitarianism
+	}
+
+	ai_weight = {
+		value = 1
+
+		if = {
+			limit = {
+				has_strategy = ai_strategy_progressive_agenda
+			}
+			add = 0.5
+		}
+		if = {
+			limit = {
+				has_strategy = ai_strategy_egalitarian_agenda
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				OR = {
+					has_strategy = ai_strategy_conservative_agenda
+					has_strategy = ai_strategy_reactionary_agenda
+					has_strategy = ai_strategy_maintain_mandate_of_heaven
+				}
+			}
+			add = -0.5
+		}
+	}
+}
+

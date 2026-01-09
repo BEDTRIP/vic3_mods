@@ -1,0 +1,308 @@
+# Merge pulses so neither VC nor TechRes+Kuromi logic is lost.
+# Load order: TechRes+Kuromi -> VC -> vc_tr.
+
+# Root = Country
+on_monthly_pulse_country = {
+	# VC monthly random character events
+	random_events = { # 人物事件
+		25 = 0
+		2 = joi_great_man.1
+		1 = joi_great_man.2
+		1 = joi_great_man.3
+		1 = joi_great_man.4
+		1 = joi_great_man.5
+		1 = joi_great_man.6
+		1 = joi_great_man.7
+		1 = joi_great_man.8
+		1 = joi_great_man.9
+		1 = joi_great_man.10
+		1 = joi_great_man.11
+		1 = joi_great_man.12
+		1 = joi_great_man.13
+		1 = joi_great_man.14
+		1 = joi_great_man.15
+		1 = joi_great_man.16
+		1 = joi_great_man.17
+		1 = joi_great_man.18
+		1 = joi_great_man.19
+		1 = joi_great_man.20
+		1 = joi_great_man.21
+		1 = joi_great_man.22
+		1 = joi_flavor_gbr.129 # 亚历山大的葬礼
+		1 = joi_flavor_gbr.130 # 阿尔伯特的葬礼
+	}
+
+	# Merge: VC sub-actions + T&R sub-actions
+	on_actions = {
+		# VC headlines system (from headlines_on_actions.txt)
+		headlines_action
+
+		# VC monarchy chains
+		joi_gbr_monarchy_action
+		joi_pru_monarchy_action
+
+		# T&R monthly pulses (from ztr_on_actions.txt)
+		un_intervention_on_monthly_pulse_country
+		yeet_pops_on_monthly_pulse_country
+	}
+}
+
+# Root = Country
+on_yearly_pulse_country = {
+	on_actions = {
+		# T&R yearly pulses
+		economy_update_on_yearly_pulse_country
+		ideology_update_on_yearly_pulse_country
+		brazil_pop_update_on_yearly_pulse_country
+		colony_pop_update_on_yearly_pulse_country
+		france_pop_update_on_yearly_pulse_country
+		germany_pop_update_on_yearly_pulse_country
+		usa_economy_update_on_yearly_pulse_country
+		japan_economy_update_on_yearly_pulse_country
+		irish_independence_on_yearly_pulse_country
+		healthcare_on_yearly_pulse_country
+		decolonization_on_yearly_pulse_country
+		decolonization_age_on_yearly_pulse_country
+		super_germany_on_yearly_pulse_country
+		superpower_on_yearly_pulse_country
+		flavor_middle_east_on_yearly_pulse_country
+
+		# VC content (file name says monthly, but it is wired here)
+		mod_lc_monthly_events
+		delay = { days = 4 }
+	}
+}
+
+# Root = Character
+# VC overrides vanilla here; we keep VC logic, but restore the vanilla regency trigger block
+# (lost when VC overwrites the base-game on_new_ruler).
+on_new_ruler = {
+	effect = {
+		# CMF switch: if this variable exists, skip on_new_ruler handling
+		if = {
+			limit = {
+				owner = {
+					NOT = { has_variable = com_no_regencies }
+				}
+			}
+
+			# Notification (CMF gating: only for adult rulers)
+			if = {
+				limit = {
+					owner = {
+						NOT = { has_variable = hide_ruler_change_notification }
+					}
+					age >= define:NCharacters|ADULT_AGE
+				}
+				post_notification = new_ruler
+			}
+
+			# Theocracy religion conversion (VC)
+			if = {
+				limit = {
+					owner = {
+						has_law_or_variant = law_type:law_theocracy
+					}
+					NOT = { religion = owner.religion }
+				}
+				change_character_religion = owner.religion
+			}
+
+			# Regency event trigger (vanilla, preserved by CMF; VC removed it)
+			if = {
+				limit = {
+					owner = {
+						has_law = law_type:law_monarchy
+						has_gov_regency = no
+					}
+					age < define:NCharacters|ADULT_AGE
+					NOT = { has_variable = regency_complete }
+				}
+				owner = {
+					trigger_event = {
+						id = regency.1
+						popup = yes
+					}
+				}
+			}
+
+			# VC: Russia monarchy events
+			if = {
+				limit = {
+					owner = {
+						c:RUS ?= this
+						has_law_or_variant = law_type:law_monarchy
+					}
+					is_ruler = yes
+				}
+				if = {
+					limit = { has_template = RUS_alexander_ii }
+					owner = { trigger_event = { id = russia_monarchy.1 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_konstantin_nikolayevich_ii }
+					owner = { trigger_event = { id = joi_flavor_gbr.128 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_tsarevich_nicholas_alexandrovich }
+					owner = { trigger_event = { id = russia_monarchy.3 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_alexander_iii }
+					owner = { trigger_event = { id = russia_monarchy.4 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_nicholas_ii }
+					owner = { trigger_event = { id = russia_monarchy.5 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_alexei_ii }
+					owner = { trigger_event = { id = russia_monarchy.9 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_michael_ii }
+					owner = { trigger_event = { id = russia_monarchy.10 popup = yes } }
+				}
+				else_if = {
+					limit = { has_template = RUS_george_i }
+					owner = { trigger_event = { id = russia_monarchy.11 popup = yes } }
+				}
+			}
+
+			# VC: Sweden monarchy events
+			if = {
+				limit = {
+					owner = {
+						c:SWE ?= this
+						has_law_or_variant = law_type:law_monarchy
+					}
+					is_ruler = yes
+				}
+				if = {
+					limit = { has_template = swe_oscar_bernadotte_template }
+					owner = { trigger_event = { id = sweden_monarchy.1 popup = yes } }
+				}
+			}
+
+			# VC: Sikh JE handling
+			if = {
+				limit = {
+					owner = {
+						c:PAN ?= this
+						has_journal_entry = je_sikh_sovereignty
+					}
+				}
+				if = {
+					limit = { NOT = { has_variable = sikh_maharaja_enthroned } }
+					owner = {
+						je:je_sikh_sovereignty = {
+							set_bar_progress = { value = 0 name = sikh_empire_progress_bar }
+						}
+					}
+					set_variable = sikh_maharaja_enthroned
+					owner = { change_variable = { name = sikh_dead_maharajas_var add = 1 } }
+				}
+			}
+
+			# VC: EIC ruler override
+			if = {
+				limit = {
+					is_ruler = yes
+					c:BIC ?= owner
+					NOT = { is_interest_group_type = ig_industrialists }
+				}
+				owner = {
+					ig:ig_industrialists = {
+						leader = { set_character_as_ruler = yes }
+					}
+					generate_new_eic_government_leader = yes
+				}
+			}
+
+			# VC: Zanzibar event
+			if = {
+				limit = {
+					owner = {
+						c:ZAN ?= this
+						any_primary_culture = { cu:bedouin = this }
+					}
+					culture = { NOT = { cu:bedouin = this } }
+					NOT = { has_global_variable = decided_future_of_zanzibar }
+				}
+				owner = { trigger_event = { id = zanzibar.6 popup = yes } }
+			}
+
+			# VC: Austrian monarchs
+			if = {
+				limit = { # if Franz Ferdinand becomes ruler, Charles I becomes heir
+					owner = { c:AUS ?= this }
+					is_ruler = yes
+					has_variable = is_aus_franz_ferdinand
+					game_date > 1887.8.17
+				}
+				owner = { create_character = { template = aus_karl_I_habsburg } }
+			}
+
+			# VC: Serbian monarchs
+			if = {
+				limit = {
+					owner ?= {
+						c:SER ?= this
+						has_law_or_variant = law_type:law_monarchy
+					}
+					is_ruler = yes
+				}
+				# Obrenovics
+				if = { # Once Milan succeeds to the Serbian throne, create Mihailo
+					limit = { has_template = SER_milan_obrenovic }
+					create_character = { template = SER_mihailo_obrenovic }
+				}
+				else_if = { # Once Mihailo succeeds to the Serbian throne, fire his coronation event
+					limit = { has_template = SER_mihailo_obrenovic }
+					trigger_event = { id = serbia.2 popup = yes }
+					if = { # And spawn Milan IV as his heir
+						limit = { game_date >= 1854.8.22 }
+						create_character = { template = SER_milan_iv_obrenovic }
+					}
+				}
+				else_if = { # Once Milan IV succeeds to the Serbian throne, make Alexander his heir if applicable
+					limit = {
+						has_template = SER_milan_iv_obrenovic
+						game_date >= 1876.8.14
+					}
+					create_character = { template = SER_alexander_obrenovic }
+				}
+				# Karadordevics
+				if = { # Once Alexander succeeds to the Serbian throne, make Petar his heir if applicable
+					limit = {
+						has_template = SER_alexandar_karadordevic
+						game_date >= 1844.8.14
+					}
+					create_character = { template = SER_petar_i_karadordevic }
+				}
+				if = { # Once Petar succeeds to the Serbian throne, make George his heir if applicable
+					limit = {
+						has_template = SER_petar_i_karadordevic
+						game_date >= 1887.9.8
+					}
+					create_character = { template = SER_george_karadordevic }
+				}
+				if = { # If George succeeds to the Serbian throne, make Alexander his heir if applicable
+					limit = {
+						has_template = SER_george_karadordevic
+						game_date >= 1888.12.16
+					}
+					create_character = { template = SER_alexander_i_karadordevic }
+				}
+				if = { # Once Alexander succeeds to the Serbian throne, make Petar II his heir if applicable
+					limit = {
+						has_template = SER_alexander_i_karadordevic
+						game_date >= 1923.9.6
+					}
+					create_character = { template = SER_petar_ii_karadordevic }
+				}
+			}
+		}
+	}
+}
+

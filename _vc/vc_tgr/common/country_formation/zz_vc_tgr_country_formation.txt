@@ -1,0 +1,90 @@
+# VC + TGR compatch — country formation tweaks
+# Goal: keep VC's extended GER state list, but remove VC-specific gating that can block TGR unification flow.
+
+REPLACE_OR_CREATE:GER = {
+	states = {
+		STATE_ELBE
+		STATE_RHINELAND
+		STATE_NORTH_RHINE
+		STATE_RUHR
+		STATE_WESTPHALIA
+		STATE_HESSE
+		STATE_HANNOVER
+		STATE_BRUNSWICK
+		STATE_ANHALT
+		STATE_SAXONY
+		STATE_FRANCONIA
+		STATE_BAVARIA
+		STATE_BRANDENBURG
+		STATE_LOWER_SILESIA
+		STATE_UPPER_SILESIA
+		STATE_WURTTEMBERG
+		STATE_POSEN
+		STATE_WEST_PRUSSIA
+		STATE_EAST_PRUSSIA
+		STATE_MECKLENBURG
+		STATE_SCHLESWIG_HOLSTEIN
+		STATE_BADEN
+		STATE_POMERANIA
+		STATE_ALSACE_LORRAINE
+		STATE_BOHEMIA
+		STATE_MORAVIA
+		STATE_AUSTRIA
+		STATE_TYROL
+		STATE_STYRIA
+		STATE_SLOVENIA
+		STATE_ISTRIA
+	}
+
+	is_major_formation = yes
+
+	unification_play = dp_unify_germany
+	leadership_play = dp_leadership_germany
+
+	required_states_fraction = 0.73
+
+	ai_will_do = { has_technology_researched = nationalism }
+
+	possible = {
+		# NOTE: VC had an extra custom_tooltip gate on its JE variable
+		# (deutsch_frankfurter_nationalversammlung_journal_has_finish_var).
+		# That variable isn't guaranteed in a TGR-driven unification run, so we drop it.
+
+		OR = {
+			has_technology_researched = pan-nationalism
+			custom_tooltip = {
+				text = je_german_unification_idea_trigger_desc
+				has_variable = je_german_unification_idea
+			}
+		}
+		custom_tooltip = {
+			text = no_confederation_of_the_rhine_tt
+			NOT = {
+				exists = c:RHN
+			}
+		}
+		custom_tooltip = {
+			text = no_dual_or_triple_monarchy_tt
+			NOR = {
+				has_government_type = gov_dual_monarchy
+				has_government_type = gov_triple_monarchy
+			}
+		}
+		NOT = {
+			c:KUK ?= this
+		}
+	}
+
+	max_num_formation_candidates = 3
+	can_be_formation_candidate = {
+		country_rank >= rank_value:major_power
+	}
+
+	can_be_unification_target = {
+		NOR = {
+			has_government_type = gov_dual_monarchy
+			has_government_type = gov_triple_monarchy
+		}
+	}
+}
+

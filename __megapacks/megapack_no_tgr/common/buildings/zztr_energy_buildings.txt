@@ -1,0 +1,24 @@
+# Renewable Energy Power Plant
+
+INJECT:building_renewable_energy_power_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_hydroelectric_power_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+#Geothermal Power Plant
+
+INJECT:building_geothermal_power_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}

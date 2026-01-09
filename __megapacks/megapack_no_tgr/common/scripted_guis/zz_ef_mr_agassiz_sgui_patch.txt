@@ -1,0 +1,8 @@
+##############################
+# E&F + Morgenroete ComPatch #
+# Merged into zzz_mr_agassiz_geologist_sguis.txt
+# This file kept for reference but logic moved to avoid duplication
+##############################
+
+# Merged - see zzz_mr_agassiz_geologist_sguis.txt
+

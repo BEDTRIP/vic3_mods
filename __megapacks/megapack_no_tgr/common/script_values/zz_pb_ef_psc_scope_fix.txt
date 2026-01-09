@@ -1,0 +1,6 @@
+#############################################
+# pb+ef: PSC scope fix
+# Merged into z_PSC_TR_construction_values.txt
+# This file kept for reference but logic moved to avoid duplication
+#############################################
+

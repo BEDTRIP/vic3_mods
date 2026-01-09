@@ -1,0 +1,396 @@
+# Megapack Internal Conflicts Report
+
+- Megapack root: `C:/Users/Andrey/Projects/vic3_mods/__megapacks/megapack_no_tgr`
+
+This report finds **duplicate identifiers** (same key/id defined multiple times within the megapack). It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/buildings — 1 duplicates
+- `building_uranium_mine` (defined in 2 files)
+  - `common/buildings/zztr_mr_buildings.txt`
+  - `common/buildings/zzzz_megacompack_buildings.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **54**
+  - `bank_je_central_1` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `bank_je_central_1_reason` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `concept_building_urban_center_lvl_by_base_rate_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `concept_maximum_pcs_capacity_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `economic_sentiment_index_base_1_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `economic_sentiment_index_base_3_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `economic_sentiment_index_base_5_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `financial_center_je_1` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `financial_center_je_1_reason` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `financial_center_je_2` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `financial_center_je_2_reason` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_arc_welded_construction_mult` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_arc_welded_construction_mult_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_iron_construction_mult` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_iron_construction_mult_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_steel_construction_mult` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_steel_construction_mult_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_wood_construction_mult` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `goods_output_wood_construction_mult_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `international_reserve_currency_1` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `je_group_ef` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `overbuilt_economy_modifier` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `silver_crisis_progress_bar` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `silver_crisis_progress_bar_desc` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_bubble_character_modifier` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_bubble_modifier` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_10_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_11_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_12_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_1_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_2_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_3_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_4_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_5_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_6_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_7_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_8_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_9_button` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_modifier_1` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_modifier_2` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_modifier_3` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_modifier_4` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_modifier_5` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `speculative_share_modifier_6` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_1_1` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_1_2` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_1_3` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_1_4` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_1_5` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_2_1` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_2_2` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_2_3` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_2_4` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+  - `status_speculative_share_2_5` (in 11 files)
+    - `localization/braz_por/01_ef_je_localization_l_braz_por.yml`
+    - `localization/english/01_ef_je_localization_l_english.yml`
+    - `localization/french/01_ef_je_localization_l_french.yml`
+    - `localization/german/01_ef_je_localization_l_german.yml`
+    - `localization/japanese/01_ef_je_localization_l_japanese.yml`
+    - ... and 6 more files
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

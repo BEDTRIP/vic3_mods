@@ -1,0 +1,13 @@
+# Fix identifier conflict: VC overwrites T&R for this modifier type.
+# Strategy: keep VC definition (richer UI metadata).
+# Load order: TechRes+Kuromi -> VC -> vc_tr.
+
+REPLACE_OR_CREATE:goods_output_grain_mult = {
+	decimals = 1
+	color = good
+	percent = yes
+	game_data = {
+		ai_value = 0
+	}
+}
+

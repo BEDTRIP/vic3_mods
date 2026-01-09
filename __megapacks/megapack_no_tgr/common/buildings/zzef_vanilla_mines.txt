@@ -1,0 +1,15 @@
+﻿#Silver mines
+
+INJECT:building_silver_mine = {
+	production_method_groups = {
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+#Gold mines
+
+INJECT:building_gold_mines = {
+	production_method_groups = {
+		pmg_data_optimization_primary_sector #T&R
+	}
+}

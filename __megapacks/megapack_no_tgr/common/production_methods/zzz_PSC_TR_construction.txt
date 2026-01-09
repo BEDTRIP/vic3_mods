@@ -1,0 +1,67 @@
+# Merged into zz_pb_ef_construction_pm.txt - removed duplicates
+
+REPLACE:pm_prefabricated_concrete_buildings = {
+	texture = "gfx/interface/icons/production_method_icons/prefabricated_concrete_buildings.dds"
+
+	unlocking_technologies = {
+		prefabricated_concrete_buildings
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			#input goods
+			goods_input_steel_add = 30
+			goods_input_aluminium_add = 10
+			goods_input_alloys_add = 10
+			goods_input_glass_add = 40 #800
+			goods_input_plastics_add = 20 #100
+			goods_input_explosives_add = 20
+			goods_input_robotics_add = 15 #-100
+			goods_input_electricity_add = 40
+
+			#output goods
+			#tech and res too underpowered with 13 points of output
+			goods_output_concrete_construction_add = 140
+		}
+
+		level_scaled = {
+			building_employment_clerks_add = 100
+			building_employment_engineers_add = 190
+			building_employment_machinists_add = 160
+			building_employment_laborers_add = 500
+		}
+		unscaled = {
+			building_laborers_mortality_mult = 0.05
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_construction_mult = 0.01
+		}
+	}
+}
+
+REPLACE_OR_CREATE:pm_concrete_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/construction_bureaucrats.dds"
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_concrete_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+
+	unlocking_production_methods = {
+		pm_concrete_point_conversion
+	}
+}

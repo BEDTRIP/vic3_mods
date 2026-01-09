@@ -1,0 +1,35 @@
+﻿REPLACE:wood_construction = {
+	texture = "gfx/interface/icons/goods_icons/wood_construction.dds"
+	cost = 130
+	category = industrial
+	local = yes
+	prestige_factor = 10
+}
+REPLACE:iron_construction = {
+	texture = "gfx/interface/icons/goods_icons/iron_construction.dds"
+	cost = 95
+	category = industrial
+	local = yes
+	prestige_factor = 10
+}
+REPLACE:steel_construction = {
+	texture = "gfx/interface/icons/goods_icons/steel_construction.dds"
+	cost = 95
+	category = industrial
+	local = yes
+	prestige_factor = 10
+}
+REPLACE:arc_welded_construction = {
+	texture = "gfx/interface/icons/goods_icons/arc_welded_construction.dds"
+	cost = 92
+	category = industrial
+	local = yes
+	prestige_factor = 10
+}
+REPLACE_OR_CREATE:concrete_construction = {
+	texture = "gfx/interface/icons/invention_icons/prefabricated_concrete_buildings.dds"
+	cost = 86
+	category = industrial
+	local = yes
+	prestige_factor = 10
+}

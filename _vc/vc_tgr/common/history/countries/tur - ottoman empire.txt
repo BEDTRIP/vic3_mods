@@ -1,0 +1,67 @@
+COUNTRIES = {
+	c:TUR ?= {
+		effect_starting_technology_tier_4_tech = yes
+
+		add_technology_researched = academia
+		add_technology_researched = law_enforcement
+		add_technology_researched = mandatory_service
+		add_technology_researched = urban_planning
+		add_technology_researched = line_infantry
+		set_tax_level = medium
+
+		add_taxed_goods = g:tobacco
+		add_taxed_goods = g:wine
+		add_taxed_goods = g:liquor
+
+		activate_law = law_type:law_monarchy
+		activate_law = law_type:law_autocracy
+		activate_law = law_type:law_millet_system
+		activate_law = law_type:law_subjecthood
+		activate_law = law_type:law_traditionalism
+		activate_law = law_type:law_censorship
+		activate_law = law_type:law_land_based_taxation
+		activate_law = law_type:law_slave_trade
+		activate_law = law_type:law_madrasa
+
+		ig:ig_landowners ?= { # Mehmed Emin Rauf Pasha was Grand Vizier in 1836
+			add_ruling_interest_group = yes
+		}
+
+		set_variable = { name = tanzimat_main_var value = 0 }
+		set_variable = { name = great_ottomanism_var value = 0 }
+
+		trigger_event = { id = joi_flavor_tur.37 }
+		
+		add_journal_entry = { type = peter_the_great_of_turkey }
+		add_journal_entry = { type = tur_sublime_porte }
+		add_journal_entry = { type = ottoman_conqueror_syria }
+		add_journal_entry = { type = ottoman_conqueror_greek }
+		add_journal_entry = { type = muhtar_system }
+		add_journal_entry = { type = ottoman_imperial_arsenal }
+
+		add_modifier = {
+			name = sick_man_of_europe
+			months = -1
+		}
+		add_modifier = {
+			name = outmoded_bureaucracy
+			months = -1
+		}
+		add_modifier = {
+			name = gurush_devaluation_leads_inflation
+			years = -1
+		}
+		create_diplomatic_pact = {
+			country = c:MON
+			type = embargo
+		}
+
+		# TGR addition: Ottoman start company (not set by VC)
+		add_company = company_type:company_imperial_arsenal
+		company:company_imperial_arsenal = {
+			set_company_establishment_date = 1832.1.1
+			set_company_state_region = s:STATE_EASTERN_THRACE
+		}
+	}
+}
+

@@ -1,30 +1,43 @@
-### Готово: конфликты найдены и перепроверены вручную
+## vc_tr — ComPatch: TechRes+Kuromi + Victorian Century
 
-Я прогнал ваш `tools/scan_conflicts.py` **отдельно для трёх корней TechRes+Kuromi** `t&r/`, `kai/`, `cmf/`) против *`Victorian Century/`**, плюс проверил GUI‑идентификаторы и руками посмотрел самые критичные места (buy_packages / pop_needs / defines / on_actions).
+### Порядок загрузки
 
-### Отчёты в рабочей папке
+**TechRes+Kuromi → Victorian Century → vc_tr (этот компач)**
 
-- `conflicts_tr_vs_vc_report.md` — **T&R vs VC** (common‑дубликаты: **137**, совпадений путей файлов: **0**)
-- `conflicts_kai_vs_vc_report.md` — **KAI vs VC** (common‑дубликаты: **1** `NAI`), совпадений путей: **0**)
-- `conflicts_cmf_vs_vc_report.md` — **CMF vs VC** (совпадений путей: **4**, common‑дубликаты: **6**)
+> Примечание: если компач не последний — смысл части правок пропадёт (VC перезапишет merged-блоки).
+
+### Отчёты конфликтов (эвристика + ручная проверка)
+
+- `conflicts_tr_vs_vc_report.md` — T&R vs VC
+- `conflicts_kai_vs_vc_report.md` — KAI vs VC
+- `conflicts_cmf_vs_vc_report.md` — CMF vs VC
 - GUI:
   - `conflicts_tr_vs_vc_gui_ids.txt`
   - `conflicts_cmf_vs_vc_gui_ids.txt`
-- Единый “человеческий” итог с приоритетами под ваш load order:
+- Сводный приоритетный итог:
   - `conflicts_tr_kai_cmf_vs_vc_master.md`
 
-### Ключевые конфликты (важно при порядке: T&R → KAI → CMF → VC)
+### Что делает компач (реализовано)
 
-- **T&R vs VC**:
-  - `common/buy_packages`: `wealth_10..wealth_99` — у T&R `TRY_INJECT`, у VC `REPLACE_OR_CREATE` ⇒ **VC перезатирает, инжекты T&R пропадают**
-  - `common/pop_needs`: `popneed_*` — у VC `REPLACE_OR_CREATE` ⇒ **VC перезатирает потребление новых goods из T&R**
-  - `common/on_actions`: `on_monthly_pulse_country` / `on_yearly_pulse_country` ⇒ **VC перезатирает, T&R-пульсы перестают работать**
-  - `common/defines`: `NPops` ⇒ **VC перезатирает блок, демография/поп‑рост T&R теряются**
-  - `common/company_types`: 32 `company_*` ⇒ **будут версии VC**
-- **KAI vs VC**:
-  - `common/defines`: `NAI` ⇒ **VC перезатирает, Kuromi AI фактически не применится без компача**
-- **CMF vs VC**:
-  - Жёсткие совпадения путей: `common/parties/{conservative,liberal,radical}_party.txt` и `gui/00_MDF_frontend_dlc.gui` ⇒ **всегда будут версии VC**
-  - `common/on_actions`: `on_new_ruler` ⇒ **VC перезатирает, CMF‑блокировка регентств может пропасть**
-  - `common/political_movements`: `movement_bonapartist`, `movement_utilitarian` ⇒ **будут версии V**
+- **`common/buy_packages/zz_vc_tr_buy_packages.txt`**
+  - возвращает T&R `TRY_INJECT:wealth_10..wealth_99` (добавляет `popneed_entertainment` в buy packages VC).
+- **`common/pop_needs/zz_vc_tr_pop_needs.txt`**
+  - встраивает в VC pop-needs потребление новых товаров TechRes+Kuromi (вода/газ/ПО/электроника/фарма/и т.п.), чтобы экономика T&R реально получала спрос при VC последним.
+- **`common/company_types/zz_vc_tr_company_types.txt`**
+  - для 32 пересекающихся `company_*` берёт VC как базу и добавляет недостающие `building_types` / `extension_building_types` / `prosperity_modifier` из T&R (без перезаписи одинаковых ключей).
+- **`common/modifier_type_definitions/zz_vc_tr_modifier_types.txt`**
+  - фиксирует конфликт `goods_output_grain_mult` (оставляем VC-определение, чтобы не терять UI-метаданные).
+- **`common/technology/technologies/zz_vc_tr_technologies.txt`**
+  - фиксирует конфликт `organized_sports` (VC как база + добавлены T&R ai_weight бонусы для FRA/GRE и доп. unlock `pan-nationalism`).
+- **`common/on_actions/zz_vc_tr_on_actions.txt`**
+  - объединяет `on_monthly_pulse_country` и `on_yearly_pulse_country` (VC headlines + VC monarchy sub-actions + T&R monthly/yearly sub-actions),
+  - сохраняет VC `on_new_ruler`, но **возвращает ванильный блок триггера регентства** (который исчезает, когда VC переопределяет `on_new_ruler`).
+- **`common/defines/zz_vc_tr_defines.txt`**
+  - “супер‑блок” `NAI` (VC как база + добавлены ключи Kuromi AI, без перезаписи совпадающих),
+  - “супер‑блок” `NPops` (модель роста населения из TechRes+Kuromi + ключи VC про рабочую долю/колонизацию/культурные общины).
+
+### Что намеренно НЕ мерджится (пока)
+
+- Жёсткие совпадения путей (CMF vs VC): `common/parties/*`, `gui/00_MDF_frontend_dlc.gui` — остаются VC (без ручного мержа).
+
 

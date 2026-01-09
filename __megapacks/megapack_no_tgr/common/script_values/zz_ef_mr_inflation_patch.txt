@@ -1,0 +1,4 @@
+### E&F + Morgenroete ComPatch (Vic3 1.12)
+### Merged into zef_00_economic_scripted_value.txt
+### This file kept for reference but logic moved to avoid duplication
+

@@ -1,0 +1,42 @@
+# Fix identifier conflict: VC overwrites T&R for organized_sports.
+# Strategy: VC as base + add T&R ai_weight flavor and extra unlock dependency.
+# Load order: TechRes+Kuromi -> VC -> vc_tr.
+
+REPLACE_OR_CREATE:organized_sports = { # VC base
+	era = era_2
+	texture = "gfx/interface/icons/invention_icons/organized_sports.dds"
+	category = society
+
+	modifier = {
+		country_prestige_mult = 0.1
+		country_authority_mult = 0.1
+		country_influence_mult = 0.1
+		building_group_bg_service_employee_mult = -0.05
+	}
+
+	unlocking_technologies = {
+		nationalism
+		pan-nationalism # from T&R (MR compatibility): don't lose this prerequisite hook
+	}
+
+	ai_weight = {
+		value = 1
+
+		# From T&R: extra weight for France / Greece (Olympics flavor)
+		if = {
+			limit = {
+				exists = c:FRA
+				c:FRA = ROOT
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				exists = c:GRE
+				c:GRE = ROOT
+			}
+			add = 1
+		}
+	}
+}
+

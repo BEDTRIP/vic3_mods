@@ -1,0 +1,32 @@
+{
+  "name": "ComPatch TechRes+Kuromi + Victorian Century",
+  "id": "",
+  "version": "1.12.2",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for TechRes+Kuromi (T&R + KAI + CMF) + Victorian Century (VC). Load order: TechRes+Kuromi -> VC -> this compatch.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "compatibility",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "TechRes+Kuromi",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}
+

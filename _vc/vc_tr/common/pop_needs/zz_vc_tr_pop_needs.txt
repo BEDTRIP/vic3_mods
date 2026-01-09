@@ -1,0 +1,225 @@
+# VC fully replaces pop needs; this compatch re-adds TechRes+Kuromi entries so new goods are actually demanded.
+# Load order: TechRes+Kuromi -> VC -> vc_tr.
+
+# From T&R: water as basic need.
+INJECT:popneed_basic_food = {
+	entry = {
+		goods = water
+
+		weight = 0.75
+		max_supply_share = 0.15
+		min_supply_share = 0.1
+	}
+}
+
+# From T&R: extend heating with gas + home appliances.
+INJECT:popneed_heating = {
+	entry = {
+		goods = gas
+
+		weight = 3
+		max_supply_share = 0.9
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = homeappliances
+
+		weight = 3
+		max_supply_share = 0.4
+		min_supply_share = 0.0
+	}
+}
+
+# From T&R: household items expanded with modern goods.
+INJECT:popneed_household_items = {
+	entry = {
+		goods = on_demand_goods
+
+		weight = 1.25
+		max_supply_share = 0.75
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = pharmaceuticals
+
+		weight = 1
+		max_supply_share = 0.2
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = homeappliances
+
+		weight = 1.5
+		max_supply_share = 0.5
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = batteries
+
+		weight = 1.5
+		max_supply_share = 0.02
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = copperwires
+
+		weight = 1.5
+		max_supply_share = 0.02
+		min_supply_share = 0.0
+	}
+}
+
+# From T&R: pharmaceuticals as intoxicants substitute.
+INJECT:popneed_intoxicants = {
+	entry = {
+		goods = pharmaceuticals
+
+		weight = 0.5
+		max_supply_share = 0.75
+		min_supply_share = 0.0
+	}
+}
+
+# From T&R: water as part of luxury drinks.
+INJECT:popneed_luxury_drinks = {
+	entry = {
+		goods = water
+
+		weight = 1.5
+		max_supply_share = 0.1
+		min_supply_share = 0.0
+	}
+}
+
+# From T&R: software as communication good.
+INJECT:popneed_communication = {
+	entry = {
+		goods = softwares
+
+		weight = 2.5
+		max_supply_share = 0.4
+		min_supply_share = 0.0
+	}
+}
+
+# From T&R: water as part of luxury food.
+INJECT:popneed_luxury_food = {
+	entry = {
+		goods = water
+
+		weight = 2
+		max_supply_share = 0.05
+		min_supply_share = 0.025
+	}
+}
+
+# From T&R (MR compatibility layer, but goods exist in TechRes+Kuromi): extra options for movement.
+INJECT:popneed_free_movement = {
+	entry = {
+		goods = steamers
+
+		weight = 2
+		max_supply_share = 0.05
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = on_demand_goods
+
+		weight = 1.5
+		max_supply_share = 0.3
+		min_supply_share = 0.0
+	}
+}
+
+# From T&R (MR compatibility layer): modern luxury items.
+INJECT:popneed_luxury_items = {
+	entry = {
+		goods = fine_art
+
+		weight = 0.5
+		max_supply_share = 0.15
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = elgar_instruments
+
+		weight = 0.25
+		max_supply_share = 0.05
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = rubber
+
+		weight = 4
+		max_supply_share = 0.02
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = televisions
+
+		weight = 1.25
+		max_supply_share = 0.3
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = computer
+
+		weight = 1.25
+		max_supply_share = 0.2
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = pharmaceuticals
+
+		weight = 1.5
+		max_supply_share = 0.1
+		min_supply_share = 0.02
+	}
+	entry = {
+		goods = cosmetics
+
+		weight = 1.25
+		max_supply_share = 0.15
+		min_supply_share = 0.05
+	}
+	entry = {
+		goods = homeappliances
+
+		weight = 1.5
+		max_supply_share = 0.5
+		min_supply_share = 0.0
+	}
+}
+
+# Keep VC leisure model but re-add modern goods from TechRes+Kuromi.
+INJECT:popneed_leisure = {
+	entry = {
+		goods = televisions
+
+		weight = 1.25
+		max_supply_share = 0.3
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = computer
+
+		weight = 1.25
+		max_supply_share = 0.3
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = interactive_entertainment
+
+		weight = 1.25
+		max_supply_share = 0.5
+		min_supply_share = 0.0
+	}
+	entry = {
+		goods = on_demand_goods
+
+		weight = 1.5
+		max_supply_share = 0.5
+		min_supply_share = 0.0
+	}
+}
+

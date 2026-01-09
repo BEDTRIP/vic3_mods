@@ -1,0 +1,53 @@
+# Bauxite Mine
+
+INJECT:building_bauxite_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Copper Mine
+
+INJECT:building_copper_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Common Ores Mine
+
+INJECT:building_commonores_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Advanced Ores Mine
+
+INJECT:building_advancedores_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Natural Gas Extraction
+
+INJECT:building_natural_gas_rig = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}
+
+# Rare Earths Mine
+
+INJECT:building_rare_earths_mine = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+}

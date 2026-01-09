@@ -1,0 +1,453 @@
+# Publishing Industry
+
+# Publishing Industry (REPLACE NEEDED SINCE WE MERGE NEW PMS FROM BOTH MODS)
+REPLACE:building_manzoni_publishing_industry = {
+	building_group = bg_light_industry
+	icon = "gfx/interface/icons/building_icons/building_manzoni_publishing_industry.dds"
+	city_type = city
+
+	levels_per_mesh = 50
+
+	unlocking_technologies = {
+		mass_communication
+	}
+
+	production_method_groups = { #DONE Aggiunti 2 nuovi metodi di produzione di Tech & Res
+		manzoni_pmg_communication #communication
+		manzoni_pmg_building_publishing_industry_automation #Automation
+		pmg_broadcast_media_industry #Broadcast Industry
+		pmg_digital_media_industry #Digital Media Industry		
+		manzoni_pmg_publisher #Publisher
+		manzoni_pmg_newspaper #Newspaper
+		pmg_data_optimization_heavy_industry
+
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+	
+	can_build_government = {
+		has_building = building_urban_center				
+	}
+
+	can_build_private = {
+		has_building = building_urban_center				
+	}
+
+	required_construction = construction_cost_very_high #DONE Avendoi più importanza ho portato da medium ad high il costo di produzione
+
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"
+}
+
+#Uranium Mine (REPLACE NEEDED TO MERGE BOTH MODS)
+REPLACE:building_uranium_mine = {
+	building_group = bg_uranium_mining
+	icon = "gfx/interface/icons/building_icons/building_curie_uranium_mine.dds"
+	city_type = mine
+	levels_per_mesh = 50
+	ignore_stateregion_max_level = yes #TODO Non so se rimuovere o no questa riga, la lascio per sicurezza
+	required_construction = construction_cost_medium
+	terrain_manipulator = mining
+	has_max_level = yes
+
+	unlocking_technologies = {
+		verrier_modern_physics_tech
+	}
+
+	production_method_groups = {
+		pmg_curie_mining_equipment_building_uranium_mine
+		pmg_curie_explosives_building_uranium_mine
+		pmg_curie_steam_automation_building_uranium_mine
+		pmg_curie_train_automation_building_uranium_mine
+		pmg_data_optimization_primary_sector
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_mining_stock
+	}
+
+	possible = {
+        OR = {
+        modifier:state_building_uranium_mine_max_level_add > 0
+		has_modifier = curie_uranium_ressources_modifier
+		owner = {
+			NOT = {
+				OR = {
+					has_law = law_type:law_mining_strategic
+					has_law = law_type:law_polluting_mining_banned
+				}
+			}
+		} #DONE Aggiunto per rendere compatibile la miniera di uranio alle nuove leggi sul nucleare
+		}
+    }
+
+    potential = {
+		OR = {
+        modifier:state_building_uranium_mine_max_level_add > 0
+		has_modifier = curie_uranium_ressources_modifier
+		}
+    }
+
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_mining.dds"
+}
+
+INJECT:building_airport = {
+	production_method_groups = {
+		pmg_tourism_airport
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+
+
+
+### E&F + Morgenroete ComPatch (Vic3 1.12)
+### Add E&F financial PM groups to Morgenroete custom buildings
+
+
+
+INJECT:building_agassiz_volcano_observatory = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_douglas_alpine_club = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_dubois_national_park = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_dubois_zoo = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_almshouse = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_arch = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_arts = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_bamiyan = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_campanile = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_canalization = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_dom = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_fountain = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_gotthard = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_gyeong = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_health = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_hospital = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_luna = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_moistero = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_mole = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_neuschwanstein = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_palacio = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_parade = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_park = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_people_forum = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_people_monument = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_people_palace = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_petra = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_potala = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_prison = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_sagrada = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_saxon = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_school = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_science = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_sports = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_statue = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_gaudi_summer = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_instrument_workshops = {
+	production_method_groups = {
+		pmg_market_liquidity
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_klimt_gallery = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_lepsius_archaeological_museum = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_manzoni_library = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_mendelejew_hydrogenation_plants = {
+	production_method_groups = {
+		pmg_market_liquidity
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_mendelejew_synthetic_rubber_factory = {
+	production_method_groups = {
+		pmg_market_liquidity
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_mr_lyme_regis_cliff = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_mr_steamboat_rock = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_panum_asylum = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_panum_red_cross = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_panum_tuberculosis_sanatorium = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_rapanui_moai = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_uranium_mine = {
+	production_method_groups = {
+		pmg_market_liquidity
+		pmg_private_ownership_mining_stock
+	}
+}
+
+INJECT:building_verrier_observatory = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_vikelas_aiacr = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_vikelas_circuit = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_vikelas_fifa = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_vikelas_ioc = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+INJECT:building_vikelas_sports = {
+	production_method_groups = {
+		pmg_market_liquidity
+	}
+}
+
+# Publishing Industry
+
+INJECT:building_elgar_opera = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+

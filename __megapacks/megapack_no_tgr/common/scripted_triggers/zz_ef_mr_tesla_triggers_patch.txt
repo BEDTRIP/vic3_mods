@@ -1,0 +1,45 @@
+##############################
+# E&F + Morgenroete ComPatch #
+# Tesla: E&F building support#
+##############################
+
+# Make Tesla construction-sector improvement accept E&F private construction building too.
+tesla_construction_sector_valid_for_improvement_trigger = {
+	level > 0
+	OR = {
+		is_building_type = building_construction_sector
+		is_building_type = building_ef_private_construction
+	}
+	NAND = {
+		has_modifier = gaudi_new_construction_methods_modifier
+		has_modifier = gaudi_faster_construction_methods_modifier
+		has_modifier = gaudi_efficient_construction_methods_modifier
+	}
+}
+
+# Prevent Tesla mechanical improvement project from targeting E&F financial building groups.
+tesla_building_valid_for_mechanical_improvement_trigger = {
+	level > 0
+	NOR = {
+		is_building_group = bg_service
+		is_building_group = bg_urban_facilities
+		is_building_group = bg_power
+		is_building_group = bg_government
+		is_building_group = bg_infrastructure
+		is_building_group = bg_military
+		is_building_group = bg_subsistence_agriculture
+		is_building_type = building_elgar_opera
+
+		# E&F
+		is_building_group = bg_bank
+		is_building_group = bg_financial_centre
+		is_building_group = bg_national_stockpile
+		is_building_group = bg_ef_private_construction
+	}
+	NAND = {
+		has_modifier = gaudi_building_throughput_add_modifier
+		has_modifier = gaudi_building_production_mult_modifier
+		has_modifier = gaudi_building_goods_input_mult_modifier
+	}
+}
+

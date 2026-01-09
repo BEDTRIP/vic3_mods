@@ -1,0 +1,219 @@
+### Advanced Tanks ###
+REPLACE:mobilization_option_advanced_tanks_1 = {
+	texture = "gfx/interface/icons/mobilization_options/mr_advanced_tanks_tier_1_mobilization_option.dds"
+
+	unlocking_technologies = {
+		mobile_armor
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = gaudi_advanced_tanks_tier_1_trigger_tt
+			has_variable = gaudi_military_engineer_advanced_tanks
+			var:gaudi_military_engineer_advanced_tanks >= 1
+		}
+		scope:military_formation = {
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_light_tanks
+					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
+					has_unit_type = unit_type:combat_unit_type_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_modern_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_main_battle_tanks
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_advanced_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_modern_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_giant_death_robot
+				}
+			}
+			NOR = {
+				has_mobilization_option = mobilization_option:mobilization_option_advanced_tanks_2
+				has_mobilization_option = mobilization_option:mobilization_option_advanced_tanks_3
+			}
+		}
+	}
+	
+	on_activate_while_mobilized = {
+		custom_tooltip = {
+			text = mobilization_option_it_hurts_organization_when_you_adjust_equipment_tt
+			add_organization = {
+				value = organization
+				multiply = -0.5
+			}
+		}
+	}
+	
+	on_deactivate = {
+		custom_tooltip = {
+			text = mobilization_option_it_hurts_organization_when_you_adjust_equipment_tt
+			add_organization = {
+				value = organization
+				multiply = -0.5
+			}
+		}
+	}
+
+	upkeep_modifier_unscaled = {
+		goods_input_oil_mult = 0.2
+		goods_input_tanks_mult = 0.2
+	}
+
+	unit_modifier = {
+		unit_kill_rate_add = 0.03
+		unit_offense_mult = 0.03
+		military_formation_movement_speed_mult = 0.1
+		character_battle_condition_rapid_advance_mult = 1
+	}
+
+	ai_weight = {
+		value = 1
+	}
+
+	group = advanced_tanks
+}
+
+REPLACE:mobilization_option_advanced_tanks_2 = {
+	texture = "gfx/interface/icons/mobilization_options/mr_advanced_tanks_tier_2_mobilization_option.dds"
+
+	unlocking_technologies = {
+		mobile_armor
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = gaudi_advanced_tanks_tier_2_trigger_tt
+			has_variable = gaudi_military_engineer_advanced_tanks
+			var:gaudi_military_engineer_advanced_tanks >= 2
+		}
+		scope:military_formation = {
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_light_tanks
+					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
+					has_unit_type = unit_type:combat_unit_type_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_modern_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_main_battle_tanks
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_advanced_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_modern_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_giant_death_robot
+				}
+			}
+			NOR = {
+				has_mobilization_option = mobilization_option:mobilization_option_advanced_tanks_1
+				has_mobilization_option = mobilization_option:mobilization_option_advanced_tanks_3
+			}
+		}
+	}
+	
+	on_activate_while_mobilized = {
+		custom_tooltip = {
+			text = mobilization_option_it_hurts_organization_when_you_adjust_equipment_tt
+			add_organization = {
+				value = organization
+				multiply = -0.5
+			}
+		}
+	}
+	
+	on_deactivate = {
+		custom_tooltip = {
+			text = mobilization_option_it_hurts_organization_when_you_adjust_equipment_tt
+			add_organization = {
+				value = organization
+				multiply = -0.5
+			}
+		}
+	}
+
+	upkeep_modifier_unscaled = {
+		goods_input_oil_mult = 0.2
+		goods_input_tanks_mult = 0.2
+	}
+
+	unit_modifier = {
+		unit_kill_rate_add = 0.06
+		unit_offense_mult = 0.06
+		military_formation_movement_speed_mult = 0.2
+		character_battle_condition_rapid_advance_mult = 1.5
+	}
+
+	ai_weight = {
+		value = 1
+	}
+
+	group = advanced_tanks
+}
+
+REPLACE:mobilization_option_advanced_tanks_3 = {
+	texture = "gfx/interface/icons/mobilization_options/mr_advanced_tanks_tier_3_mobilization_option.dds"
+
+	unlocking_technologies = {
+		mobile_armor
+	}
+
+	possible = {
+		custom_tooltip = {
+			text = gaudi_advanced_tanks_tier_3_trigger_tt
+			has_variable = gaudi_military_engineer_advanced_tanks
+			var:gaudi_military_engineer_advanced_tanks >= 3
+		}
+		scope:military_formation = {
+			any_combat_unit = {
+				OR = {
+					has_unit_type = unit_type:combat_unit_type_light_tanks
+					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
+					has_unit_type = unit_type:combat_unit_type_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_modern_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_main_battle_tanks
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_advanced_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_modern_mechanized_infantry
+					has_unit_type = unit_type:combat_unit_type_giant_death_robot
+				}
+			}
+			NOR = {
+				has_mobilization_option = mobilization_option:mobilization_option_advanced_tanks_1
+				has_mobilization_option = mobilization_option:mobilization_option_advanced_tanks_2
+			}
+		}
+	}
+	
+	on_activate_while_mobilized = {
+		custom_tooltip = {
+			text = mobilization_option_it_hurts_organization_when_you_adjust_equipment_tt
+			add_organization = {
+				value = organization
+				multiply = -0.5
+			}
+		}
+	}
+	
+	on_deactivate = {
+		custom_tooltip = {
+			text = mobilization_option_it_hurts_organization_when_you_adjust_equipment_tt
+			add_organization = {
+				value = organization
+				multiply = -0.5
+			}
+		}
+	}
+
+	upkeep_modifier_unscaled = {
+		goods_input_oil_mult = 0.2
+		goods_input_tanks_mult = 0.2
+	}
+
+	unit_modifier = {
+		unit_kill_rate_add = 0.1
+		unit_offense_mult = 0.1
+		military_formation_movement_speed_mult = 0.3
+		character_battle_condition_rapid_advance_mult = 2
+	}
+
+	ai_weight = {
+		value = 1
+	}
+
+	group = advanced_tanks
+}

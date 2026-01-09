@@ -6,8 +6,8 @@ REPLACE_OR_CREATE:popneed_basic_food = {
 	entry = {
 		goods = grain
 
-		weight = 1													#0.85	#TGR CHANGES
-		max_supply_share = 0.5										#0.9 	#TGR CHANGES
+		weight = 0.85
+		max_supply_share = 0.9
 		min_supply_share = 0.2										#0.0	#TGR CHANGES
 	}
 
@@ -15,7 +15,7 @@ REPLACE_OR_CREATE:popneed_basic_food = {
 		goods = fish
 
 		weight = 1
-		max_supply_share = 0.5										#0.9 	#TGR CHANGES
+		max_supply_share = 0.9
 		min_supply_share = 0.2										#0.0	#TGR CHANGES
 	}
 
@@ -23,7 +23,7 @@ REPLACE_OR_CREATE:popneed_basic_food = {
 		goods = meat
 
 		weight = 1
-		max_supply_share = 0.5										#0.9 	#TGR CHANGES
+		max_supply_share = 0.9
 		min_supply_share = 0.2										#0.0	#TGR CHANGES
 	}
 
@@ -31,15 +31,15 @@ REPLACE_OR_CREATE:popneed_basic_food = {
 		goods = fruit
 
 		weight = 1
-		max_supply_share = 0.4										#0.9 	#TGR CHANGES
+		max_supply_share = 0.9
 		min_supply_share = 0.1										#0.0	#TGR CHANGES
 	}
 
 	entry = {
 		goods = groceries
 
-		weight = 1													#1.15	#TGR CHANGES
-		max_supply_share = 0.4										#0.9 	#TGR CHANGES
+		weight = 1.5
+		max_supply_share = 0.9
 		min_supply_share = 0.1										#0.0	#TGR CHANGES
 	}
 }
@@ -55,7 +55,7 @@ REPLACE_OR_CREATE:popneed_luxury_drinks = {
 		goods = tea
 
 		weight = 1
-		max_supply_share = 0.45										#0.75	#TGR CHANGES
+		max_supply_share = 0.75
 		min_supply_share = 0.2										#0.0	#TGR CHANGES
 	}
 
@@ -63,7 +63,7 @@ REPLACE_OR_CREATE:popneed_luxury_drinks = {
 		goods = coffee
 
 		weight = 1
-		max_supply_share = 0.45										#0.75	#TGR CHANGES
+		max_supply_share = 0.75
 		min_supply_share = 0.2										#0.0	#TGR CHANGES
 	}
 
@@ -71,7 +71,7 @@ REPLACE_OR_CREATE:popneed_luxury_drinks = {
 		goods = wine
 
 		weight = 0.5												#0.33	#TGR CHANGES
-		max_supply_share = 0.45										#0.33	#TGR CHANGES
+		max_supply_share = 0.75
 		min_supply_share = 0.2										#0.0	#TGR CHANGES
 	}
 }
@@ -82,9 +82,9 @@ REPLACE_OR_CREATE:popneed_luxury_food = {
 	entry = {
 		goods = meat
 
-		weight = 1.50												#1.25	#TGR CHANGES
-		max_supply_share = 0.5										#0.75	#TGR CHANGES
-		min_supply_share = 0.2										#0.1	#TGR CHANGES
+		weight = 1.50
+		max_supply_share = 0.75
+		min_supply_share = 0.1
 	}
 	
 	##### TGR ADDITION #####
@@ -92,25 +92,25 @@ REPLACE_OR_CREATE:popneed_luxury_food = {
 		goods = fish
 
 		weight = 1
-		max_supply_share = 0.5										#0.9 	#TGR CHANGES
-		min_supply_share = 0.2										#0.0	#TGR CHANGES
+		max_supply_share = 0.9
+		min_supply_share = 0.1
 	}
 	########################
 
 	entry = {
 		goods = fruit
 
-		weight = 1													#0.75	#TGR CHANGES
-		max_supply_share = 0.5										#0.75	#TGR CHANGES
-		min_supply_share = 0.2										#0.1	#TGR CHANGES
+		weight = 1
+		max_supply_share = 0.5
+		min_supply_share = 0.1
 	}
 
 	entry = {
 		goods = groceries
 
-		weight = 1													#1.5	#TGR CHANGES
-		max_supply_share = 0.5										#1.0	#TGR CHANGES
-		min_supply_share = 0.2										#0.0	#TGR CHANGES
+		weight = 2
+		max_supply_share = 1.0
+		min_supply_share = 0.1
 	}
 
 	entry = {

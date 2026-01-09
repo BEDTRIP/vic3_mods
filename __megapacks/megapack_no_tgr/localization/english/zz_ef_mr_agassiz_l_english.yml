@@ -1,0 +1,5 @@
+l_english:
+ agassiz.100.s: "Silver."
+ je_agassiz_find_silver_project: "Find Silver"
+ je_agassiz_find_silver_project_reason: "$je_agassiz_find_coal_project_reason$"
+

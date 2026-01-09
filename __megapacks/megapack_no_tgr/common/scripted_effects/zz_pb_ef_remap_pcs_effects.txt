@@ -1,0 +1,30 @@
+
+# Remap the E&F "private construction sector" bubble modifier application to construction_sector.
+# E&F calls `building_ef_private_construction_modifier` from `00_on_action_main.txt`.
+
+REPLACE_OR_CREATE:building_ef_private_construction_modifier = {
+	every_scope_building = {
+		limit = {
+			is_building_type = building_construction_sector
+		}
+		remove_modifier = overbuilt_economy_modifier
+	}
+
+	# overbuilding regulation (E&F uses speculative_share_2_penality < 0 as the trigger)
+	if = {
+		limit = {
+			speculative_share_2_penality < 0
+		}
+		every_scope_building = {
+			limit = {
+				is_building_type = building_construction_sector
+			}
+			remove_modifier = overbuilt_economy_modifier
+			add_modifier = {
+				name = overbuilt_economy_modifier
+				multiplier = speculative_share_2_penality
+			}
+		}
+	}
+}
+

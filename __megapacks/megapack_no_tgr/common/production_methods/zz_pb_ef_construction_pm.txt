@@ -1,0 +1,141 @@
+
+# PSC construction goods production + E&F manufacture_stock output.
+# We keep PSC's construction-goods outputs and add E&F-style stock issuance.
+
+REPLACE:pm_wooden_buildings = {
+	texture = "gfx/interface/icons/production_method_icons/wooden_buildings.dds"
+	
+	is_default = yes
+
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_fabric_add = 25
+			goods_input_wood_add = 75
+
+			# output goods (PSC)
+			goods_output_wood_construction_add = 20
+
+			# output goods (E&F)
+			goods_output_manufacture_stock_add = 20 #50
+		}
+
+		level_scaled = {
+			building_employment_engineers_add = 40
+			building_employment_clerks_add = 100
+			building_employment_laborers_add = 860
+		}
+		unscaled = {
+			building_laborers_mortality_mult = 0.1
+		}
+	}
+}
+
+REPLACE:pm_iron_frame_buildings = {
+	texture = "gfx/interface/icons/production_method_icons/iron_frame_buildings.dds"
+	
+	unlocking_technologies = {
+		urban_planning
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_wood_add = 40
+			goods_input_fabric_add = 20
+			goods_input_iron_add = 50
+			goods_input_commonores_add = 5 # T&R addition
+			goods_input_tools_add = 10
+
+			# output goods (PSC)
+			goods_output_iron_construction_add = 50
+
+			# output goods (E&F)
+			goods_output_manufacture_stock_add = 50 #100
+		}
+
+		level_scaled = {
+			building_employment_engineers_add = 60
+			building_employment_clerks_add = 100
+			building_employment_machinists_add = 40
+			building_employment_laborers_add = 800
+		}
+		unscaled = {
+			building_laborers_mortality_mult = 0.1
+		}
+	}
+}
+
+REPLACE:pm_steel_frame_buildings = {
+	texture = "gfx/interface/icons/production_method_icons/steel_frame_buildings.dds"
+
+	unlocking_technologies = {
+		steel_frame_buildings
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_steel_add = 50
+			goods_input_glass_add = 40
+			goods_input_explosives_add = 10
+			goods_input_alloys_add = 10 # T&R addition
+			goods_input_tools_add = 20
+
+			# output goods (PSC) - T&R balanced to 80
+			goods_output_steel_construction_add = 80
+
+			# output goods (E&F)
+			goods_output_manufacture_stock_add = 100 #150
+		}
+
+		level_scaled = {
+			building_employment_engineers_add = 80
+			building_employment_clerks_add = 100
+			building_employment_machinists_add = 160
+			building_employment_laborers_add = 660
+		}
+		unscaled = {
+			building_laborers_mortality_mult = 0.1
+		}
+	}
+}
+
+REPLACE:pm_arc_welded_buildings = {
+	texture = "gfx/interface/icons/production_method_icons/arc_welded_buildings.dds"
+
+	unlocking_technologies = {
+		arc_welding
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			# input goods
+			goods_input_steel_add = 50
+			goods_input_glass_add = 40
+			goods_input_explosives_add = 20
+			goods_input_tools_add = 40
+			goods_input_alloys_add = 10 # T&R addition
+			goods_input_electricity_add = 40
+
+			# output goods (PSC) - T&R balanced to 120
+			goods_output_arc_welded_construction_add = 120
+
+			# output goods (E&F)
+			goods_output_manufacture_stock_add = 150 #200
+		}
+
+		level_scaled = {
+			building_employment_engineers_add = 140
+			building_employment_clerks_add = 100
+			building_employment_machinists_add = 160
+			building_employment_laborers_add = 600
+		}
+		unscaled = {
+			building_laborers_mortality_mult = 0.1
+		}
+	}
+
+	required_input_goods = electricity
+}
+

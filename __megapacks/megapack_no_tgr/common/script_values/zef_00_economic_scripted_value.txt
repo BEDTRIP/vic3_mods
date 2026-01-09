@@ -1,0 +1,664 @@
+REPLACE:inflation_on_consumer_goods = {
+	add = {
+		market = {
+			mg:grain = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fish = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fabric = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:clothes = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:furniture = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:paper = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:services = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:transportation = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:porcelain = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:meat = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fruit = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:wine = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tea = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tobacco = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:opium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:automobiles = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:telephones = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:radios = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:luxury_clothes = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:luxury_furniture = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fine_art = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#Tech & Res T&R + Morgenroete
+			mg:air_travel = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:elgar_music = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:manzoni_prints = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:elgar_instruments = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:homeappliances = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:televisions = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:computer = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:water = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:pharmaceuticals = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:civil_planes = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:softwares = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:on_demand_goods = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:interactive_entertainment = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:cosmetics = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:grain.market_goods_buy_orders
+		add = market.mg:fish.market_goods_buy_orders
+		add = market.mg:fabric.market_goods_buy_orders
+		add = market.mg:clothes.market_goods_buy_orders
+		add = market.mg:furniture.market_goods_buy_orders
+		add = market.mg:paper.market_goods_buy_orders
+		add = market.mg:services.market_goods_buy_orders
+		add = market.mg:transportation.market_goods_buy_orders
+		add = market.mg:porcelain.market_goods_buy_orders
+		add = market.mg:meat.market_goods_buy_orders
+		add = market.mg:fruit.market_goods_buy_orders
+		add = market.mg:wine.market_goods_buy_orders
+		add = market.mg:tea.market_goods_buy_orders
+		add = market.mg:tobacco.market_goods_buy_orders
+		add = market.mg:opium.market_goods_buy_orders
+		add = market.mg:automobiles.market_goods_buy_orders
+		add = market.mg:telephones.market_goods_buy_orders
+		add = market.mg:radios.market_goods_buy_orders
+		add = market.mg:luxury_clothes.market_goods_buy_orders
+		add = market.mg:luxury_furniture.market_goods_buy_orders
+		add = market.mg:fine_art.market_goods_buy_orders
+		#T&R + Morgenroete
+		add = market.mg:air_travel.market_goods_buy_orders
+		add = market.mg:elgar_music.market_goods_buy_orders
+		add = market.mg:manzoni_prints.market_goods_buy_orders
+		add = market.mg:elgar_instruments.market_goods_buy_orders
+		add = market.mg:homeappliances.market_goods_buy_orders
+		add = market.mg:televisions.market_goods_buy_orders
+		add = market.mg:computer.market_goods_buy_orders
+		add = market.mg:water.market_goods_buy_orders
+		add = market.mg:pharmaceuticals.market_goods_buy_orders
+		add = market.mg:civil_planes.market_goods_buy_orders
+		add = market.mg:softwares.market_goods_buy_orders
+		add = market.mg:on_demand_goods.market_goods_buy_orders
+		add = market.mg:interactive_entertainment.market_goods_buy_orders
+		add = market.mg:cosmetics.market_goods_buy_orders
+	}
+}
+
+REPLACE:inflation_on_energy = {
+	add = {
+		market = {
+			mg:wood = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:electricity = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:coal = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:oil = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#T&R
+			mg:light_fuel = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:heavy_fuel = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:gas = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:good_uranium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:wood.market_goods_buy_orders
+		add = market.mg:electricity.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+		add = market.mg:coal.market_goods_buy_orders
+		add = market.mg:oil.market_goods_buy_orders
+		#T&R
+		add = market.mg:light_fuel.market_goods_buy_orders
+		add = market.mg:heavy_fuel.market_goods_buy_orders
+		add = market.mg:gas.market_goods_buy_orders
+		add = market.mg:good_uranium.market_goods_buy_orders
+	}
+}
+
+REPLACE:inflation_on_raw_material = {
+	add = {
+		market = {
+			mg:silk = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:dye = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:sulfur = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:iron = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:lead = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:rubber = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#T&R + Morgenroete
+			mg:good_uranium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:bauxite = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:copper = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:commonores = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:advancedores = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:rare_earths = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:hardwood = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:silk.market_goods_buy_orders
+		add = market.mg:dye.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+		add = market.mg:sulfur.market_goods_buy_orders
+		add = market.mg:iron.market_goods_buy_orders
+		add = market.mg:lead.market_goods_buy_orders
+		add = market.mg:rubber.market_goods_buy_orders
+		#T&R + Morgenroete
+		add = market.mg:good_uranium.market_goods_buy_orders
+		add = market.mg:copper.market_goods_buy_orders
+		add = market.mg:commonores.market_goods_buy_orders
+		add = market.mg:advancedores.market_goods_buy_orders
+		add = market.mg:rare_earths.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+	}
+}
+
+REPLACE:inflation_on_manufactured_goods = {
+	value = 0
+	add = {
+		market = {
+			mg:clippers = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:steamers = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:engines = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:steel = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:glass = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fertilizer = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tools = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:explosives = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#T&R
+			mg:alloys = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:plastics = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:lubricant = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:copperwires = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:batteries = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:electroniccomponents = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:processors = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:robotics = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:raw_data = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:on_demand_goods = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:organized_data = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:business_data = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:telecommunications = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:aluminium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:clippers.market_goods_buy_orders
+		add = market.mg:steamers.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+		add = market.mg:engines.market_goods_buy_orders
+		add = market.mg:steel.market_goods_buy_orders
+		add = market.mg:glass.market_goods_buy_orders
+		add = market.mg:fertilizer.market_goods_buy_orders
+		add = market.mg:tools.market_goods_buy_orders
+		add = market.mg:explosives.market_goods_buy_orders
+		#T&R
+		add = market.mg:plastics.market_goods_buy_orders
+		add = market.mg:lubricant.market_goods_buy_orders
+		add = market.mg:copperwires.market_goods_buy_orders
+		add = market.mg:batteries.market_goods_buy_orders
+		add = market.mg:electroniccomponents.market_goods_buy_orders
+		add = market.mg:processors.market_goods_buy_orders
+		add = market.mg:robotics.market_goods_buy_orders
+		add = market.mg:raw_data.market_goods_buy_orders
+		add = market.mg:on_demand_goods.market_goods_buy_orders
+		add = market.mg:organized_data.market_goods_buy_orders
+		add = market.mg:business_data.market_goods_buy_orders
+		add = market.mg:telecommunications.market_goods_buy_orders
+		add = market.mg:aluminium.market_goods_buy_orders
+	}
+}
+
+REPLACE:inflation_on_military_equipment = {
+	value = 0
+	add  = {
+		market = {
+			mg:ammunition = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:small_arms = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:artillery = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tanks = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:aeroplanes = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:manowars = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:ironclads = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#T&R
+			mg:space_assets = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:ammunition.market_goods_buy_orders
+		add = market.mg:small_arms.market_goods_buy_orders
+		add = market.mg:artillery.market_goods_buy_orders
+		add = market.mg:tanks.market_goods_buy_orders
+		add = market.mg:aeroplanes.market_goods_buy_orders
+		add = market.mg:manowars.market_goods_buy_orders
+		add = market.mg:ironclads.market_goods_buy_orders
+		#T&R
+		add = market.mg:space_assets.market_goods_buy_orders
+	}
+}

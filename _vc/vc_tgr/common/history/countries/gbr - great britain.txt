@@ -1,0 +1,206 @@
+COUNTRIES = {
+	c:GBR ?= {
+		set_next_election_date = 1836.2.1
+		
+		ig:ig_intelligentsia ?= {
+			add_ruling_interest_group = yes
+		}
+
+		ig:ig_petty_bourgeoisie ?= {
+			add_ruling_interest_group = yes
+		}
+
+		ig:ig_industrialists = {
+        	set_variable = { name = memento_mori_immunity years = 30 }
+        }
+
+		set_variable = {#防止英美报错
+            name = investment_amount_var
+            value = 0
+        }
+        set_variable = british_raj_var
+        set_variable = this_country_has_national_academy#已经拥有了国家学术院
+		
+		set_import_tariff_level = { 
+			goods = g:grain 
+			level = high_tariffs
+		}
+		set_import_tariff_level = { 
+			goods = g:fabric
+			level = no_tariffs_or_subventions
+		}	
+		set_export_tariff_level = { 
+			goods = g:opium
+			level = low_subventions
+		}
+		
+		effect_starting_technology_tier_1_tech = yes
+		
+		add_technology_researched = labor_movement # A relevant labour movement already existed prior to 1836
+		add_technology_researched = joint_stock_companies
+
+		set_tax_level = medium
+		
+		add_taxed_goods = g:liquor
+		add_taxed_goods = g:luxury_clothes
+		add_taxed_goods = g:luxury_furniture
+		add_taxed_goods = g:tea
+
+		ig:ig_industrialists = {
+        	set_variable = { name = memento_mori_immunity years = 30 }
+        }
+
+		set_variable = {#防止英美报错
+            name = investment_amount_var
+            value = 0
+        }
+
+        set_variable = british_raj_var
+        set_variable = this_country_has_national_academy#已经拥有了国家学术院
+
+		# Laws 
+		activate_law = law_type:law_monarchy
+		activate_law = law_type:law_wealth_voting
+		activate_law = law_type:law_freedom_of_conscience
+		activate_law = law_type:law_women_own_property
+		activate_law = law_type:law_per_capita_based_taxation
+		activate_law = law_type:law_appointed_bureaucrats
+		activate_law = law_type:law_right_of_assembly
+		activate_law = law_type:law_national_supremacy
+		activate_law = law_type:law_protectionism # Corn Laws, babyyy
+		activate_law = law_type:law_interventionism
+		activate_law = law_type:law_religious_schools
+		activate_law = law_type:law_per_capita_based_taxation
+		activate_law = law_type:law_colonial_resettlement
+		activate_law = law_type:law_poor_laws
+		activate_law = law_type:law_charitable_health_system
+		activate_law = law_type:law_dedicated_police
+		activate_law = law_type:law_professional_army
+		activate_law = law_type:law_tenant_farmers # enclosure acts
+		activate_law = law_type:law_anti_strike_laws # 1825 Combinations of Workmen Act
+		
+		set_institution_investment_level = {
+			institution = institution_colonial_affairs
+			level = 2
+		}
+		
+		set_institution_investment_level = {
+			institution = institution_schools
+			level = 3
+		}
+
+		set_institution_investment_level = {
+			institution = institution_police
+			level = 1
+		}
+
+		add_journal_entry = { 
+			type = je_victoria 
+		}
+		add_journal_entry = {
+			type = uk_parliament_westminster
+		}
+		add_journal_entry = {
+			type = rebuild_westminster
+		}
+		add_journal_entry = {
+			type = poor_law_act
+		}
+		add_journal_entry = { 
+			type = ireland_food_problem 
+		}
+		add_journal_entry = { 
+			type = stabilize_british_empire
+		}
+		add_journal_entry = { 
+			type = oak_loyal
+		}
+		add_journal_entry = { 
+			type = her_majestys_government
+		}
+		add_journal_entry = {
+			type = gbr_corn_law
+		}
+		add_journal_entry = {
+			type = belgium_interest
+		}
+		add_journal_entry = {
+			type = rowing_of_united_kingdom
+		}
+		add_journal_entry = {
+			type = england_industrialize
+		}
+		add_journal_entry = {
+			type = company_equity
+		}
+		add_journal_entry = {
+			type = law_of_railway
+		}
+		if = {
+			limit = {
+				has_dlc_feature = rp1_content
+			}
+			add_journal_entry = { type = je_aberdeen_act }
+		}
+
+		add_modifier = {
+			name = rule_britannia
+			months = -1 # 50 Years
+		}
+		add_modifier = {
+			name = brazilian_slave_trade_modifier
+			months = 600 # 50 Years
+		}
+		add_modifier = {
+			name = civil_service_system
+			months = -1
+		}
+		add_modifier = {
+			name = catholic_emancipation_act
+			years = 3
+			is_decaying = yes
+		}
+		add_modifier = {
+			name = goldstandard_reduced_papermoney_issuance_modifier
+			years = 6
+			is_decaying = yes
+		}
+		add_modifier = {
+			name = aftermath_of_1825_financial_crisis
+			years = 4
+		}
+
+		every_scope_state = {
+			limit = {
+				state_region = s:STATE_HOME_COUNTIES
+			}
+			add_modifier = royal_society_of_london_modifier
+		}
+		
+		trigger_event = { 
+			id = joi_flavor_gbr.1 
+		}
+
+		add_company = company_type:company_hbc
+		company:company_hbc = {
+			set_company_establishment_date = 1670.5.2
+			set_company_state_region = s:STATE_HOME_COUNTIES
+			add_owned_country = c:HBC #links the country to this company
+		}
+		add_company = company_type:company_east_india_company
+		company:company_east_india_company = {
+			set_company_establishment_date = 1600.12.31
+			set_company_state_region = s:STATE_HOME_COUNTIES
+			add_owned_country = c:BIC #links the country to this company
+		}
+		
+		set_variable = free_elections_var
+		active_law:lawgroup_distribution_of_power ?= { # Wealth Voting - Reform Act
+			add_amendment = {
+				type = amendment_tradition_of_free_elections
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+}
+

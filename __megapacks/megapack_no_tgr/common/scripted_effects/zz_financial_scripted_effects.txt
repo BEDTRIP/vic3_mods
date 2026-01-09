@@ -1,0 +1,3717 @@
+# establish bank compagnie
+REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
+
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+
+	# ██████╗  █████╗ ███╗   ██╗██╗  ██╗
+	# ██╔══██╗██╔══██╗████╗  ██║██║ ██╔╝
+	# ██████╔╝███████║██╔██╗ ██║█████╔╝
+	# ██╔══██╗██╔══██║██║╚██╗██║██╔═██╗
+	# ██████╔╝██║  ██║██║ ╚████║██║  ██╗
+	# ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+
+	#USA
+	#company_BankJPMorgan
+	if = {
+		limit = {
+			game_date > 1871.1.1
+			c:USA ?= this
+			NOT = {
+				has_company = company_type:company_BankJPMorgan
+			}
+		}
+		add_company = company_type:company_BankJPMorgan
+		company:company_BankJPMorgan = {
+			set_company_state_region = s:STATE_NEW_YORK
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BankJPMorgan
+							country="c:USA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BankGoldmanSachs
+	if = {
+		limit = {
+			game_date > 1869.1.1
+			c:USA ?= this
+			NOT = {
+				has_company = company_type:company_BankGoldmanSachs
+			}
+		}
+		add_company = company_type:company_BankGoldmanSachs
+		company:company_BankGoldmanSachs = {
+			set_company_state_region = s:STATE_NEW_YORK
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BankGoldmanSachs
+							country="c:USA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_ChaseBank
+	if = {
+		limit = {
+			game_date > 1877.1.1
+			c:USA ?= this
+			NOT = {
+				has_company = company_type:company_ChaseBank
+			}
+		}
+		add_company = company_type:company_ChaseBank
+		company:company_ChaseBank = {
+			set_company_state_region = s:STATE_NEW_YORK
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_ChaseBank
+							country="c:USA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BankWellsFargo
+	if = {
+		limit = {
+			game_date > 1852.1.1
+			c:USA ?= this
+			NOT = {
+				has_company = company_type:company_BankWellsFargo
+			}
+		}
+		add_company = company_type:company_BankWellsFargo
+		company:company_BankWellsFargo = {
+			set_company_state_region = s:STATE_NEW_YORK
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BankWellsFargo
+							country="c:USA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BankAmericanExpress
+	if = {
+		limit = {
+			game_date > 1850.1.1
+			c:USA ?= this
+			NOT = {
+				has_company = company_type:company_BankAmericanExpress
+			}
+		}
+		add_company = company_type:company_BankAmericanExpress
+		company:company_BankAmericanExpress = {
+			set_company_state_region = s:STATE_NEW_YORK
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BankAmericanExpress
+							country="c:USA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#NET
+	#company_DeNederlandscheBank
+	if = {
+		limit = {
+			game_date > 1814.1.1
+			c:NET ?= this
+			NOT = {
+				has_company = company_type:company_DeNederlandscheBank
+			}
+		}
+		add_company = company_type:company_DeNederlandscheBank
+		company:company_DeNederlandscheBank = {
+			set_company_state_region = s:STATE_HOLLAND
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_DeNederlandscheBank
+							country="c:NET"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_amsterdamschebank
+	if = {
+		limit = {
+			game_date > 1871.1.1
+			c:NET ?= this
+			NOT = {
+				has_company = company_type:company_amsterdamschebank
+			}
+		}
+		add_company = company_type:company_amsterdamschebank
+		company:company_amsterdamschebank = {
+			set_company_state_region = s:STATE_HOLLAND
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_amsterdamschebank
+							country="c:NET"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_RotterdamscheBankvereeniging
+	if = {
+		limit = {
+			game_date > 1863.1.1
+			c:NET ?= this
+			NOT = {
+				has_company = company_type:company_RotterdamscheBankvereeniging
+			}
+		}
+		add_company = company_type:company_RotterdamscheBankvereeniging
+		company:company_RotterdamscheBankvereeniging = {
+			set_company_state_region = s:STATE_HOLLAND
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_RotterdamscheBankvereeniging
+							country="c:NET"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#BEL
+	#company_BanqueNationaleDeBelgique
+	if = {
+		limit = {
+			game_date > 1850.1.1
+			c:BEL ?= this
+			NOT = {
+				has_company = company_type:company_BanqueNationaleDeBelgique
+			}
+		}
+		add_company = company_type:company_BanqueNationaleDeBelgique
+		company:company_BanqueNationaleDeBelgique = {
+			set_company_state_region = s:STATE_FLANDERS
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BanqueNationaleDeBelgique
+							country="c:BEL"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_SocieteGeneraledeBelgique
+	if = {
+		limit = {
+			game_date > 1864.1.1
+			c:BEL ?= this
+			NOT = {
+				has_company = company_type:company_SocieteGeneraledeBelgique
+			}
+		}
+		add_company = company_type:company_SocieteGeneraledeBelgique
+		company:company_SocieteGeneraledeBelgique = {
+			set_company_state_region = s:STATE_FLANDERS
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_SocieteGeneraledeBelgique
+							country="c:BEL"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BanqueDeBruxelles
+	if = {
+		limit = {
+			game_date > 1871.1.1
+			c:BEL ?= this
+			NOT = {
+				has_company = company_type:company_BanqueDeBruxelles
+			}
+		}
+		add_company = company_type:company_BanqueDeBruxelles
+		company:company_BanqueDeBruxelles = {
+			set_company_state_region = s:STATE_FLANDERS
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BanqueDeBruxelles
+							country="c:BEL"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#SWI
+	#company_Bankenverein
+	if = {
+		limit = {
+			game_date > 1869.1.1
+			c:SWI ?= this
+			NOT = {
+				has_company = company_type:company_Bankenverein
+			}
+		}
+		add_company = company_type:company_Bankenverein
+		company:company_Bankenverein = {
+			set_company_state_region = s:STATE_EAST_SWITZERLAND
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Bankenverein
+							country="c:SWI"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#SWE
+	#company_HandelsBanken
+	if = {
+		limit = {
+			game_date > 1871.1.1
+			c:SWE ?= this
+			NOT = {
+				has_company = company_type:company_HandelsBanken
+			}
+		}
+		add_company = company_type:company_HandelsBanken
+		company:company_HandelsBanken = {
+			set_company_state_region = s:STATE_SVEALAND
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_HandelsBanken
+							country="c:SWE"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#DEN
+	#company_LandmandsBanken
+	if = {
+		limit = {
+			game_date > 1871.1.1
+			c:DEN ?= this
+			NOT = {
+				has_company = company_type:company_LandmandsBanken
+			}
+		}
+		add_company = company_type:company_LandmandsBanken
+		company:company_LandmandsBanken = {
+			set_company_state_region = s:STATE_ZEALAND
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_LandmandsBanken
+							country="c:DEN"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#NOR
+	#company_ChristianiaBank
+	if = {
+		limit = {
+			game_date > 1848.1.1
+			c:NOR ?= this
+			NOT = {
+				has_company = company_type:company_ChristianiaBank
+			}
+		}
+		add_company = company_type:company_ChristianiaBank
+		company:company_ChristianiaBank = {
+			set_company_state_region = s:STATE_EASTERN_NORWAY
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_ChristianiaBank
+							country="c:NOR"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#SPA
+	#company_BankofSpain
+	if = {
+		limit = {
+			game_date > 1856.1.1
+			c:SPA ?= this
+			NOT = {
+				has_company = company_type:company_BankofSpain
+			}
+		}
+		add_company = company_type:company_BankofSpain
+		company:company_BankofSpain = {
+			set_company_state_region = s:STATE_NEW_CASTILE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BankofSpain
+							country="c:SPA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BancoDeBilbao
+	if = {
+		limit = {
+			game_date > 1857.1.1
+			c:SPA ?= this
+			NOT = {
+				has_company = company_type:company_BancoDeBilbao
+			}
+		}
+		add_company = company_type:company_BancoDeBilbao
+		company:company_BancoDeBilbao = {
+			set_company_state_region = s:STATE_NEW_CASTILE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BancoDeBilbao
+							country="c:SPA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BancoHispanoColonial
+	if = {
+		limit = {
+			game_date > 1876.1.1
+			c:SPA ?= this
+			NOT = {
+				has_company = company_type:company_BancoHispanoColonial
+			}
+		}
+		add_company = company_type:company_BancoHispanoColonial
+		company:company_BancoHispanoColonial = {
+			set_company_state_region = s:STATE_NEW_CASTILE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BancoHispanoColonial
+							country="c:SPA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#POR
+	#company_BancoDePortugal
+	if = {
+		limit = {
+			game_date > 1846.1.1
+			c:POR ?= this
+			NOT = {
+				has_company = company_type:company_BancoDePortugal
+			}
+		}
+		add_company = company_type:company_BancoDePortugal
+		company:company_BancoDePortugal = {
+			set_company_state_region = s:STATE_ESTREMADURA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BancoDePortugal
+							country="c:POR"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_BancoCommercialPortugues
+	if = {
+		limit = {
+			game_date > 1864.1.1
+			c:POR ?= this
+			NOT = {
+				has_company = company_type:company_BancoCommercialPortugues
+			}
+		}
+		add_company = company_type:company_BancoCommercialPortugues
+		company:company_BancoCommercialPortugues = {
+			set_company_state_region = s:STATE_ESTREMADURA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_BancoCommercialPortugues
+							country="c:POR"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_Bank_Ultramarino
+	if = {
+		limit = {
+			game_date > 1864.1.1
+			c:POR ?= this
+			NOT = {
+				has_company = company_type:company_Bank_Ultramarino
+			}
+		}
+		add_company = company_type:company_Bank_Ultramarino
+		company:company_Bank_Ultramarino = {
+			set_company_state_region = s:STATE_ESTREMADURA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Bank_Ultramarino
+							country="c:POR"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#ROTHSCHILD (multi-pays)
+	#company_Rothschild_Bank_gbr
+	if = {
+		limit = {
+			game_date > 1811.1.1
+			c:GBR ?= this
+			NOT = {
+				has_company = company_type:company_Rothschild_Bank_gbr
+			}
+		}
+		add_company = company_type:company_Rothschild_Bank_gbr
+		company:company_Rothschild_Bank_gbr = {
+			set_company_state_region = s:STATE_HOME_COUNTIES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Rothschild_Bank_gbr
+							country="c:GBR"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_Rothschild_Bank_fra
+	if = {
+		limit = {
+			game_date > 1817.1.1
+			c:FRA ?= this
+			NOT = {
+				has_company = company_type:company_Rothschild_Bank_fra
+			}
+		}
+		add_company = company_type:company_Rothschild_Bank_fra
+		company:company_Rothschild_Bank_fra = {
+			set_company_state_region = s:STATE_ILE_DE_FRANCE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Rothschild_Bank_fra
+							country="c:FRA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_Rothschild_Bank_ger
+	if = {
+		limit = {
+			game_date > 1760.1.1
+			c:GER ?= this
+			NOT = {
+				has_company = company_type:company_Rothschild_Bank_ger
+			}
+		}
+		add_company = company_type:company_Rothschild_Bank_ger
+		company:company_Rothschild_Bank_ger = {
+			set_company_state_region = s:STATE_HESSE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Rothschild_Bank_ger
+							country="c:GER"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_Rothschild_Bank_aus
+	if = {
+		limit = {
+			game_date > 1820.1.1
+			c:AUS ?= this
+			NOT = {
+				has_company = company_type:company_Rothschild_Bank_aus
+			}
+		}
+		add_company = company_type:company_Rothschild_Bank_aus
+		company:company_Rothschild_Bank_aus = {
+			set_company_state_region = s:STATE_AUSTRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Rothschild_Bank_aus
+							country="c:AUS"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+	#company_Rothschild_Bank_ita
+	if = {
+		limit = {
+			game_date > 1821.1.1
+			c:ITA ?= this
+			NOT = {
+				has_company = company_type:company_Rothschild_Bank_ita
+			}
+		}
+		add_company = company_type:company_Rothschild_Bank_ita
+		company:company_Rothschild_Bank_ita = {
+			set_company_state_region = s:STATE_CAMPANIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = building_construction_sector
+							level < 10
+						}
+						not = {
+							has_building = building_construction_sector
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_Rothschild_Bank_ita
+							country="c:ITA"
+							levels=10
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	#ITA
+	#company_BancaDItalia
+	if = {
+		limit = {
+			game_date > 1893.1.1
+			c:ITA ?= this
+			NOT = { has_company = company_type:company_BancaDItalia }
+		}
+		add_company = company_type:company_BancaDItalia
+		company:company_BancaDItalia = {
+			set_company_state_region = s:STATE_LAZIO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancaDItalia
+							country = "c:ITA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	#company_BancaCommercialeItaliana
+	if = {
+		limit = {
+			game_date > 1894.1.1
+			c:ITA ?= this
+			NOT = { has_company = company_type:company_BancaCommercialeItaliana }
+		}
+		add_company = company_type:company_BancaCommercialeItaliana
+		company:company_BancaCommercialeItaliana = {
+			set_company_state_region = s:STATE_LOMBARDY
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancaCommercialeItaliana
+							country = "c:ITA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	#company_CassaDiRisparmioDiTorino
+	if = {
+		limit = {
+			game_date > 1827.1.1
+			c:SAR ?= this
+			NOT = { has_company = company_type:company_CassaDiRisparmioDiTorino }
+		}
+		add_company = company_type:company_CassaDiRisparmioDiTorino
+		company:company_CassaDiRisparmioDiTorino = {
+			set_company_state_region = s:STATE_PIEDMONT
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_CassaDiRisparmioDiTorino
+							country = "c:SAR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#GBR
+	#company_BankofEngland
+	if = {
+		limit = {
+			game_date > 1694.1.1
+			c:GBR ?= this
+			NOT = { has_company = company_type:company_BankofEngland }
+		}
+		add_company = company_type:company_BankofEngland
+		company:company_BankofEngland = {
+			set_company_state_region = s:STATE_HOME_COUNTIES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankofEngland
+							country = "c:GBR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	#company_LloydsBank
+	if = {
+		limit = {
+			game_date > 1765.1.1
+			c:GBR ?= this
+			NOT = { has_company = company_type:company_LloydsBank }
+		}
+		add_company = company_type:company_LloydsBank
+		company:company_LloydsBank = {
+			set_company_state_region = s:STATE_HOME_COUNTIES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_LloydsBank
+							country = "c:GBR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	#company_barclaysBank
+	if = {
+		limit = {
+			game_date > 1690.1.1
+			c:GBR ?= this
+			NOT = { has_company = company_type:company_barclaysBank }
+		}
+		add_company = company_type:company_barclaysBank
+		company:company_barclaysBank = {
+			set_company_state_region = s:STATE_HOME_COUNTIES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_barclaysBank
+							country = "c:GBR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	#company_NationalWestminsterBank
+	if = {
+		limit = {
+			game_date > 1968.1.1
+			c:GBR ?= this
+			NOT = { has_company = company_type:company_NationalWestminsterBank }
+		}
+		add_company = company_type:company_NationalWestminsterBank
+		company:company_NationalWestminsterBank = {
+			set_company_state_region = s:STATE_HOME_COUNTIES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_NationalWestminsterBank
+							country = "c:GBR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	#company_RoyalBankOfScotland
+	if = {
+		limit = {
+			game_date > 1727.1.1
+			c:GBR ?= this
+			NOT = { has_company = company_type:company_RoyalBankOfScotland }
+		}
+		add_company = company_type:company_RoyalBankOfScotland
+		company:company_RoyalBankOfScotland = {
+			set_company_state_region = s:STATE_LOWLANDS
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_RoyalBankOfScotland
+							country = "c:GBR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#FRA
+	# company_BanqueDeFrance
+	if = {
+		limit = {
+			game_date > 1800.1.1
+			c:FRA ?= this
+			NOT = { has_company = company_type:company_BanqueDeFrance }
+		}
+		add_company = company_type:company_BanqueDeFrance
+		company:company_BanqueDeFrance = {
+			set_company_state_region = s:STATE_ILE_DE_FRANCE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BanqueDeFrance
+							country = "c:FRA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankCreditLyonnais
+	if = {
+		limit = {
+			game_date > 1863.1.1
+			c:FRA ?= this
+			NOT = { has_company = company_type:company_BankCreditLyonnais }
+		}
+		add_company = company_type:company_BankCreditLyonnais
+		company:company_BankCreditLyonnais = {
+			set_company_state_region = s:STATE_RHONE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankCreditLyonnais
+							country = "c:FRA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_SocieteGenerale
+	if = {
+		limit = {
+			game_date > 1864.1.1
+			c:FRA ?= this
+			NOT = { has_company = company_type:company_SocieteGenerale }
+		}
+		add_company = company_type:company_SocieteGenerale
+		company:company_SocieteGenerale = {
+			set_company_state_region = s:STATE_ILE_DE_FRANCE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_SocieteGenerale
+							country = "c:FRA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BanqueDeParisEtDesPaysBas
+	if = {
+		limit = {
+			game_date > 1872.1.1
+			c:FRA ?= this
+			NOT = { has_company = company_type:company_BanqueDeParisEtDesPaysBas }
+		}
+		add_company = company_type:company_BanqueDeParisEtDesPaysBas
+		company:company_BanqueDeParisEtDesPaysBas = {
+			set_company_state_region = s:STATE_ILE_DE_FRANCE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BanqueDeParisEtDesPaysBas
+							country = "c:FRA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#RUS
+	# company_StateBankRussianEmpire
+	if = {
+		limit = {
+			game_date > 1850.1.1
+			c:RUS ?= this
+			NOT = { has_company = company_type:company_StateBankRussianEmpire }
+		}
+		add_company = company_type:company_StateBankRussianEmpire
+		company:company_StateBankRussianEmpire = {
+			set_company_state_region = s:STATE_INGRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_StateBankRussianEmpire
+							country = "c:RUS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# saint_petersburg_international_commercial_bank
+	if = {
+		limit = {
+			game_date > 1869.1.1
+			c:RUS ?= this
+			NOT = { has_company = company_type:saint_petersburg_international_commercial_bank }
+		}
+		add_company = company_type:saint_petersburg_international_commercial_bank
+		company_type:saint_petersburg_international_commercial_bank = {
+			set_company_state_region = s:STATE_INGRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = saint_petersburg_international_commercial_bank
+							country = "c:RUS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# russo_chinese_bank
+	if = {
+		limit = {
+			game_date > 1880.1.1
+			c:RUS ?= this
+			NOT = { has_company = company_type:russo_chinese_bank }
+		}
+		add_company = company_type:russo_chinese_bank
+		company_type:russo_chinese_bank = {
+			set_company_state_region = s:STATE_INGRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = russo_chinese_bank
+							country = "c:RUS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#GER
+	# company_DeutscheBank
+	if = {
+		limit = {
+			game_date > 1870.1.1
+			c:GER ?= this
+			NOT = { has_company = company_type:company_DeutscheBank }
+		}
+		add_company = company_type:company_DeutscheBank
+		company:company_DeutscheBank = {
+			set_company_state_region = s:STATE_BRANDENBURG
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_DeutscheBank
+							country = "c:GER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_Reichsbank
+	if = {
+		limit = {
+			game_date > 1876.1.1
+			c:GER ?= this
+			NOT = { has_company = company_type:company_Reichsbank }
+		}
+		add_company = company_type:company_Reichsbank
+		company:company_Reichsbank = {
+			set_company_state_region = s:STATE_BRANDENBURG
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_Reichsbank
+							country = "c:GER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_PreussischeSeehandlung
+	if = {
+		limit = {
+			game_date > 1772.1.1
+			c:GER ?= this
+			NOT = { has_company = company_type:company_PreussischeSeehandlung }
+		}
+		add_company = company_type:company_PreussischeSeehandlung
+		company:company_PreussischeSeehandlung = {
+			set_company_state_region = s:STATE_BRANDENBURG
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_PreussischeSeehandlung
+							country = "c:GER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BayerischeHypothekenUndWechselBank
+	if = {
+		limit = {
+			game_date > 1835.1.1
+			c:BAV ?= this
+			NOT = { has_company = company_type:company_BayerischeHypothekenUndWechselBank }
+		}
+		add_company = company_type:company_BayerischeHypothekenUndWechselBank
+		company:company_BayerischeHypothekenUndWechselBank = {
+			set_company_state_region = s:STATE_BAVARIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BayerischeHypothekenUndWechselBank
+							country = "c:BAV"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#AUS
+	# company_OesterreichischeNationalbank
+	if = {
+		limit = {
+			game_date > 1816.1.1
+			c:AUS ?= this
+			NOT = { has_company = company_type:company_OesterreichischeNationalbank }
+		}
+		add_company = company_type:company_OesterreichischeNationalbank
+		company:company_OesterreichischeNationalbank = {
+			set_company_state_region = s:STATE_AUSTRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_OesterreichischeNationalbank
+							country = "c:AUS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_OesterreichischeCreditAnstalt
+	if = {
+		limit = {
+			game_date > 1855.1.1
+			c:AUS ?= this
+			NOT = { has_company = company_type:company_OesterreichischeCreditAnstalt }
+		}
+		add_company = company_type:company_OesterreichischeCreditAnstalt
+		company:company_OesterreichischeCreditAnstalt = {
+			set_company_state_region = s:STATE_AUSTRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_OesterreichischeCreditAnstalt
+							country = "c:AUS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_WienerBankverein
+	if = {
+		limit = {
+			game_date > 1869.1.1
+			c:AUS ?= this
+			NOT = { has_company = company_type:company_WienerBankverein }
+		}
+		add_company = company_type:company_WienerBankverein
+		company:company_WienerBankverein = {
+			set_company_state_region = s:STATE_AUSTRIA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_WienerBankverein
+							country = "c:AUS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#GRE
+	# company_bankofgreec
+	if = {
+		limit = {
+			game_date > 1897.1.1
+			c:GRE ?= this
+			NOT = { has_company = company_type:company_bankofgreec }
+		}
+		add_company = company_type:company_bankofgreec
+		company:company_bankofgreec = {
+			set_company_state_region = s:STATE_PELOPONNESE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_bankofgreec
+							country = "c:GRE"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#TUR
+	# company_OttomanBank
+	if = {
+		limit = {
+			game_date > 1856.1.1
+			c:TUR ?= this
+			NOT = { has_company = company_type:company_OttomanBank }
+		}
+		add_company = company_type:company_OttomanBank
+		company:company_OttomanBank = {
+			set_company_state_region = s:STATE_EASTERN_THRACE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_OttomanBank
+							country = "c:TUR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_TurkishZiraatBankasi
+	if = {
+		limit = {
+			game_date > 1863.1.1
+			c:TUR ?= this
+			NOT = { has_company = company_type:company_TurkishZiraatBankasi }
+		}
+		add_company = company_type:company_TurkishZiraatBankasi
+		company:company_TurkishZiraatBankasi = {
+			set_company_state_region = s:STATE_EASTERN_THRACE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_TurkishZiraatBankasi
+							country = "c:TUR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BanqueImperialeOttomane
+	if = {
+		limit = {
+			game_date > 1863.1.1
+			c:TUR ?= this
+			NOT = { has_company = company_type:company_BanqueImperialeOttomane }
+		}
+		add_company = company_type:company_BanqueImperialeOttomane
+		company:company_BanqueImperialeOttomane = {
+			set_company_state_region = s:STATE_EASTERN_THRACE
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BanqueImperialeOttomane
+							country = "c:TUR"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#PER
+	# company_ImperialBankofPersia
+	if = {
+		limit = {
+			game_date > 1888.1.1
+			c:PER ?= this
+			NOT = { has_company = company_type:company_ImperialBankofPersia }
+		}
+		add_company = company_type:company_ImperialBankofPersia
+		company:company_ImperialBankofPersia = {
+			set_company_state_region = s:STATE_IRAKAJEMI
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_ImperialBankofPersia
+							country = "c:PER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankMelliIran
+	if = {
+		limit = {
+			game_date > 1900.1.1
+			c:PER ?= this
+			NOT = { has_company = company_type:company_BankMelliIran }
+		}
+		add_company = company_type:company_BankMelliIran
+		company:company_BankMelliIran = {
+			set_company_state_region = s:STATE_IRAKAJEMI
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankMelliIran
+							country = "c:PER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankTejaratPersia
+	if = {
+		limit = {
+			game_date > 1888.1.1
+			c:PER ?= this
+			NOT = { has_company = company_type:company_BankTejaratPersia }
+		}
+		add_company = company_type:company_BankTejaratPersia
+		company:company_BankTejaratPersia = {
+			set_company_state_region = s:STATE_IRAKAJEMI
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankTejaratPersia
+							country = "c:PER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankAngloPersian
+	if = {
+		limit = {
+			game_date > 1889.1.1
+			c:PER ?= this
+			NOT = { has_company = company_type:company_BankAngloPersian }
+		}
+		add_company = company_type:company_BankAngloPersian
+		company:company_BankAngloPersian = {
+			set_company_state_region = s:STATE_IRAKAJEMI
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankAngloPersian
+							country = "c:PER"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#EGY
+	# company_BanqueEgyptienne
+	if = {
+		limit = {
+			game_date > 1856.1.1
+			c:EGY ?= this
+			NOT = { has_company = company_type:company_BanqueEgyptienne }
+		}
+		add_company = company_type:company_BanqueEgyptienne
+		company:company_BanqueEgyptienne = {
+			set_company_state_region = s:STATE_LOWER_EGYPT
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BanqueEgyptienne
+							country = "c:EGY"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#CHI
+	# company_ChohungBank
+	if = {
+		limit = {
+			game_date > 1897.1.1
+			c:CHI ?= this
+			NOT = { has_company = company_type:company_ChohungBank }
+		}
+		add_company = company_type:company_ChohungBank
+		company:company_ChohungBank = {
+			set_company_state_region = s:STATE_SEOUL
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_ChohungBank
+							country = "c:CHI"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankHSBC
+	if = {
+		limit = {
+			game_date > 1865.1.1
+			c:CHI ?= this
+			NOT = { has_company = company_type:company_BankHSBC }
+		}
+		add_company = company_type:company_BankHSBC
+		company:company_BankHSBC = {
+			set_company_state_region = s:STATE_SHAOZHOU
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankHSBC
+							country = "c:CHI"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankIBC
+	if = {
+		limit = {
+			game_date > 1897.1.1
+			c:CHI ?= this
+			NOT = { has_company = company_type:company_BankIBC }
+		}
+		add_company = company_type:company_BankIBC
+		company:company_BankIBC = {
+			set_company_state_region = s:STATE_SUZHOU
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankIBC
+							country = "c:CHI"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankBOCOM
+	if = {
+		limit = {
+			game_date > 1908.1.1
+			c:CHI ?= this
+			NOT = { has_company = company_type:company_BankBOCOM }
+		}
+		add_company = company_type:company_BankBOCOM
+		company:company_BankBOCOM = {
+			set_company_state_region = s:STATE_SUZHOU
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankBOCOM
+							country = "c:CHI"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_DaQingBank
+	if = {
+		limit = {
+			game_date > 1905.1.1
+			c:CHI ?= this
+			NOT = { has_company = company_type:company_DaQingBank }
+		}
+		add_company = company_type:company_DaQingBank
+		company:company_DaQingBank = {
+			set_company_state_region = s:STATE_BEIJING
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_DaQingBank
+							country = "c:CHI"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#JAP
+	# company_Mitsubishiexchangehousebank
+	if = {
+		limit = {
+			game_date > 1880.1.1
+			c:JAP ?= this
+			NOT = { has_company = company_type:company_Mitsubishiexchangehousebank }
+		}
+		add_company = company_type:company_Mitsubishiexchangehousebank
+		company:company_Mitsubishiexchangehousebank = {
+			set_company_state_region = s:STATE_KANTO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_Mitsubishiexchangehousebank
+							country = "c:JAP"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankOfJapan
+	if = {
+		limit = {
+			game_date > 1882.1.1
+			c:JAP ?= this
+			NOT = { has_company = company_type:company_BankOfJapan }
+		}
+		add_company = company_type:company_BankOfJapan
+		company:company_BankOfJapan = {
+			set_company_state_region = s:STATE_KANTO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankOfJapan
+							country = "c:JAP"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_SumitomoBank
+	if = {
+		limit = {
+			game_date > 1895.1.1
+			c:JAP ?= this
+			NOT = { has_company = company_type:company_SumitomoBank }
+		}
+		add_company = company_type:company_SumitomoBank
+		company:company_SumitomoBank = {
+			set_company_state_region = s:STATE_KANTO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_SumitomoBank
+							country = "c:JAP"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#BIC
+	# company_ImperialBankofIndia
+	if = {
+		limit = {
+			game_date > 1876.1.1
+			c:BIC ?= this
+			NOT = { has_company = company_type:company_ImperialBankofIndia }
+		}
+		add_company = company_type:company_ImperialBankofIndia
+		company:company_ImperialBankofIndia = {
+			set_company_state_region = s:STATE_WEST_BENGAL
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_ImperialBankofIndia
+							country = "c:BIC"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankOfIndiaCompany
+	if = {
+		limit = {
+			game_date > 1906.1.1
+			c:BIC ?= this
+			NOT = { has_company = company_type:company_BankOfIndiaCompany }
+		}
+		add_company = company_type:company_BankOfIndiaCompany
+		company:company_BankOfIndiaCompany = {
+			set_company_state_region = s:STATE_WEST_BENGAL
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankOfIndiaCompany
+							country = "c:BIC"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankOfBombay
+	if = {
+		limit = {
+			game_date > 1840.1.1
+			c:BIC ?= this
+			NOT = { has_company = company_type:company_BankOfBombay }
+		}
+		add_company = company_type:company_BankOfBombay
+		company:company_BankOfBombay = {
+			set_company_state_region = s:STATE_BOMBAY
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankOfBombay
+							country = "c:BIC"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#CAN
+	# company_RoyalBankofCanada
+	if = {
+		limit = {
+			game_date > 1864.1.1
+			c:ONT ?= this
+			NOT = { has_company = company_type:company_RoyalBankofCanada }
+		}
+		add_company = company_type:company_RoyalBankofCanada
+		company:company_RoyalBankofCanada = {
+			set_company_state_region = s:STATE_ONTARIO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_RoyalBankofCanada
+							country = "c:ONT"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankOfMontreal
+	if = {
+		limit = {
+			game_date > 1817.1.1
+			c:QUE ?= this
+			NOT = { has_company = company_type:company_BankOfMontreal }
+		}
+		add_company = company_type:company_BankOfMontreal
+		company:company_BankOfMontreal = {
+			set_company_state_region = s:STATE_QUEBEC
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankOfMontreal
+							country = "c:QUE"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_CanadianImperialBankOfCommerce
+	if = {
+		limit = {
+			game_date > 1867.1.1
+			c:CAN ?= this
+			NOT = { has_company = company_type:company_CanadianImperialBankOfCommerce }
+		}
+		add_company = company_type:company_CanadianImperialBankOfCommerce
+		company:company_CanadianImperialBankOfCommerce = {
+			set_company_state_region = s:STATE_ONTARIO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_CanadianImperialBankOfCommerce
+							country = "c:CAN"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BankDesjardins
+	if = {
+		limit = {
+			game_date > 1900.1.1
+			c:QUE ?= this
+			NOT = { has_company = company_type:company_BankDesjardins }
+		}
+		add_company = company_type:company_BankDesjardins
+		company:company_BankDesjardins = {
+			set_company_state_region = s:STATE_QUEBEC
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankDesjardins
+							country = "c:QUE"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#AST
+	# company_ColonialBankOfAustralia
+	if = {
+		limit = {
+			game_date > 1837.1.1
+			c:NSW ?= this
+			NOT = { has_company = company_type:company_ColonialBankOfAustralia }
+		}
+		add_company = company_type:company_ColonialBankOfAustralia
+		company:company_ColonialBankOfAustralia = {
+			set_company_state_region = s:STATE_NEW_SOUTH_WALES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_ColonialBankOfAustralia
+							country = "c:NSW"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_NationalBankOfAustralia
+	if = {
+		limit = {
+			game_date > 1858.1.1
+			c:NSW ?= this
+			NOT = { has_company = company_type:company_NationalBankOfAustralia }
+		}
+		add_company = company_type:company_NationalBankOfAustralia
+		company:company_NationalBankOfAustralia = {
+			set_company_state_region = s:STATE_NEW_SOUTH_WALES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_NationalBankOfAustralia
+							country = "c:NSW"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_SouthAustralianBank
+	if = {
+		limit = {
+			game_date > 1840.1.1
+			c:NSW ?= this
+			NOT = { has_company = company_type:company_SouthAustralianBank }
+		}
+		add_company = company_type:company_SouthAustralianBank
+		company:company_SouthAustralianBank = {
+			set_company_state_region = s:STATE_NEW_SOUTH_WALES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_SouthAustralianBank
+							country = "c:NSW"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#MEX
+	# company_BancoDeMexico
+	if = {
+		limit = {
+			game_date > 1836.1.1
+			c:MEX ?= this
+			NOT = { has_company = company_type:company_BancoDeMexico }
+		}
+		add_company = company_type:company_BancoDeMexico
+		company:company_BancoDeMexico = {
+			set_company_state_region = s:STATE_MEXICO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoDeMexico
+							country = "c:MEX"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_bancodelondresmexico
+	if = {
+		limit = {
+			game_date > 1864.1.1
+			c:MEX ?= this
+			NOT = { has_company = company_type:company_bancodelondresmexico }
+		}
+		add_company = company_type:company_bancodelondresmexico
+		company:company_bancodelondresmexico = {
+			set_company_state_region = s:STATE_MEXICO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_bancodelondresmexico
+							country = "c:MEX"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoMercantilMexicano
+	if = {
+		limit = {
+			game_date > 1899.1.1
+			c:MEX ?= this
+			NOT = { has_company = company_type:company_BancoMercantilMexicano }
+		}
+		add_company = company_type:company_BancoMercantilMexicano
+		company:company_BancoMercantilMexicano = {
+			set_company_state_region = s:STATE_MEXICO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoMercantilMexicano
+							country = "c:MEX"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#COS
+	# company_BancoCentralDeCostaRica
+	if = {
+		limit = {
+			game_date > 1858.1.1
+			c:COS ?= this
+			NOT = { has_company = company_type:company_BancoCentralDeCostaRica }
+		}
+		add_company = company_type:company_BancoCentralDeCostaRica
+		company:company_BancoCentralDeCostaRica = {
+			set_company_state_region = s:STATE_COSTA_RICA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoCentralDeCostaRica
+							country = "c:COS"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#GUA
+	# company_BancoCentralDeGuatemala
+	if = {
+		limit = {
+			game_date > 1890.1.1
+			c:GUA ?= this
+			NOT = { has_company = company_type:company_BancoCentralDeGuatemala }
+		}
+		add_company = company_type:company_BancoCentralDeGuatemala
+		company:company_BancoCentralDeGuatemala = {
+			set_company_state_region = s:STATE_GUATEMALA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoCentralDeGuatemala
+							country = "c:GUA"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#HON
+	# company_BancoCentralDeHonduras
+	if = {
+		limit = {
+			game_date > 1890.1.1
+			c:HON ?= this
+			NOT = { has_company = company_type:company_BancoCentralDeHonduras }
+		}
+		add_company = company_type:company_BancoCentralDeHonduras
+		company:company_BancoCentralDeHonduras = {
+			set_company_state_region = s:STATE_HONDURAS
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoCentralDeHonduras
+							country = "c:HON"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#PAN
+	# company_BancoNacionalDePanama
+	if = {
+		limit = {
+			game_date > 1904.1.1
+			c:PAN ?= this
+			NOT = { has_company = company_type:company_BancoNacionalDePanama }
+		}
+		add_company = company_type:company_BancoNacionalDePanama
+		company:company_BancoNacionalDePanama = {
+			set_company_state_region = s:STATE_PANAMA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoNacionalDePanama
+							country = "c:PAN"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#BRZ
+	# company_BancoDoBrasil
+	if = {
+		limit = {
+			game_date > 1808.1.1
+			c:BRZ ?= this
+			NOT = { has_company = company_type:company_BancoDoBrasil }
+		}
+		add_company = company_type:company_BancoDoBrasil
+		company:company_BancoDoBrasil = {
+			set_company_state_region = s:STATE_RIO_DE_JANEIRO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoDoBrasil
+							country = "c:BRZ"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoMercantil
+	if = {
+		limit = {
+			game_date > 1890.1.1
+			c:BRZ ?= this
+			NOT = { has_company = company_type:company_BancoMercantil }
+		}
+		add_company = company_type:company_BancoMercantil
+		company:company_BancoMercantil = {
+			set_company_state_region = s:STATE_RIO_DE_JANEIRO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoMercantil
+							country = "c:BRZ"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoCommercialDoBrasil
+	if = {
+		limit = {
+			game_date > 1839.1.1
+			c:BRZ ?= this
+			NOT = { has_company = company_type:company_BancoCommercialDoBrasil }
+		}
+		add_company = company_type:company_BancoCommercialDoBrasil
+		company:company_BancoCommercialDoBrasil = {
+			set_company_state_region = s:STATE_RIO_DE_JANEIRO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoCommercialDoBrasil
+							country = "c:BRZ"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#ARG
+	# company_BancoNacionArgentina
+	if = {
+		limit = {
+			game_date > 1891.1.1
+			c:ARG ?= this
+			NOT = { has_company = company_type:company_BancoNacionArgentina }
+		}
+		add_company = company_type:company_BancoNacionArgentina
+		company:company_BancoNacionArgentina = {
+			set_company_state_region = s:STATE_BUENOS_AIRES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoNacionArgentina
+							country = "c:ARG"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoHipotecarioNacional
+	if = {
+		limit = {
+			game_date > 1886.1.1
+			c:ARG ?= this
+			NOT = { has_company = company_type:company_BancoHipotecarioNacional }
+		}
+		add_company = company_type:company_BancoHipotecarioNacional
+		company:company_BancoHipotecarioNacional = {
+			set_company_state_region = s:STATE_BUENOS_AIRES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoHipotecarioNacional
+							country = "c:ARG"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoProvincia
+	if = {
+		limit = {
+			game_date > 1822.1.1
+			c:ARG ?= this
+			NOT = { has_company = company_type:company_BancoProvincia }
+		}
+		add_company = company_type:company_BancoProvincia
+		company:company_BancoProvincia = {
+			set_company_state_region = s:STATE_BUENOS_AIRES
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoProvincia
+							country = "c:ARG"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#CHL
+	# company_BancoDeChile
+	if = {
+		limit = {
+			game_date > 1893.1.1
+			c:CHL ?= this
+			NOT = { has_company = company_type:company_BancoDeChile }
+		}
+		add_company = company_type:company_BancoDeChile
+		company:company_BancoDeChile = {
+			set_company_state_region = s:STATE_SANTIAGO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoDeChile
+							country = "c:CHL"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoEstado
+	if = {
+		limit = {
+			game_date > 1890.1.1
+			c:CHL ?= this
+			NOT = { has_company = company_type:company_BancoEstado }
+		}
+		add_company = company_type:company_BancoEstado
+		company:company_BancoEstado = {
+			set_company_state_region = s:STATE_SANTIAGO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoEstado
+							country = "c:CHL"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	# company_BancoDeValparaiso
+	if = {
+		limit = {
+			game_date > 1855.1.1
+			c:CHL ?= this
+			NOT = { has_company = company_type:company_BancoDeValparaiso }
+		}
+		add_company = company_type:company_BancoDeValparaiso
+		company:company_BancoDeValparaiso = {
+			set_company_state_region = s:STATE_SANTIAGO
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoDeValparaiso
+							country = "c:CHL"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#BOL
+	# company_BancoNacionalDeBolivia
+	if = {
+		limit = {
+			game_date > 1871.1.1
+			c:BOL ?= this
+			NOT = { has_company = company_type:company_BancoNacionalDeBolivia }
+		}
+		add_company = company_type:company_BancoNacionalDeBolivia
+		company:company_BancoNacionalDeBolivia = {
+			set_company_state_region = s:STATE_LA_PAZ
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoNacionalDeBolivia
+							country = "c:BOL"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#CLM
+	# company_BancoRepublicaColombia
+	if = {
+		limit = {
+			game_date > 1893.1.1
+			c:CLM ?= this
+			NOT = { has_company = company_type:company_BancoRepublicaColombia }
+		}
+		add_company = company_type:company_BancoRepublicaColombia
+		company:company_BancoRepublicaColombia = {
+			set_company_state_region = s:STATE_CUNDINAMARCA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoRepublicaColombia
+							country = "c:CLM"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#VNZ
+	# company_BancoCentralDeVenezuela
+	if = {
+		limit = {
+			game_date > 1899.1.1
+			c:VNZ ?= this
+			NOT = { has_company = company_type:company_BancoCentralDeVenezuela }
+		}
+		add_company = company_type:company_BancoCentralDeVenezuela
+		company:company_BancoCentralDeVenezuela = {
+			set_company_state_region = s:STATE_MIRANDA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoCentralDeVenezuela
+							country = "c:VNZ"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#CUB
+	# company_BancoEspanolDeLaHabana
+	if = {
+		limit = {
+			game_date > 1856.1.1
+			c:CUB ?= this
+			NOT = { has_company = company_type:company_BancoEspanolDeLaHabana }
+		}
+		add_company = company_type:company_BancoEspanolDeLaHabana
+		company:company_BancoEspanolDeLaHabana = {
+			set_company_state_region = s:STATE_CUBA
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoEspanolDeLaHabana
+							country = "c:CUB"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#URU
+	# company_BancoCentralDelUruguay
+	if = {
+		limit = {
+			game_date > 1896.1.1
+			c:URU ?= this
+			NOT = { has_company = company_type:company_BancoCentralDelUruguay }
+		}
+		add_company = company_type:company_BancoCentralDelUruguay
+		company:company_BancoCentralDelUruguay = {
+			set_company_state_region = s:STATE_URUGUAY
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoCentralDelUruguay
+							country = "c:URU"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#PRG
+	# company_BancoNacionalDelParaguay
+	if = {
+		limit = {
+			game_date > 1889.1.1
+			c:PRG ?= this
+			NOT = { has_company = company_type:company_BancoNacionalDelParaguay }
+		}
+		add_company = company_type:company_BancoNacionalDelParaguay
+		company:company_BancoNacionalDelParaguay = {
+			set_company_state_region = s:STATE_BAJO_PARAGUAY
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BancoNacionalDelParaguay
+							country = "c:PRG"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#SAF
+	# company_BankSBoBSA
+	if = {
+		limit = {
+			game_date > 1861.1.1
+			c:SAF ?= this
+			NOT = { has_company = company_type:company_BankSBoBSA }
+		}
+		add_company = company_type:company_BankSBoBSA
+		company:company_BankSBoBSA = {
+			set_company_state_region = s:STATE_CAPE_COLONY
+		}
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_construction_sector level < 10 }
+						not = { has_building = building_construction_sector }
+					}
+				}
+				create_building = {
+					building = "building_construction_sector"
+					add_ownership = {
+						company = {
+							type = company_BankSBoBSA
+							country = "c:SAF"
+							levels = 10
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+
+	# ███████╗   ██╗   ███████╗
+	# ██╔════╝   ██║   ██╔════╝
+	# █████╗  ████████╗█████╗
+	# ██╔══╝  ██╔═██╔═╝██╔══╝
+	# ███████╗██████║  ██║
+	# ╚══════╝╚═════╝  ╚═╝
+	#
+	#  ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗  █████╗  ██████╗ ███╗   ██╗██╗███████╗███████╗
+	# ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗██╔════╝ ████╗  ██║██║██╔════╝██╔════╝
+	# ██║     ██║   ██║██╔████╔██║██████╔╝███████║███████║██║  ███╗██╔██╗ ██║██║█████╗  ███████╗
+	# ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██╔══██║██║   ██║██║╚██╗██║██║██╔══╝  ╚════██║
+	# ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║  ██║╚██████╔╝██║ ╚████║██║███████╗███████║
+	#  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝╚══════╝╚══════╝
+
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+
+	#Generic
+	###company_private_construction
+	if = {
+		limit = {
+			maximum_number_companies_exceeded_monthly_pulse >= 1 #les Compagnie classique ne +1 pas comme les bank
+			NOT = {
+				has_company = company_type:company_private_construction
+			}
+			# any_scope_building = { #inutile il possede deja un centre fiancier
+			# 	is_building_type = building_construction_sector
+			# 	level >= 1
+			# }
+		}
+		add_company = company_type:company_private_construction
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = {
+							is_building_type = company_private_construction
+							level < 10
+						}
+						not = {
+							has_building = company_private_construction
+						}
+					}
+				}
+				create_building={
+					building="building_construction_sector"
+					add_ownership={
+						company={
+							type=company_private_construction
+							country="ROOT"
+							levels=5
+						}
+					}
+					reserves=1
+				}
+			}
+		}
+	}
+
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+
+	# ██╗  ██╗██╗███████╗████████╗ ██████╗ ██████╗ ██╗ ██████╗ ██╗   ██╗███████╗
+	# ██║  ██║██║██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗██║██╔═══██╗██║   ██║██╔════╝
+	# ███████║██║███████╗   ██║   ██║   ██║██████╔╝██║██║   ██║██║   ██║█████╗
+	# ██╔══██║██║╚════██║   ██║   ██║   ██║██╔══██╗██║██║▄▄ ██║██║   ██║██╔══╝
+	# ██║  ██║██║███████║   ██║   ╚██████╔╝██║  ██║██║╚██████╔╝╚██████╔╝███████╗
+	# ╚═╝  ╚═╝╚═╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝ ╚══▀▀═╝  ╚═════╝ ╚══════╝
+	#
+	#  ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ███╗   ██╗ ██████╗██╗   ██╗
+	# ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗████╗  ██║██╔════╝╚██╗ ██╔╝
+	# ██║     ██║   ██║██╔████╔██║██████╔╝███████║██╔██╗ ██║██║  ███╗╚████╔╝
+	# ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██║╚██╗██║██║   ██║ ╚██╔╝
+	# ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║ ╚████║╚██████╔╝  ██║
+	#  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═╝
+
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+	########################################################################################################################################
+
+	#GBR
+	###company_gwr
+	if = {
+		limit = {
+			maximum_number_companies_exceeded_monthly_pulse >= 1 #les Compagnie classique ne +1 pas comme les bank
+			game_date > 1833.1.1
+			c:GBR ?= this
+			NOT = { has_company = company_type:company_gwr }
+		}
+		add_company = company_type:company_gwr
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_railway level < 10 }
+						not = { has_building = building_railway }
+					}
+				}
+				create_building = {
+					building = "building_railway"
+					add_ownership = {
+						company = {
+							type = company_gwr
+							country = "c:GBR" #"ROOT"
+							levels = 5
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+
+	#USA
+	###company_us_steel #1892
+	###company_standard_oil #1870
+	###Remington #1816
+	###DuPont #1802
+	###company_PennsylvaniaRailroad
+	if = {
+		limit = {
+			maximum_number_companies_exceeded_monthly_pulse >= 1 #les Compagnie classique ne +1 pas comme les bank
+			game_date > 1846.1.1
+			c:USA ?= this
+			NOT = { has_company = company_type:company_PennsylvaniaRailroad }
+		}
+		add_company = company_type:company_PennsylvaniaRailroad
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_railway level < 10 }
+						not = { has_building = building_railway }
+					}
+				}
+				create_building = {
+					building = "building_railway"
+					add_ownership = {
+						company = {
+							type = company_PennsylvaniaRailroad
+							country = "c:USA" #"ROOT"
+							levels = 5
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+	###company_standard_oil
+	if = {
+		limit = {
+			maximum_number_companies_exceeded_monthly_pulse >= 1 #les Compagnie classique ne +1 pas comme les bank
+			#game_date > 1846.1.1
+			has_technology_researched = pumpjacks
+			c:USA ?= this
+			NOT = { has_company = company_type:company_standard_oil }
+		}
+		add_company = company_type:company_standard_oil
+		random_scope_state = {
+			if = {
+				limit = {
+					or = {
+						any_scope_building = { is_building_type = building_railway level < 10 }
+						not = { has_building = building_railway }
+					}
+				}
+				create_building = {
+					building = "building_railway"
+					add_ownership = {
+						company = {
+							type = company_standard_oil
+							country = "c:USA" #"ROOT"
+							levels = 5
+						}
+					}
+					reserves = 1
+				}
+			}
+		}
+	}
+}
+
+# Merged into zef_01_financial_scripted_effects.txt - removed duplicate
+# This file kept for reference but logic moved to avoid duplication

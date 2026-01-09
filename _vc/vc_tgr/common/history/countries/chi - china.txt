@@ -1,0 +1,70 @@
+COUNTRIES = {
+	c:CHI ?= {
+		effect_starting_technology_tier_4_tech = yes
+		add_technology_researched = urban_planning
+		add_technology_researched = sericulture
+		add_technology_researched = academia
+		add_technology_researched = law_enforcement
+		
+		set_market_capital = STATE_GUANGDONG	
+		
+		activate_law = law_type:law_monarchy
+		activate_law = law_type:law_autocracy 
+		activate_law = law_type:law_serfdom
+		activate_law = law_type:law_land_based_taxation
+		activate_law = law_type:law_imperial_examination
+		activate_law = law_type:law_subjecthood
+		activate_law = law_type:law_traditionalism
+		activate_law = law_type:law_censorship	
+		activate_law = law_type:law_closed_borders
+		activate_law = law_type:law_canton_system
+		activate_law = law_type:law_freedom_of_conscience
+		activate_law = law_type:law_classical_learning
+		
+		set_tax_level = low
+
+		set_import_tariff_level = { 
+			goods = g:opium
+			level = high_subventions
+		}
+
+		ig:ig_landowners = {
+        	set_variable = { name = memento_mori_immunity years = 50 }
+        }
+
+        ig:ig_devout = {
+        	set_variable = { name = memento_mori_immunity years = 50 }
+        }
+
+		set_variable = {
+			name = china_warlord_explosion
+			value = 0
+		}
+
+		set_variable = {
+			name = hundred_days_reform_var
+			value = 0
+		}
+
+		set_variable = {
+			name = western_affairs_movement_var
+			value = 0
+		}
+
+		add_modifier = {
+			name = qing_1728_land_tax
+			years = 16
+			is_decaying = yes
+		}
+		
+		add_journal_entry = { type = je_warlord_china }
+		add_journal_entry = { type = imperial_examination_system }
+		add_journal_entry = { type = grand_council }
+		add_journal_entry = { type = isolationist_policies }
+		add_journal_entry = { type = chinsese_royal_court }
+		add_journal_entry = { type = beijing_and_state }
+		add_journal_entry = { type = way_of_neisheng }
+		add_journal_entry = { type = china_company_jingdezhen_character }
+	}
+}
+

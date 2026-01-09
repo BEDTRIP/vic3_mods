@@ -1,0 +1,6 @@
+##############################
+# E&F + Morgenroete ComPatch #
+# Merged into zzmr_agassiz_scripted_triggers.txt
+# This file kept for reference but logic moved to avoid duplication
+##############################
+

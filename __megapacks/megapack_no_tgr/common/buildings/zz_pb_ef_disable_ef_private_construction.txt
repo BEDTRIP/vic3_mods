@@ -1,0 +1,30 @@
+
+# Disable E&F's second construction sector building type.
+# All E&F mechanics are remapped to vanilla `building_construction_sector`.
+
+REPLACE:building_ef_private_construction = {
+	building_group = bg_ef_private_construction
+	icon = "gfx/interface/icons/building_icons/ef_private_construction.dds"
+
+	city_type = city
+	levels_per_mesh = 1
+
+	ownership_type = self
+	ai_nationalization_desire = 0
+
+	unlocking_technologies = { }
+	production_method_groups = { }
+
+	buildable = no
+	expandable = no
+	downsizeable = no
+
+	can_build_government = { always = no }
+	can_build_private = { always = no }
+	potential = { always = no }
+
+	ai_value = 0
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"
+}
+
