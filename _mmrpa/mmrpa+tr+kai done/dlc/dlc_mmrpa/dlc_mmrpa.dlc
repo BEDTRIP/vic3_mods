@@ -1,0 +1,8 @@
+﻿name = "Make My Railway Profitable Again!"
+path = "dlc/dlc_mmrpa"
+steam_id = "3110785319"
+pops_id = "dlc_mmrpa"
+mp_synced = yes
+affects_save_compatibility = yes
+localizable_name = "dlc_mmrpa"
+checksum = ""

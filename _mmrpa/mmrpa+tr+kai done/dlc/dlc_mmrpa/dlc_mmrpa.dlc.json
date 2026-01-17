@@ -1,0 +1,21 @@
+﻿{
+	"id":
+	{
+		"steam": "3110785319",
+		"paradox": "dlc_mmrpa"
+	},
+	"displayName":
+	{
+		"en": "Make My Railway Profitable Again!"
+	},
+	"category":
+	{
+		"en": "DLC"
+	},
+	"description":
+	{
+		"en": "Make My Railway Profitable Again!"
+	},
+	"thumbnailPath": "thumbnail.png",
+	"thirdPartyContent": true
+}

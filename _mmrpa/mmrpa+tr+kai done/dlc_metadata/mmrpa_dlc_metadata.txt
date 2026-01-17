@@ -1,0 +1,6 @@
+﻿dlc_mmrpa = {
+	name = "Make My Railway Profitable Again!"
+	steam_id = "3110785319"
+	type = minor
+	priority = 0
+}

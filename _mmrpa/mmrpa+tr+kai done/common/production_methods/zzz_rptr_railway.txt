@@ -1,0 +1,373 @@
+REPLACE:pm_steam_trains = {
+	texture = "gfx/interface/icons/production_method_icons/trains_steam.dds"
+	replacement_if_valid = pm_steam_trains_principle_transport_3
+
+	unlocking_technologies = {
+		steel_railway_cars
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 5 # 300
+			goods_input_coal_add = 3 # 120
+			goods_input_steel_add = 1 # 100 #520
+			goods_output_transportation_add = 25 # 900
+		}
+		level_scaled = {
+			building_employment_laborers_add = 500
+			building_employment_machinists_add = 300
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 25
+			state_pollution_generation_add = 20
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.025
+		}
+	}
+}
+
+REPLACE:pm_steam_trains_principle_transport_3 = {
+	texture = "gfx/interface/icons/production_method_icons/trains_steam.dds"
+	is_hidden_when_unavailable = yes
+
+	unlocking_principles = {
+		principle_transport_3
+	}
+
+	unlocking_technologies = {
+		steel_railway_cars
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 6 # 360
+			goods_input_coal_add = 4 # 150
+			goods_input_steel_add = 1 # 150
+			goods_output_transportation_add = 30 # 1050
+		}
+		level_scaled = {
+			building_employment_laborers_add = 500
+			building_employment_machinists_add = 300
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 30
+			state_pollution_generation_add = 25
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.05
+		}
+	}
+}
+
+REPLACE:pm_electric_trains = {
+	texture = "gfx/interface/icons/production_method_icons/trains_electric.dds"
+	replacement_if_valid = pm_electric_trains_principle_transport_3
+	
+	unlocking_technologies = {
+		electric_railway
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 5 # 300
+			goods_input_electricity_add = 6 # 8
+			goods_input_steel_add = 1 # 2
+			goods_output_transportation_add = 30 # 1200
+		}
+		level_scaled = {
+			building_employment_laborers_add = 400
+			building_employment_machinists_add = 350
+			building_employment_engineers_add = 50
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 30
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.05
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+REPLACE:pm_electric_trains_principle_transport_3 = {
+	texture = "gfx/interface/icons/production_method_icons/trains_electric.dds"
+	is_hidden_when_unavailable = yes
+
+	unlocking_principles = {
+		principle_transport_3
+	}
+	
+	unlocking_technologies = {
+		electric_railway
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 6 # 360
+			goods_input_electricity_add = 4 # 300
+			goods_input_steel_add = 1 # 200 #860
+			goods_output_transportation_add = 40 # 1350
+		}
+		level_scaled = {
+			building_employment_laborers_add = 400
+			building_employment_machinists_add = 350
+			building_employment_engineers_add = 50
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 40
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.1
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+REPLACE:pm_diesel_trains = {
+	texture = "gfx/interface/icons/production_method_icons/trains_diesel.dds"	
+	replacement_if_valid = pm_diesel_trains_principle_transport_3
+
+	unlocking_technologies = {
+		compression_ignition
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 5 # 300
+			goods_input_light_fuel_add = 6 # 280
+			goods_input_steel_add = 1 # 200 #780
+			goods_output_transportation_add = 40 # 1500
+		}
+		level_scaled = {
+			building_employment_laborers_add = 400
+			building_employment_machinists_add = 300
+			building_employment_engineers_add = 100
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 40
+			state_pollution_generation_add = 15
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.1
+		}
+	}
+}
+
+REPLACE:pm_diesel_trains_principle_transport_3 = {
+	texture = "gfx/interface/icons/production_method_icons/trains_diesel.dds"	
+	is_hidden_when_unavailable = yes
+
+	unlocking_principles = {
+		principle_transport_3
+	}
+
+	unlocking_technologies = {
+		compression_ignition
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 6 # 360
+			goods_input_light_fuel_add = 8 # 350
+			goods_input_steel_add = 1
+			goods_output_transportation_add = 50
+		}
+		level_scaled = {
+			building_employment_laborers_add = 400
+			building_employment_machinists_add = 300
+			building_employment_engineers_add = 100
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 55
+			state_pollution_generation_add = 20
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.15
+		}
+	}
+}
+
+## Tech Res new
+
+REPLACE:pm_advanced_express_trains = {
+	texture = "gfx/interface/icons/production_method_icons/pm_express_trains.dds"
+	replacement_if_valid = pm_advanced_express_trains_principle_transport_3
+
+	unlocking_technologies = {
+		vikelas_streamliners_tech
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 5 # 300
+			goods_input_light_fuel_add = 3 # 350
+			goods_input_aluminium_add = 2 # 100
+			goods_input_steel_add = 2 #200 #950
+			goods_output_transportation_add = 60 # 1800
+		}
+		level_scaled = {
+			building_employment_laborers_add = 150
+			building_employment_machinists_add = 400
+			building_employment_engineers_add = 150
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 70
+			state_pollution_generation_add = 10
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.15
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+REPLACE:pm_advanced_express_trains_principle_transport_3 = {
+	texture = "gfx/interface/icons/production_method_icons/pm_express_trains.dds"
+	is_hidden_when_unavailable = yes
+
+	unlocking_principles = {
+		principle_transport_3
+	}
+	
+	unlocking_technologies = {
+		vikelas_streamliners_tech
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 6 # 360
+			goods_input_light_fuel_add = 4 # 560
+			goods_input_aluminium_add = 2 # 100
+			goods_input_steel_add = 2 #250 1270
+			goods_output_transportation_add = 70 # 2100
+		}
+		level_scaled = {
+			building_employment_laborers_add = 150
+			building_employment_machinists_add = 400
+			building_employment_engineers_add = 150
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 90
+			state_pollution_generation_add = 15
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.2
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+REPLACE:pm_high_speed_trains = {
+	texture = "gfx/interface/icons/production_method_icons/pm_high_speed_trains.dds"
+	replacement_if_valid = pm_high_speed_trains_principle_transport_3
+
+	unlocking_technologies = {
+		bullet_train_tech
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 5 # 300
+			goods_input_aluminium_add = 2 # 100
+			goods_input_steel_add = 2 #150
+			goods_input_electroniccomponents_add = 1 #160
+			goods_input_electricity_add = 6 # 300 #1010
+			goods_output_transportation_add = 70 # 2100
+		}
+		level_scaled = {
+			building_employment_machinists_add = 450
+			building_employment_engineers_add = 200
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 90
+			state_pollution_generation_add = 5
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.2
+		}
+	}
+
+	required_input_goods = electricity
+}
+
+REPLACE:pm_high_speed_trains_principle_transport_3 = {
+	texture = "gfx/interface/icons/production_method_icons/pm_high_speed_trains.dds"
+	is_hidden_when_unavailable = yes
+
+	unlocking_technologies = {
+		bullet_train_tech
+	}
+
+	unlocking_principles = {
+		principle_transport_3
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_engines_add = 6 # 360
+			goods_input_aluminium_add = 2 # 150
+			goods_input_steel_add = 2 #200
+			goods_input_electroniccomponents_add = 1 #160
+			goods_input_electricity_add = 9 # 450 #1320
+			goods_output_transportation_add = 80 # 2400
+		}
+		level_scaled = {
+			building_employment_machinists_add = 450
+			building_employment_engineers_add = 200
+			building_employment_clerks_add = 200
+		}
+	}
+
+	state_modifiers = {
+		workforce_scaled = {
+			state_infrastructure_add = 105
+			state_pollution_generation_add = 8
+		}
+		unscaled = {
+			state_market_access_price_impact = 0.25
+		}
+	}
+
+	required_input_goods = electricity
+}
