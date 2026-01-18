@@ -1,0 +1,17 @@
+# BPM + E&F ComPatch — neutral monetary ideology
+# Purpose: give IGs/characters a clear "no stance" option for E&F monetary policy laws.
+#
+# Load order: E&F -> BPM -> this patch
+
+ideology_monetary_no_policy = {
+	# BPM-style icon (provided by this compatch via gfx/...)
+	icon = "gfx/interface/icons/ideology_icons/mon_placeholder.dds"
+
+	# Explicitly neutral on monetary policy (revaluation / devaluation / none).
+	lawgroup_monetary_policy = {
+		law_revaluation = neutral
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+

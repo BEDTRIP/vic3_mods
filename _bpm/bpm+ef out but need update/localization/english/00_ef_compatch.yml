@@ -1,4 +1,0 @@
-l_english:
-
- institution_economy_lvl:0 "Institution ([GetPlayer.MakeScope.ScriptValue('institution_economy_lvl_brut')])"
- institution_economy_lvl_value:0 "#P +[GetPlayer.MakeScope.ScriptValue('institution_economy_lvl')|D]#!"

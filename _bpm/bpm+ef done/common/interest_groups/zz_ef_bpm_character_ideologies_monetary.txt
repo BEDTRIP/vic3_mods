@@ -1,0 +1,134 @@
+# BPM + E&F ComPatch — character_ideologies monetary pools
+# Goal: add E&F's `ideology_monetary_*` into BPM-style `character_ideologies` pools
+# so new characters can spawn with them like other BPM ideologies.
+#
+# Load order: E&F -> BPM -> this patch
+#
+# Note: we only INJECT the new ideology entries. We do NOT restate BPM's list, to avoid getting outdated when BPM updates.
+
+INJECT:ig_industrialists = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_market_liberals = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_liberals = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_national_liberals = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_intelligentsia = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_conservatives = {
+	character_ideologies = {
+		ideology_monetary_conservative
+	}
+}
+
+INJECT:ig_landowners = {
+	character_ideologies = {
+		ideology_monetary_conservative
+	}
+}
+
+INJECT:ig_reactionaries = {
+	character_ideologies = {
+		ideology_monetary_conservative
+	}
+}
+
+INJECT:ig_christian_democrats = {
+	character_ideologies = {
+		ideology_monetary_conservative
+	}
+}
+
+INJECT:ig_devout = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_petty_bourgeoisie = {
+	character_ideologies = {
+		ideology_monetary_moderate
+	}
+}
+
+INJECT:ig_armed_forces = {
+	character_ideologies = {
+		ideology_monetary_conservative
+	}
+}
+
+INJECT:ig_fascists = {
+	character_ideologies = {
+		ideology_monetary_conservative
+	}
+}
+
+INJECT:ig_agrarian_populists = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_rural_folk = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_trade_unions = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_socialists = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_reformist_socialists = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_revolutionist_socialists = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_radicals = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+
+INJECT:ig_anarchists = {
+	character_ideologies = {
+		ideology_monetary_left
+	}
+}
+

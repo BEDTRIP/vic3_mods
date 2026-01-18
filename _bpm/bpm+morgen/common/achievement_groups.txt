@@ -1,0 +1,296 @@
+#group = {
+#	name = "test_group"
+#	order = {
+#		"NEW_ACHIEVEMENT_1_0"
+# 		"NEW_ACHIEVEMENT_2_0"
+#	}
+#}
+
+################################################################################
+### BPM Achievements ###
+
+group = {
+	name = "bpm_achievements"
+	order = {
+		"achievement_bpm_moralist_liberal"
+	}
+}
+
+################################################################################
+### Vanilla achievement groups (restored) + Morgenröte achievement groups ###
+
+group = {
+	name = "easy_group"
+	order = {
+		"victorian_century"
+		"poor_huddled_masses"
+		"mightier_than_the_sword"
+		"institutional"
+		"educated"
+		"revolutionary"
+		"we_are_not_amused"
+		"achievement_vox_populi"
+		"achievement_agitate_elsewhere"
+		"achievement_military_junta"
+		"achievement_viva_la_confederacion"
+		"achievement_hermit_kingdom"
+		"achievement_declaration_of_independence"
+		"achievement_for_twelve_years_you_have_been_asking"
+		"achievement_hyperpeace"
+		"achievement_be_prepared"
+		"achievement_prolecorp"
+		"achievement_its_a_blockade"
+		"achievement_systembolaget"
+		"achievement_neo_absolutist"
+		"achievement_im_feeling_hungary"
+		"achievement_biedermeier"
+		"achievement_one_more_time"
+		"achievement_full_circle"
+		"achievement_sugar_rush"
+	}
+}
+
+group = {
+	name = "medium_group"
+	order = {
+		"peccavi"
+		"perkeletankki"
+		"anarchy_in_the_uk"
+		"go_west_young_man"
+		"the_paris_commune"
+		"barbarys_back"
+		"miners_and_minors"
+		"broken_promises"
+		"the_berlin_conference"
+		"belle_epoque"
+		"deeds_not_words"
+		"first_flight"
+		"serfs_up"
+		"risorgimento"
+		"three_hurrahs"
+		"solomons_quest"
+		"i_am_a_scandinavian"
+		"enlightened_despot"
+		"reading_campaign"
+		"tycoon"
+		"hegemon"
+		"caretaker"
+		"billionare"
+		"achievement_amish_paradise"
+		"achievement_euphoric"
+		"achievement_it_never_ends"
+		"achievement_emperor_norton"
+		"achievement_shut_the_door_behind_you"
+		"achievement_crush_the_commune"
+		"achievement_huge_ego_sorry"
+		"achievement_authoritarian"
+		"achievement_breadbasket"
+		"achievement_meiji_restoration"
+		"achievement_banana_republic"
+		"achievement_estado_novo"
+		"achievement_stonks"
+		"achievement_spqr"
+		"achievement_new_order"
+		"achievement_im_the_captain_now"
+		"achievement_bootlicker"
+		"achievement_great_game_no_re"
+		"achievement_standard_oil"
+		"achievement_diplomatic_victory"
+		"achievement_cult_of_reason"
+		"achievement_cosmopolitan"
+		"achievement_folkhemmet"
+		"achievement_caste_away"
+		"achievement_on_the_edge"
+		"achievement_the_real_movement"
+		"achievement_venice_vidi_vici"
+		"achievement_yes_we_have_bananas"
+		"achievement_exactly_100"
+		"achievement_wall_of_text"
+		"achievement_franchising"
+		"achievement_champagne_socialist"
+		"achievement_all_quiet_on_the_western_front"
+		"achievement_teamkiller"
+		"achievement_brotherhood_and_unity"
+		"achievement_usga"
+		"achievement_portugal_is_not_a_small_country"
+		"achievement_a_las_barricadas"
+		"achievement_unanimity"
+	}
+}
+
+group = {
+	name = "hard_group"
+	order = {
+		"luxurious_luxembourg"
+		"muhammed_alis_ambition"
+		"i_didnt_vote_for_pedro"
+		"the_western_protectorate"
+		"healthy_man_of_europe"
+		"habsburg_resurgence"
+		"great_game"
+		"bourbon_for_everyone"
+		"manifest_mexico"
+		"poppydock"
+		"grander_colombia"
+		"inventive"
+		"star_swarmed_banner"
+		"achievement_hexagon_no_more"
+		"achievement_lallemagne_cest_rien"
+		"achievement_magnanimous"
+		"achievement_federation_day"
+		"achievement_republic_or_death"
+		"achievement_desteapta_te_romane"
+		"achievement_devils_railroad"
+		"achievement_iranzamin"
+		"achievement_cant_touch_this"
+		"achievement_our_words_are_backed"
+		"achievement_azadi"
+		"achievement_fordlandia"
+		"achievement_swiss_bank_account"
+		"achievement_sorbia_is_serbia"
+		"achievement_prussia_of_the_balkans"
+		"achievement_the_most_united_kingdom"
+		"achievement_regeneration"
+		"achievement_spanish_lake"
+	}
+}
+
+group = {
+	name = "very_hard_group"
+	order = {
+		"an_empire_under_the_pun"
+		"american_territory"
+		"achievement_piratini_not_piratiny"
+		"achievement_not_yet_lost"
+		"achievement_duran_duran"
+		"achievement_honor_and_life"
+		"achievement_the_man_who_would_be_king"
+		"achievement_david_slays_goliath"
+		"achievement_deconquista"
+	}
+}
+
+################################################################################
+
+### Morgenröte Achievements ###
+
+group = {
+    name = "lepsius_achievement_group"
+    order = {
+		"lepsius_it_belongs_in_a_museum"
+		"lepsius_dig_deeper"
+		"lepsius_dr_jones_i_presume"
+		"lepsius_fortune_and_glory_kid"
+		"lepsius_you_call_this_archaeology"
+	}
+}
+
+group = {
+    name = "verrier_achievement_group"
+    order = {
+		"verrier_discover_neptune"
+		"verrier_discover_pluto"
+		"verrier_save_ceres"
+		"verrier_moon"
+		"verrier_gmt"
+	}	
+}
+
+group = {
+    name = "elgar_achievement_group"
+    order = {
+		"elgar_wagnerism"
+		"elgar_a_night_in_the_opera"
+		"elgar_a_thriving_culture"
+		"elgar_impressionante"
+		"elgar_more_than_yodeling"
+	}	
+}
+
+group = {
+    name = "gaudi_achievement_group"
+    order = {
+		"gaudi_kulturnation"
+		"gaudi_segundo_siglo_de_oro"
+		"gaudi_rapture"
+		"gaudi_stalin"
+	}	
+}
+
+group = {
+    name = "curtiss_achievement_group"
+    order = {
+		"curtiss_aviator"
+		"curtiss_higher"
+		"curtiss_red_baron"
+		"curtiss_schneider_trophy"
+		"curtiss_spirit"
+		"curtiss_zeppelin"
+		"curtiss_lost"
+	}	
+}
+
+group = {
+    name = "dubois_achievement_group"
+    order = {
+		"dubois_catch"
+		"dubois_jurassic"
+		"dubois_darwin"
+		"dubois_wisent"
+		"dubois_43"
+		"dubois_six"
+	}	
+}
+
+group = {
+    name = "agassiz_achievement_group"
+    order = {
+		"agassiz_mineralogist"
+		"agassiz_volcanologist"
+		"agassiz_geophysicist"
+		"agassiz_coe"
+	}	
+}
+
+group = {
+    name = "mendelejew_achievement_group"
+    order = {
+		"mendelejew_chemist"
+		"mendelejew_proud"
+		"mendelejew_oil"
+	}	
+}
+
+group = {
+    name = "panum_achievement_group"
+    order = {
+		"panum_zauberberg"
+		"panum_dunant"
+		"panum_treat"
+		"panum_john_slow"
+		"panum_smallpox"
+		"panum_minderwertigkeitskomplex"
+		"panum_crime_face"
+		"panum_flu"
+		"panum_biologist_job"
+	}	
+}
+
+group = {
+    name = "douglas_achievement_group"
+    order = {
+		"douglas_mountaineer"
+		"douglas_president"
+		"douglas_seven"
+		"douglas_everest"
+	}	
+}
+
+group = {
+    name = "vikelas_achievement_group"
+    order = {
+		"vikelas_our_games"
+		"vikelas_ngo_monster"
+	}	
+}
+

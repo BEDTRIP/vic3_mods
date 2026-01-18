@@ -1,0 +1,17 @@
+﻿l_english:
+
+ # Law UI: merge E&F (success+stall) with BPM rigidity info
+ ENACT_LAW:1 "#b Enact#! with #v #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_SUCCESS_CHANCE_BREAKDOWN [Law.GetCheckpointSuccessChance|+0%]#!#!#! [Concept( 'concept_enactment_success', '$concept_enactment_success_short$' )] chance and #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_STALL_CHANCE_BREAKDOWN [Law.GetCheckpointStallChance|v0%]#!#! [Concept( 'concept_enactment_stall', '$concept_enactment_stall_short$' )] chance at first checkpoint\n\nSuccess modified by #PB [GetPlayer.MakeScope.ScriptValue('bpm_political_stability_law_success_penalty')|.0%]#! from [Concept('concept_bpm_political_stability','Rigidity')]"
+
+ # UI keys that BPM reuses for modifier labels; keep E&F meaning while making it readable in BPM contexts too
+ NO_LABOR_MOVEMENT:0 "No Labor Movement (tech not unlocked)"
+ RURAL_POP:0 "Rural Pops (Agricultural Employment)"
+
+ # Keep E&F UI detail that BPM truncates
+ MARGINAL_TITLE_ACCORDION:0 "[concept_marginalized] [Concept('concept_interest_group', '$concept_interest_groups$')] (#v [GetDataModelSize( AccessPlayer.AccessMarginalInterestGroups)]#!)"
+ RADICALS_TOOLTIP:1 "#tooltip_header $RADICALS$#!\nThere are #v [Country.GetNumRadicals|D]#! $RADICALS$ in the total population of #v [Country.GetTotalPopulation|D]#! in [Country.GetName]\n$TOOLTIP_DELIMITER$\nThe number of $RADICALS$ changed by #v #tooltippable #tooltip:[Country.GetTooltipTag],RADICALS_CHANGE_TOOLTIP [Country.GetTotalNumRadicalsChange|D=-]#!#!#! since [Country.GetRadicalsLoyalistsChangeStartDate|v].\nThe most impactful factors are [Country.GetRadicalsChangeSummary]\n\n[Country.GetRadicalsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( GreaterThan_int32(Country.CalcNumStatesInTurmoil, '(int32)0'), 'STATES_IN_TURMOIL', '' ))][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromRadicals, 'RADICALS_IG_APPROVAL', '' ))]"
+ LOYALISTS_TOOLTIP:1 "#tooltip_header $LOYALISTS$#!\nThere are #v [Country.GetNumLoyalists|D]#! $LOYALISTS$ in the total population of #v [Country.GetTotalPopulation|D]#! in [Country.GetName]\n$TOOLTIP_DELIMITER$\nThe number of $LOYALISTS$ changed by #v #tooltippable #tooltip:[Country.GetTooltipTag],LOYALISTS_CHANGE_TOOLTIP [Country.GetTotalNumLoyalistsChange|D=+]#!#!#! since [Country.GetRadicalsLoyalistsChangeStartDate|v]\nThe most impactful factors are [Country.GetLoyalistsChangeSummary]\n\n[Country.GetLoyalistsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromLoyalists, 'LOYALISTS_IG_APPROVAL', '' ))]"
+
+ # Monetary ideology: neutral / no stance
+ ideology_monetary_no_policy:0 "No stance on monetary policy"
+ ideology_monetary_no_policy_desc:0 "This ideology has no stance on monetary policy laws."

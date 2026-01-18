@@ -1,0 +1,11 @@
+﻿l_japanese:
+
+ ENACT_LAW: "[Concept( 'concept_enactment_success', '$concept_enactment_success_short$' )]の確率が#v #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_SUCCESS_CHANCE_BREAKDOWN [Law.GetCheckpointSuccessChance|+0%]#!#!#!、最初のチェックポイントでの[Concept( 'concept_enactment_stall', '$concept_enactment_stall_short$' )]率が#tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_STALL_CHANCE_BREAKDOWN [Law.GetCheckpointStallChance|v0%]#!#!#!で#b 制定#!します\n\nSuccess modified by #PB [GetPlayer.MakeScope.ScriptValue('bpm_political_stability_law_success_penalty')|.0%]#! from [Concept('concept_bpm_political_stability','Rigidity')]"
+ MARGINAL_TITLE_ACCORDION: "[concept_marginalized] [Concept('concept_interest_group', '$concept_interest_groups$')] (#v [GetDataModelSize( AccessPlayer.AccessMarginalInterestGroups)]#!)"
+ RADICALS_TOOLTIP: "#tooltip_header $RADICALS$#!\n[Country.GetName]の総人口#v [Country.GetTotalPopulation|D]#!の中に#v [Country.GetNumRadicals|D]#!人の$RADICALS$がいます。\n$TOOLTIP_DELIMITER$\n$RADICALS$の数は、[Country.GetRadicalsLoyalistsChangeStartDate|v]以降の#v #tooltippable #tooltip:[Country.GetTooltipTag],RADICALS_CHANGE_TOOLTIP [Country.GetTotalNumRadicalsChange|D=-]#!#!#!によって変化します。\n最も影響力のある要因は[Country.GetRadicalsChangeSummary]\n\n[Country.GetRadicalsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( GreaterThan_int32(Country.CalcNumStatesInTurmoil, '(int32)0'), 'STATES_IN_TURMOIL', '' ))][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromRadicals, 'RADICALS_IG_APPROVAL', '' ))]です"
+ LOYALISTS_TOOLTIP: "#tooltip_header $LOYALISTS$#!\n[Country.GetName]の総人口#v [Country.GetTotalPopulation|D]#!の中に#v [Country.GetNumLoyalists|D]#!人の$LOYALISTS$がいます。\n$TOOLTIP_DELIMITER$\n$LOYALISTS$の数は、[Country.GetRadicalsLoyalistsChangeStartDate|v]以降の#v #tooltippable #tooltip:[Country.GetTooltipTag],LOYALISTS_CHANGE_TOOLTIP [Country.GetTotalNumLoyalistsChange|D=+]#!#!#!によって変化します。\n最も影響力のある要因は[Country.GetLoyalistsChangeSummary]\n\n[Country.GetLoyalistsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromLoyalists, 'LOYALISTS_IG_APPROVAL', '' ))]です"
+ NO_LABOR_MOVEMENT: "#v $labor_movement$#! [concept_technology]はアンロックされていません"
+ RURAL_POP: "農業雇用者"
+
+ ideology_monetary_no_policy:0 "金融政策に立場なし"
+ ideology_monetary_no_policy_desc:0 "このイデオロギーは金融政策法に対する立場がありません。"

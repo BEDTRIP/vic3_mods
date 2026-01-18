@@ -1,0 +1,33 @@
+{
+  "name": "ComPatch Morgenrote + BPM",
+  "id": "",
+  "version": "0.1.0",
+  "supported_game_version": "1.12.*",
+  "short_description": "Compatibility patch for Morgenrote and Better Politics Mod (BPM). Load after both mods.",
+  "picture": "5.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Morgenrote",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Better Politics Mod (BPM)",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}
+

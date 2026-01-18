@@ -1,0 +1,13 @@
+﻿l_braz_por:
+
+ ENACT_LAW: "#b Promulgar#! com #v #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_SUCCESS_CHANCE_BREAKDOWN [Law.GetCheckpointSuccessChance|+0%]#!#!#! de chance de [Concept('concept_enactment_success', '$concept_enactment_success_short$')] e #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_STALL_CHANCE_BREAKDOWN [Law.GetCheckpointStallChance|v0%]#!#! de chance de [Concept('concept_enactment_stall', '$concept_enactment_stall_short$')] no primeiro ponto de controle\n\nSuccess modified by #PB [GetPlayer.MakeScope.ScriptValue('bpm_political_stability_law_success_penalty')|.0%]#! from [Concept('concept_bpm_political_stability','Rigidity')]"
+ MARGINAL_TITLE_ACCORDION: "[Concept('concept_interest_group', '$concept_interest_groups$')] [concept_marginalized] (#v [GetDataModelSize( AccessPlayer.AccessMarginalInterestGroups)]#!)"
+ RADICALS_TOOLTIP: "#tooltip_header $RADICALS$#!\nHá #v [Country.GetNumRadicals|D]#! $RADICALS$ na população total de #v [Country.GetTotalPopulation|D]#! no país [Country.GetName]\n$TOOLTIP_DELIMITER$\nO número de $RADICALS$ mudou em #v #tooltippable #tooltip:[Country.GetTooltipTag],RADICALS_CHANGE_TOOLTIP [Country.GetTotalNumRadicalsChange|D=-]#!#!#! desde [Country.GetRadicalsLoyalistsChangeStartDate|v].\nOs fatores mais impactantes são [Country.GetRadicalsChangeSummary]\n\n[Country.GetRadicalsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( GreaterThan_int32(Country.CalcNumStatesInTurmoil, '(int32)0'), 'STATES_IN_TURMOIL', '' ))][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromRadicals, 'RADICALS_IG_APPROVAL', '' ))]"
+ LOYALISTS_TOOLTIP: "#tooltip_header $LOYALISTS$#!\nHá #v [Country.GetNumLoyalists|D]#! $LOYALISTS$ na população total de #v [Country.GetTotalPopulation|D]#! no país [Country.GetName]\n$TOOLTIP_DELIMITER$\nO número de $LOYALISTS$ mudou em #v #tooltippable #tooltip:[Country.GetTooltipTag],LOYALISTS_CHANGE_TOOLTIP [Country.GetTotalNumLoyalistsChange|D=+]#!#!#! desde [Country.GetRadicalsLoyalistsChangeStartDate|v]\nOs fatores mais impactantes são [Country.GetLoyalistsChangeSummary]\n\n[Country.GetLoyalistsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromLoyalists, 'LOYALISTS_IG_APPROVAL', '' ))]"
+ NO_LABOR_MOVEMENT: "A [concept_technology] do #v $labor_movement$#! não está desbloqueada"
+ RURAL_POP: "Contratação Agrária"
+
+ ideology_monetary_no_policy:0 "Sem posição sobre política monetária"
+
+
+ ideology_monetary_no_policy_desc:0 "This ideology has no stance on monetary policy laws."

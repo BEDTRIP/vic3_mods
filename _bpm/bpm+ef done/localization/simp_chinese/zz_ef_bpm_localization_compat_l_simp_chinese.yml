@@ -1,0 +1,11 @@
+﻿l_simp_chinese:
+
+ ENACT_LAW: "#b 制定#!（在第一个检查点有#v #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_SUCCESS_CHANCE_BREAKDOWN [Law.GetCheckpointSuccessChance|+0%]#!#!#!概率[Concept( 'concept_enactment_success', '$concept_enactment_success_short$' )]，#tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_STALL_CHANCE_BREAKDOWN [Law.GetCheckpointStallChance|v0%]#!#!概率[Concept( 'concept_enactment_stall', '$concept_enactment_stall_short$' )]）\n\nSuccess modified by #PB [GetPlayer.MakeScope.ScriptValue('bpm_political_stability_law_success_penalty')|.0%]#! from [Concept('concept_bpm_political_stability','Rigidity')]"
+ MARGINAL_TITLE_ACCORDION: "[concept_marginalized][Concept('concept_interest_group', '$concept_interest_groups$')]（#v [GetDataModelSize( AccessPlayer.AccessMarginalInterestGroups)]#!）"
+ RADICALS_TOOLTIP: "#tooltip_header $RADICALS$#!\n[Country.GetName]#v [Country.GetTotalPopulation|D]#!总人口中有#v [Country.GetNumRadicals|D]#!$RADICALS$\n$TOOLTIP_DELIMITER$\n自[Country.GetRadicalsLoyalistsChangeStartDate|v]开始，$RADICALS$的人数改变了#v #tooltippable #tooltip:[Country.GetTooltipTag],RADICALS_CHANGE_TOOLTIP [Country.GetTotalNumRadicalsChange|D=-]#!#!#!\n最有影响力的因素是[Country.GetRadicalsChangeSummary]\n\n[Country.GetRadicalsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( GreaterThan_int32(Country.CalcNumStatesInTurmoil, '(int32)0'), 'STATES_IN_TURMOIL', '' ))][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromRadicals, 'RADICALS_IG_APPROVAL', '' ))]"
+ LOYALISTS_TOOLTIP: "#tooltip_header $LOYALISTS$#!\n[Country.GetName]#v [Country.GetTotalPopulation|D]#!总人口中有#v [Country.GetNumLoyalists|D]#!$LOYALISTS$\n$TOOLTIP_DELIMITER$\n自[Country.GetRadicalsLoyalistsChangeStartDate|v]开始，$LOYALISTS$的人数改变了#v #tooltippable #tooltip:[Country.GetTooltipTag],LOYALISTS_CHANGE_TOOLTIP [Country.GetTotalNumLoyalistsChange|D=+]#!#!#!\n最有影响力的因素是[Country.GetLoyalistsChangeSummary]\n\n[Country.GetLoyalistsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromLoyalists, 'LOYALISTS_IG_APPROVAL', '' ))]"
+ NO_LABOR_MOVEMENT: "#v $labor_movement$#![concept_technology]未解锁"
+ RURAL_POP: "农业就业"
+
+ ideology_monetary_no_policy:0 "对货币政策无立场"
+ ideology_monetary_no_policy_desc:0 "这种意识形态对货币政策法没有立场。"

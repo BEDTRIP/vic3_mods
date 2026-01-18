@@ -1,0 +1,15 @@
+# BPM + E&F ComPatch — BPM-style icons for E&F monetary ideologies
+# Load order: E&F -> BPM -> this patch
+
+INJECT:ideology_monetary_moderate = {
+	icon = "gfx/interface/icons/ideology_icons/mon_liberal.dds"
+}
+
+INJECT:ideology_monetary_left = {
+	icon = "gfx/interface/icons/ideology_icons/mon_left.dds"
+}
+
+INJECT:ideology_monetary_conservative = {
+	icon = "gfx/interface/icons/ideology_icons/mon_right.dds"
+}
+

@@ -1,0 +1,1015 @@
+# BPM + E&F ComPatch — extra ideology monetary stances
+# Goal: ensure BPM-added (and BPM-used) ideologies also have E&F monetary-law stances.
+#
+# Why:
+# - BPM defines many additional ideologies (and REPLACE's many vanilla ideologies) without E&F's `lawgroup_monetary_*` stance blocks.
+# - E&F's monetary system expects ideologies to have stances for:
+#   - lawgroup_monetary_system
+#   - lawgroup_monetary_policy
+#   - lawgroup_bimetalism_ratio
+#
+# Load order: E&F -> BPM -> this patch
+#
+# Note: these stances are mapped to the closest vanilla ideology profile from the existing compatch.
+
+###############
+# Liberal-ish #
+###############
+
+INJECT:ideology_individualist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_anti_clerical = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_republican = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_egalitarian = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_anti_slavery = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_constitutionalist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_feminist_ig = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_liberal_modern = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_egalitarian_modern = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_utilitarian_millian = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = neutral
+		law_no_monetary_policy = neutral
+	}
+}
+
+##################
+# Meritocratic-ish #
+##################
+
+INJECT:ideology_modernizer = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = approve
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = neutral
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = strongly_approve
+		law_devaluation = approve
+		law_no_monetary_policy = neutral
+	}
+}
+
+INJECT:ideology_corporatist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = approve
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = neutral
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = strongly_approve
+		law_devaluation = approve
+		law_no_monetary_policy = neutral
+	}
+}
+
+################
+# Laissez-faire #
+################
+
+INJECT:ideology_plutocratic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = strongly_disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = approve
+		law_bimetallic_ratio_20 = disapprove
+		law_bimetallic_ratio_15 = neutral
+		law_bimetallic_ratio_10 = strongly_disapprove
+	}
+}
+
+INJECT:ideology_oligarchic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = strongly_disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = approve
+		law_bimetallic_ratio_20 = disapprove
+		law_bimetallic_ratio_15 = neutral
+		law_bimetallic_ratio_10 = strongly_disapprove
+	}
+}
+
+INJECT:ideology_malthusian = {
+	lawgroup_monetary_system = {
+		law_silver_standard = disapprove
+		law_bimetallic_standard = neutral
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = strongly_disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = approve
+		law_bimetallic_ratio_20 = disapprove
+		law_bimetallic_ratio_15 = neutral
+		law_bimetallic_ratio_10 = strongly_disapprove
+	}
+}
+
+################
+# Paternalistic #
+################
+
+INJECT:ideology_agrarian = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_agrarian_jeffersonian = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_confucian = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_republican_paternalistic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_scholar_paternalistic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_junker_paternalistic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_papal_paternalistic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = neutral
+		law_gold_standard = approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+##############
+# Hierarchic #
+##############
+
+INJECT:ideology_patriotic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_loyalist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_particularist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_caudillismo = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_austrian_hegemony = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_bakufu = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_colonialist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_sovereignist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_pro_slavery = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_pro_slavery_colonial = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+INJECT:ideology_enclavist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+
+##############
+# Reactionary #
+##############
+
+INJECT:ideology_isolationist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_moralist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_pious = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_papal_moralist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_shinto_moralist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_buddhist_moralist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_hindu_moralist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_sikh_moralist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_heavenly_kingdom_theocratic = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_patriarchal = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_patriarchal_suffrage = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_russian_patriarch = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_orthodox_patriarch = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+INJECT:ideology_oriental_orthodox_patriarch = {
+	lawgroup_monetary_system = {
+		law_silver_standard = strongly_approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = strongly_disapprove
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = strongly_disapprove
+		law_bimetallic_ratio_20 = approve
+		law_bimetallic_ratio_15 = strongly_approve
+		law_bimetallic_ratio_10 = disapprove
+	}
+}
+
+#########################
+# BPM ideology_ig_* set #
+#########################
+
+INJECT:ideology_ig_anarchist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = neutral
+		law_gold_exchange = disapprove
+		law_gold_standard = strongly_disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_approve
+		law_external_exchange_standard = approve
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = disapprove
+		law_devaluation = strongly_approve
+		law_no_monetary_policy = disapprove
+	}
+}
+
+INJECT:ideology_ig_revolutionist_socialist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = neutral
+		law_gold_exchange = disapprove
+		law_gold_standard = strongly_disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_approve
+		law_external_exchange_standard = approve
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = disapprove
+		law_devaluation = strongly_approve
+		law_no_monetary_policy = disapprove
+	}
+}
+
+INJECT:ideology_ig_united_socialist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = neutral
+		law_gold_exchange = disapprove
+		law_gold_standard = strongly_disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_approve
+		law_external_exchange_standard = approve
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = strongly_approve
+		law_devaluation = approve
+		law_no_monetary_policy = disapprove
+	}
+}
+
+INJECT:ideology_ig_reformist_socialist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = neutral
+		law_gold_exchange = disapprove
+		law_gold_standard = strongly_disapprove
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_approve
+		law_external_exchange_standard = approve
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = strongly_approve
+		law_devaluation = approve
+		law_no_monetary_policy = disapprove
+	}
+}
+
+INJECT:ideology_ig_social_democrat = {
+	lawgroup_monetary_system = {
+		law_silver_standard = approve
+		law_bimetallic_standard = approve
+		law_gold_exchange = disapprove
+		law_gold_standard = disapprove
+
+		law_no_monetary_system = neutral
+		law_fiat_standard = strongly_approve
+		law_external_exchange_standard = approve
+	}
+
+	lawgroup_monetary_policy = {
+		law_revaluation = approve
+		law_devaluation = strongly_approve
+		law_no_monetary_policy = disapprove
+	}
+}
+
+INJECT:ideology_ig_fascist = {
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallic_standard = disapprove
+		law_gold_exchange = approve
+		law_gold_standard = strongly_approve
+
+		law_no_monetary_system = disapprove
+		law_fiat_standard = strongly_disapprove
+		law_external_exchange_standard = disapprove
+	}
+}
+

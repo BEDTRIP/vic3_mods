@@ -1,0 +1,105 @@
+# BPM + E&F ComPatch — integrate E&F monetary ideologies into BPM
+# Goal: make E&F's monetary ideologies actually show up in BPM's IG ideology stacks,
+# so they contribute stances for E&F monetary lawgroups.
+#
+# Load order: E&F -> BPM -> this patch
+
+# Extend BPM country setup to also assign monetary ideologies
+INJECT:bpm_setup_country = {
+	bpm_setup_country_monetary_ideologies = yes
+}
+
+bpm_setup_country_monetary_ideologies = {
+	# Safety cleanup (mainly for existing saves / uncertain init order):
+	# if an IG already has a monetary stance, remove the placeholder stance.
+	every_interest_group = {
+		limit = {
+			has_ideology = ideology:ideology_monetary_no_policy
+			OR = {
+				has_ideology = ideology:ideology_monetary_moderate
+				has_ideology = ideology:ideology_monetary_conservative
+				has_ideology = ideology:ideology_monetary_left
+			}
+		}
+		remove_ideology = ideology_monetary_no_policy
+	}
+
+	# E&F gives industrialists `ideology_monetary_conservative` in global history.
+	# In this compatch we want industrialists to keep ONLY `ideology_monetary_moderate`.
+	ig:ig_industrialists ?= {
+		if = {
+			limit = { has_ideology = ideology:ideology_monetary_no_policy }
+			remove_ideology = ideology_monetary_no_policy
+		}
+		if = {
+			limit = { has_ideology = ideology:ideology_monetary_conservative }
+			remove_ideology = ideology_monetary_conservative
+		}
+		limit = { NOT = { has_ideology = ideology:ideology_monetary_moderate } }
+		add_ideology = ideology_monetary_moderate
+	}
+
+	# Only after currency standards tech exists (BPM uses it too for cabinet timing)
+	if = {
+		limit = { has_technology_researched = currency_standards }
+
+		# Market liberals / industrialists: "moderate" money managers
+		ig:ig_market_liberals ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_monetary_no_policy }
+				remove_ideology = ideology_monetary_no_policy
+			}
+			limit = { NOT = { has_ideology = ideology:ideology_monetary_moderate } }
+			add_ideology = ideology_monetary_moderate
+		}
+
+		# Conservatives / landowners: orthodox / hard-money bias
+		ig:ig_conservatives ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_monetary_no_policy }
+				remove_ideology = ideology_monetary_no_policy
+			}
+			limit = { NOT = { has_ideology = ideology:ideology_monetary_conservative } }
+			add_ideology = ideology_monetary_conservative
+		}
+		ig:ig_landowners ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_monetary_no_policy }
+				remove_ideology = ideology_monetary_no_policy
+			}
+			limit = { NOT = { has_ideology = ideology:ideology_monetary_conservative } }
+			add_ideology = ideology_monetary_conservative
+		}
+
+		# Agrarian populists / rural folk: debtor-friendly / silver-biased bloc
+		ig:ig_agrarian_populists ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_monetary_no_policy }
+				remove_ideology = ideology_monetary_no_policy
+			}
+			limit = { NOT = { has_ideology = ideology:ideology_monetary_left } }
+			add_ideology = ideology_monetary_left
+		}
+		ig:ig_rural_folk ?= {
+			if = {
+				limit = { has_ideology = ideology:ideology_monetary_no_policy }
+				remove_ideology = ideology_monetary_no_policy
+			}
+			limit = { NOT = { has_ideology = ideology:ideology_monetary_left } }
+			add_ideology = ideology_monetary_left
+		}
+
+		# Everyone else: explicitly has "no stance on monetary policy"
+		# (add only once tech exists, to avoid init-order double-stacking at game start).
+		every_interest_group = {
+			limit = {
+				NOT = { has_ideology = ideology:ideology_monetary_moderate }
+				NOT = { has_ideology = ideology:ideology_monetary_conservative }
+				NOT = { has_ideology = ideology:ideology_monetary_left }
+				NOT = { has_ideology = ideology:ideology_monetary_no_policy }
+			}
+			add_ideology = ideology_monetary_no_policy
+		}
+	}
+}
+

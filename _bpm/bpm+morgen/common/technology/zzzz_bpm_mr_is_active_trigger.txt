@@ -1,0 +1,18 @@
+####################################################
+# BPM + Morgenrote ComPatch: scripted trigger fixes #
+####################################################
+#
+# BPM ships Community Mod compatibility triggers with:
+#   morgenrote_is_active = { always = no }
+#
+# Morgenrote ships:
+#   REPLACE_OR_CREATE:morgenrote_is_active = { always = yes }
+#
+# With load order MR -> BPM, BPM wins and breaks "MR active" checks.
+# This patch restores the Morgenrote behavior after BPM.
+#
+
+REPLACE_OR_CREATE:morgenrote_is_active = {
+	always = yes
+}
+

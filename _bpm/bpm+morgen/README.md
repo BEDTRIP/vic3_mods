@@ -1,28 +1,36 @@
-### Что нашёл по конфликтам MR ↔ BPM (порядок: **MR → BPM**, BPM последний)
+### ComPatch `Morgenrote` + `BPM` (порядок: **Morgenrote → BPM → этот компач**)
 
-Я прогнал первичный скан и затем перепроверил руками “опасные” места. Итоги и артефакты лежат в `bpm_mr/`.
+Это **примерный компатч** для связки:
+- `C:\Users\Andrey\Projects\vic3_mods_out\Morgenrote\morgen`
+- `C:\Users\Andrey\Projects\vic3_mods_out\BPM`
 
-### Отчёты (автосканы)
+Порядок в плейсете по условию: **Morgenrote сначала, BPM вторым, компач последним**.
 
-- **MR (реальный корень: `.Morgenrote/morgen`) vs BPM**: `bpm_mr/conflicts_morgen_vs_bpm_report.md`
-- **CMF (из пакета MR) vs BPM**: `bpm_mr/conflicts_cmf_vs_bpm_report.md` (важно, потому что MR зависит от CMF)
+### Что конкретно исправлено (по конфликтам из `conflicts_morgen_vs_bpm_report.md`)
 
-### Подтверждённые реальные конфликты MR ↔ BPM
+- **`common/achievement_groups.txt` (жёсткий конфликт по пути файла)**  
+  - **Проблема**: при MR→BPM файл BPM целиком заменяет MR и в итоге теряются группы достижений Morgenröte, а также часть “ванильных” достижений (т.к. у BPM файл укорочен).  
+  - **Исправление в компаче**: добавлен файл `common/achievement_groups.txt`, который:
+    - включает **`group = { name = "bpm_achievements" ... }`** из BPM;
+    - берёт **полный набор “vanilla groups + MR groups”** из MR (в т.ч. `lepsius_achievement_group`, `verrier_achievement_group`, …).
 
-- **Жёсткое перетирание файла**: `common/achievement_groups.txt`  
-При MR→BPM файл BPM полностью заменяет MR и в итоге **пропадают MR achievement groups** (и у BPM файл ещё и “укорочен” относительно ванили).
-- **Технология `mass_propaganda**`:  
-MR делает `TRY_INJECT` (добавляет prereq `elgar_mass_culture_tech`), а BPM делает `REPLACE` (prereq `political_agitation` + `film`) — при MR→BPM MR-инжект **теряется**.
-- *`scripted_trigger` “MR активен”**: `morgenrote_is_active`  
-MR задаёт `always = yes`, но BPM в своём compatibility-файле задаёт `always = no` и при MR→BPM **перетирает** MR → триггер становится ложным.
+- **`morgenrote_is_active` (scripted trigger “мод активен”)**  
+  - **Проблема**: BPM задаёт `morgenrote_is_active = { always = no }` (community compatibility triggers) и при MR→BPM “перетирает” MR, из-за чего проверки “MR активен” становятся ложными.  
+  - **Исправление в компаче**: добавлен `common/scripted_triggers/zzzz_bpm_mr_is_active_trigger.txt` с  
+    `REPLACE_OR_CREATE:morgenrote_is_active = { always = yes }`.
 
-### Потенциально важный конфликт (по контенту, нужно решить приоритет)
+- **`mass_propaganda` (технология)**  
+  - **Проблема**: MR делает `TRY_INJECT:mass_propaganda` и добавляет prereq `elgar_mass_culture_tech`, но BPM делает `REPLACE:mass_propaganda`, поэтому при MR→BPM MR‑инжект теряется.  
+  - **Исправление в компаче**: добавлен `common/technology/technologies/zzzz_bpm_mr_society_technologies_patch.txt` с повторным  
+    `TRY_INJECT:mass_propaganda` → добавляет `elgar_mass_culture_tech` в `unlocking_technologies`.
 
-- *`character_templates` для шведских правителей** `swe_*_bernadotte_template`)  
-У MR там `TRY_REPLACE` с **mr-traits/DNA**, у BPM `REPLACE` со своей логикой — при MR→BPM BPM **гарантированно выигрывает**, MR-черты/ДНК для этих персон пропадут.
+### Какие конфликты ещё остались (не исправлял в этом “примерном” компаче)
 
-### Сводка “что чинить” для компача
+- **`common/character_templates` (шведские правители `swe_*_bernadotte_template`)**  
+  - MR делает `TRY_REPLACE` (mr‑traits/DNA), BPM делает `REPLACE` (свою полит‑логику лидеров).  
+  - При порядке MR→BPM **побеждает BPM**, MR‑черты/ДНК у этих персон пропадают.  
+  - Это конфликт “по дизайну”: чинится только ручным слиянием (нужно выбрать, что важнее — MR‑flavor или BPM‑логика).
 
-Я оформил это отдельной понятной запиской: *`bpm_mr/conflicts_summary_mr_bpm.md`** (там же — что именно предлагается делать в компаче по каждому пункту).
-
-Дальше можем сразу переходить к сборке компача в `bpm_mr/`, начиная с `achievement_groups.txt`, `morgenrote_is_active`, и `mass_propaganda`.
+- **Слой CMF (в `Morgenrote\\cmf`) vs BPM**  
+  - В твоём `vic3_mods_out\\Morgenrote` отдельно лежит `cmf\\` и там много пересечений с BPM по ключам (laws/parties/political_movements/scripted_triggers).  
+  - Этот компач **целенаправленно чинит только подтверждённые “ломающие” MR↔BPM пункты выше**; CMF↔BPM слить отдельно можно, но это уже другой объём работ.

@@ -1,0 +1,15 @@
+##########################################
+# BPM + Morgenrote ComPatch: technologies #
+##########################################
+
+# Morgenrote injects an extra prerequisite into vanilla mass_propaganda:
+#   elgar_mass_culture_tech
+# But BPM fully REPLACE's mass_propaganda. With load order MR -> BPM,
+# Morgenrote's injection is lost. Re-apply it after BPM.
+
+TRY_INJECT:mass_propaganda = {
+	unlocking_technologies = {
+		elgar_mass_culture_tech
+	}
+}
+

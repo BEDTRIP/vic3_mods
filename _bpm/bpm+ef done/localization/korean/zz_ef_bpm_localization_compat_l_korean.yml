@@ -1,0 +1,11 @@
+﻿l_korean:
+
+ ENACT_LAW: "첫 체크포인트에서 #v #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_SUCCESS_CHANCE_BREAKDOWN [Law.GetCheckpointSuccessChance|+0%]#!#!#! [Concept( 'concept_enactment_success', '$concept_enactment_success_short$' )] 확률 및 #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_STALL_CHANCE_BREAKDOWN [Law.GetCheckpointStallChance|v0%]#!#! [Concept( 'concept_enactment_stall', '$concept_enactment_stall_short$' )] 확률로 #b 제정#!\n\nSuccess modified by #PB [GetPlayer.MakeScope.ScriptValue('bpm_political_stability_law_success_penalty')|.0%]#! from [Concept('concept_bpm_political_stability','Rigidity')]"
+ MARGINAL_TITLE_ACCORDION: "[concept_marginalized] [Concept('concept_interest_group', '$concept_interest_groups$')] (#v [GetDataModelSize( AccessPlayer.AccessMarginalInterestGroups)]#!)"
+ RADICALS_TOOLTIP: "#tooltip_header $RADICALS$#!\n[Country.GetName] 내 총 #v [Country.GetTotalPopulation|D]#!명의 인구 중 #v [Country.GetNumRadicals|D]#!명의 $RADICALS$가 존재합니다.\n$TOOLTIP_DELIMITER$\n[Country.GetRadicalsLoyalistsChangeStartDate|v] 이후로 $RADICALS$의 수는 #v #tooltippable #tooltip:[Country.GetTooltipTag],RADICALS_CHANGE_TOOLTIP [Country.GetTotalNumRadicalsChange|D=-]#!#!#!만큼 변화했습니다.\n가장 영향이 큰 요인: [Country.GetRadicalsChangeSummary]\n\n[Country.GetRadicalsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( GreaterThan_int32(Country.CalcNumStatesInTurmoil, '(int32)0'), 'STATES_IN_TURMOIL', '' ))][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromRadicals, 'RADICALS_IG_APPROVAL', '' ))]"
+ LOYALISTS_TOOLTIP: "#tooltip_header $LOYALISTS$#!\n[Country.GetName] 내 총 #v [Country.GetTotalPopulation|D]#!명의 인구 중 #v [Country.GetNumLoyalists|D]#!명의 $LOYALISTS$가 존재합니다.\n$TOOLTIP_DELIMITER$\n[Country.GetRadicalsLoyalistsChangeStartDate|v]\n 이후로 $LOYALISTS$의 수는 #v #tooltippable #tooltip:[Country.GetTooltipTag],LOYALISTS_CHANGE_TOOLTIP [Country.GetTotalNumLoyalistsChange|D=+]#!#!#!만큼 변화했습니다.\n가장 영향이 큰 요인: [Country.GetLoyalistsChangeSummary]\n\n[Country.GetLoyalistsSummaryDesc][ConcatIfNeitherEmpty('\n\n',SelectLocalization( Country.HasIGApprovalFromLoyalists, 'LOYALISTS_IG_APPROVAL', '' ))]"
+ NO_LABOR_MOVEMENT: "#v $labor_movement$#! [concept_technology]이 잠금 해제되지 않음"
+ RURAL_POP: "농업 고용"
+
+ ideology_monetary_no_policy:0 "통화 정책에 대한 입장 없음"
+ ideology_monetary_no_policy_desc:0 "이 이데오로기는 통화 정책 법률에 대한 입장이 없습니다."
