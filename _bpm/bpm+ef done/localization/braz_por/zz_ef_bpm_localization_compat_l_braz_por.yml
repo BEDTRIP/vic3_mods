@@ -1,4 +1,4 @@
-﻿l_braz_por:
+l_braz_por:
 
  ENACT_LAW: "#b Promulgar#! com #v #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_SUCCESS_CHANCE_BREAKDOWN [Law.GetCheckpointSuccessChance|+0%]#!#!#! de chance de [Concept('concept_enactment_success', '$concept_enactment_success_short$')] e #tooltippable #tooltip:[Law.GetTooltipTag],CHECKPOINT_STALL_CHANCE_BREAKDOWN [Law.GetCheckpointStallChance|v0%]#!#! de chance de [Concept('concept_enactment_stall', '$concept_enactment_stall_short$')] no primeiro ponto de controle\n\nSuccess modified by #PB [GetPlayer.MakeScope.ScriptValue('bpm_political_stability_law_success_penalty')|.0%]#! from [Concept('concept_bpm_political_stability','Rigidity')]"
  MARGINAL_TITLE_ACCORDION: "[Concept('concept_interest_group', '$concept_interest_groups$')] [concept_marginalized] (#v [GetDataModelSize( AccessPlayer.AccessMarginalInterestGroups)]#!)"

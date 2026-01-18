@@ -62,7 +62,7 @@ INJECT:ig_christian_democrats = {
 
 INJECT:ig_devout = {
 	character_ideologies = {
-		ideology_monetary_moderate
+		ideology_monetary_no_policy
 	}
 }
 
@@ -74,7 +74,7 @@ INJECT:ig_petty_bourgeoisie = {
 
 INJECT:ig_armed_forces = {
 	character_ideologies = {
-		ideology_monetary_conservative
+		ideology_monetary_left
 	}
 }
 

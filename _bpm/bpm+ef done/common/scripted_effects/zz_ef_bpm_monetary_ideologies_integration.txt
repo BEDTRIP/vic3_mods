@@ -39,6 +39,24 @@ bpm_setup_country_monetary_ideologies = {
 		add_ideology = ideology_monetary_moderate
 	}
 
+	# Armed forces: monetary populism (use the E&F "left" monetary ideology)
+	ig:ig_armed_forces ?= {
+		if = { limit = { has_ideology = ideology:ideology_monetary_no_policy } remove_ideology = ideology_monetary_no_policy }
+		if = { limit = { has_ideology = ideology:ideology_monetary_moderate } remove_ideology = ideology_monetary_moderate }
+		if = { limit = { has_ideology = ideology:ideology_monetary_conservative } remove_ideology = ideology_monetary_conservative }
+		limit = { NOT = { has_ideology = ideology:ideology_monetary_left } }
+		add_ideology = ideology_monetary_left
+	}
+
+	# Devout: no monetary interest
+	ig:ig_devout ?= {
+		if = { limit = { has_ideology = ideology:ideology_monetary_moderate } remove_ideology = ideology_monetary_moderate }
+		if = { limit = { has_ideology = ideology:ideology_monetary_conservative } remove_ideology = ideology_monetary_conservative }
+		if = { limit = { has_ideology = ideology:ideology_monetary_left } remove_ideology = ideology_monetary_left }
+		limit = { NOT = { has_ideology = ideology:ideology_monetary_no_policy } }
+		add_ideology = ideology_monetary_no_policy
+	}
+
 	# Only after currency standards tech exists (BPM uses it too for cabinet timing)
 	if = {
 		limit = { has_technology_researched = currency_standards }

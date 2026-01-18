@@ -7,7 +7,26 @@ ideology_monetary_no_policy = {
 	# BPM-style icon (provided by this compatch via gfx/...)
 	icon = "gfx/interface/icons/ideology_icons/mon_placeholder.dds"
 
-	# Explicitly neutral on monetary policy (revaluation / devaluation / none).
+	# Explicitly neutral on ALL E&F monetary lawgroups.
+	lawgroup_monetary_system = {
+		law_silver_standard = neutral
+		law_bimetallism_standard = neutral
+		law_gold_exchange_standard = neutral
+		law_gold_standard = neutral
+
+		law_no_monetary_system = neutral
+		law_fiat_standard = neutral
+		law_external_exchange_standard = neutral
+	}
+
+	lawgroup_bimetalism_ratio = {
+		law_bimetallic_ratio_no = neutral
+		law_bimetallic_ratio_20 = neutral
+		law_bimetallic_ratio_15 = neutral
+		law_bimetallic_ratio_10 = neutral
+	}
+
+	# Neutral on monetary policy (revaluation / devaluation / none).
 	lawgroup_monetary_policy = {
 		law_revaluation = neutral
 		law_devaluation = neutral
