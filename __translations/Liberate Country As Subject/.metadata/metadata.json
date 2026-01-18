@@ -6,7 +6,9 @@
   "short_description": "Gives the option via an event to turn liberated countries into a subject",
   "picture": "thumbnail.png",
   "tags": [
-    "Utility",
+    "Utilities",
+    "Diplomacy",
+    "Events",
     "Fixes",
     "1.12"
   ],
