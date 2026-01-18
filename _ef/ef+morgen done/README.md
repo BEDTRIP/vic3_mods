@@ -1,9 +1,10 @@
+This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]E&F + Morgenröte ComPatch [1.12][/h1]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3146386373]based on Lord R compatch[/url]
 [h2]Load order[/h2]
 [list]
 [*]Community Mod Framework (CMF)
-[*]Expanded Topbar Framework
+[*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]Economic and Financial (E&F)
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*]Morgenröte

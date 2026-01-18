@@ -1,3 +1,4 @@
+This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]Power Blocs Expanded (PBE) + The Great Revision (TGR) ComPatch[/h1]
 [h2]Load order[/h2]
 [list]

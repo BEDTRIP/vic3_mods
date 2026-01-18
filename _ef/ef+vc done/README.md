@@ -36,3 +36,4 @@
 [*]This patch injects [i]country_minting_add = -500[/i] (plus the E&F icon).
 [/list]
 [/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

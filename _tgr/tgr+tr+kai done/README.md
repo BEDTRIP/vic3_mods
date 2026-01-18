@@ -1,3 +1,4 @@
+This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]ComPatch: Tech & Res + The Great Revision[/h1]
 [h2]Load order[/h2]
 [list]

@@ -1,13 +1,32 @@
 {
-  "name" : "The Great Revision RUS",
-	"id" : "",
+  "name": "The Great Revision RUS",
+  "id": "",
   "picture": "thumbnail.png",
-  "version" : "2.0",
-  "supported_game_version" : "1.12.*",
-  "short_description" : "",
-  "tags" : [],
-  "relationships" : [],
-  "game_custom_data" : {
-    "multiplayer_synchronized" : true
+  "version": "2.0",
+  "supported_game_version": "1.12.*",
+  "short_description": "Russian translation for The Great Revision.",
+  "tags": [
+    "Translation",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-01-15"
+      }
+    ]
   }
 }

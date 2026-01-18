@@ -1,13 +1,32 @@
 {
-  "name" : "Move Pops RUS",
-	"id" : "",
-  "version" : "",
-  "supported_game_version" : "",
-  "picture" : "thumbnail.png",
-  "short_description" : "",
-  "tags" : [],
-  "relationships" : [],
-  "game_custom_data" : {
-    "multiplayer_synchronized" : true
+  "name": "Move Pops RUS",
+  "id": "3519212414",
+  "version": "1.12.2",
+  "supported_game_version": "1.12.*",
+  "picture": "thumbnail.png",
+  "short_description": "Russian translation for Move Pops.",
+  "tags": [
+    "Translation",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Move Pops",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "Move Pops",
+        "version": "",
+        "date": "2024-11-30"
+      }
+    ]
   }
 }

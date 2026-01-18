@@ -1,4 +1,4 @@
-Works with all [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]my MegaComPatch[/url]
+Works with all [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]MegaComPatches[/url]
 [h1]Make My Railway Profitable Again! (MMRPA) + Tech & Res ComPatch[/h1]
 [h2]Load order[/h2]
 [list]
@@ -28,7 +28,7 @@ Works with all [url=https://steamcommunity.com/sharedfiles/filedetails/?id=36380
 [/list]
 [/list]
 
-[*][b]Balances Tech &amp; Res “new trains” PMs[/b]
+[*][b]Balances Tech & Res “new trains” PMs[/b]
 [list]
 [*]This patch also defines the Tech &amp; Res train PMs used for late-game railways, to keep railway progression consistent when both mods are enabled.
 [*]Affected PMs:
@@ -51,3 +51,4 @@ Works with all [url=https://steamcommunity.com/sharedfiles/filedetails/?id=36380
 [*]If you use other mods that also change railway PMs / railway PM groups, you may need an additional merge patch.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3546674873]Original Crimson_Kaiser21 version[/url]

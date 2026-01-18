@@ -1,3 +1,4 @@
+This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]PSC + E&F ComPatch[/h1]
 I noticed that E&F’s “private construction sector” mechanics can behave in a strange way: once your economy is strong enough, you can delete all government construction sectors and build [b]for free[/b], because private construction becomes self-sustaining and effectively grants “free construction”, which completely breaks the economy.
 
@@ -5,7 +6,7 @@ This compatch is made to solve that problem. PSC mod turns construction sectors 
 
 [h2]Load order[/h2]
 [list]
-[*]Expanded Topbar Framework
+[*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]Private Sector Construction (PSC)
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*]Economic & Financial (E&F)
@@ -50,5 +51,4 @@ This compatch is made to solve that problem. PSC mod turns construction sectors 
 [*]This patch is designed to be [b]minimal[/b] and only overrides what’s needed for PSC + E&F integration.
 [*]It will conflict with other mods that heavily overwrite the same areas (especially [i]common/buildings[/i], [i]common/scripted_buttons[/i], [i]common/journal_entries[/i], [i]common/script_values[/i]).
 [/list]
-
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

@@ -1,13 +1,13 @@
 {
-  "name": "ComPatch MMRPA + Tech&Res",
-  "id": "3648532892",
+  "name": "ComPatch Tech&Res + Kuromi + The Great Revision",
+  "id": "3637726287",
   "version": "1.12.2",
   "supported_game_version": "1.12.*",
-  "short_description": "Compatibility patch for Make My Railway Profitable Again! (MMRPA) + Tech & Res. Load after both.",
+  "short_description": "Compatibility patch for Tech & Res + Kuromi AI + The Great Revision (common/ merges). Load after all three.",
   "picture": "thumbnail.png",
   "tags": [
     "Compatibility",
-    "Fixes", 
+    "Fixes",
     "Utility",
     "1.12"
   ],
@@ -35,8 +35,8 @@
     },
     {
       "rel_type": "dependency",
-      "id": "",
-      "display_name": "Make My Railway Profitable Again!",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
       "resource_type": "mod",
       "version": "*"
     }
@@ -63,10 +63,10 @@
         "date": "2025-12-21"
       },
       {
-        "id": "3110785319",
-        "display_name": "Make My Railway Profitable Again!",
-        "version": "1.12",
-        "date": "2025-12-22"
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-01-15"
       }
     ]
   }

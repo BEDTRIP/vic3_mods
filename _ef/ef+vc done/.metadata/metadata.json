@@ -1,9 +1,9 @@
 {
-  "name": "ComPatch E&F + The Great Revision",
-  "id": "3637554948",
+  "name": "ComPatch Victorian Century + E&F",
+  "id": "3641394699",
   "version": "1.12.2",
   "supported_game_version": "1.12.*",
-  "short_description": "Compatibility patch for Economic and Financial (E&F) + TheGreatRevision (TGR)",
+  "short_description": "Compatibility patch for Economic and Financial Mod (E&F) - V4 + Victorian Century",
   "picture": "thumbnail.png",
   "tags": [
     "Compatibility",
@@ -28,8 +28,8 @@
     },
     {
       "rel_type": "dependency",
-      "id": "3215078236",
-      "display_name": "The Great Revision",
+      "id": "",
+      "display_name": "Victorian Century",
       "resource_type": "mod",
       "version": "*"
     }
@@ -50,11 +50,12 @@
         "date": "2025-12-22"
       },
       {
-        "id": "3215078236",
-        "display_name": "The Great Revision",
-        "version": "2.0",
-        "date": "2026-01-15"
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "1.12.2",
+        "date": "2026-01-11"
       }
     ]
   }
 }
+

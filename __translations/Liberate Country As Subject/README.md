@@ -9,6 +9,7 @@
 Также мод делает так, чтобы освобождённые страны наследовали ваши законы, а не законы государства, из которого они были выделены.
 
 ИИ всегда выбирает независимость. Это поведение может быть изменено, если будет спрос.
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 
 [/h3] Updated for 1.12 [/h3]
 RU translate and support for [url=https://steamcommunity.com/workshop/filedetails/?id=3241445760]Liberate Country As Subject[/url]

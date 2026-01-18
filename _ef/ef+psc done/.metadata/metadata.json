@@ -1,10 +1,9 @@
 {
-  "name": "ComPatch E&F + The Great Revision",
-  "id": "3637554948",
+  "name": "ComPatch E&F + PSC",
+  "id": "3640702353",
   "version": "1.12.2",
   "supported_game_version": "1.12.*",
-  "short_description": "Compatibility patch for Economic and Financial (E&F) + TheGreatRevision (TGR)",
-  "picture": "thumbnail.png",
+  "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Private Sector Construction (PSC)",
   "tags": [
     "Compatibility",
     "Fixes",
@@ -28,12 +27,13 @@
     },
     {
       "rel_type": "dependency",
-      "id": "3215078236",
-      "display_name": "The Great Revision",
+      "id": "3420714166",
+      "display_name": "[1.12] Private Sector Construction",
       "resource_type": "mod",
       "version": "*"
     }
   ],
+  "picture": "thumbnail.png",
   "game_custom_data": {
     "multiplayer_synchronized": true,
     "tested_with": [
@@ -50,10 +50,10 @@
         "date": "2025-12-22"
       },
       {
-        "id": "3215078236",
-        "display_name": "The Great Revision",
-        "version": "2.0",
-        "date": "2026-01-15"
+        "id": "3420714166",
+        "display_name": "[1.12] Private Sector Construction",
+        "version": "1.3.5",
+        "date": "2025-12-21"
       }
     ]
   }

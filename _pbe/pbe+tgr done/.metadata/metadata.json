@@ -5,9 +5,43 @@
   "supported_game_version": "1.12.*",
   "short_description": "Compatibility patch for PBE + TGR (common/ merges)",
   "picture": "thumbnail.png",
-  "tags": [],
-  "relationships": [],
+  "tags": [
+    "Compatibility",
+    "Fixes",
+    "Utility",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "[1.12] Power Blocs Expanded",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
   "game_custom_data": {
-    "multiplayer_synchronized": true
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "[1.12] Power Blocs Expanded",
+        "version": "1.12*",
+        "date": "2025-12-21"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-01-15"
+      }
+    ]
   }
 }

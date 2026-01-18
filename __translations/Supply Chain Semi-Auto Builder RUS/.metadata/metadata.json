@@ -1,13 +1,32 @@
 {
-  "name" : "Supply Chain Semi-Auto Builder RUS",
-	"id" : "",
-  "version" : "1.12",
-  "supported_game_version" : "1.12.*",
-  "short_description" : "",
-  "picture" : "thumbnail.png",
-  "tags" : [],
-  "relationships" : [],
-  "game_custom_data" : {
-    "multiplayer_synchronized" : true
+  "name": "Supply Chain Semi-Auto Builder RUS",
+  "id": "3519336245",
+  "version": "1.12",
+  "supported_game_version": "1.12.*",
+  "short_description": "Russian translation for Supply Chain Semi-Auto Builder.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Translation",
+    "1.12"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Supply Chain Semi-Auto Builder",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "Supply Chain Semi-Auto Builder",
+        "version": "z.260107.1",
+        "date": "2026-01-07"
+      }
+    ]
   }
 }
