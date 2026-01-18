@@ -6,9 +6,8 @@
   "short_description": "Compatibility patch for Economic and Financial Mod (E&F) - V4 + Victorian Century",
   "picture": "thumbnail.png",
   "tags": [
-    "Compatibility",
     "Fixes",
-    "Utility",
+    "Utilities",
     "1.12"
   ],
   "relationships": [

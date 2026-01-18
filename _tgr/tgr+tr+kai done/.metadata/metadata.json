@@ -6,9 +6,8 @@
   "short_description": "Compatibility patch for Tech & Res + Kuromi AI + The Great Revision (common/ merges). Load after all three.",
   "picture": "thumbnail.png",
   "tags": [
-    "Compatibility",
     "Fixes",
-    "Utility",
+    "Utilities",
     "1.12"
   ],
   "relationships": [

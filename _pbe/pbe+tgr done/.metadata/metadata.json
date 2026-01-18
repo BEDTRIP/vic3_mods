@@ -6,9 +6,8 @@
   "short_description": "Compatibility patch for PBE + TGR (common/ merges)",
   "picture": "thumbnail.png",
   "tags": [
-    "Compatibility",
     "Fixes",
-    "Utility",
+    "Utilities",
     "1.12"
   ],
   "relationships": [

@@ -6,9 +6,8 @@
   "short_description": "Compatibility patch for Make My Railway Profitable Again! (MMRPA) + Tech & Res. Load after both.",
   "picture": "thumbnail.png",
   "tags": [
-    "Compatibility",
-    "Fixes", 
-    "Utility",
+    "Fixes",
+    "Utilities",
     "1.12"
   ],
   "relationships": [

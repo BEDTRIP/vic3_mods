@@ -5,9 +5,8 @@
   "supported_game_version": "1.12.*",
   "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Private Sector Construction (PSC)",
   "tags": [
-    "Compatibility",
     "Fixes",
-    "Utility",
+    "Utilities",
     "1.12"
   ],
   "relationships": [
