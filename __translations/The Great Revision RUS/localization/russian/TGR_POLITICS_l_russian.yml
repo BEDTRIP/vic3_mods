@@ -225,8 +225,8 @@
   lawgroup_separation_of_powers: "Разделение властей"
   lawgroup_separation_of_powers_desc: "Принцип разделения властей функционально разграничивает несколько видов государственной власти, тем самым сохраняя целостность каждой из них."
   
-  lawgroup_distribution_of_power: "Структура правительства"
-  lawgroup_distribution_of_power_desc: "Как политическая власть распределяется между государственными институтами. Определяет, перед кем подотчётен глава государства."
+  #lawgroup_distribution_of_power: "Структура правительства"
+  #lawgroup_distribution_of_power_desc: "Как политическая власть распределяется между государственными институтами. Определяет, перед кем подотчётен глава государства."
   
   lawgroup_election_system: "Избирательная система"
   lawgroup_election_system_desc: "Определяет, имеют ли граждане право голоса, что даёт власть прямого представительства в органах власти."
@@ -234,6 +234,12 @@
   lawgroup_centralization: "Централизация"
   lawgroup_centralization_desc: "Как правительство решает управлять собственными бюрократическими процессами и какую степень автономии оно желает предоставить отдельным штатам."
 
+  lawgroup_legislative_process: "Законодательный процесс"
+  lawgroup_legislative_process_desc: "Законодательный процесс — это формальная процедура, в рамках которой законы предлагаются, обсуждаются, изменяются и утверждаются законодательным органом."
+  
+  lawgroup_election_system: "Избирательная система"
+  lawgroup_election_system_desc: "Как устроены выборы в стране."
+  
   ########################## LAWS TITLE #########################  
   law_consumption_fiscal_reform: "Фискальная реформа потребительских товаров"
   law_land_fiscal_reform: "Фискальная реформа землевладения"
@@ -293,11 +299,23 @@
   #law_free_trade: "Pro-Specialization Market" 
   law_protectionism: "Политика стабильного снабжения"
   
-  law_economic_decentralism: "Экономическая децентрализация" 
-  law_administrative_decentralism: "Административная децентрализация" 
-  law_local_autonomies: "Местные автономии" 
-  law_administrative_centralism: "Административная централизация" 
-  law_economic_centralism: "Экономическая централизация" 
+  law_economic_decentralism: "Экономическая децентрализация"
+  law_administrative_decentralism: "Административная децентрализация"
+  law_local_autonomies: "Местные автономии"
+  law_administrative_centralism: "Административная централизация"
+  law_economic_centralism: "Экономическая централизация"
+  
+  law_advisory_parliament_only: "Только консультативный парламент"
+  law_restricted_parliamentary_authority: "Ограниченные полномочия парламента"
+  law_chamber_of_deputies: "Баланс властей"
+  law_unicameral_parliamentary_system: "Однопалатная парламентская система"
+  law_bicameral_parliamentary_system: "Двухпалатная парламентская система"
+  
+  law_no_election: "Без выборов"
+  law_proportional_system: "Пропорциональная система"
+  law_majoritarian_system: "Мажоритарная система"
+  law_mixed_system: "Смешанная система"
+  law_ranked_system: "Рейтинговая система"
   
   #law_tgr_no_separation: "No Separation" 
   #law_tgr_mixed_separation: "Partial Separation" 
@@ -378,7 +396,19 @@
   law_local_autonomies_desc: "Эта форма правления обеспечивает штатам ограниченную способность принимать решения, но всегда под контролем центрального правительства." 
   law_administrative_centralism_desc: "Все бюрократические и административные процессы ведутся государственными учреждениями под прямым контролем центрального аппарата." 
   law_economic_centralism_desc: "Отдельные штаты не обладают экономической автономией, и вся денежно-финансовая деятельность находится под прямым надзором центрального правительства." 
+
+  law_advisory_parliament_only_desc: "Парламент выполняет лишь консультативную функцию и не обладает законодательными полномочиями. Такая система повышает управляемость ценой ослабления демократического устройства."
+  law_restricted_parliamentary_authority_desc: "Парламент не может предлагать законы, но может обсуждать, утверждать или отклонять законопроекты, внесённые исполнительной властью."
+  law_chamber_of_deputies_desc: "Система сбалансированной законодательной власти, при которой исполнительная власть вносит декрет-закон в парламентскую палату, и после рассмотрения и утверждения он становится частью законов государства."
+  law_unicameral_parliamentary_system_desc: "Однопалатная система с полной самостоятельностью в процессе внесения и принятия законов. Депутаты назначаются королём или избираются народом — в зависимости от распределения власти в стране."
+  law_bicameral_parliamentary_system_desc: "Двухпалатная система с двойной процедурой одобрения обсуждаемых законопроектов. Такая система увеличивает автономию парламента ценой более длительных законодательных процедур."
   
+  law_no_election_desc: "В стране не установлены выборы."
+  law_proportional_system_desc: "Мандаты распределяются в соответствии с долей голосов, полученной каждой партией. Эта система обеспечивает высокое представительство, но часто приводит к коалиционным правительствам и меньшей стабильности."
+  law_majoritarian_system_desc: "Мандаты получают кандидаты, набравшие больше всего голосов в каждом округе. Такая система обычно формирует сильные и стабильные правительства, но нередко исключает малые партии из представительства."
+  law_mixed_system_desc: "Эти системы сочетают мажоритарные и пропорциональные элементы в рамках одних и тех же выборов. Они стремятся уравновесить стабильность и справедливое представительство, но правила могут быть сложнее в управлении."
+  law_ranked_system_desc: "Избиратели ранжируют кандидатов по предпочтениям, вместо выбора лишь одного. Это позволяет точнее выразить волю избирателей, но делает выборы сложнее для понимания и администрирования."  
+
   #law_tgr_no_separation_desc: "There is no separation of powers. The operational, judicial and legislative system is in the hands of the head of state." 
   #law_tgr_mixed_separation_desc: "The State grants a partial separation of powers, which gives a limited form of autonomy to the institutions." 
   #law_tgr_total_separation_desc: "The separation of powers is total, which provides a wide flexibility and control between the various state bodies." 
