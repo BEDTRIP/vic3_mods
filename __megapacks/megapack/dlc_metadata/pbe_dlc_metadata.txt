@@ -1,5 +1,5 @@
 ﻿dlc_pbe = {
-	name = "[1.12] Power Blocs Expanded"
+	name = "Power Blocs Expanded"
 	steam_id = "3623185901"
 	type = minor
 	priority = 0

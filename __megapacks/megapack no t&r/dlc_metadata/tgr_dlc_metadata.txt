@@ -1,5 +1,5 @@
 ﻿dlc_tgr = {
-	name = "The Great Revision - 1.12.2"
+	name = "The Great Revision"
 	steam_id = "3215078236"
 	type = minor
 	priority = 0
