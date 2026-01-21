@@ -1,39 +1,58 @@
 {
   "name": "MegaComPatch TGR + MR + T&R + PBE",
-  "id": "",
+  "id": "3638941732",
   "version": "1.12.2",
   "supported_game_version": "1.12.*",
   "short_description": "Compatibility patch for The Great Revision (TGR) + Morgenröte + Tech & Res + Kuromi + Power Blocs Expanded (merged common/GUI/on_actions). Load after all.",
   "picture": "thumbnail.png",
   "tags": [
-    "compatibility",
+    "Fixes",
+    "Utilities",
+    "Total Conversion",
+    "Expansion",
+    "Historical",
+    "Gameplay",
     "1.12"
   ],
   "relationships": [
     {
       "rel_type": "dependency",
-      "id": "",
+      "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+      "display_name": "Community Mod Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+      "display_name": "Expanded Topbar Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
       "display_name": "The Great Revision",
       "resource_type": "mod",
       "version": "*"
     },
     {
       "rel_type": "dependency",
-      "id": "",
-      "display_name": "Kuromi AI",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
       "resource_type": "mod",
       "version": "*"
     },
     {
       "rel_type": "dependency",
-      "id": "",
-      "display_name": "Morgenröte",
+      "id": "2889925770",
+      "display_name": "Morgenroete",
       "resource_type": "mod",
       "version": "*"
     },
     {
       "rel_type": "dependency",
-      "id": "",
+      "id": "tech.res",
       "display_name": "Tech & Res",
       "resource_type": "mod",
       "version": "*"
@@ -41,12 +60,56 @@
     {
       "rel_type": "dependency",
       "id": "",
-      "display_name": "Power Blocs Expanded",
+      "display_name": "[1.12] Power Blocs Expanded",
       "resource_type": "mod",
       "version": "*"
     }
   ],
   "game_custom_data": {
-    "multiplayer_synchronized": true
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+        "display_name": "Community Mod Framework",
+        "version": "1.40.3",
+        "date": "2026-01-14"
+      },
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+        "display_name": "Expanded Topbar Framework",
+        "version": "Release 1.8.2",
+        "date": "2025-12-19"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-01-15"
+      },
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "6.0",
+        "date": "2025-12-13"
+      },
+      {
+        "id": "2889925770",
+        "display_name": "Morgenroete",
+        "version": "2.6.2c Goldberger",
+        "date": "2026-01-02"
+      },
+      {
+        "id": "tech.res",
+        "display_name": "Tech & Res",
+        "version": "1.5.10",
+        "date": "2025-12-21"
+      },
+      {
+        "id": "",
+        "display_name": "[1.12] Power Blocs Expanded",
+        "version": "1.12*",
+        "date": "2025-12-21"
+      }
+    ]
   }
 }
