@@ -1,0 +1,9 @@
+name = "[1.12] Private Sector Construction"
+path = "dlc/dlc_psc"
+steam_id = "3420714166"
+pops_id = "dlc_psc"
+mp_synced = yes
+affects_save_compatibility = yes
+localizable_name = "dlc_psc"
+checksum = ""
+

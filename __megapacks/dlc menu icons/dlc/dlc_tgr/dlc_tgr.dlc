@@ -1,0 +1,9 @@
+name = "The Great Revision - 1.12.2"
+path = "dlc/dlc_tgr"
+steam_id = "3215078236"
+pops_id = "dlc_tgr"
+mp_synced = yes
+affects_save_compatibility = yes
+localizable_name = "dlc_tgr"
+checksum = ""
+

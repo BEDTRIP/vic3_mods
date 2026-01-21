@@ -1,0 +1,22 @@
+{
+	"id":
+	{
+		"steam": "3420714166",
+		"paradox": "dlc_psc"
+	},
+	"displayName":
+	{
+		"en": "[1.12] Private Sector Construction"
+	},
+	"category":
+	{
+		"en": "DLC"
+	},
+	"description":
+	{
+		"en": "Allows private sector and market driven construction"
+	},
+	"thumbnailPath": "thumbnail.png",
+	"thirdPartyContent": true
+}
+

@@ -1,0 +1,6 @@
+﻿dlc_psc = {
+	name = "[1.12] Private Sector Construction"
+	steam_id = "3420714166"
+	type = minor
+	priority = 0
+}
