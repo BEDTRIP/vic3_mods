@@ -21,6 +21,13 @@ This is no-E&F+PSC version of [url=https://steamcommunity.com/sharedfiles/filede
 [*][b]MegaComPatch TGR + E&F + MR + T&R + PBE (this mod)[/b]
 [/olist]
 
+Also works with [url=https://steamcommunity.com/workshop/filedetails/?id=3110785319]MMRPA[/url] if you add this mods after megacompatch
+--- all mods above ---
+- this MegaComPatch 
+- Make My Railway Profitable Again!
+- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3648532892]MMRPA + Tech & Res Compatch[/url]
+--- other mods ---
+
 [i]This patch should be loaded after all listed mods. Any other mods should be loaded after the ComPatch.[/i]
 
 [h2]What this patch does[/h2]

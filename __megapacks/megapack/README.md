@@ -11,7 +11,7 @@
 [h2]Load order[/h2]
 [olist]
 [*]Community Mod Framework
-[*]Expanded Topbar Framework
+[*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]The Great Revision (TGR)
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637467628]my TGR RU Localization (if u need)[/url]
 [*]Private Sector Construction (PSC)
@@ -26,6 +26,14 @@
 [*][b]MegaComPatch TGR + E&F + MR + T&R + PBE (this mod)[/b]
 [/olist]
 
+Also works with [url=https://steamcommunity.com/workshop/filedetails/?id=3110785319]MMRPA[/url] if you add this mods after megacompatch
+--- all mods above ---
+- this MegaComPatch 
+- Make My Railway Profitable Again!
+- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3648532892]MMRPA + Tech & Res Compatch[/url]
+--- other mods ---
+
+
 [i]This patch should be loaded after all listed mods. Any other mods should be loaded after the ComPatch.[/i]
 
 [h2]What this patch does[/h2]
@@ -34,5 +42,6 @@ This is a merge of [url=https://steamcommunity.com/workshop/filedetails/?id=3585
 [h2]Notes[/h2]
 [list]
 [*]This mod is a merge patch. If you use additional mods that also replace the same files, you may need another (more specific) merge patch.
+[*] Also you can check more lightweight [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638941732]no-E&F[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]no-T&R[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3643003863]no-TGR[/url] megacompatches.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

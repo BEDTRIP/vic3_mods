@@ -11,7 +11,7 @@ This is no-T&R version of [url=https://steamcommunity.com/sharedfiles/filedetail
 [h2]Load order[/h2]
 [olist]
 [*]Community Mod Framework
-[*]Expanded Topbar Framework
+[*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]The Great Revision (TGR)
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637467628]my TGR RU Localization (if u need)[/url]
 [*]Private Sector Construction (PSC)
@@ -22,6 +22,13 @@ This is no-T&R version of [url=https://steamcommunity.com/sharedfiles/filedetail
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3490395930]PBE RU Localization (if u need)[/url]
 [*][b]MegaComPatch TGR + PSC + E&F + MR + PBE (this mod)[/b]
 [/olist]
+
+Also works with [url=https://steamcommunity.com/workshop/filedetails/?id=3110785319]MMRPA[/url], just place it after megacompatch 
+--- all mods above ---
+- this MegaComPatch 
+- Make My Railway Profitable Again!
+--- other mods ---
+
 
 [i]This patch should be loaded after all listed mods. Any other mods should be loaded after the ComPatch.[/i]
 
