@@ -1,0 +1,17 @@
+﻿l_english:
+ pmg_private_ownership_manufacture_stock: "Private Stock Ownership (Industry)"
+ pm_no_private_ownership_manufacture_stock: "No Private Stock Ownership (Industry)"
+ pm_private_ownership_majority_manufacture_stock: "Majority Private Stock Ownership (Industry)"
+
+ pmg_private_ownership_agricultural_stock: "Private Stock Ownership (Agriculture)"
+ pm_no_private_ownership_agricultural_stock: "No Private Stock Ownership (Agriculture)"
+ pm_private_ownership_majority_agricultural_stock: "Majority Private Stock Ownership (Agriculture)"
+
+ pmg_private_ownership_mining_stock: "Private Stock Ownership (Mining)"
+ pm_no_private_ownership_mining_stock: "No Private Stock Ownership (Mining)"
+ pm_private_ownership_majority_mining_stock: "Majority Private Stock Ownership (Mining)"
+
+ pmg_private_ownership_railroad_stock: "Private Stock Ownership (Railroads)"
+ pm_no_private_ownership_railroad_stock: "No Private Stock Ownership (Railroads)"
+ pm_private_ownership_majority_railroad_stock: "Majority Private Stock Ownership (Railroads)"
+

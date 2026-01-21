@@ -1,0 +1,17 @@
+﻿l_polish:
+ pmg_private_ownership_manufacture_stock: "Prywatna własność akcyjna (przemysł)"
+ pm_no_private_ownership_manufacture_stock: "Brak prywatnej własności akcyjnej (przemysł)"
+ pm_private_ownership_majority_manufacture_stock: "Prywatna większościowa własność akcyjna (przemysł)"
+
+ pmg_private_ownership_agricultural_stock: "Prywatna własność akcyjna (rolnictwo)"
+ pm_no_private_ownership_agricultural_stock: "Brak prywatnej własności akcyjnej (rolnictwo)"
+ pm_private_ownership_majority_agricultural_stock: "Prywatna większościowa własność akcyjna (rolnictwo)"
+
+ pmg_private_ownership_mining_stock: "Prywatna własność akcyjna (górnictwo)"
+ pm_no_private_ownership_mining_stock: "Brak prywatnej własności akcyjnej (górnictwo)"
+ pm_private_ownership_majority_mining_stock: "Prywatna większościowa własność akcyjna (górnictwo)"
+
+ pmg_private_ownership_railroad_stock: "Prywatna własność akcyjna (koleje)"
+ pm_no_private_ownership_railroad_stock: "Brak prywatnej własności akcyjnej (koleje)"
+ pm_private_ownership_majority_railroad_stock: "Prywatna większościowa własność akcyjna (koleje)"
+

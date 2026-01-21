@@ -1,0 +1,17 @@
+﻿l_japanese:
+ pmg_private_ownership_manufacture_stock: "民間株式所有（工業）"
+ pm_no_private_ownership_manufacture_stock: "民間株式所有なし（工業）"
+ pm_private_ownership_majority_manufacture_stock: "民間株式過半所有（工業）"
+
+ pmg_private_ownership_agricultural_stock: "民間株式所有（農業）"
+ pm_no_private_ownership_agricultural_stock: "民間株式所有なし（農業）"
+ pm_private_ownership_majority_agricultural_stock: "民間株式過半所有（農業）"
+
+ pmg_private_ownership_mining_stock: "民間株式所有（鉱業）"
+ pm_no_private_ownership_mining_stock: "民間株式所有なし（鉱業）"
+ pm_private_ownership_majority_mining_stock: "民間株式過半所有（鉱業）"
+
+ pmg_private_ownership_railroad_stock: "民間株式所有（鉄道）"
+ pm_no_private_ownership_railroad_stock: "民間株式所有なし（鉄道）"
+ pm_private_ownership_majority_railroad_stock: "民間株式過半所有（鉄道）"
+

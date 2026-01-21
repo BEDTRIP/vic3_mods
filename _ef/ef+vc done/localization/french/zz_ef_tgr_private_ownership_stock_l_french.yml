@@ -1,0 +1,17 @@
+﻿l_french:
+ pmg_private_ownership_manufacture_stock: "Propriété privée par actions (industrie)"
+ pm_no_private_ownership_manufacture_stock: "Sans propriété privée par actions (industrie)"
+ pm_private_ownership_majority_manufacture_stock: "Propriété privée majoritaire par actions (industrie)"
+
+ pmg_private_ownership_agricultural_stock: "Propriété privée par actions (agriculture)"
+ pm_no_private_ownership_agricultural_stock: "Sans propriété privée par actions (agriculture)"
+ pm_private_ownership_majority_agricultural_stock: "Propriété privée majoritaire par actions (agriculture)"
+
+ pmg_private_ownership_mining_stock: "Propriété privée par actions (mines)"
+ pm_no_private_ownership_mining_stock: "Sans propriété privée par actions (mines)"
+ pm_private_ownership_majority_mining_stock: "Propriété privée majoritaire par actions (mines)"
+
+ pmg_private_ownership_railroad_stock: "Propriété privée par actions (chemins de fer)"
+ pm_no_private_ownership_railroad_stock: "Sans propriété privée par actions (chemins de fer)"
+ pm_private_ownership_majority_railroad_stock: "Propriété privée majoritaire par actions (chemins de fer)"
+

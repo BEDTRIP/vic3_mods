@@ -1,0 +1,17 @@
+﻿l_braz_por:
+ pmg_private_ownership_manufacture_stock: "Propriedade privada por ações (indústria)"
+ pm_no_private_ownership_manufacture_stock: "Sem propriedade privada por ações (indústria)"
+ pm_private_ownership_majority_manufacture_stock: "Propriedade privada majoritária (indústria)"
+
+ pmg_private_ownership_agricultural_stock: "Propriedade privada por ações (agricultura)"
+ pm_no_private_ownership_agricultural_stock: "Sem propriedade privada por ações (agricultura)"
+ pm_private_ownership_majority_agricultural_stock: "Propriedade privada majoritária (agricultura)"
+
+ pmg_private_ownership_mining_stock: "Propriedade privada por ações (mineração)"
+ pm_no_private_ownership_mining_stock: "Sem propriedade privada por ações (mineração)"
+ pm_private_ownership_majority_mining_stock: "Propriedade privada majoritária (mineração)"
+
+ pmg_private_ownership_railroad_stock: "Propriedade privada por ações (ferrovias)"
+ pm_no_private_ownership_railroad_stock: "Sem propriedade privada por ações (ferrovias)"
+ pm_private_ownership_majority_railroad_stock: "Propriedade privada majoritária (ferrovias)"
+

@@ -1,0 +1,17 @@
+﻿l_german:
+ pmg_private_ownership_manufacture_stock: "Private Aktienbeteiligung (Industrie)"
+ pm_no_private_ownership_manufacture_stock: "Keine private Aktienbeteiligung (Industrie)"
+ pm_private_ownership_majority_manufacture_stock: "Private Mehrheitsbeteiligung (Industrie)"
+
+ pmg_private_ownership_agricultural_stock: "Private Aktienbeteiligung (Landwirtschaft)"
+ pm_no_private_ownership_agricultural_stock: "Keine private Aktienbeteiligung (Landwirtschaft)"
+ pm_private_ownership_majority_agricultural_stock: "Private Mehrheitsbeteiligung (Landwirtschaft)"
+
+ pmg_private_ownership_mining_stock: "Private Aktienbeteiligung (Bergbau)"
+ pm_no_private_ownership_mining_stock: "Keine private Aktienbeteiligung (Bergbau)"
+ pm_private_ownership_majority_mining_stock: "Private Mehrheitsbeteiligung (Bergbau)"
+
+ pmg_private_ownership_railroad_stock: "Private Aktienbeteiligung (Eisenbahn)"
+ pm_no_private_ownership_railroad_stock: "Keine private Aktienbeteiligung (Eisenbahn)"
+ pm_private_ownership_majority_railroad_stock: "Private Mehrheitsbeteiligung (Eisenbahn)"
+
