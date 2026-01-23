@@ -1,0 +1,504 @@
+# TGR vs E&F — conflict report (key-level heuristic)
+
+- TGR root: `C:/Users/Andrey/Projects/vic3_mods_out/TheGreatRevision`
+- E&F root: `C:/Users/Andrey/Projects/vic3_mods_out/E&F`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/buildings — 19 duplicates
+- `building_arms_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_artillery_foundry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_automotive_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_chemical_plant`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_electrics_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_explosives_factory`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_food_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_furniture_manufactory`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_glassworks`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_military_shipyard`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_motor_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_munition_plant`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_paper_mill`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_shipyard`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_steel_mill`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_synthetics_plant`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_textile_mill`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_tooling_workshop`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - E&F: `common/buildings/ef_01_industry.txt`
+- `building_trade_center`
+  - TGR: `common/buildings/TGR_TRADE_private_infrastructure_trade_center.txt`
+  - E&F: `common/buildings/ef_11_private_infrastructure.txt`
+
+### common/buy_packages — 99 duplicates
+- `wealth_1`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_10`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_11`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_12`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_13`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_14`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_15`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_16`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_17`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_18`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_19`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_2`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_20`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_21`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_22`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_23`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_24`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_25`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_26`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_27`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_28`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_29`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_3`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_30`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_31`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_32`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_33`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_34`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_35`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_36`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_37`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_38`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_39`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_4`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_40`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_41`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_42`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_43`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_44`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_45`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_46`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_47`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_48`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_49`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_5`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_50`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_51`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_52`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_53`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_54`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_55`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_56`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_57`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_58`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_59`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_6`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_60`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_61`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_62`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_63`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_64`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_65`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_66`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_67`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_68`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_69`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_7`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_70`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_71`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_72`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_73`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_74`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_75`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_76`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_77`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_78`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_79`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_8`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_80`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_81`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_82`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_83`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_84`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_85`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_86`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_87`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_88`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_89`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_9`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_90`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_91`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_92`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_93`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_94`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_95`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_96`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_97`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_98`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+- `wealth_99`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - E&F: `common/buy_packages/01_buy_packages.txt`
+
+### common/defines — 1 duplicates
+- `NEconomy`
+  - TGR: `common/defines/TGR_TRADE_defines.txt`
+  - E&F: `common/defines/ef_defines.txt`
+
+### common/history/buildings — 1 duplicates
+- `BUILDINGS`
+  - TGR: `common/history/buildings/TGR_TRADE_company_buildings_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_net_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_russia_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_trade_center_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_uk_setup.txt`
+  - E&F: `common/history/buildings/00_ef_building.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - TGR: `common/history/global/TGR_POLITICS_global.txt`
+  - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_obsessions.txt`
+  - E&F: `common/history/global/00_ef_economic_global_variable.txt`
+  - E&F: `common/history/global/00_ef_financial_global_variable.txt`
+  - E&F: `common/history/global/00_ef_stockpile_global_variable.txt`
+  - E&F: `common/history/global/01_ef_state_global_variable.txt`
+  - E&F: `common/history/global/04_ef_money_supply_law.txt`
+
+### common/on_actions — 3 duplicates
+- `on_half_yearly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_DECREES_on_actions.txt`
+  - TGR: `common/on_actions/TGR_MIGRATION_on_actions.txt`
+  - TGR: `common/on_actions/TGR_TAX_PANEL_on_tax_law_change.txt`
+  - E&F: `common/on_actions/00_ef_on_action.txt`
+- `on_monthly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - E&F: `common/on_actions/00_ef_on_action.txt`
+- `on_yearly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_POLITICS_gain_ideology.txt`
+  - TGR: `common/on_actions/TGR_TRADE_code_on_actions.txt`
+  - E&F: `common/on_actions/00_ef_on_action.txt`
+
+### common/production_methods — 14 duplicates
+- `pm_company_headquarter_government_run`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_principle_divine_economics_2`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_principle_divine_economics_2_academics`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_principle_divine_economics_2_aristocrats`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_principle_divine_economics_2_aristocrats_commercial_agriculture`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_principle_divine_economics_2_bureaucrats`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_principle_divine_economics_2_shopkeepers`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_privately_owned`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_privately_owned_academics`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_privately_owned_aristocrats`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_privately_owned_aristocrats_commercial_agriculture`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_privately_owned_bureaucrats`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_privately_owned_shopkeepers`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+- `pm_company_headquarter_worker_cooperative`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_investors.txt`
+  - E&F: `common/production_methods/11_ef_private_infrastructure.txt`
+
+### common/static_modifiers — 1 duplicates
+- `base_values`
+  - TGR: `common/static_modifiers/TGR_LOANS_code_static_modifiers.txt`
+  - TGR: `common/static_modifiers/TGR_POLITICS_code_static_modifiers.txt`
+  - TGR: `common/static_modifiers/TGR_TRADE_code_static_modifiers.txt`
+  - E&F: `common/static_modifiers/00_ef_static_modifier.txt`
+
+### common/technology/technologies — 7 duplicates
+- `banking`
+  - TGR: `common/technology/technologies/TGR_LOANS_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+- `central_banking`
+  - TGR: `common/technology/technologies/TGR_LOANS_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+- `international_exchange_standards`
+  - TGR: `common/technology/technologies/TGR_LOANS_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+- `investment_banks`
+  - TGR: `common/technology/technologies/TGR_TRADE_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+- `joint_stock_companies`
+  - TGR: `common/technology/technologies/TGR_TRADE_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+- `modern_financial_instruments`
+  - TGR: `common/technology/technologies/TGR_LOANS_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+- `mutual_funds`
+  - TGR: `common/technology/technologies/TGR_LOANS_society.txt`
+  - E&F: `common/technology/technologies/ef_technology.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **4**
+  - `country_clerks_pol_str_mult`
+    - TGR: `localization/english/TGR_POLITICS_l_english.yml`
+    - E&F: `localization/english/modifiers_l_english.yml`
+  - `country_clerks_pol_str_mult_desc`
+    - TGR: `localization/english/TGR_POLITICS_l_english.yml`
+    - E&F: `localization/english/modifiers_l_english.yml`
+  - `country_shopkeepers_pol_str_mult`
+    - TGR: `localization/english/TGR_POLITICS_l_english.yml`
+    - E&F: `localization/english/modifiers_l_english.yml`
+  - `country_shopkeepers_pol_str_mult_desc`
+    - TGR: `localization/english/TGR_POLITICS_l_english.yml`
+    - E&F: `localization/english/modifiers_l_english.yml`
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

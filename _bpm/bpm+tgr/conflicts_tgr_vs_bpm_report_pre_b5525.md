@@ -49,13 +49,12 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - TGR: `common/history/countries/gbr - great britain.txt`
   - BPM: `common/history/countries/brz - brazil.txt`
   - BPM: `common/history/countries/chi - china.txt`
-  - BPM: `common/history/countries/chl - chile.txt`
   - BPM: `common/history/countries/fra - france.txt`
   - BPM: `common/history/countries/ont - ontario.txt`
+  - BPM: `common/history/countries/pco - puerto rico.txt`
 
 ### common/history/global — 1 duplicates
 - `GLOBAL`
-  - TGR: `common/history/global/TGR_LOANS_global.txt`
   - TGR: `common/history/global/TGR_POLITICS_global.txt`
   - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
   - TGR: `common/history/global/TGR_TRADE_global.txt`
@@ -233,7 +232,7 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - TGR: `common/law_groups/TGR_POLITICS_laws.txt`
   - BPM: `common/law_groups/BPM_laws.txt`
 
-### common/laws — 61 duplicates
+### common/laws — 64 duplicates
 - `law_agrarianism`
   - TGR: `common/laws/TGR_POLITICS_economic_system.txt`
   - BPM: `common/laws/BPM_economic_system.txt`
@@ -336,6 +335,9 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
 - `law_no_police`
   - TGR: `common/laws/TGR_POLITICS_policing.txt`
   - BPM: `common/laws/BPM_police.txt`
+- `law_no_womens_rights`
+  - TGR: `common/laws/TGR_POLITICS_rights_of_women.txt`
+  - BPM: `common/laws/BPM_rights_of_women.txt`
 - `law_no_workers_rights`
   - TGR: `common/laws/TGR_POLITICS_labor_rights.txt`
   - BPM: `common/laws/BPM_labor_laws.txt`
@@ -411,6 +413,12 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
 - `law_wealth_voting`
   - TGR: `common/laws/TGR_POLITICS_distribution_of_power.txt`
   - BPM: `common/laws/BPM_distribution_of_power.txt`
+- `law_women_in_the_workplace`
+  - TGR: `common/laws/TGR_POLITICS_rights_of_women.txt`
+  - BPM: `common/laws/BPM_rights_of_women.txt`
+- `law_women_own_property`
+  - TGR: `common/laws/TGR_POLITICS_rights_of_women.txt`
+  - BPM: `common/laws/BPM_rights_of_women.txt`
 - `law_womens_suffrage`
   - TGR: `common/laws/TGR_POLITICS_rights_of_women.txt`
   - BPM: `common/laws/BPM_rights_of_women.txt`
@@ -435,22 +443,10 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - TGR: `common/legitimacy_levels/TGR_POLITICS_legitimacy_levels.txt`
   - BPM: `common/legitimacy_levels/bpm_legitimacy_levels.txt`
 
-### common/modifier_type_definitions — 5 duplicates
+### common/modifier_type_definitions — 1 duplicates
 - `country_shopkeepers_pol_str_mult`
   - TGR: `common/modifier_type_definitions/TGR_POLITICS_todo_sort_into_other_files.txt`
   - BPM: `common/modifier_type_definitions/BPM_functional_modifiers.txt`
-- `state_engineers_investment_pool_contribution_add`
-  - TGR: `common/modifier_type_definitions/TGR_LOANS_todo_sort_into_other_files.txt`
-  - BPM: `common/modifier_type_definitions/zz_BPM_00_modifier_types.txt`
-- `state_laborers_investment_pool_contribution_add`
-  - TGR: `common/modifier_type_definitions/TGR_LOANS_todo_sort_into_other_files.txt`
-  - BPM: `common/modifier_type_definitions/zz_BPM_00_modifier_types.txt`
-- `state_machinists_investment_pool_contribution_add`
-  - TGR: `common/modifier_type_definitions/TGR_LOANS_todo_sort_into_other_files.txt`
-  - BPM: `common/modifier_type_definitions/zz_BPM_00_modifier_types.txt`
-- `state_shopkeepers_investment_pool_contribution_add`
-  - TGR: `common/modifier_type_definitions/TGR_LOANS_todo_sort_into_other_files.txt`
-  - BPM: `common/modifier_type_definitions/zz_BPM_00_modifier_types.txt`
 
 ### common/on_actions — 4 duplicates
 - `on_half_yearly_pulse_country`

@@ -1,0 +1,498 @@
+# TGR vs T&R — conflict report (key-level heuristic)
+
+- TGR root: `C:/Users/Andrey/Projects/vic3_mods_out/TheGreatRevision`
+- T&R root: `C:/Users/Andrey/Projects/vic3_mods_out/TechRes+Kuromi/t&r`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/ai_strategies — 4 duplicates
+- `ai_strategy_colonial_extraction`
+  - TGR: `common/ai_strategies/GRPROD_admin_strategies.txt`
+  - T&R: `common/ai_strategies/ztr_admin_strategies.txt`
+- `ai_strategy_default`
+  - TGR: `common/ai_strategies/TGR_ADJUSTMENTS_default_strategy.txt`
+  - TGR: `common/ai_strategies/TGR_POLITICS_default_strategy.txt`
+  - T&R: `common/ai_strategies/ztr_default_strategy.txt`
+- `ai_strategy_industrial_expansion`
+  - TGR: `common/ai_strategies/GRPROD_admin_strategies.txt`
+  - T&R: `common/ai_strategies/ztr_admin_strategies.txt`
+- `ai_strategy_resource_expansion`
+  - TGR: `common/ai_strategies/GRPROD_admin_strategies.txt`
+  - T&R: `common/ai_strategies/ztr_admin_strategies.txt`
+
+### common/buildings — 18 duplicates
+- `building_arms_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_artillery_foundry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_automotive_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_chemical_plant`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_electrics_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_explosives_factory`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_food_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_furniture_manufactory`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_glassworks`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_military_shipyard`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_motor_industry`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_munition_plant`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_paper_mill`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_shipyard`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_steel_mill`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_synthetics_plant`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_textile_mill`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_tooling_workshop`
+  - TGR: `common/buildings/TGR_POLITICS_industry.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+
+### common/buy_packages — 90 duplicates
+- `wealth_10`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_11`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_12`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_13`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_14`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_15`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_16`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_17`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_18`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_19`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_20`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_21`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_22`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_23`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_24`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_25`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_26`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_27`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_28`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_29`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_30`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_31`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_32`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_33`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_34`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_35`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_36`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_37`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_38`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_39`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_40`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_41`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_42`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_43`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_44`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_45`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_46`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_47`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_48`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_49`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_50`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_51`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_52`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_53`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_54`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_55`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_56`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_57`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_58`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_59`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_60`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_61`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_62`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_63`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_64`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_65`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_66`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_67`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_68`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_69`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_70`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_71`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_72`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_73`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_74`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_75`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_76`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_77`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_78`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_79`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_80`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_81`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_82`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_83`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_84`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_85`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_86`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_87`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_88`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_89`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_90`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_91`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_92`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_93`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_94`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_95`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_96`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_97`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_98`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_99`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+
+### common/company_types — 7 duplicates
+- `company_altos_hornos_de_vizcaya`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+- `company_east_india_company`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_asia.txt`
+- `company_imperial_arsenal`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_asia.txt`
+- `company_krupp`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_germany.txt`
+- `company_lkab`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+- `company_philips`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_europe.txt`
+- `company_united_fruit`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - T&R: `common/company_types/ztr_companies_usa.txt`
+
+### common/defines — 2 duplicates
+- `NEconomy`
+  - TGR: `common/defines/TGR_TRADE_defines.txt`
+  - T&R: `common/defines/ztr_defines.txt`
+- `NPops`
+  - TGR: `common/defines/TGR_ASSIMILATION_defines.txt`
+  - TGR: `common/defines/TGR_POPS_defines.txt`
+  - TGR: `common/defines/TGR_TRADE_defines.txt`
+  - T&R: `common/defines/ztr_defines.txt`
+
+### common/history/buildings — 1 duplicates
+- `BUILDINGS`
+  - TGR: `common/history/buildings/TGR_TRADE_company_buildings_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_net_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_russia_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_trade_center_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_uk_setup.txt`
+  - T&R: `common/history/buildings/elgar_opera.txt`
+  - T&R: `common/history/buildings/manzoni_printing.txt`
+  - T&R: `common/history/buildings/mr_buildings.txt`
+  - T&R: `common/history/buildings/ztr_buildings.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - TGR: `common/history/global/TGR_POLITICS_global.txt`
+  - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_obsessions.txt`
+  - T&R: `common/history/global/ztr_global.txt`
+
+### common/laws — 2 duplicates
+- `law_extraction_economy`
+  - TGR: `common/laws/TGR_POLITICS_economic_system.txt`
+  - T&R: `common/laws/ztr_economic_system.txt`
+- `law_industry_banned`
+  - TGR: `common/laws/TGR_POLITICS_economic_system.txt`
+  - T&R: `common/laws/ztr_economic_system.txt`
+
+### common/on_actions — 2 duplicates
+- `on_monthly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+- `on_yearly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_POLITICS_gain_ideology.txt`
+  - TGR: `common/on_actions/TGR_TRADE_code_on_actions.txt`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+
+### common/pop_needs — 3 duplicates
+- `popneed_basic_food`
+  - TGR: `common/pop_needs/TGR_TRADE_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+- `popneed_luxury_drinks`
+  - TGR: `common/pop_needs/TGR_TRADE_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+- `popneed_luxury_food`
+  - TGR: `common/pop_needs/TGR_TRADE_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_pop_needs.txt`
+
+### common/production_methods — 16 duplicates
+- `pm_assembly_lines_building_arms_industry`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_assembly_lines_building_automotive_industry`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_assembly_lines_building_motor_industry`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_automatic_power_looms`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_basic_port`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_ports.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_compression_ignition_tractors`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_new_production_methods.txt`
+- `pm_diesel_trains`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_railway.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_diesel_trains_principle_transport_3`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_railway.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_electric_fencing`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_electric_trains`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_railway.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_electric_trains_principle_transport_3`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_railway.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_industrial_port`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_ports.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_modern_port`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_ports.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_rail_transport_mine`
+  - TGR: `common/production_methods/TGR_TRADE_automation.txt`
+  - T&R: `common/production_methods/ztr_new_production_methods.txt`
+- `pm_steam_trains`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_railway.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+- `pm_steam_trains_principle_transport_3`
+  - TGR: `common/production_methods/TGR_TRADE_private_infrastructure_railway.txt`
+  - T&R: `common/production_methods/ztr_vanilla_production_methods.txt`
+
+### common/technology/technologies — 1 duplicates
+- `mutual_funds`
+  - TGR: `common/technology/technologies/TGR_LOANS_society.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_society.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

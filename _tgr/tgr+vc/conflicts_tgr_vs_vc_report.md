@@ -1,0 +1,478 @@
+# TGR vs VC — conflict report (key-level heuristic)
+
+- TGR root: `C:/Users/Andrey/Projects/vic3_mods_out/TheGreatRevision`
+- VC root: `C:/Users/Andrey/Projects/vic3_mods_out/Victorian Century`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/buy_packages — 99 duplicates
+- `wealth_1`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_10`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_11`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_12`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_13`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_14`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_15`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_16`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_17`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_18`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_19`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_2`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_20`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_21`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_22`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_23`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_24`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_25`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_26`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_27`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_28`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_29`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_3`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_30`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_31`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_32`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_33`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_34`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_35`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_36`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_37`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_38`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_39`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_4`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_40`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_41`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_42`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_43`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_44`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_45`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_46`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_47`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_48`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_49`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_5`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_50`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_51`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_52`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_53`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_54`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_55`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_56`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_57`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_58`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_59`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_6`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_60`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_61`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_62`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_63`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_64`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_65`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_66`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_67`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_68`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_69`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_7`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_70`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_71`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_72`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_73`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_74`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_75`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_76`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_77`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_78`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_79`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_8`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_80`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_81`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_82`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_83`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_84`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_85`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_86`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_87`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_88`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_89`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_9`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_90`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_91`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_92`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_93`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_94`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_95`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_96`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_97`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_98`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_99`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+
+### common/company_types — 10 duplicates
+- `company_east_india_company`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_gebruder_thonet`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_imperial_arsenal`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_krupp`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_mitsui`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_ong_lung_sheng_tea_company`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_philips`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_russian_american_company`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_united_fruit`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_william_cramp`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+  - VC: `common/company_types/joi_companies.txt`
+
+### common/country_formation — 1 duplicates
+- `GER`
+  - TGR: `common/country_formation/TGR_GER_UNIFICATION_major_formables.txt`
+  - VC: `common/country_formation/jol_major_formables.txt`
+
+### common/defines — 3 duplicates
+- `NAI`
+  - TGR: `common/defines/TGR_ADJUSTMENTS_ai.txt`
+  - TGR: `common/defines/TGR_GER_UNIFICATION_ai.txt`
+  - TGR: `common/defines/TGR_TAX_PANEL_defines.txt`
+  - TGR: `common/defines/TGR_TRADE_ai.txt`
+  - VC: `common/defines/joi_ai.txt`
+- `NEconomy`
+  - TGR: `common/defines/TGR_TRADE_defines.txt`
+  - VC: `common/defines/joi_defines.txt`
+- `NPops`
+  - TGR: `common/defines/TGR_ASSIMILATION_defines.txt`
+  - TGR: `common/defines/TGR_POPS_defines.txt`
+  - TGR: `common/defines/TGR_TRADE_defines.txt`
+  - VC: `common/defines/joi_defines.txt`
+
+### common/government_types — 2 duplicates
+- `gov_presidential_democracy`
+  - TGR: `common/government_types/TGR_POLITICS_presidential_republics.txt`
+  - VC: `common/government_types/joi_republics.txt`
+- `gov_presidential_dictatorship`
+  - TGR: `common/government_types/TGR_POLITICS_presidential_republics.txt`
+  - VC: `common/government_types/joi_republics.txt`
+
+### common/history/countries — 1 duplicates
+- `COUNTRIES`
+  - TGR: `common/history/countries/aus - austria.txt`
+  - TGR: `common/history/countries/brz - brazil.txt`
+  - TGR: `common/history/countries/chi - china.txt`
+  - TGR: `common/history/countries/fra - france.txt`
+  - TGR: `common/history/countries/gbr - great britain.txt`
+  - VC: `common/history/countries/aus - austria.txt`
+  - VC: `common/history/countries/bic - british east india company.txt`
+  - VC: `common/history/countries/brz - brazil.txt`
+  - VC: `common/history/countries/chi - china.txt`
+  - VC: `common/history/countries/fra - france.txt`
+
+### common/ideologies — 1 duplicates
+- `ideology_utilitarian_leader`
+  - TGR: `common/ideologies/TGR_POLITICS_character_ideologies.txt`
+  - VC: `common/ideologies/joi_leader_ideologies.txt`
+
+### common/interest_groups — 8 duplicates
+- `ig_armed_forces`
+  - TGR: `common/interest_groups/TGR_POLITICS_armed_forces.txt`
+  - VC: `common/interest_groups/joi_armed_forces.txt`
+- `ig_devout`
+  - TGR: `common/interest_groups/TGR_POLITICS_devout.txt`
+  - VC: `common/interest_groups/joi_devout.txt`
+- `ig_industrialists`
+  - TGR: `common/interest_groups/TGR_POLITICS_industrialists.txt`
+  - VC: `common/interest_groups/joi_industrialists.txt`
+- `ig_intelligentsia`
+  - TGR: `common/interest_groups/TGR_POLITICS_intelligentsia.txt`
+  - VC: `common/interest_groups/joi_intelligentsia.txt`
+- `ig_landowners`
+  - TGR: `common/interest_groups/TGR_POLITICS_landowners.txt`
+  - VC: `common/interest_groups/joi_landowners.txt`
+- `ig_petty_bourgeoisie`
+  - TGR: `common/interest_groups/TGR_POLITICS_petty_bourgeoisie.txt`
+  - VC: `common/interest_groups/joi_petty_bourgeoisie.txt`
+- `ig_rural_folk`
+  - TGR: `common/interest_groups/TGR_POLITICS_rural_folk.txt`
+  - VC: `common/interest_groups/joi_rural_folk.txt`
+- `ig_trade_unions`
+  - TGR: `common/interest_groups/TGR_POLITICS_trade_unions.txt`
+  - VC: `common/interest_groups/joi_trade_unions.txt`
+
+### common/journal_entries — 3 duplicates
+- `je_german_unification`
+  - TGR: `common/journal_entries/TGR_GER_UNIFICATION_german_unification.txt`
+  - VC: `common/journal_entries/00_german_unification.txt`
+- `je_north_german_unification`
+  - TGR: `common/journal_entries/TGR_GER_UNIFICATION_german_unification.txt`
+  - VC: `common/journal_entries/00_german_unification.txt`
+- `je_schleswig_holstein_question`
+  - TGR: `common/journal_entries/TGR_GER_UNIFICATION_german_unification.txt`
+  - VC: `common/journal_entries/00_german_unification.txt`
+
+### common/on_actions — 2 duplicates
+- `on_monthly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - VC: `common/on_actions/headlines_on_actions.txt`
+  - VC: `common/on_actions/joi_code_on_actions.txt`
+- `on_yearly_pulse_country`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_POLITICS_gain_ideology.txt`
+  - TGR: `common/on_actions/TGR_TRADE_code_on_actions.txt`
+  - VC: `common/on_actions/modlc_on_actions_monthly.txt`
+
+### common/parties — 3 duplicates
+- `conservative_party`
+  - TGR: `common/parties/conservative_party.txt`
+  - VC: `common/parties/conservative_party.txt`
+- `liberal_party`
+  - TGR: `common/parties/liberal_party.txt`
+  - VC: `common/parties/liberal_party.txt`
+- `radical_party`
+  - TGR: `common/parties/radical_party.txt`
+  - VC: `common/parties/radical_party.txt`
+
+### common/pop_needs — 3 duplicates
+- `popneed_basic_food`
+  - TGR: `common/pop_needs/TGR_TRADE_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_luxury_drinks`
+  - TGR: `common/pop_needs/TGR_TRADE_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_luxury_food`
+  - TGR: `common/pop_needs/TGR_TRADE_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+
+### common/static_modifiers — 1 duplicates
+- `base_values`
+  - TGR: `common/static_modifiers/TGR_LOANS_code_static_modifiers.txt`
+  - TGR: `common/static_modifiers/TGR_POLITICS_code_static_modifiers.txt`
+  - TGR: `common/static_modifiers/TGR_TRADE_code_static_modifiers.txt`
+  - VC: `common/static_modifiers/joi_code_static_modifiers.txt`
+
+### common/technology/technologies — 1 duplicates
+- `human_rights`
+  - TGR: `common/technology/technologies/TGR_POLITICS_society.txt`
+  - VC: `common/technology/technologies/joi_society.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

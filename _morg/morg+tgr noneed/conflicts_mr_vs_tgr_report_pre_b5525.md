@@ -307,7 +307,6 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - MR: `common/history/global/0_mr_cmf_initiation.txt`
   - MR: `common/history/global/mr_global.txt`
   - MR: `common/history/global/mr_set_cultures_global.txt`
-  - TGR: `common/history/global/TGR_LOANS_global.txt`
   - TGR: `common/history/global/TGR_POLITICS_global.txt`
   - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
   - TGR: `common/history/global/TGR_TRADE_global.txt`
