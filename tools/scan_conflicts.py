@@ -151,20 +151,22 @@ def collect_event_ids(mod_root: Path) -> dict[str, list[str]]:
 def _write_report(
     report_path: Path,
     *,
-    ef_root: Path,
-    vc_root: Path,
-    ef_common: dict[str, dict[str, list[str]]],
-    vc_common: dict[str, dict[str, list[str]]],
-    ef_loc: dict[str, list[str]],
-    vc_loc: dict[str, list[str]],
-    ef_events: dict[str, list[str]],
-    vc_events: dict[str, list[str]],
+    a_root: Path,
+    b_root: Path,
+    a_name: str,
+    b_name: str,
+    a_common: dict[str, dict[str, list[str]]],
+    b_common: dict[str, dict[str, list[str]]],
+    a_loc: dict[str, list[str]],
+    b_loc: dict[str, list[str]],
+    a_events: dict[str, list[str]],
+    b_events: dict[str, list[str]],
 ) -> None:
     lines: list[str] = []
-    lines.append("# E&F vs Victorian Century — conflict report (key-level heuristic)")
+    lines.append(f"# {a_name} vs {b_name} — conflict report (key-level heuristic)")
     lines.append("")
-    lines.append(f"- E&F root: `{ef_root.as_posix()}`")
-    lines.append(f"- VC root: `{vc_root.as_posix()}`")
+    lines.append(f"- {a_name} root: `{a_root.as_posix()}`")
+    lines.append(f"- {b_name} root: `{b_root.as_posix()}`")
     lines.append("")
     lines.append(
         "This report finds **identifier-level duplicates** (same key/id defined by both mods), "
@@ -174,12 +176,12 @@ def _write_report(
 
     # common duplicates by same category path
     lines.append("## common/*: duplicate top-level keys")
-    common_cats = sorted(set(ef_common).intersection(vc_common))
+    common_cats = sorted(set(a_common).intersection(b_common))
     total_common_dups = 0
     for cat in common_cats:
-        ef_keys = set(ef_common[cat])
-        vc_keys = set(vc_common[cat])
-        dup = sorted(ef_keys & vc_keys)
+        a_keys = set(a_common[cat])
+        b_keys = set(b_common[cat])
+        dup = sorted(a_keys & b_keys)
         if not dup:
             continue
         total_common_dups += len(dup)
@@ -187,10 +189,10 @@ def _write_report(
         lines.append(f"### {cat} — {len(dup)} duplicates")
         for k in dup[:250]:
             lines.append(f"- `{k}`")
-            for f in sorted(set(ef_common[cat][k]))[:5]:
-                lines.append(f"  - E&F: `{f}`")
-            for f in sorted(set(vc_common[cat][k]))[:5]:
-                lines.append(f"  - VC: `{f}`")
+            for f in sorted(set(a_common[cat][k]))[:5]:
+                lines.append(f"  - {a_name}: `{f}`")
+            for f in sorted(set(b_common[cat][k]))[:5]:
+                lines.append(f"  - {b_name}: `{f}`")
         if len(dup) > 250:
             lines.append(f"- ... and {len(dup) - 250} more")
     if total_common_dups == 0:
@@ -199,27 +201,27 @@ def _write_report(
 
     lines.append("")
     lines.append("## localization: duplicate localization keys")
-    loc_dup = sorted(set(ef_loc) & set(vc_loc))
+    loc_dup = sorted(set(a_loc) & set(b_loc))
     lines.append(f"- Total duplicate localization keys: **{len(loc_dup)}**")
     for k in loc_dup[:250]:
         lines.append(f"  - `{k}`")
-        for f in sorted(set(ef_loc[k]))[:3]:
-            lines.append(f"    - E&F: `{f}`")
-        for f in sorted(set(vc_loc[k]))[:3]:
-            lines.append(f"    - VC: `{f}`")
+        for f in sorted(set(a_loc[k]))[:3]:
+            lines.append(f"    - {a_name}: `{f}`")
+        for f in sorted(set(b_loc[k]))[:3]:
+            lines.append(f"    - {b_name}: `{f}`")
     if len(loc_dup) > 250:
         lines.append(f"  - ... and {len(loc_dup) - 250} more")
 
     lines.append("")
     lines.append("## events: duplicate event ids (`id = ...` anywhere in events/*.txt)")
-    ev_dup = sorted(set(ef_events) & set(vc_events))
+    ev_dup = sorted(set(a_events) & set(b_events))
     lines.append(f"- Total duplicate event ids: **{len(ev_dup)}**")
     for eid in ev_dup[:250]:
         lines.append(f"  - `{eid}`")
-        for f in sorted(set(ef_events[eid]))[:3]:
-            lines.append(f"    - E&F: `{f}`")
-        for f in sorted(set(vc_events[eid]))[:3]:
-            lines.append(f"    - VC: `{f}`")
+        for f in sorted(set(a_events[eid]))[:3]:
+            lines.append(f"    - {a_name}: `{f}`")
+        for f in sorted(set(b_events[eid]))[:3]:
+            lines.append(f"    - {b_name}: `{f}`")
     if len(ev_dup) > 250:
         lines.append(f"  - ... and {len(ev_dup) - 250} more")
 
@@ -227,13 +229,23 @@ def _write_report(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description=(
+            "Compare two Vic3 mods and report identifier-level duplicates (common keys, localization keys, event ids). "
+            "Heuristic, may include false positives. "
+            "Back-compat: --ef/--vc defaults still supported."
+        )
+    )
     parser.add_argument(
         "--workspace",
         type=Path,
         default=Path.cwd(),
         help="Workspace root (defaults to current dir).",
     )
+    parser.add_argument("--a", type=Path, default=None, help="Path to mod A root (generic mode).")
+    parser.add_argument("--b", type=Path, default=None, help="Path to mod B root (generic mode).")
+    parser.add_argument("--a-name", type=str, default=None, help="Display name for mod A.")
+    parser.add_argument("--b-name", type=str, default=None, help="Display name for mod B.")
     parser.add_argument(
         "--ef",
         type=Path,
@@ -255,44 +267,59 @@ def main() -> int:
     args = parser.parse_args()
 
     ws = args.workspace.resolve()
-    ef_root = (args.ef or (ws / "E&F" / "e&f")).resolve()
-    vc_root = (args.vc or (ws / "Victorian Century")).resolve()
-    out_path = (args.out or (ws / "conflicts_ef_vs_vc_report.md")).resolve()
+    # Generic mode (preferred): --a/--b
+    if args.a is not None or args.b is not None:
+        if args.a is None or args.b is None:
+            raise SystemExit("Provide both --a and --b (or use legacy --ef/--vc mode).")
+        a_root = args.a.resolve()
+        b_root = args.b.resolve()
+        a_name = args.a_name or a_root.name
+        b_name = args.b_name or b_root.name
+        out_path = (args.out or (ws / f"conflicts_{a_name}_vs_{b_name}_report.md")).resolve()
+    else:
+        # Legacy mode: keep prior defaults for E&F vs VC
+        a_root = (args.ef or (ws / "E&F" / "e&f")).resolve()
+        b_root = (args.vc or (ws / "Victorian Century")).resolve()
+        a_name = args.a_name or "E&F"
+        b_name = args.b_name or "VC"
+        out_path = (args.out or (ws / "conflicts_ef_vs_vc_report.md")).resolve()
 
-    if not ef_root.exists():
-        raise SystemExit(f"E&F root not found: {ef_root}")
-    if not vc_root.exists():
-        raise SystemExit(f"VC root not found: {vc_root}")
+    if not a_root.exists():
+        raise SystemExit(f"Mod A root not found: {a_root}")
+    if not b_root.exists():
+        raise SystemExit(f"Mod B root not found: {b_root}")
 
-    print("Collecting E&F common keys...")
-    ef_common = collect_common_keys(ef_root)
-    print("Collecting VC common keys...")
-    vc_common = collect_common_keys(vc_root)
+    print(f"Collecting {a_name} common keys...")
+    a_common = collect_common_keys(a_root)
+    print(f"Collecting {b_name} common keys...")
+    b_common = collect_common_keys(b_root)
     print("Collecting localization keys...")
-    ef_loc = collect_localization_keys(ef_root)
-    vc_loc = collect_localization_keys(vc_root)
+    a_loc = collect_localization_keys(a_root)
+    b_loc = collect_localization_keys(b_root)
     print("Collecting event ids...")
-    ef_events = collect_event_ids(ef_root)
-    vc_events = collect_event_ids(vc_root)
+    a_events = collect_event_ids(a_root)
+    b_events = collect_event_ids(b_root)
 
     _write_report(
         out_path,
-        ef_root=ef_root,
-        vc_root=vc_root,
-        ef_common=ef_common,
-        vc_common=vc_common,
-        ef_loc=ef_loc,
-        vc_loc=vc_loc,
-        ef_events=ef_events,
-        vc_events=vc_events,
+        a_root=a_root,
+        b_root=b_root,
+        a_name=a_name,
+        b_name=b_name,
+        a_common=a_common,
+        b_common=b_common,
+        a_loc=a_loc,
+        b_loc=b_loc,
+        a_events=a_events,
+        b_events=b_events,
     )
 
-    common_cats = set(ef_common).intersection(vc_common)
+    common_cats = set(a_common).intersection(b_common)
     common_dup_count = 0
     for cat in common_cats:
-        common_dup_count += len(set(ef_common[cat]).intersection(vc_common[cat]))
-    loc_dup_count = len(set(ef_loc).intersection(vc_loc))
-    ev_dup_count = len(set(ef_events).intersection(vc_events))
+        common_dup_count += len(set(a_common[cat]).intersection(b_common[cat]))
+    loc_dup_count = len(set(a_loc).intersection(b_loc))
+    ev_dup_count = len(set(a_events).intersection(b_events))
 
     print("Wrote report:", out_path)
     print("Summary:",

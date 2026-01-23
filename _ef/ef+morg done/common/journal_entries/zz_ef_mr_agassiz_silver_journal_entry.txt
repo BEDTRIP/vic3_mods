@@ -55,7 +55,9 @@ je_agassiz_find_silver_project = {
 
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 
 		# Those should be removed in every geology JE
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -103,7 +105,9 @@ je_agassiz_find_silver_project = {
 
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 
 		# Those should be removed in every geology JE
 		remove_variable = agassiz_geologist_improvement_progress_var

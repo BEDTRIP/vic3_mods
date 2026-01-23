@@ -1,0 +1,808 @@
+# Morgenrote vs T&R — conflict report (key-level heuristic)
+
+- Morgenrote root: `C:/Users/Andrey/Projects/vic3_mods_out/Morgenrote`
+- T&R root: `C:/Users/Andrey/Projects/vic3_mods_out/TechRes+Kuromi/t&r`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/building_groups — 2 duplicates
+- `bg_opera`
+  - Morgenrote: `common/building_groups/mr_arts_elgar_building_groups.txt`
+  - T&R: `common/building_groups/ztr_mr_building_groups.txt`
+- `bg_uranium_mining`
+  - Morgenrote: `common/building_groups/mr_science_curie_building_groups.txt`
+  - T&R: `common/building_groups/ztr_modified_mr_building_groups.txt`
+
+### common/buildings — 9 duplicates
+- `building_airport`
+  - Morgenrote: `common/buildings/mr_sports_civil_aviation_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_modified_buildings.txt`
+- `building_art_academy`
+  - Morgenrote: `common/buildings/mr_vanilla_buildings_replace.txt`
+  - T&R: `common/buildings/ztr_vanilla_optimization_buildings.txt`
+- `building_elgar_opera`
+  - Morgenrote: `common/buildings/mr_arts_elgar_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_modified_buildings.txt`
+- `building_instrument_workshops`
+  - Morgenrote: `common/buildings/mr_arts_elgar_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_modified_buildings.txt`
+- `building_manzoni_publishing_industry`
+  - Morgenrote: `common/buildings/mr_arts_manzoni_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_modified_buildings.txt`
+- `building_mendelejew_hydrogenation_plants`
+  - Morgenrote: `common/buildings/mr_science_mendelejew_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_modified_buildings.txt`
+- `building_mendelejew_synthetic_rubber_factory`
+  - Morgenrote: `common/buildings/mr_science_mendelejew_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_modified_buildings.txt`
+- `building_railway`
+  - Morgenrote: `common/buildings/mr_vanilla_buildings_replace.txt`
+  - T&R: `common/buildings/ztr_vanilla_modified_buildings.txt`
+- `building_uranium_mine`
+  - Morgenrote: `common/buildings/mr_science_curie_buildings.txt`
+  - T&R: `common/buildings/ztr_mr_buildings.txt`
+
+### common/buy_packages — 90 duplicates
+- `wealth_10`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_11`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_12`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_13`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_14`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_15`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_16`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_17`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_18`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_19`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_20`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_21`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_22`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_23`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_24`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_25`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_26`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_27`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_28`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_29`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_30`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_31`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_32`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_33`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_34`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_35`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_36`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_37`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_38`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_39`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_40`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_41`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_42`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_43`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_44`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_45`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_46`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_47`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_48`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_49`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_50`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_51`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_52`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_53`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_54`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_55`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_56`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_57`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_58`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_59`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_60`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_61`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_62`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_63`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_64`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_65`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_66`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_67`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_68`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_69`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_70`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_71`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_72`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_73`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_74`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_75`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_76`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_77`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_78`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_79`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_80`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_81`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_82`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_83`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_84`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_85`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_86`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_87`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_88`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_89`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_90`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_91`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_92`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_93`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_94`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_95`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_96`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_97`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_98`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+- `wealth_99`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - T&R: `common/buy_packages/ztr_buy_packages.txt`
+
+### common/company_types — 10 duplicates
+- `company_basic_chemicals`
+  - Morgenrote: `common/company_types/vanilla_company_types.txt`
+  - T&R: `common/company_types/ztr_99_basic_companies.txt`
+- `company_basic_oil`
+  - Morgenrote: `common/company_types/vanilla_company_types.txt`
+  - T&R: `common/company_types/ztr_99_basic_companies.txt`
+- `curtiss_company_DLR`
+  - Morgenrote: `common/company_types/mr_curtiss_company_types.txt`
+  - T&R: `common/company_types/ztr_airline_companies.txt`
+- `curtiss_company_KLM`
+  - Morgenrote: `common/company_types/mr_curtiss_company_types.txt`
+  - T&R: `common/company_types/ztr_airline_companies.txt`
+- `curtiss_company_air_france`
+  - Morgenrote: `common/company_types/mr_curtiss_company_types.txt`
+  - T&R: `common/company_types/ztr_airline_companies.txt`
+- `curtiss_company_basic_air_travel`
+  - Morgenrote: `common/company_types/mr_curtiss_company_types.txt`
+  - T&R: `common/company_types/ztr_airline_companies.txt`
+- `curtiss_company_imperial_airways`
+  - Morgenrote: `common/company_types/mr_curtiss_company_types.txt`
+  - T&R: `common/company_types/ztr_airline_companies.txt`
+- `curtiss_company_swissair`
+  - Morgenrote: `common/company_types/mr_curtiss_company_types.txt`
+  - T&R: `common/company_types/ztr_airline_companies.txt`
+- `elgar_company_basic_instruments`
+  - Morgenrote: `common/company_types/mr_elgar_company_types.txt`
+  - T&R: `common/company_types/ztr_entertainment_companies.txt`
+- `elgar_company_steinway`
+  - Morgenrote: `common/company_types/mr_elgar_company_types.txt`
+  - T&R: `common/company_types/ztr_entertainment_companies.txt`
+
+### common/goods — 4 duplicates
+- `elgar_instruments`
+  - Morgenrote: `common/goods/elgar_goods.txt`
+  - T&R: `common/goods/ztr_mr_goods.txt`
+- `elgar_music`
+  - Morgenrote: `common/goods/elgar_goods.txt`
+  - T&R: `common/goods/ztr_mr_goods.txt`
+- `good_uranium`
+  - Morgenrote: `common/goods/curie_goods.txt`
+  - T&R: `common/goods/ztr_mr_goods.txt`
+- `manzoni_prints`
+  - Morgenrote: `common/goods/manzoni_goods.txt`
+  - T&R: `common/goods/ztr_mr_goods.txt`
+
+### common/history/buildings — 1 duplicates
+- `BUILDINGS`
+  - Morgenrote: `common/history/buildings/elgar_opera.txt`
+  - Morgenrote: `common/history/buildings/gaudi_monument.txt`
+  - Morgenrote: `common/history/buildings/manzoni_printing.txt`
+  - Morgenrote: `common/history/buildings/mr_buildings.txt`
+  - Morgenrote: `common/history/buildings/verrier_observatory.txt`
+  - T&R: `common/history/buildings/elgar_opera.txt`
+  - T&R: `common/history/buildings/manzoni_printing.txt`
+  - T&R: `common/history/buildings/mr_buildings.txt`
+  - T&R: `common/history/buildings/ztr_buildings.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - Morgenrote: `common/history/global/0_mr_cmf_initiation.txt`
+  - Morgenrote: `common/history/global/mr_global.txt`
+  - Morgenrote: `common/history/global/mr_set_cultures_global.txt`
+  - T&R: `common/history/global/ztr_global.txt`
+
+### common/history/states — 1 duplicates
+- `STATES`
+  - Morgenrote: `common/history/states/mr_states.txt`
+  - T&R: `common/history/states/ztr_state_traits.txt`
+
+### common/mobilization_options — 1 duplicates
+- `mobilization_option_aerial_recon`
+  - Morgenrote: `common/mobilization_options/vanilla_mobilization_option.txt`
+  - T&R: `common/mobilization_options/ztr_vanilla_mobilization_option.txt`
+
+### common/modifier_type_definitions — 19 duplicates
+- `building_airport_throughput_add`
+  - Morgenrote: `common/modifier_type_definitions/civil_aviation_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `building_elgar_opera_throughput_add`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_building_modifier_types.txt`
+- `building_manzoni_publishing_industry_throughput_add`
+  - Morgenrote: `common/modifier_type_definitions/manzoni_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_building_modifier_types.txt`
+- `building_mendelejew_hydrogenation_plants_throughput_add`
+  - Morgenrote: `common/modifier_type_definitions/mendelejew_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_building_modifier_types.txt`
+- `building_mendelejew_synthetic_rubber_factory_throughput_add`
+  - Morgenrote: `common/modifier_type_definitions/mendelejew_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_building_modifier_types.txt`
+- `goods_input_elgar_instruments_add`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_input_elgar_music_add`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_input_good_uranium_add`
+  - Morgenrote: `common/modifier_type_definitions/curie_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_input_luxury_clothes_add`
+  - Morgenrote: `common/modifier_type_definitions/vanilla_missing_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_new_goods_modifier_types.txt`
+- `goods_input_manzoni_prints_add`
+  - Morgenrote: `common/modifier_type_definitions/manzoni_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_elgar_instruments_add`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_elgar_instruments_mult`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_elgar_music_add`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_elgar_music_mult`
+  - Morgenrote: `common/modifier_type_definitions/elgar_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_good_uranium_add`
+  - Morgenrote: `common/modifier_type_definitions/curie_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_good_uranium_mult`
+  - Morgenrote: `common/modifier_type_definitions/curie_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `goods_output_grain_mult`
+  - Morgenrote: `common/modifier_type_definitions/dubois_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_new_goods_modifier_types.txt`
+- `goods_output_manzoni_prints_add`
+  - Morgenrote: `common/modifier_type_definitions/manzoni_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+- `state_building_uranium_mine_max_level_add`
+  - Morgenrote: `common/modifier_type_definitions/curie_building_modifier_types.txt`
+  - T&R: `common/modifier_type_definitions/ztr_mr_modifier_types.txt`
+
+### common/on_actions — 3 duplicates
+- `on_acquired_technology`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/curtiss_on_actions.txt`
+  - Morgenrote: `common/on_actions/dubois_on_actions.txt`
+  - Morgenrote: `common/on_actions/elgar_on_actions.txt`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+- `on_monthly_pulse_country`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/curtiss_on_actions.txt`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+- `on_yearly_pulse_country`
+  - Morgenrote: `common/on_actions/MFE_main_flavor_pulse.txt`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - T&R: `common/on_actions/ztr_on_actions.txt`
+
+### common/pop_needs — 4 duplicates
+- `popneed_entertainment`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+- `popneed_free_movement`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+- `popneed_leisure`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+- `popneed_luxury_items`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - T&R: `common/pop_needs/ztr_mr_pop_needs.txt`
+
+### common/prestige_goods — 1 duplicates
+- `prestige_good_generic_instruments`
+  - Morgenrote: `common/prestige_goods/mr_prestige_goods.txt`
+  - T&R: `common/prestige_goods/ztr_generic_prestige_goods.txt`
+
+### common/production_method_groups — 13 duplicates
+- `manzoni_pmg_building_publishing_industry_automation`
+  - Morgenrote: `common/production_method_groups/manzoni_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_modified_mr_production_method_groups.txt`
+- `manzoni_pmg_communication`
+  - Morgenrote: `common/production_method_groups/manzoni_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_modified_mr_production_method_groups.txt`
+- `pmg_base_building_airport`
+  - Morgenrote: `common/production_method_groups/civil_aviation_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_mr_production_method_groups.txt`
+- `pmg_cargo_airport`
+  - Morgenrote: `common/production_method_groups/civil_aviation_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_mr_production_method_groups.txt`
+- `pmg_curie_explosives_building_uranium_mine`
+  - Morgenrote: `common/production_method_groups/curie_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_new_production_method_groups.txt`
+- `pmg_curie_mining_equipment_building_uranium_mine`
+  - Morgenrote: `common/production_method_groups/curie_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_new_production_method_groups.txt`
+- `pmg_curie_steam_automation_building_uranium_mine`
+  - Morgenrote: `common/production_method_groups/curie_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_new_production_method_groups.txt`
+- `pmg_curie_train_automation_building_uranium_mine`
+  - Morgenrote: `common/production_method_groups/curie_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_new_production_method_groups.txt`
+- `pmg_elgar_ballet_school`
+  - Morgenrote: `common/production_method_groups/elgar_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_modified_mr_production_method_groups.txt`
+- `pmg_elgar_instruments`
+  - Morgenrote: `common/production_method_groups/elgar_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_modified_mr_production_method_groups.txt`
+- `pmg_elgar_orchestra`
+  - Morgenrote: `common/production_method_groups/elgar_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_modified_mr_production_method_groups.txt`
+- `pmg_luxury_building_glassworks`
+  - Morgenrote: `common/production_method_groups/mr_vanilla_production_method_groups_inject.txt`
+  - T&R: `common/production_method_groups/ztr_vanilla_production_method_groups.txt`
+- `pmg_mendelejew_isoprene`
+  - Morgenrote: `common/production_method_groups/mendelejew_production_method_groups.txt`
+  - T&R: `common/production_method_groups/ztr_modified_mr_production_method_groups.txt`
+
+### common/production_methods — 33 duplicates
+- `manzoni_pm_cylinder_presses`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_electric_telegraph`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_linotype`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_physical`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_printing_presses`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_radio`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_rotary_presses`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `manzoni_pm_telephone`
+  - Morgenrote: `common/production_methods/manzoni_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_air_freight`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_air_mail`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_air_passenger_only`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_curie_atmospheric_engine_pump_building_uranium_mine`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_curie_condensing_engine_pump_building_uranium_mine`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_curie_diesel_pump_building_uranium_mine`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_curie_dynamite_building_uranium_mine`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_mr_production_methods.txt`
+- `pm_curie_nitroglycerin_building_uranium_mine`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_mr_production_methods.txt`
+- `pm_curie_picks_and_shovels_building_uranium_mine`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_curie_uranium_glass`
+  - Morgenrote: `common/production_methods/curie_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_domestic_routes`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_artisan_instruments`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_classic_ballet`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_classical_orchestra`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_early_romantic_orchestra`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_expressionistic_ballet`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_industrial_instruments`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_late_romantic_orchestra`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_mid_romantic_orchestra`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_elgar_no_ballet`
+  - Morgenrote: `common/production_methods/elgar_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_international_routes`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_mendelejew_coal_liquefaction`
+  - Morgenrote: `common/production_methods/mendelejew_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_mendelejew_isoprene`
+  - Morgenrote: `common/production_methods/mendelejew_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_private_charters`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+- `pm_regional_routes`
+  - Morgenrote: `common/production_methods/civil_aviation_production_methods.txt`
+  - T&R: `common/production_methods/ztr_modified_mr_production_methods.txt`
+
+### common/scripted_effects — 1 duplicates
+- `dubois_add_volcanoes`
+  - Morgenrote: `common/scripted_effects/mr_science_dubois_volcanoes_scripted_effects.txt`
+  - T&R: `common/scripted_effects/ztr_mr_state_traits.txt`
+
+### common/scripted_triggers — 2 duplicates
+- `agassiz_state_has_volcano`
+  - Morgenrote: `common/scripted_triggers/agassiz_scripted_triggers.txt`
+  - T&R: `common/scripted_triggers/ztr_event_scripted_triggers.txt`
+- `dubois_has_volcano`
+  - Morgenrote: `common/scripted_triggers/dubois_scripted_triggers.txt`
+  - T&R: `common/scripted_triggers/ztr_event_scripted_triggers.txt`
+
+### common/state_traits — 1 duplicates
+- `dubois_state_trait_volcano`
+  - Morgenrote: `common/state_traits/mr_science_agassiz_state_traits.txt`
+  - T&R: `common/state_traits/ztr_mr_state_traits.txt`
+
+### common/technology/technologies — 49 duplicates
+- `agassiz_geology_tech`
+  - Morgenrote: `common/technology/technologies/agassiz_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `agassiz_sounding_tech`
+  - Morgenrote: `common/technology/technologies/agassiz_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_military.txt`
+- `antibiotics`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_society.txt`
+- `atmospheric_engine`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_production.txt`
+- `camera`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `carrier_tech`
+  - Morgenrote: `common/technology/technologies/a_vanilla_military_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_military.txt`
+- `chemical_bleaching`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_production.txt`
+- `combustion_engine`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_production.txt`
+- `curtiss_early_aviation_tech`
+  - Morgenrote: `common/technology/technologies/curtiss_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_military.txt`
+- `curtiss_messenger_pidgeons_tech`
+  - Morgenrote: `common/technology/technologies/curtiss_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_military.txt`
+- `curtiss_modern_aviation_tech`
+  - Morgenrote: `common/technology/technologies/curtiss_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_military.txt`
+- `curtiss_montgolfier_balloon_tech`
+  - Morgenrote: `common/technology/technologies/curtiss_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_military.txt`
+- `curtiss_reconnaissance_balloon_tech`
+  - Morgenrote: `common/technology/technologies/curtiss_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_military.txt`
+- `curtiss_seaplanes_tech`
+  - Morgenrote: `common/technology/technologies/curtiss_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_military.txt`
+- `dubois_genetics_tech`
+  - Morgenrote: `common/technology/technologies/dubois_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `dubois_nature_protection_tech`
+  - Morgenrote: `common/technology/technologies/dubois_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `dubois_theory_of_evolution_tech`
+  - Morgenrote: `common/technology/technologies/dubois_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `electric_telegraph`
+  - Morgenrote: `common/technology/technologies/a_vanilla_military_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_military.txt`
+- `electrical_generation`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_production.txt`
+- `elgar_classicism_tech`
+  - Morgenrote: `common/technology/technologies/elgar_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `elgar_irrationalism_tech`
+  - Morgenrote: `common/technology/technologies/elgar_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `elgar_mass_culture_tech`
+  - Morgenrote: `common/technology/technologies/elgar_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `elgar_modern_art_tech`
+  - Morgenrote: `common/technology/technologies/elgar_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `film`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `improved_fertilizer`
+  - Morgenrote: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_production.txt`
+- `malaria_prevention`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `manzoni_linotype_tech`
+  - Morgenrote: `common/technology/technologies/manzoni_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_production.txt`
+- `manzoni_rotary_press_tech`
+  - Morgenrote: `common/technology/technologies/manzoni_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_production.txt`
+- `mass_propaganda`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `mendelejew_synthetic_fuel_tech`
+  - Morgenrote: `common/technology/technologies/mendelejew_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `mendelejew_synthetic_rubber_tech`
+  - Morgenrote: `common/technology/technologies/mendelejew_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `military_aviation`
+  - Morgenrote: `common/technology/technologies/a_vanilla_military_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_military.txt`
+- `modern_sewerage`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `organized_sports`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `panum_antitoxins_tech`
+  - Morgenrote: `common/technology/technologies/panum_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_society.txt`
+- `panum_vaccination_tech`
+  - Morgenrote: `common/technology/technologies/panum_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `pharmaceuticals`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `romanticism`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `theiler_microbiology_tech`
+  - Morgenrote: `common/technology/technologies/theiler_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_society.txt`
+- `verrier_astro_physics_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `verrier_astronomy_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_production.txt`
+- `verrier_chemistry_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_production.txt`
+- `verrier_electromagnetism_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_production.txt`
+- `verrier_modern_physics_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `verrier_nuclear_physics_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `verrier_physics_tech`
+  - Morgenrote: `common/technology/technologies/mr_science_verrier_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_mr_production.txt`
+- `vikelas_international_sports_tech`
+  - Morgenrote: `common/technology/technologies/vikelas_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_new_society.txt`
+- `vikelas_streamliners_tech`
+  - Morgenrote: `common/technology/technologies/vikelas_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_mr_production.txt`
+- `zeppelins`
+  - Morgenrote: `common/technology/technologies/a_vanilla_military_technologies.txt`
+  - T&R: `common/technology/technologies/ztr_modified_vanilla_military.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

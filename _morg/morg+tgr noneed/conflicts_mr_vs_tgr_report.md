@@ -1,0 +1,352 @@
+# Morgenrote vs TGR — conflict report (key-level heuristic)
+
+- Morgenrote root: `C:/Users/Andrey/Projects/vic3_mods_out/Morgenrote`
+- TGR root: `C:/Users/Andrey/Projects/vic3_mods_out/TheGreatRevision`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/buy_packages — 90 duplicates
+- `wealth_10`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_11`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_12`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_13`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_14`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_15`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_16`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_17`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_18`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_19`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_20`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_21`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_22`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_23`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_24`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_25`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_26`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_27`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_28`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_29`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_30`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_31`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_32`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_33`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_34`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_35`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_36`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_37`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_38`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_39`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_40`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_41`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_42`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_43`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_44`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_45`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_46`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_47`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_48`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_49`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_50`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_51`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_52`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_53`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_54`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_55`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_56`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_57`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_58`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_59`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_60`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_61`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_62`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_63`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_64`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_65`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_66`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_67`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_68`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_69`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_70`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_71`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_72`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_73`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_74`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_75`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_76`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_77`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_78`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_79`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_80`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_81`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_82`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_83`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_84`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_85`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_86`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_87`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_88`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_89`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_90`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_91`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_92`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_93`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_94`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_95`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_96`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_97`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_98`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+- `wealth_99`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - TGR: `common/buy_packages/00_buy_packages.txt`
+
+### common/history/buildings — 1 duplicates
+- `BUILDINGS`
+  - Morgenrote: `common/history/buildings/elgar_opera.txt`
+  - Morgenrote: `common/history/buildings/gaudi_monument.txt`
+  - Morgenrote: `common/history/buildings/manzoni_printing.txt`
+  - Morgenrote: `common/history/buildings/mr_buildings.txt`
+  - Morgenrote: `common/history/buildings/verrier_observatory.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_company_buildings_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_net_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_russia_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_trade_center_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_uk_setup.txt`
+
+### common/history/countries — 1 duplicates
+- `COUNTRIES`
+  - Morgenrote: `common/history/countries/rap - rapanui.txt`
+  - Morgenrote: `common/history/countries/z_mr_starting_technologies.txt`
+  - TGR: `common/history/countries/aus - austria.txt`
+  - TGR: `common/history/countries/brz - brazil.txt`
+  - TGR: `common/history/countries/chi - china.txt`
+  - TGR: `common/history/countries/fra - france.txt`
+  - TGR: `common/history/countries/gbr - great britain.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - Morgenrote: `common/history/global/0_mr_cmf_initiation.txt`
+  - Morgenrote: `common/history/global/mr_global.txt`
+  - Morgenrote: `common/history/global/mr_set_cultures_global.txt`
+  - TGR: `common/history/global/TGR_LOANS_global.txt`
+  - TGR: `common/history/global/TGR_POLITICS_global.txt`
+  - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_obsessions.txt`
+
+### common/on_actions — 3 duplicates
+- `on_half_yearly_pulse_country`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/athletes_on_actions.txt`
+  - Morgenrote: `common/on_actions/curtiss_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_DECREES_on_actions.txt`
+  - TGR: `common/on_actions/TGR_MIGRATION_on_actions.txt`
+  - TGR: `common/on_actions/TGR_TAX_PANEL_on_tax_law_change.txt`
+- `on_monthly_pulse_country`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/curtiss_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+- `on_yearly_pulse_country`
+  - Morgenrote: `common/on_actions/MFE_main_flavor_pulse.txt`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_POLITICS_gain_ideology.txt`
+  - TGR: `common/on_actions/TGR_TRADE_code_on_actions.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

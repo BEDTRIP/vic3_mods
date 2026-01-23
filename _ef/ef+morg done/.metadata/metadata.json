@@ -1,7 +1,7 @@
 {
   "name": "ComPatch E&F + Morgenroete",
   "id": "3637341756",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "supported_game_version": "1.12.*",
   "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Morgenroete",
   "picture": "thumbnail.png",
@@ -46,8 +46,8 @@
       {
         "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
         "display_name": "Community Mod Framework",
-        "version": "1.40.3",
-        "date": "2026-01-14"
+        "version": "1.40.4",
+        "date": "2026-01-22"
       },
       {
         "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
@@ -64,8 +64,8 @@
       {
         "id": "2889925770",
         "display_name": "Morgenroete",
-        "version": "2.6.2c Goldberger",
-        "date": "2026-01-02"
+        "version": "2.6.3 Mohorovicic",
+        "date": "2026-01-18"
       }
     ]
   }

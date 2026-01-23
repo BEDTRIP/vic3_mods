@@ -1,0 +1,346 @@
+# Morgenrote vs VC — conflict report (key-level heuristic)
+
+- Morgenrote root: `C:/Users/Andrey/Projects/vic3_mods_out/Morgenrote`
+- VC root: `C:/Users/Andrey/Projects/vic3_mods_out/Victorian Century`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/buy_packages — 90 duplicates
+- `wealth_10`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_11`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_12`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_13`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_14`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_15`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_16`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_17`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_18`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_19`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_20`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_21`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_22`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_23`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_24`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_25`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_26`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_27`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_28`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_29`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_30`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_31`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_32`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_33`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_34`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_35`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_36`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_37`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_38`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_39`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_40`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_41`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_42`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_43`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_44`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_45`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_46`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_47`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_48`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_49`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_50`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_51`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_52`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_53`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_54`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_55`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_56`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_57`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_58`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_59`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_60`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_61`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_62`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_63`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_64`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_65`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_66`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_67`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_68`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_69`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_70`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_71`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_72`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_73`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_74`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_75`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_76`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_77`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_78`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_79`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_80`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_81`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_82`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_83`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_84`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_85`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_86`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_87`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_88`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_89`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_90`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_91`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_92`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_93`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_94`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_95`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_96`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_97`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_98`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+- `wealth_99`
+  - Morgenrote: `common/buy_packages/mr_buy_packages.txt`
+  - VC: `common/buy_packages/joi_buy_packages.txt`
+
+### common/history/countries — 1 duplicates
+- `COUNTRIES`
+  - Morgenrote: `common/history/countries/rap - rapanui.txt`
+  - Morgenrote: `common/history/countries/z_mr_starting_technologies.txt`
+  - VC: `common/history/countries/aus - austria.txt`
+  - VC: `common/history/countries/bic - british east india company.txt`
+  - VC: `common/history/countries/brz - brazil.txt`
+  - VC: `common/history/countries/chi - china.txt`
+  - VC: `common/history/countries/fra - france.txt`
+
+### common/modifier_type_definitions — 5 duplicates
+- `goods_output_fine_art_mult`
+  - Morgenrote: `common/modifier_type_definitions/klimt_building_modifier_types.txt`
+  - VC: `common/modifier_type_definitions/joi_modifier_types.txt`
+- `goods_output_grain_mult`
+  - Morgenrote: `common/modifier_type_definitions/dubois_building_modifier_types.txt`
+  - VC: `common/modifier_type_definitions/joi_modifier_types.txt`
+- `goods_output_wood_mult`
+  - Morgenrote: `common/modifier_type_definitions/dubois_building_modifier_types.txt`
+  - VC: `common/modifier_type_definitions/joi_modifier_types.txt`
+- `unit_combat_unit_type_battleship_offense_mult`
+  - Morgenrote: `common/modifier_type_definitions/panum_condition_modifier_types.txt`
+  - VC: `common/modifier_type_definitions/joi_modifier_types.txt`
+- `unit_combat_unit_type_dreadnought_offense_mult`
+  - Morgenrote: `common/modifier_type_definitions/panum_condition_modifier_types.txt`
+  - VC: `common/modifier_type_definitions/joi_modifier_types.txt`
+
+### common/on_actions — 2 duplicates
+- `on_monthly_pulse_country`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/curtiss_on_actions.txt`
+  - VC: `common/on_actions/headlines_on_actions.txt`
+  - VC: `common/on_actions/joi_code_on_actions.txt`
+- `on_yearly_pulse_country`
+  - Morgenrote: `common/on_actions/MFE_main_flavor_pulse.txt`
+  - Morgenrote: `common/on_actions/academics_on_actions.txt`
+  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/ai_on_actions.txt`
+  - Morgenrote: `common/on_actions/artists_on_actions.txt`
+  - VC: `common/on_actions/modlc_on_actions_monthly.txt`
+
+### common/pop_needs — 3 duplicates
+- `popneed_free_movement`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_leisure`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+- `popneed_luxury_items`
+  - Morgenrote: `common/pop_needs/mr_pop_needs.txt`
+  - VC: `common/pop_needs/joi_pop_needs.txt`
+
+### common/technology/technologies — 1 duplicates
+- `organized_sports`
+  - Morgenrote: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - VC: `common/technology/technologies/joi_society.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**
