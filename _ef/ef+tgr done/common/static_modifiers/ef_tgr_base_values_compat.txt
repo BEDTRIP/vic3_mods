@@ -8,6 +8,10 @@ INJECT:base_values = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
 	country_minting_add = -500
 
+	# TGR 20.01.2026 (b5525cd0): Loans module injects a large baseline (-0.2). This compatch disables TGR loans,
+	# so we neutralize the baseline here and keep E&F's tech-based adjustments instead.
+	country_loan_interest_rate_add = 0
+
 	# TGR POLITICS: higher baseline pools
 	country_bureaucracy_add = 200
 	country_authority_add = 200
