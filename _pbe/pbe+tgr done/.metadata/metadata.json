@@ -1,7 +1,7 @@
 {
   "name": "ComPatch Power Blocks Expanded + The Great Revision",
   "id": "3637673379",
-  "version": "1.12.2",
+  "version": "1.12.3",
   "supported_game_version": "1.12.*",
   "short_description": "Compatibility patch for PBE + TGR (common/ merges)",
   "picture": "thumbnail.png",
@@ -39,7 +39,7 @@
         "id": "3215078236",
         "display_name": "The Great Revision",
         "version": "2.0",
-        "date": "2026-01-15"
+        "date": "2026-01-20"
       }
     ]
   }

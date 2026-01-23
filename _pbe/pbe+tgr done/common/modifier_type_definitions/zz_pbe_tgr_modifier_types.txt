@@ -1,0 +1,16 @@
+########################################
+# PBE + TGR ComPatch — modifier type definitions pin
+# TGR 20.01 (b5525cd0...) added loans-related modifier type definitions, including
+# `state_bureaucrats_investment_pool_contribution_add`, which PBE already defines.
+# This compatch pins the final definition to avoid "last mod wins" ambiguity.
+########################################
+
+REPLACE_OR_CREATE:state_bureaucrats_investment_pool_contribution_add = {
+	decimals = 0
+	color = good
+	percent = yes
+	game_data = {
+		ai_value = 0
+	}
+}
+
