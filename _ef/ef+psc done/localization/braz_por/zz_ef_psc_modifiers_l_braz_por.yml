@@ -1,0 +1,3 @@
+﻿l_braz_por:
+ state_building_construction_sector_max_level_add:1 "Limite Máximo de $building_construction_sector$ $state_construction_mult$"
+ state_building_construction_sector_max_level_add_desc:1 "Um bônus ou penalidade para o Limite Flexível de $state_construction_mult$ de edifícios de $building_construction_sector$."
