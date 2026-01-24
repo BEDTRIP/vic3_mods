@@ -1,0 +1,22 @@
+{
+  "name": "ANTI: disable TGR loans",
+  "id": "",
+  "version": "0.1.0",
+  "supported_game_version": "1.12.*",
+  "short_description": "Disables selected TGR mini-mod content by restoring vanilla files or replacing TGR-only files with no-ops.",
+  "tags": [
+    "compatibility"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3452303324",
+      "display_name": "TGR loans",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

@@ -1,0 +1,70 @@
+# bpm+tgr compatch
+# Adds TGR "government_*" IG ideologies to BPM interest groups,
+# so BPM IGs keep their identity but still have stances for TGR-only lawgroups/laws.
+#
+# Note: ideology_government_* are defined by TGR and are not overridden by BPM.
+
+INJECT:ig_armed_forces = {
+	on_enable = {
+		ig:ig_armed_forces = {
+			add_ideology = ideology_government_armed_forces
+		}
+	}
+}
+
+INJECT:ig_devout = {
+	on_enable = {
+		ig:ig_devout = {
+			add_ideology = ideology_government_devout
+		}
+	}
+}
+
+INJECT:ig_industrialists = {
+	on_enable = {
+		ig:ig_industrialists = {
+			add_ideology = ideology_government_industrialist
+		}
+	}
+}
+
+INJECT:ig_intelligentsia = {
+	on_enable = {
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_government_intelligentsia
+		}
+	}
+}
+
+INJECT:ig_landowners = {
+	on_enable = {
+		ig:ig_landowners = {
+			add_ideology = ideology_government_landowners
+		}
+	}
+}
+
+INJECT:ig_petty_bourgeoisie = {
+	on_enable = {
+		ig:ig_petty_bourgeoisie = {
+			add_ideology = ideology_government_petty_bourgeoisie
+		}
+	}
+}
+
+INJECT:ig_rural_folk = {
+	on_enable = {
+		ig:ig_rural_folk = {
+			add_ideology = ideology_government_rural_folk
+		}
+	}
+}
+
+INJECT:ig_trade_unions = {
+	on_enable = {
+		ig:ig_trade_unions = {
+			add_ideology = ideology_government_trade_unions
+		}
+	}
+}
+

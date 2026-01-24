@@ -1,0 +1,430 @@
+# bpm+tgr compatch
+# Adds TGR-only lawgroup stances to BPM character ideologies (leaders/agitators),
+# without replacing BPM ideology definitions.
+#
+# Order: TGR -> BPM -> compatch
+# Strategy: INJECT only the additional lawgroup blocks (from TGR reference).
+
+INJECT:ideology_anarchist = {
+	lawgroup_election_system = {
+		law_no_election = approve
+		law_proportional_system = neutral
+		law_majoritarian_system = disapprove
+		law_mixed_system = neutral
+		law_ranked_system = neutral
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_disapprove
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = disapprove
+		law_bicameral_parliamentary_system = strongly_disapprove
+	}
+}
+
+INJECT:ideology_authoritarian = {
+	lawgroup_election_system = {
+		law_no_election = approve
+		law_proportional_system = strongly_disapprove
+		law_majoritarian_system = neutral
+		law_mixed_system = disapprove
+		law_ranked_system = disapprove
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_approve
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = neutral
+		law_bicameral_parliamentary_system = disapprove
+	}
+
+	lawgroup_centralization = {
+		law_economic_decentralism = strongly_disapprove
+		law_administrative_decentralism = disapprove			
+		law_local_autonomies = neutral
+		law_administrative_centralism = approve
+		law_economic_centralism = strongly_approve
+	}
+}
+
+INJECT:ideology_communist = {
+	lawgroup_working_hours = {
+		law_unregulated_work_time = strongly_disapprove			
+		law_token_time_regulations = disapprove
+		law_limited_work_hours = approve
+		law_protected_leisure = strongly_approve	
+	}
+
+	# BPM uses lawgroup_work_time_regulations for the work-time laws
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = strongly_disapprove			
+		law_token_time_regulations = disapprove
+		law_limited_work_hours = approve
+		law_protected_leisure = strongly_approve	
+	}
+}
+
+INJECT:ideology_corporatist_leader = {
+	lawgroup_working_hours = {
+		law_unregulated_work_time = neutral			
+		law_token_time_regulations = approve
+		#law_limited_work_hours = approve
+		#law_protected_leisure = neutral	
+	}
+
+	# BPM uses lawgroup_work_time_regulations for the work-time laws
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = neutral			
+		law_token_time_regulations = approve
+		#law_limited_work_hours = approve
+		#law_protected_leisure = neutral	
+	}
+
+	lawgroup_environment = {
+		law_no_environment_regulations = disapprove			
+		law_minimum_environment_regulations = approve
+		law_standard_environment_regulations = strongly_approve
+		#law_eco_environment_regulations = neutral	
+	}
+
+	lawgroup_social_security = {
+		law_no_pension = disapprove
+		law_minimum_pension = neutral
+		law_medium_pension = approve
+		#law_modern_pension = neutral
+	}
+
+	lawgroup_retirement_age = {
+		law_no_retirement_age = disapprove
+		law_retirement_age_inability_to_work = neutral
+		law_retirement_after_contribution = approve
+		law_retirement_standard_retirement_age = neutral
+	}
+
+	lawgroup_salary_regulation = {
+		law_no_salary_regulation = disapprove
+		law_salary_competitive_economy = neutral
+		law_salary_minimum_safety = approve
+		law_salary_national_contract = neutral
+	}
+}
+
+INJECT:ideology_despotic_utopian = {
+	lawgroup_election_system = {
+		law_no_election = disapprove
+		law_proportional_system = disapprove
+		law_majoritarian_system = approve
+		law_mixed_system = neutral
+		law_ranked_system = approve
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = approve
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = disapprove
+		law_unicameral_parliamentary_system = disapprove
+		law_bicameral_parliamentary_system = disapprove
+	}
+}
+
+INJECT:ideology_fascist = {
+	lawgroup_election_system = {
+		law_no_election = strongly_approve
+		law_proportional_system = disapprove
+		law_majoritarian_system = approve
+		law_mixed_system = neutral
+		law_ranked_system = disapprove
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_approve
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = disapprove
+		law_unicameral_parliamentary_system = strongly_disapprove
+		law_bicameral_parliamentary_system = strongly_disapprove
+	}
+
+	lawgroup_centralization = {
+		law_economic_decentralism = strongly_disapprove
+		law_administrative_decentralism = disapprove			
+		law_local_autonomies = neutral
+		law_administrative_centralism = approve
+		law_economic_centralism = strongly_approve
+	}
+}
+
+INJECT:ideology_integralist = {
+	lawgroup_election_system = {
+		law_no_election = strongly_approve
+		law_proportional_system = strongly_disapprove
+		law_majoritarian_system = approve
+		law_mixed_system = disapprove
+		law_ranked_system = disapprove
+	}
+
+	lawgroup_centralization = {
+		law_economic_decentralism = strongly_disapprove
+		law_administrative_decentralism = disapprove			
+		law_local_autonomies = disapprove
+		law_administrative_centralism = approve
+		law_economic_centralism = strongly_approve
+	}
+}
+
+INJECT:ideology_jacksonian_democrat = {
+	lawgroup_election_system = {
+		law_no_election = disapprove
+		law_proportional_system = strongly_approve
+		law_majoritarian_system = approve
+		law_mixed_system = neutral
+		law_ranked_system = neutral
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = disapprove
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = approve
+		law_bicameral_parliamentary_system = strongly_approve
+	}
+}
+
+INJECT:ideology_liberal_leader = {
+	lawgroup_election_system = {
+		law_no_election = disapprove
+		law_proportional_system = approve
+		law_majoritarian_system = approve
+		law_mixed_system = neutral
+		law_ranked_system = approve
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = neutral
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = approve
+		law_bicameral_parliamentary_system = approve
+	}
+
+	lawgroup_working_hours = {
+		law_unregulated_work_time = disapprove			
+		law_token_time_regulations = neutral
+		law_limited_work_hours = approve
+		law_protected_leisure = neutral	
+	}
+
+	# BPM uses lawgroup_work_time_regulations for the work-time laws
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = disapprove			
+		law_token_time_regulations = neutral
+		law_limited_work_hours = approve
+		law_protected_leisure = neutral	
+	}
+
+	lawgroup_environment = {
+		law_no_environment_regulations = disapprove			
+		law_minimum_environment_regulations = neutral
+		law_standard_environment_regulations = approve
+		#law_eco_environment_regulations = neutral	
+	}
+
+	lawgroup_centralization = {
+		#law_economic_decentralism = strongly_disapprove
+		law_administrative_decentralism = strongly_approve			
+		law_local_autonomies = approve
+		law_administrative_centralism = neutral
+		law_economic_centralism = disapprove
+	}
+}
+
+INJECT:ideology_market_liberal = {
+	lawgroup_working_hours = {
+		law_unregulated_work_time = strongly_approve			
+		law_token_time_regulations = neutral
+		law_limited_work_hours = disapprove
+		law_protected_leisure = strongly_disapprove	
+	}
+
+	# BPM uses lawgroup_work_time_regulations for the work-time laws
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = strongly_approve			
+		law_token_time_regulations = neutral
+		law_limited_work_hours = disapprove
+		law_protected_leisure = strongly_disapprove	
+	}
+
+	lawgroup_environment = {
+		law_no_environment_regulations = strongly_approve			
+		law_minimum_environment_regulations = neutral
+		law_standard_environment_regulations = disapprove
+		law_eco_environment_regulations = strongly_disapprove	
+	}
+}
+
+INJECT:ideology_nihilist = {
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = disapprove
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = approve
+		law_unicameral_parliamentary_system = neutral
+		law_bicameral_parliamentary_system = neutral
+	}
+}
+
+INJECT:ideology_positivist = {
+	lawgroup_election_system = {
+		law_no_election = disapprove
+		law_proportional_system = strongly_disapprove
+		law_majoritarian_system = approve
+		law_mixed_system = disapprove
+		law_ranked_system = approve
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = neutral
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = disapprove
+		law_bicameral_parliamentary_system = disapprove
+	}
+}
+
+INJECT:ideology_radical = {
+	lawgroup_election_system = {
+		law_no_election = disapprove
+		law_proportional_system = strongly_approve
+		law_majoritarian_system = neutral
+		law_mixed_system = approve
+		law_ranked_system = approve
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_disapprove
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = approve
+		law_bicameral_parliamentary_system = strongly_approve
+	}
+}
+
+INJECT:ideology_reformer = {
+	lawgroup_working_hours = {
+		law_unregulated_work_time = neutral			
+		law_token_time_regulations = approve
+		law_limited_work_hours = disapprove
+		law_protected_leisure = disapprove	
+	}
+
+	# BPM uses lawgroup_work_time_regulations for the work-time laws
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = neutral			
+		law_token_time_regulations = approve
+		law_limited_work_hours = disapprove
+		law_protected_leisure = disapprove	
+	}
+}
+
+INJECT:ideology_republican_leader = {
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = disapprove
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = approve
+		law_bicameral_parliamentary_system = approve
+	}
+}
+
+INJECT:ideology_royalist = {
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = neutral
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = approve
+		law_unicameral_parliamentary_system = disapprove
+		law_bicameral_parliamentary_system = disapprove
+	}
+}
+
+INJECT:ideology_social_democrat = {
+	lawgroup_working_hours = {
+		law_unregulated_work_time = disapprove			
+		law_token_time_regulations = neutral
+		law_limited_work_hours = approve
+		law_protected_leisure = strongly_approve	
+	}
+
+	# BPM uses lawgroup_work_time_regulations for the work-time laws
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = disapprove			
+		law_token_time_regulations = neutral
+		law_limited_work_hours = approve
+		law_protected_leisure = strongly_approve	
+	}
+
+	lawgroup_election_system = {
+		law_no_election = strongly_disapprove
+		law_proportional_system = strongly_approve
+		law_majoritarian_system = neutral
+		law_mixed_system = neutral
+		law_ranked_system = approve
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_disapprove
+		law_restricted_parliamentary_authority = strongly_disapprove
+		law_chamber_of_deputies = disapprove
+		law_unicameral_parliamentary_system = approve
+		law_bicameral_parliamentary_system = strongly_approve
+	}
+
+	lawgroup_social_security = {
+		law_no_pension = disapprove
+		law_minimum_pension = disapprove
+		law_medium_pension = approve
+		law_modern_pension = strongly_approve
+	}
+
+	lawgroup_retirement_age = {
+		law_no_retirement_age = disapprove
+		law_retirement_age_inability_to_work = disapprove
+		law_retirement_after_contribution = approve
+		law_retirement_standard_retirement_age = strongly_approve
+	}
+
+	lawgroup_salary_regulation = {
+		law_no_salary_regulation = disapprove
+		law_salary_competitive_economy = disapprove
+		law_salary_minimum_safety = approve
+		law_salary_national_contract = strongly_approve
+	}
+}
+
+INJECT:ideology_theocrat = {
+	lawgroup_centralization = {
+		law_economic_decentralism = disapprove
+		law_administrative_decentralism = disapprove			
+		law_local_autonomies = neutral
+		law_administrative_centralism = approve
+		law_economic_centralism = neutral
+	}
+}
+
+INJECT:ideology_vanguardist = {
+	lawgroup_election_system = {
+		law_no_election = strongly_approve
+		law_proportional_system = disapprove
+		law_majoritarian_system = approve
+		law_mixed_system = neutral
+		law_ranked_system = disapprove
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_approve
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = disapprove
+		law_bicameral_parliamentary_system = strongly_disapprove
+	}
+}
+

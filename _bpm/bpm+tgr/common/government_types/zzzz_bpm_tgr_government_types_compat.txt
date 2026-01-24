@@ -1,0 +1,63 @@
+# bpm+tgr compatch
+# Keep BPM government types, but make them compatible with TGR variants.
+#
+# Order: TGR -> BPM -> compatch
+
+REPLACE:gov_presidential_dictatorship = {
+	transfer_of_power = dictatorial
+
+	male_ruler = "RULER_TITLE_PRESIDENT"
+	female_ruler = "RULER_TITLE_PRESIDENT"
+	
+	possible = {
+		has_law_or_variant = law_type:law_presidential_republic
+		has_law_or_variant = law_type:law_autocracy
+	}
+
+	on_government_type_change = {
+		change_to_dictatorial = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_dictatorial = yes
+	}
+}
+
+REPLACE:gov_presidential_democracy = {
+	transfer_of_power = presidential_elective
+	# new_leader_on_reform_government = no
+
+	male_ruler = "RULER_TITLE_PRESIDENT"
+	female_ruler = "RULER_TITLE_PRESIDENT"
+	
+	possible = {
+		has_law_or_variant = law_type:law_presidential_republic
+		NOR = { 
+			has_law_or_variant = law_type:law_autocracy
+			has_law_or_variant = law_type:law_oligarchy
+			has_law_or_variant = law_type:law_technocracy
+			has_law_or_variant = law_type:law_military_junta
+			has_law_or_variant = law_type:law_appointed_on_advice
+			has_law_or_variant = law_type:law_supreme_legislature
+			AND = {
+				country_has_primary_culture = cu:brazilian
+				OR = {
+					has_law_or_variant = law_type:law_presidential_republic
+					has_law_or_variant = law_type:law_no_separate_hog
+				}
+				has_law_or_variant = law_type:law_landed_voting
+				OR = {
+					has_law_or_variant = law_type:law_tenant_farmers
+					has_law_or_variant = law_type:law_serfdom
+				}
+			}
+		}
+	}
+
+	on_government_type_change = {
+		change_to_presidential_elective = yes
+	}
+	on_post_government_type_change = {
+		post_change_to_presidential_elective = yes
+	}
+}
+

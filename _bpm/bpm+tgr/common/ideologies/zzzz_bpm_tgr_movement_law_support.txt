@@ -1,0 +1,92 @@
+# bpm+tgr compatch
+# Adds TGR-only lawgroup stances to BPM movement ideologies,
+# so movements can meaningfully react to TGR-only laws.
+#
+# Source of stances: TGR `common/ideologies/TGR_POLITICS_ig_ideologies_movement.txt`
+
+INJECT:ideology_gov_absolutist_royalist = {
+	lawgroup_election_system = {
+		law_no_election = strongly_approve
+		law_proportional_system = disapprove
+		law_majoritarian_system = neutral
+		law_mixed_system = neutral
+		law_ranked_system = disapprove
+	}
+
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = strongly_approve
+		law_restricted_parliamentary_authority = approve
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = neutral
+		law_bicameral_parliamentary_system = disapprove
+	}
+
+	lawgroup_centralization = {
+		law_economic_decentralism = strongly_disapprove
+		law_administrative_decentralism = disapprove			
+		law_local_autonomies = disapprove
+		law_administrative_centralism = approve
+		law_economic_centralism = strongly_approve
+	}
+}
+
+INJECT:ideology_gov_socialist = {
+	lawgroup_salary_regulation = {
+		law_no_salary_regulation = disapprove
+		law_salary_competitive_economy = disapprove
+		law_salary_minimum_safety = approve
+		law_salary_national_contract = strongly_approve
+	}
+
+	lawgroup_social_security = {
+		law_no_pension = disapprove
+		law_minimum_pension = neutral
+		law_medium_pension = approve
+		law_modern_pension = strongly_approve
+	}
+
+	lawgroup_retirement_age = {
+		law_no_retirement_age = disapprove
+		law_retirement_age_inability_to_work = neutral
+		law_retirement_after_contribution = approve
+		law_retirement_standard_retirement_age = strongly_approve
+	}
+
+	# TGR names this lawgroup_working_hours; BPM uses lawgroup_work_time_regulations for the overlapping work-time laws.
+	lawgroup_working_hours = {
+		law_unregulated_work_time = strongly_disapprove			
+		law_token_time_regulations = disapprove
+		law_limited_work_hours = approve
+		law_protected_leisure = strongly_approve	
+	}
+	lawgroup_work_time_regulations = {
+		law_unregulated_work_time = strongly_disapprove			
+		law_token_time_regulations = disapprove
+		law_limited_work_hours = approve
+		law_protected_leisure = strongly_approve	
+	}
+}
+
+INJECT:ideology_bpm_movement_paternalist = {
+	lawgroup_salary_regulation = {
+		law_no_salary_regulation = disapprove
+		law_salary_competitive_economy = disapprove
+		law_salary_minimum_safety = approve
+		law_salary_national_contract = strongly_approve
+	}
+
+	lawgroup_social_security = {
+		law_no_pension = disapprove
+		law_minimum_pension = neutral
+		law_medium_pension = approve
+		law_modern_pension = strongly_approve
+	}
+
+	lawgroup_retirement_age = {
+		law_no_retirement_age = disapprove
+		law_retirement_age_inability_to_work = neutral
+		law_retirement_after_contribution = approve
+		law_retirement_standard_retirement_age = strongly_approve
+	}
+}
+
