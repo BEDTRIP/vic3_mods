@@ -1,29 +1,46 @@
 {
-  "name": "ANTI: disable TGR politics + german uni",
+  "name": "AntiTGR: no Better Politics and German Unification",
   "id": "",
-  "version": "0.1.0",
+  "version": "1.12.3",
   "supported_game_version": "1.12.*",
-  "short_description": "Disables selected TGR mini-mod content by restoring vanilla files or replacing TGR-only files with no-ops.",
+  "short_description": "Disables selected TGR mod content",
+  "picture": "thumbnail.png",
   "tags": [
-    "compatibility"
+    "Fixes",
+    "Utilities",
+    "1.12"
   ],
   "relationships": [
     {
       "rel_type": "dependency",
-      "id": "3339803194",
-      "display_name": "TGR politics",
+      "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+      "display_name": "Community Mod Framework",
       "resource_type": "mod",
       "version": "*"
     },
     {
       "rel_type": "dependency",
-      "id": "3336964965",
-      "display_name": "TGR german uni",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
       "resource_type": "mod",
       "version": "*"
     }
   ],
   "game_custom_data": {
-    "multiplayer_synchronized": true
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+        "display_name": "Community Mod Framework",
+        "version": "1.40.4",
+        "date": "2026-01-22"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-01-20"
+      }
+    ]
   }
 }
