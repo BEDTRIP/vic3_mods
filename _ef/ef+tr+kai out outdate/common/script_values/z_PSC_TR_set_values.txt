@@ -1,0 +1,16 @@
+﻿REPLACE:wood_construction_good_base_price = {
+    value = 130
+}
+
+REPLACE:iron_construction_good_base_price = {
+    value = 95
+}
+
+REPLACE:steel_construction_good_base_price = {
+    value = 95
+}
+
+REPLACE:arc_welded_construction_good_base_price = {
+    value = 92
+}
+concrete_construction_good_base_price = 86

@@ -1,0 +1,6 @@
+﻿l_english: 
+ goods_output_concrete_construction_add:0 "@concrete_construction! Concrete Construction Output"
+ goods_output_concrete_construction_add_desc:0 "The amount of @concrete_construction! Concrete Construction produced by buildings"
+
+ goods_input_concrete_construction_add:0 "@concrete_construction! Concrete Construction Input"
+ goods_input_concrete_construction_add_desc:0 "The amount of @concrete_construction! Concrete Construction consumed by buildings"

@@ -1,8 +1,0 @@
-﻿# Uranium Mine
-
-INJECT:building_uranium_mine = {
-	production_method_groups = {
-		pmg_market_liquidity #E&F
-		pmg_private_ownership_mining_stock
-	}
-}

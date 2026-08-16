@@ -1,0 +1,5 @@
+﻿INJECT:pmg_construction_regulator = {
+	production_methods = {
+		pm_concrete_point_conversion
+	}
+}
