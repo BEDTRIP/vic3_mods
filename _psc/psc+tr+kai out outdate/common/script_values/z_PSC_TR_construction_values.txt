@@ -54,8 +54,26 @@ REPLACE:calculate_construction_sector_max_level = {
         limit = {
             has_technology_researched = prefabricated_concrete_buildings
         }
-        add = 5
+        add = 15
     }
+	if = {
+		limit = {
+			has_technology_researched = highway_systems
+		}
+		add = 10
+	}
+	if = {
+		limit = {
+			has_technology_researched = freight_village
+		}
+		add = 15
+	}
+	if = {
+		limit = {
+			has_technology_researched = modern_urban_planning
+		}
+		add = 10
+	}
 }
 
 # Scope: State

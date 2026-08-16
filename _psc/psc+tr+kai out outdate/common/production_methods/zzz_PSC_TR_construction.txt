@@ -131,12 +131,6 @@ REPLACE:pm_prefabricated_concrete_buildings = {
 			building_laborers_mortality_mult = 0.05
 		}
 	}
-
-	state_modifiers = {
-		workforce_scaled = {
-			state_construction_mult = 0.01
-		}
-	}
 }
 
 REPLACE_OR_CREATE:pm_concrete_point_conversion = {
