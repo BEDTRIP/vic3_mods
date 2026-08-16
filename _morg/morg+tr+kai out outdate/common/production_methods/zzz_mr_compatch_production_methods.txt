@@ -10,6 +10,7 @@ REPLACE:pm_private_charters = {
 			goods_input_electricity_add = 3
 			goods_input_telephones_add = 2
 			goods_output_air_travel_add = 12
+			goods_output_transportation_add = 5
 		}
 		level_scaled = {
 			building_employment_laborers_add = 1000
@@ -39,6 +40,7 @@ REPLACE:pm_regional_routes = {
 			goods_input_telecommunications_add = 4
 			goods_input_electricity_add = 3
 			goods_output_air_travel_add = 18
+			goods_output_transportation_add = 10
 
 		}
 		level_scaled = {
@@ -69,6 +71,7 @@ REPLACE:pm_domestic_routes = {
 			goods_input_telecommunications_add = 7
 			goods_input_electricity_add = 3
 			goods_output_air_travel_add = 24
+			goods_output_transportation_add = 15
 		}
 		level_scaled = {
 			building_employment_laborers_add = 750
@@ -101,6 +104,7 @@ REPLACE:pm_international_routes = {
 			goods_input_telecommunications_add = 10
 			goods_input_electricity_add = 3
 			goods_output_air_travel_add = 30
+			goods_output_transportation_add = 20
 		}
 		level_scaled = {
 			building_employment_laborers_add = 750

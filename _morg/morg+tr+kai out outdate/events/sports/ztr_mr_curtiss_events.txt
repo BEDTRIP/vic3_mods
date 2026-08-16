@@ -1,3 +1,5 @@
+namespace = curtiss
+
 curtiss.228 = {
 	dlc = dlc_morgenrote
 
@@ -56,6 +58,109 @@ curtiss.228 = {
 		scope:curtiss_factory_state = {
 			add_modifier = {
 				name = curtiss_thriving_aeroplane_factory_modifier
+			}
+		}
+	}
+}
+
+curtiss.229 = {
+	dlc = dlc_morgenrote
+
+	type = country_event
+
+	title = curtiss.229.t
+
+	desc = curtiss.229.d
+
+	flavor = curtiss.229.f
+
+	duration = 3
+
+	placement = scope:curtiss_factory_state
+
+	gui_window = event_window_1char_tabloid
+
+	left_icon = scope:howard_hughes
+
+	icon = "gfx/interface/icons/event_icons/event_aviation.dds"
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/airplane"
+
+	cooldown = {
+		years = 5
+	}
+
+	trigger = {
+		has_variable = curtiss_private_airline
+		var:curtiss_flight_route >= 9
+		any_scope_state = {
+			OR = {
+				has_modifier = curtiss_thriving_aviation_modifier
+				has_modifier = curtiss_expanded_airline_modifier
+			}
+			NOT = {
+				has_building = building_aircraft_industry
+			}
+		}
+		NOT = {
+			has_variable = curtiss_hughes_offered_industry
+		}
+	}
+
+	immediate = {
+		set_variable = curtiss_hughes_offered_industry
+		random_scope_state = {
+			limit = {
+				OR = {
+					has_modifier = curtiss_thriving_aviation_modifier
+					has_modifier = curtiss_expanded_airline_modifier
+				}
+				NOT = {
+					has_building = building_aircraft_industry
+				}
+			}
+			save_scope_as = curtiss_factory_state
+		}
+		curtiss_howard_hughes_effect = yes
+		ig:ig_industrialists = {
+			save_scope_as = ig_industrialists
+		}
+	}
+
+	option = {	#A great day for aviation!
+		name = curtiss.228.g
+		default_option = yes
+		scope:curtiss_factory_state = {
+			create_building = {
+				building = "building_aircraft_industry"
+				level=2
+ 				reserves=1
+			}
+			activate_building = {
+				building = "building_aircraft_industry"
+			}
+		}
+		scope:ig_industrialists = {
+			add_modifier = {
+				name = curtiss_approved_new_airplane_industry_modifier
+				years = 5
+			}
+		}
+		scope:howard_hughes = {
+			add_modifier = {
+				name = curtiss_airplane_constructor_modifier
+			}
+		}
+	}
+
+	option = {	#This is obviously a trap.
+		name = curtiss.229.h
+		default_option = yes
+		scope:ig_industrialists = {
+			add_modifier = {
+				name = curtiss_disapproved_new_airplane_industry_modifier
+				years = 5
 			}
 		}
 	}
@@ -164,10 +269,6 @@ curtiss.506 = {
 				limit = {
 					OR = {
 						has_building = building_airport
-						# is_production_method_active = {
-						# 	building_type = building_aircraft_industry
-						# 	production_method = pm_aeroplane_production
-						# }
 						has_building = building_aircraft_industry #T&R
 					}
 				}
@@ -276,57 +377,3 @@ curtiss.513 = {
 }
 
 ######################################################
-
-# Private Planes bring Rich Investors in [SCOPE.sS('plane_state').GetName]
-MFE_trade_good_events.7 = {
-	dlc = dlc_morgenrote
-
-	type = country_event
-	placement = scope:plane_state
-	title = "MFE_trade_good_events.7.t"
-	desc = "MFE_trade_good_events.7.d"
-	flavor = "MFE_trade_good_events.7.f"
-	duration = 3
-	icon = "gfx/interface/icons/event_icons/event_aviation.dds"
-	event_image = {
-		video = "gfx/event_pictures/unspecific_airPlane.bk2"
-	}
-	
-	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
-	on_opened_soundeffect = "event:/SFX/Events/unspecific/airplane"
-	
-	cooldown = { months = long_cooldown }
-	trigger = {
-		any_scope_building = {
-			is_building_type = building_aircraft_industry #T&R
-			rich_building_trigger = yes
-			level >= 3
-		}
-	}
-	
-	immediate = {
-		random_scope_building = {
-			limit = {
-				is_building_type = building_aircraft_industry #T&R
-				rich_building_trigger = yes
-				level >= 3
-			}
-			state = {
-				save_scope_as = plane_state
-			}
-		}
-	}
-	
-	option = {
-		name = MFE_trade_good_events.7.a
-		default_option = yes
-		# It's a great time to live in [SCOPE.GetRootScope.GetCountry.GetName]
-		scope:plane_state = {
-			add_modifier = {
-				name = MFE_plane_investors_state_mod
-				days = normal_modifier_time
-			}
-		}
-	}
-	
-}

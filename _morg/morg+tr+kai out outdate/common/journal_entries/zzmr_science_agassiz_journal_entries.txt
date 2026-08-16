@@ -52,7 +52,9 @@ je_agassiz_find_commonores_project = {
 
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -102,7 +104,9 @@ je_agassiz_find_commonores_project = {
 
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -175,7 +179,9 @@ je_agassiz_find_copper_project = {
 
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -225,7 +231,9 @@ je_agassiz_find_copper_project = {
 
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -298,7 +306,9 @@ je_agassiz_find_bauxite_project = {
 
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -348,7 +358,9 @@ je_agassiz_find_bauxite_project = {
 
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -421,7 +433,9 @@ je_agassiz_find_rare_earths_project = {
 
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -471,7 +485,9 @@ je_agassiz_find_rare_earths_project = {
 
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -544,7 +560,9 @@ je_agassiz_find_advancedores_project = {
 
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -594,7 +612,9 @@ je_agassiz_find_advancedores_project = {
 
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
-		remove_modifier = agassiz_ore_search_cost_modifier
+		scope:journal_entry = {
+			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		
 		#Those should be removed in every geology je
 		remove_variable = agassiz_geologist_improvement_progress_var
@@ -668,7 +688,9 @@ je_agassiz_find_gas_project = {
 	on_complete = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
 		show_as_tooltip = {
+			scope:journal_entry = {
 			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		}
 		
 		#Those should be removed in every geology je
@@ -720,7 +742,9 @@ je_agassiz_find_gas_project = {
 	on_invalid = {
 		remove_variable = agassiz_can_stop_active_improvement_project_var #Needs to be removed, when the JE is removed
 		show_as_tooltip = {
+			scope:journal_entry = {
 			remove_modifier = agassiz_ore_search_cost_modifier
+		}
 		}
 		
 		#Those should be removed in every geology je

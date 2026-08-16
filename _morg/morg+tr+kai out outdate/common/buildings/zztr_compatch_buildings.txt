@@ -39,14 +39,12 @@ REPLACE:building_manzoni_publishing_industry = {
 
 #Uranium Mine (REPLACE NEEDED TO MERGE BOTH MODS)
 REPLACE:building_uranium_mine = {
-	building_group = bg_uranium_mining
+	building_group = bg_mining
 	icon = "gfx/interface/icons/building_icons/building_curie_uranium_mine.dds"
 	city_type = mine
 	levels_per_mesh = 50
-	ignore_stateregion_max_level = yes #TODO Non so se rimuovere o no questa riga, la lascio per sicurezza
-	required_construction = construction_cost_medium
+	required_construction = construction_cost_high
 	terrain_manipulator = mining
-	has_max_level = yes
 
 	unlocking_technologies = {
 		verrier_modern_physics_tech
@@ -61,29 +59,17 @@ REPLACE:building_uranium_mine = {
 	}
 
 	possible = {
-        OR = {
-        modifier:state_building_uranium_mine_max_level_add > 0
-		has_modifier = curie_uranium_ressources_modifier
 		owner = {
 			NOT = {
 				OR = {
-					has_law = law_type:law_mining_strategic
-					has_law = law_type:law_polluting_mining_banned
+					has_law_or_variant = law_type:law_mining_strategic
+					has_law_or_variant = law_type:law_polluting_mining_banned
 				}
 			}
-		} #DONE Aggiunto per rendere compatibile la miniera di uranio alle nuove leggi sul nucleare
 		}
-    }
-
-    potential = {
-		OR = {
-        modifier:state_building_uranium_mine_max_level_add > 0
-		has_modifier = curie_uranium_ressources_modifier
-		}
-    }
+	}
 
 	ownership_type = self
-
 	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_mining.dds"
 }
 

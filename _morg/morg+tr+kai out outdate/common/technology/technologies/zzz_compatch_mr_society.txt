@@ -22,28 +22,6 @@ REPLACE:curtiss_tourism_tech = {
 	}
 }
 
-REPLACE:panum_antitoxins_tech = {
-	# Treatment for Diphteria and Scarlet
-	era = era_4
-	texture = "gfx/interface/icons/invention_icons/panum_antitoxins_tech.dds"
-	category = society
-
-	unlocking_technologies = {
-		malaria_prevention
-	}
-
-	modifier = {
-		state_mortality_mult = -0.02
-		state_harvest_condition_panum_diphteria_condition_impact_mult = -0.25
-		state_harvest_condition_panum_scarlet_condition_impact_mult = -0.25
-		state_harvest_condition_panum_polio_condition_impact_mult = -0.25
-	}
-
-	ai_weight = {
-		value = 1
-	}
-} #DONE Aggiunto per panum
-
 # Era 5
 
 REPLACE:vikelas_international_sports_tech = {

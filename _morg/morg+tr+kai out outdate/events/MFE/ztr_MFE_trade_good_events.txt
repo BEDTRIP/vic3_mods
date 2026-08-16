@@ -1,0 +1,55 @@
+namespace = MFE_trade_good_events
+
+# Private Planes bring Rich Investors in [SCOPE.sS('plane_state').GetName]
+MFE_trade_good_events.7 = {
+	dlc = dlc_morgenrote
+
+	type = country_event
+	placement = scope:plane_state
+	title = "MFE_trade_good_events.7.t"
+	desc = "MFE_trade_good_events.7.d"
+	flavor = "MFE_trade_good_events.7.f"
+	duration = 3
+	icon = "gfx/interface/icons/event_icons/event_aviation.dds"
+	event_image = {
+		video = "gfx/event_pictures/unspecific_airPlane.bk2"
+	}
+	
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/airplane"
+	
+	cooldown = { months = long_cooldown }
+	trigger = {
+		any_scope_building = {
+			is_building_type = building_aircraft_industry #T&R
+			rich_building_trigger = yes
+			level >= 3
+		}
+	}
+	
+	immediate = {
+		random_scope_building = {
+			limit = {
+				is_building_type = building_aircraft_industry #T&R
+				rich_building_trigger = yes
+				level >= 3
+			}
+			state = {
+				save_scope_as = plane_state
+			}
+		}
+	}
+	
+	option = {
+		name = MFE_trade_good_events.7.a
+		default_option = yes
+		# It's a great time to live in [SCOPE.GetRootScope.GetCountry.GetName]
+		scope:plane_state = {
+			add_modifier = {
+				name = MFE_plane_investors_state_mod
+				days = normal_modifier_time
+			}
+		}
+	}
+	
+}
