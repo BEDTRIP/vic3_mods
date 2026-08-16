@@ -1,0 +1,31 @@
+{
+  "name": "E&F History Hotfix [1.13]",
+  "id": "com.github.BEDTRIP.EF-History-Hotfix",
+  "version": "1.13.10-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Fixes two broken entries in Economic and Financial's common/history/buildings that spam errors and create buildings in a NULL state on game start.",
+  "tags": [
+    "Fixes",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "04.07.2026",
+        "date": "2026-07-04"
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "E&F GUI Hotfix [1.13]",
+  "id": "com.github.BEDTRIP.EF-GUI-Hotfix",
+  "version": "1.13.10-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Restores four vanilla 1.13 GUI panels that Economic and Financial still ships as pre-1.13 copies, keeping E&F's currency-symbol replacement.",
+  "tags": [
+    "Fixes",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

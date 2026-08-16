@@ -1,11 +1,21 @@
-### E&F + Morgenroete ComPatch (Vic3 1.12)
-### Extend E&F "private ownership production stocks" logic to Morgenroete buildings.
+### E&F + Morgenroete ComPatch (Vic3 1.13)
+### Extend E&F "private ownership -> stocks" switching to Morgenroete buildings.
+###
+### E&F 4.07.2026 still lists only vanilla / E&F buildings in
+### private_ownership_production_stocks, so Morgenroete buildings that carry an
+### E&F stock PM group need their own switch.
+###
+### NOTE (changed in the 1.13 update): this effect is no longer wired in by
+### overriding financial_center_ef_on_yearly_pulse_country. That override had
+### two problems: it had to be kept byte-in-sync with E&F, and E&F only calls
+### that effect for countries that own a financial centre, so Morgenroete
+### buildings never switched anywhere else. It is now called from our own
+### on_action (common/on_actions/zz_ef_mr_on_actions.txt), which is additive
+### and overrides nothing.
 
-# Called from the yearly pulse (see override below).
 mr_private_ownership_production_stocks = {
 	every_scope_state = {
 
-		########## MORGENROETE
 		# building_airport (manufacture stock)
 		if = {
 			limit = {
@@ -37,40 +47,6 @@ mr_private_ownership_production_stocks = {
 			activate_production_method = {
 				building_type = building_airport
 				production_method = pm_no_private_ownership_manufacture_stock
-			}
-		}
-
-		# building_uranium_mine (mining stock)
-		if = {
-			limit = {
-				has_building = building_uranium_mine
-				b:building_uranium_mine = {
-					private_ownership_fraction > 0.5
-				}
-				is_production_method_active = {
-					building_type = building_uranium_mine
-					production_method = pm_no_private_ownership_mining_stock
-				}
-			}
-			activate_production_method = {
-				building_type = building_uranium_mine
-				production_method = pm_private_ownership_majority_mining_stock
-			}
-		}
-		if = {
-			limit = {
-				has_building = building_uranium_mine
-				b:building_uranium_mine = {
-					private_ownership_fraction <= 0.5
-				}
-				is_production_method_active = {
-					building_type = building_uranium_mine
-					production_method = pm_private_ownership_majority_mining_stock
-				}
-			}
-			activate_production_method = {
-				building_type = building_uranium_mine
-				production_method = pm_no_private_ownership_mining_stock
 			}
 		}
 
@@ -243,17 +219,39 @@ mr_private_ownership_production_stocks = {
 				production_method = pm_no_private_ownership_manufacture_stock
 			}
 		}
+
+		# building_uranium_mine (mining stock)
+		if = {
+			limit = {
+				has_building = building_uranium_mine
+				b:building_uranium_mine = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_uranium_mine
+					production_method = pm_no_private_ownership_mining_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_uranium_mine
+				production_method = pm_private_ownership_majority_mining_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_uranium_mine
+				b:building_uranium_mine = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_uranium_mine
+					production_method = pm_private_ownership_majority_mining_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_uranium_mine
+				production_method = pm_no_private_ownership_mining_stock
+			}
+		}
 	}
 }
-
-# Override: extend E&F yearly pulse so it also runs the Morgenroete private-ownership switch.
-financial_center_ef_on_yearly_pulse_country = {
-	private_ownership_production_stocks = yes
-	mr_private_ownership_production_stocks = yes
-	financial_center_production_methods = yes
-	ai_buy_central_bank_debt = yes
-	sovereign_bond_yields = yes
-	bond_maturity_on_action = yes
-	financial_crash_count_reset_condition = yes
-}
-

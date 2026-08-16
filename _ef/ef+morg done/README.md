@@ -1,5 +1,5 @@
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
-[h1]E&F + Morgenröte ComPatch [1.12][/h1]
+[h1]E&F + Morgenröte ComPatch [1.13][/h1]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3146386373]based on Lord R compatch[/url]
 [h2]Load order[/h2]
 [list]
@@ -16,23 +16,18 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [list]
 [*][b]Adds E&F financial PM-groups to Morgenröte buildings[/b]
 [list]
-[*]Injects [i]pmg_market_liquidity[/i] into many custom Morgenröte buildings
-[*]Adds private ownership stock PM-groups where relevant (e.g. Airport / Uranium mine / publishing & industry buildings)
+[*]Injects [i]pmg_market_liquidity[/i] into all 62 custom Morgenröte buildings
+[*]Adds private ownership stock PM-groups to the ones that can actually be privately owned (Airport, Uranium mine, Opera, Instrument workshops, Manzoni publishing, both Mendelejew plants)
 [/list]
 
 [*][b]Extends E&F “private ownership → stocks” switching to Morgenröte buildings[/b]
 [list]
-[*]Adds an additional yearly check so Morgenroete buildings switch correctly based on [i]private_ownership_fraction[/i]
+[*]A yearly check switches those Morgenröte buildings between stock PMs based on [i]private_ownership_fraction[/i], the same way E&F does for its own buildings
 [/list]
 
 [*][b]Makes E&F inflation scripted values account for Morgenröte goods[/b]
 [list]
-[*]Adds Morgenroete goods to E&F inflation calculations (including: [i]air_travel[/i], [i]elgar_music[/i], [i]manzoni_prints[/i], [i]elgar_instruments[/i], [i]good_uranium[/i])
-[/list]
-
-[*][b]Agassiz geology integration (Silver)[/b]
-[list]
-[*]Adds “Find Silver” support so Agassiz geology can target E&F [i]building_silver_mine[/i] (JE + GUI + triggers)
+[*]Adds [i]air_travel[/i], [i]elgar_music[/i], [i]elgar_instruments[/i], [i]manzoni_prints[/i] to the consumer-goods basket and [i]good_uranium[/i] to the raw-material basket
 [/list]
 
 [*][b]Tesla project compatibility[/b]
@@ -42,9 +37,19 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [/list]
 [/list]
 
+[h2]Changes in the 1.13 version[/h2]
+[list]
+[*]Building list resynced with Morgenröte 2.8.3e: added Andersson Institute, both Curie buildings, both Lepsius monuments and the Elgar Opera; removed the deleted [i]building_gaudi_sagrada[/i]
+[*]The Agassiz “Find Silver” journal entry, GUI patch, triggers and localization were [b]removed[/b]. Morgenröte 2.8 replaced the per-ore projects with one “Improve Mining” project that targets [i]bg_mining[/i], and the E&F silver mine’s group [i]bg_silver_mining[/i] is a child of [i]bg_mining[/i], so it is picked up with no patch at all. Keeping the old files would have broken the new geologist UI.
+[*]The private-ownership switch is no longer wired in by overriding E&F’s [i]financial_center_ef_on_yearly_pulse_country[/i]; it uses its own on_action instead. Besides overriding nothing, this fixes the old behaviour where Morgenröte buildings only switched in countries that owned a financial centre.
+[*]Tesla mechanical improvement trigger resynced with Morgenröte 2.8.3e (adds [i]bg_subsistence_ranching[/i] to the exclusion list)
+[/list]
+
 [h2]Notes[/h2]
 [list]
 [*]This patch is designed to be [b]minimal[/b] and only overrides what’s needed for integration.
+[*][i]buy_packages[/i] need no patch: E&F uses INJECT and Morgenröte uses TRY_INJECT on the same [i]wealth_*[/i] keys, so both pop needs are applied.
+[*][i]building_railway[/i] needs no patch either — both mods inject into it rather than replacing it.
 [*]It does [b]not[/b] guarantee compatibility with other mods that also heavily edit the same [b]common/[/b] areas.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
