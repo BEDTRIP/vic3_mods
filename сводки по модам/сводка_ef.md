@@ -1,63 +1,85 @@
 ### Общая сводка: что меняет **Economic and Financial (E&F)** (фокус на `common/`)
 
-**E&F** — это крупный “оверлей” на экономику, который добавляет в игру полноценную **денежно‑финансовую подсистему** и встраивает её в ванильные здания/рынки через массовые патчи.
+**Актуальная версия в репозитории**: коммит `E&F 4.07.2026` (август 2026), игра **1.13.\***.  
+Steam ID: `3143591632`. Метadata в локальной копии почти пустой — ориентироваться на дату коммита и содержимое файлов.
+
+**E&F** — крупный «оверлей» на экономику: полноценная **денежно‑финансовая подсистема**, вшитая в ванильные здания/рынки через массовые патчи.
+
+---
 
 ### Финансы, валюта и законы (самая важная часть)
 - **Новые группы законов**:
-  - `lawgroup_monetary_system`: выбор **монетарного стандарта** (fiat / silver / gold / bimetallism / gold exchange / etc).
-  - `lawgroup_monetary_policy`: **монетарная политика** (в т.ч. revaluation / devaluation).
-  - `lawgroup_currency_type`: выбор **типа валюты** (по сути — конкретная “валюта” страны).
-  - `lawgroup_bimetalism_ratio`: отдельная настройка **соотношения биметаллизма** (10/15/20…).
-- **Новый институт**: `institution_economic_central_bank` (центробанк) с модификаторами по кредиту/процентам.
-- **Много “невидимых”/служебных триггеров/переменных** в `script_values/` + `scripted_effects/` + `on_actions/`, которые поддерживают:
-  - денежную массу/“ликвидность”,
-  - базовую ставку (`base_rate_percentage`) и её влияние,
-  - кредитный рейтинг страны (AAA…D) через модификаторы,
-  - кризисы (currency crisis / bankruptcy / instability и т.п.) и их расчёт.
+  - `lawgroup_monetary_system` — монетарный стандарт (fiat / silver / gold / bimetallism / gold exchange и т.д.).
+  - `lawgroup_monetary_policy` — монетарная политика (revaluation / devaluation).
+  - `lawgroup_currency_type` — тип/конкретная валюта страны.
+  - `lawgroup_bimetalism_ratio` — соотношение биметаллизма.
+- **Институт**: `institution_economic_central_bank`.
+- **Скриптовая платформа** в `script_values/`, `scripted_effects/`, `on_actions/`:
+  - денежная масса и ликвидность,
+  - базовая ставка и кредитный рейтинг (AAA…D),
+  - кризисы (currency crisis / bankruptcy / instability).
 
-### Goods: валюта и финансовые инструменты становятся товарами рынка
-- В `common/goods/ef_00_goods.txt` мод:
-  - **INJECT-патчит** ванильный `gold` (делает торгуемым/нефиксированным),
-  - добавляет `silver`,
-  - добавляет **финансовые товары**: `bond`, отраслевые “акции” (`manufacture_stock`, `agricultural_stock`, `mining_stock`, `railroad_stock`), `mutual_funds`, `war_bond`, и др.,
-  - добавляет **огромный список “валют” как goods** (dinar/mark/peso/… и т.д. десятками).
-- В `common/pop_needs/00_ef_pop_needs.txt` добавлен **новый pop need “currency”**, который потребляет выбранную валюту как товар. Это фундаментально меняет спрос/цены в рынках.
+---
 
-### Здания и производство: мод вшивает финансы в ванилу
-Ключевой механизм — добавление в здания двух типов PM-групп:
-- **`pmg_market_liquidity`**: привязка к выбранному “закону валюты”, обычно через потребление соответствующего currency-good.
-- **`pmg_private_ownership_*_stock`**: “акционирование” отраслей (выпуск/обращение отраслевых stock-goods) и связанная приватная собственность.
+### Goods: валюта и финансовые инструменты как товары рынка
+- `common/goods/ef_00_goods.txt`:
+  - **INJECT** ванильного `gold`,
+  - `silver`,
+  - финансовые товары: `bond`, отраслевые stocks, `mutual_funds`, `war_bond` и др.,
+  - десятки currency-goods (dinar/mark/peso/…).
+- `common/pop_needs/00_ef_pop_needs.txt` — pop need **`currency`**.
 
-E&F **массово INJECT-патчит ванильные здания**, добавляя туда эти группы (точки конфликтов для компачей):
-- Индустрия (`ef_01_industry.txt`), агро (`ef_02_agro.txt`), шахты (`ef_03_mines.txt`), плантации (`ef_04_plantations.txt`), urban (`ef_06_urban_center.txt`), ресурсные (`ef_09_misc_resource.txt`), инфраструктура/торговля (`ef_11_private_infrastructure.txt`).
+---
 
-Плюс добавляет/расширяет собственные здания:
-- **`building_bank`**: служебное/нестроящееся здание с PM-группами под монетарную систему/политику/валюту (движок центробанка).
-- **`building_financial_centre`** (+ много региональных вариантов): приватное “финансовое ядро”, которое **потребляет bonds/stocks** и производит/поддерживает финансовые продукты (например `mutual_funds`), влияя на инвестиции.
-- **`building_ef_private_construction`**: отдельное “приватное строительство”, завязанное на банковскую систему/ставку и выпускающее финансовые товары (заметно меняет динамику строительной мощности/инвестиций).
-- **`building_silver_mine`**: новая серебряная шахта + участие серебра в стандартах/монетарных расчётах.
+### Здания и производство
+Ключевые PM-группы E&F:
+- **`pmg_market_liquidity`** — привязка к закону валюты.
+- **`pmg_private_ownership_*_stock`** — акционирование отраслей.
 
-### Технологии: E&F прямо заменяет ванильные tech’и
-В `common/technology/technologies/ef_technology.txt` много **`REPLACE:` на ванильные технологии** (например `banking`, `currency_standards`, `central_banking`, `corporate_charters`, `joint_stock_companies`, `postal_savings` и др.), добавляя:
-- автотрек “currency_standards/metalique_standard”,
-- триггеры введения новой валюты/переходов стандартов,
-- новые/перенастроенные модификаторы под финансы.
+E&F **массово INJECT-патчит ванильные здания** (`ef_01_industry.txt`, `ef_02_agro.txt`, `ef_03_mines.txt`, `ef_04_plantations.txt`, `ef_06_urban_center.txt`, `ef_09_misc_resource.txt`, `ef_11_private_infrastructure.txt`).
 
-Это **крупнейшая зона несовместимости** с любыми модами, которые тоже трогают эти технологии.
+Собственные здания:
+- **`building_bank`** — центробанк.
+- **`building_financial_centre`** (+ региональные варианты).
+- **`building_ef_private_construction`** — приватное строительство.
+- **`building_silver_mine`** — серебряная шахта; **важно для компачей**: группа **`bg_silver_mining`**, не `bg_mining`.
 
-### Национальные запасы (stockpile) и дип. механики
-- В `common/script_values/00_stockpile_scripted_value.txt` и `production_methods/17_ef_national_stockpile.txt` реализована система **госрезерва**: “складировать/выпускать” зерно/уголь/железо/оружие/и т.д. через PM’ы и переменные.
-- В `common/treaty_articles/` добавлены статьи договоров вроде **`material_supply`** (поставки), а также валютные союзы (латинский/скандинавский) — это расширяет дипломатию и экономические взаимодействия.
+Группы зданий E&F (точки для компачей с другими модами):
+- `bg_bank`, `bg_financial_centre`, `bg_national_stockpile`, `bg_ef_private_construction`, `bg_silver_mining`.
 
-### События/JE/GUI
-- `events/00_ef_economic_event.txt`: крупные ивенты про **введение валют, реформы стандартов, валютные унификации, монетарные союзы**.
-- `journal_entries/` и `scripted_guis/` + `messages/` + `scripted_buttons/`: много UI/JE-обвязки (панели/индикаторы/кнопки) для управления/объяснения финансовых механик.
-- `on_actions/00_ef_on_action.txt`: регулярные пульсы (monthly/half-year/yearly/…) — мод **постоянно пересчитывает** финансовые переменные.
+---
 
-### Для компачей: где почти наверняка будут конфликты
-- **`common/technology/technologies/*` (REPLACE ванилы)**.
-- **`common/goods/*` и `common/pop_needs/*`** (добавляет новые goods и новый pop need).
-- **`common/buildings/*` (INJECT в ванильные building types)**.
-- **`common/production_methods*` и `production_method_groups*`** (добавляет новые PMG/PM и вшивает их в здания).
-- **`common/defines/*`** (меняет экономические константы).
-- **`common/on_actions`, `script_values`, `scripted_effects`, `static_modifiers`** (скриптовая “платформа” мода).
+### Технологии
+- `common/technology/technologies/ef_technology.txt` — много **`REPLACE:`** ванильных tech (`banking`, `currency_standards`, `central_banking`, `corporate_charters`, `joint_stock_companies`, …).
+- Главная зона конфликтов с модами, которые тоже правят те же технологии.
+
+---
+
+### Инфляция (изменилось в 1.13-обновлении)
+В `common/script_values/00_economic_scripted_value.txt` инфляция разбита на **несколько корзин**:
+- `inflation_on_consumer_goods`
+- `inflation_on_energy` *(новая)*
+- `inflation_on_raw_material`
+- `inflation_on_manufactured_goods` *(новая)*
+- `inflation_on_military_equipment` *(новая)*
+
+Для компачей с модами, добавляющими goods: нужно понимать, **в какую корзину** попадает товар, а не только дописывать в consumer/raw.
+
+---
+
+### Прочее
+- **Stockpile**: PM и переменные (часть файлов упакована в `.zip`).
+- **Companies**: расширенная система (`company_types`, `01_economic_company_value.txt`).
+- **Treaty articles**, **events/JE/GUI**, **on_actions** — регулярные пульсы пересчёта финансов.
+- **GUI**: крупный рефакторинг панелей (budget, construction, companies, custom windows).
+
+---
+
+### Для компачей: где ждать конфликты
+- **`common/technology/technologies/*`** (REPLACE ванилы).
+- **`common/goods/*`**, **`common/pop_needs/*`**.
+- **`common/buildings/*`** (INJECT в ваниль).
+- **`common/production_methods*`**, **`production_method_groups*`**.
+- **`common/buy_packages/*`** — полное переопределение `wealth_*` (конфликт с Morgenrote).
+- **`common/script_values/*`**, **`scripted_effects/*`**, **`on_actions/*`**, **`static_modifiers/*`**.
+- **`common/building_groups/*`** — особенно E&F-специфичные группы для исключений в чужих триггерах (Tesla и т.п.).
