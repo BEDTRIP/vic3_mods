@@ -1,0 +1,30 @@
+﻿### E&F Hotfix — пересчёт выпуска local_currency
+###
+### Аддитивно: on_action складываются, ничего не перекрывается.
+### Модификатор страновой, как и no_money_production у E&F, — он сам
+### раздаёт state_sell_orders_* по всем штатам страны.
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_local_currency_monthly
+	}
+}
+
+zz_ef_local_currency_monthly = {
+	effect = {
+		if = {
+			limit = { has_modifier = zz_ef_local_currency_fix }
+			remove_modifier = zz_ef_local_currency_fix
+		}
+		if = {
+			limit = {
+				has_modifier = no_money_production
+				zz_ef_local_currency_reduction > 0
+			}
+			add_modifier = {
+				name = zz_ef_local_currency_fix
+				multiplier = zz_ef_local_currency_reduction
+			}
+		}
+	}
+}

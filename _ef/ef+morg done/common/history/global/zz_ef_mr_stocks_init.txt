@@ -1,0 +1,15 @@
+﻿### E&F + Morgenroete ComPatch — инициализация stock-PM на старте партии
+###
+### on_yearly_pulse_country отрабатывает только через год после старта, поэтому
+### здания Morgenroete весь первый год стоят на "No ... Stock", даже если
+### частное владение уже больше половины. Сам E&F решает это тем, что зовёт
+### private_ownership_production_stocks прямо из common/history/global/
+### (99_ef_history_global_variable.txt). Делаем то же самое для своих зданий.
+###
+### Файл аддитивный: блоки GLOBAL складываются, "zz_" идёт после "99_ef_".
+
+GLOBAL = {
+	every_country = {
+		mr_private_ownership_production_stocks = yes
+	}
+}

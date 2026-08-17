@@ -1,4 +1,4 @@
-﻿BUILDINGS = {
+BUILDINGS = {
 	every_country = {
 
 		#####################################################################################################################################################
@@ -3612,7 +3612,7 @@
 	}
 
 	#SPA
-	s:STATE_LOWER_ANDALUSIA={
+	s:STATE_UPPER_ANDALUSIA={
 		region_state:SPA={
 			create_building={
 				building="building_silver_mine"

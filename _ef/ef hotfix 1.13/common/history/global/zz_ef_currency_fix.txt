@@ -1,0 +1,70 @@
+﻿### E&F Hotfix [1.13] — правка валютных законов
+###
+### Файл аддитивный: блоки GLOBAL из common/history/global/ складываются,
+### а "zz_" обрабатывается после "99_ef_history_global_variable.txt",
+### поэтому здешние activate_law перекрывают выданные E&F.
+
+GLOBAL = {
+	every_country = {
+
+		########################################################################
+		# 1. Вюртемберг: опечатка в E&F.
+		#    99_ef_history_global_variable.txt выдаёт WUR закон
+		#    law_gulden_south_german_gulde_currency — без "n" на конце.
+		#    Такого закона нет, activate_law молча не срабатывает, и Вюртемберг
+		#    остаётся без валюты, хотя товар gulden_south_german_gulden_c живой.
+		########################################################################
+		if = {
+			limit = { c:WUR ?= this }
+			activate_law = law_type:law_gulden_south_german_gulden_currency
+		}
+
+		########################################################################
+		# 2. Страны, чью валюту автор E&F закомментировал в ef_00_goods.txt,
+		#    но activate_law в истории оставил. Закон активен, товара нет:
+		#    банк не чеканит, здания не платят за ликвидность, а штатные
+		#    pm_no_currency_type / pm_no_market_liquidity не включаются,
+		#    потому что их отпирает law_no_market_liquidity.
+		#    Переводим в законное состояние "валюты нет".
+		#
+		# 3. Плюс те, чью валюту вырезали мы сами — ради слотов под
+		#    Morgenrote и PSC (лимит 128 товаров).
+		########################################################################
+		if = {
+			limit = {
+				OR = {
+					c:LIB ?= this		# Либерия        — dollar_liberian_dollar
+					c:COS ?= this		# Коста-Рика     — peso_costa_rican_colon
+					c:ECU ?= this		# Эквадор        — peso_ecuadorian_peso
+					c:ELS ?= this		# Сальвадор      — peso_el_salvador_colon
+					c:GUA ?= this		# Гватемала      — peso_guatemalan_quetzal
+					c:HON ?= this		# Гондурас       — peso_honduran_lempira
+					c:NIC ?= this		# Никарагуа      — peso_nicaraguan_cordoba
+					c:PRG ?= this		# Парагвай       — peso_paraguayan_peso
+					c:URU ?= this		# Уругвай        — peso_uruguayan_peso
+					c:VNZ ?= this		# Венесуэла      — peso_venezuelan_peso
+					c:DAI ?= this		# Дайвьет        — spe_dong
+					c:HAI ?= this		# Гаити          — dollar_caribbean_dollar  (вырезано нами)
+					c:NZL ?= this		# Новая Зеландия — dollar_new_zealand_dollar (вырезано нами)
+				}
+			}
+			activate_law = law_type:law_no_market_liquidity
+		}
+
+		########################################################################
+		# 4. Стартовая инициализация выпуска local_currency.
+		#    on_monthly_pulse_country отрабатывает только через месяц, поэтому
+		#    без этого блока весь первый месяц страны печатают плоские 2500.
+		########################################################################
+		if = {
+			limit = {
+				has_modifier = no_money_production
+				zz_ef_local_currency_reduction > 0
+			}
+			add_modifier = {
+				name = zz_ef_local_currency_fix
+				multiplier = zz_ef_local_currency_reduction
+			}
+		}
+	}
+}

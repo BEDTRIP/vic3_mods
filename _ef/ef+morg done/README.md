@@ -23,6 +23,7 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [*][b]Extends E&F “private ownership → stocks” switching to Morgenröte buildings[/b]
 [list]
 [*]A yearly check switches those Morgenröte buildings between stock PMs based on [i]private_ownership_fraction[/i], the same way E&F does for its own buildings
+[*]The same switch also runs once at game start from [i]common/history/global/[/i], so the buildings are not stuck on “No Stock” for the whole first year
 [/list]
 
 [*][b]Makes E&F inflation scripted values account for Morgenröte goods[/b]

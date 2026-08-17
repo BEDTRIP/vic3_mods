@@ -1,0 +1,10 @@
+{
+  "name": "_ZZ Goods Cap Test",
+  "id": "com.github.BEDTRIP.ZZ-Goods-Cap-Test",
+  "version": "1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Diagnostic only: adds 5 unused goods to test whether the modset hits a goods-count limit.",
+  "tags": [ "Utilities", "1.13" ],
+  "relationships": [],
+  "game_custom_data": { "multiplayer_synchronized": true }
+}

@@ -1,112 +1,173 @@
-# E&F History Hotfix [1.13]
+# E&F 1.13.10 Hotfix
 
-Мини-мод, который чинит два бага в **Economic and Financial (E&F)**, версия репозитория **04.07.2026**, на Victoria 3 **1.13.10**.
+Правки к **Economic and Financial**, версия репозитория **04.07.2026**, под Victoria 3 **1.13.10**.
+Ставить **после E&F**. От компача E&F + Morgenröte не зависит и работает без него.
 
-Компача E&F + Morgenröte не касается — работает и без него.
-
----
-
-## Что чинит
-
-Мод целиком заменяет один файл E&F: `common/history/buildings/00_ef_building.txt`.
-Всё остальное содержимое файла скопировано побайтово, изменены ровно две вещи.
-
-### 1. `s:STATE_ANDALUSIA` → `s:STATE_UPPER_ANDALUSIA` (строка 3615)
-
-Такого стейта в игре нет. В ванили 1.13 Андалусия разделена на `STATE_LOWER_ANDALUSIA` и `STATE_UPPER_ANDALUSIA`.
-
-В логе:
-
-```
-Error: Failed to scope to state region by key 'STATE_ANDALUSIA'
-  Script location: common/history/buildings/00_ef_building.txt:3615
-Error: Event target link 's' returned an unset scope
-Error: region_state:SPA effect [ Wrong scope for effect: none, expected state_region ]
-```
-
-Из-за этого Испания **не получала стартовую серебряную шахту** (`building_silver_mine`, компания `company_basic_gold_and_silver_mining_2`, 5 уровней).
-
-Выбран `UPPER` — это Хаэн/Альмерия, район Линареса и Ла-Каролины, крупнейшая испанская свинцово-серебряная добыча XIX века. Если задумка автора была про Рио-Тинто (Уэльва), правильным был бы `LOWER`.
-
-### 2. Блок `#GRE` закомментирован (строки 3816–3879)
-
-Это побуквенная копия блока `#PRU` с заменой `PRU` → `GRE`, включая `company_PreussischeSeehandlung` — прусский банк, выдающий Греции золотые и серебряные шахты **в Саксонии и Бранденбурге**.
-
-Греция существует на 1836, но этими стейтами не владеет, поэтому `region_state:GRE` возвращает невалидный объект, и все пять `create_building` внутри выполняются в NULL-стейте:
-
-```
-Error: Event target link 'region_state' returned an invalid object
-  Script location: common/history/buildings/00_ef_building.txt:3818
-Error: create_building effect [ Scoped object is not valid. Type: Область NULL_STATE (x000000) ]
-  Script location: .../3819, 3830, 3841, 3852, 3867
-```
-
-Это **главный подозреваемый по вылету** при старте игры: `create_building` в невалидном стейте.
-
-Блок закомментирован, а не удалён — если автор E&F имел в виду реальные греческие рудники (Лаврион в Аттике), содержимое под рукой.
+Три независимых блока: **лимит товаров**, **история**, **GUI**.
 
 ---
 
-## Чего мод НЕ чинит
+## 1. Лимит товаров — главное
 
-`common/history/buildings/00_ef_building.txt:2999` — вызов `financial_center_modifier = yes` внутри `every_country`. Внутри эффекта скриптовые значения `has_building_financial_centre_*` (`common/script_values/00_financial_scripted_value.txt`, строки 7027–7375) и `target_demand_bond_ajusted` (строка 3674) вычисляются в скоупе `none`:
+Victoria 3 1.13 не переваривает больше **128** товаров. Проверено эмпирически пустыми товарами-заглушками: 128 грузится, 130 и 131 — вылет при входе в игру, без единой скриптовой ошибки в логе.
 
-```
-Error: any_scope_state trigger [ Wrong scope for trigger: none, expected country, ... ]
-Error: is_subject trigger [ Wrong scope for trigger: none, expected country ]
-```
+E&F в одиночку даёт **126** (ваниль 53 + свои 73). Запас — два слота. Любой мод, добавляющий три и больше товаров, ломает игру:
 
-**1282 ошибки** за один старт игры — это самый шумный источник в логе, но лечится он внутри `financial_center_modifier` (`common/scripted_effects/09_introduction_building_lvl.txt:22135`), а это ~15 000 строк чужого кода. Копировать их в хотфикс смысла нет — это надо чинить автору E&F.
+| сборка | товаров | итог |
+|---|---:|---|
+| E&F | 126 | работает |
+| E&F + Morgenröte (+5) | 131 | **вылет** |
+| E&F + Morgenröte + PSC (+4) | 135 | **вылет** |
+
+Похоже, автор E&F в этот же потолок и упёрся: при переходе на 1.13 он вырезал из мода 32 товара и не добавил ни одного, оставив 126.
+
+### Что вырезано здесь
+
+Восемь валют закомментированы в `common/goods/ef_00_goods.txt` — тем же способом, каким автор вырезал свои 32. Законы, PM, переменные и локализация остаются висеть; на количество товаров они не влияют.
+
+| валюта | почему безопасно |
+|---|---|
+| `eco_central_african_eco_c` | `currency_identifiers` всегда 0 — за валютой нет ни страны, ни тега |
+| `eco_east_african_eco_c` | то же |
+| `eco_west_african_eco_c` | то же |
+| `dinar_c` | базовая generic, всегда 0, никому не выдаётся |
+| `peso_c` | базовая generic, всегда 0, есть ещё восемь именных песо |
+| `gulden_indies_guilder_c` | привязана к `c:DEI`, но DEI по истории получает `rupee_indonesian_rupiah` — дубль-пустышка |
+| `dollar_caribbean_dollar_c` | Гаити переведена на «валюты нет» (см. ниже) |
+| `dollar_new_zealand_dollar_c` | Новая Зеландия переведена на «валюты нет» |
+
+Итог: **118** товаров вместо 126.
+
+| сборка | стало |
+|---|---:|
+| E&F + хотфикс | 118 |
+| + Morgenröte | **123** |
+| + Morgenröte + PSC | **127** |
 
 ---
 
-## Известные подозрительные места, оставленные как есть
+## 2. История
 
-`region_state:TAG` на страны, которые этим стейтом на 1836 не владеют. В логе ошибок не дают, потому что сама страна на старте не существует (движок молча пропускает ссылку) либо блок закрыт проверкой даты:
+### `common/history/global/zz_ef_currency_fix.txt` (новый, аддитивный)
 
-| Строки | Что | Почему безопасно |
+Блоки `GLOBAL` складываются, а `zz_` обрабатывается после `99_ef_history_global_variable.txt` — поэтому файл ничего не перекрывает, просто дописывает `activate_law` последним.
+
+**Вюртемберг.** E&F выдаёт ему `law_gulden_south_german_gulde_currency` — без `n` на конце. Такого закона нет, `activate_law` молча не срабатывает, и WUR остаётся вообще без валюты, хотя товар `gulden_south_german_gulden_c` живой. Выдаём правильный закон.
+
+**Тринадцать стран → `law_no_market_liquidity`.** Одиннадцать из них — валюты, которые автор вырезал, забыв убрать `activate_law`: Либерия, Коста-Рика, Эквадор, Сальвадор, Гватемала, Гондурас, Никарагуа, Парагвай, Уругвай, Венесуэла, Дайвьет. Плюс Гаити и Новая Зеландия, чьи валюты вырезали мы.
+
+Зачем это нужно. Именной закон валюты без товара — состояние хуже, чем отсутствие валюты: штатные `pm_no_currency_type` и `pm_no_market_liquidity` не включаются (их отпирает `law_no_market_liquidity`), вместо них активны именные PM, указывающие в пустоту. Банк не чеканит, здания не платят за ликвидность. `law_no_market_liquidity` — первый закон в `lawgroup_currency_type`, без требований и эффектов, на нём и так живёт большинство стран мира.
+
+### `common/history/buildings/00_ef_building.txt` (перекрывает файл E&F)
+
+Две правки, всё остальное скопировано побайтово.
+
+**`s:STATE_ANDALUSIA` → `s:STATE_LOWER_ANDALUSIA`.** Такого стейта в 1.13 нет, Андалусия разделена на Lower и Upper. Из-за этого Испания не получала стартовую серебряную шахту.
+
+Целевой штат выбран не по истории, а по месторождению: модификатор `silver_mine_max_level` Испании выдаётся в `common/history/states/01_ef_states.txt:67` именно `STATE_LOWER_ANDALUSIA`. Без него здание `building_silver_mine` не проходит `possible`/`potential` и в штате не появляется. Первая версия хотфикса ставила Upper — проверка в игре показала пустую Верхнюю Андалусию и месторождение 0/10 в Нижней.
+
+**Блок `#GRE` закомментирован.** Побуквенная копия блока `#PRU` с заменой тега, вместе с `company_PreussischeSeehandlung`: Греция получала золотые и серебряные шахты в Саксонии и Бранденбурге. Греция этими стейтами не владеет, поэтому `region_state:GRE` даёт невалидный объект и пять `create_building` выполняются в NULL-стейте.
+
+---
+
+## 3. GUI
+
+E&F перекрывает **32** ванильных `.gui`. Часть — настоящие переработки под финансовую систему, но шесть отстали от 1.13 на сотни строк. Это опаснее, чем кажется: движок ищет некоторые виджеты **по имени**, и если в перекрытом файле имени нет, игра не ругается тихо, а падает.
+
+Именно так и выглядел вылет при появлении карты мира:
+
+```
+[pdx_gui.h:91]: Could not find widget 'enemy_naval_mission_marker'
+                in file 'gui/map_markers.gui'
+```
+
+В ванили этот виджет есть (`map_markers.gui:3995`), в копии E&F — нет.
+
+### Восстановлено (ваниль 1.13.10 + замена `@money!` на символ валюты)
+
+| файл | отставание | что было потеряно |
 |---|---|---|
-| 850–1447 | `region_state:GER`, `region_state:NGF` в 17 немецких стейтах | GER/NGF на 1836 не существуют |
-| 1499–1639 | `region_state:ITA` в Кампании, Ломбардии, Венето, Тоскане, Пьемонте | ITA не существует |
-| 1703, 1790 | `region_state:CAN` в Квебеке и Онтарио | CAN не существует |
-| 1890 | `region_state:AST` в Новом Южном Уэльсе | AST не существует |
-| 2451, 2547, 2733 | `region_state:GBR` в Шаочжоу | внутри `if = { limit = { game_date > 1860 } }` |
-| 2899 | `region_state:PEU` в Лиме | PEU на 1836 не существует |
+| `map_markers.gui` | −420 строк | `name=`: `enemy_naval_mission_marker`, `coastal_building_marker`, `enemy_frame`; `type=`: `naval_mission_marker_dot` — **вылет при загрузке карты** |
+| `custom_tooltip.gui` | −336 | `type=`: `naval_mission_marker_tooltip_fleet`, `coastal_building_marker_tooltip_row`, `treaty_tooltip_article_entry` — подсказки к тем же морским маркерам |
+| `military_formation_panel.gui` | −387 | `type=`: `military_formation_cancel_invasion_button` — кандидат в вылет при открытии военной вкладки |
+| `frontend/shared/lists.gui` | −121 | `type=`: `dropdown_menu_round`, структура выпадающих списков до 1.13 |
+| `popups.gui` | −135 | `name=`: `amount_input`, `decommission_supply_ships_window` |
+| `right_click_menu.gui` | −71 | `name=`: `enemy_fleets_on_mission_in_sea_region` |
 
-Если E&F когда-нибудь добавит эти страны на старт или появится мод, который их добавляет, каждая строка отсюда превратится во вторую версию бага `#GRE`.
+Проверено: во всех шести восстановленных файлах не пропало ни одного `name=` и ни одного `type=` относительно ванили 1.13.10.
+
+Потери со стороны E&F минимальны и косметические: шесть `using = tooltip_above` в маркерах, одна строка `tooltip = "TOOLTIP_STATE_DEVASTATION"`, `text = "[MilitaryFormation.GetNameNoIcon]"` и варианты `treaty_tooltip_article` под `acquire_monopoly_for_company`. Все денежные строки воспроизводятся подстановкой `@money!` автоматически.
+
+### ⚠ Ещё два файла с той же болезнью — не тронуты
+
+| файл | отсутствуют `name=` | когда рванёт |
+|---|---|---|
+| `budget_panel.gui` | `declare_bankruptcy_button`, `bankruptcy_progress_bar`, `bankruptcy_progressbar` | при показе интерфейса банкротства |
+| `construction_panel.gui` | `ship_construction_queue_pages` | при открытии очереди корабельного строительства |
+
+Их подменить ванилью нельзя: это настоящие переработки E&F (−145/+218 и −113/+105), в них вся его бюджетная механика. Нужен ручной мерж — взять ваниль 1.13 и перенести туда правки E&F. Отдельная задача.
 
 ---
 
-## Установка и порядок загрузки
+## 4. Алерты — 70 000 ошибок за партию
 
-1. Community Mod Framework
-2. Expanded Topbar Framework (или Dence UI)
-3. Economic and Financial (E&F)
-4. **E&F History Hotfix (этот мод)**
-5. Morgenröte
-6. E&F + Morgenröte ComPatch
+`common/alert_types/00_ef_alert_types.txt` — 32 алерта, из них 31 читает переменные, которые в большинстве партий не инициализированы:
 
-Главное — **после E&F**. Относительно Morgenröte и компача порядок не важен, они этот файл не трогают.
+- **29 штук `store_release_*`** (боеприпасы, зерно, уголь, нефть…) читают `<товар>_store_month_fixe`, `store_<товар>_time` и т.п. Это переменные национального стокпайла, а его PM и PMG у E&F лежат в `17_ef_national_stockpile.zip` — архивы игра не читает, здания с группой `bg_national_stockpile` в моде нет. Данных нет, переменные не создаются.
+- **2 штуки `selle_bond_maturity_yers_time_*_Y`** читают `selle_bond_maturity_yers_time_1..10` в скоупе рынка.
+
+Алерты объявлены как `script_context = player_country` и `player_market`, то есть пересчитываются при каждой смене игровой страны. Отсюда и результат: в тестовой партии эти два семейства дали **порядка 70 000** записей вида
+
+```
+Value of wrong type in 'common/alert_types/00_ef_alert_types.txt:1017'. Got value of type 'none'
+Failed to fetch variable for 'selle_bond_maturity_yers_time_6' due to no variables in scope
+```
+
+и это был **единственный** источник ошибок в логе, если не считать шума от самой игры.
+
+**Что сделано.** В каждый `valid` добавлены `has_variable` на все переменные, которые этот алерт читает — прямо и через `*_time_rest` из `00_economic_scripted_value.txt`. Нет данных — алерт не вычисляется и молчит. Есть данные — работает ровно как раньше.
+
+Пропатчен 31 алерт из 32. `fso_alert` не тронут: он не читает переменных.
+
+**Вторая правка в том же файле.** Два алерта `selle_bond_maturity_yers_time_5_Y` и `_10_Y` объявлены как `script_context = player_market`, но читают `var:selle_bond_maturity_yers_time_1..10`. В Victoria 3 у рынка переменных нет в принципе — движок отвечает `This scope doesn't support variables. Scope: Рынок ...`. То есть эти два алерта не могли работать никогда.
+
+Сами переменные ставятся в `common/history/global/00_ef_financial_global_variable.txt` внутри `GLOBAL = { every_country = { ... } }`, то есть они **страновые**. Поэтому `script_context` заменён на `player_country` — и ошибка уходит, и алерт наконец начинает работать так, как задумывался.
+
+Правятся только живые строки: в файле есть ещё 28 закомментированных заготовок `buy_sell_*_order` с тем же `player_market`, их патч не трогает.
+
+
+Оговорка: там, где алерт читает пять переменных через `or`, теперь требуются все пять. Раньше при частично заданных данных одна ветка считалась, остальные сыпали ошибками — то есть результат всё равно был неопределённым.
+
+---
+
+## Что осталось несделанным
+
+- `00_ef_building.txt:2999` — `financial_center_modifier` выполняется в скоупе `none`, **1282 ошибки** за один старт. Лечится внутри `09_introduction_building_lvl.txt:22135`, это ~15 000 строк чужого кода.
+- Все 95 законов валют требуют `unlocking_technologies = { currency_standars }` — технологии с такой опечаткой не существует. Группа законов валют недоступна для обычного принятия.
+- 34 осиротевших набора modifier types (вырезанные товары) — те самые 140 предупреждений `defined in script but not in code`.
+- Тунисский и югославский динары оставлены: за ними стоят теги `c:TUN` и `c:YUG`, и если игрок соберёт эти страны, они попадут в то же состояние, что чинится в блоке 2.
+
+Всё это стоит отправить автору E&F — у него это чинится в разы дешевле.
 
 ---
 
 ## ⚠️ Обслуживание
 
-Мод **полностью перезаписывает** `common/history/buildings/00_ef_building.txt`.
+Мод перекрывает три файла E&F (`ef_00_goods.txt`, `00_ef_building.txt`) и четыре ванильных `.gui`. Значит:
 
-Это значит: как только E&F обновится и что-то допишет в стартовую историю (новые финцентры, шахты, компании), **этот мод откатит все правки обратно**. При каждом апдейте E&F надо пересобирать файл заново:
+- **после каждого обновления E&F** правки надо накатывать заново, иначе хотфикс откатит его изменения;
+- **после каждого патча игры** `.gui` надо перекопировать из новой ванили.
 
 ```bash
 cd C:/Users/Andrey/Projects/vic3_mods_out
-# 1. изменился ли исходник?
-diff "E&F/common/history/buildings/00_ef_building.txt" \
-     "../vic3_mods/_ef/ef hotfix 1.13/common/history/buildings/00_ef_building.txt"
 
-# 2. проверить, живы ли ещё оба бага
+# изменился ли исходник goods?
+diff "E&F/common/goods/ef_00_goods.txt" \
+     "../vic3_mods/_ef/ef hotfix 1.13/common/goods/ef_00_goods.txt"
+
+# живы ли ещё оба бага истории?
 grep -n 'STATE_ANDALUSIA' "E&F/common/history/buildings/00_ef_building.txt"
-grep -n -A3 '#GRE' "E&F/common/history/buildings/00_ef_building.txt"
+grep -n -A3 '#GRE'        "E&F/common/history/buildings/00_ef_building.txt"
+
+# не подрос ли счётчик товаров (должно быть <= 128 со всеми модами)
 ```
-
-Если оба бага исправлены автором — мод надо просто удалить.
-
-Баги стоит отправить автору E&F: тогда хотфикс станет не нужен.

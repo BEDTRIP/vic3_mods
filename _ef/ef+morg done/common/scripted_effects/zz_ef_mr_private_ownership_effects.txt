@@ -1,4 +1,4 @@
-### E&F + Morgenroete ComPatch (Vic3 1.13)
+﻿### E&F + Morgenroete ComPatch (Vic3 1.13)
 ### Extend E&F "private ownership -> stocks" switching to Morgenroete buildings.
 ###
 ### E&F 4.07.2026 still lists only vanilla / E&F buildings in

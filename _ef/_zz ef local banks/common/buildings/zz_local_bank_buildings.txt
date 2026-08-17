@@ -1,0 +1,44 @@
+﻿### building_local_bank — частный банк, выпускающий местную валюту
+###
+### Занятость взята с ванильного торгового центра (pm_trade_center):
+### 800 служащих и 200 лавочников на уровень.
+### Владение: государство, инвестпул частников, финансовые районы.
+
+building_local_bank = {
+	building_group = bg_local_bank
+	city_type = city
+	levels_per_mesh = 50
+
+	lens = infrastructure
+
+	required_construction = construction_cost_very_low
+
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
+
+	production_method_groups = {
+		pmg_base_building_local_bank
+		pmg_mutual_funds_local_bank
+	}
+
+	can_build_government = {
+		always = yes
+	}
+
+	can_build_private = {
+		always = yes
+	}
+
+	ownership_type = self
+}
+
+### Разрешаем финансовым районам вкладываться в местные банки
+TRY_INJECT:building_financial_district = {
+	investment_scores = {
+		bg_local_bank_score = {
+			group = "bg_local_bank"
+			score = {
+				value = 0.5
+			}
+		}
+	}
+}

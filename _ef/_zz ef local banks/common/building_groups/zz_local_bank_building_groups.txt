@@ -1,0 +1,24 @@
+﻿### Локальные банки — группа зданий
+### Родитель bg_private_infrastructure: частное владение, без экономии масштаба,
+### и заодно автоматически попадает под исключения Теслы (bg_infrastructure).
+
+bg_local_bank = {
+	parent_group = bg_private_infrastructure
+
+	lens = trade
+
+	stateregion_max_level = no
+	subsidized = no
+	economy_of_scale = no
+
+	urbanization = 15
+	infrastructure_usage_per_level = 0
+
+	default_building = building_local_bank
+
+	should_auto_expand = {
+		default_auto_expand_rule = yes
+	}
+
+	foreign_investment_ai_factor = 5
+}

@@ -1,0 +1,39 @@
+﻿### Переключение паевых фондов по доле частного владения.
+### Та же схема, что E&F применяет к своим зданиям.
+
+zz_local_bank_mutual_funds_switch = {
+	every_scope_state = {
+		if = {
+			limit = {
+				has_building = building_local_bank
+				b:building_local_bank = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_local_bank
+					production_method = pm_no_mutual_funds_local_bank
+				}
+			}
+			activate_production_method = {
+				building_type = building_local_bank
+				production_method = pm_mutual_funds_local_bank
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_local_bank
+				b:building_local_bank = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_local_bank
+					production_method = pm_mutual_funds_local_bank
+				}
+			}
+			activate_production_method = {
+				building_type = building_local_bank
+				production_method = pm_no_mutual_funds_local_bank
+			}
+		}
+	}
+}

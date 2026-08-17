@@ -1,0 +1,12 @@
+﻿### E&F Hotfix — полное отключение выпуска local_currency из модификатора
+###
+### E&F даёт странам без денежной системы модификатор no_money_production
+### с плоским state_sell_orders_local_currency_add = 2500 на каждый штат.
+### Теперь местную валюту выпускают здания (мод E&F Local Banks),
+### поэтому генерацию из воздуха вычитаем целиком.
+###
+### Модификатор zz_ef_local_currency_fix имеет базу -1, множитель ниже.
+
+zz_ef_local_currency_reduction = {
+	value = 2500
+}

@@ -1,0 +1,26 @@
+﻿### НЕДОСТАЮЩИЕ ТИПЫ МОДИФИКАТОРОВ ДЛЯ local_currency
+###
+### E&F объявляет для каждого своего товара четыре типа:
+###   goods_input_X_add, goods_output_X_add, goods_input_X_mult, goods_output_X_mult
+### Для local_currency объявлены ТОЛЬКО два _mult
+### (00_ef_building_modifier_types.txt:419 и :427), а оба _add отсутствуют.
+###
+### Из-за этого любой goods_output_local_currency_add молча не работает —
+### именно поэтому местный банк потреблял золото, но ничего не выпускал.
+### Это баг E&F, а не наш: у остальных 130 товаров все четыре типа на месте.
+
+goods_input_local_currency_add = {
+	decimals = 1
+	color = bad
+	game_data = {
+		ai_value = 0
+	}
+}
+
+goods_output_local_currency_add = {
+	decimals = 1
+	color = good
+	game_data = {
+		ai_value = 0
+	}
+}
