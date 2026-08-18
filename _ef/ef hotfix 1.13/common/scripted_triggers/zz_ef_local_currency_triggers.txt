@@ -1,0 +1,18 @@
+﻿### E&F Hotfix — кому прижимаем выпуск local_currency
+###
+### Условие одно и то же в двух местах (старт игры и ежемесячный пульс),
+### поэтому вынесено в триггер.
+###
+### market ?= { owner ?= { ... } } — рабочий путь до владельца рынка,
+### ванильные скрипты ходят так же (scripted_triggers/00_gfx_route_graphics_triggers.txt).
+### Если владелец рынка сам без денежной системы — значит настоящей валюты
+### в рынке нет, и трогать страну не надо.
+
+zz_ef_local_currency_needs_throttle = {
+	has_modifier = no_money_production
+	market ?= {
+		owner ?= {
+			NOT = { has_modifier = no_money_production }
+		}
+	}
+}

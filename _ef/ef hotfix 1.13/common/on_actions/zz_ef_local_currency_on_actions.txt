@@ -1,8 +1,15 @@
 ﻿### E&F Hotfix — пересчёт выпуска local_currency
 ###
 ### Аддитивно: on_action складываются, ничего не перекрывается.
-### Модификатор страновой, как и no_money_production у E&F, — он сам
-### раздаёт state_sell_orders_* по всем штатам страны.
+###
+### Модификатор вешается на СТРАНУ, как и no_money_production у E&F, —
+### он сам раздаёт state_sell_orders_* по всем штатам поровну.
+###
+### Вешать по штатам отдельно нельзя: multiplier в add_modifier считается
+### не в скоупе штата, а выше, и любое state_* значение возвращает none.
+### Проверено запуском, лог: "Value of wrong type ... Got value of type 'none'".
+###
+### Пересчитываем ежемесячно: население, достаток и рынок подвижны.
 
 on_monthly_pulse_country = {
 	on_actions = {
@@ -12,13 +19,23 @@ on_monthly_pulse_country = {
 
 zz_ef_local_currency_monthly = {
 	effect = {
+		### Уборка. Второй блок — для сохранений с предыдущей версии,
+		### где модификатор пробовали вешать на каждый штат.
 		if = {
 			limit = { has_modifier = zz_ef_local_currency_fix }
 			remove_modifier = zz_ef_local_currency_fix
 		}
+		every_scope_state = {
+			if = {
+				limit = { has_modifier = zz_ef_local_currency_fix }
+				remove_modifier = zz_ef_local_currency_fix
+			}
+		}
+
+		### Выдача
 		if = {
 			limit = {
-				has_modifier = no_money_production
+				zz_ef_local_currency_needs_throttle = yes
 				zz_ef_local_currency_reduction > 0
 			}
 			add_modifier = {
