@@ -1,17 +1,16 @@
-﻿### E&F Hotfix — корректировка выпуска local_currency
+﻿### E&F Hotfix — выпуск local_currency по расчёту
 ###
-### E&F даёт странам без денежной системы модификатор no_money_production
-### с плоским state_sell_orders_local_currency_add = 2500 на КАЖДЫЙ штат,
-### без всякой привязки к населению. Стран без денежной системы в игре
-### около 600 из 724, поэтому мелкая периферия заливает общий рынок
-### дешёвой local_currency, и попы нормальных стран закрывают ей
-### popneed_currency вместо своей национальной валюты.
+### Ефовские плоские 2500 отключены в источнике
+### (см. zz_ef_no_money_production.txt), этот модификатор выдаёт замену.
 ###
-### Этот модификатор вычитает излишек. Базовое значение -1, реальная
-### величина задаётся множителем при выдаче (см. on_actions).
-### Ничего у E&F не перекрывается: модификаторы складываются.
+### Базовое значение +1, реальная величина задаётся множителем при выдаче:
+### zz_ef_local_currency_per_state, см. common/on_actions/.
+###
+### Имя оставлено прежним (fix, а не grant) намеренно: мод _ZZ EF Local Banks
+### глушит его через TRY_REPLACE по этому ключу, и переименование потребовало
+### бы синхронной правки в двух модах.
 
 zz_ef_local_currency_fix = {
 	icon = gfx/interface/icons/timed_modifier_icons/no_money_production.dds
-	state_sell_orders_local_currency_add = -1
+	state_sell_orders_local_currency_add = 1
 }
