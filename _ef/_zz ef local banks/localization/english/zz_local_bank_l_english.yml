@@ -1,9 +1,0 @@
-﻿l_english:
- building_local_bank: "Local Bank"
- building_local_bank_desc: "A private bank of issue. It buys gold and puts banknotes into circulation, giving a country without a monetary system something to pay with."
- bg_local_bank: "Local Banks"
- pmg_base_building_local_bank: "Note Issue"
- pm_local_bank_gold_issue: "Gold-Backed Notes"
- pmg_mutual_funds_local_bank: "Mutual Funds"
- pm_no_mutual_funds_local_bank: "No Mutual Funds"
- pm_mutual_funds_local_bank: "Mutual Funds"

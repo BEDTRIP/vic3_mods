@@ -1,9 +1,0 @@
-﻿l_russian:
- building_local_bank: "Местный банк"
- building_local_bank_desc: "Частный эмиссионный банк. Скупает золото и выпускает в обращение банкноты, давая стране без денежной системы то, чем можно расплачиваться."
- bg_local_bank: "Местные банки"
- pmg_base_building_local_bank: "Эмиссия"
- pm_local_bank_gold_issue: "Банкноты под золото"
- pmg_mutual_funds_local_bank: "Паевые фонды"
- pm_no_mutual_funds_local_bank: "Без паевых фондов"
- pm_mutual_funds_local_bank: "Паевые фонды"

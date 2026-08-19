@@ -360,3 +360,75 @@ grep -c 'currency_standars' "E&F/common/laws/01_ef_currency_type.txt"
 
 # has the goods count crept up? (must stay <= 128 with every mod loaded)
 ```
+
+---
+
+## For Steam
+
+Short description in Steam BBCode — paste as is into the workshop page.
+
+```
+[h1]E&F Hotfix [1.13][/h1]
+Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13.10[/b].
+Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637341756]E&F + Morgenröte ComPatch[/url] — works with or without it.
+
+[h2]Load order[/h2]
+[list]
+[*]Community Mod Framework (CMF)
+[*]Expanded Topbar Framework (or Dence UI)
+[*]Economic and Financial (E&F)
+[*][b]E&F Hotfix (this mod)[/b]
+[/list]
+
+[h2]What it fixes[/h2]
+[list]
+[*][b]The 128 goods limit — the reason E&F + any goods mod crashes[/b]
+[list]
+[*]Vic3 1.13 crashes on entering a game above 128 goods, with nothing in the log. E&F alone brings 126, so two free slots
+[*]Eight dead currencies are commented out — ones with no country behind them, or duplicates. Down to [b]118[/b], which leaves room for Morgenröte (123) and PSC (127)
+[/list]
+
+[*][b]The crash when the world map appears[/b]
+[list]
+[*]Six vanilla GUI files E&F still ships in their 1.12 form are restored to 1.13.10, keeping the [i]@money![/i] → currency symbol substitution
+[*][i]map_markers.gui[/i] was missing [i]enemy_naval_mission_marker[/i] — the engine looks that widget up by name and crashes when it is gone
+[*]Also restored: [i]custom_tooltip[/i], [i]military_formation_panel[/i], [i]popups[/i], [i]right_click_menu[/i], [i]frontend/shared/lists[/i]
+[/list]
+
+[*][b]~70,000 script errors per session[/b]
+[list]
+[*]31 of 32 E&F alerts read variables that are never initialised — the national stockpile they belong to ships inside a .zip the game does not read
+[*]Every alert now checks [i]has_variable[/i] first. No data, no evaluation, no log spam
+[*]Two bond alerts ran with [i]script_context = player_market[/i] while reading country variables — markets have no variables in Vic3, so those two could never work. Fixed to [i]player_country[/i]
+[/list]
+
+[*][b]History bugs[/b]
+[list]
+[*]Spain got no starting silver mine: E&F points at [i]STATE_ANDALUSIA[/i], which 1.13 split into Lower and Upper
+[*]Greece got gold and silver mines in Saxony and Brandenburg — a copy-paste of the Prussian block, running in a NULL state
+[*]Württemberg got no currency at all: its law is spelled [i]gulde[/i] without the n
+[*]Thirteen countries held a named currency law whose good does not exist — worse than having no currency. Moved to [i]law_no_market_liquidity[/i]
+[/list]
+
+[*][b]Local currency flooding every market[/b]
+[list]
+[*]E&F handed countries without a monetary system a flat 2500 local currency [b]per state[/b], regardless of size. ~600 of 724 countries qualify, and their cheap currency crowded real national currencies out of [i]popneed_currency[/i]
+[*]Replaced with an amount computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve
+[/list]
+
+[*][b]Currency laws were unavailable to everyone[/b]
+[list]
+[*]All 95 laws required a technology named [i]currency_standars[/i] — the real one has a d. One letter, 95 times, and the whole law group could never be enacted
+[*]Fixed, with a restriction: a law is available only to the tags E&F itself assigns it to, and only once you actually have a central bank
+[/list]
+[/list]
+
+[h2]Not fixed[/h2]
+[list]
+[*][i]budget_panel.gui[/i] and [i]construction_panel.gui[/i] are equally out of date but hold real E&F reworks — they need a manual merge, not a vanilla swap. Expect trouble at bankruptcy and in the ship construction queue
+[*][i]financial_center_modifier[/i] runs in [i]none[/i] scope: 1282 errors per game start, buried in ~15,000 lines
+[/list]
+
+[i]Overrides five E&F files and six vanilla .gui files, so it has to be rebuilt after every E&F update and every game patch.[/i]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+```

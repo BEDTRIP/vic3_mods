@@ -1,9 +1,10 @@
 {
   "name": "E&F 1.13.10 Hotfix",
-  "id": "com.github.BEDTRIP.EF-Hotfix",
+  "id": "3786286962",
   "version": "1.13.10-1",
   "supported_game_version": "1.13.*",
   "short_description": "Fixes two broken entries in Economic and Financial's common/history/buildings that spam errors and create buildings in a NULL state on game start.",
+  "picture": "thumbnail.png",
   "tags": [
     "Fixes",
     "1.13"

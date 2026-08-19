@@ -6,6 +6,7 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [*]Community Mod Framework (CMF)
 [*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]Economic and Financial (E&F)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]my E&F Hotfix[/url]
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*]Morgenröte
 [*][b]E&F + Morgenröte ComPatch (this mod)[/b]
