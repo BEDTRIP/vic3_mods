@@ -1,3 +1,19 @@
+**Версия в репозитории**: `.metadata/metadata.json` → `version = 1.3.7`, имя мода `[1.13] Private Sector Construction`, `supported_game_version` пустой. Коммит папки — `PSC 2.05.2026`.
+Steam ID: `3420714166`.
+**Сверено с файлами: 19.08.2026.**
+
+Проверено при сверке 19.08.2026:
+- состав файлов не изменился (22 файла в `common/`, 6 в `gui/`, 4 новых товара);
+- 4 товара `*_construction` с `local = yes` на месте, имена не менялись;
+- `bg_construction` по-прежнему перевешен на `bg_private_infrastructure`, добавлена `bg_construction_regulator`;
+- PM-имена `pm_*_point_conversion` не менялись; в `zz_PSC_construction.txt` они по-прежнему `REPLACE_OR_CREATE:`;
+- `calculate_state_construction_base_price` в `PSC_construction_values.txt` **всё ещё без гварда** `has_building = building_construction_regulator` → спам `Wrong scope for trigger: none, expected building` при старте сохраняется, патч в компаче ef+psc актуален;
+- пересечений по путям файлов с E&F нет вообще (`common` 22/101, `gui` 6/89, `gfx` 7/856 — пересечение пустое);
+- по ключам с E&F пересекаются только аддитивные `BUILDINGS`, `GLOBAL`, `on_production_method_changed` — не конфликт;
+- **`gui` конфликтует по именам виджетов**: `construction_panel`, `state_buildings`, `state_panel_types` (`state_panel_buildings_content`, `state_panel_buildings_fixed_bottom`), `urban_building_list`, `construction_queue_pages`, `construction_sector_or_no_sector`, `domestic_queue` — оба мода переопределяют одни и те же ванильные окна разными файлами.
+
+---
+
 ### Общая идея PSC (сверено по файлам мода `PSC` и ванили `.vanillaVIC3`)
 
 **PSC (Private Sector Construction) полностью меняет “источник” и “финансирование” строительства: вместо прямой генерации абстрактных очков строительства Construction Sector’ами, мод вводит локальные (штатные) товары-строительство + служебный “регулятор”, который конвертирует эти товары в `country_construction`, и добавляет модель разделения гос/частных трат (инвестпул ↔ бюджет).**
