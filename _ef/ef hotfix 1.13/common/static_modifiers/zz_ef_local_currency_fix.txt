@@ -1,14 +1,15 @@
-﻿### E&F Hotfix — выпуск local_currency по расчёту
+﻿### E&F Hotfix — local_currency issued from the computed demand
 ###
-### Ефовские плоские 2500 отключены в источнике
-### (см. zz_ef_no_money_production.txt), этот модификатор выдаёт замену.
+### E&F's flat 2500 is disabled at the source (see zz_ef_no_money_production.txt);
+### this modifier is the replacement grant.
 ###
-### Базовое значение +1, реальная величина задаётся множителем при выдаче:
-### zz_ef_local_currency_per_state, см. common/on_actions/.
+### The base value is +1 and the real amount comes from the multiplier applied
+### when the modifier is handed out: zz_ef_local_currency_per_state, see
+### common/on_actions/.
 ###
-### Имя оставлено прежним (fix, а не grant) намеренно: мод _ZZ EF Local Banks
-### глушит его через TRY_REPLACE по этому ключу, и переименование потребовало
-### бы синхронной правки в двух модах.
+### The key is deliberately still called "fix" rather than "grant": the
+### _ZZ EF Local Banks mod neuters this modifier through TRY_REPLACE on that
+### exact key, and renaming it would mean a synchronised edit in two mods.
 
 zz_ef_local_currency_fix = {
 	icon = gfx/interface/icons/timed_modifier_icons/no_money_production.dds

@@ -1,30 +1,31 @@
-﻿### E&F Hotfix — плоские 2500 отключены в источнике
+﻿### E&F Hotfix — the flat 2500 is killed at the source
 ###
-### E&F вешает на страну без денежной системы модификатор no_money_production,
-### а в нём строка state_sell_orders_local_currency_add = 2500. Модификатор
-### страновой, значит 2500 прилетают в КАЖДЫЙ штат, без привязки к населению,
-### богатству и хоть чему-нибудь. Стран без денежной системы около 600 из 724.
+### E&F puts the no_money_production modifier on every country without a
+### monetary system, and that modifier carries
+### state_sell_orders_local_currency_add = 2500. It is a country modifier, so
+### the 2500 lands in EVERY state the country owns, with no regard for
+### population, wealth or anything else. Roughly 600 of the game's 724
+### countries have no monetary system.
 ###
-### REPLACE: переопределяет запись целиком и оставляет от неё одну иконку.
-### Сама запись остаётся живой, поэтому все проверки
-### has_modifier = no_money_production в E&F (и наш триггер зажима)
-### продолжают работать как раньше.
+### REPLACE: overwrites the whole entry and leaves nothing but the icon. The
+### entry stays alive, so every has_modifier = no_money_production check in
+### E&F keeps working exactly as before — it just cannot print money anymore.
 ###
-### Почему именно так, а не встречным вычитанием, как было раньше:
+### Why at the source rather than by subtracting it back:
 ###
-### 1. E&F выдаёт no_money_production из эффекта law_no_monetary_system по
-###    своему пульсу, а мы пересчитывали по своему. on_monthly_pulse_country
-###    игра размазывает по дням месяца, поэтому между этими двумя моментами
-###    проходило до месяца, и всё это время штат печатал полные 2500. Именно
-###    это и выглядело как "у вассалов то появляется, то исчезает 2.5к".
-###    Новорождённые страны — восстания, освобождения, объединения —
-###    начинали жизнь с полного объёма.
+### 1. Timing. E&F applies no_money_production from the law_no_monetary_system
+###    effect on its own pulse, while we recalculated on ours, and the game
+###    spreads on_monthly_pulse_country across the days of the month. Up to a
+###    month could pass between the two, and the state printed the full 2500
+###    the whole time. That is what showed up in game as "2.5k keeps popping
+###    up on random vassals". Countries born mid-game — revolts, releases,
+###    unifications — started life with the full amount.
 ###
-### 2. Вычитание упиралось в потолок: если расчёт давал больше 2500 на штат,
-###    вычитать было нечего, и страна оставалась с ефовским значением.
-###    Теперь выдача не ограничена сверху ничем, кроме здравого смысла.
+### 2. A ceiling. If the computed demand came out above 2500 per state there
+###    was nothing left to subtract, and the country kept E&F's number. The
+###    replacement grant has no upper bound beyond a sanity cap.
 ###
-### Взамен выдаём своё — см. zz_ef_local_currency_fix и on_actions.
+### What replaces it: see zz_ef_local_currency_fix.txt and common/on_actions/.
 
 REPLACE:no_money_production = {
 	icon = gfx/interface/icons/timed_modifier_icons/no_money_production.dds

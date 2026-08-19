@@ -9,7 +9,7 @@ popneed_currency = {
 	entry = {
 		goods = local_currency
 
-		weight = 0.1		### E&F Hotfix: было 0.25 — столько же, сколько у настоящих валют
+		weight = 0.1		### E&F Hotfix: was 0.25, the same weight real currencies get
 		max_supply_share = 1.0 # Maxes out at 80% of supply share
 		min_supply_share = 0.0
 	}

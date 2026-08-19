@@ -1,148 +1,147 @@
 # E&F 1.13.10 Hotfix
 
-Правки к **Economic and Financial**, версия репозитория **04.07.2026**, под Victoria 3 **1.13.10**.
-Ставить **после E&F**. От компача E&F + Morgenröte не зависит и работает без него.
+Fixes for **Economic and Financial**, repository version **04.07.2026**, on Victoria 3 **1.13.10**.
+Load it **after E&F**. It does not depend on the E&F + Morgenröte ComPatch and works without it.
 
-Три независимых блока: **лимит товаров**, **история**, **GUI**.
+Six independent blocks: **goods limit**, **history**, **GUI**, **alerts**, **local_currency issuance**, **currency laws**.
 
 ---
 
-## 1. Лимит товаров — главное
+## 1. The goods limit — the big one
 
-Victoria 3 1.13 не переваривает больше **128** товаров. Проверено эмпирически пустыми товарами-заглушками: 128 грузится, 130 и 131 — вылет при входе в игру, без единой скриптовой ошибки в логе.
+Victoria 3 1.13 cannot digest more than **128** goods. Established empirically with dummy filler goods: 128 loads, 130 and 131 crash on entering the game, without a single script error in the log.
 
-E&F в одиночку даёт **126** (ваниль 53 + свои 73). Запас — два слота. Любой мод, добавляющий три и больше товаров, ломает игру:
+E&F on its own brings **126** (53 vanilla + 73 of its own). That leaves two slots. Any mod adding three or more goods breaks the game:
 
-| сборка | товаров | итог |
+| build | goods | result |
 |---|---:|---|
-| E&F | 126 | работает |
-| E&F + Morgenröte (+5) | 131 | **вылет** |
-| E&F + Morgenröte + PSC (+4) | 135 | **вылет** |
+| E&F | 126 | works |
+| E&F + Morgenröte (+5) | 131 | **crash** |
+| E&F + Morgenröte + PSC (+4) | 135 | **crash** |
 
-Похоже, автор E&F в этот же потолок и упёрся: при переходе на 1.13 он вырезал из мода 32 товара и не добавил ни одного, оставив 126.
+The E&F author seems to have hit the same ceiling: moving to 1.13 he cut 32 goods from the mod and added none, landing on 126.
 
-### Что вырезано здесь
+### What is cut here
 
-Восемь валют закомментированы в `common/goods/ef_00_goods.txt` — тем же способом, каким автор вырезал свои 32. Законы, PM, переменные и локализация остаются висеть; на количество товаров они не влияют.
+Eight currencies are commented out in `common/goods/ef_00_goods.txt`, the same way the author cut his own 32. Laws, production methods, variables and localisation stay behind; they do not count towards the goods total.
 
-| валюта | почему безопасно |
+| currency | why it is safe |
 |---|---|
-| `eco_central_african_eco_c` | `currency_identifiers` всегда 0 — за валютой нет ни страны, ни тега |
-| `eco_east_african_eco_c` | то же |
-| `eco_west_african_eco_c` | то же |
-| `dinar_c` | базовая generic, всегда 0, никому не выдаётся |
-| `peso_c` | базовая generic, всегда 0, есть ещё восемь именных песо |
-| `gulden_indies_guilder_c` | привязана к `c:DEI`, но DEI по истории получает `rupee_indonesian_rupiah` — дубль-пустышка |
-| `dollar_caribbean_dollar_c` | Гаити переведена на «валюты нет» (см. ниже) |
-| `dollar_new_zealand_dollar_c` | Новая Зеландия переведена на «валюты нет» |
+| `eco_central_african_eco_c` | `currency_identifiers` is always 0 — no country and no tag stands behind it |
+| `eco_east_african_eco_c` | same |
+| `eco_west_african_eco_c` | same |
+| `dinar_c` | the generic base currency, always 0, handed to nobody |
+| `peso_c` | the generic base currency, always 0, and there are eight named pesos besides |
+| `gulden_indies_guilder_c` | bound to `c:DEI`, but history gives DEI `rupee_indonesian_rupiah` — a duplicate that never fires |
+| `dollar_caribbean_dollar_c` | Haiti is moved to "no currency" (see below) |
+| `dollar_new_zealand_dollar_c` | New Zealand is moved to "no currency" |
 
-Итог: **118** товаров вместо 126.
+Result: **118** goods instead of 126.
 
-| сборка | стало |
+| build | now |
 |---|---:|
-| E&F + хотфикс | 118 |
+| E&F + hotfix | 118 |
 | + Morgenröte | **123** |
 | + Morgenröte + PSC | **127** |
 
 ---
 
-## 2. История
+## 2. History
 
-### `common/history/global/zz_ef_currency_fix.txt` (новый, аддитивный)
+### `common/history/global/zz_ef_currency_fix.txt` (new, additive)
 
-Блоки `GLOBAL` складываются, а `zz_` обрабатывается после `99_ef_history_global_variable.txt` — поэтому файл ничего не перекрывает, просто дописывает `activate_law` последним.
+`GLOBAL` blocks stack, and `zz_` is processed after `99_ef_history_global_variable.txt`, so this file overrides nothing — it simply appends its `activate_law` calls last.
 
-**Вюртемберг.** E&F выдаёт ему `law_gulden_south_german_gulde_currency` — без `n` на конце. Такого закона нет, `activate_law` молча не срабатывает, и WUR остаётся вообще без валюты, хотя товар `gulden_south_german_gulden_c` живой. Выдаём правильный закон.
+**Württemberg.** E&F gives it `law_gulden_south_german_gulde_currency` — no trailing `n`. No such law exists, `activate_law` silently does nothing, and WUR ends up with no currency at all even though the good `gulden_south_german_gulden_c` is alive. We hand it the correct law.
 
-**Тринадцать стран → `law_no_market_liquidity`.** Одиннадцать из них — валюты, которые автор вырезал, забыв убрать `activate_law`: Либерия, Коста-Рика, Эквадор, Сальвадор, Гватемала, Гондурас, Никарагуа, Парагвай, Уругвай, Венесуэла, Дайвьет. Плюс Гаити и Новая Зеландия, чьи валюты вырезали мы.
+**Thirteen countries → `law_no_market_liquidity`.** Eleven of them hold currencies the author cut while forgetting to remove the `activate_law`: Liberia, Costa Rica, Ecuador, El Salvador, Guatemala, Honduras, Nicaragua, Paraguay, Uruguay, Venezuela, Dai Viet. Plus Haiti and New Zealand, whose currencies we cut ourselves.
 
-Зачем это нужно. Именной закон валюты без товара — состояние хуже, чем отсутствие валюты: штатные `pm_no_currency_type` и `pm_no_market_liquidity` не включаются (их отпирает `law_no_market_liquidity`), вместо них активны именные PM, указывающие в пустоту. Банк не чеканит, здания не платят за ликвидность. `law_no_market_liquidity` — первый закон в `lawgroup_currency_type`, без требований и эффектов, на нём и так живёт большинство стран мира.
+Why this matters. A named currency law with no good behind it is a worse state than having no currency: the stock `pm_no_currency_type` and `pm_no_market_liquidity` never switch on (`law_no_market_liquidity` is what unlocks them), and the named production methods that run instead point at nothing. The bank mints nothing, buildings pay nothing for liquidity. `law_no_market_liquidity` is the first law in `lawgroup_currency_type`, with no requirements and no effects — most of the world already lives on it.
 
-### `common/history/buildings/00_ef_building.txt` (перекрывает файл E&F)
+### `common/history/buildings/00_ef_building.txt` (overrides the E&F file)
 
-Две правки, всё остальное скопировано побайтово.
+Two edits, everything else copied byte for byte.
 
-**`s:STATE_ANDALUSIA` → `s:STATE_LOWER_ANDALUSIA`.** Такого стейта в 1.13 нет, Андалусия разделена на Lower и Upper. Из-за этого Испания не получала стартовую серебряную шахту.
+**`s:STATE_ANDALUSIA` → `s:STATE_LOWER_ANDALUSIA`.** No such state exists in 1.13; Andalusia is split into Lower and Upper. Because of it Spain never got its starting silver mine.
 
-Целевой штат выбран не по истории, а по месторождению: модификатор `silver_mine_max_level` Испании выдаётся в `common/history/states/01_ef_states.txt:67` именно `STATE_LOWER_ANDALUSIA`. Без него здание `building_silver_mine` не проходит `possible`/`potential` и в штате не появляется. Первая версия хотфикса ставила Upper — проверка в игре показала пустую Верхнюю Андалусию и месторождение 0/10 в Нижней.
+The target state was picked from the deposit, not from history: Spain's `silver_mine_max_level` modifier is granted to `STATE_LOWER_ANDALUSIA` in `common/history/states/01_ef_states.txt:67`. Without it `building_silver_mine` fails its `possible`/`potential` and never appears. The first version of this hotfix used Upper — an in-game check showed an empty Upper Andalusia and a 0/10 deposit in Lower.
 
-**Блок `#GRE` закомментирован.** Побуквенная копия блока `#PRU` с заменой тега, вместе с `company_PreussischeSeehandlung`: Греция получала золотые и серебряные шахты в Саксонии и Бранденбурге. Греция этими стейтами не владеет, поэтому `region_state:GRE` даёт невалидный объект и пять `create_building` выполняются в NULL-стейте.
+**The `#GRE` block is commented out.** It is a character-for-character copy of the `#PRU` block with the tag swapped, `company_PreussischeSeehandlung` included: Greece was handed gold and silver mines in Saxony and Brandenburg. Greece owns neither state, so `region_state:GRE` returns an invalid object and five `create_building` calls run in a NULL state.
 
 ---
 
 ## 3. GUI
 
-E&F перекрывает **32** ванильных `.gui`. Часть — настоящие переработки под финансовую систему, но шесть отстали от 1.13 на сотни строк. Это опаснее, чем кажется: движок ищет некоторые виджеты **по имени**, и если в перекрытом файле имени нет, игра не ругается тихо, а падает.
+E&F overrides **32** vanilla `.gui` files. Some are genuine reworks for the financial system, but six had fallen hundreds of lines behind 1.13. That is more dangerous than it sounds: the engine looks some widgets up **by name**, and when the name is missing from the overriding file the game does not complain quietly — it crashes.
 
-Именно так и выглядел вылет при появлении карты мира:
+That is exactly what the crash on opening the world map looked like:
 
 ```
 [pdx_gui.h:91]: Could not find widget 'enemy_naval_mission_marker'
                 in file 'gui/map_markers.gui'
 ```
 
-В ванили этот виджет есть (`map_markers.gui:3995`), в копии E&F — нет.
+Vanilla has that widget (`map_markers.gui:3995`); the E&F copy does not.
 
-### Восстановлено (ваниль 1.13.10 + замена `@money!` на символ валюты)
+### Restored (vanilla 1.13.10 + the `@money!` → currency symbol substitution)
 
-| файл | отставание | что было потеряно |
+| file | behind by | what was lost |
 |---|---|---|
-| `map_markers.gui` | −420 строк | `name=`: `enemy_naval_mission_marker`, `coastal_building_marker`, `enemy_frame`; `type=`: `naval_mission_marker_dot` — **вылет при загрузке карты** |
-| `custom_tooltip.gui` | −336 | `type=`: `naval_mission_marker_tooltip_fleet`, `coastal_building_marker_tooltip_row`, `treaty_tooltip_article_entry` — подсказки к тем же морским маркерам |
-| `military_formation_panel.gui` | −387 | `type=`: `military_formation_cancel_invasion_button` — кандидат в вылет при открытии военной вкладки |
-| `frontend/shared/lists.gui` | −121 | `type=`: `dropdown_menu_round`, структура выпадающих списков до 1.13 |
+| `map_markers.gui` | −420 lines | `name=`: `enemy_naval_mission_marker`, `coastal_building_marker`, `enemy_frame`; `type=`: `naval_mission_marker_dot` — **crash on map load** |
+| `custom_tooltip.gui` | −336 | `type=`: `naval_mission_marker_tooltip_fleet`, `coastal_building_marker_tooltip_row`, `treaty_tooltip_article_entry` — tooltips for those same naval markers |
+| `military_formation_panel.gui` | −387 | `type=`: `military_formation_cancel_invasion_button` — a candidate for the crash on opening the military tab |
+| `frontend/shared/lists.gui` | −121 | `type=`: `dropdown_menu_round`, pre-1.13 dropdown structure |
 | `popups.gui` | −135 | `name=`: `amount_input`, `decommission_supply_ships_window` |
 | `right_click_menu.gui` | −71 | `name=`: `enemy_fleets_on_mission_in_sea_region` |
 
-Проверено: во всех шести восстановленных файлах не пропало ни одного `name=` и ни одного `type=` относительно ванили 1.13.10.
+Verified: across all six restored files not a single `name=` and not a single `type=` is missing relative to vanilla 1.13.10.
 
-Потери со стороны E&F минимальны и косметические: шесть `using = tooltip_above` в маркерах, одна строка `tooltip = "TOOLTIP_STATE_DEVASTATION"`, `text = "[MilitaryFormation.GetNameNoIcon]"` и варианты `treaty_tooltip_article` под `acquire_monopoly_for_company`. Все денежные строки воспроизводятся подстановкой `@money!` автоматически.
+What is lost from the E&F side is minimal and cosmetic: six `using = tooltip_above` in the markers, one `tooltip = "TOOLTIP_STATE_DEVASTATION"`, one `text = "[MilitaryFormation.GetNameNoIcon]"`, and the `treaty_tooltip_article` variants under `acquire_monopoly_for_company`. Every money string is reproduced automatically by the `@money!` substitution.
 
-### ⚠ Ещё два файла с той же болезнью — не тронуты
+### ⚠ Two more files with the same illness — left alone
 
-| файл | отсутствуют `name=` | когда рванёт |
+| file | missing `name=` | when it blows up |
 |---|---|---|
-| `budget_panel.gui` | `declare_bankruptcy_button`, `bankruptcy_progress_bar`, `bankruptcy_progressbar` | при показе интерфейса банкротства |
-| `construction_panel.gui` | `ship_construction_queue_pages` | при открытии очереди корабельного строительства |
+| `budget_panel.gui` | `declare_bankruptcy_button`, `bankruptcy_progress_bar`, `bankruptcy_progressbar` | when the bankruptcy interface is shown |
+| `construction_panel.gui` | `ship_construction_queue_pages` | when the ship construction queue is opened |
 
-Их подменить ванилью нельзя: это настоящие переработки E&F (−145/+218 и −113/+105), в них вся его бюджетная механика. Нужен ручной мерж — взять ваниль 1.13 и перенести туда правки E&F. Отдельная задача.
+These cannot be swapped for vanilla: they are real E&F reworks (−145/+218 and −113/+105) and hold his entire budget mechanic. They need a manual merge — take vanilla 1.13 and port the E&F changes onto it. A separate job.
 
 ---
 
-## 4. Алерты — 70 000 ошибок за партию
+## 4. Alerts — 70,000 errors per session
 
-`common/alert_types/00_ef_alert_types.txt` — 32 алерта, из них 31 читает переменные, которые в большинстве партий не инициализированы:
+`common/alert_types/00_ef_alert_types.txt` holds 32 alerts, 31 of which read variables that are uninitialised in most games:
 
-- **29 штук `store_release_*`** (боеприпасы, зерно, уголь, нефть…) читают `<товар>_store_month_fixe`, `store_<товар>_time` и т.п. Это переменные национального стокпайла, а его PM и PMG у E&F лежат в `17_ef_national_stockpile.zip` — архивы игра не читает, здания с группой `bg_national_stockpile` в моде нет. Данных нет, переменные не создаются.
-- **2 штуки `selle_bond_maturity_yers_time_*_Y`** читают `selle_bond_maturity_yers_time_1..10` в скоупе рынка.
+- **29 `store_release_*`** (ammunition, grain, coal, oil…) read `<good>_store_month_fixe`, `store_<good>_time` and friends. These are national stockpile variables, and the stockpile's production methods and PM groups live in `17_ef_national_stockpile.zip` — the game does not read archives, and no building with the `bg_national_stockpile` group exists in the mod. No data, no variables.
+- **2 `selle_bond_maturity_yers_time_*_Y`** read `selle_bond_maturity_yers_time_1..10` in market scope.
 
-Алерты объявлены как `script_context = player_country` и `player_market`, то есть пересчитываются при каждой смене игровой страны. Отсюда и результат: в тестовой партии эти два семейства дали **порядка 70 000** записей вида
+The alerts are declared with `script_context = player_country` and `player_market`, meaning they are re-evaluated on every change of played country. Hence the outcome: in a test game those two families produced **on the order of 70,000** entries like
 
 ```
 Value of wrong type in 'common/alert_types/00_ef_alert_types.txt:1017'. Got value of type 'none'
 Failed to fetch variable for 'selle_bond_maturity_yers_time_6' due to no variables in scope
 ```
 
-и это был **единственный** источник ошибок в логе, если не считать шума от самой игры.
+and that was the **only** source of errors in the log, discounting noise from the base game.
 
-**Что сделано.** В каждый `valid` добавлены `has_variable` на все переменные, которые этот алерт читает — прямо и через `*_time_rest` из `00_economic_scripted_value.txt`. Нет данных — алерт не вычисляется и молчит. Есть данные — работает ровно как раньше.
+**What was done.** Every `valid` block got `has_variable` guards for each variable that alert reads — directly and through the `*_time_rest` script values in `00_economic_scripted_value.txt`. No data, no evaluation, no noise. With data present it behaves exactly as before.
 
-Пропатчен 31 алерт из 32. `fso_alert` не тронут: он не читает переменных.
+31 of 32 alerts are patched. `fso_alert` is untouched: it reads no variables.
 
-**Вторая правка в том же файле.** Два алерта `selle_bond_maturity_yers_time_5_Y` и `_10_Y` объявлены как `script_context = player_market`, но читают `var:selle_bond_maturity_yers_time_1..10`. В Victoria 3 у рынка переменных нет в принципе — движок отвечает `This scope doesn't support variables. Scope: Рынок ...`. То есть эти два алерта не могли работать никогда.
+**A second fix in the same file.** Two alerts, `selle_bond_maturity_yers_time_5_Y` and `_10_Y`, are declared `script_context = player_market` but read `var:selle_bond_maturity_yers_time_1..10`. Markets in Victoria 3 do not support variables at all — the engine answers `This scope doesn't support variables. Scope: Market ...`. Those two alerts could never have worked.
 
-Сами переменные ставятся в `common/history/global/00_ef_financial_global_variable.txt` внутри `GLOBAL = { every_country = { ... } }`, то есть они **страновые**. Поэтому `script_context` заменён на `player_country` — и ошибка уходит, и алерт наконец начинает работать так, как задумывался.
+The variables themselves are set in `common/history/global/00_ef_financial_global_variable.txt` inside `GLOBAL = { every_country = { ... } }`, i.e. they are **country-scoped**. So `script_context` is changed to `player_country` — the error goes away and the alert finally starts doing what it was meant to.
 
-Правятся только живые строки: в файле есть ещё 28 закомментированных заготовок `buy_sell_*_order` с тем же `player_market`, их патч не трогает.
+Only live lines are patched: the file also holds 28 commented-out `buy_sell_*_order` drafts with the same `player_market`, and the patch leaves them alone.
 
-
-Оговорка: там, где алерт читает пять переменных через `or`, теперь требуются все пять. Раньше при частично заданных данных одна ветка считалась, остальные сыпали ошибками — то есть результат всё равно был неопределённым.
+One caveat: where an alert reads five variables through an `or`, all five are now required. Previously, with partially populated data, one branch evaluated while the rest threw errors — so the result was undefined either way.
 
 ---
 
-## 5. Выпуск `local_currency` — считается, а не выдаётся плоско
+## 5. `local_currency` issuance — computed, not handed out flat
 
-**Что было.** E&F вешает на страну без денежной системы модификатор `no_money_production`:
+**What it was.** E&F puts the `no_money_production` modifier on every country without a monetary system:
 
 ```
 no_money_production = {
@@ -150,9 +149,9 @@ no_money_production = {
 }
 ```
 
-Модификатор страновой, поэтому 2500 единиц прилетали в **каждый штат** страны — без привязки к населению, богатству или чему угодно ещё. Стран без денежной системы в игре около 600 из 724, и их дешёвая местная валюта заливала общие рынки: потребность в валюте закрывает любая валюта, а местная стоит дешевле, так что попы нормальных стран закрывали `popneed_currency` ей вместо своей национальной.
+It is a country modifier, so 2500 units landed in **every state** the country owns, with no regard for population, wealth or anything else. About 600 of the game's 724 countries have no monetary system, and their cheap local currency flooded the shared markets: any currency satisfies the currency need, local currency is cheaper, so pops of proper nations covered `popneed_currency` with it instead of their own national money.
 
-**Что стало.** Плоская выдача отключена в источнике:
+**What it is now.** The flat issuance is disabled at the source:
 
 ```
 REPLACE:no_money_production = {
@@ -160,121 +159,204 @@ REPLACE:no_money_production = {
 }
 ```
 
-Запись остаётся живой, поэтому все проверки `has_modifier = no_money_production` в E&F работают как раньше — просто печатать она больше не умеет. Взамен страна получает столько, сколько насчитано:
+The entry stays alive, so every `has_modifier = no_money_production` check in E&F keeps working — it simply cannot print money anymore. In its place the country gets what the formula computes:
 
 ```
-потребность страны = население/1000 × f(средний уровень жизни) × 0.0132
-на штат            = потребность / число штатов, не меньше 25
+country demand = population/1000 × f(average standard of living) × 0.0132
+per state      = demand / number of states, at least 25
 ```
 
-> ⚠ **Сейчас включён режим проверки формулы: расчёт применяется ко ВСЕМ странам без денежной системы.** Штатное поведение — только для тех, кто сидит в чужом рынке с настоящей валютой — возвращается раскомментированием блока `market` в `common/scripted_triggers/zz_ef_local_currency_triggers.txt`.
+> ⚠ **Formula validation mode is currently ON: the calculation applies to ALL countries without a monetary system.** Normal behaviour — throttling only those sitting in someone else's market with a real currency — is restored by uncommenting the `market` block in `common/scripted_triggers/zz_ef_local_currency_triggers.txt`.
 
-### Почему в источнике, а не встречным вычитанием
+### Why at the source rather than by subtracting it back
 
-Так было раньше — модификатор с базой `-1` вычитал лишнее из ефовских 2500. Отказались по двум причинам, обе всплыли в игре:
+That is how it worked before — a modifier with a base of `-1` subtracting the excess from E&F's 2500. Dropped for two reasons, both of which showed up in game:
 
-1. **Отставание на месяц.** E&F выдаёт `no_money_production` из эффекта `law_no_monetary_system` по своему пульсу, а `on_monthly_pulse_country` игра размазывает по дням месяца. Между этими двумя моментами штат печатал полные 2500 — это и выглядело как «у вассалов то появляется, то исчезает 2.5к». Новорождённые страны (восстания, освобождения, объединения) начинали жизнь с полного объёма.
-2. **Потолок.** Если расчёт давал больше 2500 на штат, вычитать было нечего, и страна оставалась с ефовским значением. Теперь выдача сверху не ограничена ничем, кроме предохранителя `max = 25000`.
+1. **A month of lag.** E&F applies `no_money_production` from the `law_no_monetary_system` effect on its own pulse, while the game spreads `on_monthly_pulse_country` across the days of the month. The state printed the full 2500 in between — which is what "2.5k keeps popping up on random vassals" was. Countries born mid-game (revolts, releases, unifications) started life with the full amount.
+2. **A ceiling.** If the computed demand exceeded 2500 per state there was nothing left to subtract and the country kept E&F's number. The grant has no upper bound now beyond a `max = 25000` sanity cap.
 
-### Почему не по фактическому потреблению
+### Why not from actual consumption
 
-Пробовали и отказались — знание дорогое, записываю. Читать `state_goods_consumption` по товару `local_currency` технически можно: сумма по штатам собирается внутри странового script value и остаётся страновым числом, ровно как в ванильном `country_total_urbanization`. Но по смыслу это тупик.
+Tried and abandoned; the knowledge was expensive, so it is written down. Reading `state_goods_consumption` for `local_currency` works technically: the per-state sum accumulates inside a country-scoped script value and stays a country-scoped number, exactly like vanilla's `country_total_urbanization`. It fails on meaning.
 
-**В залитом рынке потребление измеряет не потребность, а доступность.** Валюты много и она дешёвая → попы охотно ей закрывают `popneed_currency` → потребление большое → мы разрешаем печатать много → валюты становится ещё больше. Ионические острова на британском рынке (188 тыс населения, расчётных ~113 единиц) так печатали полные 2500.
+**In a flooded market, consumption measures availability, not need.** Currency is plentiful and cheap → pops happily cover `popneed_currency` with it → consumption is high → we allow printing more → there is even more of it. The Ionian Islands on the British market (188k people, ~113 units by the formula) printed the full 2500 that way.
 
-Потолок в 2× от расчёта самораскрутку убрал, но дал то же самое в мягкой форме: в потолок стали упираться все подряд, и у всех стабильно выходило вдвое больше расчётного.
+Capping the measurement at 2× the formula killed the runaway but produced the same thing in a milder form: everybody pinned themselves to the cap and steadily ran at twice the computed value.
 
-Отличить «им правда столько надо» от «им просто дёшево достаётся» по потреблению нельзя в принципе. Настоящий спрос (`buy_orders`) игра считает только на уровне рынка, а он общий на всех участников и для одной маленькой страны бесполезен:
+"They genuinely need this much" cannot be told apart from "they are simply getting it cheap" through consumption. Real demand (`buy_orders`) is only computed by the game at market level, where it is shared across every participant and useless for sizing one small country:
 
-| скоуп | что доступно |
+| scope | available |
 |---|---|
-| рынок | `market_goods_buy_orders`, `market_goods_consumption`, `market_goods_delta`, производство, импорт, экспорт |
-| штат | `state_goods_consumption`, `state_goods_production`, `state_goods_delta` |
-| страна | ничего — только сумма по штатам вручную |
+| market | `market_goods_buy_orders`, `market_goods_consumption`, `market_goods_delta`, production, imports, exports |
+| state | `state_goods_consumption`, `state_goods_production`, `state_goods_delta` |
+| country | nothing — only a manual sum over states |
 
-Поэтому расчёт чистый, без обратной связи от рынка.
+Hence a clean formula with no feedback from the market.
 
-### Откуда взялась кривая f
+### About the flicker in the first month
 
-Потребность в валюте задана в `common/buy_packages/00_ef_buy_packages.txt` — E&F дописывает `popneed_currency` во все 99 уровней достатка:
+`on_monthly_pulse_country` is not "once a month for everybody at once": the game spreads it across the days, recomputing roughly a thirtieth of all countries each day. On top of that E&F applies `no_money_production` from its own pulse. Values will jump around the vassals for the first month — that is normal, and the only cure is dropping modifiers in favour of buildings.
 
-| достаток | 1 | 5 | 10 | 15 | 20 | 25 | 30 | 40 | 99 |
+### Where the curve f comes from
+
+The need is defined in `common/buy_packages/00_ef_buy_packages.txt` — E&F injects `popneed_currency` into all 99 wealth levels:
+
+| wealth | 1 | 5 | 10 | 15 | 20 | 25 | 30 | 40 | 99 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | £ | 21 | 28 | 37 | 41 | 40 | 46 | 62 | 96 | 6177 |
 
-Форма несимметричная: до 10 уровня растёт бодро, с 10 по 20 стоит полкой, после 20 разгоняется, после 40 уходит в экспоненту. В `zz_ef_local_currency_values.txt` она разложена на отрезки (`zz_ef_lc_curve_a` … `_e`), каждый обрезан по своим границам и умножен на свой наклон. Совпадение с таблицей: SoL 6.1 → 30.8 (в таблице 31), 11 → 37.3 (38), 30 → 62.0 (62), 40 → 96.0 (96).
+The shape is lopsided: it climbs briskly up to level 10, sits on a shelf from 10 to 20, accelerates past 20 and goes exponential past 40. In `zz_ef_local_currency_values.txt` it is broken into segments (`zz_ef_lc_curve_a` … `_e`), each clamped to its own bounds and multiplied by its own slope. Agreement with the table: SoL 6.1 → 30.8 (table says 31), 11 → 37.3 (38), 30 → 62.0 (62), 40 → 96.0 (96).
 
-### Калибровка
+### Calibration
 
-Замеры по игре — потребление страной целиком:
+In-game measurements, whole-country consumption:
 
-| страна | население | SoL | замер | формула | |
+| country | population | SoL | measured | formula | |
 |---|---:|---:|---:|---:|---:|
-| Новая Гранада | 1.47 млн | 7.3 | 1640 | 634 | 39% |
-| Черкессия | 664 тыс | ~11 | 372 | 327 | 88% |
-| Бухара | 1.47 млн | 6.1 | 380 | 597 | 157% |
+| New Granada | 1.47M | 7.3 | 1640 | 634 | 39% |
+| Circassia | 664k | ~11 | 372 | 327 | 88% |
+| Bukhara | 1.47M | 6.1 | 380 | 597 | 157% |
 
-Разброс на душу между ними четырёхкратный, и **ни население, ни достаток его не объясняют** — по кривой все трое должны потреблять почти одинаково. Значит остаток даёт что-то третье: состав населения, цена товара в момент замера, доля иждивенцев. Поэтому `rate` взят как среднее геометрическое трёх подгонок — компромисс, а не подгонка под одну страну.
+Per capita they differ by a factor of four, and **neither population nor wealth explains it** — by the curve all three should consume almost the same. Something else does the work: pop composition, the price of the good at the moment of measurement, the dependant ratio. So `rate` is the geometric mean of the three fits — a compromise, not a fit to one country.
 
-Ручка одна и линейная — `zz_ef_local_currency_rate`, сейчас `0.0132`. Изначально было `0.013` плюс запас 25% сверху (итого `0.01625`); по итогам прогона запас свёрнут в саму ручку, общий уровень срезан на 19%. Дальше крутить так же: `0.0132` → `0.0099` это ещё минус четверть всем и сразу.
+One knob, and it is linear: `zz_ef_local_currency_rate`, currently `0.0132`. It started at `0.013` plus 25% headroom (`0.01625` in total); after a test run the headroom was folded into the knob and the overall level cut by 19%. Turn it the same way from here: `0.0132` → `0.0099` is another quarter off everyone at once.
 
-### Почему модификатор страновой
+### Why the modifier is country-scoped
 
-Пробовали вешать по штатам — не работает, и это стоит запомнить. **`multiplier` в `add_modifier` вычисляется не в том скоупе, где стоит эффект.** Внутри `every_scope_state` триггеры видят штат нормально, а множитель строкой ниже — нет:
+Applying it per state was tried and does not work, and this is worth remembering. **The `multiplier` in `add_modifier` is not evaluated in the scope the effect sits in.** Inside `every_scope_state` the triggers see the state fine, but the multiplier one line below does not:
 
 ```
 Value of wrong type in 'zz_ef_local_currency_on_actions.txt:39'. Got value of type 'none'
 ```
 
-`state_population` и `sg:local_currency` возвращали ноль, всё упиралось в нижний предел, и штаты печатали по 10 единиц вместо тысяч.
+`state_population` and `sg:local_currency` came back as zero, everything bottomed out on the lower bound, and states issued 10 units instead of thousands.
 
-Важно, что это ограничение **на модификатор, а не на чтение данных**: сумму по штатам собрать внутри странового script value можно — от неё отказались по смыслу, а не по технике.
+Note this is a limitation **on the modifier, not on reading data**: the per-state sum can be accumulated inside a country-scoped script value (see `country_total_urbanization` above) — it was dropped on meaning, not on technique.
 
-Побочный эффект странового модификатора: штаты одной страны получают поровну, хотя у Черкессии они 590 тыс и 74 тыс населения. Лечится только отказом от модификаторов в пользу зданий — этим и занимается мод банков.
+Side effect of a country-scoped modifier: states of one country get equal shares, even though Circassia's two hold 590k and 74k people. The only cure is dropping modifiers in favour of buildings, which is what the local banks mod does.
 
-### Механика
+### Mechanics
 
-| файл | что |
+| file | what |
 |---|---|
-| `common/static_modifiers/zz_ef_no_money_production.txt` | `REPLACE:` — глушит ефовские 2500 в источнике |
-| `common/static_modifiers/zz_ef_local_currency_fix.txt` | наш модификатор выдачи, база `+1` |
-| `common/scripted_triggers/zz_ef_local_currency_triggers.txt` | кому применяется. **Сейчас — всем с `no_money_production`**; рыночное условие закомментировано |
-| `common/script_values/zz_ef_local_currency_values.txt` | кривая и расчёт. Ручка одна — `rate` |
-| `common/on_actions/zz_ef_local_currency_on_actions.txt` | ежемесячный пересчёт |
-| блок 4 в `zz_ef_currency_fix.txt` | стартовая выдача, чтобы первый месяц страна не сидела без валюты |
+| `common/static_modifiers/zz_ef_no_money_production.txt` | `REPLACE:` — kills E&F's flat 2500 at the source |
+| `common/static_modifiers/zz_ef_local_currency_fix.txt` | our grant modifier, base `+1` |
+| `common/scripted_triggers/zz_ef_local_currency_triggers.txt` | who it applies to. **Currently everyone with `no_money_production`**; the market condition is commented out |
+| `common/script_values/zz_ef_local_currency_values.txt` | the curve and the calculation. One knob — `rate` |
+| `common/on_actions/zz_ef_local_currency_on_actions.txt` | monthly recalculation |
+| block 4 in `zz_ef_currency_fix.txt` | the initial grant, so the first month is not spent without currency |
 
-Плюс в `common/pop_needs/00_ef_pop_needs.txt` вес `local_currency` в `popneed_currency` снижен с `0.25` до `0.1`: настоящая валюта должна быть привлекательнее местной. У всех 65 реальных валют вес остался `0.25`.
+Also in `common/pop_needs/00_ef_pop_needs.txt` the weight of `local_currency` inside `popneed_currency` is lowered from `0.25` to `0.1`: a real currency should be more attractive than a generic local one. All 65 real currencies keep `0.25`.
 
-**Если стоит мод _ZZ EF Local Banks** — он глушит и нашу выдачу тоже (`TRY_REPLACE:zz_ef_local_currency_fix`) и печатает валюту зданиями. Хотфикс от банков не зависит и полностью работает без них.
-
----## Что осталось несделанным
-
-- `00_ef_building.txt:2999` — `financial_center_modifier` выполняется в скоупе `none`, **1282 ошибки** за один старт. Лечится внутри `09_introduction_building_lvl.txt:22135`, это ~15 000 строк чужого кода.
-- Все 95 законов валют требуют `unlocking_technologies = { currency_standars }` — технологии с такой опечаткой не существует. Группа законов валют недоступна для обычного принятия.
-- 34 осиротевших набора modifier types (вырезанные товары) — те самые 140 предупреждений `defined in script but not in code`.
-- Тунисский и югославский динары оставлены: за ними стоят теги `c:TUN` и `c:YUG`, и если игрок соберёт эти страны, они попадут в то же состояние, что чинится в блоке 2.
-
-Всё это стоит отправить автору E&F — у него это чинится в разы дешевле.
+**With the _ZZ EF Local Banks mod installed** it neuters our grant too (`TRY_REPLACE:zz_ef_local_currency_fix`) and prints currency from buildings instead. The hotfix does not depend on it and works fully without it.
 
 ---
 
-## ⚠️ Обслуживание
+## 6. Currency laws — a typo removed
 
-Мод перекрывает три файла E&F (`ef_00_goods.txt`, `00_ef_building.txt`) и четыре ванильных `.gui`. Значит:
+All 95 laws in `common/laws/01_ef_currency_type.txt` required:
 
-- **после каждого обновления E&F** правки надо накатывать заново, иначе хотфикс откатит его изменения;
-- **после каждого патча игры** `.gui` надо перекопировать из новой ванили.
+```
+unlocking_technologies = {
+    currency_standars
+}
+```
+
+No technology by that name exists — the real one is `currency_standards`, with a `d`. One letter, 95 times, and the whole `lawgroup_currency_type` was unavailable to anyone, ever.
+
+**It did not affect the intended path**: `introduction_of_<currency>` calls `activate_law` directly, which bypasses requirements. The typo only closed off manual selection by the player.
+
+**It is worth fixing for one case** — a country formed mid-game. Germany inherits Prussia's central bank, Prussia researched `central_banking` long ago, so `on_researched` will never fire again, and GER could never get the mark: not by history (it has none), not by automation (already spent), not by law (the typo). An open law group is the only way out.
+
+Since the laws can now be enacted by hand, a `possible` block was added. It is built from E&F's own data rather than invented:
+
+| | count | rule |
+|---|---:|---|
+| law bound to tags | 53 | available to whoever E&F itself hands that currency to in history — including the HMM branch, so formable countries are covered |
+| ownerless currency | 3 | available to everyone — Tunisian and Yugoslav dinar, South German gulden |
+| good commented out | 39 | `always = no` — holding a law with no good is worse than having no currency: the bank mints nothing, the production methods point at nothing |
+
+On top of that **every available law requires `has_modifier = has_central_bank`**. This is the important part: you cannot pick a currency before you have a central bank. Otherwise a Japan player would take the yen in 1836 and walk straight past the Meiji chain that gates it (see below).
+
+The author never intended "one currency per country": there was no `possible` on any of the 95 laws, and he deliberately hands one currency to several tags (Canadian dollar — CAN, ONT, QUE; Prussian thaler — PRU and NGF; Bolivian peso — BOL and PBC).
+
+### How the central bank is actually granted — and why we stay out of it
+
+Worked out while debugging Japan; written down so nobody steps on it again.
+
+The path to a central bank is not a journal entry but `on_researched` on the technologies:
+
+```
+banking            → add_technology_researched = currency_standards
+currency_standards → activate_law = law_type:law_fiat_standard
+central_banking    → currency_standards + metalique_standard
+                   → introduction_new_currency = yes
+```
+
+`introduction_new_currency` (`09_introduction_building_lvl.txt:38456`) places a level 5 `building_bank` in the capital, applies `central_bank_modifier` and `central_bank_production_methods`, then calls 90+ `introduction_of_<currency>` effects, each handing its law to the right tag.
+
+It is called under this condition:
+
+```
+or = {
+	is_valid_country = yes
+	AND = { var:gdp_view >= 1   NOT = { c:JAP ?= this } }
+	AND = { is_player = yes     NOT = { c:JAP ?= this } }
+}
+```
+
+So **any played country gets a central bank as soon as it researches `central_banking`** — except Japan, explicitly excluded from both open branches. Japan can only come in through `is_valid_country`, and there:
+
+```
+is_valid_country_JAP = {
+	c:JAP ?= this
+	or = {
+		has_journal_entry = je_meiji_economy
+		has_variable = japan_emperor_restored
+		has_variable = japan_restoration_complete
+	}
+}
+```
+
+All three flags are alive in vanilla 1.13 (`00_meiji_restoration.txt:744`, plus the variable is used in achievements, `ai_strategies` and companies). **Japan is not broken — it is gated behind the Meiji Restoration, and that is intentional.**
+
+The other countries "missing" from the main history list are gated the same way, to the historical dates their currencies were introduced — PHI 1851, CUB and CLM 1857, SAF 1860, ARG 1867, CHL 1881, SER 1884, EGY 1898, MOR 1906, KOR 1911.
+
+What follows for the hotfix: **handing these countries banks and currencies at game start is not allowed** — that demolishes the design rather than fixing a bug. It was tried and reverted. `bank_je_central_1` is left alone too: it genuinely cannot complete (it requires an already standing bank while `on_complete` leads to the commented-out `bank_je_central_2`), but it is not the main path, and "fixing" it would open a way around Meiji.
+
+---
+
+## Left undone
+
+- `00_ef_building.txt:2999` — `financial_center_modifier` runs in `none` scope, **1282 errors** per game start. The cure lives inside `09_introduction_building_lvl.txt:22135`, ~15,000 lines of somebody else's code.
+- 34 orphaned modifier type sets (from the cut goods) — the 140 `defined in script but not in code` warnings.
+- The Tunisian and Yugoslav dinars are left in: tags `c:TUN` and `c:YUG` stand behind them, and if a player forms those countries they land in the same state block 2 fixes.
+- `bank_je_central_1` cannot complete (see section 6). A bug report for the E&F author, not something to patch here.
+
+All of this is worth sending to the E&F author — it is far cheaper to fix on his side.
+
+---
+
+## ⚠️ Maintenance
+
+The mod overrides four E&F files (`ef_00_goods.txt`, `00_ef_building.txt`, `00_ef_alert_types.txt`, `01_ef_currency_type.txt`) plus `00_ef_pop_needs.txt` and six vanilla `.gui` files. Which means:
+
+- **after every E&F update** the edits have to be re-applied, otherwise the hotfix rolls his changes back;
+- **after every game patch** the `.gui` files have to be re-copied from the new vanilla.
 
 ```bash
 cd C:/Users/Andrey/Projects/vic3_mods_out
 
-# изменился ли исходник goods?
+# did the goods source change?
 diff "E&F/common/goods/ef_00_goods.txt" \
      "../vic3_mods/_ef/ef hotfix 1.13/common/goods/ef_00_goods.txt"
 
-# живы ли ещё оба бага истории?
+# are both history bugs still alive?
 grep -n 'STATE_ANDALUSIA' "E&F/common/history/buildings/00_ef_building.txt"
 grep -n -A3 '#GRE'        "E&F/common/history/buildings/00_ef_building.txt"
 
-# не подрос ли счётчик товаров (должно быть <= 128 со всеми модами)
+# is the typo still there? (if not, the laws override can be dropped)
+grep -c 'currency_standars' "E&F/common/laws/01_ef_currency_type.txt"
+
+# has the goods count crept up? (must stay <= 128 with every mod loaded)
 ```

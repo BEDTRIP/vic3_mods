@@ -1,18 +1,19 @@
-﻿### E&F Hotfix [1.13] — правка валютных законов
+﻿### E&F Hotfix [1.13] — currency law corrections
 ###
-### Файл аддитивный: блоки GLOBAL из common/history/global/ складываются,
-### а "zz_" обрабатывается после "99_ef_history_global_variable.txt",
-### поэтому здешние activate_law перекрывают выданные E&F.
+### This file is additive: GLOBAL blocks under common/history/global/ stack,
+### and "zz_" is processed after "99_ef_history_global_variable.txt", so the
+### activate_law calls here land last.
 
 GLOBAL = {
 	every_country = {
 
 		########################################################################
-		# 1. Вюртемберг: опечатка в E&F.
-		#    99_ef_history_global_variable.txt выдаёт WUR закон
-		#    law_gulden_south_german_gulde_currency — без "n" на конце.
-		#    Такого закона нет, activate_law молча не срабатывает, и Вюртемберг
-		#    остаётся без валюты, хотя товар gulden_south_german_gulden_c живой.
+		# 1. Wuerttemberg: a typo in E&F.
+		#    99_ef_history_global_variable.txt hands WUR the law
+		#    law_gulden_south_german_gulde_currency — no trailing "n". No such
+		#    law exists, activate_law silently does nothing, and Wuerttemberg
+		#    ends up with no currency at all even though the good
+		#    gulden_south_german_gulden_c is alive.
 		########################################################################
 		if = {
 			limit = { c:WUR ?= this }
@@ -20,32 +21,33 @@ GLOBAL = {
 		}
 
 		########################################################################
-		# 2. Страны, чью валюту автор E&F закомментировал в ef_00_goods.txt,
-		#    но activate_law в истории оставил. Закон активен, товара нет:
-		#    банк не чеканит, здания не платят за ликвидность, а штатные
-		#    pm_no_currency_type / pm_no_market_liquidity не включаются,
-		#    потому что их отпирает law_no_market_liquidity.
-		#    Переводим в законное состояние "валюты нет".
+		# 2. Countries whose currency the E&F author commented out in
+		#    ef_00_goods.txt while leaving the activate_law in history. The law
+		#    is active but the good is gone: the central bank mints nothing,
+		#    buildings pay nothing for liquidity, and the stock
+		#    pm_no_currency_type / pm_no_market_liquidity never switch on
+		#    because law_no_market_liquidity is what unlocks them.
+		#    Move them to the legitimate "no currency" state.
 		#
-		# 3. Плюс те, чью валюту вырезали мы сами — ради слотов под
-		#    Morgenrote и PSC (лимит 128 товаров).
+		# 3. Plus the ones we cut ourselves, to free good slots for
+		#    Morgenroete and PSC (the 128 goods limit).
 		########################################################################
 		if = {
 			limit = {
 				OR = {
-					c:LIB ?= this		# Либерия        — dollar_liberian_dollar
-					c:COS ?= this		# Коста-Рика     — peso_costa_rican_colon
-					c:ECU ?= this		# Эквадор        — peso_ecuadorian_peso
-					c:ELS ?= this		# Сальвадор      — peso_el_salvador_colon
-					c:GUA ?= this		# Гватемала      — peso_guatemalan_quetzal
-					c:HON ?= this		# Гондурас       — peso_honduran_lempira
-					c:NIC ?= this		# Никарагуа      — peso_nicaraguan_cordoba
-					c:PRG ?= this		# Парагвай       — peso_paraguayan_peso
-					c:URU ?= this		# Уругвай        — peso_uruguayan_peso
-					c:VNZ ?= this		# Венесуэла      — peso_venezuelan_peso
-					c:DAI ?= this		# Дайвьет        — spe_dong
-					c:HAI ?= this		# Гаити          — dollar_caribbean_dollar  (вырезано нами)
-					c:NZL ?= this		# Новая Зеландия — dollar_new_zealand_dollar (вырезано нами)
+					c:LIB ?= this		# Liberia       — dollar_liberian_dollar
+					c:COS ?= this		# Costa Rica    — peso_costa_rican_colon
+					c:ECU ?= this		# Ecuador       — peso_ecuadorian_peso
+					c:ELS ?= this		# El Salvador   — peso_el_salvador_colon
+					c:GUA ?= this		# Guatemala     — peso_guatemalan_quetzal
+					c:HON ?= this		# Honduras      — peso_honduran_lempira
+					c:NIC ?= this		# Nicaragua     — peso_nicaraguan_cordoba
+					c:PRG ?= this		# Paraguay      — peso_paraguayan_peso
+					c:URU ?= this		# Uruguay       — peso_uruguayan_peso
+					c:VNZ ?= this		# Venezuela     — peso_venezuelan_peso
+					c:DAI ?= this		# Dai Viet      — spe_dong
+					c:HAI ?= this		# Haiti         — dollar_caribbean_dollar  (cut by us)
+					c:NZL ?= this		# New Zealand   — dollar_new_zealand_dollar (cut by us)
 				}
 			}
 			activate_law = law_type:law_no_market_liquidity
@@ -53,14 +55,15 @@ GLOBAL = {
 
 
 		########################################################################
-		# 4. Стартовая выдача local_currency.
-		#    Ефовские плоские 2500 отключены в источнике, поэтому без этого
-		#    блока страна весь первый месяц сидела бы вообще без валюты:
-		#    on_monthly_pulse_country игра размазывает по дням месяца.
+		# 4. Initial local_currency grant.
+		#    E&F's flat 2500 is disabled at the source, so without this block a
+		#    country would sit with no currency at all for the whole first
+		#    month: the game spreads on_monthly_pulse_country across the days
+		#    of the month.
 		#
-		#    Условие может и не сработать: E&F навешивает no_money_production
-		#    из своего пульса, и на момент истории его может ещё не быть.
-		#    Тогда просто ничего не произойдёт, и всё сделает пульс.
+		#    The condition may well not fire: E&F applies no_money_production
+		#    from its own pulse, and it may not be there yet when history runs.
+		#    In that case nothing happens here and the pulse does the work.
 		########################################################################
 		if = {
 			limit = {

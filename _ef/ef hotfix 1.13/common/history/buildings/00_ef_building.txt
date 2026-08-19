@@ -3814,12 +3814,12 @@
 	}
  
 	### ─── E&F Hotfix [1.13] ────────────────────────────────────────────────────
-	### Блок #GRE ниже — побуквенная копия блока #PRU с заменой PRU → GRE,
-	### включая company_PreussischeSeehandlung. Греция не владеет ни Саксонией,
-	### ни Бранденбургом, поэтому region_state:GRE возвращает невалидный стейт,
-	### и все create_building внутри падают с
+	### The #GRE block below is a character-for-character copy of the #PRU block
+	### with PRU swapped for GRE, company_PreussischeSeehandlung included.
+	### Greece owns neither Saxony nor Brandenburg, so region_state:GRE resolves
+	### to an invalid state and every create_building inside it fails with
 	### 'create_building effect [ Scoped object is not valid. Type: NULL_STATE ]'.
-	### Блок закомментирован целиком.
+	### The whole block is commented out.
 	### ────────────────────────────────────────────────────────────────────────────
 #	#GRE
 #	s:STATE_SAXONY={

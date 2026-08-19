@@ -1,15 +1,16 @@
-﻿### E&F Hotfix — выдача local_currency
+﻿### E&F Hotfix — local_currency issuance
 ###
-### Аддитивно: on_action складываются, ничего не перекрывается.
+### Additive: on_actions stack, nothing is overridden.
 ###
-### Модификатор вешается на СТРАНУ, как и ефовский no_money_production, —
-### он сам раздаёт state_sell_orders_* по всем штатам поровну.
+### The modifier goes on the COUNTRY, exactly like E&F's own
+### no_money_production — it hands state_sell_orders_* to every state evenly.
 ###
-### Вешать по штатам отдельно нельзя: multiplier в add_modifier считается
-### не в скоупе штата, а выше, и любое state_* значение возвращает none.
-### Проверено запуском, лог: "Value of wrong type ... Got value of type 'none'".
+### Putting it on individual states does not work: the multiplier in
+### add_modifier is evaluated in a scope above the state, so any state_* value
+### comes back as none. Verified in game, the log says
+### "Value of wrong type ... Got value of type 'none'".
 ###
-### Пересчитываем ежемесячно: население и уровень жизни подвижны.
+### Recomputed monthly because population and standard of living both move.
 
 on_monthly_pulse_country = {
 	on_actions = {
@@ -19,8 +20,8 @@ on_monthly_pulse_country = {
 
 zz_ef_local_currency_monthly = {
 	effect = {
-		### Уборка. Второй блок — для сохранений с версии, где модификатор
-		### пробовали вешать на каждый штат.
+		### Cleanup. The second block is for saves from the version where the
+		### modifier was applied per state.
 		if = {
 			limit = { has_modifier = zz_ef_local_currency_fix }
 			remove_modifier = zz_ef_local_currency_fix
@@ -32,7 +33,7 @@ zz_ef_local_currency_monthly = {
 			}
 		}
 
-		### Выдача
+		### Issue
 		if = {
 			limit = {
 				zz_ef_local_currency_needs_throttle = yes

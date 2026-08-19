@@ -1,109 +1,116 @@
-﻿### E&F Hotfix — сколько local_currency оставляем стране
+﻿### E&F Hotfix — how much local_currency a country is given
 ###
-### E&F выдавал стране без денежной системы плоские 2500 local_currency на
-### КАЖДЫЙ штат. Эта выдача отключена в источнике
-### (static_modifiers/zz_ef_no_money_production.txt), а взамен страна
-### получает столько, сколько насчитано здесь: по населению, среднему
-### уровню жизни и таблице потребностей E&F. Считаем по стране целиком
-### и делим между штатами.
+### E&F used to hand every country without a monetary system a flat 2500
+### local_currency per state. That issuance is disabled at the source
+### (static_modifiers/zz_ef_no_money_production.txt); instead the country gets
+### whatever is computed here, from population, average standard of living and
+### E&F's own pop needs table. Computed for the whole country, then split
+### between its states.
 ###
-### Кому это применяется — см. common/scripted_triggers/.
+### Who this applies to: see common/scripted_triggers/.
 ###
 ########################################################################
-### Почему модификатор страновой
+### Why the modifier is country-scoped
 ###
-### Проверено запуском: multiplier в add_modifier вычисляется НЕ в том
-### скоупе, где стоит эффект. Внутри every_scope_state триггеры видят штат
-### нормально, а множитель строкой ниже — нет:
+### Verified in game: the multiplier in add_modifier is NOT evaluated in the
+### scope the effect sits in. Inside every_scope_state the triggers see the
+### state just fine, but the multiplier one line below does not:
 ###
 ###   Value of wrong type in 'zz_ef_local_currency_on_actions.txt:39'.
 ###   Got value of type 'none'
 ###
-### Поэтому модификатор вешается на страну, а разделение по штатам — просто
-### деление на их число. Побочный эффект: штаты одной страны получают
-### поровну, хотя у Черкессии они 590 тыс и 74 тыс населения. Лечится только
-### отказом от модификаторов в пользу зданий — этим занимается мод банков.
+### So the modifier goes on the country and the split between states is plain
+### division by their count. Side effect: states of one country get equal
+### shares, even though Circassia's two hold 590k and 74k people. The only
+### cure is to drop modifiers in favour of buildings, which is what the
+### _ZZ EF Local Banks mod does.
 ###
 ########################################################################
-### Почему НЕ по фактическому потреблению
+### Why NOT from actual consumption
 ###
-### Пробовали читать state_goods_consumption по товару local_currency и
-### подгонять выпуск под него. Технически это работает: сумма по штатам
-### собирается внутри странового script value и остаётся страновым числом
-### (так устроен ванильный country_total_urbanization). Но по смыслу — нет.
+### Tried and abandoned; the knowledge was expensive, so it is written down.
+### Reading state_goods_consumption for local_currency does work technically:
+### the per-state sum can be accumulated inside a country-scoped script value
+### and stays a country-scoped number (that is how vanilla's
+### country_total_urbanization is built). It fails on meaning.
 ###
-### В залитом рынке потребление измеряет не потребность, а доступность.
-### Валюты много и она дешёвая -> попы охотно ей закрывают popneed_currency
-### -> потребление большое -> мы разрешаем печатать много -> валюты
-### становится ещё больше. Ионические острова на британском рынке (188 тыс
-### населения, расчётных ~113 единиц) так печатали полные 2500.
+### In a flooded market, consumption measures availability, not need. Currency
+### is plentiful and cheap -> pops happily cover popneed_currency with it ->
+### consumption is high -> we allow printing more -> there is even more of it.
+### The Ionian Islands on the British market (188k people, ~113 units by the
+### formula) printed the full 2500 that way.
 ###
-### Потолок в 2x от расчёта самораскрутку убрал, но получилось то же самое
-### в мягкой форме: в этот потолок стали упираться все подряд, и у всех
-### стабильно выходило вдвое больше расчётного.
+### Capping the measurement at 2x the formula killed the runaway but produced
+### the same thing in a milder form: everybody pinned themselves to the cap
+### and steadily ran at twice the computed value.
 ###
-### Отличить "им правда столько надо" от "им просто дёшево достаётся" по
-### потреблению нельзя в принципе. Настоящий спрос (buy_orders) игра считает
-### только на уровне рынка, а он общий на всех участников и для одной
-### маленькой страны бесполезен. Поэтому — чистый расчёт, без обратной связи.
+### "They genuinely need this much" cannot be told apart from "they are simply
+### getting it cheap" through consumption. Real demand (buy_orders) is only
+### computed by the game at market level, where it is shared across every
+### participant and useless for sizing one small country. Hence a clean
+### formula with no feedback loop.
 ###
 ########################################################################
-### Откуда взялась кривая
+### Where the curve comes from
 ###
-### Потребность в валюте задана в common/buy_packages/00_ef_buy_packages.txt:
-### E&F дописывает popneed_currency во все 99 уровней достатка. Вот она,
-### в фунтах на уровень:
+### The need itself is defined in common/buy_packages/00_ef_buy_packages.txt:
+### E&F injects popneed_currency into all 99 wealth levels. In pounds per
+### level:
 ###
 ###    1 -> 21     10 -> 37     20 -> 40     30 ->  62     40 ->  96
 ###    5 -> 28     15 -> 41     25 -> 46     35 ->  76     99 -> 6177
 ###
-### Форма несимметричная: до 10 уровня растёт бодро, с 10 по 20 стоит на
-### месте, после 20 разгоняется, после 40 уходит в экспоненту. Ниже она
-### разложена на отрезки — каждый кусок это своя наклонная, суммируются.
+### The shape is lopsided: it climbs briskly up to level 10, sits on a shelf
+### from 10 to 20, accelerates past 20 and goes exponential past 40. Below it
+### is broken into segments — each one its own slope, all summed.
 ###
-### Калибровка по трём замерам (потребление страны целиком):
+### Calibrated against three in-game measurements (whole-country consumption):
 ###
-###   Новая Гранада  1.47 млн, SoL 7.3 -> 1640
-###   Черкессия      664 тыс,  SoL ~11 ->  372
-###   Бухара         1.47 млн, SoL 6.1 ->  380
+###   New Granada  1.47M people, SoL 7.3 -> 1640
+###   Circassia    664k people,  SoL ~11 ->  372
+###   Bukhara      1.47M people, SoL 6.1 ->  380
 ###
-### Разброс на душу между ними четырёхкратный, и ни население, ни достаток
-### его не объясняют — по кривой все трое должны потреблять почти одинаково.
-### Поэтому rate взят как среднее геометрическое трёх подгонок и затем
-### подрезан по итогам прогона. При rate = 0.0132 формула даёт:
+### Per capita they differ by a factor of four, and neither population nor
+### wealth explains it — by the curve all three should consume almost the same.
+### So rate is the geometric mean of the three fits, trimmed after a test run.
+### At rate = 0.0132 the formula gives:
 ###
-###   Новая Гранада  634 (39% от замера)
-###   Черкессия      327 (88%)
-###   Бухара         597 (157%)
+###   New Granada  634 (39% of the measurement)
+###   Circassia    327 (88%)
+###   Bukhara      597 (157%)
 ###
-### ЕСЛИ ВАЛЮТЫ ВСЁ ЕЩЁ МНОГО ИЛИ МАЛО — крутить надо rate, он линейный
-### и единственный: 0.0132 -> 0.0099 это минус четверть всем и сразу.
+### IF THERE IS STILL TOO MUCH OR TOO LITTLE CURRENCY, turn rate. It is linear
+### and it is the only knob: 0.0132 -> 0.0099 is a quarter off everyone at once.
 ########################################################################
 
-### ЕДИНСТВЕННАЯ РУЧКА: единиц валюты на 1000 душ на каждый фунт таблицы
-### buy_packages. Линейная: вдвое меньше значение — вдвое меньше валюты.
-
+### THE ONLY KNOB: units of currency per 1000 people per pound of the
+### buy_packages table. Linear — half the value, half the currency.
+###
+### History of this value:
+###   0.013 x 1.25 = 0.01625 — first calibration, with 25% headroom on top
+###   0.012                  — test run said ~26% too much, headroom folded in
+###   0.0132                 — 10% given back, 19% below the original
 zz_ef_local_currency_rate = {
-	value = 0.0125
+	value = 0.0132
 }
 
 ########################################################################
-### Кривая потребности по достатку — кусочно-линейная аппроксимация
-### таблицы buy_packages. Каждый отрезок обрезан по своим границам и
-### умножен на свой наклон, дальше всё складывается.
+### The wealth curve — a piecewise-linear approximation of the
+### buy_packages table. Each segment is clamped to its own bounds and
+### multiplied by its own slope, then everything is summed.
 ###
-### Проверка: SoL 6.1 -> 30.8 (таблица 31), SoL 11 -> 37.3 (38),
-###           SoL 30 -> 62.0 (62), SoL 40 -> 96.0 (96).
+### Check: SoL 6.1 -> 30.8 (table says 31), SoL 11 -> 37.3 (38),
+###        SoL 30 -> 62.0 (62), SoL 40 -> 96.0 (96).
 ########################################################################
 
-zz_ef_lc_curve_a = {			# 0..10, наклон 1.6
+zz_ef_lc_curve_a = {			# 0..10, slope 1.6
 	value = average_sol
 	min = 0
 	max = 10
 	multiply = 1.6
 }
 
-zz_ef_lc_curve_b = {			# 10..20, полка
+zz_ef_lc_curve_b = {			# 10..20, the shelf
 	value = average_sol
 	subtract = 10
 	min = 0
@@ -111,7 +118,7 @@ zz_ef_lc_curve_b = {			# 10..20, полка
 	multiply = 0.3
 }
 
-zz_ef_lc_curve_c = {			# 20..30, разгон
+zz_ef_lc_curve_c = {			# 20..30, picking up
 	value = average_sol
 	subtract = 20
 	min = 0
@@ -127,7 +134,7 @@ zz_ef_lc_curve_d = {			# 30..40
 	multiply = 3.4
 }
 
-zz_ef_lc_curve_e = {			# выше 40 — грубо, туда почти никто не заходит
+zz_ef_lc_curve_e = {			# above 40 — rough, almost nobody gets there
 	value = average_sol
 	subtract = 40
 	min = 0
@@ -145,11 +152,11 @@ zz_ef_local_currency_wealth_curve = {
 }
 
 ########################################################################
-### Собственно расчёт
+### The calculation itself
 ########################################################################
 
-### Сколько штатов у страны. Модификатор страновой, но действует на каждый
-### штат, поэтому страновую потребность надо разделить между ними.
+### How many states the country owns. The modifier is country-scoped but acts
+### on every state, so the country-wide demand has to be split between them.
 zz_ef_local_currency_state_count = {
 	value = 0
 	every_scope_state = {
@@ -158,7 +165,7 @@ zz_ef_local_currency_state_count = {
 	min = 1
 }
 
-### Потребность страны целиком
+### Demand for the whole country
 zz_ef_local_currency_demand = {
 	value = total_population
 	divide = 1000
@@ -166,13 +173,11 @@ zz_ef_local_currency_demand = {
 	multiply = zz_ef_local_currency_rate
 }
 
-### Сколько выдаём на штат.
-### Модификатор zz_ef_local_currency_fix имеет базу +1, это его множитель.
-###
-### Ефовские плоские 2500 отключены в источнике через REPLACE, поэтому
-### здесь именно выдача, а не вычитание, и верхнего предела в 2500 больше
-### нет: крупная страна получит столько, сколько ей насчитано.
-### max = 25000 стоит просто предохранителем от абсурда.
+### How much each state is given.
+### The zz_ef_local_currency_fix modifier has a base of +1; this is its
+### multiplier. E&F's flat 2500 is disabled at the source, so this is a grant
+### rather than a subtraction, and there is no 2500 ceiling anymore: a large
+### country gets whatever it is owed. max = 25000 is only a sanity cap.
 zz_ef_local_currency_per_state = {
 	value = zz_ef_local_currency_demand
 	divide = zz_ef_local_currency_state_count

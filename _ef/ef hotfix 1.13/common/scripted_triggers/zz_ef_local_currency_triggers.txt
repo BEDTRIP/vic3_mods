@@ -1,26 +1,27 @@
-﻿### E&F Hotfix — кому пересчитываем выпуск local_currency
+﻿### E&F Hotfix — who gets the recomputed local_currency output
 ###
-### Условие одно и то же в двух местах (старт игры и ежемесячный пульс),
-### поэтому вынесено в триггер.
+### The same condition is needed in two places (game start and the monthly
+### pulse), so it lives here.
 ###
 ########################################################################
-### ⚠ СЕЙЧАС ВКЛЮЧЕНО ДЛЯ ВСЕХ — режим проверки формулы
+### CURRENTLY ENABLED FOR EVERYONE - formula validation mode
 ###
-### Чтобы посмотреть, насколько расчёт похож на правду по всему миру,
-### рыночное условие временно отключено: пересчёт применяется к каждой
-### стране без денежной системы, включая тех, кто варится в собственном
-### соку. Так по карте потребления сразу видно, где формула врёт.
+### To see how close the formula lands across the whole world, the market
+### condition is temporarily switched off: the recalculation applies to every
+### country without a monetary system, including the ones stewing in their own
+### market. The consumption map then shows at a glance where the formula lies.
 ###
-### Чтобы вернуть штатное поведение — раскомментировать блок market ниже.
+### To restore normal behaviour, uncomment the market block below.
 ###
-### Штатное поведение: прижимаем только тех, кто сидит в ЧУЖОМ рынке, где
-### ходит настоящая валюта. У них попам есть чем закрыть popneed_currency
-### помимо местной валюты, а вот их дешёвая местная валюта заливает общий
-### рынок и вытесняет чужие национальные валюты. Страну в собственном рынке
-### без настоящих валют трогать нельзя: местная там единственная.
+### Normal behaviour: only throttle countries sitting in SOMEONE ELSE'S market
+### where a real currency circulates. Their pops have something other than
+### local currency to cover popneed_currency with, while their cheap local
+### currency is what floods the shared market and crowds out other nations'
+### national currencies. A country alone in its own market with no real
+### currency must not be touched: local currency is all it has.
 ###
-### market ?= { owner ?= { ... } } — рабочий путь до владельца рынка,
-### ванильные скрипты ходят так же
+### market ?= { owner ?= { ... } } is the working path to the market owner;
+### vanilla scripts walk it the same way
 ### (scripted_triggers/00_gfx_route_graphics_triggers.txt).
 ########################################################################
 

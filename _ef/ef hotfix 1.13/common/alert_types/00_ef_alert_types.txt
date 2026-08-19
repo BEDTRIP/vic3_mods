@@ -28,11 +28,11 @@ fso_alert = {
 #################################################################################################
  
 selle_bond_maturity_yers_time_5_Y = {
- 	script_context = player_country	### E&F Hotfix: было player_market — у рынка нет переменных, а переменные этого alert'а страновые
+ 	script_context = player_country	### E&F Hotfix: was player_market. Markets do not support variables, and this alert reads country-scoped ones.
 	texture = "gfx/interface/icons/alert_icons/selle_bond_maturity_yers_time.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = selle_bond_maturity_yers_time_10
 		has_variable = selle_bond_maturity_yers_time_6
 		has_variable = selle_bond_maturity_yers_time_7
@@ -54,11 +54,11 @@ selle_bond_maturity_yers_time_5_Y = {
 }  
 
 selle_bond_maturity_yers_time_10_Y = {
- 	script_context = player_country	### E&F Hotfix: было player_market — у рынка нет переменных, а переменные этого alert'а страновые
+ 	script_context = player_country	### E&F Hotfix: was player_market. Markets do not support variables, and this alert reads country-scoped ones.
 	texture = "gfx/interface/icons/alert_icons/selle_bond_maturity_yers_time.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = selle_bond_maturity_yers_time_1
 		has_variable = selle_bond_maturity_yers_time_2
 		has_variable = selle_bond_maturity_yers_time_3
@@ -627,7 +627,7 @@ store_release_ammunition = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_ammunition.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = ammunition_release_month_fixe
 		has_variable = ammunition_release_status
 		has_variable = ammunition_store_month_fixe
@@ -656,7 +656,7 @@ store_release_small_arms = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_small_arms.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_small_arms_time
 		has_variable = small_arms_release_month_fixe
 		has_variable = small_arms_release_status
@@ -685,7 +685,7 @@ store_release_artillery = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_artillery.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = artillery_release_month_fixe
 		has_variable = artillery_release_status
 		has_variable = artillery_store_month_fixe
@@ -714,7 +714,7 @@ store_release_tanks = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_tanks.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_tanks_time
 		has_variable = store_tanks_time
 		has_variable = tanks_release_month_fixe
@@ -743,7 +743,7 @@ store_release_aeroplanes = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_aeroplanes.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = aeroplanes_release_month_fixe
 		has_variable = aeroplanes_release_status
 		has_variable = aeroplanes_store_month_fixe
@@ -772,7 +772,7 @@ store_release_grain = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_grain.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = grain_release_month_fixe
 		has_variable = grain_release_status
 		has_variable = grain_store_month_fixe
@@ -801,7 +801,7 @@ store_release_fabric = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_fabric.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = fabric_release_month_fixe
 		has_variable = fabric_release_status
 		has_variable = fabric_store_month_fixe
@@ -830,7 +830,7 @@ store_release_wood = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_wood.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_wood_time
 		has_variable = store_wood_time
 		has_variable = wood_release_month_fixe
@@ -859,7 +859,7 @@ store_release_groceries = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_groceries.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = groceries_release_month_fixe
 		has_variable = groceries_release_status
 		has_variable = groceries_store_month_fixe
@@ -888,7 +888,7 @@ store_release_clothes = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_clothes.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = clothes_release_month_fixe
 		has_variable = clothes_release_status
 		has_variable = clothes_store_month_fixe
@@ -917,7 +917,7 @@ store_release_paper = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_paper.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = paper_release_month_fixe
 		has_variable = paper_release_status
 		has_variable = paper_store_month_fixe
@@ -946,7 +946,7 @@ store_release_silk = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_silk.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_silk_time
 		has_variable = silk_release_month_fixe
 		has_variable = silk_release_status
@@ -975,7 +975,7 @@ store_release_dye = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_dye.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = dye_release_month_fixe
 		has_variable = dye_release_status
 		has_variable = dye_store_month_fixe
@@ -1004,7 +1004,7 @@ store_release_sulfur = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_sulfur.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_sulfur_time
 		has_variable = store_sulfur_time
 		has_variable = sulfur_release_month_fixe
@@ -1033,7 +1033,7 @@ store_release_coal = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_coal.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = coal_release_month_fixe
 		has_variable = coal_release_status
 		has_variable = coal_store_month_fixe
@@ -1062,7 +1062,7 @@ store_release_iron = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_iron.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = iron_release_month_fixe
 		has_variable = iron_release_status
 		has_variable = iron_store_month_fixe
@@ -1091,7 +1091,7 @@ store_release_lead = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_lead.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = lead_release_month_fixe
 		has_variable = lead_release_status
 		has_variable = lead_store_month_fixe
@@ -1120,7 +1120,7 @@ store_release_hardwood = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_hardwood.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = hardwood_release_month_fixe
 		has_variable = hardwood_release_status
 		has_variable = hardwood_store_month_fixe
@@ -1149,7 +1149,7 @@ store_release_rubber = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_rubber.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_rubber_time
 		has_variable = rubber_release_month_fixe
 		has_variable = rubber_release_status
@@ -1178,7 +1178,7 @@ store_release_oil = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_oil.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = oil_release_month_fixe
 		has_variable = oil_release_status
 		has_variable = oil_store_month_fixe
@@ -1207,7 +1207,7 @@ store_release_engines = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_engines.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = engines_release_month_fixe
 		has_variable = engines_release_status
 		has_variable = engines_store_month_fixe
@@ -1236,7 +1236,7 @@ store_release_steel = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_steel.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_steel_time
 		has_variable = steel_release_month_fixe
 		has_variable = steel_release_status
@@ -1265,7 +1265,7 @@ store_release_fertilizer = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_fertilizer.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = fertilizer_release_month_fixe
 		has_variable = fertilizer_release_status
 		has_variable = fertilizer_store_month_fixe
@@ -1294,7 +1294,7 @@ store_release_tools = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_tools.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_tools_time
 		has_variable = store_tools_time
 		has_variable = tools_release_month_fixe
@@ -1323,7 +1323,7 @@ store_release_explosives = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_explosives.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = explosives_release_month_fixe
 		has_variable = explosives_release_status
 		has_variable = explosives_store_month_fixe
@@ -1352,7 +1352,7 @@ store_release_automobiles = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_automobiles.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = automobiles_release_month_fixe
 		has_variable = automobiles_release_status
 		has_variable = automobiles_store_month_fixe
@@ -1381,7 +1381,7 @@ store_release_telephones = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_telephones.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = release_telephones_time
 		has_variable = store_telephones_time
 		has_variable = telephones_release_month_fixe
@@ -1410,7 +1410,7 @@ store_release_radios = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_radios.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = radios_release_month_fixe
 		has_variable = radios_release_status
 		has_variable = radios_store_month_fixe
@@ -1439,7 +1439,7 @@ store_release_opium = {
 	texture = "gfx/interface/icons/alert_icons/stockpile_opium.dds"
 
 	valid = { 
-		### E&F Hotfix: не вычислять, пока переменные не заданы
+		### E&F Hotfix: do not evaluate before the variables exist
 		has_variable = opium_release_month_fixe
 		has_variable = opium_release_status
 		has_variable = opium_store_month_fixe

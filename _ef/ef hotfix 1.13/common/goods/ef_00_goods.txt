@@ -1075,7 +1075,7 @@ local_currency = {
 # #end_tag_1 
 
 #begin_tag_1	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	dinar_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/dinar.dds"
 #		cost = 1
@@ -1219,7 +1219,7 @@ local_currency = {
 		traded_quantity = 5 #250
 		convoy_cost_multiplier = 1
 	}	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	dollar_caribbean_dollar_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/dollar_caribbean_dollar.dds"
 #		cost = 1
@@ -1253,7 +1253,7 @@ local_currency = {
 	# 	traded_quantity = 5 #250
 	# 	convoy_cost_multiplier = 1
 	# }	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	dollar_new_zealand_dollar_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/dollar_new_zealand_dollar.dds"
 #		cost = 1
@@ -1298,7 +1298,7 @@ local_currency = {
 	# 	traded_quantity = 5 #250
 	# 	convoy_cost_multiplier = 1
 	# }	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	eco_central_african_eco_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/eco_central_african_eco.dds"
 #		cost = 1
@@ -1310,7 +1310,7 @@ local_currency = {
 #		traded_quantity = 5 #250
 #		convoy_cost_multiplier = 1
 #	}	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	eco_east_african_eco_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/eco_east_african_eco.dds"
 #		cost = 1
@@ -1377,7 +1377,7 @@ local_currency = {
 	# 	traded_quantity = 5 #250
 	# 	convoy_cost_multiplier = 1
 	# }	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	eco_west_african_eco_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/eco_west_african_eco.dds"
 #		cost = 1
@@ -1477,7 +1477,7 @@ local_currency = {
 		traded_quantity = 5 #250
 		convoy_cost_multiplier = 1
 	}	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	gulden_indies_guilder_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/gulden_indies_guilder.dds"
 #		cost = 1
@@ -1687,7 +1687,7 @@ local_currency = {
 		traded_quantity = 5 #250
 		convoy_cost_multiplier = 1
 	}	
-	### E&F Hotfix: вырезано ради лимита 128 товаров
+	### E&F Hotfix: commented out to stay under the 128 goods limit
 #	peso_c = {
 #		texture = "gfx/interface/icons/goods_icons/currencies/peso.dds"
 #		cost = 1
