@@ -153,10 +153,10 @@
   ## Financial product
   ################################
 
-  bond:0 "Облигация"
-  war_bond:0 "Военная облигация"
-  paper_gold:0 "Бумажное золото"
-  railroad_stock:0 "Железнодорожные акции"
-  agricultural_stock:0 "Сельскохозяйственные акции"
-  manufacture_stock:0 "Промышленные акции"
-  mining_stock:0 "Горнодобывающие акции"
+  bond:0               "Облигация"
+  war_bond:0           "    Военная облигация    "
+  paper_gold:0         "    Бумажное золото      "
+  railroad_stock:0     "  Железнодорожные акции  "
+  agricultural_stock:0 "Акции сельского хозяйства"
+  manufacture_stock:0  "   Промышленные акции    "
+  mining_stock:0       "  Горнодобывающие акции  "

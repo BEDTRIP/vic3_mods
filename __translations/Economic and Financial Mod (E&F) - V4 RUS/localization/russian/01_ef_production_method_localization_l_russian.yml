@@ -439,7 +439,7 @@
   pm_no_mining_stock_exchange:0 "Без фондовой биржи (горнодобыча)"
   pm_mining_stock_exchange:0 "Фондовая биржа (горнодобыча)"
 
-  pmg_agricultural_stock_exchange:0 "Сельскохозяйственные акции"
+  pmg_agricultural_stock_exchange:0 "Акции сельского хозяйства"
   pm_no_agricultural_stock_exchange:0 "Без фондовой биржи (сельское хозяйство)"
   pm_agricultural_stock_exchange:0 "Фондовая биржа (сельское хозяйство)"
 
