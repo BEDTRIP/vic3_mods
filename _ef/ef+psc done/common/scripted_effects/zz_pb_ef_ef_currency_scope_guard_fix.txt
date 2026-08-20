@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # pb+ef: E&F scope guards (reduce script spam)
 # Fixes errors after unpausing like:
 # - Undefined event target 'seller'

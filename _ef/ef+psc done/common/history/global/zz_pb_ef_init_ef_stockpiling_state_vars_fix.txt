@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # pb+ef: init E&F state vars to avoid "var not set" spam
 #
 # E&F stockpiling logic compares state vars like:

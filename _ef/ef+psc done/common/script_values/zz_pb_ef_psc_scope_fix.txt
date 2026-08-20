@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # pb+ef: PSC scope fix
 # Fixes startup spam:
 #   has_active_production_method [ Wrong scope for trigger: none, expected building ]

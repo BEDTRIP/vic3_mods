@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # pb+ef: fix E&F Div/0 in financial modifiers
 # - E&F divides by building_financial_num (can be 0)
 # - E&F divides by base_demande_*_fix (can be 0)

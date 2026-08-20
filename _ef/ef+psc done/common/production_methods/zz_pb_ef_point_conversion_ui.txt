@@ -1,9 +1,28 @@
+﻿#############################################
+# pb+ef: cosmetic only -- give the regulator's conversion PMs the construction
+# icons instead of PSC's "construction bureaucrats" icon.
+#
+# Why the whole PM is restated: there is no way to patch a single field of an
+# existing PM. INJECT: appends keys, and `texture` already exists, so it would
+# leave a duplicate. So the four PMs are copied from PSC verbatim and only the
+# texture line differs.
+#
+# Why we bother at all: the budget/overview panel reads AccessConstructionSpeeds,
+# which is tied to NDefines.NCountry.CONSTRUCTION_CAMP_BUILDING. PSC repoints
+# that define at building_construction_regulator, so the UI shows the regulator's
+# PMs where the player expects the construction sector's.
+#
+# !! MAINTENANCE !!
+# These four are byte-for-byte copies of PSC/common/production_methods/
+# zz_PSC_construction.txt apart from `texture`. If PSC changes an input amount
+# or the bureaucrat count, this file silently reverts it. RE-DIFF AGAINST PSC
+# ON EVERY PSC UPDATE. Verified in sync with PSC 1.3.7 on 2026-08-19.
+#
+# REPLACE_OR_CREATE, not REPLACE: these keys do not exist in vanilla, PSC creates
+# them. Plain REPLACE: would throw four errors into error.log if PSC is absent.
+#############################################
 
-# UI/UX patch: make PSC point-conversion PMs look like construction-sector PMs in UI.
-# Reason: budget/overview uses AccessConstructionSpeeds which is tied to CONSTRUCTION_CAMP_BUILDING
-# (PSC sets it to building_construction_regulator), so the UI will show regulator PMs.
-
-REPLACE:pm_wood_point_conversion = {
+REPLACE_OR_CREATE:pm_wood_point_conversion = {
 	texture = "gfx/interface/icons/production_method_icons/wooden_buildings.dds"
 	is_default = yes
 	is_hidden_when_unavailable = yes
@@ -27,7 +46,7 @@ REPLACE:pm_wood_point_conversion = {
 	}
 }
 
-REPLACE:pm_iron_point_conversion = {
+REPLACE_OR_CREATE:pm_iron_point_conversion = {
 	texture = "gfx/interface/icons/production_method_icons/iron_frame_buildings.dds"
 	is_hidden_when_unavailable = yes
 
@@ -51,7 +70,7 @@ REPLACE:pm_iron_point_conversion = {
 	}
 }
 
-REPLACE:pm_steel_point_conversion = {
+REPLACE_OR_CREATE:pm_steel_point_conversion = {
 	texture = "gfx/interface/icons/production_method_icons/steel_frame_buildings.dds"
 	is_hidden_when_unavailable = yes
 
@@ -75,7 +94,7 @@ REPLACE:pm_steel_point_conversion = {
 	}
 }
 
-REPLACE:pm_arc_welded_point_conversion = {
+REPLACE_OR_CREATE:pm_arc_welded_point_conversion = {
 	texture = "gfx/interface/icons/production_method_icons/arc_welded_buildings.dds"
 	is_hidden_when_unavailable = yes
 

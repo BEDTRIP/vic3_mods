@@ -1,0 +1,50 @@
+{
+ "law_large_monetary_policy": {
+  "rep_key": "law_large_monetary_policy",
+  "rep_good": null,
+  "en": "Large Monetary Policy",
+  "members": [
+   "law_large_monetary_policy"
+  ]
+ },
+ "law_large_monetary_policy_desc": {
+  "rep_key": "law_large_monetary_policy_desc",
+  "rep_good": null,
+  "en": "The central bank is granted broad authority to intervene in monetary affairs, allowing for large-scale expansion or contraction of the money supply. Such powers enable the government to respond aggressively to economic crises, stimulate growth, finance extraordinary expenditures, or stabilize the national currency when necessary. IGs are more inclined to enact this law if the Central bank metal reserve ratio falls below 75% or rises above 125%.",
+  "members": [
+   "law_large_monetary_policy_desc"
+  ]
+ },
+ "private_liquidity_provision": {
+  "rep_key": "private_liquidity_provision",
+  "rep_good": null,
+  "en": "Private Liquidity Provision",
+  "members": [
+   "private_liquidity_provision"
+  ]
+ },
+ "private_liquidity_provision_desc": {
+  "rep_key": "private_liquidity_provision_desc",
+  "rep_good": null,
+  "en": "Private banks actively provide short-term liquidity to the financial system, smoothing market tensions and supporting credit flows outside direct central bank intervention.",
+  "members": [
+   "private_liquidity_provision_desc"
+  ]
+ },
+ "advanced_interbank_refinancing": {
+  "rep_key": "advanced_interbank_refinancing",
+  "rep_good": null,
+  "en": "Advanced Interbank Refinancing",
+  "members": [
+   "advanced_interbank_refinancing"
+  ]
+ },
+ "advanced_interbank_refinancing_desc": {
+  "rep_key": "advanced_interbank_refinancing_desc",
+  "rep_good": null,
+  "en": "An advanced interbank refinancing framework allows banks to access liquidity through structured interbank markets, improving financial stability, capital circulation, and crisis resilience.",
+  "members": [
+   "advanced_interbank_refinancing_desc"
+  ]
+ }
+}

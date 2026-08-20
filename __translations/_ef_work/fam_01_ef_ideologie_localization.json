@@ -1,0 +1,18 @@
+{
+ "ideology_monetary_policy": {
+  "rep_key": "ideology_monetary_policy",
+  "rep_good": null,
+  "en": "Monetary Interventionism",
+  "members": [
+   "ideology_monetary_policy"
+  ]
+ },
+ "ideology_monetary_policy_desc": {
+  "rep_key": "ideology_monetary_policy_desc",
+  "rep_good": null,
+  "en": "This group believes that monetary policy should be actively used to steer the economy. Whether through monetary expansion, contraction, market intervention, or currency management, the state should possess broad powers to pursue its economic objectives.",
+  "members": [
+   "ideology_monetary_policy_desc"
+  ]
+ }
+}

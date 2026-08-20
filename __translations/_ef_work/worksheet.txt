@@ -1,0 +1,655 @@
+########## FILE 00_ef_gui_localization_l_english.yml
+--- PAT: central_bank_metal_purchases
+    GOODS: None
+    EN  : Central Bank Metal Purchases
+--- PAT: EF_{G}_gui_stack
+    GOODS: gold,silver
+    EN  : #v [GetPlayer.MakeScope.ScriptValue('EF_gold_gui_stack')] #!stack of #v 100M #!@gold!
+--- PAT: EF_{G}_gui_room
+    GOODS: gold,silver
+    EN  : Gold are present in #v [GetPlayer.MakeScope.ScriptValue('EF_gold_gui_room')] #! in a Vault
+--- PAT: alert_fso_alert_name
+    GOODS: None
+    EN  : Action displonible dans le Financial Stability Office (FSO)
+--- PAT: alert_fso_alert_hint
+    GOODS: None
+    EN  : You can select an option in the Financial Stability Office (FSO) to impact your [GetBuildingType('building_financial_centre').GetName] or your [GetBuildingType('building_ef_private_construction').GetName].
+--- PAT: alert_fso_alert_action
+    GOODS: None
+    EN  : Journal
+--- PAT: alert_selle_{G}_maturity_yers_time_5_Y_name
+    GOODS: bond
+    EN  : One of your five-year sovereign debt holdings from another country has reached its final year of maturity.
+--- PAT: alert_selle_{G}_maturity_yers_time_5_Y_hint
+    GOODS: bond
+    EN  : Foreign debts you own are coming due.
+--- PAT: alert_selle_{G}_maturity_yers_time_5_Y_action
+    GOODS: bond
+    EN  : Global Panel
+--- PAT: alert_selle_{G}_maturity_yers_time_10_Y_name
+    GOODS: bond
+    EN  : One of your ten-year sovereign debt holdings from another country has reached its final year of maturity.
+--- PAT: alert_selle_{G}_maturity_yers_time_10_Y_hint
+    GOODS: bond
+    EN  : Foreign debts you own are coming due.
+--- PAT: alert_selle_{G}_maturity_yers_time_10_Y_action
+    GOODS: bond
+    EN  : Global Panel
+--- PAT: alert_buy_sell_{G}_order_name
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : A ammunition @ammunition! buy/sell order is in progress
+--- PAT: alert_buy_sell_{G}_order_hint
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : The buy/sell order will be executed in less than 1 month.
+--- PAT: alert_buy_sell_{G}_order_action
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Global Panel
+--- PAT: alert_store_release_{G}_name
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : The store/release stopiling of ammunition @ammunition! is coming to an end
+--- PAT: alert_store_release_{G}_hint
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : There are 3 months remaining in the execution period for the store/release of ammunition order.
+--- PAT: alert_store_release_{G}_action
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Stockpile Panel
+--- PAT: law_large_monetary_policy_texture
+    GOODS: None
+    EN  : @large_monetary_policy!
+--- PAT: {G}_global_price
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Grain global price
+    RUSRC[grain_global_price]: Мировая цена на зерно
+--- PAT: {G}_global_offer
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Grain global offer
+    RUSRC[grain_global_offer]: Мировое предложение зерна
+--- PAT: {G}_global_demande
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Grain global demand
+    RUSRC[grain_global_demande]: Мировой спрос на зерно
+--- PAT: {G}_name
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : @fabric! fabric
+    RUSRC[grain_name]: @grain! Зерно
+--- PAT: {G}_reserve_window
+    GOODS: gold
+    EN  : Metal Reserves
+--- PAT: show_{G}_reserve_window
+    GOODS: gold
+    EN  : Show Metal Reserves
+--- PAT: currency_reserve_window
+    GOODS: None
+    EN  : Currency Reserves
+--- PAT: show_currency_reserve_window
+    GOODS: None
+    EN  : Show Currency Reserves
+--- PAT: predicted_{G}_store
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Predicted @fabric! stored per Year
+    RUSRC[predicted_grain_store]: Идет @grain! в запас в год
+--- PAT: predicted_{G}_release
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Predicted @fabric! released per Year
+    RUSRC[predicted_grain_release]: Идет @grain! на выпуск в год
+--- PAT: store_{G}_infinit
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Set Infinite Stockpile Order
+--- PAT: store_{G}
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Set Stockpile Order
+--- PAT: release_{G}
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Set Release Order
+--- PAT: {G}_sell
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Toggle Stockpile / Release
+--- PAT: set_{G}_0
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Reset Buy Order Only
+--- PAT: increase_{G}_quantity_store
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Increase Stockpile Quantity
+--- PAT: reduce_{G}_quantity_store
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Decrease Stockpile Quantity
+--- PAT: increase_{G}_quantity_release
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Increase Release Quantity
+--- PAT: reduce_{G}_quantity_release
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Decrease Release Quantity
+--- PAT: increase_{G}_month_store
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Increase Stockpile Duration
+--- PAT: reduce_{G}_month_store
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Decrease Stockpile Duration
+--- PAT: increase_{G}_month_release
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Increase Release Duration
+--- PAT: reduce_{G}_month_release
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Decrease Release Duration
+--- PAT: stockpile_panel_overview_section
+    GOODS: None
+    EN  : Goods currently in stock
+--- PAT: {G}_flag_icon
+    GOODS: ammunition,ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : @ammunition!
+--- PAT: {G}_flag_var_state_state_panel
+    GOODS: ammunition
+    EN  :  T [Root.MakeScope.ScriptValue('stockpiling_ammunition_var_state')|=+D] @ammunition!/1.00M 
+--- PAT: {G}_flag_green_arow_bellow_state_panel
+    GOODS: ammunition
+    EN  : i[Country.MakeScope.ScriptValue('money_value_rapported_inflation')|2]i [GetPlayer.MakeScope.ScriptValue('stockpiling_ammunition_var_state')|D] 
+--- PAT: {G}_flag_red_arow_bellow_state_panel
+    GOODS: ammunition
+    EN  : @red_arow_bellow! #N -#! [GetPlayer.MakeScope.Var('release_ammunition_var_1').GetValue|-D]
+--- PAT: {G}_flag_status_state_panel
+    GOODS: ammunition
+    EN  : [GetPlayer.GetCustom('stokpiling_ammunition_status')]
+--- PAT: {G}_flag_var_state
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : [GetPlayer.MakeScope.ScriptValue('stockpiling_ammunition_var_state')|D] @ammunition!/1.00M
+--- PAT: {G}_flag_green_arow_bellow
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : @green_arow_bellow! [GetPlayer.MakeScope.ScriptValue('ammunition_market_goods_delta_month_view')|=+D]
+--- PAT: {G}_flag_red_arow_bellow
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : @red_arow_bellow! #N -#! [GetPlayer.MakeScope.Var('release_ammunition_var_1').GetValue|-D]
+--- PAT: {G}_flag_status
+    GOODS: ammunition,small_arms,artillery,tanks,aeroplanes,grain,fabric,wood,groceries,clothes,paper,silk,dye,sulfur,coal,iron,lead,hardwood,rubber,oil,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : [GetPlayer.GetCustom('stokpiling_ammunition_status')]
+--- PAT: {G}_price
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : [Localize('fabric')] price
+    RUSRC[bond_price]: Цена облигации
+########## FILE 01_ef_event_localization_l_english.yml
+--- PAT: 00_ef_economic_event.12.f
+    GOODS: None
+    EN  : The government of [SCOPE.sC('target_country').GetName] has formally signed the #v Latin Monetary Union Treaty#!, entering a twenty-year commitment to adopt the shared monetary standards defined by the convention.\n \n By ratifying the agreement, [SCOPE.sC('target_country').GetName] accepts the French-led parity between gold and silver, aligns the value of its currency with the Union’s reference standard, and agrees to the gradual harmonization of its coinage with that of the other signatory states.\n \n This commitment marks a significant step toward deeper financial integration and the free circulation of standardized gold and silver coins among the members of the Union.
+--- PAT: notification_00_ef_economic_event_30_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_30_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_30_message_desc$
+--- PAT: notification_00_ef_economic_event_30_message_name
+    GOODS: None
+    EN  : [SCOPE.sC('target_country').GetName] Abandons Metal Convertibility
+--- PAT: notification_00_ef_economic_event_30_message_desc
+    GOODS: None
+    EN  : Facing severe monetary instability, [SCOPE.sC('target_country').GetName] has enacted emergency measures that suspend all forms of metal convertibility and place the national currency under a #b fiat standard#!.
+--- PAT: notification_00_ef_economic_event_26_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_26_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_26_message_desc$
+--- PAT: notification_00_ef_economic_event_26_message_name
+    GOODS: None
+    EN  : Adoption of a Bimetallic Standard in [SCOPE.sC('target_country').GetName]
+--- PAT: notification_00_ef_economic_event_26_message_desc
+    GOODS: None
+    EN  : In an effort to reinforce monetary stability, [SCOPE.sC('target_country').GetName] has enacted a series of financial measures establishing a #b bimetallic standard#!, granting full convertibility of the national currency into both #b gold#! and #b silver#!.
+--- PAT: notification_00_ef_economic_event_27_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_27_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_27_message_desc$
+--- PAT: notification_00_ef_economic_event_27_message_name
+    GOODS: None
+    EN  : Adoption of the Gold Standard in [SCOPE.sC('target_country').GetName]
+--- PAT: notification_00_ef_economic_event_27_message_desc
+    GOODS: None
+    EN  : Seeking to strengthen monetary stability and integrate more effectively into international financial markets, [SCOPE.sC('target_country').GetName] has enacted new financial legislation establishing a #b gold standard#!.
+--- PAT: notification_00_ef_economic_event_31_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_31_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_31_message_desc$
+--- PAT: notification_00_ef_economic_event_31_message_name
+    GOODS: None
+    EN  : Devaluation of the [SCOPE.sC('target_country').GetCustom('currency_name')] [SCOPE.sC('target_country').GetCustom('currency_symbol')] Standard
+--- PAT: notification_00_ef_economic_event_31_message_desc
+    GOODS: None
+    EN  : The parliament of [SCOPE.sC('target_country').GetName] has enacted a reform #b devaluing the nation’s Metal Standard#! —that is, lowering the legally defined metal value that backs the national currency.\n\nThe official parity of the [SCOPE.sC('target_country').GetCustom('currency_name')] [SCOPE.sC('target_country').GetCustom('currency_symbol')] moves from #b 1 [SCOPE.sC('target_country').GetCustom('currency_symbol')] = [SCOPE.sC('target_country').MakeScope.Var('money_value_target_1_old').GetValue] [SCOPE.sC('target_country').GetCustom('monetary_system')]#! to the #b devalued#! level of #b 1 [SCOPE.sC('target_country').GetCustom('currency_symbol')] = [SCOPE.sC('target_country').MakeScope.Var('money_value_target_1').GetValue] [SCOPE.sC('target_country').GetCustom('monetary_system')]#!.
+--- PAT: notification_00_ef_economic_event_32_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_32_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_32_message_desc$
+--- PAT: notification_00_ef_economic_event_32_message_name
+    GOODS: None
+    EN  : Revaluation of the [SCOPE.sC('target_country').GetCustom('currency_name')] [SCOPE.sC('target_country').GetCustom('currency_symbol')] Standard
+--- PAT: notification_00_ef_economic_event_32_message_desc
+    GOODS: None
+    EN  : The parliament of [SCOPE.sC('target_country').GetName] has enacted a reform #b revaluing the nation’s Metal Standard#! —that is, increasing the legally defined metal value that backs the national currency.\n\n The official parity of the [SCOPE.sC('target_country').GetCustom('currency_name')] [SCOPE.sC('target_country').GetCustom('currency_symbol')] rises from #b 1 [SCOPE.sC('target_country').GetCustom('currency_symbol')] = [SCOPE.sC('target_country').MakeScope.Var('money_value_target_1_old').GetValue] [SCOPE.sC('target_country').GetCustom('monetary_system')]#! to the #b revalued#! level of #b 1 [SCOPE.sC('target_country').GetCustom('currency_symbol')] = [SCOPE.sC('target_country').MakeScope.Var('money_value_target_1').GetValue] [SCOPE.sC('target_country').GetCustom('monetary_system')]#!.
+--- PAT: notification_00_ef_economic_event_95_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_95_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_95_message_desc$
+--- PAT: notification_00_ef_economic_event_95_message_name
+    GOODS: None
+    EN  : Private Banks Target the Gold Reserves
+--- PAT: notification_00_ef_economic_event_95_message_desc
+    GOODS: None
+    EN  : A coordinated arbitrage operation is underway.\n\nThe listed private banks have begun exploiting the statutory bimetallic ratio, attacking the value of [SCOPE.sC('target_country').GetCustom('currency_name')] [SCOPE.sC('target_country').GetCustom('currency_symbol')] by draining the country's #v Gold reserves#! @gold! through large-scale arbitrage.\n\n A flow of #p [SCOPE.sC('target_country').MakeScope.Var('silver_state_1_fix').GetValue|D]#! @silver! and an outflow of #n -[SCOPE.sC('target_country').MakeScope.Var('gold_state_1_fix').GetValue|D]#! @gold!.\n\nIf this continues, the mismatch between the legal ratio and the global gold price will trigger severe monetary instability.
+--- PAT: notification_00_ef_economic_event_96_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_96_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_96_message_desc$
+--- PAT: notification_00_ef_economic_event_96_message_name
+    GOODS: None
+    EN  : Private Banks Target the Silver Reserves
+--- PAT: notification_00_ef_economic_event_96_message_desc
+    GOODS: None
+    EN  : A coordinated arbitrage operation is underway.\n\nThe listed private banks have begun exploiting the statutory bimetallic ratio, attacking the value of [SCOPE.sC('target_country').GetCustom('currency_name')] [SCOPE.sC('target_country').GetCustom('currency_symbol')] by draining the country's #v Silver reserves#! @Silver! through large-scale arbitrage.\n\n A flow of #p [SCOPE.sC('target_country').MakeScope.ScriptValue('gold_gained')|D=]#! @gold! and an outflow of #n -[SCOPE.sC('target_country').MakeScope.ScriptValue('silver_lost')|D]#! @silver!.\n\n If this continues, the mismatch between the legal ratio and the global silver price will trigger severe monetary instability.
+--- PAT: notification_00_ef_economic_event_97_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_97_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_97_message_desc$
+--- PAT: notification_00_ef_economic_event_97_message_name
+    GOODS: None
+    EN  : Arbitrage on the [SCOPE.sC('seller').GetCustom('currency_name')]
+--- PAT: notification_00_ef_economic_event_97_message_desc
+    GOODS: None
+    EN  : The rise in the rate has strengthened the attractiveness of the currency, prompting private banks to acquire additional currency in order to benefit from the new parity. This dynamic encourages increased inflows of metal into the issuing country.\n\nWithin this framework, the bank acquired a total of #v [SCOPE.sC('buyer_country').MakeScope.Var('arbitrage_value_in_currency').GetValue|D] [SCOPE.sC('seller').GetCustom('currency_symbol')]#! — equivalent to #v [SCOPE.sC('buyer_country').MakeScope.Var('arbitrage_value_in_metal').GetValue|D]#! [SCOPE.sC('seller').GetCustom('monetary_system_partiel')] — in accordance with market conditions and the prevailing parity.\n\nThis operation reflects the bank’s investment strategy as well as renewed confidence in the currency.
+--- PAT: notification_00_ef_economic_event_971_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_971_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_971_message_desc$
+--- PAT: notification_00_ef_economic_event_971_message_name
+    GOODS: None
+    EN  : Accumulation of [SCOPE.sC('seller').GetCustom('currency_name')] [SCOPE.sC('seller').GetCustom('currency_symbol')]
+--- PAT: notification_00_ef_economic_event_971_message_desc
+    GOODS: None
+    EN  : Due to its stability and its central role in international settlements, this currency has historically occupied a privileged position in the composition of bank reserves. Financial institutions naturally seek to hold a significant share of it, both to secure their assets and to facilitate their external operations.\n\nWithin this framework, the bank acquired a total of #v [SCOPE.sC('buyer_country').MakeScope.Var('arbitrage_value_in_currency').GetValue|D] [SCOPE.sC('seller').GetCustom('currency_symbol')]#! — equivalent to #v [SCOPE.sC('buyer_country').MakeScope.Var('arbitrage_value_in_metal').GetValue|D]#! [SCOPE.sC('seller').GetCustom('monetary_system_partiel')] — in accordance with prevailing financial practices.\n\nThis movement illustrates the monetary prestige of the issuing country and the structuring role its currency plays in the balance of the global system.
+--- PAT: notification_00_ef_economic_event_98_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_98_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_98_message_desc$
+--- PAT: notification_00_ef_economic_event_98_message_name
+    GOODS: None
+    EN  : Sale of [SCOPE.sC('buyer').GetCustom('currency_name')] [SCOPE.sC('seller').GetCustom('currency_symbol')]
+--- PAT: notification_00_ef_economic_event_98_message_desc
+    GOODS: None
+    EN  : It sold a total of #v [SCOPE.sC('buyer').MakeScope.Var('sell_arbitrage_value_10_in_currency').GetValue|D] [SCOPE.sC('buyer').GetCustom('currency_symbol')]#! — equivalent to #v [SCOPE.sC('buyer').MakeScope.Var('sell_arbitrage_value_in_metal').GetValue|D]#! [SCOPE.sC('buyer').GetCustom('monetary_system_partiel')] — in accordance with market conditions.\n\nThis operation reflects the bank’s arbitrage strategy following monetary easing, which reduces the relative attractiveness of the currency on the markets.
+--- PAT: notification_00_ef_economic_event_981_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_981_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_981_message_desc$
+--- PAT: notification_00_ef_economic_event_981_message_name
+    GOODS: None
+    EN  : Sale of [SCOPE.sC('buyer').GetCustom('currency_name')] [SCOPE.sC('seller').GetCustom('currency_symbol')]
+--- PAT: notification_00_ef_economic_event_981_message_desc
+    GOODS: None
+    EN  : The official revaluation of the standard has increased the legal value of the currency. Private banks arbitrage this situation by selling the currency in order to recover metal, which has become relatively more advantageous.\n\nWithin this framework, the bank sold a total of #v [SCOPE.sC('buyer').MakeScope.Var('sell_arbitrage_value_10_in_currency').GetValue|D] [SCOPE.sC('buyer').GetCustom('currency_symbol')]#! — equivalent to #v [SCOPE.sC('buyer').MakeScope.Var('sell_arbitrage_value_in_metal').GetValue|D]#! [SCOPE.sC('buyer').GetCustom('monetary_system_partiel')] — in accordance with market conditions.\n\nThis operation represents approximately #v 10%#! of the reserves held by the bank, mobilized to take advantage of the gap created by the new official parity.
+--- PAT: notification_00_ef_economic_event_982_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_982_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_982_message_desc$
+--- PAT: notification_00_ef_economic_event_982_message_name
+    GOODS: None
+    EN  : Pressure on the [SCOPE.sC('buyer').GetCustom('currency_name')] [SCOPE.sC('seller').GetCustom('currency_symbol')]
+--- PAT: notification_00_ef_economic_event_982_message_desc
+    GOODS: None
+    EN  : Dependent on #v Silver#! @silver!, the value of the currency is directly affected by international variations in the metal. When the price of silver weakens, private banks tend to divest themselves of this currency, considered more fragile compared to currencies backed by more stable standards.\n\nIn this context, the bank sold a total of #v [SCOPE.sC('buyer').MakeScope.Var('sell_arbitrage_value_10_in_currency').GetValue|D] [SCOPE.sC('buyer').GetCustom('currency_symbol')]#! — equivalent to #v [SCOPE.sC('buyer').MakeScope.Var('sell_arbitrage_value_in_metal').GetValue|D]#! [SCOPE.sC('buyer').GetCustom('monetary_system_partiel')] — in accordance with market conditions.\n\nThe pressure exerted by financial institutions illustrates the vulnerability of a currency tied to a metal subject to strong international volatility.
+--- PAT: notification_00_ef_economic_event_1_message_tooltip
+    GOODS: None
+    EN  : #header $notification_00_ef_economic_event_1_message_name$#!\n$TOOLTIP_DELIMITER$\n$notification_00_ef_economic_event_1_message_desc$
+--- PAT: notification_00_ef_economic_event_1_message_name
+    GOODS: None
+    EN  : New Central Bank and National Currency in [SCOPE.sC('target_country').GetName]
+--- PAT: notification_00_ef_economic_event_1_message_desc
+    GOODS: None
+    EN  : The government of [SCOPE.sC('target_country').GetName] has formally announced the establishment of a modern Central Bank and the introduction of a new national currency: the [SCOPE.sC('target_country').GetCustom('currency_name')]#! [SCOPE.sC('target_country').GetCustom('currency_symbol')].
+--- PAT: 00_ef_economic_event.106.t
+    GOODS: None
+    EN  : Monetary Imbalance
+--- PAT: 00_ef_economic_event.106.d
+    GOODS: None
+    EN  : Political Pressure Mounts
+--- PAT: 00_ef_economic_event.106.f
+    GOODS: None
+    EN  : The Central Bank's metal reserve ratio has fallen below 75% or risen above 125%, straying dangerously from its intended target. As confidence in the current monetary framework weakens, [concept_interest_group] across the nation are increasingly calling for sweeping monetary reforms. The [SCOPE.gsInterestGroup('ig_want_a_large_monetary_policy').GetName] may adopt the [GetIdeology('ideology_monetary_policy').GetName] ideology, increasing support for the enactment of [GetLawType('law_large_monetary_policy').GetName].
+--- PAT: 00_ef_economic_event.106.a
+    GOODS: None
+    EN  : The debate intensifies.
+--- PAT: 00_ef_economic_event.107.t
+    GOODS: None
+    EN  : Monetary Stability
+--- PAT: 00_ef_economic_event.107.d
+    GOODS: None
+    EN  : Confidence Restored
+--- PAT: 00_ef_economic_event.107.f
+    GOODS: None
+    EN  : The Central Bank's metal reserve ratio has returned to acceptable levels, restoring confidence in the nation's monetary framework. With the currency once again operating within its intended bounds, support for extraordinary monetary measures is fading. The [SCOPE.gsInterestGroup('ig_want_a_large_monetary_policy').GetName] may abandon the [GetIdeology('ideology_monetary_policy').GetName] ideology, reducing support for the enactment of [GetLawType('law_large_monetary_policy').GetName].
+--- PAT: 00_ef_economic_event.107.a
+    GOODS: None
+    EN  : Stability returns.
+########## FILE 01_ef_ideologie_localization_l_english.yml
+--- PAT: ideology_monetary_policy
+    GOODS: None
+    EN  : Monetary Interventionism
+--- PAT: ideology_monetary_policy_desc
+    GOODS: None
+    EN  : This group believes that monetary policy should be actively used to steer the economy. Whether through monetary expansion, contraction, market intervention, or currency management, the state should possess broad powers to pursue its economic objectives.
+########## FILE 01_ef_je_localization_l_english.yml
+--- PAT: financial_center_je_2_reason_1
+    GOODS: None
+    EN  : The speculative market#! currently represents #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#! of the national #b [concept_gdp]#!.
+--- PAT: financial_center_je_2_reason_1_2
+    GOODS: None
+    EN  : #U - 0–10% → speculative tension greatly reduced (−3)\n - 10–20% → tension decreasing (−2)\n - 20–30% → slight decrease (−1)\n - 30–40% → slight increase (+1)\n - 40–50% → marked increase (+2)\n - 50%+ → strong bubble growth (+3)#!
+--- PAT: financial_center_je_2_reason_1_3
+    GOODS: None
+    EN  : Plus vous augmenter le niveau de vos fiancial center augmente, plus le secteur privé réinvesti le pool d'invessstissement, plus cela crer de fiancial product et donc de bull spéculative pontentiel
+--- PAT: financial_center_je_2_reason_2
+    GOODS: None
+    EN  : #b Current value:#!\n - Number of [GetBuildingType('building_ef_private_construction').GetName] in the country: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!\n - Total level of [GetBuildingType('building_urban_center').GetName]: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')]#!\n - Current [concept_base_rate_percentage]: #p [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!\n - Theoretical maximum PCS level: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#! #b (Soit [GetPlayer.MakeScope.ScriptValue('base_rate_to_pcs_factor')|%] of [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')])#!
+--- PAT: speculative_share_13_button
+    GOODS: None
+    EN  : #b Regulate Private Construction Sector #!
+--- PAT: speculative_share_13_button_desc
+    GOODS: None
+    EN  : Private construction has grown beyond sustainable levels. State intervention seeks to restore equilibrium and prevent further imbalance.
+--- PAT: speculative_share_13_button_tt_1
+    GOODS: None
+    EN  : - The theoretical maximum level of [GetBuildingType('building_ef_private_construction').GetName] (Current: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!) exceeds the current number of [GetBuildingType('building_ef_private_construction').GetName] in the country (Current: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!).\n- Does not have the modifier [GetStaticModifier('speculative_share_modifier_7').GetName|v]
+--- PAT: status_central_bank_3
+    GOODS: None
+    EN  :  As long as Japan remains under the Shogunate, modern financial structures cannot be established.\n Completing the Imperial Restoration will end this isolation and unlock the creation of a national Central Bank.
+--- PAT: speculative_share_modifier_7
+    GOODS: None
+    EN  : Recent [GetBuildingType('building_ef_private_construction').GetName] regulatuion
+--- PAT: fc_fso_situation
+    GOODS: None
+    EN  : Financial Sector Stability
+--- PAT: pcs_fso_situation
+    GOODS: None
+    EN  : Construction Sector Stability
+--- PAT: speculative_share_1_button_tt_new
+    GOODS: None
+    EN  : $speculative_share_1_button$ \n$speculative_share_1_button_desc$\n\nPossible: \n- $speculative_share_1_button_tt$\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \n\nEffect:\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths
+--- PAT: speculative_share_2_button_tt_new
+    GOODS: None
+    EN  : $speculative_share_2_button$ \n$speculative_share_2_button_desc$\n\nPossible: \n- $speculative_share_2_button_tt$\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \n\nEffect:\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier for 12 months, which will have the effect of decreasing the financial product entry in [GetBuildingType('building_financial_centre').GetName] by #r -25%#!
+--- PAT: speculative_share_3_button_tt_new
+    GOODS: None
+    EN  : $speculative_share_3_button$ \n$speculative_share_3_button_desc$\n\nPossible: \n- $speculative_share_3_button_tt$\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \n\nEffect:\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier for 12 months, which will have the effect of decreasing the financial product entry in [GetBuildingType('building_financial_centre').GetName] by #r -50%#!
+--- PAT: speculative_share_4_button_tt_new
+    GOODS: None
+    EN  : $speculative_share_4_button$ \n$speculative_share_4_button_desc$\n\nPossible: \n- $speculative_share_4_button_tt$\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \n\nEffect:\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier for 12 months, which will have the effect of decreasing the financial product entry in [GetBuildingType('building_financial_centre').GetName] by #r -75%#!
+--- PAT: speculative_share_5_button_tt
+    GOODS: None
+    EN  : $speculative_share_5_button$\n\n$speculative_share_5_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_5_button_tt_1$\n- $speculative_share_5_button_tt_2$\n- $speculative_share_5_button_tt_3$\n- $speculative_share_5_button_tt_4$\n\nEffect:\n $speculative_share_5_button_tt_effect_1$
+--- PAT: speculative_share_5_button_tt_effect_1
+    GOODS: None
+    EN  : - Start building 5 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months
+--- PAT: speculative_share_6_button_tt
+    GOODS: None
+    EN  : $speculative_share_6_button$\n\n$speculative_share_6_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_6_button_tt_1$\n- $speculative_share_6_button_tt_2$\n- $speculative_share_6_button_tt_3$\n- $speculative_share_6_button_tt_4$\n\nEffect:\n $speculative_share_6_button_tt_effect_1$
+--- PAT: speculative_share_6_button_tt_effect_1
+    GOODS: None
+    EN  : - Start building 10 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months
+--- PAT: speculative_share_7_button_tt
+    GOODS: None
+    EN  : $speculative_share_7_button$\n\n$speculative_share_7_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_7_button_tt_1$\n- $speculative_share_7_button_tt_2$\n- $speculative_share_7_button_tt_3$\n- $speculative_share_7_button_tt_4$\n\nEffect:\n $speculative_share_7_button_tt_effect_1$
+--- PAT: speculative_share_7_button_tt_effect_1
+    GOODS: None
+    EN  : - Start building 15 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months
+--- PAT: speculative_share_8_button_tt
+    GOODS: None
+    EN  : $speculative_share_8_button$\n\n$speculative_share_8_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_8_button_tt_1$\n- $speculative_share_8_button_tt_2$\n- $speculative_share_8_button_tt_3$\n- $speculative_share_8_button_tt_4$\n\nEffect:\n $speculative_share_8_button_tt_effect_1$
+--- PAT: speculative_share_8_button_tt_effect_1
+    GOODS: None
+    EN  : - Start building 20 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months
+--- PAT: speculative_share_9_button_tt
+    GOODS: None
+    EN  : $speculative_share_9_button$\n\n$speculative_share_9_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_9_button_tt_1$\n- $speculative_share_9_button_tt_2$\n- $speculative_share_9_button_tt_3$\n\n Effect:\n$speculative_share_9_button_tt_effect_1_1$
+--- PAT: speculative_share_9_button_tt_effect_1_1
+    GOODS: None
+    EN  : - Construct 5 [GetBuildingType('building_ef_private_construction').GetName] in a random state\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\n- $speculative_share_9_button_tt_effect_1$\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months
+--- PAT: speculative_share_10_button_tt
+    GOODS: None
+    EN  : $speculative_share_10_button$\n\n$speculative_share_10_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_10_button_tt_1$\n- $speculative_share_10_button_tt_2$\n- $speculative_share_10_button_tt_3$\n\n Effect:\n$speculative_share_10_button_tt_effect_1_1$
+--- PAT: speculative_share_10_button_tt_effect_1_1
+    GOODS: None
+    EN  : - Construct 10 [GetBuildingType('building_ef_private_construction').GetName] in a random state\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\n- $speculative_share_10_button_tt_effect_1$\n- $speculative_share_10_button_tt_effect_2$\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months
+--- PAT: speculative_share_11_button_tt
+    GOODS: None
+    EN  : $speculative_share_11_button$\n\n$speculative_share_11_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_11_button_tt_1$\n- $speculative_share_11_button_tt_2$\n- $speculative_share_11_button_tt_3$\n\n Effect:\n$speculative_share_11_button_tt_effect_1_1$
+--- PAT: speculative_share_11_button_tt_effect_1_1
+    GOODS: None
+    EN  : - Construct 15 [GetBuildingType('building_ef_private_construction').GetName] in a random state\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\n- $speculative_share_11_button_tt_effect_1$\n- $speculative_share_11_button_tt_effect_2$\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months
+--- PAT: speculative_share_12_button_tt
+    GOODS: None
+    EN  : $speculative_share_12_button$\n\n$speculative_share_12_button_desc$\n\nPossible:\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\n- $speculative_share_12_button_tt_1$\n- $speculative_share_12_button_tt_2$\n- $speculative_share_12_button_tt_3$\n\n Effect:\n$speculative_share_12_button_tt_effect_1_1$
+--- PAT: speculative_share_12_button_tt_effect_1_1
+    GOODS: None
+    EN  : - Construct 20 [GetBuildingType('building_ef_private_construction').GetName] in a random state\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\n- $speculative_share_12_button_tt_effect_1$\n- $speculative_share_12_button_tt_effect_2$\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months
+--- PAT: speculative_share_13_button_tt
+    GOODS: None
+    EN  : $speculative_share_13_button$\n\n$speculative_share_13_button_desc$\n\nPossible:\n$speculative_share_13_button_tt_1$\n\nEffect:\n- $speculative_share_13_button_tt_effect_1_1$
+--- PAT: speculative_share_13_button_tt_effect_1_1
+    GOODS: None
+    EN  : A [GetBuildingType('building_ef_private_construction').GetName] in a random state will be completely dismantled, reducing the total number of [GetBuildingType('building_ef_private_construction').GetName] in the country.
+--- PAT: je_ef_efcc_situation
+    GOODS: None
+    EN  : Economic and Financial Crisis Committee
+--- PAT: je_ef_efcc_situation_reason
+    GOODS: None
+    EN  : $economic_instability_txt$ \n\n $active_desc$\n$critical_desc$\n$stabilizing_desc$ \n\n- $central_bank_bankruptcy_country_tooltip$\n\n- $currency_crisis_country_tooltip$\n\n- $economic_crisis_country_tooltip$\n\n- $financial_crash_country_tooltip$\n\n- $country_bankruptcy_tooltip$
+--- PAT: je_efcc_progress_bar
+    GOODS: None
+    EN  : Economic Stabilization
+--- PAT: je_efcc_progress_bar_desc
+    GOODS: None
+    EN  : Economic Stabilization Progress: #T [GetPlayer.MakeScope.Var('je_efcc_1_global_variable_progress_bar_1').GetValue|0] mouths/ 12 mouths#!
+--- PAT: current_modifiers_efcc
+    GOODS: None
+    EN  : Current Major Modifiers
+--- PAT: current_situation
+    GOODS: None
+    EN  : Economic and Financial Crisis Overview
+--- PAT: active
+    GOODS: None
+    EN  : #N #l Active#!#!
+--- PAT: stabilizing
+    GOODS: None
+    EN  : #blue #l Stabilizing#!#!
+--- PAT: critical
+    GOODS: None
+    EN  : #gold #l Critical#!#!
+--- PAT: inactive
+    GOODS: None
+    EN  : #P #l Inactive#!#!
+--- PAT: active_desc
+    GOODS: None
+    EN  : $active$: Once activated, a crisis applies its own unique modifiers for a period of #l 2 years.#!
+--- PAT: critical_desc
+    GOODS: None
+    EN  : $critical$: You have one year to rebuild your central bank’s metallic reserves through measures such as massive foreign currency sales, direct state recapitalization, or securing international loans for the central bank.
+--- PAT: stabilizing_desc
+    GOODS: None
+    EN  : $stabilizing$: If no crisis occurs for an entire year, both the Economic Instability and Crisis counters will be reset — but only if the nation #l is not at war.#!
+--- PAT: country_bankruptcy_var
+    GOODS: None
+    EN  : #T [GetPlayer.MakeScope.Var('country_bankruptcy').GetValue|0]#!
+--- PAT: economic_instability_count
+    GOODS: None
+    EN  : (Count: #T [GetPlayer.MakeScope.Var('economic_instability_count').GetValue|0]/2#!)
+--- PAT: central_bank_bankruptcy_country_count
+    GOODS: None
+    EN  : (Count: #T [GetPlayer.MakeScope.Var('central_bank_bankruptcy').GetValue|0]#!)
+--- PAT: currency_crisis_country_count
+    GOODS: None
+    EN  : (Count: #T [GetPlayer.MakeScope.Var('currency_crisis').GetValue|0]#!)
+--- PAT: economic_crisis_country_count
+    GOODS: None
+    EN  : (Count: #T [GetPlayer.MakeScope.Var('economic_crisis').GetValue|0]#!)
+--- PAT: financial_crash_country_count
+    GOODS: None
+    EN  : (Count: #T [GetPlayer.MakeScope.Var('financial_crash').GetValue|0]#!)
+--- PAT: country_bankruptcy_count
+    GOODS: None
+    EN  : (Count: #T [GetPlayer.MakeScope.Var('country_bankruptcy').GetValue|0]#!)
+--- PAT: status_economic_crisis_1
+    GOODS: None
+    EN  : #p Economic Stability #!is supporting steady national growth.
+--- PAT: status_economic_crisis_2
+    GOODS: None
+    EN  : #gold Economic Slowdown #!is weakening production and trade activity.
+--- PAT: status_economic_crisis_3
+    GOODS: None
+    EN  : #N Economic Crisis #!is severely disrupting the national economy.
+--- PAT: status_currency_crisis_1
+    GOODS: None
+    EN  : \n#p Monetary Stability #!is maintaining confidence in the national currency.
+--- PAT: status_currency_crisis_2
+    GOODS: None
+    EN  : \n#gold Currency Instability #!is beginning to pressure monetary markets.
+--- PAT: status_currency_crisis_3
+    GOODS: None
+    EN  : \n#N Currency Crisis #!is actively destabilizing the national currency.
+--- PAT: status_financial_crash_1
+    GOODS: None
+    EN  : \n#p Financial Stability #!is maintaining healthy market conditions.
+--- PAT: status_financial_crash_2
+    GOODS: None
+    EN  : \n#gold Financial Instability #!is spreading through financial markets.
+--- PAT: status_financial_crash_3
+    GOODS: None
+    EN  : \n#N Financial Crash #!is causing widespread market disruption.
+--- PAT: status_central_bank_bankruptcy_1
+    GOODS: None
+    EN  : \n#p Central Banking Stability #!is ensuring monetary confidence.
+--- PAT: status_central_bank_bankruptcy_2
+    GOODS: None
+    EN  : \n#gold Central Bank Distress #!we have one year to avoid bankruptcy.
+--- PAT: status_central_bank_bankruptcy_3
+    GOODS: None
+    EN  : \n#N Central Bank Bankruptcy #!has disrupted national monetary control.
+--- PAT: status_country_bankruptcy_1
+    GOODS: None
+    EN  : \n#p Fiscal Stability #!is maintaining sustainable state finances.
+--- PAT: status_country_bankruptcy_2
+    GOODS: None
+    EN  : \n#gold Sovereign Debt Distress #!is increasing pressure on government finances.
+--- PAT: status_country_bankruptcy_3
+    GOODS: None
+    EN  : \n#N Country Bankruptcy #!has severely damaged state credibility and finances.
+--- PAT: central_bank_bankruptcy_country_tooltip
+    GOODS: None
+    EN  : #T #l Money Value in Gold:#! [GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]@gold!#! \nThe current gold value of the national currency @gold! is #b [GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]#! @gold!. If this value remains below #n 0.01#! @gold! for more than #bold 1 year#!, a #l #n Central Bank Bankruptcy#!#! may emerge. If the country is already experiencing economic or financial instability, dropping below #n 0.01#! @gold! will immediately trigger a #n multifactor economic crisis#!.\n > For #u 2 years#! the country will be in crisis and prevent the establishment of [concept_trade] routes (#u 3 years#! after the crisis, you could create a new currency).
+--- PAT: currency_crisis_country_tooltip
+    GOODS: None
+    EN  : #T #l Money Value over 1 Year:#! [GetPlayer.MakeScope.ScriptValue('money_value_dif_1_final')|%|=+]#! \nIf the value of the national currency declines by more than #n -50%#! within #bold 1 year#!, a #l #n Currency Crisis#!#! may emerge. If the country is already experiencing economic or financial instability, a monetary devaluation exceeding #n -50%#! will immediately trigger a #n multifactor economic crisis#!.\n > For #u 2 years#! the country will be in crisis and prevent the establishment of [concept_trade] routes (#u 3 years#! after the crisis, you could create a new currency).
+--- PAT: economic_crisis_country_tooltip
+    GOODS: None
+    EN  : #T #l [concept_gdp] over 1 Year:#! [GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]#! \nIf the national [concept_gdp] declines by more than #n -50%#! within #bold 1 year#!, an #l #n Economic Crisis#!#! may emerge. If the country is already experiencing economic or financial instability, an economic contraction exceeding #n -50%#! will immediately trigger a #n multifactor economic crisis#!.\n > For #u 2 years#! #t all buildings#! in the country will receive a modifier that will decrease their productivity by more than #N 50%#!.
+--- PAT: financial_crash_country_tooltip
+    GOODS: None
+    EN  : #T #l Stock Market Index Variation over 1 Year:#! [GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]#! \nIf the national stock market index declines by more than #n -50%#! within #bold 1 year#!, a #l #n Financial Crash#!#! may emerge. If the country is already experiencing economic or financial instability, a market collapse exceeding #n -50%#! will immediately trigger a #n multifactor economic crisis#!.\n > For #u 2 years#! #t all private buildings#! in the country will receive a modifier that will decrease their productivity by more than #N 50%#!.
+--- PAT: country_bankruptcy_tooltip
+    GOODS: None
+    EN  : #T #l Country Bankruptcy:#!#! \n When the country declares bankruptcy, it enters a period of economic instability for the entire duration of the moddifier. While this is the least damaging major crisis to the economy, it creates a highly vulnerable environment in which any additional emerging crisis will immediately escalate into a #n multifactor economic crisis#!.
+########## FILE 01_ef_law_localization_l_english.yml
+--- PAT: law_large_monetary_policy
+    GOODS: None
+    EN  : Large Monetary Policy
+--- PAT: law_large_monetary_policy_desc
+    GOODS: None
+    EN  : The central bank is granted broad authority to intervene in monetary affairs, allowing for large-scale expansion or contraction of the money supply. Such powers enable the government to respond aggressively to economic crises, stimulate growth, finance extraordinary expenditures, or stabilize the national currency when necessary. IGs are more inclined to enact this law if the Central bank metal reserve ratio falls below 75% or rises above 125%.
+--- PAT: private_liquidity_provision
+    GOODS: None
+    EN  : Private Liquidity Provision
+--- PAT: private_liquidity_provision_desc
+    GOODS: None
+    EN  : Private banks actively provide short-term liquidity to the financial system, smoothing market tensions and supporting credit flows outside direct central bank intervention.
+--- PAT: advanced_interbank_refinancing
+    GOODS: None
+    EN  : Advanced Interbank Refinancing
+--- PAT: advanced_interbank_refinancing_desc
+    GOODS: None
+    EN  : An advanced interbank refinancing framework allows banks to access liquidity through structured interbank markets, improving financial stability, capital circulation, and crisis resilience.
+########## FILE 01_ef_modifier_type_localization_l_english.yml
+--- PAT: goods_output_{G}_add
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Goods input fabric multiply
+    RUSRC[goods_output_silver_add]: Выпуск серебра
+--- PAT: goods_output_{G}_add_desc
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Goods output fabric multiply
+    RUSRC[goods_output_silver_add_desc]: Множитель выпуска серебра
+--- PAT: goods_input_{G}_add
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Goods output fabric multiply
+    RUSRC[goods_input_silver_add]: Потребление серебра
+--- PAT: goods_input_{G}_add_desc
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Goods input fabric multiply
+    RUSRC[goods_input_silver_add_desc]: Множитель потребления серебра
+--- PAT: goods_input_{G}_mult
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Store fabric
+    RUSRC[goods_input_bond_mult]: Складирование Облигаций
+--- PAT: goods_input_{G}_mult_desc
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Store fabric
+    RUSRC[goods_input_bond_mult_desc]: Складирование Облигаций
+--- PAT: goods_output_{G}_mult
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Release fabric
+    RUSRC[goods_output_bond_mult]: Выпуск Облигаций
+--- PAT: goods_output_{G}_mult_desc
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Release fabric
+    RUSRC[goods_output_bond_mult_desc]: Выпуск Облигаций
+--- PAT: state_buy_orders_{G}_add
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : [GetGoods('fabric').GetTextIcon][Nbsp][GetGoods('fabric').GetNameNoFormatting] Buy Orders
+    RUSRC[state_buy_orders_grain_add]: [GetGoods('grain').GetTextIcon][Nbsp][GetGoods('grain').GetNameNoFormatting] Ордера на покупку
+--- PAT: state_buy_orders_{G}_add_desc
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : An increase or decrease to [concept_buy_orders] for [GetGoods('fabric').GetName] in a [concept_state]
+    RUSRC[state_buy_orders_grain_add_desc]: Увеличение или уменьшение [concept_buy_orders] для [GetGoods('grain').GetName] в [concept_state]
+--- PAT: state_sell_orders_{G}_add
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : [GetGoods('fabric').GetTextIcon][Nbsp][GetGoods('fabric').GetNameNoFormatting] Sell Orders
+    RUSRC[state_sell_orders_grain_add]: [GetGoods('grain').GetTextIcon][Nbsp][GetGoods('grain').GetNameNoFormatting] Ордера на продажу
+--- PAT: state_sell_orders_{G}_add_desc
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : An increase or decrease to [concept_sell_orders] for [GetGoods('fabric').GetName] in a [concept_state]
+    RUSRC[state_sell_orders_grain_add_desc]: Увеличение или уменьшение [concept_sell_orders] для [GetGoods('grain').GetName] в [concept_state]
+########## FILE 01_ef_production_method_localization_l_english.yml
+--- PAT: pm_private_ownership_majority_{G}
+    GOODS: manufacture_stock,mining_stock,agricultural_stock,railroad_stock
+    EN  : Manufacture Stock
+--- PAT: pm_no_private_ownership_{G}
+    GOODS: manufacture_stock,mining_stock,agricultural_stock,railroad_stock
+    EN  : No Manufacture Stock
+--- PAT: pm_{G}_0
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Nothing
+    RUSRC[pm_grain_0]: Пусто
+--- PAT: pm_store_{G}_1
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Nothing
+    RUSRC[pm_store_grain_1]: Пусто
+--- PAT: pm_release_{G}_1
+    GOODS: fabric,groceries,clothes,paper,coal,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Nothing
+    RUSRC[pm_release_grain_1]: Пусто
+########## FILE 01_ef_static_modifier_localization_l_english.yml
+--- PAT: UNI_modifier_1
+    GOODS: None
+    EN  : Prestige Good is truly necessary
+--- PAT: release_{G}_1
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Release fabric
+    RUSRC[release_grain_1]: Выпуск зерна
+--- PAT: store_{G}_1
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Store fabric
+    RUSRC[store_grain_1]: Складирование зерна
+--- PAT: storing_{G}
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Storing fabric
+    RUSRC[storing_grain]: Запасание зерна
+--- PAT: releasing_{G}
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : Releasing fabric
+    RUSRC[releasing_grain]: Выпуск зерна
+########## FILE 01_ef_tooltips_localization_l_english.yml
+--- PAT: buy_{G}_custom_tooltip
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : #T Buy @fabric!#!\nYou have more than [Market.GetOwner.MakeScope.ScriptValue('buy_fabric_market_panel')|D] [Market.GetOwner.GetCustom('currency_good')]\nYou have less than 1M fabric @fabric!\nThe selected country has more than [GetPlayer.MakeScope.Var('fabric_market_panel_quantity').GetValue|D] fabric @fabric!\nNo contract made this year for this good (Remaining contracts: [GetPlayer.MakeScope.ScriptValue('fabric_contract_1_year_order')|0])\nYou own a [GetBuildingType('building_financial_centre').GetName]\nThe selected country has [GetBuildingType('building_financial_centre').GetName]\nYou have Material Supply Treaty with the country
+    RUSRC[buy_grain_custom_tooltip]: #T Купить @grain#!\nУ вас больше чем [Market.GetOwner.MakeScope.ScriptValue('buy_grain_market_panel')|D] [Market.GetOwner.GetCustom('currency_good')]\nУ вас меньше 1M зерна @grain!\nУ выбранной страны больше чем [GetPlayer.MakeScope.Var('grain_market_panel_quantity').GetValue|D] зерна @grain!\nВ этом году не заключено ни одного контракта на этот товар (Осталось контрактов: [GetPlayer.MakeScope.ScriptValue('grain_contract_1_year_order')|0])\nУ вас есть [GetBuildingType('building_financial_centre').GetName]\nУ выбранной страны есть [GetBuildingType('building_financial_centre').GetName]\nУ вас есть Договор о поставке материалов с этой страной
+--- PAT: sell_{G}_custom_tooltip
+    GOODS: fabric,groceries,clothes,paper,hardwood,engines,steel,fertilizer,tools,explosives,automobiles,telephones,radios,opium
+    EN  : #T Sell @fabric!#!\nThe selected country has more than [Market.GetOwner.MakeScope.ScriptValue('sell_fabric_market_panel')|D] [Market.GetOwner.GetCustom('currency_good')]\nThe selected country has less than 1M fabric @fabric!\nYou have more than [GetPlayer.MakeScope.Var('fabric_market_panel_quantity').GetValue|D] fabric @fabric!\nNo contract made this year for this good (Remaining contracts: [GetPlayer.MakeScope.ScriptValue('fabric_contract_1_year_order')|0])\nYou own a [GetBuildingType('building_financial_centre').GetName]\nThe selected country has [GetBuildingType('building_financial_centre').GetName]\nYou have Material Supply Treaty with the country
+    RUSRC[sell_grain_custom_tooltip]: #T Продать @grain#!\nУ выбранной страны больше чем [Market.GetOwner.MakeScope.ScriptValue('sell_grain_market_panel')|D] [Market.GetOwner.GetCustom('currency_good')]\nУ выбранной страны меньше 1M зерна @grain!\nУ вас больше чем [GetPlayer.MakeScope.Var('grain_market_panel_quantity').GetValue|D] зерна @grain!\nВ этом году не заключено ни одного контракта на этот товар (Осталось контрактов: [GetPlayer.MakeScope.ScriptValue('grain_contract_1_year_order')|0])\nУ вас есть [GetBuildingType('building_financial_centre').GetName]\nУ выбранной страны есть [GetBuildingType('building_financial_centre').GetName]\nУ вас есть Договор о поставке материалов с этой страной

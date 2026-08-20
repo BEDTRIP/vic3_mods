@@ -1,0 +1,586 @@
+{
+ "financial_center_je_2_reason_1": {
+  "rep_key": "financial_center_je_2_reason_1",
+  "rep_good": null,
+  "en": "The speculative market#! currently represents #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#! of the national #b [concept_gdp]#!.",
+  "members": [
+   "financial_center_je_2_reason_1"
+  ]
+ },
+ "financial_center_je_2_reason_1_2": {
+  "rep_key": "financial_center_je_2_reason_1_2",
+  "rep_good": null,
+  "en": "#U - 0–10% → speculative tension greatly reduced (−3)\\n - 10–20% → tension decreasing (−2)\\n - 20–30% → slight decrease (−1)\\n - 30–40% → slight increase (+1)\\n - 40–50% → marked increase (+2)\\n - 50%+ → strong bubble growth (+3)#!",
+  "members": [
+   "financial_center_je_2_reason_1_2"
+  ]
+ },
+ "financial_center_je_2_reason_1_3": {
+  "rep_key": "financial_center_je_2_reason_1_3",
+  "rep_good": null,
+  "en": "Plus vous augmenter le niveau de vos fiancial center augmente, plus le secteur privé réinvesti le pool d'invessstissement, plus cela crer de fiancial product et donc de bull spéculative pontentiel",
+  "members": [
+   "financial_center_je_2_reason_1_3"
+  ]
+ },
+ "financial_center_je_2_reason_2": {
+  "rep_key": "financial_center_je_2_reason_2",
+  "rep_good": null,
+  "en": "#b Current value:#!\\n - Number of [GetBuildingType('building_ef_private_construction').GetName] in the country: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!\\n - Total level of [GetBuildingType('building_urban_center').GetName]: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')]#!\\n - Current [concept_base_rate_percentage]: #p [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!\\n - Theoretical maximum PCS level: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#! #b (Soit [GetPlayer.MakeScope.ScriptValue('base_rate_to_pcs_factor')|%] of [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')])#!",
+  "members": [
+   "financial_center_je_2_reason_2"
+  ]
+ },
+ "speculative_share_13_button": {
+  "rep_key": "speculative_share_13_button",
+  "rep_good": null,
+  "en": "#b Regulate Private Construction Sector #!",
+  "members": [
+   "speculative_share_13_button"
+  ]
+ },
+ "speculative_share_13_button_desc": {
+  "rep_key": "speculative_share_13_button_desc",
+  "rep_good": null,
+  "en": "Private construction has grown beyond sustainable levels. State intervention seeks to restore equilibrium and prevent further imbalance.",
+  "members": [
+   "speculative_share_13_button_desc"
+  ]
+ },
+ "speculative_share_13_button_tt_1": {
+  "rep_key": "speculative_share_13_button_tt_1",
+  "rep_good": null,
+  "en": "- The theoretical maximum level of [GetBuildingType('building_ef_private_construction').GetName] (Current: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!) exceeds the current number of [GetBuildingType('building_ef_private_construction').GetName] in the country (Current: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!).\\n- Does not have the modifier [GetStaticModifier('speculative_share_modifier_7').GetName|v]",
+  "members": [
+   "speculative_share_13_button_tt_1"
+  ]
+ },
+ "status_central_bank_3": {
+  "rep_key": "status_central_bank_3",
+  "rep_good": null,
+  "en": " As long as Japan remains under the Shogunate, modern financial structures cannot be established.\\n Completing the Imperial Restoration will end this isolation and unlock the creation of a national Central Bank.",
+  "members": [
+   "status_central_bank_3"
+  ]
+ },
+ "speculative_share_modifier_7": {
+  "rep_key": "speculative_share_modifier_7",
+  "rep_good": null,
+  "en": "Recent [GetBuildingType('building_ef_private_construction').GetName] regulatuion",
+  "members": [
+   "speculative_share_modifier_7"
+  ]
+ },
+ "fc_fso_situation": {
+  "rep_key": "fc_fso_situation",
+  "rep_good": null,
+  "en": "Financial Sector Stability",
+  "members": [
+   "fc_fso_situation"
+  ]
+ },
+ "pcs_fso_situation": {
+  "rep_key": "pcs_fso_situation",
+  "rep_good": null,
+  "en": "Construction Sector Stability",
+  "members": [
+   "pcs_fso_situation"
+  ]
+ },
+ "speculative_share_1_button_tt_new": {
+  "rep_key": "speculative_share_1_button_tt_new",
+  "rep_good": null,
+  "en": "$speculative_share_1_button$ \\n$speculative_share_1_button_desc$\\n\\nPossible: \\n- $speculative_share_1_button_tt$\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \\n\\nEffect:\\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths",
+  "members": [
+   "speculative_share_1_button_tt_new"
+  ]
+ },
+ "speculative_share_2_button_tt_new": {
+  "rep_key": "speculative_share_2_button_tt_new",
+  "rep_good": null,
+  "en": "$speculative_share_2_button$ \\n$speculative_share_2_button_desc$\\n\\nPossible: \\n- $speculative_share_2_button_tt$\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \\n\\nEffect:\\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier for 12 months, which will have the effect of decreasing the financial product entry in [GetBuildingType('building_financial_centre').GetName] by #r -25%#!",
+  "members": [
+   "speculative_share_2_button_tt_new"
+  ]
+ },
+ "speculative_share_3_button_tt_new": {
+  "rep_key": "speculative_share_3_button_tt_new",
+  "rep_good": null,
+  "en": "$speculative_share_3_button$ \\n$speculative_share_3_button_desc$\\n\\nPossible: \\n- $speculative_share_3_button_tt$\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \\n\\nEffect:\\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier for 12 months, which will have the effect of decreasing the financial product entry in [GetBuildingType('building_financial_centre').GetName] by #r -50%#!",
+  "members": [
+   "speculative_share_3_button_tt_new"
+  ]
+ },
+ "speculative_share_4_button_tt_new": {
+  "rep_key": "speculative_share_4_button_tt_new",
+  "rep_good": null,
+  "en": "$speculative_share_4_button$ \\n$speculative_share_4_button_desc$\\n\\nPossible: \\n- $speculative_share_4_button_tt$\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_2').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_3').GetName|v] modifier\\n- [GetPlayer.GetName] do not has [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier   \\n\\nEffect:\\n- [GetPlayer.GetName] place a total ban on [GetGoods('bond').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('manufacture_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('agricultural_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('mining_stock').GetName]\\n- [GetPlayer.GetName] place a total ban on [GetGoods('railroad_stock').GetName] \\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_1').GetName|v] modifier for 12 mounths\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_4').GetName|v] modifier for 12 months, which will have the effect of decreasing the financial product entry in [GetBuildingType('building_financial_centre').GetName] by #r -75%#!",
+  "members": [
+   "speculative_share_4_button_tt_new"
+  ]
+ },
+ "speculative_share_5_button_tt": {
+  "rep_key": "speculative_share_5_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_5_button$\\n\\n$speculative_share_5_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_5_button_tt_1$\\n- $speculative_share_5_button_tt_2$\\n- $speculative_share_5_button_tt_3$\\n- $speculative_share_5_button_tt_4$\\n\\nEffect:\\n $speculative_share_5_button_tt_effect_1$",
+  "members": [
+   "speculative_share_5_button_tt"
+  ]
+ },
+ "speculative_share_5_button_tt_effect_1": {
+  "rep_key": "speculative_share_5_button_tt_effect_1",
+  "rep_good": null,
+  "en": "- Start building 5 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_5_button_tt_effect_1"
+  ]
+ },
+ "speculative_share_6_button_tt": {
+  "rep_key": "speculative_share_6_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_6_button$\\n\\n$speculative_share_6_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_6_button_tt_1$\\n- $speculative_share_6_button_tt_2$\\n- $speculative_share_6_button_tt_3$\\n- $speculative_share_6_button_tt_4$\\n\\nEffect:\\n $speculative_share_6_button_tt_effect_1$",
+  "members": [
+   "speculative_share_6_button_tt"
+  ]
+ },
+ "speculative_share_6_button_tt_effect_1": {
+  "rep_key": "speculative_share_6_button_tt_effect_1",
+  "rep_good": null,
+  "en": "- Start building 10 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_6_button_tt_effect_1"
+  ]
+ },
+ "speculative_share_7_button_tt": {
+  "rep_key": "speculative_share_7_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_7_button$\\n\\n$speculative_share_7_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_7_button_tt_1$\\n- $speculative_share_7_button_tt_2$\\n- $speculative_share_7_button_tt_3$\\n- $speculative_share_7_button_tt_4$\\n\\nEffect:\\n $speculative_share_7_button_tt_effect_1$",
+  "members": [
+   "speculative_share_7_button_tt"
+  ]
+ },
+ "speculative_share_7_button_tt_effect_1": {
+  "rep_key": "speculative_share_7_button_tt_effect_1",
+  "rep_good": null,
+  "en": "- Start building 15 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_7_button_tt_effect_1"
+  ]
+ },
+ "speculative_share_8_button_tt": {
+  "rep_key": "speculative_share_8_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_8_button$\\n\\n$speculative_share_8_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_8_button_tt_1$\\n- $speculative_share_8_button_tt_2$\\n- $speculative_share_8_button_tt_3$\\n- $speculative_share_8_button_tt_4$\\n\\nEffect:\\n $speculative_share_8_button_tt_effect_1$",
+  "members": [
+   "speculative_share_8_button_tt"
+  ]
+ },
+ "speculative_share_8_button_tt_effect_1": {
+  "rep_key": "speculative_share_8_button_tt_effect_1",
+  "rep_good": null,
+  "en": "- Start building 20 lvl of [GetBuildingType('building_financial_centre').GetName] in random state as a Private Construction\\n- Blocks the expansion of [GetBuildingType('building_financial_centre').GetName] for 12 months\\n- Get the modifier [GetStaticModifier('down_base_rate').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_8_button_tt_effect_1"
+  ]
+ },
+ "speculative_share_9_button_tt": {
+  "rep_key": "speculative_share_9_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_9_button$\\n\\n$speculative_share_9_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_9_button_tt_1$\\n- $speculative_share_9_button_tt_2$\\n- $speculative_share_9_button_tt_3$\\n\\n Effect:\\n$speculative_share_9_button_tt_effect_1_1$",
+  "members": [
+   "speculative_share_9_button_tt"
+  ]
+ },
+ "speculative_share_9_button_tt_effect_1_1": {
+  "rep_key": "speculative_share_9_button_tt_effect_1_1",
+  "rep_good": null,
+  "en": "- Construct 5 [GetBuildingType('building_ef_private_construction').GetName] in a random state\\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\\n- $speculative_share_9_button_tt_effect_1$\\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_9_button_tt_effect_1_1"
+  ]
+ },
+ "speculative_share_10_button_tt": {
+  "rep_key": "speculative_share_10_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_10_button$\\n\\n$speculative_share_10_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_10_button_tt_1$\\n- $speculative_share_10_button_tt_2$\\n- $speculative_share_10_button_tt_3$\\n\\n Effect:\\n$speculative_share_10_button_tt_effect_1_1$",
+  "members": [
+   "speculative_share_10_button_tt"
+  ]
+ },
+ "speculative_share_10_button_tt_effect_1_1": {
+  "rep_key": "speculative_share_10_button_tt_effect_1_1",
+  "rep_good": null,
+  "en": "- Construct 10 [GetBuildingType('building_ef_private_construction').GetName] in a random state\\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\\n- $speculative_share_10_button_tt_effect_1$\\n- $speculative_share_10_button_tt_effect_2$\\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_10_button_tt_effect_1_1"
+  ]
+ },
+ "speculative_share_11_button_tt": {
+  "rep_key": "speculative_share_11_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_11_button$\\n\\n$speculative_share_11_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_11_button_tt_1$\\n- $speculative_share_11_button_tt_2$\\n- $speculative_share_11_button_tt_3$\\n\\n Effect:\\n$speculative_share_11_button_tt_effect_1_1$",
+  "members": [
+   "speculative_share_11_button_tt"
+  ]
+ },
+ "speculative_share_11_button_tt_effect_1_1": {
+  "rep_key": "speculative_share_11_button_tt_effect_1_1",
+  "rep_good": null,
+  "en": "- Construct 15 [GetBuildingType('building_ef_private_construction').GetName] in a random state\\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\\n- $speculative_share_11_button_tt_effect_1$\\n- $speculative_share_11_button_tt_effect_2$\\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_11_button_tt_effect_1_1"
+  ]
+ },
+ "speculative_share_12_button_tt": {
+  "rep_key": "speculative_share_12_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_12_button$\\n\\n$speculative_share_12_button_desc$\\n\\nPossible:\\n- Not has [GetStaticModifier('speculative_share_modifier_5').GetName|v] modifier\\n- [GetStaticModifier('has_financial_center').GetName|v] modifier\\n- $speculative_share_12_button_tt_1$\\n- $speculative_share_12_button_tt_2$\\n- $speculative_share_12_button_tt_3$\\n\\n Effect:\\n$speculative_share_12_button_tt_effect_1_1$",
+  "members": [
+   "speculative_share_12_button_tt"
+  ]
+ },
+ "speculative_share_12_button_tt_effect_1_1": {
+  "rep_key": "speculative_share_12_button_tt_effect_1_1",
+  "rep_good": null,
+  "en": "- Construct 20 [GetBuildingType('building_ef_private_construction').GetName] in a random state\\n- Blocks the expansion of [GetBuildingType('building_ef_private_construction').GetName] for 12 months\\n- $speculative_share_12_button_tt_effect_1$\\n- $speculative_share_12_button_tt_effect_2$\\n- [GetPlayer.GetName] get [GetStaticModifier('down_base_rate').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_5').GetName|v] for 12 months\\n- [GetPlayer.GetName] get [GetStaticModifier('speculative_share_modifier_6').GetName|v] for 12 months",
+  "members": [
+   "speculative_share_12_button_tt_effect_1_1"
+  ]
+ },
+ "speculative_share_13_button_tt": {
+  "rep_key": "speculative_share_13_button_tt",
+  "rep_good": null,
+  "en": "$speculative_share_13_button$\\n\\n$speculative_share_13_button_desc$\\n\\nPossible:\\n$speculative_share_13_button_tt_1$\\n\\nEffect:\\n- $speculative_share_13_button_tt_effect_1_1$",
+  "members": [
+   "speculative_share_13_button_tt"
+  ]
+ },
+ "speculative_share_13_button_tt_effect_1_1": {
+  "rep_key": "speculative_share_13_button_tt_effect_1_1",
+  "rep_good": null,
+  "en": "A [GetBuildingType('building_ef_private_construction').GetName] in a random state will be completely dismantled, reducing the total number of [GetBuildingType('building_ef_private_construction').GetName] in the country.",
+  "members": [
+   "speculative_share_13_button_tt_effect_1_1"
+  ]
+ },
+ "je_ef_efcc_situation": {
+  "rep_key": "je_ef_efcc_situation",
+  "rep_good": null,
+  "en": "Economic and Financial Crisis Committee",
+  "members": [
+   "je_ef_efcc_situation"
+  ]
+ },
+ "je_ef_efcc_situation_reason": {
+  "rep_key": "je_ef_efcc_situation_reason",
+  "rep_good": null,
+  "en": "$economic_instability_txt$ \\n\\n $active_desc$\\n$critical_desc$\\n$stabilizing_desc$ \\n\\n- $central_bank_bankruptcy_country_tooltip$\\n\\n- $currency_crisis_country_tooltip$\\n\\n- $economic_crisis_country_tooltip$\\n\\n- $financial_crash_country_tooltip$\\n\\n- $country_bankruptcy_tooltip$",
+  "members": [
+   "je_ef_efcc_situation_reason"
+  ]
+ },
+ "je_efcc_progress_bar": {
+  "rep_key": "je_efcc_progress_bar",
+  "rep_good": null,
+  "en": "Economic Stabilization",
+  "members": [
+   "je_efcc_progress_bar"
+  ]
+ },
+ "je_efcc_progress_bar_desc": {
+  "rep_key": "je_efcc_progress_bar_desc",
+  "rep_good": null,
+  "en": "Economic Stabilization Progress: #T [GetPlayer.MakeScope.Var('je_efcc_1_global_variable_progress_bar_1').GetValue|0] mouths/ 12 mouths#!",
+  "members": [
+   "je_efcc_progress_bar_desc"
+  ]
+ },
+ "current_modifiers_efcc": {
+  "rep_key": "current_modifiers_efcc",
+  "rep_good": null,
+  "en": "Current Major Modifiers",
+  "members": [
+   "current_modifiers_efcc"
+  ]
+ },
+ "current_situation": {
+  "rep_key": "current_situation",
+  "rep_good": null,
+  "en": "Economic and Financial Crisis Overview",
+  "members": [
+   "current_situation"
+  ]
+ },
+ "active": {
+  "rep_key": "active",
+  "rep_good": null,
+  "en": "#N #l Active#!#!",
+  "members": [
+   "active"
+  ]
+ },
+ "stabilizing": {
+  "rep_key": "stabilizing",
+  "rep_good": null,
+  "en": "#blue #l Stabilizing#!#!",
+  "members": [
+   "stabilizing"
+  ]
+ },
+ "critical": {
+  "rep_key": "critical",
+  "rep_good": null,
+  "en": "#gold #l Critical#!#!",
+  "members": [
+   "critical"
+  ]
+ },
+ "inactive": {
+  "rep_key": "inactive",
+  "rep_good": null,
+  "en": "#P #l Inactive#!#!",
+  "members": [
+   "inactive"
+  ]
+ },
+ "active_desc": {
+  "rep_key": "active_desc",
+  "rep_good": null,
+  "en": "$active$: Once activated, a crisis applies its own unique modifiers for a period of #l 2 years.#!",
+  "members": [
+   "active_desc"
+  ]
+ },
+ "critical_desc": {
+  "rep_key": "critical_desc",
+  "rep_good": null,
+  "en": "$critical$: You have one year to rebuild your central bank’s metallic reserves through measures such as massive foreign currency sales, direct state recapitalization, or securing international loans for the central bank.",
+  "members": [
+   "critical_desc"
+  ]
+ },
+ "stabilizing_desc": {
+  "rep_key": "stabilizing_desc",
+  "rep_good": null,
+  "en": "$stabilizing$: If no crisis occurs for an entire year, both the Economic Instability and Crisis counters will be reset — but only if the nation #l is not at war.#!",
+  "members": [
+   "stabilizing_desc"
+  ]
+ },
+ "country_bankruptcy_var": {
+  "rep_key": "country_bankruptcy_var",
+  "rep_good": null,
+  "en": "#T [GetPlayer.MakeScope.Var('country_bankruptcy').GetValue|0]#!",
+  "members": [
+   "country_bankruptcy_var"
+  ]
+ },
+ "economic_instability_count": {
+  "rep_key": "economic_instability_count",
+  "rep_good": null,
+  "en": "(Count: #T [GetPlayer.MakeScope.Var('economic_instability_count').GetValue|0]/2#!)",
+  "members": [
+   "economic_instability_count"
+  ]
+ },
+ "central_bank_bankruptcy_country_count": {
+  "rep_key": "central_bank_bankruptcy_country_count",
+  "rep_good": null,
+  "en": "(Count: #T [GetPlayer.MakeScope.Var('central_bank_bankruptcy').GetValue|0]#!)",
+  "members": [
+   "central_bank_bankruptcy_country_count"
+  ]
+ },
+ "currency_crisis_country_count": {
+  "rep_key": "currency_crisis_country_count",
+  "rep_good": null,
+  "en": "(Count: #T [GetPlayer.MakeScope.Var('currency_crisis').GetValue|0]#!)",
+  "members": [
+   "currency_crisis_country_count"
+  ]
+ },
+ "economic_crisis_country_count": {
+  "rep_key": "economic_crisis_country_count",
+  "rep_good": null,
+  "en": "(Count: #T [GetPlayer.MakeScope.Var('economic_crisis').GetValue|0]#!)",
+  "members": [
+   "economic_crisis_country_count"
+  ]
+ },
+ "financial_crash_country_count": {
+  "rep_key": "financial_crash_country_count",
+  "rep_good": null,
+  "en": "(Count: #T [GetPlayer.MakeScope.Var('financial_crash').GetValue|0]#!)",
+  "members": [
+   "financial_crash_country_count"
+  ]
+ },
+ "country_bankruptcy_count": {
+  "rep_key": "country_bankruptcy_count",
+  "rep_good": null,
+  "en": "(Count: #T [GetPlayer.MakeScope.Var('country_bankruptcy').GetValue|0]#!)",
+  "members": [
+   "country_bankruptcy_count"
+  ]
+ },
+ "status_economic_crisis_1": {
+  "rep_key": "status_economic_crisis_1",
+  "rep_good": null,
+  "en": "#p Economic Stability #!is supporting steady national growth.",
+  "members": [
+   "status_economic_crisis_1"
+  ]
+ },
+ "status_economic_crisis_2": {
+  "rep_key": "status_economic_crisis_2",
+  "rep_good": null,
+  "en": "#gold Economic Slowdown #!is weakening production and trade activity.",
+  "members": [
+   "status_economic_crisis_2"
+  ]
+ },
+ "status_economic_crisis_3": {
+  "rep_key": "status_economic_crisis_3",
+  "rep_good": null,
+  "en": "#N Economic Crisis #!is severely disrupting the national economy.",
+  "members": [
+   "status_economic_crisis_3"
+  ]
+ },
+ "status_currency_crisis_1": {
+  "rep_key": "status_currency_crisis_1",
+  "rep_good": null,
+  "en": "\\n#p Monetary Stability #!is maintaining confidence in the national currency.",
+  "members": [
+   "status_currency_crisis_1"
+  ]
+ },
+ "status_currency_crisis_2": {
+  "rep_key": "status_currency_crisis_2",
+  "rep_good": null,
+  "en": "\\n#gold Currency Instability #!is beginning to pressure monetary markets.",
+  "members": [
+   "status_currency_crisis_2"
+  ]
+ },
+ "status_currency_crisis_3": {
+  "rep_key": "status_currency_crisis_3",
+  "rep_good": null,
+  "en": "\\n#N Currency Crisis #!is actively destabilizing the national currency.",
+  "members": [
+   "status_currency_crisis_3"
+  ]
+ },
+ "status_financial_crash_1": {
+  "rep_key": "status_financial_crash_1",
+  "rep_good": null,
+  "en": "\\n#p Financial Stability #!is maintaining healthy market conditions.",
+  "members": [
+   "status_financial_crash_1"
+  ]
+ },
+ "status_financial_crash_2": {
+  "rep_key": "status_financial_crash_2",
+  "rep_good": null,
+  "en": "\\n#gold Financial Instability #!is spreading through financial markets.",
+  "members": [
+   "status_financial_crash_2"
+  ]
+ },
+ "status_financial_crash_3": {
+  "rep_key": "status_financial_crash_3",
+  "rep_good": null,
+  "en": "\\n#N Financial Crash #!is causing widespread market disruption.",
+  "members": [
+   "status_financial_crash_3"
+  ]
+ },
+ "status_central_bank_bankruptcy_1": {
+  "rep_key": "status_central_bank_bankruptcy_1",
+  "rep_good": null,
+  "en": "\\n#p Central Banking Stability #!is ensuring monetary confidence.",
+  "members": [
+   "status_central_bank_bankruptcy_1"
+  ]
+ },
+ "status_central_bank_bankruptcy_2": {
+  "rep_key": "status_central_bank_bankruptcy_2",
+  "rep_good": null,
+  "en": "\\n#gold Central Bank Distress #!we have one year to avoid bankruptcy.",
+  "members": [
+   "status_central_bank_bankruptcy_2"
+  ]
+ },
+ "status_central_bank_bankruptcy_3": {
+  "rep_key": "status_central_bank_bankruptcy_3",
+  "rep_good": null,
+  "en": "\\n#N Central Bank Bankruptcy #!has disrupted national monetary control.",
+  "members": [
+   "status_central_bank_bankruptcy_3"
+  ]
+ },
+ "status_country_bankruptcy_1": {
+  "rep_key": "status_country_bankruptcy_1",
+  "rep_good": null,
+  "en": "\\n#p Fiscal Stability #!is maintaining sustainable state finances.",
+  "members": [
+   "status_country_bankruptcy_1"
+  ]
+ },
+ "status_country_bankruptcy_2": {
+  "rep_key": "status_country_bankruptcy_2",
+  "rep_good": null,
+  "en": "\\n#gold Sovereign Debt Distress #!is increasing pressure on government finances.",
+  "members": [
+   "status_country_bankruptcy_2"
+  ]
+ },
+ "status_country_bankruptcy_3": {
+  "rep_key": "status_country_bankruptcy_3",
+  "rep_good": null,
+  "en": "\\n#N Country Bankruptcy #!has severely damaged state credibility and finances.",
+  "members": [
+   "status_country_bankruptcy_3"
+  ]
+ },
+ "central_bank_bankruptcy_country_tooltip": {
+  "rep_key": "central_bank_bankruptcy_country_tooltip",
+  "rep_good": null,
+  "en": "#T #l Money Value in Gold:#! [GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]@gold!#! \\nThe current gold value of the national currency @gold! is #b [GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]#! @gold!. If this value remains below #n 0.01#! @gold! for more than #bold 1 year#!, a #l #n Central Bank Bankruptcy#!#! may emerge. If the country is already experiencing economic or financial instability, dropping below #n 0.01#! @gold! will immediately trigger a #n multifactor economic crisis#!.\\n > For #u 2 years#! the country will be in crisis and prevent the establishment of [concept_trade] routes (#u 3 years#! after the crisis, you could create a new currency).",
+  "members": [
+   "central_bank_bankruptcy_country_tooltip"
+  ]
+ },
+ "currency_crisis_country_tooltip": {
+  "rep_key": "currency_crisis_country_tooltip",
+  "rep_good": null,
+  "en": "#T #l Money Value over 1 Year:#! [GetPlayer.MakeScope.ScriptValue('money_value_dif_1_final')|%|=+]#! \\nIf the value of the national currency declines by more than #n -50%#! within #bold 1 year#!, a #l #n Currency Crisis#!#! may emerge. If the country is already experiencing economic or financial instability, a monetary devaluation exceeding #n -50%#! will immediately trigger a #n multifactor economic crisis#!.\\n > For #u 2 years#! the country will be in crisis and prevent the establishment of [concept_trade] routes (#u 3 years#! after the crisis, you could create a new currency).",
+  "members": [
+   "currency_crisis_country_tooltip"
+  ]
+ },
+ "economic_crisis_country_tooltip": {
+  "rep_key": "economic_crisis_country_tooltip",
+  "rep_good": null,
+  "en": "#T #l [concept_gdp] over 1 Year:#! [GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]#! \\nIf the national [concept_gdp] declines by more than #n -50%#! within #bold 1 year#!, an #l #n Economic Crisis#!#! may emerge. If the country is already experiencing economic or financial instability, an economic contraction exceeding #n -50%#! will immediately trigger a #n multifactor economic crisis#!.\\n > For #u 2 years#! #t all buildings#! in the country will receive a modifier that will decrease their productivity by more than #N 50%#!.",
+  "members": [
+   "economic_crisis_country_tooltip"
+  ]
+ },
+ "financial_crash_country_tooltip": {
+  "rep_key": "financial_crash_country_tooltip",
+  "rep_good": null,
+  "en": "#T #l Stock Market Index Variation over 1 Year:#! [GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]#! \\nIf the national stock market index declines by more than #n -50%#! within #bold 1 year#!, a #l #n Financial Crash#!#! may emerge. If the country is already experiencing economic or financial instability, a market collapse exceeding #n -50%#! will immediately trigger a #n multifactor economic crisis#!.\\n > For #u 2 years#! #t all private buildings#! in the country will receive a modifier that will decrease their productivity by more than #N 50%#!.",
+  "members": [
+   "financial_crash_country_tooltip"
+  ]
+ },
+ "country_bankruptcy_tooltip": {
+  "rep_key": "country_bankruptcy_tooltip",
+  "rep_good": null,
+  "en": "#T #l Country Bankruptcy:#!#! \\n When the country declares bankruptcy, it enters a period of economic instability for the entire duration of the moddifier. While this is the least damaging major crisis to the economy, it creates a highly vulnerable environment in which any additional emerging crisis will immediately escalate into a #n multifactor economic crisis#!.",
+  "members": [
+   "country_bankruptcy_tooltip"
+  ]
+ }
+}

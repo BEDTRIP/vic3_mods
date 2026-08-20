@@ -1,54 +1,62 @@
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]PSC + E&F ComPatch[/h1]
-I noticed that E&F’s “private construction sector” mechanics can behave in a strange way: once your economy is strong enough, you can delete all government construction sectors and build [b]for free[/b], because private construction becomes self-sustaining and effectively grants “free construction”, which completely breaks the economy.
+E&F's "private construction sector" breaks the economy once you are rich enough: it is in a building group with [i]is_government_funded = no[/i], so nothing it consumes ever reaches your budget, yet it still hands the country construction points. Its top method gives [b]double[/b] the construction of the vanilla sector for [b]a quarter[/b] of the input goods, and sells stock on top. Delete your government construction sectors and you build for free.
 
-This compatch is made to solve that problem. PSC mod turns construction sectors into a separate, fully-fledged market, and E&F now interacts with that market the same way it previously interacted with its own private construction sectors. The “market stimulation” mechanics and the “Overbuilt Economy” crisis mechanics also work properly.
+This compatch fixes that by handing construction over to PSC. PSC turns construction sectors into a real market — they produce construction goods, a regulator converts those into construction points, and the treasury and the investment pool are billed for every unit. E&F's monetary and financial layer is then rewired onto that same sector, so both mods talk about one building instead of two.
 
 [h2]Load order[/h2]
 [list]
 [*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]Private Sector Construction (PSC)
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*]Economic & Financial (E&F)
+[*][b]E&F 1.13.10 Hotfix[/b] — [b]required[/b], see below
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*][b]PSC + E&F ComPatch (this mod)[/b]
 [/list]
 
 [i]Place other mods after this only if they do not overwrite the same files in common/.[/i]
 
+[h2]The hotfix is not optional[/h2]
+Victoria 3 caps the goods database at 128 entries and crashes on entering a campaign if you go over — silently, with nothing in error.log. Vanilla ships 53 goods, E&F adds 73 and PSC adds 4, which lands on 130. The [b]E&F 1.13.10 Hotfix[/b] trims eight unused currency goods and brings the total to 122. Run E&F and PSC together without it and the game will not start.
+
 [h2]What this patch does[/h2]
 [list]
-[*][b]Unifies the “private construction” building[/b]
+[*][b]Unifies the "private construction" building[/b]
 [list]
-[*]Disables E&F’s separate [i]building_ef_private_construction[/i] (not buildable).
-[*]Uses PSC’s [i]building_construction_sector[/i] as the single construction-sector building for both mods.
-[*]Injects E&F [i]pmg_market_liquidity[/i] into [i]building_construction_sector[/i].
-[*]Keeps PSC construction-sector behavior, but allows E&F monetary/financial mechanics to “see” the construction sector.
-[*]Adds an investment score entry so E&F financial district logic can target [i]bg_construction[/i] (since we no longer use [i]bg_ef_private_construction[/i]).
-[*]Adds an AI helper value to increase construction-sector priority when construction goods are overpriced.
+[*]Disables E&F's separate [i]building_ef_private_construction[/i] (not buildable).
+[*]Uses PSC's [i]building_construction_sector[/i] as the single construction sector for both mods.
+[*]Injects E&F [i]pmg_market_liquidity[/i] into [i]building_construction_sector[/i], so the currency drain sees construction.
+[*]Repoints E&F's history, its companies and its bank-founding effect at the unified sector, so starting sectors and company ownership still land where they should.
+[*]Adds an investment score entry for [i]bg_construction[/i] so E&F's financial district logic has a target.
+[*]Caps total sectors with E&F's Urban Center formula, and gives the AI a nudge to build sectors when construction goods are overpriced.
 [/list]
 
-[*][b]Overbuilt Economy debuff extension[/b]
+[*][b]Overbuilt Economy is switched off, on purpose[/b]
 [list]
-[*]The "Overbuilt Economy" modifier now affects construction sector outputs differently:
-[list]
-[*][b]Reduces[/b] PSC construction goods output (wood/iron/steel/arc-welded construction).
-[*][b]Increases[/b] E&F [i]manufacture_stock[/i] output.
+[*]E&F's "Overbuilt Economy" counts private sectors against an Urban Center cap and debuffs them. Under PSC that would be a second punishment for something you already pay for in goods and money.
+[*]Its only release valve in E&F demolishes a whole construction building at a time. In PSC a state holds exactly one construction sector whose level [i]is[/i] that state's entire capacity, so the AI would flatten 20–50 levels a month.
+[*]So the counter is held at zero instead. The stimulus buttons stay usable and the journal bar reads what is actually happening.
 [/list]
-[*]This creates a realistic scenario where overbuilding leads to resource waste while financial speculation intensifies.
-[*]The Overbuilt Economy progress is [b]capped at 100%[/b] to prevent excessive penalties.
-[*]Pay close attention to this parameter, as it can significantly impact your construction sector productivity.
+
+[*][b]Bug fixes carried along[/b]
+[list]
+[*]Guards PSC's per-state price lookup, which reads the regulator's method in states that have no regulator ([i]Wrong scope for trigger: none, expected building[/i] at startup).
+[*]Guards two E&F divisions by zero and a missing-scope crash in the private bank currency sale.
+[*]Initialises E&F's stockpile state variables so the log stops complaining about unset variables.
+[/list]
 [/list]
 
 [h2]Localization[/h2]
 [list]
 [*]English
 [*]Russian
-[*]Other - English placeholder
+[*]Other — English placeholder
 [/list]
 
 [h2]Notes / Compatibility[/h2]
 [list]
-[*]This patch is designed to be [b]minimal[/b] and only overrides what’s needed for PSC + E&F integration.
-[*]It will conflict with other mods that heavily overwrite the same areas (especially [i]common/buildings[/i], [i]common/scripted_buttons[/i], [i]common/journal_entries[/i], [i]common/script_values[/i]).
+[*]This patch only overrides what PSC + E&F integration needs. Where it has to copy bulk content from E&F, that copy is regenerated by a script rather than maintained by hand.
+[*]It will conflict with other mods that heavily overwrite the same areas (especially [i]common/buildings[/i], [i]common/scripted_buttons[/i], [i]common/script_values[/i]).
+[*][b]Known gap:[/b] E&F and PSC both redefine the vanilla [i]construction_panel[/i] and the state building list, in different files. One of them loses. This compatch does not merge them yet.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

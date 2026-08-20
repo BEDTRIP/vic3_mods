@@ -24,20 +24,28 @@
   ################################
   #Introduction CB et FC
   ################################
- 
+
   bank_je_central_1:0 "Закон об учреждении центрального банка" 
   bank_je_central_1_reason:0 "Центральный банк позволяет унифицировать и централизовать выпуск монет и банкнот — ключевой этап экономического развития любого государства.\n \n Центральный банк автоматически появится, когда ВВП страны превысит 5 миллионов, либо когда будет открыта технология «Центральный банк»."
-  
+
   financial_center_je_1:0 "Разрешение на учреждение фондовой биржи"
   financial_center_je_1_reason:0 "Центральный банк позволяет унифицировать и централизовать выпуск монет и банкнот — ключевой этап экономического развития любого государства.\n \n Центральный банк автоматически появится, когда ВВП страны превысит 5 миллионов, либо когда будет открыта технология «Центральный банк»."
- 
+
 ##########################
 #financial_center_je
 ##########################
- 
-  financial_center_je_2:0 "Управление финансовой стабильности (УФС)"
-  financial_center_je_2_reason:0 "#l > Стабильность финансового сектора: #! \n\n #b Спекулятивный рынок#! в настоящее время составляет #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#! от национального #b [concept_gdp]#!.\n\nЧем больше доля [concept_gdp], приходящаяся на спекулятивный рынок, тем сильнее раздувается спекулятивный пузырь согласно следующей модели:\n\n #U - 0–10% → спекулятивная напряжённость сильно снижена (−3)\n - 10–20% → напряжённость снижается (−2)\n - 20–30% → небольшое снижение (−1)\n - 30–40% → небольшое увеличение (+1)\n - 40–50% → заметное увеличение (+2)\n - 50%+ → сильный рост пузыря (+3)#!\n\n#b Текущие последствия:#!\n - Снижение доступной мощности [concept_construction] (текущее: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Замедление темпа инноваций (текущее: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Снижение целевого уровня [concept_prosperity] для [concept_company] (текущее: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Потеря национального престижа (текущее: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n\nЕсли прогресс пузыря достигнет #b 100%#!, страну настигнет #b крупный финансовый крах#!.\n\n#l > Стабильность строительного сектора: #!\n\n [GetBuildingType('building_ef_private_construction').GetName] отражает общий спрос на проекты [concept_construction] со стороны частных лиц, а также [concept_company] различного масштаба.\n\n В отличие от государственной мощности [GetBuildingType('building_construction_sector').GetName], мощность [GetBuildingType('building_ef_private_construction').GetName] имеет теоретический максимум — совокупный спрос населения на [concept_construction].\n \n Таким образом, существует прямая связь между уровнем [concept_urbanization] в штатах страны и её максимальной мощностью [GetBuildingType('building_ef_private_construction').GetName].\n \n [concept_base_rate_percentage], устанавливаемая Центральным банком, выступает множителем, связывающим эти две величины. Следовательно, теоретический максимум мощности [GetBuildingType('building_ef_private_construction').GetName] страны (равен:\n \n #v Общее количество уровней [GetBuildingType('building_urban_center').GetName] × (1 - Базовая ставка x 10)#!\n \n #lore "Чем выше [concept_base_rate_percentage], тем сильнее сжимается строительный сектор. И наоборот, когда [concept_base_rate_percentage] низка, [GetBuildingType('building_ef_private_construction').GetName] достигает максимального потенциала спроса — равного суммарному числу уровней [GetBuildingType('building_urban_center').GetName] во всех штатах."#! \n \n #b Текущее значение:#!\n - Количество [GetBuildingType('building_ef_private_construction').GetName] в стране: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!\n - Общее количество уровней [GetBuildingType('building_urban_center').GetName]: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')]#!\n - Текущая [concept_base_rate_percentage]: #p [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!\n - Теоретический максимум уровня ЧСС: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#! #b (То есть [GetPlayer.MakeScope.ScriptValue('base_rate_to_pcs_factor')|%] от [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')])#!\n \n Если общее количество уровней [GetBuildingType('building_ef_private_construction').GetName] превышает этот теоретический максимум из-за рыночных условий, страна входит в состояние #v Перестроенная экономика#!.\n \n В состоянии «Перестроенная экономика» индикатор прогресса будет увеличиваться на #U +1#! каждый месяц, а процент его заполнения будет напрямую определять отрицательный модификатор к выпуску финансовых продуктов.\n \n И наоборот, пока текущий уровень [GetBuildingType('building_ef_private_construction').GetName] ниже максимального, вы можете попросить частный сектор строить больше — в обмен на экономические уступки."
- 
+
+  financial_center_je_2:0 "Управление финансовой стабильности (FSO)"
+  financial_center_je_2_reason:0 "#l > Стабильность финансового сектора: #! \n\n #b Спекулятивный рынок#! в настоящее время составляет #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#! национального #b [concept_gdp]#!.\n\nЧем большую долю [concept_gdp] занимает спекулятивный рынок, тем сильнее раздувается спекулятивный пузырь по следующей схеме:\n\n #U - 0–10% → спекулятивное напряжение сильно снижено (−3)\n - 10–20% → напряжение снижается (−2)\n - 20–30% → небольшое снижение (−1)\n - 30–40% → небольшой рост (+1)\n - 40–50% → заметный рост (+2)\n - 50%+ → сильный рост пузыря (+3)#!\n\n#b Текущие последствия:#!\n - Сокращение доступной мощности [concept_construction] (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Замедление темпа инноваций (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Снижение целевого [concept_prosperity] для [concept_company] (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n - Потеря национального престижа (сейчас: [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|D=+] %)\n\nЕсли пузырь достигнет #b 100%#! заполнения, страну поразит #b крупный финансовый крах#!.\n\n#l > Стабильность строительного сектора: #!\n\n [GetBuildingType('building_ef_private_construction').GetName] отражает общий спрос на проекты [concept_construction] со стороны частных лиц, а также [concept_company] разного размера.\n\n В отличие от мощности государственного [GetBuildingType('building_construction_sector').GetName], мощность [GetBuildingType('building_ef_private_construction').GetName] имеет теоретический предел — совокупный спрос населения на [concept_construction].\n \n Таким образом, существует прямая связь между уровнем [concept_urbanization] штатов страны и её максимальной мощностью [GetBuildingType('building_ef_private_construction').GetName].\n \n [concept_base_rate_percentage], устанавливаемая Центральным банком, выступает множителем, связывающим эти две величины. Следовательно, теоретически максимальная мощность [GetBuildingType('building_ef_private_construction').GetName] страны равна:\n \n #v Суммарный уровень [GetBuildingType('building_urban_center').GetName] × (1 - Ключевая ставка x 10)#!\n \n #lore «Чем выше [concept_base_rate_percentage], тем сильнее сжимается строительный сектор. И наоборот, когда [concept_base_rate_percentage] низка, [GetBuildingType('building_ef_private_construction').GetName] достигает своего максимального потенциала спроса — равного суммарному числу уровней [GetBuildingType('building_urban_center').GetName] во всех штатах.»#! \n \n #b Текущие значения:#!\n - Число [GetBuildingType('building_ef_private_construction').GetName] в стране: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!\n - Суммарный уровень [GetBuildingType('building_urban_center').GetName]: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')]#!\n - Текущая [concept_base_rate_percentage]: #p [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!\n - Теоретический максимум уровня ЧСС: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#! #b (т.е. [GetPlayer.MakeScope.ScriptValue('base_rate_to_pcs_factor')|%] от [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')])#!\n \n Если суммарное число уровней [GetBuildingType('building_ef_private_construction').GetName] превысит этот теоретический максимум из-за рыночной конъюнктуры, страна попадает в состояние #v перестроенной экономики#!.\n \n Пока длится перестроенная экономика, шкала прогресса растёт на #U +1#! каждый месяц, а её заполнение напрямую определяет отрицательный модификатор к выпуску финансовых продуктов.\n \n И наоборот, пока текущий уровень [GetBuildingType('building_ef_private_construction').GetName] ниже максимального, вы можете попросить частный сектор строить больше в обмен на экономические уступки."
+
+  financial_center_je_2_reason_1:0 "Спекулятивный рынок#! в настоящее время составляет #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#! национального #b [concept_gdp]#!."
+
+  financial_center_je_2_reason_1_2:0 "#U - 0–10% → спекулятивное напряжение сильно снижено (−3)\n - 10–20% → напряжение снижается (−2)\n - 20–30% → небольшое снижение (−1)\n - 30–40% → небольшой рост (+1)\n - 40–50% → заметный рост (+2)\n - 50%+ → сильный рост пузыря (+3)#!"
+
+  financial_center_je_2_reason_1_3:0 "Чем выше уровень ваших финансовых центров, тем активнее частный сектор реинвестирует инвестиционный пул, тем больше создаётся финансовых продуктов — и тем выше потенциал спекулятивного пузыря"
+
+  financial_center_je_2_reason_2:0 "#b Текущие значения:#!\n - Число [GetBuildingType('building_ef_private_construction').GetName] в стране: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!\n - Суммарный уровень [GetBuildingType('building_urban_center').GetName]: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')]#!\n - Текущая [concept_base_rate_percentage]: #p [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!\n - Теоретический максимум уровня ЧСС: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#! #b (т.е. [GetPlayer.MakeScope.ScriptValue('base_rate_to_pcs_factor')|%] от [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl')])#!"
+
   economic_sentiment_index_base_1_button:1 "#b 5 [GetBuildingType('building_ef_private_construction').GetName]#!"
   economic_sentiment_index_base_1_button_desc: "Попросить частный сектор инвестировать в новые [GetBuildingType('building_ef_private_construction').GetName]. Определённое количество таких секторов будет построено по всей стране.\nОднако после этого запроса частный сектор некоторое время не сможет отвечать на дальнейшие требования правительства."
   economic_sentiment_index_base_1_button_tt: "#b Индекс экономических настроений#! должен быть выше #b 1#! (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('economic_sentiment_index_base_JE_fixe')|D+]#!)"
@@ -94,15 +102,17 @@
   speculative_share_8_button_tt_2: "Уровень главного финансового центра ниже 5000 (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('bg_financial_centre_lvl')]#!)"
   speculative_share_8_button_tt_3: "Средства частных банков превышают 20% денежной массы (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_pourcent')|%|]#!)"
   speculative_share_8_button_tt_4: "Доля спекулятивного рынка в [concept_gdp] ниже 7.5% (Сейчас:#b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%|]#!)"
- 
+
+
+
+
+
   speculative_share_9_button:1 "#b Стимулирование спроса на строительство #!" 
   speculative_share_9_button_desc: "Правительство стремится стимулировать частное строительство, снизив базовую ставку. Это приведёт к строительству #b 5 [GetBuildingType('building_ef_private_construction').GetName]#!. Однако чрезмерный рост может привести к риску запуска «Перестроенной экономики»."
   speculative_share_9_button_tt_1: "Уровень «Перестроенной экономики» равен 0 (Сейчас: #b [GetPlayer.MakeScope.Var('speculative_share_2').GetValue]%#!)"
   speculative_share_9_button_tt_2: "Общий уровень [GetBuildingType('building_ef_private_construction').GetName] #b [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#! ниже теоретического лимита #b [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!"
   speculative_share_9_button_tt_3: "[concept_base_rate_percentage] ниже #b 12%#! и выше #b 1.10%#! (Сейчас: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!)"
-  #speculative_share_9_button_tt_4: "The share of the speculative market in the [concept_gdp] is below 7.5% (Current:#b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')|%|]#!)"
-  speculative_share_9_button_tt_effect_1: "Базовая ставка будет снижена на #b 1%#! и не может быть изменена в течение #b 1 года#!."
-  #speculative_share_9_button_tt_effect_2: "An amount of #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_10_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')] will be locked in a governmental fund. This monetary mass cannot be altered."
+    speculative_share_9_button_tt_effect_1: "Базовая ставка будет снижена на #b 1%#! и не может быть изменена в течение #b 1 года#!."
 
   speculative_share_10_button:1 "#b Программа частной инфраструктуры #!" 
   speculative_share_10_button_desc: "Правительство стремится стимулировать частное строительство, снизив базовую ставку, что приведёт к строительству #b 10 [GetBuildingType('building_ef_private_construction').GetName]#!. Этот проект создаст денежную массу в размере #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_10_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')], что соответствует #b 2%#! средств частных банков, умноженным на коэффициент редкости Сектора частного строительства #b (Rarety Facto:[GetPlayer.MakeScope.ScriptValue('rarity_factor')|D])#!. Чрезмерное денежное расширение может привести к риску дестабилизации валюты и запуску «Перестроенной экономики»."
@@ -127,9 +137,14 @@
   speculative_share_12_button_tt_3: "[concept_base_rate_percentage] ниже #b 12%#! и выше #b 4.10%#! (Сейчас: #b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')]%#!)" 
   speculative_share_12_button_tt_effect_1: "Базовая ставка будет снижена на #b 4%#! и не может быть изменена в течение #b 1 года#!."
   speculative_share_12_button_tt_effect_2: "Сумма #b [GetPlayer.MakeScope.ScriptValue('private_bank_funds_proportion_by_psc_20_by_rarity')|D]#! [GetPlayer.GetCustom('global_monetary_reference_currency_good')] будет заблокирована в государственном фонде. Эту денежную массу нельзя изменить."
- 
+
+  speculative_share_13_button:1 "#b Регулировать частный строительный сектор #!"
+  speculative_share_13_button_desc: "Частное строительство разрослось сверх устойчивого уровня. Вмешательство государства призвано восстановить равновесие и не допустить дальнейшего перекоса."
+  speculative_share_13_button_tt_1:0 "- Теоретический максимум уровня [GetBuildingType('building_ef_private_construction').GetName] (сейчас: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!) превышает текущее число [GetBuildingType('building_ef_private_construction').GetName] в стране (сейчас: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!).\n- Отсутствует модификатор [GetStaticModifier('speculative_share_modifier_7').GetName|v]"
+
   status_central_bank_1: "При отсутствии централизованной денежной системы страна опирается на разрозненный набор способов обмена. Бартер, устаревшие местные монеты и смесь иностранных валют обращаются бок о бок, подчёркивая фрагментированное состояние экономики."
   status_central_bank_2: "После открытия технологии «Валютный стандарт» в разных штатах страны обращаются различные виды банкнот без какой-либо централизованной унификации"
+  status_central_bank_3: " Пока Япония остаётся под властью сёгуната, современные финансовые структуры не могут быть созданы.\n Завершение Реставрации Мэйдзи положит конец этой изоляции и откроет возможность создания национального Центрального банка."
 
   # status_financial_center_1: "Доверие инвесторов стремительно растёт, рынки процветают, а частный капитал свободно перетекает во все отрасли. Экономика излучает стабильность и рост."
   # status_financial_center_2: "Экономическая обстановка уверенная. Частные банки расширяют свои портфели, а общество воспринимает рынок как надёжный и прибыльный."
@@ -178,6 +193,7 @@
   speculative_share_modifier_4:0 "Чрезвычайный указ о приостановке финансового рынка"
   speculative_share_modifier_5:0 "Указ о частных инвестициях"
   speculative_share_modifier_6:0 "Блокировка монетарного расширения"
+  speculative_share_modifier_7:0 "Недавнее регулирование [GetBuildingType('building_ef_private_construction').GetName]"
 
   status_speculative_share_1_5:0 "Финансы: #n Спекулятивный всплеск#! — рынок в состоянии эйфории. Потоки частного капитала выходят за любые разумные пределы, системный пузырь уже здесь."
   status_speculative_share_1_4:0 "Финансы: #O Перегретый рынок#! — финансовая активность взлетает, спекулятивные инвестиции опережают реальное производство."
@@ -197,14 +213,14 @@
 
   # latin_monetary_union_je_1: "Конвенция Латинского монетного союза"
   # latin_monetary_union_je_1_reason: "The Convention on the Latin Union Latine a pour objectif l’établissement d’une alliance monétaire régionale, fondée par la France, la Belgique, la Suisse et l’Italie.\n Cet accord instaure des standards communs pour les pièces d’or et d’argent, permettant aux monnaies des États membres de circuler librement dans l’ensemble de l’Union.\n\n Une fois l’entrée au journal complétée, l’objectif final est la signature d’un traité monétaire d’une durée de vingt ans entre #v la France#!, puissance initiatrice, et les #v pays participants#!.\n\n Ce traité établit un cadre monétaire commun dans lequel les États s’engagent à respecter les normes définies par la France.\n\n les pays signatére du traiter verons:\n - le taux de change or/argent fixé selon les valeur en vigeur en france\n - le standart monetaire sera fixé sur le standart monetaire français (peut importe le standart actuel)\n\n afin avec les année la valeur de la monaie de ces different pays tendron vers une valeur commune. \n\n Nombre actuel de pays dans la convention: #p [GetPlayer.MakeScope.ScriptValue('latin_monetary_union_country_in_debat')+]#!"
- 
+
   latin_monetary_union_je_1: "Конвенция Латинского монетного союза"
   latin_monetary_union_je_1_reason: "Конвенция Латинского союза направлена на создание регионального валютного альянса, основанного Францией, Бельгией, Швейцарией и Италией.\n Это соглашение устанавливает единые стандарты для золотых и серебряных монет, позволяя валютам государств-участников свободно обращаться по всей территории Союза.\n\n После завершения этой записи журнала конечной целью станет подписание двадцатилетнего валютного договора между #v Францией#!, державой-инициатором, и #v странами-участницами#!.\n\n Этот договор задаёт единые денежные рамки, в которых государства обязуются соблюдать стандарты, определённые Францией.\n\n Страны, подписывающие договор, получат:\n - соотношение обмена золото/серебро, фиксированное по значениям, действующим во Франции\n - денежный стандарт, приведённый в соответствие с французским денежным стандартом (независимо от текущего стандарта)\n\n таким образом, с годами стоимость валют этих разных стран будет стремиться к общему значению.\n\n Текущее количество стран в конвенции: #p [GetPlayer.MakeScope.ScriptValue('latin_monetary_union_country_in_debat')+]#!"
 
   latin_monetary_union_je_1_desc.1: "Франция инициировала обсуждения Латинского союза"
   latin_monetary_union_je_1_desc.2: "конвенция длилась более 6 лет"
   latin_monetary_union_je_1_desc.3: "[SCOPE.sC('target_country').GetName] подписывает #v Договор Латинского монетного союза.#!"
-  
+
   status_latin_monetary_union_je_1: "В настоящее время к конвенции присоединились:"
   status_latin_monetary_union_je_2: "#v $FRA$#!"
   status_latin_monetary_union_je_3: "- #v $BEL$#!"
@@ -217,9 +233,9 @@
   status_latin_monetary_union_je_10: "- #v $PAP$#!"
   status_latin_monetary_union_je_11: "- #v $SIC$#!"
   status_latin_monetary_union_je_12: "- #v $GRE$#!"
-  status_latin_monetary_union_je_13: "- #v $ITA$#!" 
-  status_latin_monetary_union_je_14: "- #v [ROOT.GetCountry.GetNameNoFormatting]#!" 
- 
+  status_latin_monetary_union_je_13: "- #v $ITA$#!"
+  status_latin_monetary_union_je_14: "- #v [ROOT.GetCountry.GetNameNoFormatting]#!"
+
 latin_monetary_union_progress_bar: "Количество лет дебатов"
 latin_monetary_union_progress_bar_desc: "Количество лет дебатов: [JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)] Год(лет) / 6 лет — [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]"
 
@@ -235,23 +251,23 @@ latin_monetary_union_2_button_desc: "Вы решаете снова вступи
 
   scandinavian_monetary_union_je_1: "Конвенция Скандинавского монетного союза"
   scandinavian_monetary_union_je_1_reason: "Конвенция Скандинавского монетного союза направлена на создание регионального валютного альянса, построенного вокруг общего золотого стандарта.\n Это соглашение стремится ввести единые спецификации для чеканки монет и денежно-кредитной политики, позволяя валютам подписавших государств постепенно сближаться к единой системе.\n\n После завершения этой записи журнала конечной целью станет подписание долгосрочного валютного договора между #v державой-инициатором#! и #v участвующими государствами#!.\n\n В рамках этого договора страны-подписанты обязуются принять закон #v [GetLawType('law_gold_standard').GetName]#! и [concept_money_value_target_real], определённый инициатором конвенции.\n\n Государства-подписанты будут:\n – принимать коэффициент конвертации в золото ([concept_money_value_target_real]), установленный инициатором;\n – приводить свою денежную систему к стандарту инициатора (#v Закон [GetLawType('law_gold_standard').GetName]#!), независимо от прежнего режима.\n\n Со временем стоимость их валют будет сходиться к общему золотому ориентиру.\n\n Текущее количество стран, участвующих в конвенции: #p [GetPlayer.MakeScope.ScriptValue('scandinavian_monetary_union_country_in_debat')+]#!"
-  
+
   #scandinavian_monetary_union_je_1_desc.1: ""
   scandinavian_monetary_union_je_1_desc.2: "конвенция длилась более 3 лет"
   scandinavian_monetary_union_je_1_desc.3: "[SCOPE.sC('target_country').GetName] подписывает #v Договор Скандинавского монетного союза.#!"
   scandinavian_monetary_union_je_1_desc.4: "Больше не существует действительного инициатора, способного довести конвенцию до завершения"
   scandinavian_monetary_union_je_1_desc.5: "Если переговоры провалятся, они завершатся, и вы потеряете статус инициатора."
- 
+
   status_scandinavian_monetary_union_je_1: "В настоящее время к конвенции присоединились:"
   status_scandinavian_monetary_union_je_2: "#v $SWE$#!"
   status_scandinavian_monetary_union_je_3: "#v $DEN$#!"
-  status_scandinavian_monetary_union_je_4: "#v $NOR$#!"  
- 
+  status_scandinavian_monetary_union_je_4: "#v $NOR$#!"
+
   status_scandinavian_monetary_union_je_5: "- #v $SWE$#!"
   status_scandinavian_monetary_union_je_6: "- #v $DEN$#!"
-  status_scandinavian_monetary_union_je_7: "- #v $NOR$#!"  
+  status_scandinavian_monetary_union_je_7: "- #v $NOR$#!"
 
-  status_scandinavian_monetary_union_je_8: "- #v [ROOT.GetCountry.GetNameNoFormatting]#!" 
+  status_scandinavian_monetary_union_je_8: "- #v [ROOT.GetCountry.GetNameNoFormatting]#!"
 
   scandinavian_monetary_union_progress_bar: "Количество лет дебатов"
   scandinavian_monetary_union_progress_bar_desc: "Количество лет дебатов: [JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)] Год(лет)/3 года - [JournalEntry.GetCurrentBarProgress(ScriptedProgressBar.Self)|%]"
@@ -261,7 +277,7 @@ latin_monetary_union_2_button_desc: "Вы решаете снова вступи
 
   scandinavian_monetary_union_2_button: "Снова вступить в конвенцию"
   scandinavian_monetary_union_2_button_desc: "Вы решаете снова вступить в конвенцию и быть засчитанным среди стран-подписантов по её завершении."
- 
+
 
   silver_crisis_progress_bar:0 "Длительность серебряного кризиса"
   silver_crisis_progress_bar_desc:0 "Время, прошедшее с начала #v Серебряного кризиса#!: #v [JournalEntry.GetCurrentBarValue(ScriptedProgressBar.Self)] Год(лет)#!"
@@ -280,38 +296,128 @@ latin_monetary_union_2_button_desc: "Вы решаете снова вступи
   #####################
   #bank_central JE
   #####################
+
+  bank_central_currency_JE_dollar_united_states_dollar: "TEXT"
+  bank_central_currency_JE_dollar_united_states_dollar_reason: "TEXT"
+
+  status_bank_central_currency_JE_1: "Сейчас действует #b [Localize('fiat_standard_name')]#! [GetPlayer.GetCustom('currency_good')]"
+  status_bank_central_currency_JE_2: "Сейчас действует #b [Localize('silver_standard_name')]#! @silver!"
+  status_bank_central_currency_JE_3: "Сейчас действует #b [Localize('bimetallism_standard_name')]#! @bimetallism!"
+  status_bank_central_currency_JE_4: "Сейчас действует #b [Localize('gold_standard_name')]#! @gold!"
+  status_bank_central_currency_JE_5: "Сейчас действует #b [Localize('gold_exchange_standard_name')]#! @bimetallism!"
+
+
+  bank_je_central_peso_mexican_peso: "Águila de plata"
+
+  #####################
+  #scripted gui
+  #####################
+
+  fc_fso_situation:0 "Стабильность финансового сектора"
+  pcs_fso_situation:0 "Стабильность строительного сектора"
+
+	speculative_share_1_button_tt_new:0 "$speculative_share_1_button$ \n$speculative_share_1_button_desc$\n\nВозможно, если: \n- $speculative_share_1_button_tt$\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_2').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_3').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_4').GetName|v]   \n\nЭффект:\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('bond').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_1').GetName|v] на 12 месяцев"
+	speculative_share_2_button_tt_new:0 "$speculative_share_2_button$ \n$speculative_share_2_button_desc$\n\nВозможно, если: \n- $speculative_share_2_button_tt$\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_2').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_3').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_4').GetName|v]   \n\nЭффект:\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('bond').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_1').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_2').GetName|v] на 12 месяцев, что снизит поступление финансовых продуктов в [GetBuildingType('building_financial_centre').GetName] на #r -25%#!"
+	speculative_share_3_button_tt_new:0 "$speculative_share_3_button$ \n$speculative_share_3_button_desc$\n\nВозможно, если: \n- $speculative_share_3_button_tt$\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_2').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_3').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_4').GetName|v]   \n\nЭффект:\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('bond').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_1').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_3').GetName|v] на 12 месяцев, что снизит поступление финансовых продуктов в [GetBuildingType('building_financial_centre').GetName] на #r -50%#!"
+	speculative_share_4_button_tt_new:0 "$speculative_share_4_button$ \n$speculative_share_4_button_desc$\n\nВозможно, если: \n- $speculative_share_4_button_tt$\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_2').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_3').GetName|v]\n- [GetPlayer.GetName] не имеет модификатора [GetStaticModifier('speculative_share_modifier_4').GetName|v]   \n\nЭффект:\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('bond').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('manufacture_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('agricultural_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('mining_stock').GetName]\n- [GetPlayer.GetName] вводит полный запрет на [GetGoods('railroad_stock').GetName] \n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_1').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает модификатор [GetStaticModifier('speculative_share_modifier_4').GetName|v] на 12 месяцев, что снизит поступление финансовых продуктов в [GetBuildingType('building_financial_centre').GetName] на #r -75%#!"
+
+	speculative_share_5_button_tt:0 "$speculative_share_5_button$\n\n$speculative_share_5_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_5_button_tt_1$\n- $speculative_share_5_button_tt_2$\n- $speculative_share_5_button_tt_3$\n- $speculative_share_5_button_tt_4$\n\nЭффект:\n $speculative_share_5_button_tt_effect_1$"
+   speculative_share_5_button_tt_effect_1:0 "- Начинает строительство 5 ур. [GetBuildingType('building_financial_centre').GetName] в случайном штате как частное строительство\n- Блокирует расширение [GetBuildingType('building_financial_centre').GetName] на 12 месяцев\n- Даёт модификатор [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев"
+	speculative_share_6_button_tt:0 "$speculative_share_6_button$\n\n$speculative_share_6_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_6_button_tt_1$\n- $speculative_share_6_button_tt_2$\n- $speculative_share_6_button_tt_3$\n- $speculative_share_6_button_tt_4$\n\nЭффект:\n $speculative_share_6_button_tt_effect_1$"
+   speculative_share_6_button_tt_effect_1:0 "- Начинает строительство 10 ур. [GetBuildingType('building_financial_centre').GetName] в случайном штате как частное строительство\n- Блокирует расширение [GetBuildingType('building_financial_centre').GetName] на 12 месяцев\n- Даёт модификатор [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев"
+	speculative_share_7_button_tt:0 "$speculative_share_7_button$\n\n$speculative_share_7_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_7_button_tt_1$\n- $speculative_share_7_button_tt_2$\n- $speculative_share_7_button_tt_3$\n- $speculative_share_7_button_tt_4$\n\nЭффект:\n $speculative_share_7_button_tt_effect_1$"
+   speculative_share_7_button_tt_effect_1:0 "- Начинает строительство 15 ур. [GetBuildingType('building_financial_centre').GetName] в случайном штате как частное строительство\n- Блокирует расширение [GetBuildingType('building_financial_centre').GetName] на 12 месяцев\n- Даёт модификатор [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев"
+	speculative_share_8_button_tt:0 "$speculative_share_8_button$\n\n$speculative_share_8_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_8_button_tt_1$\n- $speculative_share_8_button_tt_2$\n- $speculative_share_8_button_tt_3$\n- $speculative_share_8_button_tt_4$\n\nЭффект:\n $speculative_share_8_button_tt_effect_1$"
+   speculative_share_8_button_tt_effect_1:0 "- Начинает строительство 20 ур. [GetBuildingType('building_financial_centre').GetName] в случайном штате как частное строительство\n- Блокирует расширение [GetBuildingType('building_financial_centre').GetName] на 12 месяцев\n- Даёт модификатор [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев"
+
+  speculative_share_9_button_tt:0 "$speculative_share_9_button$\n\n$speculative_share_9_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_9_button_tt_1$\n- $speculative_share_9_button_tt_2$\n- $speculative_share_9_button_tt_3$\n\n Эффект:\n$speculative_share_9_button_tt_effect_1_1$"
+  speculative_share_9_button_tt_effect_1_1:0 "- Строит 5 [GetBuildingType('building_ef_private_construction').GetName] в случайном штате\n- Блокирует расширение [GetBuildingType('building_ef_private_construction').GetName] на 12 месяцев\n- $speculative_share_9_button_tt_effect_1$\n- [GetPlayer.GetName] получает [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_5').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_6').GetName|v] на 12 месяцев"
+  speculative_share_10_button_tt:0 "$speculative_share_10_button$\n\n$speculative_share_10_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_10_button_tt_1$\n- $speculative_share_10_button_tt_2$\n- $speculative_share_10_button_tt_3$\n\n Эффект:\n$speculative_share_10_button_tt_effect_1_1$"
+  speculative_share_10_button_tt_effect_1_1:0 "- Строит 10 [GetBuildingType('building_ef_private_construction').GetName] в случайном штате\n- Блокирует расширение [GetBuildingType('building_ef_private_construction').GetName] на 12 месяцев\n- $speculative_share_10_button_tt_effect_1$\n- $speculative_share_10_button_tt_effect_2$\n- [GetPlayer.GetName] получает [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_5').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_6').GetName|v] на 12 месяцев"
+  speculative_share_11_button_tt:0 "$speculative_share_11_button$\n\n$speculative_share_11_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_11_button_tt_1$\n- $speculative_share_11_button_tt_2$\n- $speculative_share_11_button_tt_3$\n\n Эффект:\n$speculative_share_11_button_tt_effect_1_1$"
+  speculative_share_11_button_tt_effect_1_1:0 "- Строит 15 [GetBuildingType('building_ef_private_construction').GetName] в случайном штате\n- Блокирует расширение [GetBuildingType('building_ef_private_construction').GetName] на 12 месяцев\n- $speculative_share_11_button_tt_effect_1$\n- $speculative_share_11_button_tt_effect_2$\n- [GetPlayer.GetName] получает [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_5').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_6').GetName|v] на 12 месяцев"
+  speculative_share_12_button_tt:0 "$speculative_share_12_button$\n\n$speculative_share_12_button_desc$\n\nВозможно, если:\n- Нет модификатора [GetStaticModifier('speculative_share_modifier_5').GetName|v]\n- Есть модификатор [GetStaticModifier('has_financial_center').GetName|v]\n- $speculative_share_12_button_tt_1$\n- $speculative_share_12_button_tt_2$\n- $speculative_share_12_button_tt_3$\n\n Эффект:\n$speculative_share_12_button_tt_effect_1_1$"
+  speculative_share_12_button_tt_effect_1_1:0 "- Строит 20 [GetBuildingType('building_ef_private_construction').GetName] в случайном штате\n- Блокирует расширение [GetBuildingType('building_ef_private_construction').GetName] на 12 месяцев\n- $speculative_share_12_button_tt_effect_1$\n- $speculative_share_12_button_tt_effect_2$\n- [GetPlayer.GetName] получает [GetStaticModifier('down_base_rate').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_5').GetName|v] на 12 месяцев\n- [GetPlayer.GetName] получает [GetStaticModifier('speculative_share_modifier_6').GetName|v] на 12 месяцев"
+
+  speculative_share_13_button_tt:0 "$speculative_share_13_button$\n\n$speculative_share_13_button_desc$\n\nВозможно, если:\n$speculative_share_13_button_tt_1$\n\nЭффект:\n- $speculative_share_13_button_tt_effect_1_1$"
+  speculative_share_13_button_tt_effect_1_1:0 "Один [GetBuildingType('building_ef_private_construction').GetName] в случайном штате будет полностью демонтирован, что сократит общее число [GetBuildingType('building_ef_private_construction').GetName] в стране."
+
+
+je_ef_efcc_situation:0 "Комитет по экономическому и финансовому кризису"
+je_ef_efcc_situation_reason:0 "$economic_instability_txt$ \n\n $active_desc$\n$critical_desc$\n$stabilizing_desc$ \n\n- $central_bank_bankruptcy_country_tooltip$\n\n- $currency_crisis_country_tooltip$\n\n- $economic_crisis_country_tooltip$\n\n- $financial_crash_country_tooltip$\n\n- $country_bankruptcy_tooltip$"
+
+je_efcc_progress_bar:0 "Экономическая стабилизация"
+je_efcc_progress_bar_desc:0 "Прогресс экономической стабилизации: #T [GetPlayer.MakeScope.Var('je_efcc_1_global_variable_progress_bar_1').GetValue|0] мес. / 12 мес.#!"
  
-  bank_central_currency_JE_dollar_united_states_dollar: "ТЕКСТ"
-  bank_central_currency_JE_dollar_united_states_dollar_reason: "ТЕКСТ"
+current_modifiers_efcc:0 "Действующие основные модификаторы"
+current_situation:0 "Обзор экономического и финансового кризиса"
+  
+active:0 "#N #l Активно#!#!"
+stabilizing:0 "#blue #l Стабилизация#!#!"
+critical:0 "#gold #l Критично#!#!"
+inactive:0 "#P #l Неактивно#!#!"
+ 
+active_desc: "$active$: После активации кризис накладывает собственные уникальные модификаторы на срок #l 2 года.#!"
+critical_desc: "$critical$: У вас есть один год, чтобы восстановить металлические резервы центрального банка — например, за счёт массовой продажи иностранной валюты, прямой рекапитализации государством или привлечения международных займов для центрального банка."
+stabilizing_desc: "$stabilizing$: Если в течение целого года не произойдёт ни одного кризиса, счётчики экономической нестабильности и кризисов будут обнулены — но лишь при условии, что страна #l не находится в состоянии войны.#!"
+ 
+central_bank_bankruptcy_country_var:0 "[GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]@gold!" #money_value_in_gold @gold!
+currency_crisis_country_var:0 "[GetPlayer.MakeScope.ScriptValue('money_value_dif_1_final')|%|=+]" #money_value_dif_1_final
+economic_crisis_country_var:0 "[GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]" #GDP_dif_1_final
+financial_crash_country_var:0 "[GetPlayer.MakeScope.Var('country_indice_value_dif_01').GetValue|%|=+]" #country_indice_value_dif_01
+country_bankruptcy_var:0 "#T [GetPlayer.MakeScope.Var('country_bankruptcy').GetValue|0]#!"
 
-  status_bank_central_currency_JE_1: "Текущий стандарт: #b [Localize('fiat_standard_name')]#! [GetPlayer.GetCustom('currency_good')]"
-  status_bank_central_currency_JE_2: "Текущий стандарт: #b [Localize('silver_standard_name')]#! @silver!"
-  status_bank_central_currency_JE_3: "Текущий стандарт: #b [Localize('bimetallism_standard_name')]#! @bimetallism!"
-  status_bank_central_currency_JE_4: "Текущий стандарт: #b [Localize('gold_standard_name')]#! @gold!"
-  status_bank_central_currency_JE_5: "Текущий стандарт: #b [Localize('gold_exchange_standard_name')]#! @bimetallism!"
+economic_instability_count:0 "(Счёт: #T [GetPlayer.MakeScope.Var('economic_instability_count').GetValue|0]/2#!)"
+central_bank_bankruptcy_country_count:0 "(Счёт: #T [GetPlayer.MakeScope.Var('central_bank_bankruptcy').GetValue|0]#!)"
+currency_crisis_country_count:0 "(Счёт: #T [GetPlayer.MakeScope.Var('currency_crisis').GetValue|0]#!)"
+economic_crisis_country_count:0 "(Счёт: #T [GetPlayer.MakeScope.Var('economic_crisis').GetValue|0]#!)"
+financial_crash_country_count:0 "(Счёт: #T [GetPlayer.MakeScope.Var('financial_crash').GetValue|0]#!)"
+country_bankruptcy_count:0 "(Счёт: #T [GetPlayer.MakeScope.Var('country_bankruptcy').GetValue|0]#!)"
+ 
+#economic_crisis
+status_economic_crisis_1:0 "#p Экономическая стабильность #!поддерживает устойчивый рост страны."
+status_economic_crisis_2:0 "#gold Экономический спад #!ослабляет производство и торговую активность."
+status_economic_crisis_3:0 "#N Экономический кризис #!серьёзно расстраивает национальную экономику."
+
+#currency_crisis
+status_currency_crisis_1:0 "\n#p Денежная стабильность #!поддерживает доверие к национальной валюте."
+status_currency_crisis_2:0 "\n#gold Валютная нестабильность #!начинает давить на денежные рынки."
+status_currency_crisis_3:0 "\n#N Валютный кризис #!активно дестабилизирует национальную валюту." 
+
+#financial_crash
+status_financial_crash_1:0 "\n#p Финансовая стабильность #!поддерживает здоровое состояние рынков."
+status_financial_crash_2:0 "\n#gold Финансовая нестабильность #!распространяется по финансовым рынкам."
+status_financial_crash_3:0 "\n#N Финансовый крах #!вызывает массовые потрясения на рынках."
+
+#central_bank_bankruptcy
+status_central_bank_bankruptcy_1:0 "\n#p Стабильность центрального банка #!обеспечивает доверие к денежной системе."
+status_central_bank_bankruptcy_2:0 "\n#gold Трудности центрального банка #!— у нас есть год, чтобы избежать банкротства."
+status_central_bank_bankruptcy_3:0 "\n#N Банкротство центрального банка #!нарушило контроль государства над денежной системой."
+
+#country_bankruptcy
+status_country_bankruptcy_1:0 "\n#p Бюджетная стабильность #!поддерживает устойчивость государственных финансов."
+status_country_bankruptcy_2:0 "\n#gold Долговые трудности государства #!усиливают давление на государственные финансы."
+status_country_bankruptcy_3:0 "\n#N Банкротство страны #!серьёзно подорвало доверие к государству и его финансы."
 
  
-  bank_je_central_peso_mexican_peso: "Серебряный орёл"
+central_bank_bankruptcy_country_tooltip:0 "#T #l Стоимость денег в золоте:#! [GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]@gold!#! \nТекущая золотая стоимость национальной валюты @gold! составляет #b [GetPlayer.MakeScope.ScriptValue('money_value_in_gold')|D]#! @gold!. Если это значение остаётся ниже #n 0,01#! @gold! дольше #bold 1 года#!, может наступить #l #n банкротство центрального банка#!#!. Если страна уже переживает экономическую или финансовую нестабильность, падение ниже #n 0,01#! @gold! немедленно вызовет #n многофакторный экономический кризис#!.\n > В течение #u 2 лет#! страна будет находиться в кризисе, что помешает созданию торговых путей ([concept_trade]) (спустя #u 3 года#! после кризиса вы сможете ввести новую валюту)."
 
+currency_crisis_country_tooltip:0 "#T #l Стоимость денег за 1 год:#! [GetPlayer.MakeScope.ScriptValue('money_value_dif_1_final')|%|=+]#! \nЕсли стоимость национальной валюты упадёт более чем на #n -50%#! за #bold 1 год#!, может наступить #l #n валютный кризис#!#!. Если страна уже переживает экономическую или финансовую нестабильность, обесценивание валюты более чем на #n -50%#! немедленно вызовет #n многофакторный экономический кризис#!.\n > В течение #u 2 лет#! страна будет находиться в кризисе, что помешает созданию торговых путей ([concept_trade]) (спустя #u 3 года#! после кризиса вы сможете ввести новую валюту)."
 
+economic_crisis_country_tooltip:0 "#T #l [concept_gdp] за 1 год:#! [GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]#! \nЕсли [concept_gdp] страны сократится более чем на #n -50%#! за #bold 1 год#!, может наступить #l #n экономический кризис#!#!. Если страна уже переживает экономическую или финансовую нестабильность, спад экономики более чем на #n -50%#! немедленно вызовет #n многофакторный экономический кризис#!.\n > В течение #u 2 лет#! #t все здания#! в стране получат модификатор, снижающий их производительность более чем на #N 50%#!."
 
+financial_crash_country_tooltip:0 "#T #l Изменение фондового индекса за 1 год:#! [GetPlayer.MakeScope.ScriptValue('GDP_dif_1_final')|%|=+]#! \nЕсли национальный фондовый индекс упадёт более чем на #n -50%#! за #bold 1 год#!, может наступить #l #n финансовый крах#!#!. Если страна уже переживает экономическую или финансовую нестабильность, обвал рынка более чем на #n -50%#! немедленно вызовет #n многофакторный экономический кризис#!.\n > В течение #u 2 лет#! #t все частные здания#! в стране получат модификатор, снижающий их производительность более чем на #N 50%#!."
 
+country_bankruptcy_tooltip:0 "#T #l Банкротство страны:#!#! \n Объявляя банкротство, страна вступает в период экономической нестабильности на весь срок действия модификатора. Хотя из всех крупных кризисов этот наносит экономике наименьший ущерб, он создаёт крайне уязвимое положение, в котором любой новый возникший кризис немедленно перерастёт в #n многофакторный экономический кризис#!."
+ 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# monetary_systeme_transition
+# new_currency
+# economic_instability
+# central_bank_bankruptcy_country
+# currency_crisis_country
+# economic_crisis_country
+# financial_crash_country
 
 
 

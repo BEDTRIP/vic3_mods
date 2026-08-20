@@ -1,9 +1,22 @@
-
-# Unify construction sector:
-# - keep PSC chain (construction goods -> regulator -> construction points)
-# - add E&F currency drain via pmg_market_liquidity
+﻿#############################################
+# pb+ef: the single construction sector for both mods.
 #
-# NOTE: this is based on PSC's REPLACE of building_construction_sector.
+# Keeps PSC's chain (construction goods -> regulator -> construction points) and
+# bolts E&F's currency drain onto it via pmg_market_liquidity, so E&F's monetary
+# layer sees construction spending at all. E&F's own building is disabled in
+# zz_pb_ef_disable_ef_private_construction.txt.
+#
+# Two additions of our own on top of PSC's ai_value:
+#   - a capital-state kickstart, so the AI does not stall without a first sector;
+#   - ai_construction_sector_price_pressure_bonus, which pushes the AI to build
+#     sectors when construction goods run hot (zz_pb_ef_ai_construction_values.txt).
+#
+# !! MAINTENANCE !!
+# This is a full REPLACE of PSC's own REPLACE. Everything not listed above is a
+# verbatim copy of PSC/common/buildings/zz_PSC_construction.txt.
+# RE-DIFF AGAINST PSC ON EVERY PSC UPDATE.
+# Verified against PSC 1.3.7 on 2026-08-19.
+#############################################
 
 REPLACE:building_construction_sector = {
 	building_group = bg_construction

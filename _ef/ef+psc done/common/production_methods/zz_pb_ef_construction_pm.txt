@@ -1,6 +1,24 @@
-
-# PSC construction goods production + E&F manufacture_stock output.
-# We keep PSC's construction-goods outputs and add E&F-style stock issuance.
+﻿#############################################
+# pb+ef: PSC's construction-goods output + E&F's stock issuance in one PM set.
+#
+# PSC replaces the four vanilla construction PMs so they emit
+# goods_output_*_construction instead of country_construction_add. E&F's own
+# private-sector PMs emitted manufacture_stock. Since the compatch collapses
+# both mods onto one building, both outputs have to live in the same method.
+#
+# The stock numbers are E&F's, halved -- the commented values on the right are
+# what E&F used on its own (cheaper, higher-yield) private sector. Its building
+# gave double the construction for a quarter of the goods, all off-budget,
+# which is the whole reason this compatch exists; keeping its stock yield
+# unchanged on top of PSC's full-price sector would just move the free lunch.
+#
+# !! MAINTENANCE !!
+# Everything except the goods_output_manufacture_stock_add lines is a verbatim
+# copy of PSC/common/production_methods/zz_PSC_construction.txt. If PSC retunes
+# an input or an employment number, this file silently reverts it.
+# RE-DIFF AGAINST PSC ON EVERY PSC UPDATE.
+# Verified in sync with PSC 1.3.7 on 2026-08-19 (only the four stock lines differ).
+#############################################
 
 REPLACE:pm_wooden_buildings = {
 	texture = "gfx/interface/icons/production_method_icons/wooden_buildings.dds"
