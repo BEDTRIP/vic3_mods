@@ -16,22 +16,22 @@
   #####################################################################################################################
   #####################################################################################################################
   #####################################################################################################################
-  UNI_modifier_1:0 "Престижный товар действительно необходим"
+  UNI_modifier_1:0 "Люксовый товар действительно необходим"
 
-  modifier_desactive_building:0 "Окупированная область"
+  modifier_desactive_building:0 "Оккупированная область"
   silver_mine_max_level:0 "Максимальный уровень серебряных рудников"
 
-  modifier_desactive_building:0 "Окупированная область"
-  country_credit_note_mult:0 "Мультипликатор страны"
-  country_credit_note_add:0 "Добавление страны"
-  country_credit_note_add_desc:0 "Увеличение общего рейтинга страны на +0.5 за уровень учреждения"
-  country_credit_note_mult_desc:0 "Увеличение общего рейтинга страны на 5% за уровень учреждения"
+  modifier_desactive_building:0 "Оккупированная область"
+  country_credit_note_mult:0 "Множитель кредитного рейтинга страны"
+  country_credit_note_add:0 "Прибавка к кредитному рейтингу страны"
+  country_credit_note_add_desc:0 "Увеличение общего рейтинга страны на +0,5 за уровень института"
+  country_credit_note_mult_desc:0 "Увеличение общего рейтинга страны на 5% за уровень института"
   financial_product_by_trade_route_mult:0 "Финансовый продукт по торговому маршруту"
-  financial_product_by_trade_route_mult_desc:0 "Представляет общую долю конкретного типа финансового продукта, который может быть включён в заказ продажи через импорт"
+  financial_product_by_trade_route_mult_desc:0 "Представляет общую долю конкретного типа финансового продукта, который может быть включён в приказ о продаже через импорт"
 
 
-  rise_base_rate:0 "Повышение базовой ставки"
-  down_base_rate:0 "Снижение базовой ставки"
+  rise_base_rate:0 "Повышение ключевой ставки"
+  down_base_rate:0 "Снижение ключевой ставки"
 
   devaluation_currency_target:0 "Девальвация целевого денежного значения"
   revaluation_currency_target:0 "Ревальвация целевого денежного значения"
@@ -42,10 +42,10 @@
   #building:
   ################################
 
-  building_silver_mine_throughput_add:0 "$building_silver_mine$ строит [concept_throughput]"
+  building_silver_mine_throughput_add:0 "[concept_throughput] $building_silver_mine$"
 
 
-  modifier_desactive_bank:0 "Банк заморожен"
+  modifier_desactive_bank:0 "Банк отключён"
   leading_currency_type:0 "Тип ведущей валюты"
 
   devaluation_currency_25:0 "Девальвация 25%"
@@ -68,13 +68,13 @@
   revaluation_currency_75_small:0 "@revaluation_txt! 75%"
   revaluation_currency_100_small:0 "@revaluation_txt! 100%"
 
-  devaluation_txt_prev:0 "Нет инфляции по денежной политике, если базовая цена товара [GetPlayer.GetCustom('currency_name')] [GetPlayer.GetCustom('currency_good')] выше #n 50%#! (Фактически: [GetPlayer.MakeScope.ScriptValue('currency_market_goods_lake_ratio')|%|-]) или в дефиците"
+  devaluation_txt_prev:0 "Нет инфляции от денежной политики, если базовая цена товара [GetPlayer.GetCustom('currency_name')] [GetPlayer.GetCustom('currency_good')] выше #n 50%#! (сейчас: [GetPlayer.MakeScope.ScriptValue('currency_market_goods_lake_ratio')|%|-]) или если товар в дефиците"
 
-  customs_union_limit_20:0  "Лимит для таможенного союза 20%"
-  protectora_limit_30:0 "Лимит для протектората 30%"
-  dominion_limit_50:0   "Лимит для доминиона 75%"
-  other_subject_type_limit_50:0 "Лимит для других типов субъектов 50%"
-  puppet_limit_75:0  "Лимит для марионетки 75%"
+  customs_union_limit_20:0  "Лимит таможенного союза 20%"
+  protectora_limit_30:0 "Лимит протектората 30%"
+  dominion_limit_50:0   "Лимит для доминиона 50%"
+  other_subject_type_limit_50:0 "Лимит прочих типов субъектов 50%"
+  puppet_limit_75:0  "Лимит марионетки 75%"
 
   release_ammunition_1:0 "Высвободить @ammunition!"
   store_ammunition_1:0 "Накопить @ammunition!"
@@ -199,12 +199,12 @@
   bond_deemande:0 "Спрос на облигации"
   manufacture_stock_deemande:0 "Спрос на промышленные акции"
   agricultural_stock_deemande:0 "Спрос на сельскохозяйственные акции"
-  mining_stock_deemande:0 "Спрос на добывающие акции"
+  mining_stock_deemande:0 "Спрос на горнодобывающие акции"
   railroad_stock_deemande:0 "Спрос на железнодорожные акции"
 
 
   goods_input_railroad_stock_mult:0 "Мультипликатор железнодорожных акций"
-  goods_input_mining_stock_mult:0 "Мультипликатор гррнодобывающих акций"
+  goods_input_mining_stock_mult:0 "Мультипликатор горнодобывающих акций"
   goods_input_agricultural_stock_mult:0 "Мультипликатор сельскохозяйственных акций"
   goods_input_bond_mult:0 "Мультипликатор облигаций"
   goods_input_manufacture_stock_mult:0 "Мультипликатор промышленных акций"
@@ -297,8 +297,8 @@
   state_building_financial_centre_que_max_level_add:0 "Максимальный уровень Bourse de Montréal"
   state_building_financial_centre_que_max_level_add_desc:0 "Максимальный уровень Bourse de Montréal"
 
-  state_building_financial_centre_rus_max_level_add:0 "Максимальный уровень Санкт-Петербургской биржы"
-  state_building_financial_centre_rus_max_level_add_desc:0 "Максимальный уровень Санкт-Петербургской биржы"
+  state_building_financial_centre_rus_max_level_add:0 "Максимальный уровень Санкт-Петербургской биржи"
+  state_building_financial_centre_rus_max_level_add_desc:0 "Максимальный уровень Санкт-Петербургской биржи"
 
   state_building_financial_centre_saf_max_level_add:0 "Максимальный уровень Johannesburg Stock Exchange"
   state_building_financial_centre_saf_max_level_add_desc:0 "Максимальный уровень Johannesburg Stock Exchange"
@@ -358,16 +358,16 @@
   weak_currency:0 "Слабая валюта"
   balanced_currency:0 "Сбалансированная\nвалюта"
   strong_currency:0 "Сильная валюта"
-  extreme_weak_currency:0 "Сверх слабая валюта"
+  extreme_weak_currency:0 "Крайне слабая валюта"
 
-  money_value_in_gold:0 "Стоимость денег (в золоте @gold!)"
+  money_value_in_gold:0 "Стоимость денег (в #gold золоте @gold!#!)"
   compare_to_the_average:0 "В сравнении со средним"
   money_value_median:0 "Средняя стоимость денег"
   modifier_currency_value:0 "Сила валюты"
 
-  1_25_median:0 "(> 1.25 Среднее)"
+  1_25_median:0 "(> 1,25 от среднего)"
  # 1_25_median_0_75
-  0_75_median:0 "(< 0.75 Среднее)"
+  0_75_median:0 "(< 0,75 от среднего)"
 
   modifier_on_import_trade_route:0 "Модификатор\nторгового маршрута\nпо импорту"
   modifier_on_import_trade_route_desc:0 "[GetPlayer.MakeScope.ScriptValue('difference_with_average_gold_exchange_rate_currencies_revers')|%|+=]\nпреимущество по импорту"
@@ -375,7 +375,7 @@
   modifier_on_export_trade_route_desc:0 "[GetPlayer.MakeScope.ScriptValue('difference_with_average_gold_exchange_rate_currencies_revers_normalized')|%|=+]\nпреимущество по экспорту"
 
 
-  economic_instability_txt:0 "Счётчик экономической нестабильности увеличивается на 1 за каждый кризис, который происходит. Если он достигает 2 или более, он запускает все кризисы, которые зарегистрировали одно или более инцидентов."
+  economic_instability_txt:0 "Счётчик экономической нестабильности увеличивается на 1 за каждый произошедший кризис. Если он достигает 2 или более, запускаются все кризисы, по которым зафиксирован хотя бы один инцидент."
 
 
   economic_instability:0 "Счётчик экономической нестабильности"
@@ -386,11 +386,11 @@
 
   current_status:0 "Текущий статус"
   current_crisis:0 "Текущий кризис"
-  nothing_status:0 "Текущий статус отсутствует"
+  nothing_status:0 "Значимых модификаторов нет"
   nothing_crisis:0 "Текущий кризис отсутствует"
 
-  foreign_exchange_controls:0 "Контроль валютного рынка"
-  monetary_systeme_transition:0 "Переход к денежной системе"
+  foreign_exchange_controls:0 "Валютный контроль"
+  monetary_systeme_transition:0 "Смена денежного стандарта"
   new_currency:0 "Введение новой валюты"
 
   global_monetary_reference:0 "Глобальный денежный эталон"
@@ -464,7 +464,7 @@
   eco_ghanaian_pound_leading_currency_type:0 "Отношение к ганскому фунту"
   eco_nigerian_naira_leading_currency_type:0 "Отношение к нигерийской найре"
   eco_south_african_rand_leading_currency_type:0 "Отношение к южноафриканскому ранду"
-  eco_tuareg_ouguiya_leading_currency_type:0 "Отношение к туарегскому угия"
+  eco_tuareg_ouguiya_leading_currency_type:0 "Отношение к туарегской угии"
   eco_west_african_eco_leading_currency_type:0 "Отношение к западноафриканскому эко"
   franc_belgian_franc_leading_currency_type:0 "Отношение к бельгийскому франку"
   franc_french_franc_leading_currency_type:0 "Отношение к французскому франку"
@@ -474,7 +474,7 @@
   gulden_bavarian_gulden_leading_currency_type:0 "Отношение к баварскому гульдену"
   gulden_florin_leading_currency_type:0 "Отношение к флорину"
   gulden_hungarian_forint_leading_currency_type:0 "Отношение к венгерскому форинту"
-  gulden_indies_guilder_leading_currency_type:0 "Отношение к голландскому гульдену"
+  gulden_indies_guilder_leading_currency_type:0 "Отношение к ост-индскому гульдену"
   gulden_south_german_gulden_leading_currency_type:0 "Отношение к южногерманскому гульдену"
   krone_czech_koruna_leading_currency_type:0 "Отношение к чешской кроне"
   krone_danish_krone_leading_currency_type:0 "Отношение к датской кроне"
@@ -488,8 +488,8 @@
   lira_leading_currency_type:0 "Отношение к лире"
   lira_ducato_leading_currency_type:0 "Отношение к дукату"
   lira_ottoman_lira_leading_currency_type:0 "Отношение к османской лире"
-  lira_scudo_pontificio_leading_currency_type:0 "Отношение к скудо Понтифицио"
-  lira_scudo_sardo_leading_currency_type:0 "Отношение к скудо Сардо"
+  lira_scudo_pontificio_leading_currency_type:0 "Отношение к папскому скудо"
+  lira_scudo_sardo_leading_currency_type:0 "Отношение к сардинскому скудо"
   lira_toscane_lira_leading_currency_type:0 "Отношение к тосканской лире"
   mark_leading_currency_type:0 "Отношение к марке"
   mark_finnish_markka_leading_currency_type:0 "Отношение к финской марке"
@@ -498,7 +498,7 @@
   peso_bolivien_peso_leading_currency_type:0 "Отношение к боливийскому песо"
   peso_chilean_peso_leading_currency_type:0 "Отношение к чилийскому песо"
   peso_colombian_peso_leading_currency_type:0 "Отношение к колумбийскому песо"
-  peso_costa_rican_colon_leading_currency_type:0 "Отношение к коста-риканскому колону"
+  peso_costa_rican_colon_leading_currency_type:0 "Отношение к костариканскому колону"
   peso_cuban_peso_leading_currency_type:0 "Отношение к кубинскому песо"
   peso_ecuadorian_peso_leading_currency_type:0 "Отношение к эквадорскому песо"
   peso_el_salvador_colon_leading_currency_type:0 "Отношение к сальвадорскому колону"
@@ -522,12 +522,12 @@
   spe_dong_leading_currency_type:0 "Отношение к донгу"
   spe_drachma_leading_currency_type:0 "Отношение к драхме"
   spe_korean_won_leading_currency_type:0 "Отношение к корейской воне"
-  spe_latvian_lats_leading_currency_type:0 "Отношение к латвийскому латy"
+  spe_latvian_lats_leading_currency_type:0 "Отношение к латвийскому лату"
   spe_lithuanian_litas_leading_currency_type:0 "Отношение к литовскому литу"
   spe_peseta_leading_currency_type:0 "Отношение к песете"
   spe_ruble_leading_currency_type:0 "Отношение к рублю"
   spe_uni_leading_currency_type:0 "Отношение к уни"
-  spe_yen_leading_currency_type:0 "Отношение к йене"
+  spe_yen_leading_currency_type:0 "Отношение к иене"
   spe_yuan_leading_currency_type:0 "Отношение к юаню"
   spe_zloti_leading_currency_type:0 "Отношение к злотому"
   thaler_hannoveraner_thaler_leading_currency_type:0 "Отношение к ганноверскому талеру"

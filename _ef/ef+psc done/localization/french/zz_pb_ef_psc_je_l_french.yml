@@ -1,5 +1,5 @@
 ﻿# GENERATED FILE -- do not edit by hand.
-# Rebuilt by tools/regen_ef_psc_copies.py from 01_ef_je_localization_l_french.yml
+# Rebuilt by tools/regen_ef_psc_copies.py from E&F: 01_ef_je_localization_l_french.yml
 # keeping only the lines that name building_ef_private_construction, renamed to building_construction_sector.
 # Hand-written strings live in zz_pb_ef_psc_l_french.yml and are skipped here.
 # ScriptValue('building_ef_private_construction_lvl') is left alone on purpose: that key name stays,

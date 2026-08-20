@@ -1,5 +1,5 @@
 ﻿# GENERATED FILE -- do not edit by hand.
-# Rebuilt by tools/regen_ef_psc_copies.py from 00_ef_companies.txt
+# Rebuilt by tools/regen_ef_psc_copies.py from E&F: 00_ef_companies.txt
 # with building_ef_private_construction -> building_construction_sector.
 # Re-run that script after every E&F update.
 

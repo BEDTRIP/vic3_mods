@@ -21,9 +21,9 @@
   building_bank:0 "Центральный банк"
 
   ## Financial place
-  building_financial_centre_scripted:0 "Фондовая биржа [ROOT.GetCountry.GetCapital.GetNameNoFormatting]"
+  building_financial_centre_scripted:0 "Фондовая биржа ([ROOT.GetCountry.GetCapital.GetNameNoFormatting])"
   building_financial_centre:0 "Финансовый центр" 
-  bg_financial_centre:0 "Финансовый центр"
+  bg_financial_centre:0 "Финансовые центры"
 
   building_financial_centre_arg:0 "Bolsa de Comercio de Buenos Aires"
   building_financial_centre_aus:0 "Wiener Börse"
@@ -68,7 +68,7 @@
   building_financial_centre_sax:0 "Sächsische Börse"
 
   ## National Stockpile
-  building_national_stockpile:0 "Национальные запасы"
+  building_national_stockpile:0 "Национальный резерв"
 
   ## CompagnyF
 

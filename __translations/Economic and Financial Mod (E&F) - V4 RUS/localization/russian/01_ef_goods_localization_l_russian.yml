@@ -55,7 +55,7 @@
   eco_ghanaian_pound_c:0 "Ганский фунт"
   eco_nigerian_naira_c:0 "Нигерийская найра"
   eco_south_african_rand_c:0 "Южноафриканский ранд"
-  eco_tuareg_ouguiya_c:0 "Туарегский угия"
+  eco_tuareg_ouguiya_c:0 "Туарегская угия"
   eco_west_african_eco_c:0 "Западноафриканский эко"
 
   # Franc
@@ -69,7 +69,7 @@
   gulden_bavarian_gulden_c:0 "Баварский гульден"
   gulden_florin_c:0 "Флорин"
   gulden_hungarian_forint_c:0 "Венгерский форинт"
-  gulden_indies_guilder_c:0 "Голландский гульден Ост-Индии"
+  gulden_indies_guilder_c:0 "Ост-индский гульден"
   gulden_south_german_gulden_c:0 "Южногерманский гульден"
 
   # Krone
@@ -89,7 +89,7 @@
   lira_c:0 "Лира"
   lira_ducato_c:0 "Дукат"
   lira_ottoman_lira_c:0 "Османская лира"
-  lira_scudo_pontificio_c:0 "Понтификский скудо"
+  lira_scudo_pontificio_c:0 "Папский скудо"
   lira_scudo_sardo_c:0 "Сардинский скудо"
   lira_toscane_lira_c:0 "Тосканская лира"
 
@@ -103,7 +103,7 @@
   peso_bolivien_peso_c:0 "Боливийское песо"
   peso_chilean_peso_c:0 "Чилийское песо"
   peso_colombian_peso_c:0 "Колумбийское песо"
-  peso_costa_rican_colon_c:0 "Коста-риканский колон"
+  peso_costa_rican_colon_c:0 "Костариканский колон"
   peso_cuban_peso_c:0 "Кубинское песо"
   peso_ecuadorian_peso_c:0 "Эквадорское песо"
   peso_el_salvador_colon_c:0 "Сальвадорский колон"
@@ -140,9 +140,9 @@
   spe_peseta_c:0 "Песета"
   spe_ruble_c:0 "Рубль"
   spe_uni_c:0 "Уни"
-  spe_yen_c:0 "Йена"
+  spe_yen_c:0 "Иена"
   spe_yuan_c:0 "Юань"
-  spe_zloti_c:0 "Злоты"
+  spe_zloti_c:0 "Злотый"
 
   # Thaler
   thaler_hannoveraner_thaler_c:0 "Ганноверский талер"

@@ -1,0 +1,76 @@
+﻿#############################################
+# 7d. Pre-seed the two country variables that history/buildings uses before
+#     history/global has a chance to set them.
+#
+# THE ERROR
+#   Failed to fetch variable for 'country_already_financial_center' due to not being set
+#   Invalid left side during comparison 'var'
+#     common/scripted_effects/09_introduction_building_lvl.txt:22681
+#     common/history/buildings/00_ef_building.txt:2999
+#
+# WHAT HAPPENS
+# 00_ef_building.txt:2999 calls `financial_center_modifier = yes` for the
+# historic financial-centre countries. That effect reads exactly two variables:
+#
+#   line  43  add_modifier = { name = financial_center_place
+#                              multiplier = var:gdp_view_fc }
+#   line 22725 not = { var:country_already_financial_center = 1 }
+#
+# Both are initialised in exactly one place at campaign start:
+#   common/history/global/00_ef_economic_global_variable.txt
+#     :628  country_already_financial_center = 0   (GLOBAL -> every_country)
+#     :784  gdp_view_fc                      = 5   (GLOBAL -> every_country)
+#
+# common/history/buildings/ is processed BEFORE common/history/global/, so at
+# the moment the effect runs neither variable exists yet. Hence the two errors,
+# once per affected country.
+#
+# WHY IT IS NOT JUST LOG NOISE
+# The failing read on line 43 is a modifier multiplier. When it comes back as
+# none the `financial_center_place` modifier is applied with a broken scale, so
+# the historic financial centres start the game mis-sized. The comparison on
+# 22725 failing is cosmetic by comparison -- history/global resets the flag to
+# 0 straight afterwards anyway.
+#
+# WHY HERE AND NOT IN 00_ef_building.txt
+# BUILDINGS blocks are additive and files in this folder are processed in name
+# order, so `00_a_` lands before `00_ef_building.txt` without overriding
+# anything. Doing it inside 00_ef_building.txt would mean carrying yet another
+# edit to a 4200-line file we already override for two other reasons.
+#
+# Both writes are guarded by has_variable, so if the E&F author ever moves his
+# init earlier this file silently becomes a no-op instead of clobbering him.
+# The values are his: 0 and 5.
+#
+# SCOPE NOTE: BUILDINGS is a country-iterating context here, same as E&F uses
+# on the very next line of its own file -- `BUILDINGS = { every_country = { ...`.
+#
+# NOT FIXED HERE, but found while digging: 00_ef_building.txt:117 calls
+# `initialize_historic_macro_facilities_ns = { ... }`, and that effect's only
+# definition is commented out at 09_introduction_building_lvl.txt:23546. The
+# call therefore resolves to nothing. Left alone -- removing it changes what
+# the campaign starts with, which is a decision for the E&F author, not a fix.
+#############################################
+
+BUILDINGS = {
+	every_country = {
+		if = {
+			limit = {
+				NOT = { has_variable = country_already_financial_center }
+			}
+			set_variable = {
+				name = country_already_financial_center
+				value = 0
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = gdp_view_fc }
+			}
+			set_variable = {
+				name = gdp_view_fc
+				value = 5
+			}
+		}
+	}
+}

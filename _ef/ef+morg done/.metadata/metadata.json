@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "ComPatch E&F + Morgenroete",
   "id": "3637341756",
-  "version": "1.13.10",
+  "version": "1.13.10-1",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Morgenroete",
   "picture": "thumbnail.png",
@@ -34,6 +34,13 @@
     },
     {
       "rel_type": "dependency",
+      "id": "3786286962",
+      "display_name": "E&F 1.13.10 Hotfix",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
       "id": "2889925770",
       "display_name": "Morgenroete",
       "resource_type": "mod",
@@ -60,6 +67,12 @@
         "display_name": "Economic and Financial Mod (E&F) - V4",
         "version": "04.07.2026",
         "date": "2026-07-04"
+      },
+      {
+        "id": "3786286962",
+        "display_name": "E&F 1.13.10 Hotfix",
+        "version": "1.13.10-2",
+        "date": "2026-08-19"
       },
       {
         "id": "2889925770",

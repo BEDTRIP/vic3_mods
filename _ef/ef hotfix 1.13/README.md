@@ -373,11 +373,36 @@ Re-checked against E&F 04.07.2026 and it now looks unnecessary: `common/history/
 
 It is kept for now only because the original log that showed the spam could not be re-read during this pass. **Start a game with this file disabled, grep `error.log` for those two lines, and if it is clean, delete the file.** Every write is guarded by `NOT = { has_variable = ... }`, so leaving it in cannot do harm in the meantime — it just runs a loop over every state at game start for nothing.
 
+### `common/history/buildings/00_a_ef_history_var_init.txt` — the `country_already_financial_center` spam
+
+```
+Failed to fetch variable for 'country_already_financial_center' due to not being set
+Invalid left side during comparison 'var'
+  common/scripted_effects/09_introduction_building_lvl.txt:22681
+  common/history/buildings/00_ef_building.txt:2999
+```
+
+`00_ef_building.txt:2999` calls `financial_center_modifier = yes` for the historic financial-centre countries. That effect reads exactly two variables — nothing else:
+
+| where | read |
+|---|---|
+| `financial_center_modifier` line 43 | `add_modifier = { name = financial_center_place  multiplier = var:gdp_view_fc }` |
+| `financial_center_modifier` line 22725 | `not = { var:country_already_financial_center = 1 }` |
+
+Both are initialised in exactly one place at campaign start — `common/history/global/00_ef_economic_global_variable.txt`, line 628 (`= 0`) and line 784 (`= 5`), both under `GLOBAL -> every_country`. And `common/history/buildings/` is processed **before** `common/history/global/`, so when the effect runs neither variable exists.
+
+Checked the rest of what `00_ef_building.txt` calls, and this is the only one affected: `establish_bank_and_ef_compagnie` (9658 lines), `initialize_historic_macro_facilities_bc`, `initialize_historic_macro_facilities_fc` and `is_valid_country_hmm` read no variables at all.
+
+**This one is not just log noise.** The failing read on line 43 is a modifier multiplier — when it comes back `none` the `financial_center_place` modifier is applied with a broken scale, so the historic financial centres start the game mis-sized. The comparison at 22725 failing really is cosmetic: history/global resets that flag to 0 immediately afterwards regardless.
+
+The fix is a separate additive `BUILDINGS` block. Files in the folder are processed in name order and `BUILDINGS` blocks stack, so `00_a_` lands ahead of `00_ef_building.txt` without overriding it. Both writes are guarded by `has_variable`, so if the author ever moves his init earlier this file quietly becomes a no-op. The values are his: 0 and 5.
+
+Found while digging, **not fixed**: `00_ef_building.txt:117` calls `initialize_historic_macro_facilities_ns = { ... }`, whose only definition is commented out at `09_introduction_building_lvl.txt:23546` — the call resolves to nothing. Removing it would change what the campaign starts with, which is the author's call, not a hotfix's.
+
 ---
 
 ## Left undone
 
-- `00_ef_building.txt:2999` — `financial_center_modifier` runs in `none` scope, **1282 errors** per game start. The cure lives inside `09_introduction_building_lvl.txt:22135`, ~15,000 lines of somebody else's code.
 - 34 orphaned modifier type sets (from the cut goods) — the 140 `defined in script but not in code` warnings.
 - The Tunisian and Yugoslav dinars are left in: tags `c:TUN` and `c:YUG` stand behind them, and if a player forms those countries they land in the same state block 2 fixes.
 - `bank_je_central_1` cannot complete (see section 6). A bug report for the E&F author, not something to patch here.
@@ -480,10 +505,11 @@ Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/shared
 [*]Replaced with an amount computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve
 [/list]
 
-[*][b]Two script guards[/b]
+[*][b]Three script guards[/b]
 [list]
 [*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], which is zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
 [*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist when the source list comes back empty
+[*]The historic financial centres are set up from [i]history/buildings[/i], which runs before [i]history/global[/i] — so the two variables that setup reads do not exist yet. Besides the log spam, one of them is a modifier multiplier, so those centres started the game mis-sized
 [/list]
 
 [*][b]Currency laws were unavailable to everyone[/b]
@@ -496,7 +522,6 @@ Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/shared
 [h2]Not fixed[/h2]
 [list]
 [*][i]budget_panel.gui[/i] and [i]construction_panel.gui[/i] are equally out of date but hold real E&F reworks — they need a manual merge, not a vanilla swap. Expect trouble at bankruptcy and in the ship construction queue
-[*][i]financial_center_modifier[/i] runs in [i]none[/i] scope: 1282 errors per game start, buried in ~15,000 lines
 [/list]
 
 [i]Overrides five E&F files and six vanilla .gui files, so it has to be rebuilt after every E&F update and every game patch.[/i]

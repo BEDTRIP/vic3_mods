@@ -6,13 +6,16 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [*]Community Mod Framework (CMF)
 [*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]Economic and Financial (E&F)
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]my E&F Hotfix[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]my E&F Hotfix[/url] — [b]required[/b], see below
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*]Morgenröte
 [*][b]E&F + Morgenröte ComPatch (this mod)[/b]
 [/list]
 
 [i]Place your other mods after this only if they do not overwrite the same files in common/.[/i]
+
+[h2]The hotfix is not optional[/h2]
+Victoria 3 caps the goods database at 128 entries and crashes on entering a campaign above that — silently, with nothing in error.log. Vanilla ships 53, E&F adds 73, Morgenröte adds 5, which lands on [b]131[/b]. The [b]E&F Hotfix[/b] comments out eight dead currency goods and brings the pair down to [b]123[/b]. Run E&F and Morgenröte together without it and the game will not start.
 [h2]What this patch does[/h2]
 [list]
 [*][b]Adds E&F financial PM-groups to Morgenröte buildings[/b]
@@ -50,6 +53,7 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [h2]Notes[/h2]
 [list]
 [*]This patch is designed to be [b]minimal[/b] and only overrides what’s needed for integration.
+[*]Four things here are upstream content plus a short list of deliberate additions: the 62-building liquidity list, the two E&F inflation baskets, and the two Morgenröte Tesla triggers. [i]tools/check_ef_morg_drift.py[/i] in the repo re-derives all four from the current mods and reports anything that moved — run it after every E&F or Morgenröte update.
 [*][i]buy_packages[/i] need no patch: E&F uses INJECT and Morgenröte uses TRY_INJECT on the same [i]wealth_*[/i] keys, so both pop needs are applied.
 [*][i]building_railway[/i] needs no patch either — both mods inject into it rather than replacing it.
 [*]It does [b]not[/b] guarantee compatibility with other mods that also heavily edit the same [b]common/[/b] areas.

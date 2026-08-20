@@ -48,10 +48,10 @@
   dlc_ef_desc: "Economic and Financial Mod, который превращает игру в настоящую симуляцию экономического и финансового управления"
 
   EF_gold_gui_stack: "#v [GetPlayer.MakeScope.ScriptValue('EF_gold_gui_stack')] #!стек по #v 100M #!@gold!"
-  EF_gold_gui_room: "Золото хранится в #v [GetPlayer.MakeScope.ScriptValue('EF_gold_gui_room')] #! хранилище"
+  EF_gold_gui_room: "Золото хранится в #v [GetPlayer.MakeScope.ScriptValue('EF_gold_gui_room')] #! хранилищах"
 
   EF_silver_gui_stack: "#v [GetPlayer.MakeScope.ScriptValue('EF_silver_gui_stack')] #!стек по #v 500M #!@silver!"
-  EF_silver_gui_room: "Серебро хранится в #v [GetPlayer.MakeScope.ScriptValue('EF_silver_gui_room')] #! хранилище"
+  EF_silver_gui_room: "Серебро хранится в #v [GetPlayer.MakeScope.ScriptValue('EF_silver_gui_room')] #! хранилищах"
 
 
 
@@ -71,7 +71,7 @@ metal_barometre_1: "#gold Золото @gold!#! крайне #n дешёвое#!
 metal_barometre_2: "#gold Золото @gold!#! очень дешёвое — #gray Серебро @silver!#! очень дорогое"
 metal_barometre_3: "#gold Золото @gold!#! дешёвое — #gray Серебро @silver!#! дорогое"
 metal_barometre_4: "#gold Золото @gold!#! справедливо оценено — #gray Серебро @silver!#! справедливо оценено"
-metal_barometre_5: "#gold Золото @gold!#! слегка дорогое — #gray Серебро @silver!#! немного слабое"
+metal_barometre_5: "#gold Золото @gold!#! слегка дорогое — #gray Серебро @silver!#! слегка слабое"
 metal_barometre_6: "#gold Золото @gold!#! очень дорогое — #gray Серебро @silver!#! очень слабое"
 metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#! — #gray Серебро @silver!#! #n почти ничего не стоит#!"
 
@@ -178,7 +178,7 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
 
   #for_list
 
-  money_value_in_paper_no_bc_top_bar_for_list:0 "@uni! = #b [Country.MakeScope.ScriptValue('money_value_rapported_inflation')|D3]#!
+  money_value_in_paper_no_bc_top_bar_for_list:0 "@uni! = #b [Country.MakeScope.ScriptValue('money_value_rapported_inflation')|D3]#!"
   money_value_in_paper_top_bar_for_list:0 "[Country.GetCustom('currency_symbol')] = #b [Country.MakeScope.ScriptValue('money_value_rapported_inflation')|D3]#!"
 
   money_value_in_silver_top_bar_for_list:0 "#b [Country.MakeScope.ScriptValue('money_value_in_gold')|3]#! @silver!"
@@ -248,7 +248,7 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
   concept_government_treasury_desc:1 "Еженедельный профицит бюджета [Concept('concept_country','$concept_country_possessive$')] накапливается в $concept_government_treasury$. При отрицательном балансе любые [concept_money] в $concept_government_treasury$ будут потрачены в первую очередь, прежде чем $concept_country$ начнёт брать [concept_loans].       "
 
   building_urban_center_lvl_by_base_rate:0 "[concept_building_urban_center_lvl_by_base_rate]"
-  concept_building_urban_center_lvl_by_base_rate:0 "Максимальный уровень Частного строительного сектора"
+  concept_building_urban_center_lvl_by_base_rate:0 "Максимальный уровень частного строительного сектора"
   concept_building_urban_center_lvl_by_base_rate_desc:1 "Максимальный уровень [GetBuildingType('building_ef_private_construction').GetName] определяется количеством [GetBuildingType('building_urban_center').GetName] в области и [concept_base_rate_percentage]. Для [concept_base_rate_percentage] 1% или менее максимальный уровень равен количеству [GetBuildingType('building_urban_center').GetName]. Для [concept_base_rate_percentage] 10% максимальный уровень [GetBuildingType('building_ef_private_construction').GetName] равен 1."
 
   # credit_at_central_bank_interest_1_years:0 "Interest to be repaid per years"
@@ -267,7 +267,7 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
   BUDGET_GOVERNMENT_EXPENSES:0 "Государственные расходы"
   NATIONAL_BALANCE:0 "Финансовый баланс"
 
-  private_bank_title:0 "[concept_investment_pool] - Частный банк"
+  private_bank_title:0 "[concept_investment_pool] — Частный банк"
 
   FINANCIAL_CENTRE_TITLE_arg:0 "[Concept('concept_financial_centre','Bolsa de Comercio de Buenos Aires')]"
   FINANCIAL_CENTRE_TITLE_aus:0 "[Concept('concept_financial_centre','Wiener Börse')]"
@@ -347,7 +347,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   alert_buy_sell_wood_order_name:0 "Выполняется заявка на покупку/продажу древесины @wood!"
   alert_buy_sell_wood_order_hint:0 "Заявка на покупку/продажу будет исполнена менее чем через 1 месяц."
   alert_buy_sell_wood_order_action:0 "Глобальная панель"
-  alert_buy_sell_groceries_order_name:0 "Выполняется заявка на покупку/продажу бакалеи @groceries!"
+  alert_buy_sell_groceries_order_name:0 "Выполняется заявка на покупку/продажу продуктов @groceries!"
   alert_buy_sell_groceries_order_hint:0 "Заявка на покупку/продажу будет исполнена менее чем через 1 месяц."
   alert_buy_sell_groceries_order_action:0 "Глобальная панель"
   alert_buy_sell_clothes_order_name:0 "Выполняется заявка на покупку/продажу одежды @clothes!"
@@ -359,7 +359,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   alert_buy_sell_silk_order_name:0 "Выполняется заявка на покупку/продажу шёлка @silk!"
   alert_buy_sell_silk_order_hint:0 "Заявка на покупку/продажу будет исполнена менее чем через 1 месяц."
   alert_buy_sell_silk_order_action:0 "Глобальная панель"
-  alert_buy_sell_dye_order_name:0 "Выполняется заявка на покупку/продажу красителя @dye!"
+  alert_buy_sell_dye_order_name:0 "Выполняется заявка на покупку/продажу красителей @dye!"
   alert_buy_sell_dye_order_hint:0 "Заявка на покупку/продажу будет исполнена менее чем через 1 месяц."
   alert_buy_sell_dye_order_action:0 "Глобальная панель"
   alert_buy_sell_sulfur_order_name:0 "Выполняется заявка на покупку/продажу серы @sulfur!"
@@ -512,15 +512,15 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   #money_supply:0 "Money Supply"
   money_supply_montly:0 "Денежная масса за месяц"
 
-  GDP_var_year_1:0 "Изменение ВВП - 1 год"
-  GDP_var_year_5:0 "Изменение ВВП - 5 лет"
-  GDP_var_year_10:0 "Изменение ВВП - 10 лет"
+  GDP_var_year_1:0 "Изменение ВВП — 1 год"
+  GDP_var_year_5:0 "Изменение ВВП — 5 лет"
+  GDP_var_year_10:0 "Изменение ВВП — 10 лет"
 
   ## no_formated :
 
   money_value_no_formated:0 "Стоимость денег"
   money_supply_no_formated:0 "Денежная масса"
-  national_capacity_no_formated:0 "Национальный потенциал"
+  national_capacity_no_formated:0 "Национальный капитал"
   inflation_rate_no_formated:0 "Темп инфляции"
 
 
@@ -540,7 +540,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   engaged_private_banks:0 "Прямые инвестиции в частные банки"
 
-  chartered_c:0 "Преф. компания"
+  chartered_c:0 "Чартерная комп."
 
 
   ######################################################################################################################
@@ -566,7 +566,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   monetary_policy:0 "[concept_monetary_policy]"
   devaluation:0 "Девальвация"
   revaluation:0 "Ревальвация"
-  current_monetary_policy:0 "Текущая политика:"
+  current_monetary_policy:0 "Текущая денежная политика:"
   for_overlord:0 "Управление паритетом для ваших субъектов"
   your_parity_target:0 "Ваша цель паритета [concept_parity] для ваших субъектов:"
   for_subject:0 "Для субъекта:"
@@ -579,7 +579,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   #extreme_weak_currency_solution_count_player:0 "Years in [GetStaticModifier(' extreme_weak_currency').GetName]"
   extreme_weak_currency_solution_count_player:0 "Лет в режиме крайне слабой валюты"
   current_modetary_law:0 "Монетарный закон"
-  extreme_weak_currency_solution_count_player_2: "#T [GetPlayer.MakeScope.ScriptValue('extreme_weak_currency_solution_count_sc')|D]#! лет(года)"
+  extreme_weak_currency_solution_count_player_2: "#T [GetPlayer.MakeScope.ScriptValue('extreme_weak_currency_solution_count_sc')|D]#! лет(года) — НВ: [GetPlayer.MakeScope.Var('new_currency_count').GetValue|D]"
   extreme_weak_currency_solution_count_player_txt: "Через 3 года при крайне слабой валюте и фиатном стандарте вы сможете полностью сбросить валюту. Все металлические резервы будут потеряны, торговый баланс и займы будут обнулены, престиж -50% на 5 лет.          "
 
   currency_introduction:0 "Ввести новую валюту"
@@ -593,14 +593,14 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   currency_parity_laws:0 "Законы валютного [concept_parity]:"
   real_monetary_parity_after_inflation:0 "Денежный [concept_parity] после инфляции:"
-  gold_reserves_var:0 "Государственная [concept_government_treasury]"
+  gold_reserves_var:0 "[concept_government_treasury] страны"
   central_bank_metal_reserves:0 "[concept_central_bank_metal_reserves]"
-  central_bank_metal_stacked_per_month:0 "[GetPlayer.GetCustom('monetary_system_name')] доход в месяц"
+  central_bank_metal_stacked_per_month:0 "[GetPlayer.GetCustom('monetary_system_name')]: накоплено за месяц"
   gold_balance_scripted:0 "[concept_gold_balance]"
   current_account:0 "Текущий счёт" #same as central_bank_gold_stacked_per_month but more small
-  delta_value:0 "Баланс платежей"
-  delta_value_small:0 "Баланс платежей"
-  budget_panel_desc_reserve_currency:0 "В XIX веке термин 'резервная валюта' относился к широко принятой иностранной валюте, хранимой правительствами и центральными банками в качестве резерва для международных транзакций и поддержания эконом. стабильности.   "
+  delta_value:0 "Платёжный баланс"
+  delta_value_small:0 "Платёжный баланс"
+  budget_panel_desc_reserve_currency:0 "В XIX веке термин «резервная валюта» относился к широко принятой иностранной валюте, хранимой правительствами и центральными банками в качестве резерва для международных транзакций и поддержания эконом. стабильности.   "
   total_currency_product:0 "Общий объём валюты"
   currency_own:0 "Валюта, находящаяся у страны"
   currency_no_own:0 "Валюта, находящаяся у другой страны"
@@ -618,7 +618,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   apply_for_international_funding:0 "Подать заявку на международное финансирование"
 
   gold_lent_to_other:0 "Выдано золота"
-  gold_lent_to_foreign_countries:0 "Иностранные инвестиции в долг"
+  gold_lent_to_foreign_countries:0 "Инвестиции во внешний долг"
   gold_lent_to_us:0 "Иностранное золото под залог долга"
 
   interest:0 "[concept_interest]:"
@@ -635,7 +635,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   money_value_rapported_inflation:0 "[concept_money_value_rapported_inflation]"
 
   money_value_target_set:0 "Новый паритет [GetPlayer.GetCustom('monetary_system_name')]"
-  no_monetary_policy:0 "Нет монетарной политики"
+  no_monetary_policy:0 "Принять «[GetLawType('law_no_monetary_policy').GetName]»"
 
   law_no_monetary_policy_texture:0 "@no_monetary_policy!"
   law_revaluation_texture:0 "@revaluation!"
@@ -677,9 +677,9 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   devaluation_rate:0 "Темп девальвации"
 
 
-  inflation_value_predicted_devaluation:0 "([GetPlayer.MakeScope.ScriptValue('inflation_value_predicted_devaluation')|%|=-]/#b  [GetPlayer.MakeScope.Var('devaluation_time').GetValue]#! Years)"
+  inflation_value_predicted_devaluation:0 "([GetPlayer.MakeScope.ScriptValue('inflation_value_predicted_devaluation')|%|=-]/#b  [GetPlayer.MakeScope.Var('devaluation_time').GetValue]#! лет)"
 
-  inflation_value_predicted_revaluation:0 "([GetPlayer.MakeScope.ScriptValue('inflation_value_predicted_revaluation')|%|=-]/#b   [GetPlayer.MakeScope.Var('revaluation_time').GetValue]#! Years)"
+  inflation_value_predicted_revaluation:0 "([GetPlayer.MakeScope.ScriptValue('inflation_value_predicted_revaluation')|%|=-]/#b   [GetPlayer.MakeScope.Var('revaluation_time').GetValue]#! лет)"
 
 
   set_devaluation_rate:0 "Создать [GetPlayer.MakeScope.ScriptValue('money_supply_predicted_add_devaluation_1')|D=+] [GetMetaPlayer.GetPlayedOrObservedCountry.GetCustom('currency_symbol')]"
@@ -699,7 +699,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   left_time_devaluation:0 "Осталось времени до завершения девальвации: [GetPlayer.MakeScope.ScriptValue('devaluation_on_time_scripted')] мес."
   left_time_revaluation:0 "Осталось времени до завершения ревальвации: [GetPlayer.MakeScope.ScriptValue('revaluation_on_time_scripted')] мес."
  
-  you_need_monetary_policy_tools:0 "Необходимы исследования инструментов монетарной политики"
+  you_need_monetary_policy_tools:0 "Требуется технология [GetTechnology('monetary_policy_tools').GetName|l] и принятый закон «[GetLawType('law_large_monetary_policy').GetName]»"
  
   overlord_currency_lord:0 "Паритет, установленный сюзереном"
 
@@ -736,7 +736,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   gold_standard_name:0 "Золотой стандарт"
   gold_exchange_standard_name:0 "Золотой обменный стандарт"
 
-  politic_monetary_systeme:0 "@politic_monetary_systeme! Монетарная система"
+  politic_monetary_systeme:0 "@politic_monetary_systeme! Денежная система"
 
   #icon
   fiat_standard_01_monetary_systeme_icon:0 "[Localize('fiat_standard_texticon')]"
@@ -811,7 +811,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   you_own_global_monetary_reference_2:0 "#T [GetPlayer.MakeScope.Var('reference_currency_owned_by_the_country_fixe').GetValue|D] [GetPlayer.GetCustom('global_monetary_reference_currency_good')]#!"
   you_own_global_monetary_reference_3:0 "[GetPlayer.GetCustom('global_monetary_reference_name')] [GetPlayer.GetCustom('global_monetary_reference_texture')]"
 
-  money_value_currency_reference_1:0 "Стоимость глобальной резервной валюты"
+  money_value_currency_reference_1:0 "Стоимость глобального денежного эталона"
   money_value_currency_reference_2:0 "1 [GetPlayer.GetCustom('global_monetary_reference_currency_ISO_4217')] ([GetPlayer.GetCustom('global_monetary_reference_texture')]) = [GetPlayer.MakeScope.ScriptValue('global_monetary_reference')|+D] @gold!"
 
   currency_reference_in_gold_1:0 "Требуется для паритета"
@@ -823,7 +823,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   # money_value_target_with_the_reference_currency
 
-  money_value_target_with_the_reference_currency_set:0 "Установить паритет с глобальной резервной валютой"
+  money_value_target_with_the_reference_currency_set:0 "Установить паритет с эталонной валютой"
   predicted_parity:0 "Прогнозируемый паритет"
   reference_currency_parity_with_national_currency_1:0 "1 [GetPlayer.GetCustom('global_monetary_reference_currency_good')] = [GetPlayer.MakeScope.Var('money_value_target_with_the_reference_currency_2').GetValue][GetPlayer.GetCustom('currency_good')]"
 
@@ -1271,12 +1271,12 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   player_no_gold_lent_to_us:0 "Открывается при выполнении следующих условий:\n- Имеет собственный [concept_market] \n- [GetStaticModifier('has_financial_center').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]"
 
-  has_tech_national_stockpile_and_subject:0 "Открывается при выполнении следующих условий:\n- Имеет собственный [concept_market] \n- Изучено Национальное Хранилище"
+  has_tech_national_stockpile_and_subject:0 "Открывается при выполнении следующих условий:\n- Имеет собственный [concept_market] \n- Изучено Национальный резерв"
 
-  not_has_tech_national_stockpile_and_subject:0 "Открывается при выполнении следующих условий:\n- Имеет собственный [concept_market] \n- Изучено Национальное Хранилище"
+  not_has_tech_national_stockpile_and_subject:0 "Открывается при выполнении следующих условий:\n- Имеет собственный [concept_market] \n- Изучено Национальный резерв"
 
-  market_owner_no_currency_exchange_panel_visibility:0 "Открывается, если владелец рынка выполняет условия:\n- Имеет собственный [concept_market] \n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Нет модификатора Контроль валютного рынка"
-  player_no_currency_exchange_panel_visibility:0 "Открывается, если игрок выполняет условия:\n- Имеет собственный [concept_market] \n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Нет модификатора Контроль валютного рынка"
+  market_owner_no_currency_exchange_panel_visibility:0 "Открывается, если владелец рынка выполняет условия:\n- Имеет собственный [concept_market] \n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Нет модификатора Валютный контроль"
+  player_no_currency_exchange_panel_visibility:0 "Открывается, если игрок выполняет условия:\n- Имеет собственный [concept_market] \n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Нет модификатора Валютный контроль"
 
   market_owner_no_has_financial_center:0 "Открывается, если владелец рынка выполняет условия:\n- [GetStaticModifier('has_financial_center').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]"
   player_no_has_financial_center:0 "Открывается, если игрок выполняет условия:\n- [GetStaticModifier('has_financial_center').GetName]\n- [GetStaticModifier('has_central_bank').GetName]\n- Принят закон [GetLawType('law_silver_standard').GetName], [GetLawType('law_bimetallism_standard').GetName],\n [GetLawType('law_gold_standard').GetName] или [GetLawType('law_gold_exchange_standard').GetName]\n - Не принят закон [GetLawType('law_isolationism').GetName]"
@@ -1319,7 +1319,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   mining_stock_01_texticon_financial_product:0 "@mining_stock!"
   railroad_stock_01_texticon_financial_product:0 "@railroad_stock!"
 
-  FP_TITEL:0 "ФС"
+  FP_TITEL:0 "ФП"
   FP_NAME:0 "Название"
   FP_QTT:0 "Количество"
   FP_PRICE:0 "Цена"
@@ -1356,17 +1356,17 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   growth_1_year:0 "Рост за 1 год"
   growth_5_year:0 "Рост за 5 лет"
   growth_10_year:0 "Рост за 10 лет"
-  currency_GOODS:0 "Денежная масса в обращении"
+  currency_GOODS:0 "Валюта в обращении"
   financial_product:0 "Финансовый продукт"
   financial_product_GOODS:0 "Финансовый продукт"
   exports:0 "Экспорт"
   imports:0 "Импорт"
-  trade_balance_fixe:0 "Текущий счет"
-  raw_material:0 "Сырье"
+  trade_balance_fixe:0 "Текущий счёт"
+  raw_material:0 "Сырьё и военное снаряжение"
 
   privat_bank:0 "Частный банк"
   ai_privat_bank_seller_country_general:0 "Посмотреть позиции частных банков"
-  interest_rate_policy:0 "Ключевая ставка"
+  interest_rate_policy:0 "Политика ключевой ставки"
   refinancing_operations:0 "Рефинансирование"
 
   exchange_rate_with_the_reference_currency:0 "Курс обмена с эталонной валютой"
@@ -1432,9 +1432,9 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   cap:0 "Капитализация"
   divers_index:0 "Диверсифицированная капитализация"
 
-  country_country_credit_pondered_mean:0 "Средний кредитный рейтинг страны [GetPlayer.MakeScope.ScriptValue('country_credit_pondered_mean')|D3]/10"
+  country_country_credit_pondered_mean:0 "Средний кредитный рейтинг страны [GetPlayer.MakeScope.ScriptValue('country_credit_pondered_mean')|D3]/10\n(база 10)"
 
-  institution_economic_central_bank_lvl:0 "Учреждение ([GetPlayer.MakeScope.ScriptValue('institution_economic_central_bank_lvl_brut')])"
+  institution_economic_central_bank_lvl:0 "Институт ([GetPlayer.MakeScope.ScriptValue('institution_economic_central_bank_lvl_brut')])"
   institution_economic_central_bank_lvl_value:0 "#P +[GetPlayer.MakeScope.ScriptValue('institution_economic_central_bank_lvl')|D]#!"
   country_credit_rating_national_debt_compared_gdp_malus_100_desc:0 "#N x[GetPlayer.MakeScope.ScriptValue('country_credit_rating_national_debt_compared_gdp_malus_100')|-D]#!"
   country_credit_rating_national_debt_compared_gdp_malus_100_on_interest_rate_desc:0 "#N x[GetPlayer.MakeScope.ScriptValue('country_credit_rating_national_debt_compared_gdp_malus_100_on_interest_rate')|-D]#!"
@@ -1443,7 +1443,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
 
 
-  country_institution_economic_central_bank_max_investment_add:0 "Максимальное управление экономикой и центральным банком"
+  country_institution_economic_central_bank_max_investment_add:0 "Макс. уровень института «Экономическое и банковское управление»"
 
   country_taking_loans:0 "Получение кредитов"
   country_taking_loans_value:0 "#N x0.75#!"
@@ -1469,7 +1469,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   country_credit_rating_ratio_with_highest_gdp:0 "Соотношение со страной\nс наибольшим ВВП"
   country_credit_rating_ratio_with_highest_gdp_value:0 "#P [GetPlayer.MakeScope.ScriptValue('country_credit_rating_ratio_with_highest_gdp')|D]/10#!"
 
-  country_credit_rating_ratio_with_national_capacity_reference_currency:0 "Соотношение нацио-\nнальной мощности"
+  country_credit_rating_ratio_with_national_capacity_reference_currency:0 "Соотношение нацио-\nнального капитала"
   country_credit_rating_ratio_with_national_capacity_reference_currency_value:0 "#P [GetPlayer.MakeScope.ScriptValue('country_credit_rating_ratio_with_national_capacity_reference_currency')|D]/10#! (x2)"
 
   country_credit_rating_ratio_with_country_indice_reference_currency:0 "Соотношение с наибольшей\nкапитализацией "
@@ -1493,7 +1493,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   country_credit_rating_literacy_rate:0 "Уровень грамотности"
   country_credit_rating_literacy_rate_value:0 "#P [GetPlayer.MakeScope.ScriptValue('country_credit_rating_literacy_rate')|D]/10#!"
 
-  country_credit_rating_infamy:0 "Уровень бесчестия"
+  country_credit_rating_infamy:0 "Уровень дурной славы"
   country_credit_rating_infamy_value:0 "#P [GetPlayer.MakeScope.ScriptValue('country_credit_rating_infamy')|D]/10#!"
 
   country_credit_rating_government_legitimacy:0 "Легитимность\nправительства"
@@ -1539,8 +1539,8 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   corean_stock_exchange:0 "Корейская фондовая биржа"
   royal_securities_exchange_of_bhutan:0 "Королевская биржа ценных бумаг Бутана"
   amsterdam_stock_exchange:0 "Амстердамская фондовая биржа"
-  dutch_stock_exchange:0 "Голландская фондовая биржа"
-  palacio_da_bolsa:0 "Палацио да Болса"
+  dutch_stock_exchange:0 "Нидерландская фондовая биржа"
+  palacio_da_bolsa:0 "Дворец биржи в Порту"
   portuguese_stock_exchange:0 "Португальская фондовая биржа"
   bolsa_de_brasil:0 "Бразильская биржа"
   borsa_stanbul:0 "Стамбульская биржа"
@@ -1571,7 +1571,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   D_s:0 "Ваша страна не считается нуждающейся во внешних инвестициях для развития. На самом деле, ни один иностранный инвестор не будет финансировать ваш долг."
 
-  budget_panel_desc_raw_material:0 "Здесь вы можете купить сырье на международном рынке. В отличие от договора о поставке сырья, здесь вы платите золотом по курсу глобальной эталонной валюты ([GetPlayer.GetCustom('global_monetary_reference_currency_ISO_4217')] [GetPlayer.GetCustom('global_monetary_reference_texture')]).\n У вас нет ограничения по количеству покупок, но вы не можете продавать товары.\n Военное снаряжение нельзя купить на международном рынке. Его можно приобрести только по договору о поставке воен. снаряжения."
+  budget_panel_desc_raw_material:0 "Здесь вы можете купить сырьё на международном рынке. В отличие от договора о поставке сырья, здесь вы платите золотом по курсу глобальной эталонной валюты ([GetPlayer.GetCustom('global_monetary_reference_currency_ISO_4217')] [GetPlayer.GetCustom('global_monetary_reference_texture')]).\n У вас нет ограничения по количеству покупок, но вы не можете продавать товары.\n Военное снаряжение нельзя купить на международном рынке. Его можно приобрести только по договору о поставке воен. снаряжения."
 
   international_financial_power:0 "[concept_international_financial_power]"
 
@@ -1590,121 +1590,121 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   monetary_systeme:0 "Денежная система"
 
 
-  ammunition_global_price:0 "Мировая цена на зерно"
-  ammunition_global_offer:0 "Мировое предложение зерна"
-  ammunition_global_demande:0 "Мировой спрос на зерно"
+  ammunition_global_price:0 "Мировая цена на боеприпасы"
+  ammunition_global_offer:0 "Мировое предложение боеприпасов"
+  ammunition_global_demande:0 "Мировой спрос на боеприпасы"
 
-  small_arms_global_price:0 "Мировая цена на зерно"
-  small_arms_global_offer:0 "Мировое предложение зерна"
-  small_arms_global_demande:0 "Мировой спрос на зерно"
+  small_arms_global_price:0 "Мировая цена на стрелковое оружие"
+  small_arms_global_offer:0 "Мировое предложение стрелкового оружия"
+  small_arms_global_demande:0 "Мировой спрос на стрелковое оружие"
 
-  artillery_global_price:0 "Мировая цена на зерно"
-  artillery_global_offer:0 "Мировое предложение зерна"
-  artillery_global_demande:0 "Мировой спрос на зерно"
+  artillery_global_price:0 "Мировая цена на артиллерию"
+  artillery_global_offer:0 "Мировое предложение артиллерии"
+  artillery_global_demande:0 "Мировой спрос на артиллерию"
 
-  tanks_global_price:0 "Мировая цена на зерно"
-  tanks_global_offer:0 "Мировое предложение зерна"
-  tanks_global_demande:0 "Мировой спрос на зерно"
+  tanks_global_price:0 "Мировая цена на танки"
+  tanks_global_offer:0 "Мировое предложение танков"
+  tanks_global_demande:0 "Мировой спрос на танки"
 
-  aeroplanes_global_price:0 "Мировая цена на зерно"
-  aeroplanes_global_offer:0 "Мировое предложение зерна"
-  aeroplanes_global_demande:0 "Мировой спрос на зерно"
+  aeroplanes_global_price:0 "Мировая цена на самолёты"
+  aeroplanes_global_offer:0 "Мировое предложение самолётов"
+  aeroplanes_global_demande:0 "Мировой спрос на самолёты"
 
   grain_global_price:0 "Мировая цена на зерно"
   grain_global_offer:0 "Мировое предложение зерна"
   grain_global_demande:0 "Мировой спрос на зерно"
 
-  fabric_global_price:0 "Мировая цена на зерно"
-  fabric_global_offer:0 "Мировое предложение зерна"
-  fabric_global_demande:0 "Мировой спрос на зерно"
+  fabric_global_price:0 "Мировая цена на ткань"
+  fabric_global_offer:0 "Мировое предложение ткани"
+  fabric_global_demande:0 "Мировой спрос на ткань"
 
-  wood_global_price:0 "Мировая цена на зерно"
-  wood_global_offer:0 "Мировое предложение зерна"
-  wood_global_demande:0 "Мировой спрос на зерно"
+  wood_global_price:0 "Мировая цена на древесину"
+  wood_global_offer:0 "Мировое предложение древесины"
+  wood_global_demande:0 "Мировой спрос на древесину"
 
-  groceries_global_price:0 "Мировая цена на зерно"
-  groceries_global_offer:0 "Мировое предложение зерна"
-  groceries_global_demande:0 "Мировой спрос на зерно"
+  groceries_global_price:0 "Мировая цена на продукты"
+  groceries_global_offer:0 "Мировое предложение продуктов"
+  groceries_global_demande:0 "Мировой спрос на продукты"
 
-  clothes_global_price:0 "Мировая цена на зерно"
-  clothes_global_offer:0 "Мировое предложение зерна"
-  clothes_global_demande:0 "Мировой спрос на зерно"
+  clothes_global_price:0 "Мировая цена на одежду"
+  clothes_global_offer:0 "Мировое предложение одежды"
+  clothes_global_demande:0 "Мировой спрос на одежду"
 
-  paper_global_price:0 "Мировая цена на зерно"
-  paper_global_offer:0 "Мировое предложение зерна"
-  paper_global_demande:0 "Мировой спрос на зерно"
+  paper_global_price:0 "Мировая цена на бумагу"
+  paper_global_offer:0 "Мировое предложение бумаги"
+  paper_global_demande:0 "Мировой спрос на бумагу"
 
-  silk_global_price:0 "Мировая цена на зерно"
-  silk_global_offer:0 "Мировое предложение зерна"
-  silk_global_demande:0 "Мировой спрос на зерно"
+  silk_global_price:0 "Мировая цена на шёлк"
+  silk_global_offer:0 "Мировое предложение шёлка"
+  silk_global_demande:0 "Мировой спрос на шёлк"
 
-  dye_global_price:0 "Мировая цена на зерно"
-  dye_global_offer:0 "Мировое предложение зерна"
-  dye_global_demande:0 "Мировой спрос на зерно"
+  dye_global_price:0 "Мировая цена на красители"
+  dye_global_offer:0 "Мировое предложение красителей"
+  dye_global_demande:0 "Мировой спрос на красители"
 
-  sulfur_global_price:0 "Мировая цена на зерно"
-  sulfur_global_offer:0 "Мировое предложение зерна"
-  sulfur_global_demande:0 "Мировой спрос на зерно"
+  sulfur_global_price:0 "Мировая цена на серу"
+  sulfur_global_offer:0 "Мировое предложение серы"
+  sulfur_global_demande:0 "Мировой спрос на серу"
 
-  coal_global_price:0 "Мировая цена на зерно"
-  coal_global_offer:0 "Мировое предложение зерна"
-  coal_global_demande:0 "Мировой спрос на зерно"
+  coal_global_price:0 "Мировая цена на уголь"
+  coal_global_offer:0 "Мировое предложение угля"
+  coal_global_demande:0 "Мировой спрос на уголь"
 
-  iron_global_price:0 "Мировая цена на зерно"
-  iron_global_offer:0 "Мировое предложение зерна"
-  iron_global_demande:0 "Мировой спрос на зерно"
+  iron_global_price:0 "Мировая цена на железо"
+  iron_global_offer:0 "Мировое предложение железа"
+  iron_global_demande:0 "Мировой спрос на железо"
 
-  lead_global_price:0 "Мировая цена на зерно"
-  lead_global_offer:0 "Мировое предложение зерна"
-  lead_global_demande:0 "Мировой спрос на зерно"
+  lead_global_price:0 "Мировая цена на свинец"
+  lead_global_offer:0 "Мировое предложение свинца"
+  lead_global_demande:0 "Мировой спрос на свинец"
 
-  hardwood_global_price:0 "Мировая цена на зерно"
-  hardwood_global_offer:0 "Мировое предложение зерна"
-  hardwood_global_demande:0 "Мировой спрос на зерно"
+  hardwood_global_price:0 "Мировая цена на твёрдую древесину"
+  hardwood_global_offer:0 "Мировое предложение твёрдой древесины"
+  hardwood_global_demande:0 "Мировой спрос на твёрдую древесину"
 
-  rubber_global_price:0 "Мировая цена на зерно"
-  rubber_global_offer:0 "Мировое предложение зерна"
-  rubber_global_demande:0 "Мировой спрос на зерно"
+  rubber_global_price:0 "Мировая цена на каучук"
+  rubber_global_offer:0 "Мировое предложение каучука"
+  rubber_global_demande:0 "Мировой спрос на каучук"
 
-  oil_global_price:0 "Мировая цена на зерно"
-  oil_global_offer:0 "Мировое предложение зерна"
-  oil_global_demande:0 "Мировой спрос на зерно"
+  oil_global_price:0 "Мировая цена на нефть"
+  oil_global_offer:0 "Мировое предложение нефти"
+  oil_global_demande:0 "Мировой спрос на нефть"
 
-  engines_global_price:0 "Мировая цена на зерно"
-  engines_global_offer:0 "Мировое предложение зерна"
-  engines_global_demande:0 "Мировой спрос на зерно"
+  engines_global_price:0 "Мировая цена на двигатели"
+  engines_global_offer:0 "Мировое предложение двигателей"
+  engines_global_demande:0 "Мировой спрос на двигатели"
 
-  steel_global_price:0 "Мировая цена на зерно"
-  steel_global_offer:0 "Мировое предложение зерна"
-  steel_global_demande:0 "Мировой спрос на зерно"
+  steel_global_price:0 "Мировая цена на сталь"
+  steel_global_offer:0 "Мировое предложение стали"
+  steel_global_demande:0 "Мировой спрос на сталь"
 
-  fertilizer_global_price:0 "Мировая цена на зерно"
-  fertilizer_global_offer:0 "Мировое предложение зерна"
-  fertilizer_global_demande:0 "Мировой спрос на зерно"
+  fertilizer_global_price:0 "Мировая цена на удобрения"
+  fertilizer_global_offer:0 "Мировое предложение удобрений"
+  fertilizer_global_demande:0 "Мировой спрос на удобрения"
 
-  tools_global_price:0 "Мировая цена на зерно"
-  tools_global_offer:0 "Мировое предложение зерна"
-  tools_global_demande:0 "Мировой спрос на зерно"
+  tools_global_price:0 "Мировая цена на инструменты"
+  tools_global_offer:0 "Мировое предложение инструментов"
+  tools_global_demande:0 "Мировой спрос на инструменты"
 
-  explosives_global_price:0 "Мировая цена на зерно"
-  explosives_global_offer:0 "Мировое предложение зерна"
-  explosives_global_demande:0 "Мировой спрос на зерно"
+  explosives_global_price:0 "Мировая цена на взрывчатку"
+  explosives_global_offer:0 "Мировое предложение взрывчатки"
+  explosives_global_demande:0 "Мировой спрос на взрывчатку"
 
-  automobiles_global_price:0 "Мировая цена на зерно"
-  automobiles_global_offer:0 "Мировое предложение зерна"
-  automobiles_global_demande:0 "Мировой спрос на зерно"
+  automobiles_global_price:0 "Мировая цена на автомобили"
+  automobiles_global_offer:0 "Мировое предложение автомобилей"
+  automobiles_global_demande:0 "Мировой спрос на автомобили"
 
-  telephones_global_price:0 "Мировая цена на зерно"
-  telephones_global_offer:0 "Мировое предложение зерна"
-  telephones_global_demande:0 "Мировой спрос на зерно"
+  telephones_global_price:0 "Мировая цена на телефоны"
+  telephones_global_offer:0 "Мировое предложение телефонов"
+  telephones_global_demande:0 "Мировой спрос на телефоны"
 
-  radios_global_price:0 "Мировая цена на зерно"
-  radios_global_offer:0 "Мировое предложение зерна"
-  radios_global_demande:0 "Мировой спрос на зерно"
+  radios_global_price:0 "Мировая цена на радиоприёмники"
+  radios_global_offer:0 "Мировое предложение радиоприёмников"
+  radios_global_demande:0 "Мировой спрос на радиоприёмники"
 
-  opium_global_price:0 "Мировая цена на зерно"
-  opium_global_offer:0 "Мировое предложение зерна"
-  opium_global_demande:0 "Мировой спрос на зерно"
+  opium_global_price:0 "Мировая цена на опиум"
+  opium_global_offer:0 "Мировое предложение опиума"
+  opium_global_demande:0 "Мировой спрос на опиум"
 
   5Y:0 "5 лет"
   10Y:0 "10 лет"
@@ -1760,9 +1760,9 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   contract_debt_txt:0 "Вы возьмёте в долг у вашего центрального банка [GetPlayer.MakeScope.ScriptValue('debt_issued_relative_GDP_in_currency')|+D] [GetPlayer.GetCustom('currency_symbol')], что эквивалентно [GetPlayer.MakeScope.ScriptValue('debt_issued_relative_GDP')|+D] [GetPlayer.GetCustom('monetary_system')], при этом будет произведено [GetPlayer.MakeScope.ScriptValue('bond_creation_by_debt')|+D] @bond!. Это составляет [GetPlayer.MakeScope.Var('debt_issued_relative_GDP_percentage').GetValue|%|+] от ВВП долга, проценты по которому будут ежегодно выплачиваться вашему центральному банку."
 
-  base_rate_percentage_txt:0 "Базовая ставка вызывает ежегодное изменение частного кредита на [GetPlayer.MakeScope.ScriptValue('base_rate_effective_growth')|%=+], что равно [GetPlayer.MakeScope.ScriptValue('private_bank_borrowings_year')|+D] [GetPlayer.GetCustom('currency_symbol')], применяемым к инвестиционному пулу."
+  base_rate_percentage_txt:0 "Ключевая ставка вызывает ежегодное изменение частного кредита на [GetPlayer.MakeScope.ScriptValue('base_rate_effective_growth')|%=+], что равно [GetPlayer.MakeScope.ScriptValue('private_bank_borrowings_year')|+D] [GetPlayer.GetCustom('currency_symbol')], применяемым к инвестиционному пулу."
 
-  base_rate_percentage:0 "Базовая ставка"
+  base_rate_percentage:0 "Ключевая ставка"
 
   percentage_of_gdp:0 "Процент от ВВП"
 
@@ -1785,12 +1785,12 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   central_bank_interest_refund_per_year_text_3:0 "Общие проценты"
   central_bank_interest_refund_per_year_text_4:0 "[GetPlayer.MakeScope.Var('gold_loaned_to_central_bank_historic').GetValue|D+]@gold!"
 
-  refund_debt_txt:0 "Вы выплатите [GetPlayer.MakeScope.Var('refund_credit_at_central_bank').GetValue|D] [GetPlayer.GetCustom('currency_symbol')] вашему центральному банку для погашения долга. Это приведет к пересчету вашей ежемесячной процентной ставки, уменьшив ежемесячные платежи."
+  refund_debt_txt:0 "Вы выплатите [GetPlayer.MakeScope.Var('refund_credit_at_central_bank').GetValue|D] [GetPlayer.GetCustom('currency_symbol')] вашему центральному банку для погашения долга. Это приведёт к пересчёту вашей ежемесячной процентной ставки, уменьшив ежемесячные платежи."
 
   refund_credit_at_central_bank:0 "Погасить кредит в центральном банке"
   take:0 "Взять"
   refund:0 "Погасить"
-  refund_all:0 "Погасить все"
+  refund_all:0 "Погасить всё"
 
   see_seller_country:0 "Посмотреть финансируемые страны"
   see_national_debt:0 "Посмотреть внешний государственный долг"
@@ -1851,8 +1851,8 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   buy_order_week:0 "Приказ на покупку\n(неделя)"
 
   no_order:0 "Нет приказа"
-  store_on:0 "Хранить включено"
-  release_on:0 "Выпуск включён"
+  store_on:0 "#P Хранение включено#!"
+  release_on:0 "#N Высвобождение включено#!"
 
   predicted_ammunition_store:0 "Прогнозируемое накопление @ammunition! в год"
   predicted_ammunition_release:0 "Прогнозируемое высвобождение @ammunition! в год"
@@ -2322,7 +2322,7 @@ increase_opium_month_release:0 "Увеличить срок высвобожде
 reduce_opium_month_release:0 "Уменьшить срок высвобождения"
 
 
-  you_must_have_the_technology_stockpiling_goods:0 "Вам необходима технология «Накопление запасов»"
+  you_must_have_the_technology_stockpiling_goods:0 "Вам необходима технология «Складирование товаров»"
 
   stockpile_panel_overview_section:0 "Товары, находящиеся в запасе"
 
@@ -2545,7 +2545,7 @@ opium_flag_status:0 "[GetPlayer.GetCustom('stokpiling_opium_status')]"
 
 
   #Desc
-  national_stockpile_country_desc:0 " "Нац. Резерв" — это значительный запас или накопление чего-либо, обычно товаров, сырья или ресурсов, хранимых в ожидании будущих потребностей или для решения чрезвычайных ситуаций. Также может означать большое количество чего-либо, накопленное за определённый период времени. "
+  national_stockpile_country_desc:0 " «Национальный резерв» — это значительный запас или накопление чего-либо, обычно товаров, сырья или ресурсов, хранимых в ожидании будущих потребностей или для решения чрезвычайных ситуаций. Также может означать большое количество чего-либо, накопленное за определённый период времени. "
 
   budget_panel_desc_goods:0 "Здесь вы можете управлять национальным запасом. Вы можете начать #p приказ на хранение#! (бесконечно или на выбранный срок) или #n приказ на выпуск#! (только на выбранный срок). После выбора #n приказа на выпуск#! вы не сможете его изменить или продавать этот тип товаров, пока не истечёт время.    "
 
@@ -2676,7 +2676,7 @@ opium_flag_status:0 "[GetPlayer.GetCustom('stokpiling_opium_status')]"
   bond_weekly_interest_10Y:0 "Недельный процент (10 лет)"
   remaining_debt:0 "Оставшийся долг"
 
-  chek_sell_limit_currency_var_0:0 "Вы #p покупаете #!/#n продаёте #![GetPlayer.MakeScope.Var('sell_limit_currency_var_1').GetValue|D] [GetPlayer.GetCustom('currency_good')]/[GetPlayer.GetCustom('sell_limit_currency_var_0')] [GetPlayer.MakeScope.ScriptValue('sell_limit_currency_var_0')|D] [GetPlayer.GetCustom('currency_good')] сколько разрешено вашему рангу страны в этом году."
+  chek_sell_limit_currency_var_0:0 "Вы #p покупаете #!/#n продаёте #![GetPlayer.MakeScope.Var('sell_limit_currency_var_1').GetValue|D] [GetPlayer.GetCustom('currency_good')] из [GetPlayer.GetCustom('sell_limit_currency_var_0')] [GetPlayer.MakeScope.ScriptValue('sell_limit_currency_var_0')|D] [GetPlayer.GetCustom('currency_good')], разрешённых вашему рангу страны в этом году."
 
   quantity_of_currency_market_panel_dinar:0 "Количество [Localize('dinar')] [Localize('dinar_good')]"
   quantity_of_currency_market_panel_dinar_algerian_dinar:0 "Количество [Localize('dinar_algerian_dinar')] [Localize('dinar_algerian_dinar_good')]"
@@ -3212,18 +3212,18 @@ opium_flag_status:0 "[GetPlayer.GetCustom('stokpiling_opium_status')]"
   central_bank_metal_reserves_state_in_this_state:0 "Металлические резервы центрального банка"
   reserve_currency_amoun_held:0 "Количество резервной валюты"
 
-  is_looted_state:0 "Эта столица штата недавно была разграблена."
-  is_looted_state:0 "Эта столица штата недавно была разграблена."
+  is_looted_state:0 "Эта столица области недавно была разграблена."
+  is_looted_state:0 "Эта столица области недавно была разграблена."
 
-  central_bank_metal_reserves_state_transfert:0 "Перевести банковские резервы, финансовые продукты из [Localize('FINANCIAL_CENTRE_TITLE')] и товары из [Localize('NATIONAL_STOCKPILE_TITLE')] в столичный штат. (Вы не должны быть в состоянии войны)"
-  looting_state_button:0 "Разграбить половину всех активов (металлы, финансовые продукты, запасы), хранящихся в этом штате. Они будут переведены в ваш столичный штат. Грабёж разрешён один раз в год и каждый раз накладывает штраф #N 50#! к [concept_infamy]."
+  central_bank_metal_reserves_state_transfert:0 "Перевести банковские резервы, финансовые продукты из [Localize('FINANCIAL_CENTRE_TITLE')] и товары из [Localize('NATIONAL_STOCKPILE_TITLE')] в столичную область. (Вы не должны быть в состоянии войны)"
+  looting_state_button:0 "Разграбить половину всех активов (металлы, финансовые продукты, запасы), хранящихся в этой области. Они будут переведены в вашу столичную область. Грабёж разрешён один раз в год и каждый раз накладывает штраф #N 50#! к [concept_infamy]."
 
   transfer:0 "Перевести"
   pillage:0 "Разграбить"
 
-  dependent_bc:0 "Центральный банк зависит от [State.GetOwner.GetOverlord.GetName]"
+  dependent_bc:0 "Центральный банк зависит от [State.GetOwner.GetOverlord.GetAltName('RU_CL_RP')]"
   independent_bc:0 "Центральный банк независим"
-  offshore_port:0 "Оффшорный порт"
+  offshore_port:0 "Офшорный порт"
 
   #list:
   #dinar
@@ -3634,7 +3634,7 @@ opium_flag_status:0 "[GetPlayer.GetCustom('stokpiling_opium_status')]"
   #####################################################################################################################
 
   #other
-  money_value_parity:0 "[GetPlayer.GetCustom('currency_name')] value: [GetPlayer.MakeScope.ScriptValue('money_value_target_real')|+D] [GetPlayer.GetCustom('monetary_system')]"
+  money_value_parity:0 "[GetPlayer.GetCustom('currency_name')] — стоимость: [GetPlayer.MakeScope.ScriptValue('money_value_target_real')|+D] [GetPlayer.GetCustom('monetary_system')]"
 
   #gold
   gold_03_name_currency:0 "[GetPlayer.GetCustom('monetary_system')] страна без валюты"
@@ -6131,13 +6131,13 @@ thaler_saxon_thaler_03_money_value:0 "#v [GetPlayer.MakeScope.ScriptValue('money
 
   #Desc
 
-  central_bank_desc:0 "Здесь вы найдете национальную валюту и золотые резервы, хранящиеся в [concept_central_bank] государства."
+  central_bank_desc:0 "Здесь вы найдёте национальную валюту и золотые резервы, хранящиеся в [concept_central_bank] государства."
 
-  financial_center_state_desc:0 "Здесь вы найдете резервы финансо-\nвых продуктов, хранящиеся в [concept_financial_centre] государства."
+  financial_center_state_desc:0 "Здесь вы найдёте резервы финансо-\nвых продуктов, хранящиеся в [concept_financial_centre] государства."
 
-  national_stockpile_state_desc:0 "Здесь вы найдете резервы товаров, хранящиеся в [concept_national_stockpile] государства."
+  national_stockpile_state_desc:0 "Здесь вы найдёте резервы товаров, хранящиеся в [concept_national_stockpile] государства."
 
-  reserves_currency_desc:0 "Здесь вы найдете валютные резервы, хранящиеся в [concept_central_bank] государства."
+  reserves_currency_desc:0 "Здесь вы найдёте валютные резервы, хранящиеся в [concept_central_bank] государства."
 
   stockpiling_bond_var_state_1:0 "Облигация"
   stockpiling_manufacture_stock_var_state_1:0 "Промышленные акции"
@@ -6179,7 +6179,7 @@ thaler_saxon_thaler_03_money_value:0 "#v [GetPlayer.MakeScope.ScriptValue('money
   #####################################################################################################################
   #####################################################################################################################
   #####################################################################################################################
-  ai_switch_for_gold_exchange_standard_decisions_1:0 "Принять законы о золотодевизном стандарте"
+  ai_switch_for_gold_exchange_standard_decisions_1:0 "Принять законы о золотом обменном стандарте"
   ai_switch_for_gold_exchange_standard_decisions_1_desc:0 "Приняв этот закон, вы привязываете свою валюту к эталонной валюте. Для обеспечения конвертации требуется владеть фиксированным объёмом базовой валюты."
 
 

@@ -15,13 +15,13 @@
   #####################################################################################################################
 
   # Modded generic companies and  e&f custom
-  company_basic_bank: "Национальный банк"
+  company_basic_bank: "Национальный гражданский банк"
   company_basic_state_owned_bank: "Государственный банк"
   company_basic_state_development_focus: "Государственная строительная компания"
 
   company_private_construction: "Частная строительная компания"
   company_private_construction_dynamic_name_tag_singular: "Частная строительная компания"
-  company_private_construction_dynamic_name_tag_plural: "Частная строительная компания"
+  company_private_construction_dynamic_name_tag_plural: "Частные строительные компании"
 
   company_basic_gold_and_silver_mining_2: "Золото и серебро"
   company_basic_gold_and_silver_mining_2_dynamic_name_tag_singular: "Золото и серебро"
@@ -37,7 +37,7 @@
 
   company_basic_gold_mining_rus: "Императорское Уральское металлургическое общество"
   company_basic_gold_mining_rus_dynamic_name_tag_singular: "Императорское Уральское металлургическое общество"
-  company_basic_gold_mining_rus_dynamic_name_tag_plural: "PИмператорское Уральское металлургическое общество"
+  company_basic_gold_mining_rus_dynamic_name_tag_plural: "Императорское Уральское металлургическое общество"
 
   company_PennsylvaniaRailroad: "Pennsylvania Railroad"
   company_PennsylvaniaRailroad_dynamic_name_tag_singular: "Pennsylvania Railroad"

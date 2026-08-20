@@ -58,7 +58,7 @@
   ## private construction
   ################################
 
-  pmg_mining_equipment_building_silver_mine:0 "Горное оборудование"
+  pmg_mining_equipment_building_silver_mine:0 "Горнодобывающее оборудование"
   pm_picks_and_shovels_building_silver_mine:0 "Кирки и лопаты"
   pm_atmospheric_engine_pump_building_silver_mine:0 "Пароатмосферный насос"
   pm_condensing_engine_pump_building_silver_mine:0 "Паровой насос с конденсатором"
@@ -114,7 +114,7 @@
   pm_currency_eco_ghanaian_pound_currency:0 "Ганский фунт"
   pm_currency_eco_nigerian_naira_currency:0 "Нигерийская найра"
   pm_currency_eco_south_african_rand_currency:0 "Южноафриканский ранд"
-  pm_currency_eco_tuareg_ouguiya_currency:0 "Туарегский угия"
+  pm_currency_eco_tuareg_ouguiya_currency:0 "Туарегская угия"
   pm_currency_eco_west_african_eco_currency:0 "Западноафриканский эко"
 
   # Franc
@@ -128,7 +128,7 @@
   pm_currency_gulden_bavarian_gulden_currency:0 "Баварский гульден"
   pm_currency_gulden_florin_currency:0 "Флорин"
   pm_currency_gulden_hungarian_forint_currency:0 "Венгерский форинт"
-  pm_currency_gulden_indies_guilder_currency:0 "Голландский гульден Ост-Индии"
+  pm_currency_gulden_indies_guilder_currency:0 "Ост-индский гульден"
   pm_currency_gulden_south_german_gulden_currency:0 "Южногерманский гульден"
 
   # Krone
@@ -199,9 +199,9 @@
   pm_currency_spe_peseta_currency:0 "Песета"
   pm_currency_spe_ruble_currency:0 "Рубль"
   pm_currency_spe_uni_currency:0 "Уни"
-  pm_currency_spe_yen_currency:0 "Йена"
+  pm_currency_spe_yen_currency:0 "Иена"
   pm_currency_spe_yuan_currency:0 "Юань"
-  pm_currency_spe_zloti_currency:0 "Злоты"
+  pm_currency_spe_zloti_currency:0 "Злотый"
 
   # Thaler
   pm_currency_thaler_hannoveraner_thaler_currency:0 "Ганноверский талер"
@@ -212,9 +212,9 @@
   ## Industry market liquidity PM :
   ################################
 
-  pmg_market_liquidity:0 "Ликвидность рынка"
+  pmg_market_liquidity:0 "Рыночная ликвидность"
 
-  pm_no_market_liquidity:0 "Нет ликвидности рынка"
+  pm_no_market_liquidity:0 "Нет рыночной ликвидности"
 
 
   # Dinar
@@ -248,7 +248,7 @@
   pm_market_liquidity_eco_ghanaian_pound_currency:0 "Ганский фунт"
   pm_market_liquidity_eco_nigerian_naira_currency:0 "Нигерийская найра"
   pm_market_liquidity_eco_south_african_rand_currency:0 "Южноафриканский ранд"
-  pm_market_liquidity_eco_tuareg_ouguiya_currency:0 "Туарегский угия"
+  pm_market_liquidity_eco_tuareg_ouguiya_currency:0 "Туарегская угия"
   pm_market_liquidity_eco_west_african_eco_currency:0 "Западноафриканский эко"
 
   # Franc
@@ -262,7 +262,7 @@
   pm_market_liquidity_gulden_bavarian_gulden_currency:0 "Баварский гульден"
   pm_market_liquidity_gulden_florin_currency:0 "Флорин"
   pm_market_liquidity_gulden_hungarian_forint_currency:0 "Венгерский форинт"
-  pm_market_liquidity_gulden_indies_guilder_currency:0 "Голландский гульден Ост-Индии"
+  pm_market_liquidity_gulden_indies_guilder_currency:0 "Ост-индский гульден"
   pm_market_liquidity_gulden_south_german_gulden_currency:0 "Южногерманский гульден"
 
   # Krone
@@ -333,9 +333,9 @@
   pm_market_liquidity_spe_peseta_currency:0 "Песета"
   pm_market_liquidity_spe_ruble_currency:0 "Рубль"
   pm_market_liquidity_spe_uni_currency:0 "Уни"
-  pm_market_liquidity_spe_yen_currency:0 "Йена"
+  pm_market_liquidity_spe_yen_currency:0 "Иена"
   pm_market_liquidity_spe_yuan_currency:0 "Юань"
-  pm_market_liquidity_spe_zloti_currency:0 "Злоты"
+  pm_market_liquidity_spe_zloti_currency:0 "Злотый"
 
   # Thaler
   pm_market_liquidity_thaler_hannoveraner_thaler_currency:0 "Ганноверский талер"
@@ -364,16 +364,16 @@
   pm_r_manufacture_stock:0 "Покупка промышленных акций"
 
   pmg_minting_type:0 "Тип чеканки"
-  pmg_monetary_policy:0 "Денежная политика"
+  pmg_monetary_policy:0 "Денежно-кредитная политика"
   pm_bank:0 "Банк"
   pm_revaluation:0 "Ревальвация"
   pm_devaluation:0 "Девальвация"
   pm_no_gold_standard:0 "Нет золотого стандарта"
   pm_gold_standard:0 "Золотой стандарт"
   pm_gold_exchange_standard_bank_money_currency:0 "Золотой обменный стандарт"
-  pm_external_exchange_standard_bank_money_currency:0 "Стандарт внешнего обмена"
+  pm_external_exchange_standard_bank_money_currency:0 "Внешний валютный стандарт"
   pm_reserve_currency:0 "Фонд облигаций"
-  pm_no_monetary_policy:0 "Нет денежной политики"
+  pm_no_monetary_policy:0 "Без денежной политики"
 
   pmg_mining_stock:0 "Акционерный капитал"
   pm_mining_stock:0 "Выпущенные акции"
@@ -408,21 +408,21 @@
   pm_devaluation_75:0 "Девальвация 75%"
   pm_devaluation_100:0 "Девальвация 100%"
 
-  pmg_additional_production_method:0 "Дополнительные методы производства"
-  pm_no_additional_production_method:0 "Нет дополнительных методов производства"
-  pm_desactive_bc:0 "Деактивация центрального банка"
-  pm_customs_union_limit_20:0 "Лимит для таможенного союза 20%"
-  pm_protectora_limit_30:0 "Лимит для протектората 30%"
-  pm_dominion_limit_50:0 "Лимит для доминиона 50%"
-  pm_puppet_limit_75:0 "Лимит длямарионетки 75%"
+  pmg_additional_production_method:0 "Дополнительные производственные методы"
+  pm_no_additional_production_method:0 "Нет дополнительных производственных методов"
+  pm_desactive_bc:0 "Отключение центрального банка"
+  pm_customs_union_limit_20:0 "Лимит таможенного союза 20%"
+  pm_protectora_limit_30:0 "Лимит протектората 30%"
+  pm_dominion_limit_50:0 "Лимит доминиона 50%"
+  pm_puppet_limit_75:0 "Лимит марионетки 75%"
 
-  pmg_bond_production:0 "Методы производства облигаций"
+  pmg_bond_production:0 "Производственные методы облигаций"
   pm_no_bond_production:0 "Нет производства облигаций"
   pm_bond_production:0 "Производство облигаций"
 
   pmg_no_gold_standard:0 "Нет золотого стандарта"
-  pm_no_money_production:0 "Нет производства денег"
-  pm_money_production:0 "Производство денег"
+  pm_no_money_production:0 "Нет денежного производства"
+  pm_money_production:0 "Денежное производство"
 
   ################################
   ## Financial center PM :
@@ -431,19 +431,19 @@
   pmg_bond_exchange:0 "Облигационный фонд"
   pm_bond_exchange:0 "Обмен облигаций"
 
-  pmg_manufacture_stock_exchange:0 "Акции промышленности"
+  pmg_manufacture_stock_exchange:0 "Промышленные акции"
   pm_no_manufacture_stock_exchange:0 "Без фондовой биржи (промышленность)"
   pm_manufacture_stock_exchange:0 "Фондовая биржа (промышленность)"
 
-  pmg_mining_stock_exchange:0 "Акции горнодобычи"
+  pmg_mining_stock_exchange:0 "Горнодобывающие акции"
   pm_no_mining_stock_exchange:0 "Без фондовой биржи (горнодобыча)"
   pm_mining_stock_exchange:0 "Фондовая биржа (горнодобыча)"
 
-  pmg_agricultural_stock_exchange:0 "Акции сельского хозяйства"
+  pmg_agricultural_stock_exchange:0 "Сельскохозяйственные акции"
   pm_no_agricultural_stock_exchange:0 "Без фондовой биржи (сельское хозяйство)"
   pm_agricultural_stock_exchange:0 "Фондовая биржа (сельское хозяйство)"
 
-  pmg_railroad_stock_exchange:0 "Акции железных дорог"
+  pmg_railroad_stock_exchange:0 "Железнодорожные акции"
   pm_no_railroad_stock_exchange:0 "Без фондовой биржи (железные дороги)"
   pm_railroad_stock_exchange:0 "Фондовая биржа (железные дороги)"
 

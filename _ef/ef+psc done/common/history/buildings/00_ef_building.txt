@@ -1,14 +1,18 @@
 ﻿# GENERATED FILE -- do not edit by hand.
-# Rebuilt by tools/regen_ef_psc_copies.py from 00_ef_building.txt
+# Rebuilt by tools/regen_ef_psc_copies.py from hotfix: 00_ef_building.txt
 # with building_ef_private_construction -> building_construction_sector.
 # Re-run that script after every E&F update.
 #
-# LOAD ORDER MATTERS: this path collides with both E&F and the E&F hotfix.
-# The compatch MUST load after the hotfix. It already contains the hotfix's
-# two fixes (STATE_LOWER_ANDALUSIA, and the GRE block that built in a NULL
-# state), so loading last loses nothing -- but if the hotfix ends up after
-# the compatch, the rename below is undone and E&F starts creating the
-# disabled building_ef_private_construction again, silently.
+# LOAD ORDER MATTERS: this path exists in E&F, in the E&F hotfix and here.
+# Order is E&F -> hotfix -> compatch, so this copy is the one the game uses,
+# and it is generated FROM the hotfix's version -- it already carries the
+# hotfix's two fixes (STATE_LOWER_ANDALUSIA, and the GRE block that built in
+# a NULL state). If the compatch ever ends up loading before the hotfix, the
+# rename below is undone and E&F starts creating the disabled
+# building_ef_private_construction again, silently.
+#
+# Quick check in game: the error at financial_center_modifier should report
+# this file at the line number of THIS copy, not the hotfix's.
 
 BUILDINGS = {
 	every_country = {
