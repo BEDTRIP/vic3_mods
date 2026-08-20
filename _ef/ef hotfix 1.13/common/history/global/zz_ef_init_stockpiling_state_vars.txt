@@ -1,0 +1,64 @@
+﻿#############################################
+# 7c. Belt-and-braces init for the stockpile state variables
+#
+# GLOBAL blocks are additive and `zz_` is processed last, so this appends to
+# E&F's own init rather than replacing it. Every write is guarded by
+# `NOT = { has_variable = ... }`, so it only fills gaps.
+#
+# !! VERIFY BEFORE KEEPING !!
+# This was written against E&F v4.1.1 to stop startup spam:
+#     Failed to fetch variable ... due to not being set
+#     Invalid left side during comparison 'var'
+# Re-checked against E&F 04.07.2026 on 2026-08-19 and it now looks REDUNDANT:
+# common/history/global/01_ef_state_global_variable.txt:1362-1389 already sets
+# all seven of these inside `GLOBAL = { every_state = { ... } }`, which covers
+# unowned states too. A sweep of common/ also found no stockpiling_* variable
+# that is read via var: but never set anywhere (552 read, 2303 set, 0 orphans).
+#
+# It is kept for now only because the original spam was observed in a log this
+# analysis could not re-read. Start a game, grep error.log for the two lines
+# above with this file disabled, and if the log is clean, DELETE IT.
+#
+# The earlier version also ran the same loop twice -- once as `every_scope_state`
+# at GLOBAL level and once nested inside `every_country`. The outer loop already
+# covers every state, so the nested copy was pure duplicate work; removed.
+#
+# Was previously carried by the E&F + PSC compatch. It has nothing to do with
+# PSC, so it lives here now.
+#############################################
+
+GLOBAL = {
+	every_scope_state = {
+		# E&F financial-centre stockpile transfer vars
+		if = {
+			limit = { NOT = { has_variable = stockpiling_bond_var_state_1 } }
+			set_variable = { name = stockpiling_bond_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_manufacture_stock_var_state_1 } }
+			set_variable = { name = stockpiling_manufacture_stock_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_agricultural_stock_var_state_1 } }
+			set_variable = { name = stockpiling_agricultural_stock_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_mining_stock_var_state_1 } }
+			set_variable = { name = stockpiling_mining_stock_var_state_1 value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = stockpiling_railroad_stock_var_state_1 } }
+			set_variable = { name = stockpiling_railroad_stock_var_state_1 value = 0 }
+		}
+
+		# Common markers used by E&F stockpile transfer code
+		if = {
+			limit = { NOT = { has_variable = financial_center_site_var } }
+			set_variable = { name = financial_center_site_var value = 0 }
+		}
+		if = {
+			limit = { NOT = { has_variable = looted_state } }
+			set_variable = { name = looted_state value = 0 }
+		}
+	}
+}

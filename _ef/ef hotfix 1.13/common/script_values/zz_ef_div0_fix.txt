@@ -1,0 +1,203 @@
+﻿#############################################
+# 7a. Division by zero in the financial demand values
+#
+# E&F computes the demand modifiers for its five stock/bond goods like this
+# (common/script_values/00_financial_scripted_value.txt):
+#
+#   target_demand_<good>_ajusted = {
+#       value    = target_demand_<good>
+#       subtract = market.mg:<good>.market_goods_exports
+#       divide   = building_financial_num   # <-- can be 0
+#       ...
+#   }
+#   target_demand_<good>_for_modifier = {
+#       value    = target_demand_<good>_ajusted
+#       subtract = base_demande_<good>_fix
+#       divide   = base_demande_<good>_fix  # <-- can be 0
+#       multiply = 100
+#   }
+#
+# The author knows about the first one -- his own comment on that line reads
+# "---------------> division par zero possible". building_financial_num is a
+# sum of ~90 has_building_financial_centre_<tag> flags, so it is 0 for every
+# country that owns no financial centre, which is most of the world early on.
+# base_demande_<good>_fix just reads var:base_demande_<good>_fix, which is 0
+# until the first financial centre exists.
+#
+# Fix: clamp the first divisor at 1, and guard the second with a
+# `> 0` check so the whole block is skipped instead of dividing.
+# Values are otherwise E&F's, line for line.
+#
+# Scope note: `min = 1` on a `divide = { value = ... }` block clamps the
+# divisor, not the result -- so with one or more financial centres the maths
+# is bit-identical to E&F's.
+#
+# Was previously carried by the E&F + PSC compatch. It has nothing to do with
+# PSC, so it lives here now.
+#############################################
+
+REPLACE_OR_CREATE:target_demand_bond_ajusted = {
+	value = target_demand_bond
+	subtract = market.mg:bond.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_bond_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_bond_fix > 0 }
+		value = target_demand_bond_ajusted
+		subtract = base_demande_bond_fix
+		divide = base_demande_bond_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_manufacture_stock_ajusted = {
+	value = target_demand_manufacture_stock
+	subtract = market.mg:manufacture_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_manufacture_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_manufacture_stock_fix > 0 }
+		value = target_demand_manufacture_stock_ajusted
+		subtract = base_demande_manufacture_stock_fix
+		divide = base_demande_manufacture_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_agricultural_stock_ajusted = {
+	value = target_demand_agricultural_stock
+	subtract = market.mg:agricultural_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_agricultural_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_agricultural_stock_fix > 0 }
+		value = target_demand_agricultural_stock_ajusted
+		subtract = base_demande_agricultural_stock_fix
+		divide = base_demande_agricultural_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_mining_stock_ajusted = {
+	value = target_demand_mining_stock
+	subtract = market.mg:mining_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_mining_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_mining_stock_fix > 0 }
+		value = target_demand_mining_stock_ajusted
+		subtract = base_demande_mining_stock_fix
+		divide = base_demande_mining_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+
+REPLACE_OR_CREATE:target_demand_railroad_stock_ajusted = {
+	value = target_demand_railroad_stock
+	subtract = market.mg:railroad_stock.market_goods_exports
+	divide = { value = building_financial_num min = 1 }
+
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.05
+	}
+	if = { limit = { has_modifier = speculative_share_modifier_2 } multiply = 0.75 }
+	if = { limit = { has_modifier = speculative_share_modifier_3 } multiply = 0.5 }
+	if = { limit = { has_modifier = speculative_share_modifier_4 } multiply = 0.25 }
+
+	min = 0
+}
+
+REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_railroad_stock_fix > 0 }
+		value = target_demand_railroad_stock_ajusted
+		subtract = base_demande_railroad_stock_fix
+		divide = base_demande_railroad_stock_fix
+		multiply = 100
+	}
+	max = 25000
+}
+

@@ -38,13 +38,13 @@ Victoria 3 caps the goods database at 128 entries and crashes on entering a camp
 [*]So the counter is held at zero instead. The stimulus buttons stay usable and the journal bar reads what is actually happening.
 [/list]
 
-[*][b]Bug fixes carried along[/b]
+[*][b]One PSC bug fixed along the way[/b]
 [list]
-[*]Guards PSC's per-state price lookup, which reads the regulator's method in states that have no regulator ([i]Wrong scope for trigger: none, expected building[/i] at startup).
-[*]Guards two E&F divisions by zero and a missing-scope crash in the private bank currency sale.
-[*]Initialises E&F's stockpile state variables so the log stops complaining about unset variables.
+[*]PSC's per-state construction price lookup reads the regulator's production method in every state, including states that have no regulator yet. That produces [i]has_active_production_method [ Wrong scope for trigger: none, expected building ][/i] at every startup. Guarded here.
 [/list]
 [/list]
+
+[i]E&F's own bugs — the divisions by zero in its stock demand values and the missing-scope crash in the private bank currency sale — used to live in this compatch. They have nothing to do with PSC, so they moved to the E&F Hotfix, which is a dependency anyway.[/i]
 
 [h2]Localization[/h2]
 [list]

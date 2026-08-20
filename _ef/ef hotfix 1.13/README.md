@@ -3,7 +3,7 @@
 Fixes for **Economic and Financial**, repository version **04.07.2026**, on Victoria 3 **1.13.10**.
 Load it **after E&F**. It does not depend on the E&F + Morgenröte ComPatch and works without it.
 
-Six independent blocks: **goods limit**, **history**, **GUI**, **alerts**, **local_currency issuance**, **currency laws**.
+Seven independent blocks: **goods limit**, **history**, **GUI**, **alerts**, **local_currency issuance**, **currency laws**, **script guards**.
 
 ---
 
@@ -326,6 +326,55 @@ What follows for the hotfix: **handing these countries banks and currencies at g
 
 ---
 
+## 7. Two script guards, moved here from the PSC compatch
+
+These fix E&F on its own and have nothing to do with PSC, so they were moved out of the E&F + PSC compatch and into this mod. Both are key-level `REPLACE_OR_CREATE:` overrides — no E&F file is overwritten, so they cost nothing on the next E&F update beyond a re-check.
+
+### `common/script_values/zz_ef_div0_fix.txt` — division by zero
+
+E&F's five stock/bond demand values divide twice by numbers that are legitimately zero:
+
+```
+target_demand_<good>_ajusted = {
+    value    = target_demand_<good>
+    subtract = market.mg:<good>.market_goods_exports
+    divide   = building_financial_num   # <-- 0 for anyone without a financial centre
+    ...
+}
+target_demand_<good>_for_modifier = {
+    value    = target_demand_<good>_ajusted
+    subtract = base_demande_<good>_fix
+    divide   = base_demande_<good>_fix  # <-- 0 until the first centre exists
+    multiply = 100
+}
+```
+
+The author knows about the first one — the comment on that very line in `00_financial_scripted_value.txt` reads `---------------> division par zero possible`. `building_financial_num` is a sum of ~90 `has_building_financial_centre_<tag>` flags, so it is 0 for most of the world in 1836. `base_demande_<good>_fix` just reads `var:base_demande_<good>_fix`, which is 0 until a centre is built.
+
+The fix clamps the first divisor with `divide = { value = building_financial_num min = 1 }` and wraps the second in a `> 0` check so the block is skipped rather than divided. Note `min` on a `divide = { }` block clamps the **divisor**, not the result — with one or more centres the arithmetic is bit-identical to E&F's. Ten values patched: bond, manufacture, agricultural, mining and railroad stock, `_ajusted` and `_for_modifier` each.
+
+### `common/scripted_effects/zz_ef_currency_scope_guard_fix.txt` — dereferencing a scope that may not exist
+
+`sell_currency_privat_bank` builds a seller/buyer pair out of an ordered list and then does, unconditionally:
+
+```
+scope:seller.owner = { save_scope_as = seller_country }
+```
+
+If the list came back empty there is no `scope:seller`. The same holds for `scope:central_bank_site` in the two metal-transfer branches further down. The fix aborts cleanly on a missing seller and adds `exists = scope:central_bank_site` to those two limits. The arithmetic is untouched.
+
+Verified still unguarded in E&F 04.07.2026 on 2026-08-19.
+
+### `common/history/global/zz_ef_init_stockpiling_state_vars.txt` — ⚠ probably redundant, verify and delete
+
+Additive `GLOBAL` block that fills in seven state variables (`stockpiling_{bond,manufacture_stock,agricultural_stock,mining_stock,railroad_stock}_var_state_1`, `financial_center_site_var`, `looted_state`) if they are missing. It was written against E&F v4.1.1 to stop startup spam of `Failed to fetch variable ... due to not being set` and `Invalid left side during comparison 'var'`.
+
+Re-checked against E&F 04.07.2026 and it now looks unnecessary: `common/history/global/01_ef_state_global_variable.txt:1362-1389` already sets all seven inside `GLOBAL = { every_state = { ... } }`, which covers unowned states too, and a sweep of `common/` found no `stockpiling_*` variable that is read via `var:` but never set (552 read, 2303 set, 0 orphans).
+
+It is kept for now only because the original log that showed the spam could not be re-read during this pass. **Start a game with this file disabled, grep `error.log` for those two lines, and if it is clean, delete the file.** Every write is guarded by `NOT = { has_variable = ... }`, so leaving it in cannot do harm in the meantime — it just runs a loop over every state at game start for nothing.
+
+---
+
 ## Left undone
 
 - `00_ef_building.txt:2999` — `financial_center_modifier` runs in `none` scope, **1282 errors** per game start. The cure lives inside `09_introduction_building_lvl.txt:22135`, ~15,000 lines of somebody else's code.
@@ -343,6 +392,21 @@ The mod overrides four E&F files (`ef_00_goods.txt`, `00_ef_building.txt`, `00_e
 
 - **after every E&F update** the edits have to be re-applied, otherwise the hotfix rolls his changes back;
 - **after every game patch** the `.gui` files have to be re-copied from the new vanilla.
+
+The three files in section 7 override **keys**, not files (`REPLACE_OR_CREATE:`), so an E&F update cannot silently roll them back — but it can make them obsolete. Re-check with:
+
+```bash
+cd C:/Users/Andrey/Projects/vic3_mods_out
+
+# is the div/0 still there? (the author's own comment marks it)
+grep -n -A3 'target_demand_bond_ajusted' "E&F/common/script_values/00_financial_scripted_value.txt"
+
+# is the seller scope still dereferenced unguarded?
+grep -n -A2 'scope:seller.owner' "E&F/common/scripted_effects/01_economic_scripted_effects.txt"
+
+# does E&F still init the stockpile state vars itself? (if yes, drop 7c)
+grep -n -B2 'stockpiling_bond_var_state_1' "E&F/common/history/global/01_ef_state_global_variable.txt"
+```
 
 ```bash
 cd C:/Users/Andrey/Projects/vic3_mods_out
@@ -414,6 +478,12 @@ Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/shared
 [list]
 [*]E&F handed countries without a monetary system a flat 2500 local currency [b]per state[/b], regardless of size. ~600 of 724 countries qualify, and their cheap currency crowded real national currencies out of [i]popneed_currency[/i]
 [*]Replaced with an amount computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve
+[/list]
+
+[*][b]Two script guards[/b]
+[list]
+[*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], which is zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
+[*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist when the source list comes back empty
 [/list]
 
 [*][b]Currency laws were unavailable to everyone[/b]
