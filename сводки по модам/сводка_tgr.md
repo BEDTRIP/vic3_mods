@@ -265,3 +265,11 @@ TGR очень сильно “подкручивает” кампанию че
 - **Старое README компача было ошибочным**: называло себя `pb+tgr` (копипаста) и описывало merged-файл, которого не существовало в папке. Переписано.
 - Пересечения `BUILDINGS`/`GLOBAL` с PSC — те же аддитивные категории, что и с E&F/MR, не конфликт.
 
+### Дополнение 2026-08-21 (из сверки PBE × TGR)
+
+- **Компач `pbe+tgr done` переписан.** Единственная точка мерджа — `force_regime_change` в `common/diplomatic_actions/`: TGR правит его через `REPLACE_OR_CREATE:`, PBE — обычным ключом и грузится позже, так что без компача версия TGR теряется молча.
+- Вклад TGR в это действие: cohesion floor 0.1 → 0.25, tenure 5 лет → 1 год, `installed_regime` на `months = 24`, AI-пороги −25/−50 → −50/−100 (у PBE ровно те же), сохранена ванильная `add_cohesion_percent = scaled_cohesion_cost`. Венгерские `trigger_if` и `NOT ally` TGR вырезал.
+- В мердже структура взята у PBE (гейт `OR = { has_game_rule ... }`), числа — у TGR внутрь ветки `AND`. Прошлая версия компача поднимала требования TGR наружу и тем самым обнуляла game rule PBE.
+- **`country_influence_add`** (TGR `decimals = 0` против ванильного `1` у PBE) и **`state_bureaucrats_investment_pool_contribution_add`** (TGR `color = neutral` против ванильного `good`) — различия только в отображении, PBE грузится последним и даёт ванильный результат. Пин-файл в компаче удалён как бесполезный.
+- TGR не трогает `power_bloc_principles`, `power_bloc_identities`, `cohesion_levels`, `scripted_rules` — весь основной домен PBE. GUI не пересекается (`budget_panel.gui` против панелей блока). Товаров TGR не добавляет: 53 ключа, все ванильные, через `REPLACE_OR_CREATE:`.
+- Разбор целиком — `_pbe/pbe+tgr done/conflicts_tgr_vs_pbe_report.md`.

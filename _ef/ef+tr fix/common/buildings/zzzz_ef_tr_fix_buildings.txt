@@ -1,0 +1,60 @@
+﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13)
+### Buildings the compatch misses or names wrong.
+###
+### Everything in this file is INJECT:, so nothing T&R or the compatch defines
+### is overwritten -- the PM groups are appended to whatever list survives.
+### The three buildings that DO need a full re-statement live in the generated
+### file next to this one (zzzz_ef_tr_fix_buildings_gen.txt).
+
+### The compatch writes INJECT:building_gold_mines -- plural. No such building
+### exists: vanilla 1.13 has building_gold_mine and building_gold_field, and
+### neither declares an alias with an "s" (checked against 1.12.3 as well, in
+### case it was renamed). So gold mines never got T&R's data layer, and the bad
+### key costs one line in error.log at load -- TRY_INJECT: would have been
+### silent, plain INJECT: is not.
+###
+### We can only add the right key from here; the compatch's bad one stays and
+### keeps logging. Removing it means editing the compatch itself.
+###
+### building_gold_field is deliberately left alone: the compatch author patched
+### silver and gold mines only, and T&R itself puts pmg_data_optimization_* into
+### 30 vanilla buildings without touching any precious-metal mine. Adding the
+### group to gold fields would be a design decision, not a repair.
+INJECT:building_gold_mine = {
+	production_method_groups = {
+		pmg_data_optimization_primary_sector #T&R
+	}
+}
+
+### Two T&R industries the compatch never wires into E&F.
+###
+### building_computer_assembly_plant is new in Tech & Res 13.05.2026 and appears
+### nowhere in the compatch -- not in the building injections, not in the
+### ownership effect, not in the crisis lists.
+###
+### building_consumer_electronics_industry has existed since the 1.12 build. The
+### compatch lists it in private_ownership_production_stocks and in both crisis
+### effects, but never gives it the PM groups those effects switch, so
+### activate_production_method there points at a method the building does not
+### have. (The switch itself is also miswritten; see
+### zzzz_ef_tr_fix_effects.txt.)
+###
+### Both are bg_heavy_industry with ownership_type = self, exactly like the 33
+### T&R buildings the compatch does cover. The three T&R buildings that stay
+### uncovered are correct as they are: building_research_center has
+### can_build_private = always no, building_modern_state_baseline is
+### buildable = no, and building_nuclear_weapons_silo is government-only --
+### E&F does not put liquidity into government buildings.
+INJECT:building_computer_assembly_plant = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_consumer_electronics_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}

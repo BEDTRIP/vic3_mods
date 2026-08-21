@@ -1,0 +1,64 @@
+{
+  "name": "E&F + Tech & Res ComPatch Fix",
+  "id": "ef.tr.fix",
+  "version": "1.13.10-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Fixes for the Tech & Res + E&F ComPatch on 1.13.10: gold-mine minting, T&R production method groups the compatch reverts, dead building names, the consumer-electronics ownership switch, and two T&R industries it never wires into E&F.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3786286962",
+      "display_name": "E&F 1.13.10 Hotfix",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3472248460",
+      "display_name": "Tech & Res",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "04.07.2026",
+        "date": "2026-07-04"
+      },
+      {
+        "id": "3786286962",
+        "display_name": "E&F 1.13.10 Hotfix",
+        "version": "1.13.10-2",
+        "date": "2026-08-19"
+      },
+      {
+        "id": "3472248460",
+        "display_name": "Tech & Res",
+        "version": "1.6'",
+        "date": "2026-05-13"
+      },
+      {
+        "id": "tech.res.e&f",
+        "display_name": "Tech & Res + E&F ComPatch",
+        "version": "1.6",
+        "date": "2026-05-08"
+      }
+    ]
+  }
+}

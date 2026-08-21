@@ -1,0 +1,58 @@
+﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13)
+### Minting for the three gold-mine tiers the compatch adds.
+###
+### Vanilla ties country_minting_add to gold output on this ladder:
+###
+###   pm_picks_and_shovels        gold  8  ->  250 minting
+###   pm_atmospheric_engine_pump  gold 15  ->  500
+###   pm_condensing_engine_pump   gold 25  ->  750
+###   pm_diesel_pump              gold 30  -> 1000   (T&R keeps 30 / 1000)
+###
+### The compatch adds three tiers above diesel -- Electric Fueled Pump (35),
+### Heavy Machineries (45), A&R Operations (50) -- and gives none of them
+### country_modifiers at all. Its own REPLACE:pm_diesel_pump_building_gold_mine
+### does not list country_modifiers either, so the 1000 there survives (REPLACE:
+### only swaps the sub-blocks a mod names). The break is the upgrade: research
+### thermal_cracking, move the mine one step up, and minting goes 1000 -> 0
+### while gold output goes 30 -> 35. For a gold-standard economy in E&F that
+### turns the whole upper half of the ladder into a downgrade.
+###
+### The cause is visible in the file: it is a copy of the silver-mine block, and
+### E&F's silver mine has no minting at all -- it sells the `silver` good
+### instead. The silver PMs are right; only gold lost something.
+###
+### Values below keep vanilla's ~33 minting per unit of gold output, rounded to
+### vanilla's 250-step grid: 35 -> 1250, 45 -> 1500, 50 -> 1750.
+###
+### INJECT:, not REPLACE:, on purpose. These PMs have no country_modifiers, so
+### the merge simply adds the block, and the compatch's inputs, employment and
+### pollution stay exactly as its author balanced them. INJECT: into a modifier
+### block sums rather than overwrites -- the compatch relies on that itself in
+### zef_private_construction.txt (goods_input_iron_add = -2 only makes sense as
+### a delta), so a future author-side change to these numbers would add up
+### rather than be silently replaced. That is the intended behaviour here: if
+### the compatch ever ships its own minting, this file must be dropped.
+
+INJECT:pm_electric_fueled_pump_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = 1250
+		}
+	}
+}
+
+INJECT:pm_heavy_machineries_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = 1500
+		}
+	}
+}
+
+INJECT:pm_autonomous_and_remote_ops_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = 1750
+		}
+	}
+}

@@ -1,0 +1,25 @@
+﻿l_russian:
+
+# E&F + Tech & Res ComPatch Fix
+# The compatch ships English only, so its production methods show as raw
+# identifiers in every other language. Russian is the one that matters here; the
+# rest fall back to English, which is at least readable.
+#
+# The two pmg_mining_equipment_* keys are NOT repeated: the gold one is vanilla
+# and already translated ("Горнодобывающее оборудование"), and the silver one
+# belongs to E&F and is covered by the E&F RU localisation mod. Re-emitting them
+# from here would only risk shadowing a better translation.
+#
+# Wording follows vanilla's mine methods ("Дизельный насос", "Паровой насос с
+# конденсатором") rather than the Tech & Res RU mod, which does not carry these
+# compatch-only keys.
+
+ pm_electric_fueled_pump_building_silver_mine:0 "Электрический насос"
+ pm_heavy_machineries_building_silver_mine:0 "Тяжёлая горная техника"
+ pm_autonomous_and_remote_ops_building_silver_mine:0 "Автономная и дистанционная добыча"
+
+ pm_electric_fueled_pump_building_gold_mine:0 "Электрический насос"
+ pm_heavy_machineries_building_gold_mine:0 "Тяжёлая горная техника"
+ pm_autonomous_and_remote_ops_building_gold_mine:0 "Автономная и дистанционная добыча"
+
+ pm_prefabricated_concrete_buildings_private:0 "Сборные железобетонные здания"

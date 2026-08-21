@@ -1,0 +1,290 @@
+﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT
+###
+### Source: the compatch's own common/script_values/zef_00_economic_scripted_value.txt
+### (Morgenroete goods NOT merged -- rerun with --morg for a build with it).
+### Regenerate with tools/regen_ef_tr_copies.py after any update of either.
+###
+### Each basket is a weighted average: sum(price deviation * buy orders) over
+### the goods, divided by 0.1 + sum(buy orders) over the same goods. A good in
+### the numerator but not the divisor pushes the reading up; a good in the
+### divisor but not the numerator dilutes it towards zero. Both halves must
+### list the same goods, and in the compatch they do not.
+###
+### E&F's own hardwood-in-the-divisor-only quirk is left alone here -- it is
+### in E&F itself, in three baskets, and belongs in the E&F hotfix.
+###
+### Fixes applied this run:
+###   inflation_on_manufactured_goods: added market.mg:alloys to the divisor
+###   inflation_on_raw_material: added market.mg:bauxite to the divisor
+###   inflation_on_raw_material: de-duplicated market.mg:hardwood in the divisor
+
+inflation_on_raw_material = {
+	add = {
+		market = {
+			mg:silk = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:dye = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:sulfur = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:iron = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:lead = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:rubber = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#T&R
+			mg:bauxite = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:copper = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:commonores = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:advancedores = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:rare_earths = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:hardwood = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:silk.market_goods_buy_orders
+		add = market.mg:dye.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+		add = market.mg:sulfur.market_goods_buy_orders
+		add = market.mg:iron.market_goods_buy_orders
+		add = market.mg:lead.market_goods_buy_orders
+		add = market.mg:rubber.market_goods_buy_orders
+		#T&R
+		add = market.mg:copper.market_goods_buy_orders
+		add = market.mg:commonores.market_goods_buy_orders
+		add = market.mg:advancedores.market_goods_buy_orders
+		add = market.mg:rare_earths.market_goods_buy_orders
+			add = market.mg:bauxite.market_goods_buy_orders
+}
+}
+
+inflation_on_manufactured_goods = {
+	value = 0
+	add = {
+		market = {
+			mg:clippers = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:steamers = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:engines = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:steel = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:glass = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:fertilizer = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:tools = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:explosives = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			#T&R
+			mg:alloys = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:plastics = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:lubricant = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:copperwires = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:batteries = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:electroniccomponents = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:processors = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:robotics = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:raw_data = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:on_demand_goods = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:organized_data = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:business_data = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:telecommunications = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:aluminium = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			}
+			mg:ai_systems = {
+				add = {
+					add = market_goods_pricier
+					multiply = market_goods_buy_orders
+				}
+			} 
+		}
+	}
+	divide = {
+		value = 0.1
+		add = market.mg:clippers.market_goods_buy_orders
+		add = market.mg:steamers.market_goods_buy_orders
+		add = market.mg:hardwood.market_goods_buy_orders
+		add = market.mg:engines.market_goods_buy_orders
+		add = market.mg:steel.market_goods_buy_orders
+		add = market.mg:glass.market_goods_buy_orders
+		add = market.mg:fertilizer.market_goods_buy_orders
+		add = market.mg:tools.market_goods_buy_orders
+		add = market.mg:explosives.market_goods_buy_orders
+		#T&R
+		add = market.mg:plastics.market_goods_buy_orders
+		add = market.mg:lubricant.market_goods_buy_orders
+		add = market.mg:copperwires.market_goods_buy_orders
+		add = market.mg:batteries.market_goods_buy_orders
+		add = market.mg:electroniccomponents.market_goods_buy_orders
+		add = market.mg:processors.market_goods_buy_orders
+		add = market.mg:robotics.market_goods_buy_orders
+		add = market.mg:ai_systems.market_goods_buy_orders
+		add = market.mg:raw_data.market_goods_buy_orders
+		add = market.mg:on_demand_goods.market_goods_buy_orders
+		add = market.mg:organized_data.market_goods_buy_orders
+		add = market.mg:business_data.market_goods_buy_orders
+		add = market.mg:telecommunications.market_goods_buy_orders
+		add = market.mg:aluminium.market_goods_buy_orders
+			add = market.mg:alloys.market_goods_buy_orders
+}
+}

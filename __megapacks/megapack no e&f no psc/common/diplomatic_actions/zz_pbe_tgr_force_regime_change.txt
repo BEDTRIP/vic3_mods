@@ -1,3 +1,26 @@
+﻿########################################################################
+# PBE + TGR ComPatch - merged Power Bloc "Force Regime Change"
+#
+# Both mods redefine the same DB entry `force_regime_change`:
+#   TGR: common/diplomatic_actions/TGR_ADJUSTMENTS_power_bloc_force_regime_change.txt
+#   PBE: common/diplomatic_actions/vokaes_power_bloc_actions.txt   (plain key, no REPLACE:)
+# With the documented load order (TGR -> PBE) PBE wins outright and every TGR
+# adjustment is lost silently. This file re-adds TGR's side on top of PBE's
+# structure. It is the only DB entry this ComPatch touches.
+#
+# 2026-08-21: PBE renamed its whole prefix `kates_` -> `vokaes_`. The previous
+# version of this file still referenced `kates_power_bloc_rule_diplo_action_changes_enabled`
+# and `kates_force_regime_change_infamy` - both resolve to nothing now, and a
+# missing game rule / script value does not raise an error, it just silently
+# evaluates as absent. Symptom would have been "PBE infamy cost never fires".
+# Never copy PBE identifiers by hand again without re-grepping the mod.
+#
+# Deliberately NOT restored from vanilla 1.13: the `NOT = { is_diplomatic_play_ally_of }`
+# check and the two `trigger_if` guards around je_matter_of_hungary. Both mods
+# removed them independently; re-adding them here would be this ComPatch inventing
+# behaviour neither author wants.
+########################################################################
+
 REPLACE_OR_CREATE:force_regime_change = {
 	groups= {
 		power_bloc_leader
@@ -5,22 +28,22 @@ REPLACE_OR_CREATE:force_regime_change = {
 	show_in_lens = no
 
 	texture = "gfx/interface/icons/diplomatic_action_icons/force_regime_change.dds"
-	
+
 	selectable = {
 		is_power_bloc_leader = yes
 		power_bloc ?= {
 			modifier:power_bloc_leader_can_regime_change_bool = yes
 		}
 	}
-	
+
 	potential = {
 		power_bloc ?= {
 			scope:target_country.power_bloc ?= this
 		}
 	}
-	
+
 	possible = {
-		# PBE: require significant "progressiveness distance" in key lawgroups
+		# Vanilla, kept identically by both mods.
 		custom_tooltip = {
 			text = "FORCE_REGIME_CHANGE_GOV_PRINCIPLES_DIST_POWER_PROGRESSIVENESS_DIFFERENCE"
 			OR = {
@@ -41,15 +64,27 @@ REPLACE_OR_CREATE:force_regime_change = {
 			}
 		}
 
-		# TGR: always require baseline cohesion + short tenure
-		power_bloc = {
-			current_cohesion_percentage >= 0.25
-		}
-		scope:target_country = {
-			tenure_in_current_power_bloc_years >= 1
+		# PBE's structure with TGR's numbers.
+		# PBE gates the cohesion/tenure wall behind its own game rule on purpose: with
+		# `diplo_action_changes` enabled the action is paid for in infamy instead
+		# (see accept_effect below), so the wall is lifted rather than stacked on top.
+		# TGR only retunes the numbers - cohesion 0.1 -> 0.25, tenure 5y -> 1y - so its
+		# contribution belongs inside PBE's AND branch, not around the whole OR.
+		# (The older version of this patch hoisted TGR's two checks out of the OR, which
+		# made the PBE rule do nothing: you paid the infamy AND still had to clear the wall.)
+		OR = {
+			has_game_rule = vokaes_power_bloc_rule_diplo_action_changes_enabled
+			AND = {
+				power_bloc = {
+					current_cohesion_percentage >= 0.25
+				}
+				scope:target_country = {
+					tenure_in_current_power_bloc_years >= 1
+				}
+			}
 		}
 
-		# shared: prestige threshold
+		# PBE wraps the vanilla prestige check in a tooltip so it reads as one line.
 		custom_tooltip = {
 			text = "PRESTIGE_THREE_TIMES_POSSIBLE"
 			prestige >= {
@@ -58,39 +93,46 @@ REPLACE_OR_CREATE:force_regime_change = {
 			}
 		}
 	}
-	
+
 	accept_effect = {
 		regime_change = scope:target_country
 		scope:target_country = {
 			add_modifier = {
 				name = installed_regime
+				# TGR's 24 months. PBE writes `months = normal_modifier_time`, but that
+				# script value is 1825 and vanilla feeds it to `days` - as months it is
+				# 152 years, i.e. permanent. Taking TGR's literal here is also the bug fix.
 				months = 24
 				multiplier = 0.2
 			}
 		}
 
-		# PBE: optional infamy incident when PBE diplo-action rules are enabled
+		# PBE: infamy incident, only while PBE's diplo-action rules are on.
 		if = {
 			limit = {
-				has_game_rule = kates_power_bloc_rule_diplo_action_changes_enabled
+				has_game_rule = vokaes_power_bloc_rule_diplo_action_changes_enabled
 			}
 			create_incident = {
 				country = scope:target_country
-				value = kates_force_regime_change_infamy
+				value = vokaes_force_regime_change_infamy
 			}
 		}
 
-		# TGR/PBE: cohesion cost
+		# Vanilla + TGR. PBE drops the cohesion cost entirely, which looks like an
+		# oversight rather than a design choice: with the rule off there is then no
+		# cost at all. Restored here.
 		power_bloc = {
 			add_cohesion_percent = scaled_cohesion_cost
 		}
 	}
-	
+
+	# ai = {} is byte-identical in TGR and PBE (both tighten vanilla's -25/-50 to
+	# -50/-100), so nothing to merge - carried over verbatim.
 	ai = {
 		evaluation_chance = {
 			value = 0.025 # AI shouldn't use this very often
 		}
-		
+
 		will_propose = {
 			power_bloc = { current_cohesion_percentage >= 0.75 }
 			"ai_ideological_opinion(scope:target_country)" <= -50
@@ -140,4 +182,3 @@ REPLACE_OR_CREATE:force_regime_change = {
 		}
 	}
 }
-

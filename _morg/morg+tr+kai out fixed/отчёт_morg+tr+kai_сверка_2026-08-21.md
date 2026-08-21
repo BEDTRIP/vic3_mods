@@ -1,4 +1,4 @@
-# Сверка компача `morg+tr+kai` — 21.08.2026
+﻿# Сверка компача `morg+tr+kai` — 21.08.2026
 
 Компач собран **04.05.2026** (единственный коммит `d04b022 t&r morg 4.05.2026`).
 С тех пор оба мода обновились:
@@ -24,6 +24,18 @@
 * **1 новая дыра совместимости**, которой в компаче нет.
 
 После правок остаётся **~8 файлов**.
+
+> **Статус: реализовано 21.08.2026.** Ниже — исходный разбор, он оставлен как есть
+> для истории. Текущее состояние патча описано в `README.md`, актуальный чеклист
+> проверки в игре — в §7 этого файла (переписан под то, что реально сделано),
+> итог работы — в §8. Удалённые файлы лежат в
+> `vic3_mods/_to_delete/morg+tr+kai_2026-08-21/`.
+>
+> Принятые решения по трём открытым вопросам: плейсхолдеры `ztr_mr_production.txt`
+> и `ztr_mr_society.txt` убраны (society — заменён точечными `REPLACE:`),
+> `pop_needs` переведены на `INJECT:`, `vikelas_international_sports_tech` собран
+> гибридом (эра и пререк от MR, модификаторы от компача), призовые полёты
+> починены через `INJECT:`.
 
 Главная причина такого сжатия: **Tech & Res сам по себе — полноценный слой совместимости с Morgenröte** (`ztr_mr_*`, `ztr_modified_mr_*`: 20 файлов, все ключевые PM/PMG/здания/техи MR), а Morgenröte 2.8.3e переписал две механики с «жёстко по типу здания» на «по свойству», из-за чего T&R-здания подхватываются сами.
 
@@ -321,48 +333,184 @@ any_company = { can_potentially_produce_prestige_goods = prestige_good_generic_f
 
 ## 7. Чеклист проверки в игре
 
-По убыванию риска. После каждого пункта — явное «годно / не годно».
+Переписан 21.08.2026 под фактически сделанные правки. По убыванию риска,
+с явным «годно / не годно».
 
-**A. Загрузка (без этого дальше нет смысла)**
+### A. Загрузка
 
 1. Игра стартует, вход в 1836 год не вылетает. → годно / не годно
-2. `logs/error.log` чист по `military_formation_movement_speed_mult` (после фикса §3.1 не должно быть ни одной строки). → годно / не годно
-3. `logs/error.log` чист по `pmg_data_optimization_heavy_industry`, `manzoni_pmg_publisher`, `manzoni_pmg_newspaper`, `manzoni_pm_cylinder_presses`. → годно / не годно
-4. Порядок в плейсете: Morgenröte → Tech & Res → компач. Проверить консолью `effect = { if = { limit = { technres_is_active = yes } ... } }` или косвенно: компания Steinway у MR не должна предлагаться. → годно / не годно
+2. `logs/error.log` чист по `military_formation_movement_speed_mult` — теперь во
+   всех трёх опциях мобилизации стоит `military_formation_army_movement_speed_mult`.
+   Раньше это была гарантированная ошибка. → годно / не годно
+3. `logs/error.log` чист по именам, которых больше нет в компаче:
+   `pmg_data_optimization_heavy_industry` (заменено на `_no_shopkeepers`),
+   `je_agassiz_find_*`, `curtiss_aeroplane_production_score`. → годно / не годно
+4. Порядок в плейсете Morgenröte → Tech & Res → компач. Метадата теперь объявляет
+   обе зависимости, лаунчер должен расставить сам. Косвенная проверка: компания
+   Steinway от Morgenröte не предлагается (её гасит `technres_is_active = no`).
+   → годно / не годно
 
-**B. То, что удалили — убедиться, что не сломали**
+### B. Работают ли новые `INJECT:` — самое неопределённое место
 
-5. Геолог Агассица: кнопка «улучшить шахту» открывает окно выбора, **и в списке есть шахты T&R** (медь, боксит, редкозёмы, обычные/продвинутые руды, газовая вышка). Это главная проверка §1.2 — если T&R-шахт в списке нет, значит `is_building_group = bg_mining` не сработал как ожидалось и блок Агассица надо возвращать. → годно / не годно
-6. Проект по T&R-шахте вешает на неё модификатор стоимости (`agassiz_ore_search_cost_modifier`) и завершается модификатором производства. → годно / не годно
-7. Потребности попов: `air_travel` присутствует в тултипах `popneed_entertainment` и `popneed_leisure`. → годно / не годно
-8. Спрос на `civil_planes` не улетел вверх после того, как `air_travel` встал рядом (§3.3). Смотреть цену `civil_planes` на крупном рынке ~1930. → годно / не годно
-9. Уровни `wealth_*`: тултип потребления богатого попа содержит `popneed_entertainment` (значит `TRY_INJECT` MR/T&R отработал и удалённый `zzz_compatch_buy_packages.txt` был лишним). → годно / не годно
+Три инжекта дописывают блок, которого в целевой записи может не быть вовсе.
+Если движок так не умеет, они молча ничего не сделают.
 
-**C. Авиация Кёртисса (то, что осталось)**
+5. Компания KLM / Imperial Airways / базовая авиакомпания показывает
+   `prestige_good_generic_flights` в списке возможных призовых товаров.
+   Если нет — `INJECT:` не создаёт отсутствующий `possible_prestige_goods`, и
+   `common/company_types/zz_compatch_curtiss_prestige.txt` надо переписывать на
+   `REPLACE:` шести компаний с телом T&R. → годно / не годно
+6. JE `je_mr_prestige_goods_flights` появляется в группе технологий. → годно / не годно
+7. В тултипе `popneed_entertainment` и `popneed_leisure` есть `air_travel`
+   (обе записи добавлены через `INJECT:`). → годно / не годно
+8. В здании «Аэропорт» присутствует группа ПМ «туризм» (`pmg_tourism_airport`,
+   тоже `INJECT:` в список групп). → годно / не годно
 
-10. JE «Линдберг» (`je_curtiss_lindbergh_generic` / `_usa`) появляется при наличии аэропорта и авиапрома T&R — без записи в компаче. → годно / не годно
-11. Решение «основать лётную школу» доступно при 3+/5+ уровнях `building_aircraft_industry` (это осталось в компаче). → годно / не годно
-12. Кубок Шнейдера начисляет очки за уровни `building_aircraft_industry` и аэропорты (осталось в компаче). → годно / не годно
-13. События `curtiss.228`, `curtiss.229`, `curtiss.506` срабатывают (остались в компаче), `curtiss.510`, `curtiss.513` — тоже (удалены, работают за счёт `modifier:goods_output_aeroplanes_add`). → годно / не годно
-14. `MFE_trade_good_events.7` («частные самолёты») срабатывает при 3+ уровнях авиапрома. Заодно проверить, что видео проигрывается (после удаления файла компача идёт короткое имя MR). → годно / не годно
+### C. Авиация — главный смысл патча
 
-**D. Издательство и уран**
+9. Аэропорт производит `air_travel` на всех четырёх маршрутных ПМ и на
+   «только пассажиры». → годно / не годно
+10. **Транспортный баланс.** Аэропорт больше не выдаёт `transportation` (было
+    120/100/75/50 у T&R — крупнейший источник в игре, выше скоростных поездов).
+    Смотреть цену `transportation` на большом рынке в 1930-х и позже. Если просело —
+    вернуть частичный `goods_output_transportation_add` в
+    `zzz_mr_compatch_production_methods.txt`, **не трогая `air_travel`**.
+    → годно / не годно
+11. Занятость на «внутренних» и «международных» маршрутах соответствует T&R 13.05
+    (750/750/750 и 750/500/800, инженеров нет). → годно / не годно
+12. Решение «основать лётную школу» доступно при 3+/5+ уровнях
+    `building_aircraft_industry`. → годно / не годно
+13. Кубок Шнейдера начисляет очки за уровни `building_aircraft_industry` и аэропорты.
+    → годно / не годно
+14. События `curtiss.228`, `curtiss.229`, `curtiss.506` срабатывают (остались в
+    компаче), а `curtiss.510`, `curtiss.513` и `MFE_trade_good_events.7` — тоже
+    (удалены, работают за счёт обобщённых проверок Morgenröte). У последнего заодно
+    проверить, что проигрывается видео. → годно / не годно
+15. JE «Линдберг» появляется при наличии аэропорта и авиапрома T&R — без записи
+    в компаче. → годно / не годно
 
-15. `building_manzoni_publishing_industry`: в списке ПМ есть **и** `manzoni_pmg_publisher` / `manzoni_pmg_newspaper` (MR), **и** `pmg_broadcast_media_industry` / `pmg_digital_media_industry` (T&R), **и** `manzoni_pm_cylinder_presses` внутри группы автоматизации. → годно / не годно
-16. `building_uranium_mine` строится (не заперт `has_max_level`), сидит в `bg_mining`, запрещён при `law_mining_strategic` / `law_polluting_mining_banned` и их вариантах. → годно / не годно
+### D. Что удалено — убедиться, что не сломали
 
-**E. Техи и мобилизация**
+16. Геолог Агассица: кнопка «улучшить шахту» открывает окно выбора, **и в списке
+    есть шахты T&R** — медь, боксит, редкозёмы, обычные и продвинутые руды,
+    газовая вышка. Если их нет, `is_building_group = bg_mining` сработал не так, как
+    ожидалось, и блок Агассица надо возвращать из `_to_delete/`. → годно / не годно
+17. Проект по T&R-шахте вешает модификатор стоимости и завершается модификатором
+    производства. → годно / не годно
+18. Тултип потребления богатого попа содержит `popneed_entertainment` — значит
+    `TRY_INJECT` обоих модов отработал и удалённый 38-килобайтный
+    `zzz_compatch_buy_packages.txt` действительно был лишним. → годно / не годно
+19. Окно мобилизации: группы стоят в разумном порядке (файл с весами удалён,
+    веса теперь родные у каждого мода). → годно / не годно
 
-17. `verrier_nuclear_physics_tech` открывается после `verrier_radioactivity_tech`, а не после `verrier_modern_physics_tech`. → годно / не годно
-18. `vikelas_international_sports_tech` в дереве ровно один раз, эра и пререки соответствуют принятому решению (§2). → годно / не годно
-19. Традиции Элгара/Климта растут при исследовании `romanticism`, `elgar_classicism_tech`, `elgar_irrationalism_tech` (проверка §3.6, независимо от выбранного варианта). → годно / не годно
-20. Опции мобилизации «Advanced Tanks» I/II/III доступны для юнитов T&R (`main_battle_tanks`, `modern_mechanized_infantry` и т.д.), бонус к скорости движения виден в тултипе, ИИ переключается на старший тир при апгрейде. → годно / не годно
+### E. Издательство
 
-**F. Призовые полёты (после фикса §4)**
+20. `building_manzoni_publishing_industry`: в списке ПМ есть **и**
+    `manzoni_pmg_publisher` / `manzoni_pmg_newspaper` (MR), **и**
+    `pmg_broadcast_media_industry` / `pmg_digital_media_industry` (T&R),
+    **и** `manzoni_pm_cylinder_presses` внутри группы автоматизации.
+    → годно / не годно
 
-21. Авиакомпания (KLM / Imperial Airways / базовая) показывает `prestige_good_generic_flights` в списке возможных призовых товаров. → годно / не годно
-22. JE `je_mr_prestige_goods_flights` появляется в группе технологий. → годно / не годно
+### F. Техи
 
-**G. Синхронизация**
+21. Счётчики традиций Элгара/Климта растут при исследовании `romanticism`,
+    `elgar_classicism_tech`, `elgar_irrationalism_tech`. → годно / не годно
+22. `elgar_modern_art_tech` **не** исследуется вручную (выдаётся событием), и
+    ровно одна из трёх веток современного искусства доступна.
+    `elgar_mass_culture_tech` требует все три конечные ветки. → годно / не годно
+23. `panum_vaccination_tech` показывает смягчение оспы, `malaria_prevention` —
+    жёлтой лихорадки, при этом `malaria_prevention` остаётся в редакции T&R
+    (era 4, `civilizing_mission`, колониальная институция). → годно / не годно
+24. `verrier_nuclear_physics_tech` открывается после `verrier_radioactivity_tech`.
+    → годно / не годно
+25. `vikelas_international_sports_tech` в дереве ровно один раз: эра 4, единственный
+    пререк `organized_sports`, три модификатора (влияние / отношения / распад
+    инфамии). ИИ у Франции и Греции тянется к нему до 1896 года. → годно / не годно
+26. Уран: `building_uranium_mine` строится, сидит в `bg_mining`, запрещён при
+    `law_mining_strategic` / `law_polluting_mining_banned` и их вариантах —
+    запись из компача удалена, работает версия T&R. → годно / не годно
 
-23. Репозиторий и игровая папка `mod/` совпадают: `diff -rq`. Игровая папка в этой сессии не была подключена — проверить вручную. → годно / не годно
+### G. Мобилизация
+
+27. Опции «Advanced Tanks» I/II/III доступны для юнитов T&R (`main_battle_tanks`,
+    `modern_mechanized_infantry`, `giant_death_robot` и т.д.), бонус к скорости
+    движения виден в тултипе, ИИ переключается на старший тир при апгрейде.
+    → годно / не годно
+
+### H. Синхронизация
+
+28. Репозиторий и игровая папка `mod/` совпадают: `diff -rq`. В сессии 21.08.2026
+    игровая папка не была подключена — правки лежат **только в репозитории**.
+    → годно / не годно
+
+---
+
+## 8. Итог правок 21.08.2026
+
+Было 21 файл, стало 15 (из них `thumbnail.png`, `README.md` и этот отчёт —
+не код). Собственно кода: **12 файлов вместо 20**.
+
+### Удалено (в `vic3_mods/_to_delete/morg+tr+kai_2026-08-21/`)
+
+| Файл | Причина |
+|---|---|
+| `common/buy_packages/zzz_compatch_buy_packages.txt` | 38 КБ, дословно повторял `TRY_INJECT` обоих модов |
+| `common/journal_entries/zzmr_science_agassiz_journal_entries.txt` | 6 JE, которые никто не активировал; шахты T&R покрыты `bg_mining` |
+| `common/scripted_triggers/zzmr_agassiz_scripted_triggers.txt` | то же |
+| `localization/english/zmr_agassiz_l_english.yml` | то же |
+| `localization/english/gui/zmr_gui_science_l_english.yml` | «Prospect Oil or Gas» больше не нужно, газ идёт по рудной ветке |
+| `common/journal_entries/zzz_compatch_journal_entries.txt` | MR перешёл на `modifier:goods_output_aeroplanes_add > 0` |
+| `events/MFE/ztr_MFE_trade_good_events.txt` | MR перешёл на `has_active_production_method`; плюс устаревший путь к видео |
+| `common/mobilization_option_groups/zzz_mr_compatch_mobilization_option_groups.txt` | наборы групп у модов не пересекаются, чинить нечего |
+| `common/technology/technologies/ztr_mr_military.txt` | заглушка ради одного `ai_weight` |
+| `common/technology/technologies/ztr_mr_production.txt` | заглушка; T&R там только добавляет бонусы к скорости исследования |
+| `common/technology/technologies/ztr_mr_society.txt` | заглушка заменена точечными `REPLACE:` |
+
+### Переписано
+
+| Файл | Что изменилось |
+|---|---|
+| `common/buildings/zztr_compatch_buildings.txt` | убрана запись `building_uranium_mine` (совпала с T&R 13.05); `pmg_data_optimization_heavy_industry` → `_no_shopkeepers` |
+| `common/production_methods/zzz_mr_compatch_production_methods.txt` | 9 записей → 5; тела пересобраны от T&R 13.05, выход заменён на `air_travel` по инструкции автора T&R; убраны `pm_air_mail`, `pm_air_freight`, `pm_luxury_requisitions`, `pm_travel_agencies` |
+| `common/pop_needs/zztr_mr_compatch_pop_needs.txt` | два полных `REPLACE:` → два `INJECT:` по одной записи |
+| `common/production_method_groups/zzz_mr_compatch_production_method_groups.txt` | текстура подтянута к T&R 13.05 |
+| `common/mobilization_options/zzz_mr_compatch_mobilization_option.txt` | пересобран от MR 2.8.3e: исправлено имя модификатора скорости, возвращён условный `ai_weight`, список юнитов T&R сохранён |
+| `common/script_values/zzz_compatch_script_values.txt` | 2 записи → 1 |
+| `common/technology/technologies/zzz_compatch_mr_society.txt` | 4 записи → 8: убраны `curtiss_tourism_tech` и старый `elgar_mass_culture_tech`, добавлены точечные правки вместо заглушки |
+| `events/sports/ztr_mr_curtiss_events.txt` | 5 событий → 3 |
+| `common/scripted_triggers/zztr_compatch_vanilla_scripted_triggers.txt` | содержимое актуально, добавлены BOM и комментарий о регенерации |
+| `common/decisions/zztr_compatch_decisions.txt` | то же |
+| `.metadata/metadata.json` | объявлены зависимости от Morgenröte и Tech & Res, версия и теги приведены в порядок |
+
+### Добавлено
+
+| Файл | Зачем |
+|---|---|
+| `common/company_types/zz_compatch_curtiss_prestige.txt` | 6 `INJECT:` — возвращают `prestige_good_generic_flights` авиакомпаниям |
+| `common/technology/technologies/zzz_compatch_mr_production.txt` | `verrier_nuclear_physics_tech` вынесен из «society»-файла по категории |
+| `README.md` | у компача его не было вовсе; подробный markdown + раздел `## For Steam` |
+
+### Проверено автоматически после правок
+
+* BOM есть во всех `.txt` и `.yml`, баланс скобок нулевой в каждом файле.
+* Все 31 ключа компача существуют выше по стеку — ни одного `REPLACE:` в пустоту.
+* Все использованные идентификаторы разрешаются: 8 PMG, 12 PM, 16 техов в
+  `unlocking_technologies`, 9 типов юнитов, 63 товара, 1 prestige good,
+  12 типов зданий, 26 типов модификаторов, 26 ключей локализации, 7 статических
+  модификаторов. Ненайденных нет.
+
+### Найдено попутно, НЕ исправлено — вне согласованного объёма
+
+* `camera`: T&R `REPLACE`-ит ванильный тех и срезает добавленный Morgenröte
+  `country_verrier_decorative_astronomical_objectes_add = 2`. Сам мод помечает
+  этот модификатор «(no effect)», и второй его источник (тех Верье, +4) остаётся,
+  так что потеря косметическая.
+* `organized_sports`: T&R меняет пререк с `vikelas_sports_clubs_tech` (тех
+  Morgenröte) на `pan-nationalism` и эру 3 → 4. Цепочка Викеласа
+  «спортклубы → организованный спорт» разрывается: `vikelas_sports_clubs_tech`
+  остаётся исследуемым, но перестаёт быть ступенью. Ошибки нет, но это тот же
+  класс правки, что и остальные точечные `REPLACE:` в
+  `zzz_compatch_mr_society.txt` — скажи, если добавлять.
+* `androids`: у T&R товар с `category = industrial`, но он не внесён в их
+  собственный `goods_is_industrial`. Их баг; чинить у себя — значит разойтись с
+  их списком на две строки вместо одной.

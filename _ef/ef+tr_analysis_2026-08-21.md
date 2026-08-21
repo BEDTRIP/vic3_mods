@@ -140,23 +140,19 @@ T&R делает `REPLACE:` для `building_automotive_industry`, `building_syn
 ни у кого (проверил `variant_of` в laws у ваниль/TGR/PBE/T&R/E&F/MR/CMF), так что
 сегодня это безвредно — но это дрейф, и он сам себя починит, если файл пересобрать.
 
-**Что делать.** Файл нужен, но его надо пересобрать от текущего T&R: взять
-`ztr_vanilla_modified_buildings.txt` как есть и дописать в `production_method_groups`
-две строки E&F. Ещё лучше — заменить `REPLACE:` на `INJECT:` и оставить только то,
-ради чего файл существует:
+**Что делать.** Первым делом хотелось заменить `REPLACE:` на три строки
+`INJECT:` — тогда патч ничего не переизлагает и не может отстать от T&R. Не
+годится: `INJECT:` умеет только дописать недостающую группу, но не убрать
+устаревшую, а две пересекающиеся группы дата-оптимизации на одном здании
+(`pmg_data_optimization_heavy_industry` и `..._algorithmic_dispatch` отличаются
+одним PM из шести) дали бы игроку возможность включить обе.
 
-```
-# T&R does a full REPLACE: of these three vanilla buildings, and its
-# production_method_groups sub-block wipes E&F's earlier INJECT.
-# INJECT: merges into the surviving list instead of restating T&R's definition,
-# so a T&R change to PMGs, possible or ai_value no longer silently drifts out of
-# this patch. Load order requirement: after both E&F and T&R.
-INJECT:building_automotive_industry = { production_method_groups = { pmg_market_liquidity pmg_private_ownership_manufacture_stock } }
-INJECT:building_synthetics_plant   = { production_method_groups = { pmg_market_liquidity pmg_private_ownership_manufacture_stock } }
-INJECT:building_power_plant        = { production_method_groups = { pmg_market_liquidity pmg_private_ownership_manufacture_stock } }
-```
+Значит здание надо переизложить — но не руками. `zzzz_ef_tr_fix_buildings_gen.txt`
+в фикс-моде собирается из `ztr_vanilla_modified_buildings.txt` как он есть
+сегодня, плюс две группы E&F; пересборка — одна команда
+(`tools/regen_ef_tr_copies.py`). Ровно тот же приём, что в
+`regen_ef_psc_copies.py`.
 
-Файл сжимается со 130 строк до трёх и перестаёт разъезжаться при каждом обновлении T&R.
 
 ### 3. `common/production_methods/zef_mines_production_methods.txt` — **новые ступени золота не чеканят**
 
@@ -358,53 +354,162 @@ T&R. Технические мелочи: в 8 из 15 файлов нет BOM (
 
 ## Что делать, по убыванию
 
-1. **Решить вопрос 128 товаров** — до этого остальное смысла не имеет.
-2. **`zztr_vanilla_buildings.txt` → три строки `INJECT:`** (п. 2). Убирает откат
-   PMG электростанции и автозавода и снимает проблему на будущее.
-3. **Вернуть чеканку новым золотым PM** (п. 3).
-4. **Починить `building_gold_mines` → `building_gold_mine`** (п. 1).
-5. **`building_consumer_electronics_industry`**: перевёрнутое условие + недостающая
-   инъекция PMG; **`building_computer_assembly_plant`**: добавить инъекцию (п. 6.2, 7).
-6. **Вернуть канонические имена одиннадцати зданий**, убрать `military_shipyard`
-   и `artillery_foundries` (п. 6.1).
-7. **Выкинуть `zztr_mr_buildings.txt` и `zztr_modified_mr_buildings.txt`**, оставить
-   `ef+morg done` (п. 8).
-8. `bauxite` в знаменатель `inflation_on_raw_material` (п. 5).
-9. Локализация, `relationships`, BOM (п. 9, 10).
+1. **Решить вопрос 128 товаров** — до этого остальное смысла не имеет. Отложено
+   по договорённости.
+2. Всё остальное из списка ниже сделано в тот же день — см. раздел
+   «Сделано 21.08.2026» и мод `_ef/ef+tr fix`:
+   PMG электростанции и автозавода, чеканка золота, `building_gold_mines`,
+   Consumer Electronics и Computer Assembly Plant, канонические имена зданий,
+   корзины инфляции, локализация, `relationships`, BOM.
+3. **Не закрыто снизу**: дубль инъекций в семь зданий Morgenröte — решается при
+   сборке мегапака, выкинуть `zztr_mr_buildings.txt` и
+   `zztr_modified_mr_buildings.txt` из компача.
 
 Побочно — кандидаты в `ef hotfix 1.13`, к компачу отношения не имеют:
 `building_naval_base` и `building_military_shipyard` удалены из ванили в 1.13, а E&F
-их ещё зовёт; `building_vineyard_plantation` не существовал никогда.
+их ещё зовёт; `building_vineyard_plantation` не существовал никогда;
+`hardwood` стоит в знаменателе трёх корзин инфляции, не появляясь ни в одном
+числителе.
 
 ---
 
-## Чеклист проверки в игре
+# Сделано 21.08.2026: мод `_ef/ef+tr fix`
 
-Порядок загрузки для всех пунктов: CMF → … → E&F → **ef hotfix** → T&R → KAI → компач.
-Компач обязан быть ниже и E&F, и T&R — иначе `REPLACE:` T&R снесёт его инъекции.
+Всё, кроме потолка товаров, закрыто отдельным мини-модом, который грузится
+**после** компача. Компач при этом не трогается: он остаётся «чужим» в
+`out outdate`, а все правки живут в своём моде и переживают его обновление.
 
-1. **Старт вообще** — годно / не годно. Сборка с E&F+hotfix+T&R сейчас должна
-   вылетать при входе в игру без единой ошибки в логе (157 товаров). Если она
-   почему-то стартует — значит моя арифметика по потолку неверна, и это надо знать
-   до всего остального.
-2. **Электростанция, панель здания** — есть ли вкладка «Power Transmission»
-   (DC / half / AC) и вкладка дата-оптимизации. Ожидаемо сейчас: transmission нет,
-   дата-оптимизация есть. После правки п. 2 — наоборот. Годно / не годно.
-3. **Золотая шахта, США или Трансвааль, после `compression_ignition` и дальше** —
-   смотреть `country_minting` при переключении PM вверх по группе Mining Equipment.
-   Падение до нуля на `Electric Fueled Pump` — подтверждение п. 3.
-4. **Алиасы в скоупах** — самый дешёвый способ: выставить любой стране
-   `law_council_republic`/национализацию так, чтобы `private_ownership_fraction`
-   текстильной фабрики перешла 0.5, и посмотреть, переключился ли PM частной
-   собственности. Переключился → алиасы (`building_textile_mills`) резолвятся, и
-   из п. 6.1 остаются только два имени; не переключился → ломаются все одиннадцать.
-5. **`error.log` после 5 игровых лет** — искать `building_gold_mines`,
-   `building_artillery_foundries`, `building_military_shipyards`,
-   `building_naval_base`, `building_vineyard_plantation`,
-   `pm_private_ownership_majority_manufacture_stock`.
-6. **Здания MR** (`building_airport`, `building_uranium_mine` и остальные пять) при
-   одновременно включённых `ef+morg` и компаче — не задвоилась ли PM-группа в панели
-   здания. Годно / не годно.
-7. **Частный стройсектор E&F** — на `Arc Welded Buildings` страновая стройка должна
-   вырасти на **25**, не на 30 и не упасть на 5. Это проверка семантики `INJECT:`
-   в блоках модификаторов, от неё зависит вся п. 4.
+`_ef/ef+tr fix` — `[1.13] E&F + Tech & Res ComPatch Fix`, 10 файлов:
+
+| файл | что делает | как |
+|---|---|---|
+| `common/buildings/zzzz_ef_tr_fix_buildings.txt` | `building_gold_mine` вместо опечатки `..._mines`; ликвидность и stock-группа для `building_computer_assembly_plant` и `building_consumer_electronics_industry` | `INJECT:` |
+| `common/buildings/zzzz_ef_tr_fix_buildings_gen.txt` | три ванильных здания, пересобранные от актуального T&R + две группы E&F | `REPLACE:`, генерируется |
+| `common/production_methods/zzzz_ef_tr_fix_gold_minting.txt` | чеканка 1250 / 1500 / 1750 трём новым ступеням золотой шахты | `INJECT:` |
+| `common/scripted_effects/zzzz_ef_tr_fix_effects.txt` | переключение частной собственности для 12 зданий по каноническим именам | новый ключ |
+| `common/scripted_effects/zzzz_ef_tr_fix_effects_gen.txt` | `financial_crash_consequences` и `economic_crisis_consequences` с исправленными именами | `REPLACE:`, генерируется |
+| `common/script_values/zzzz_ef_tr_fix_inflation_gen.txt` | корзины `inflation_on_raw_material` и `..._manufactured_goods` сведены | переопределение, генерируется |
+| `common/on_actions/zzzz_ef_tr_fix_on_actions.txt` | подключение эффекта к `on_yearly_pulse_country` и `on_production_method_changed` | аддитивно |
+| `common/history/global/zzzz_ef_tr_fix_init.txt` | тот же эффект один раз на старте | аддитивный `GLOBAL` |
+| `localization/russian/…` | 7 названий PM | — |
+| `README.md` | стимовский BBCode + раздел про сопровождение | — |
+
+Плюс `tools/regen_ef_tr_copies.py` — генератор трёх `_gen`-файлов.
+
+## Решения, которые стоит зафиксировать
+
+**Почему отдельный мод, а не форк компача.** Форк означал бы владение 100 КБ
+`zef_01_financial_scripted_effects.txt`, который сам по себе — копия файла E&F.
+Каждое обновление E&F пришлось бы сводить руками. Мод сверху владеет 27 КБ, из
+которых 23 КБ генерируются одной командой.
+
+**Почему `private_ownership_production_stocks` не переопределён.** Там 82 КБ
+ради двенадцати блоков. Вместо этого — свой эффект в своём `on_action`:
+`on_actions` аддитивны, так что ни E&F, ни компач, ни `ef+morg` ничего не теряют.
+Это ровно тот приём, что уже применён в `ef+morg done`.
+
+**Почему два кризисных эффекта всё-таки переопределены.** Из чужого
+`scripted_effect` нельзя дописать элемент в `or`-список. Единственный способ
+починить имена — переизложить эффект целиком. Файл генерируется, а не пишется
+руками, и в его шапку каждый прогон печатает список подстановок:
+
+```
+###   economic_crisis_consequences: building_artillery_foundries -> building_artillery_foundry
+###   economic_crisis_consequences: building_financial_centre_TUS -> building_financial_centre_tus
+###   economic_crisis_consequences: dropped building_military_shipyards
+###   economic_crisis_consequences: added building_computer_assembly_plant
+###   …
+```
+
+Если после обновления компача список поедет — это видно сразу, без диффа.
+
+**Почему 11 имён продублированы, а не заменены.** Девять из них — настоящие
+`aliases` ванильных зданий и, скорее всего, резолвятся. Проверить это дешевле в
+игре, чем угадать. Поэтому в `zzzz_ef_tr_fix_effects.txt` переключение
+повторено под каноническими именами: если алиасы работают, все блоки —
+no-op (условие не сойдётся, здание уже на нужном PM); если нет — они и делают
+работу. В кризисных эффектах, где дублировать нельзя, имена именно заменены.
+
+**Чеканка золота: 1250 / 1500 / 1750.** Ваниль держит ~33 единицы чеканки на
+единицу выпуска золота (8/250, 15/500, 25/750, 30/1000) и шагает по 250.
+Новые ступени дают 35 / 45 / 50 золота — отсюда числа. Через `INJECT:`, потому
+что он в блоках модификаторов суммирует: если автор компача когда-нибудь
+добавит свою чеканку, значения сложатся, и это будет видно. Если добавит —
+файл надо удалить.
+
+## Что вскрылось по ходу правки
+
+**Корзины инфляции разъезжаются у обоих компачей.** Каждое из пяти значений —
+средневзвешенное: числитель суммирует отклонение цены на объём заказов,
+знаменатель — те же объёмы. Товар только в числителе завышает инфляцию, только
+в знаменателе — размывает её к нулю. Состояние на сегодня:
+
+| корзина | E&F | компач T&R | `ef+morg done` |
+|---|---|---|---|
+| consumer_goods | 21/21 ✔ | 34/34 ✔ | 25/25 ✔ |
+| energy | 4/5 — лишний `hardwood` | 9/10 — то же | — |
+| raw_material | 6/7 — лишний `hardwood` | 12/12, но нет `bauxite` и `hardwood` дважды | 7/8 — то же, что у E&F |
+| manufactured_goods | 8/9 — лишний `hardwood` | 23/23, но нет `alloys` | — |
+| military_equipment | 7/7 ✔ | 8/8 ✔ | — |
+
+Фикс-мод чинит `raw_material` и `manufactured_goods`. `hardwood` в знаменателе
+трёх корзин без числителя — это E&F, в файлах E&F, и место ему в хотфиксе, а не
+здесь; в `raw_material` вопрос уже закрыт самим компачем, который добавил
+`hardwood` в числитель.
+
+**Компач и `ef+morg done` переопределяют одни и те же значения.**
+`inflation_on_consumer_goods` и `inflation_on_raw_material` определены обоими.
+Позже загруженный побеждает целиком, товары проигравшего из корзины выпадают —
+сегодня выпадают `air_travel` и `good_uranium`. Фикс-мод грузится последним и
+поэтому может свести их: `regen_ef_tr_copies.py --morg`. В репозиторий положена
+версия без Morgenröte (мод объявляет зависимости только на E&F и T&R) —
+**для мегапака пересобрать с `--morg`**.
+
+## Что осталось нерешаемым снизу
+
+- **Строка `building_gold_mines` в `error.log`.** Добавить правильный ключ можно,
+  удалить чужой неправильный — нет. Уйдёт только правкой самого компача.
+- **Двойная инъекция в семь зданий Morgenröte.** `ef+morg done` и компач
+  инжектят одни и те же группы. Убрать дубль сверху = переизложить семь
+  определений зданий T&R, то есть завести ровно тот дрейф, от которого мы
+  избавляемся. Правильное место — сборка мегапака: выкинуть
+  `zztr_mr_buildings.txt` и `zztr_modified_mr_buildings.txt`.
+- **Потолок 128 товаров.** По договорённости отложено.
+
+## Синхронизация
+
+Игровая папка `mod/` в этой сессии не примонтирована — в неё ничего не
+скопировано. После проверки `diff -rq` между репозиторием и `mod/` обязателен.
+
+## Чеклист проверки в игре (заменяет прежний)
+
+Порядок загрузки: CMF → ETF → E&F → **ef hotfix** → T&R → KAI → компач → **ef+tr fix**.
+
+1. **Старт вообще** — годно / не годно. Пока потолок товаров не решён, сборка
+   должна вылетать при входе в игру (157 товаров). Если стартует — арифметика
+   потолка неверна, и это надо знать до всего остального.
+2. **Электростанция, панель здания** — должны быть и вкладка Power Transmission
+   (DC / half / AC), и Market Liquidity, и Private Ownership. Дата-оптимизации
+   быть не должно (T&R её оттуда убрал). Годно / не годно.
+3. **Автозавод** — верхняя ступень дата-оптимизации называется Algorithmic
+   Dispatch, не Internet Data Optimization.
+4. **Золотая шахта, США или Трансвааль** — вести вверх по группе Mining
+   Equipment после `compression_ignition`: `country_minting` должен расти
+   1000 → 1250 → 1500 → 1750, а не падать в ноль.
+5. **Алиасы в скоупах** — довести `private_ownership_fraction` текстильной
+   фабрики выше 0.5 и посмотреть, переключился ли PM частной собственности.
+   Переключился → алиасы резолвятся и половина `zzzz_ef_tr_fix_effects.txt` —
+   страховка; не переключился → она и есть механика.
+6. **Consumer Electronics и Computer Assembly Plant** — в панели есть Market
+   Liquidity и Private Ownership, и PM переключается по доле частника.
+7. **`error.log` после 5 игровых лет** — ожидаемо остаётся только
+   `building_gold_mines`. Появление `building_artillery_foundries`,
+   `building_military_shipyards`, `building_naval_base`,
+   `building_vineyard_plantation` или
+   `pm_private_ownership_majority_manufacture_stock` означает, что фикс-мод
+   грузится не последним.
+8. **Здания MR** при одновременно включённых `ef+morg` и компаче — не задвоилась
+   ли PM-группа в панели. Годно / не годно.
+9. **Частный стройсектор E&F** — на `Arc Welded Buildings` страновая стройка
+   должна вырасти на **25**, не на 30 и не упасть на 5. Это проверка семантики
+   `INJECT:` в блоках модификаторов, от неё зависит файл чеканки золота.

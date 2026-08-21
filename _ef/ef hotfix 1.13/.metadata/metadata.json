@@ -1,9 +1,9 @@
-﻿{
+{
   "name": "E&F Hotfix",
   "id": "3786286962",
   "version": "4.1.7.4",
   "supported_game_version": "1.13.*",
-  "short_description": "Fixes for Economic and Financial=",
+  "short_description": "Fixes for Economic and Financial",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
