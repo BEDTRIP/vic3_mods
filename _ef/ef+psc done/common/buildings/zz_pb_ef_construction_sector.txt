@@ -81,8 +81,12 @@ REPLACE:building_construction_sector = {
 			}
 		}
 
+		# `exists = owner` first: ai_value is evaluated for unowned states too, and
+		# `owner` comes back as none there ->
+		#   Value of wrong type in 'zz_pb_ef_construction_sector.txt:86'. Got value of type 'none'
 		if = {
 			limit = {
+				exists = owner
 				owner.building_ef_private_construction_lvl > owner.building_urban_center_lvl_by_base_rate
 			}
 			divide = 2
@@ -95,8 +99,16 @@ REPLACE:building_construction_sector = {
 	# Limit total Construction Sectors by the (E&F) Urban Center-based cap.
 	# NOTE: `can_build_private` is evaluated in a non-building scope, so `level` is invalid here.
 	# We rely on E&F script_values; in pb+ef we remap `building_ef_private_construction_lvl` to sum `building_construction_sector`.
+	#
+	# `owner ?= { }` rather than `owner.x <= owner.y`: this is also evaluated for
+	# states with no owner, where the plain form logs
+	#   Value of wrong type in 'zz_pb_ef_construction_sector.txt:99'. Got value of type 'none'
+	# The safe form skips the check there, which is the right answer anyway --
+	# nobody is privately funding a building in a state nobody owns.
 	can_build_private = {
-		owner.building_ef_private_construction_lvl <= owner.building_urban_center_lvl_by_base_rate
+		owner ?= {
+			building_ef_private_construction_lvl <= building_urban_center_lvl_by_base_rate
+		}
 	}
 
 	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"

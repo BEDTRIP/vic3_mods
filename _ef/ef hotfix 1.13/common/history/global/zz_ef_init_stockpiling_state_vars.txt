@@ -1,34 +1,58 @@
 ﻿#############################################
-# 7c. Belt-and-braces init for the stockpile state variables
+# 7c. Init for the stockpile state variables E&F reads but does not set
+#
+# THE ERRORS (error.log: 474 blocks in one session, 270 of them these five)
+#   Failed to fetch variable for 'stockpiling_bond_var_state_1' due to not being set
+#   Event target link 'var' returned an unset scope
+#   Invalid left side during comparison 'var'
+#     common/scripted_effects/01_economic_scripted_effects.txt   (x18 each, five variables)
+#     <- common/on_actions/00_ef_on_action.txt:96
+#     <- common/scripted_effects/00_on_action_main.txt:21
+#     <- common/scripted_effects/00_on_action_main.txt:18431
+#
+# WHERE THEY COME FROM
+# `stockpiling_capital_state_transfert` runs on the monthly pulse of any country
+# that owns a bank, and gates its financial-centre branch on
+#
+#   any_scope_state = {
+#       var:financial_center_site_var = 0
+#       or = {
+#           var:stockpiling_bond_var_state_1 > 0
+#           var:stockpiling_manufacture_stock_var_state_1 > 0
+#           var:stockpiling_agricultural_stock_var_state_1 > 0
+#           var:stockpiling_mining_stock_var_state_1 > 0
+#           var:stockpiling_railroad_stock_var_state_1 > 0
+#       }
+#   }
+#
+# `any_scope_state` walks every state the country owns, so all five have to
+# exist on all of them or the read throws three errors per state per month.
 #
 # GLOBAL blocks are additive and `zz_` is processed last, so this appends to
-# E&F's own init rather than replacing it. Every write is guarded by
-# `NOT = { has_variable = ... }`, so it only fills gaps.
+# whatever E&F sets itself. Every write is guarded by `NOT = { has_variable }`,
+# so it only fills gaps and never fights E&F over a value.
 #
-# !! VERIFY BEFORE KEEPING !!
-# This was written against E&F v4.1.1 to stop startup spam:
-#     Failed to fetch variable ... due to not being set
-#     Invalid left side during comparison 'var'
-# Re-checked against E&F 04.07.2026 on 2026-08-19 and it now looks REDUNDANT:
-# common/history/global/01_ef_state_global_variable.txt:1362-1389 already sets
-# all seven of these inside `GLOBAL = { every_state = { ... } }`, which covers
-# unowned states too. A sweep of common/ also found no stockpiling_* variable
-# that is read via var: but never set anywhere (552 read, 2303 set, 0 orphans).
+# !! every_state, NOT every_scope_state !!
+# GLOBAL runs in `none` scope. An earlier version of this file used
+# `every_scope_state` at the top level, and the entire block silently did
+# nothing:
 #
-# It is kept for now only because the original spam was observed in a log this
-# analysis could not re-read. Start a game, grep error.log for the two lines
-# above with this file disabled, and if the log is clean, DELETE IT.
+#   Error: every_scope_state effect [ Wrong scope for effect: none, expected
+#          country, front, state_region, strait, strategic_region, theater ]
+#   Script location: common/history/global/zz_ef_init_stockpiling_state_vars.txt:31
 #
-# The earlier version also ran the same loop twice -- once as `every_scope_state`
-# at GLOBAL level and once nested inside `every_country`. The outer loop already
-# covers every state, so the nested copy was pure duplicate work; removed.
+# `every_scope_state` needs a country or region to iterate. `every_state` is the
+# top-level list, and it is what E&F itself uses in
+# common/history/global/01_ef_state_global_variable.txt:2. Nesting as
+# `every_country = { every_scope_state = { ... } }` also works, but it misses
+# states with no owner and repeats the work once per country.
 #
 # Was previously carried by the E&F + PSC compatch. It has nothing to do with
 # PSC, so it lives here now.
 #############################################
 
 GLOBAL = {
-	every_scope_state = {
+	every_state = {
 		# E&F financial-centre stockpile transfer vars
 		if = {
 			limit = { NOT = { has_variable = stockpiling_bond_var_state_1 } }
