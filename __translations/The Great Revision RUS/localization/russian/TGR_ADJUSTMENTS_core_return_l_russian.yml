@@ -3,6 +3,13 @@
  ########################### MODIFIERS ###########################
  refused_to_return_core_modifier: "Отказались передать законные территории"
  
+ ########################### GAME RULES ###########################
+ rule_tgr_core_return_great_powers:0 "Возврат территорий Великим державам"
+ setting_tgr_core_return_great_powers_enabled:0 "Включено"
+ setting_tgr_core_return_great_powers_enabled_desc:0 "Великие державы могут отправить #red;bold; Ультиматум#! Игроку и другим странам под управлением ИИ.\n@warning! Это позволяет ИИ требовать возврата исторически принадлежавших им территорий, что усиливает раздробленность границ."
+ setting_tgr_core_return_great_powers_disabled:0 "Отключено"
+ setting_tgr_core_return_great_powers_disabled_desc:0 "Событие «#yellow;bold; Возврат территорий#!» не будет запускаться."
+ 
  
  ########################### EVENTS ###########################
 
@@ -70,4 +77,99 @@
  great_revision_events_core_return.8.a:0 "Мы не можем рисковать ещё одной катастрофической войной... Мы принимаем условия."
  great_revision_events_core_return.8.b:0 "Приходите и забирайте!"
  
+ #ARGENTINA CORES
+ great_revision_events_core_return.9:0 "[SCOPE.sCountry('argentina_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.9.t:0 "[SCOPE.sCountry('argentina_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.9.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('argentina_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.9.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.9.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.9.b:0 "Пусть попробуют их забрать!"
+ 
+ #CHILE CORES
+ great_revision_events_core_return.10:0 "[SCOPE.sCountry('chile_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.10.t:0 "[SCOPE.sCountry('chile_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.10.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('chile_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.10.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.10.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.10.b:0 "Пусть попробуют их забрать!"
+ 
+ #PERU' CORES
+ great_revision_events_core_return.11:0 "[SCOPE.sCountry('peru_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.11.t:0 "[SCOPE.sCountry('peru_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.11.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('peru_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.11.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.11.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.11.b:0 "Пусть попробуют их забрать!"
+ 
+ #BELGIO CORES
+ great_revision_events_core_return.12:0 "[SCOPE.sCountry('belgio_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.12.t:0 "[SCOPE.sCountry('belgio_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.12.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('belgio_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.12.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.12.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.12.b:0 "Пусть попробуют их забрать!"
+ 
+ #NETHERLANDS CORES
+ great_revision_events_core_return.13:0 "[SCOPE.sCountry('net_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.13.t:0 "[SCOPE.sCountry('net_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.13.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('net_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.13.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.13.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.13.b:0 "Пусть попробуют их забрать!"
+ 
+ #PERSIA CORES
+ great_revision_events_core_return.14:0 "[SCOPE.sCountry('persia_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.14.t:0 "[SCOPE.sCountry('persia_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.14.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('persia_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.14.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.14.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.14.b:0 "Пусть попробуют их забрать!"
+ 
+ #NORTH GERMAN FEDERATION CORES
+ great_revision_events_core_return.15:0 "[SCOPE.sCountry('north_german_federation_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.15.t:0 "[SCOPE.sCountry('north_german_federation_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.15.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('north_german_federation_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.15.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.15.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.15.b:0 "Пусть попробуют их забрать!"
+ 
+ #BRAZIL CORES
+ great_revision_events_core_return.16:0 "[SCOPE.sCountry('brazil_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.16.t:0 "[SCOPE.sCountry('brazil_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.16.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('brazil_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.16.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.16.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.16.b:0 "Пусть попробуют их забрать!"
+ 
+ #PARAGUAY CORES
+ great_revision_events_core_return.17:0 "[SCOPE.sCountry('paraguay_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.17.t:0 "[SCOPE.sCountry('paraguay_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.17.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('paraguay_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.17.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.17.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.17.b:0 "Пусть попробуют их забрать!"
+ 
+ #ECUADOR CORES
+ great_revision_events_core_return.18:0 "[SCOPE.sCountry('ecuador_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.18.t:0 "[SCOPE.sCountry('ecuador_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.18.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('ecuador_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.18.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.18.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.18.b:0 "Пусть попробуют их забрать!"
+ 
+ #FRANCE AFRICA CORES
+ great_revision_events_core_return.19:0 "[SCOPE.sCountry('french_africa_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.19.t:0 "[SCOPE.sCountry('french_africa_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.19.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('french_africa_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.19.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.19.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.19.b:0 "Пусть попробуют их забрать!"
+ 
+ #JAPANESE KOREA CORES
+ great_revision_events_core_return.20:0 "[SCOPE.sCountry('japan_korea_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.20.t:0 "[SCOPE.sCountry('japan_korea_core_owner').GetName] требует вернуть коренные территории"
+ great_revision_events_core_return.20.d:0 "Проявив дипломатическую агрессию, посол [SCOPE.sCountry('japan_korea_core_owner').GetName] потребовал от нашего правительства вернуть территории, незаконно захваченные во время войны."
+ great_revision_events_core_return.20.f:0 "В случае согласия мы передадим законному владельцу #red;bold; принадлежащие нам коренные территории#!, не относящиеся к нашей исконной культуре."
+ great_revision_events_core_return.20.a:0 "Мы не можем рисковать очередной разрушительной войной... Мы принимаем условия."
+ great_revision_events_core_return.20.b:0 "Пусть попробуют их забрать!"
 

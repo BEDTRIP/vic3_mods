@@ -181,3 +181,18 @@ TGR очень сильно “подкручивает” кампанию че
 - **Law groups / laws / ideologies / IGs**: `common/law_groups/TGR_POLITICS_laws.txt`, `common/laws/TGR_POLITICS_*.txt`, `common/ideologies/*`, `common/interest_groups/*`
 - **Унификации**: `common/journal_entries/TGR_*UNIFICATION*`, `events/TGR_*UNIFICATION*`, `common/on_actions/TGR_*UNIFICATION*`, `common/scripted_buttons/TGR_*UNIFICATION*`
 - **Дипломатия (loans/migration/trade_states/regime_change)**: `common/diplomatic_actions/*`, `common/treaty_articles/*`, соответствующие `events/` и `on_actions/`.
+
+
+---
+
+### Дополнение 2026-08-21 (из сверки MR × TGR)
+
+**Версия**: `2.0`, `supported_game_version` = `1.13.10`, `relationships` пусты. Steam ID `3215078236`.
+
+- **Новое с прошлой сверки**: TGR стал инжектить в три ванильных теха — `INJECT:atmospheric_engine` (`TGR_POLITICS_production.txt`), `INJECT:civilizing_mission` и `INJECT:malaria_prevention` (`TGR_POLITICS_society.txt`). Раньше `common/technology` в пересечениях не всплывал.
+- **Товаров TGR не добавляет ни одного**: все 53 записи в `common/goods` — `REPLACE_OR_CREATE` ванильных. Для расчёта потолка 128 TGR даёт ноль.
+- **Ванильных файлов перекрывает целиком 496**, но содержательных мало: `common/buy_packages/00_buy_packages.txt`, все 12 `common/parties/*.txt`, 14 файлов `common/history/countries/*` (AUS BRZ CHI FRA GBR JAP MEX NET PER SAR SIC SPA SWE TUR), `common/decisions/manifest_destiny.txt`, `gui/budget_panel.gui`, `localization/languages.yml`. Остальные ~470 — `.dds` иконки законов и PM.
+- **`gui/budget_panel.gui` — 2336 строк против ванильных 2112** (переписан, не обрезан), но четыре ванильных имени виджетов пропали: `bankruptcy_progress_bar`, `bankruptcy_progressbar`, `declare_bankruptcy_button`, `tutorial_highlight_tax_level`. Первые три нигде больше не упоминаются — кнопка банкротства, похоже, убрана намеренно под систему займов. А `tutorial_highlight_tax_level` **ссылается ванильный** `common/tutorial_lessons/00_tutorial_lessons_budget_balance.txt` → урок туториала по бюджету ищет несуществующий виджет. Проверять при включённом туториале.
+- **`building_groups` TGR переопределяет ровно четыре**: `bg_trade`, `bg_consumer_goods`, `bg_industry_heavy`, `bg_industry_light`. Всё остальное дерево групп ванильное — чужие группы с родителями вне этой четвёрки не задеваются.
+- **`pop_needs`**: `REPLACE_OR_CREATE` для восьми — `popneed_basic_food`, `popneed_luxury_food`, `popneed_luxury_drinks`, `popneed_intoxicants`, `popneed_crude_items`, `popneed_simple_clothing`, `popneed_household_items`, `popneed_heating`.
+- **`on_actions` TGR трогает всего пять** и без префиксов `REPLACE:`: `on_yearly_pulse_country`, `on_monthly_pulse_country`, `on_half_yearly_pulse_country`, `on_law_activated`, `on_tax_law_change`. Каталог аддитивен, стыкуется с любым модом.

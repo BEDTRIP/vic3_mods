@@ -1,25 +1,25 @@
 {
   "name": "ComPatch Morgenroete + Power Blocs Expanded",
   "id": "3582029087",
-  "version": "0.1.0",
-  "supported_game_version": "1.12.*",
-  "short_description": "Compatibility patch for Morgenroete + Power Blocs Expanded",
+  "version": "0.2.0-noneed",
+  "supported_game_version": "1.13.*",
+  "short_description": "DEPRECATED / NOT NEEDED. Morgenroete and Power Blocs Expanded are compatible as-is under 1.13 - see README.md. This folder ships no content.",
   "picture": "thumbnail.png",
   "tags": [
     "compatibility",
-    "1.12"
+    "1.13"
   ],
   "relationships": [
     {
       "rel_type": "dependency",
-      "id": "",
-      "display_name": "Morgenroete",
+      "id": "2889925770",
+      "display_name": "Morgenroete - Dawn of Flavor",
       "resource_type": "mod",
       "version": "*"
     },
     {
       "rel_type": "dependency",
-      "id": "",
+      "id": "3623185901",
       "display_name": "Power Blocs Expanded",
       "resource_type": "mod",
       "version": "*"

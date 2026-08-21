@@ -1,4 +1,4 @@
-# Сводка по `PowerBlocksExpanded` (PBE)
+﻿# Сводка по `PowerBlocksExpanded` (PBE)
 
 - **Версия мода:** `1.13*` (`.metadata/metadata.json`: `name = "[1.13] Power Blocs Expanded"`, id `3623185901`, `supported_game_version = 1.13*`, `relationships = []`)
 - **Дата сверки:** 2026-08-19
@@ -156,7 +156,7 @@ MAX_MANDATE_PROGRESS      = 750
 | пара | статус | дата |
 |---|---|---|
 | E&F + PBE | `noneed` — подтверждено, см. `_ef/ef+pbe noneed/conflicts_ef_vs_pbe_report.md` | 2026-08-19 |
-| Morgenröte + PBE | `noneed` | — |
+| Morgenröte + PBE | `noneed` — подтверждено, см. `_morg/morg+pbe noneed/conflicts_mr_vs_pbe_report.md`. Единственное пересечение — два корневых пульса, а `common/on_actions/` аддитивен. Старый мерджащий файл удалён: он ссылался на `kates_*` | 2026-08-21 |
 | PBE + PSC | `noneed` | — |
 | PBE + TR+Kuromi | `noneed` | — |
 | PBE + VC | `noneed` | — |

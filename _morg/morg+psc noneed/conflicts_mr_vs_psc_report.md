@@ -1,4 +1,7 @@
-# Morgenrote vs PSC — conflict report (key-level heuristic)
+﻿# Morgenrote vs PSC — conflict report (key-level heuristic)
+
+> Regenerated 2026-08-21 against Morgenrote 2.8.3e / PSC 1.3.7 (game 1.13.10).
+> Verdict: no conflict — see README.md for the full checklist.
 
 - Morgenrote root: `C:/Users/Andrey/Projects/vic3_mods_out/Morgenrote`
 - PSC root: `C:/Users/Andrey/Projects/vic3_mods_out/PSC`
@@ -20,23 +23,22 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
 - `GLOBAL`
   - Morgenrote: `common/history/global/0_mr_cmf_initiation.txt`
   - Morgenrote: `common/history/global/mr_global.txt`
-  - Morgenrote: `common/history/global/mr_set_cultures_global.txt`
   - PSC: `common/history/global/PSC_global.txt`
 
 ### common/on_actions — 3 duplicates
 - `on_acquired_technology`
-  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
-  - Morgenrote: `common/on_actions/artists_on_actions.txt`
-  - Morgenrote: `common/on_actions/curtiss_on_actions.txt`
-  - Morgenrote: `common/on_actions/dubois_on_actions.txt`
-  - Morgenrote: `common/on_actions/elgar_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_arts_artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_arts_elgar_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_arts_gaudi_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_general_rapanui_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_science_agassiz_on_actions.txt`
   - PSC: `common/on_actions/PSC_on_actions.txt`
 - `on_building_built`
-  - Morgenrote: `common/on_actions/agassiz_on_actions.txt`
-  - Morgenrote: `common/on_actions/artists_on_actions.txt`
-  - Morgenrote: `common/on_actions/dubois_on_actions.txt`
-  - Morgenrote: `common/on_actions/klimt_on_actions.txt`
-  - Morgenrote: `common/on_actions/lepsius_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_arts_artists_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_arts_klimt_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_arts_manzoni_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_science_agassiz_on_actions.txt`
+  - Morgenrote: `common/on_actions/mr_science_andersson_on_actions.txt`
   - PSC: `common/on_actions/PSC_on_actions.txt`
 - `on_monthly_pulse`
   - Morgenrote: `common/on_actions/mr_on_actions.txt`

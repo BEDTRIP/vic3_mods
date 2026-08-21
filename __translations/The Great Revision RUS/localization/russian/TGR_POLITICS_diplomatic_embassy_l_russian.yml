@@ -2,11 +2,11 @@
 
   #################### TREATY ####################
   diplomatic_embassy: "Дипломатическое посольство"
-  diplomatic_embassy_desc: "[concept_treaty] [concept_article], учреждённая одной [concept_country] по отношению к другой, в рамках которой две $concept_country$ создают дипломатическое представительство для улучшения своих отношений."
+  diplomatic_embassy_desc: "[concept_article] [concept_treaty], заключаемая одной [concept_country] в отношении другой: обе $concept_country$ учреждают дипломатическое представительство для улучшения отношений между собой."
   diplomatic_embassy_article_short_desc: "Учредить дипломатическое посольство между двумя [concept_country]"
   
   concept_diplomatic_embassy: "Дипломатическое посольство"
-  concept_diplomatic_embassy_desc: "[concept_treaty] [concept_article], учреждённая одной [concept_country] по отношению к другой, в рамках которой две $concept_country$ создают дипломатическое представительство для улучшения своих отношений."
+  concept_diplomatic_embassy_desc: "[concept_article] [concept_treaty], заключаемая одной [concept_country] в отношении другой: обе $concept_country$ учреждают дипломатическое представительство для улучшения отношений между собой."
   
   
 

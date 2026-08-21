@@ -42,24 +42,44 @@
   ########################### TGR PRODUCTION & TRADE: EVENTS  #######################################
   ai_production_event.1:0 "The Great Revision: Международная торговля"
   ai_production_event.1.t:0 "The Great Revision: Международная торговля"
-  ai_production_event.1.d:0 "#yellow;bold; The Great Revision#! вносит множество изменений в торговлю, делая ИИ способным управлять сложными стратегиями специализации экономики."
-  ai_production_event.1.f:0 "Используя The Great Revision, вы заметите, что каждая страна следует определённой экономической стратегии, нацеленной на специализацию в конкретных секторах.\n\nЭто приведёт к тому, что государства будут торговать друг с другом, специализируясь на экспорте своей продукции и импорте сырья. Можно ожидать, что мировой ВВП вырастет, и каждая нация будет лучше развивать свою экономику.\n\nНаслаждайтесь #yellow;bold; The Great Revision#!!"
-  ai_production_event.1.a:0 "Дайте мне играть!"
+  ai_production_event.1.d:0 "#yellow;bold; The Great Revision#! вносит множество изменений в торговлю, позволяя ИИ применять сложные стратегии для специализации своей экономики."
+  ai_production_event.1.f:0 "Играя с The Great Revision, вы заметите, что каждая страна следует особой экономической стратегии, нацеленной на специализацию в определённых секторах.\n\nЭто приведёт к тому, что страны начнут торговать друг с другом, специализируясь на экспорте своей продукции и импорте сырья. Ожидайте роста мирового ВВП и более успешного развития экономики каждой нации.\n\nНаслаждайтесь #yellow;bold; The Great Revision#!!"
+  ai_production_event.1.a:0 "Приступить к игре!"
+  
+  ai_production_event.4:0 "The Great Revision: Международная торговля"
+  ai_production_event.4.t:0 "The Great Revision: Международная торговля"
+  ai_production_event.4.d:0 "#yellow;bold; The Great Revision#! вносит множество изменений в торговлю, позволяя ИИ применять сложные стратегии для специализации своей экономики."
+  ai_production_event.4.f:0 "Играя с The Great Revision, вы заметите, что каждая страна следует особой экономической стратегии, нацеленной на специализацию в определённых секторах.\n\nЭто приведёт к тому, что страны начнут торговать друг с другом, специализируясь на экспорте своей продукции и импорте сырья. Ожидайте роста мирового ВВП и более успешного развития экономики каждой нации.\n\nНаслаждайтесь #yellow;bold; The Great Revision#!!"
+  ai_production_event.4.a:0 "Приступить к игре!"
   
   ########################### TGR PRODUCTION & TRADE: COMPANY NAME  #######################################
-  company_russian_american_company: "Новая индустрия" # Alt. Rossiysko-Amerikanskaya Kompaniya
-  company_mantero_seta: "Конфиндустрия Италии"
-  company_philips: "Нидерландский конгломерат"
-  company_ong_lung_sheng_tea_company: "Чай и зерно «Онг Лун Шэн»"
-  company_ong_lung_sheng_tea_company_heaven_kingdom: "Чай и зерно «Тайпин»"
+  company_william_cramp: "Lee Wilson & Co"
+  company_altos_hornos_de_vizcaya: "Compañía de Andaluza"
+  company_krupp: "Rheinmetall GmbH"
+  company_russian_american_company: "Российско-Американская Компания"
+  company_mantero_seta: "Confindustria Italiana"
+  company_mantero_seta_two_sicilies: "Conglomerato delle Due Sicilie"
+  company_philips: "Konglomerat der Niederlande"
+  company_ong_lung_sheng_tea_company: "Ong Lung Sheng Tea & Grain"
+  company_ong_lung_sheng_tea_company_heaven_kingdom: "Taiping Tea & Grain"
   
   ########################### TGR PRODUCTION & TRADE: LOCALIZATION  #######################################
-  pm_refrigerated_storage_building_livestock_ranch:0 "Железнодорожные склады"
-  pm_refrigerated_storage_building_fishing_wharf:0 "Железнодорожные склады"
+  pm_refrigerated_storage_building_livestock_ranch:0 "Железнодорожный склад"
+  pm_refrigerated_storage_building_fishing_wharf:0 "Железнодорожный склад"
+  
+  state_building_trade_center_max_level_add:0 "Макс. уровень «$building_trade_center$»"
+  state_building_trade_center_max_level_add_desc:0 "Бонус или штраф к максимальному уровню зданий «$building_trade_center$»."
   
   ########################### TGR PRODUCTION & TRADE: MODIFIERS  #######################################
   great_revision_uk_start_company:0 "Компания Гудзонова залива"
   great_revision_brazil_argentina_economy_starter:0 "Система воскресных школ"
+  
+  ########################### TGR PRODUCTION & TRADE: LAWS  #######################################
+  law_ai_subventioned_trade:0 "Меркантилизм"
+  law_ai_subventioned_trade_desc:0 "Экономика, ориентированная на импорт, с упором на поддержание положительного запаса сырья для конкуренции с другими нациями."
+  law_ai_subventioned_trade_modern:0 "Субсидируемая торговля"
+  law_ai_subventioned_trade_modern_desc:0 "Экономика, ориентированная на импорт, с упором на поддержание положительного запаса сырья для конкуренции с другими нациями."
+
 
   
   

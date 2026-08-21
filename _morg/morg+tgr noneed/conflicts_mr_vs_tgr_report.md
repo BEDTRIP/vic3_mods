@@ -1,5 +1,8 @@
 # MR vs TGR — conflict report (key-level heuristic)
 
+> Regenerated 2026-08-21 — MR 2.8.3e Mitsopoulos / TGR 2.0 (game 1.13.10).
+> Verdict and reasoning: see `noneed_analysis_2026-08-21.md`. Previous run: `conflicts_mr_vs_tgr_report_pre_b5525.md`.
+
 - MR root: `C:/Users/Andrey/Projects/vic3_mods_out/Morgenrote`
 - TGR root: `C:/Users/Andrey/Projects/vic3_mods_out/TheGreatRevision`
 
@@ -286,11 +289,11 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - MR: `common/history/buildings/manzoni_printing.txt`
   - MR: `common/history/buildings/mr_buildings.txt`
   - MR: `common/history/buildings/verrier_observatory.txt`
-  - TGR: `common/history/buildings/TGR_TRADE_company_buildings_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_austria_setup.txt`
   - TGR: `common/history/buildings/TGR_TRADE_net_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_ottomans_setup.txt`
   - TGR: `common/history/buildings/TGR_TRADE_russia_setup.txt`
-  - TGR: `common/history/buildings/TGR_TRADE_trade_center_setup.txt`
-  - TGR: `common/history/buildings/TGR_TRADE_uk_setup.txt`
+  - TGR: `common/history/buildings/TGR_TRADE_spain_setup.txt`
 
 ### common/history/countries — 1 duplicates
 - `COUNTRIES`
@@ -306,7 +309,6 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
 - `GLOBAL`
   - MR: `common/history/global/0_mr_cmf_initiation.txt`
   - MR: `common/history/global/mr_global.txt`
-  - MR: `common/history/global/mr_set_cultures_global.txt`
   - TGR: `common/history/global/TGR_LOANS_global.txt`
   - TGR: `common/history/global/TGR_POLITICS_global.txt`
   - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
@@ -315,35 +317,47 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
 
 ### common/on_actions — 3 duplicates
 - `on_half_yearly_pulse_country`
-  - MR: `common/on_actions/academics_on_actions.txt`
-  - MR: `common/on_actions/ai_on_actions.txt`
-  - MR: `common/on_actions/artists_on_actions.txt`
-  - MR: `common/on_actions/athletes_on_actions.txt`
-  - MR: `common/on_actions/curtiss_on_actions.txt`
+  - MR: `common/on_actions/mr_ai_on_actions.txt`
+  - MR: `common/on_actions/mr_arts_gaudi_on_actions.txt`
+  - MR: `common/on_actions/mr_on_actions.txt`
+  - MR: `common/on_actions/mr_science_academics_on_actions.txt`
+  - MR: `common/on_actions/mr_science_dubois_on_actions.txt`
   - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
   - TGR: `common/on_actions/TGR_DECREES_on_actions.txt`
   - TGR: `common/on_actions/TGR_MIGRATION_on_actions.txt`
+  - TGR: `common/on_actions/TGR_POLITICS_call_election_on_actions.txt`
   - TGR: `common/on_actions/TGR_TAX_PANEL_on_tax_law_change.txt`
 - `on_monthly_pulse_country`
-  - MR: `common/on_actions/academics_on_actions.txt`
-  - MR: `common/on_actions/agassiz_on_actions.txt`
-  - MR: `common/on_actions/ai_on_actions.txt`
-  - MR: `common/on_actions/artists_on_actions.txt`
-  - MR: `common/on_actions/curtiss_on_actions.txt`
+  - MR: `common/on_actions/mr_ai_on_actions.txt`
+  - MR: `common/on_actions/mr_arts_artists_on_actions.txt`
+  - MR: `common/on_actions/mr_arts_manzoni_on_actions.txt`
+  - MR: `common/on_actions/mr_on_actions.txt`
+  - MR: `common/on_actions/mr_science_academics_on_actions.txt`
   - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
   - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
   - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
 - `on_yearly_pulse_country`
   - MR: `common/on_actions/MFE_main_flavor_pulse.txt`
-  - MR: `common/on_actions/academics_on_actions.txt`
-  - MR: `common/on_actions/agassiz_on_actions.txt`
-  - MR: `common/on_actions/ai_on_actions.txt`
-  - MR: `common/on_actions/artists_on_actions.txt`
+  - MR: `common/on_actions/mr_ai_on_actions.txt`
+  - MR: `common/on_actions/mr_arts_artists_on_actions.txt`
+  - MR: `common/on_actions/mr_arts_elgar_on_actions.txt`
+  - MR: `common/on_actions/mr_arts_gaudi_on_actions.txt`
   - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
   - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
   - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
   - TGR: `common/on_actions/TGR_POLITICS_gain_ideology.txt`
   - TGR: `common/on_actions/TGR_TRADE_code_on_actions.txt`
+
+### common/technology/technologies — 3 duplicates
+- `atmospheric_engine`
+  - MR: `common/technology/technologies/a_vanilla_production_technologies.txt`
+  - TGR: `common/technology/technologies/TGR_POLITICS_production.txt`
+- `civilizing_mission`
+  - MR: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - TGR: `common/technology/technologies/TGR_POLITICS_society.txt`
+- `malaria_prevention`
+  - MR: `common/technology/technologies/a_vanilla_society_technologies.txt`
+  - TGR: `common/technology/technologies/TGR_POLITICS_society.txt`
 
 ## localization: duplicate localization keys
 - Total duplicate localization keys: **0**

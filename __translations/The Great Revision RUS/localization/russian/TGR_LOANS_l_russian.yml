@@ -4,27 +4,6 @@
 great_revision_loans_unticked: "@simple_box!"
 great_revision_loans_ticked: "@green_checkmark_box!"
 
-########################### DIPLOMATIC ACTIONS  #######################################
-apply_for_a_loan: "Запросить международный заем"
-apply_for_a_loan_desc: "[concept_diplomatic_pact], заключаемый одной [concept_country] с другой [concept_country], который позволяет первой стране получить #yellow;bold; международный заем#!."
-apply_for_a_loan_action_propose_name: "Начать $Request International Loan$"
-apply_for_a_loan_proposal_notification_name: "Запрос на #yellow;bold; международный заем#!."
-apply_for_a_loan_proposal_notification_desc: "Мы получили запрос на #yellow;bold; международный заем#!."
-apply_for_a_loan_proposal_declined_name: "#yellow;bold; Международный заем#! отклонен."
-apply_for_a_loan_proposal_declined_desc: "Они отклонили наш запрос на #yellow;bold; международный заем#!."
-apply_for_a_loan_proposal_accepted_name: "Запрос на #yellow;bold; международный заем#! был принят."
-apply_for_a_loan_proposal_accepted_desc: "Скоро мы получим ответ с условиями и требованиями."
-
-issue_a_loan: "Выдать международный заем"
-issue_a_loan_desc: "[concept_diplomatic_pact], заключаемый одной [concept_country] с другой [concept_country], который позволяет первой стране выдать #yellow;bold; международный заем#!."
-issue_a_loan_action_propose_name: "Начать $Issue International Loan$"
-issue_a_loan_proposal_notification_name: "Предложение #yellow;bold; международного займа#!."
-issue_a_loan_proposal_notification_desc: "Мы получили предложение #yellow;bold; международного займа#!."
-issue_a_loan_proposal_declined_name: "#yellow;bold; Международный заем#! отклонен."
-issue_a_loan_proposal_declined_desc: "Они отклонили наше предложение #yellow;bold; международного займа#!."
-issue_a_loan_proposal_accepted_name: "Запрос на #yellow;bold; международный заем#! был принят."
-issue_a_loan_proposal_accepted_desc: "Скоро мы получим ответ с условиями и требованиями."
-
 ########################### JOURNAL ENTRIES: DESCRIPTION  #######################################
 je_international_loans: "Международные займы"
 je_international_loans_reason: "С наступлением нового века важность #bold; финансового сектора#! становится все очевиднее. Доступ к займам позволит нам активнее инвестировать в нашу экономику.\nНо чтобы получить выгодный [concept_credit], мы должны обеспечить нашей стране репутацию надежной — как #b внутри страны#!, так и #b на международной арене#!.\n\nНачальная #red;bold; национальная процентная ставка#! составляет #red;bold; 25%#!, однако каждая #green;bold; переменная#!, которую вы выполните, снизит процентную ставку. Стабильные #b правительство#! и #b экономика#! гарантируют, что мы сможем занимать деньги на выгодных условиях.\n\n#b #green;bold; Переменные#!, уменьшающие #red;bold; национальную процентную ставку#!:\n#bold; Законы#!\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_no_slavery_countries_checkbox')] Принят [concept_law] [GetLawType('law_slavery_banned').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_economic_system_checkbox')] НЕ принят [concept_law] [GetLawType('law_traditionalism').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_trade_policy_checkbox')] НЕ принят [concept_law] [GetLawType('law_isolationism').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_communist_countries_checkbox')] НЕ принят [concept_law] [GetLawType('law_cooperative_ownership').GetName]\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_no_autocratic_countries_checkbox')] НЕ принят [concept_law] [GetLawType('law_autocracy').GetName]\n\n#bold; Экономика#!\n• #green;bold; -3%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_positive_cash_reserve_checkbox')] Национальные [concept_gold_reserves] > 25%\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_positive_cashflow_checkbox')] Положительный фиксированный недельный доход\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_positive_investment_pool_cashflow_checkbox')] Недельный чистый доход [concept_investment_pool] > 50k \n• #green;bold; -2%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_debt_checkbox')] Всего [concept_loans] < 25%\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_gdp_ranking_checkbox')] [concept_gdp] в топ-10\n\n#bold; Политика#!\n• #green;bold; -2%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_legittimacy_checkbox')] [concept_legitimacy] > 90\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_infamy_checkbox')] [concept_infamy] < 25\n• #green;bold; -2%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_political_movement_radicalism_checkbox')] НЕТ ни одного [concept_political_movement] с [concept_activism] > 25%\n• #green;bold; -3%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_is_at_war_checkbox')] [ROOT.GetCountry.GetNameNoFlag] НЕ находится в состоянии войны\n• #green;bold; -1%#! [SCOPE.GetRootScope.GetCountry.GetCustom('great_revision_country_radicals_checkbox')] В любом [concept_state_region] в [ROOT.GetCountry.GetNameNoFlag] < 20% [concept_turmoil]"
@@ -64,44 +43,44 @@ je_international_loans_progress_bar_variable_23: "Издано #yellow;bold; П�
 
 ########################### JOURNAL ENTRIES: BUTTONS & TOOLTIPS  #######################################
 tgr_loans_button_1: "Принять #yellow;bold; Закон о банковском соглашении#!"
-tgr_loans_button_1_desc: "Дает уступки частным банкам, чтобы получить доступ к субсидированному займу."
-tgr_loans_button_1_modifier_tooltip: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -2%#!."
+tgr_loans_button_1_desc: "Идёт на уступки частным банкам ради доступа к субсидированному кредиту."
+tgr_loans_button_1_modifier_tooltip: "Это действие снизит #red;bold; Национальную процентную ставку#! на #green;bold; -2%#!."
 
 tgr_loans_button_4: "Принять #yellow;bold; Закон об интервенционизме#!"
-tgr_loans_button_4_desc: "Чтобы сократить неэффективность частного сектора, этот указ позволит государству вмешиваться более напрямую — ценой введения некоторых ограничений для частного сектора."
-tgr_loans_button_4_modifier_tooltip_1: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -2%#!."
+tgr_loans_button_4_desc: "Чтобы исправить неэффективность частного сектора, этот указ позволит государству вмешиваться более напрямую — ценой некоторых ограничений для частного сектора."
+tgr_loans_button_4_modifier_tooltip_1: "Это действие снизит #red;bold; Национальную процентную ставку#! на #green;bold; -2%#!."
 
-tgr_loans_button_7: "Поощрять внутренние #green;bold; инвестиции#!"
-tgr_loans_button_7_desc: "Чтобы стимулировать внутренний рост, мы можем поощрять малых и крупных инвесторов не держать капитал без дела, а вкладывать его во внутренний рынок."
-tgr_loans_button_7_modifier_tooltip_1: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -1%#!."
+tgr_loans_button_3: "Принять #yellow;bold; Закон о налоге на инвестиции#!"
+tgr_loans_button_3_desc: "Вводит чрезвычайный налог на инвестированный капитал для покрытия государственного дефицита."
+tgr_loans_button_3_modifier_tooltip_1: "Вы введёте налог в размере #green;bold; 25%#! от общей стоимости [concept_investment_pool]. #red;bold; Это разгневает инвесторов#!."
+tgr_loans_button_3_modifier_tooltip_2: "Это действие повысит #red;bold; Национальную процентную ставку#! на #red;bold; 3%#!."
 
-tgr_loans_button_8: "Поощрять внутреннее #green;bold; потребление#!"
-tgr_loans_button_8_desc: "Мы можем ограничить экономический рост, усложнив инвестиции в новые проекты. Это перенаправит капитал из инвестиций в рост внутреннего потребления."
-tgr_loans_button_8_modifier_tooltip_1: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -1%#!."
+tgr_loans_button_5: "Принять #yellow;bold; Закон о национальной приватизации#!"
+tgr_loans_button_5_desc: "Вводит чрезвычайный указ о приватизации [concept_nationally_owned] [concept_building_level]."
+tgr_loans_button_5_modifier_tooltip_1: "Вы инициируете период [Concept('concept_privatize','$concept_privatization$')], чтобы попытаться сократить #red;bold; Государственный долг#!."
+tgr_loans_button_5_modifier_tooltip_2: "Это действие снизит #red;bold; Национальную процентную ставку#! на #green;bold; -5%#!."
 
-tgr_loans_button_2: "Выпустить #bold; малые#! #yellow;bold; государственные облигации#!"
+tgr_loans_button_7: "Стимулирует внутренние #yellow;bold; Инвестиции#!"
+tgr_loans_button_7_desc: "Чтобы стимулировать внутренний рост, мы можем побудить мелких и крупных инвесторов не удерживать капитал, а вкладывать его на внутреннем рынке."
+tgr_loans_button_7_modifier_tooltip_1: "Это действие снизит #red;bold; Национальную процентную ставку#! на #green;bold; -3%#!."
+tgr_loans_button_7_modifier_tooltip_2: "#yellow;bold; Инвесторы#! вложат в рынок больше капитала. Это приведёт к смещению баланса от #red;bold; потребления#! к #green;bold; инвестициям#!, с небольшим снижением #red;bold; ВВП#! в краткосрочной перспективе."
+
+tgr_loans_button_8: "Стимулирует внутреннее #yellow;bold; Потребление#!"
+tgr_loans_button_8_desc: "Мы можем сдержать экономический рост, усложнив инвестирование в новые проекты. Это сместит капитал от инвестиций в сторону роста внутреннего потребления."
+tgr_loans_button_8_modifier_tooltip_1: "Это действие снизит #red;bold; Национальную процентную ставку#! на #green;bold; -1%#!."
+tgr_loans_button_8_modifier_tooltip_2: "#yellow;bold; Инвесторы#! выведут капитал с рынка. Это приведёт к смещению баланса от #red;bold; инвестиций#! к #green;bold; потреблению#!, с небольшим ростом #green;bold; ВВП#! в краткосрочной перспективе."
+
+tgr_loans_button_2: "Выпустить #bold; небольшие#! #yellow;bold; государственные облигации#!"
 tgr_loans_button_2_desc: "Использует инструменты Центрального банка для выпуска облигаций с целью финансирования государственного аппарата"
-tgr_loans_button_2_modifier_tooltip_1: "Вы получите заем, равный #green;bold; 5%#! стоимости вашего [concept_gdp], распределенный на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от вашей #red;bold; национальной процентной ставки#!."
-tgr_loans_button_2_modifier_tooltip_2: "Это действие повысит #red;bold; национальную процентную ставку#! на #red;bold; 2%#!."
+tgr_loans_button_2_modifier_tooltip_1: "Вы получите заём в размере #green;bold; 5%#! от вашего [concept_gdp], распределённый на #yellow;bold; 10 лет#!, со ставкой, зависящей от вашей #red;bold; Национальной процентной ставки#!."
+tgr_loans_button_2_modifier_tooltip_2: "Это действие повысит #red;bold; Национальную процентную ставку#! на #red;bold; 1%#!."
 
 tgr_loans_button_6: "Выпустить #bold; крупные#! #yellow;bold; государственные облигации#!"
 tgr_loans_button_6_desc: "Использует инструменты Центрального банка для выпуска облигаций с целью финансирования государственного аппарата"
-tgr_loans_button_6_modifier_tooltip_1: "Вы получите заем, равный #green;bold; 10%#! стоимости вашего [concept_gdp], распределенный на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от вашей #red;bold; национальной процентной ставки#!."
-tgr_loans_button_6_modifier_tooltip_2: "Это действие повысит #red;bold; национальную процентную ставку#! на #red;bold; 5%#!."
+tgr_loans_button_6_modifier_tooltip_1: "Вы получите заём в размере #green;bold; 10%#! от вашего [concept_gdp], распределённый на #yellow;bold; 10 лет#!, со ставкой, зависящей от вашей #red;bold; Национальной процентной ставки#!."
+tgr_loans_button_6_modifier_tooltip_2: "Это действие повысит #red;bold; Национальную процентную ставку#! на #red;bold; 2%#!."
 
-tgr_loans_button_3: "Учредить #yellow;bold; Кредитный департамент#!"
-tgr_loans_button_3_desc: "Использует излишек ваших [concept_gold_reserves], чтобы давать деньги взаймы другой стране."
-tgr_loans_button_3_modifier_tooltip_1: "Открывает на 10 лет [concept_diplomatic_action] #yellow;bold; Issue a loan#!, позволяющее выдавать международный заем другой стране."
-tgr_loans_button_3_modifier_tooltip_2: "Сумма займа будет равна #green;bold; 10%#! стоимости #yellow;bold; их#! [concept_gdp], распределенной на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от #yellow;bold; их#! #red;bold; национальной процентной ставки#!."
-tgr_loans_button_3_modifier_tooltip_3: "Это действие снизит #red;bold; национальную процентную ставку#! на #green;bold; -2%#!."
-
-tgr_loans_button_5: "Учредить #yellow;bold; Долговой департамент#!"
-tgr_loans_button_5_desc: "Учреждает государственное ведомство, ответственное за управление международными займами."
-tgr_loans_button_5_modifier_tooltip_1: "Открывает на 10 лет [concept_diplomatic_action] #yellow;bold; Apply for a loan#!, позволяющее получать международный заем у других стран."
-tgr_loans_button_5_modifier_tooltip_2: "Сумма займа будет равна #green;bold; 10%#! стоимости #yellow;bold; их#! [concept_gdp], распределенной на #yellow;bold; 10 лет#!, с процентной ставкой, зависящей от #yellow;bold; вашей#! #red;bold; национальной процентной ставки#!."
-tgr_loans_button_5_modifier_tooltip_3: "Это действие повысит #red;bold; национальную процентную ставку#! на #red;bold; 5%#!."
-
-great_revision_gdp_rank: "Нахождение [concept_gdp] в топ-20"
+great_revision_gdp_rank: "[concept_gdp] входит в топ-20"
 
 
 ########################### JOURNAL ENTRIES: MODIFIERS  #######################################
@@ -111,25 +90,19 @@ tgr_loans_button_1_modifier: "Принят Закон о банковском с
 
 tgr_loans_button_4_modifier: "Принят Закон об интервенционизме"
 
-tgr_loans_button_7_modifier: "Поощряются внутренние инвестиции"
+tgr_loans_button_3_modifier_trigger: "Принят Закон о налоге на инвестиции"
 
-tgr_loans_button_8_modifier: "Поощряется внутреннее потребление"
+tgr_loans_button_5_modifier_trigger: "Принят Закон о национальной приватизации"
 
-tgr_loans_button_2_modifier: "Выпущены малые государственные облигации"
-tgr_loans_button_2_interest_modifier: "Погашение малых государственных облигаций"
+tgr_loans_button_7_modifier: "Стимулирование внутренних инвестиций"
+
+tgr_loans_button_8_modifier: "Стимулирование внутреннего потребления"
+
+tgr_loans_button_2_modifier: "Выпущены небольшие государственные облигации"
+tgr_loans_button_2_interest_modifier: "Погашение небольших государственных облигаций"
 
 tgr_loans_button_6_modifier: "Выпущены крупные государственные облигации"
 tgr_loans_button_6_interest_modifier: "Погашение крупных государственных облигаций"
-
-tgr_loans_button_3_modifier_trigger: "Учрежден кредитный департамент"
-tgr_loans_button_3_modifier_trigger_expired: "Получен международный заем"
-tgr_loans_button_3_interest_modifier_receiver: "Погашение международного займа"
-tgr_loans_button_3_interest_modifier_lender: "Доход от международного займа"
-
-tgr_loans_button_5_modifier_trigger: "Учрежден долговой департамент"
-tgr_loans_button_5_modifier_trigger_expired: "Выдан международный заем"
-tgr_loans_button_5_interest_modifier_applicant: "Погашение международного займа"
-tgr_loans_button_5_interest_modifier_issuer: "Доход от международного займа"
 
 ########################### EVENTS ###########################
 international_loans_event.1:0 "Предложение #yellow;bold; международного займа#!"

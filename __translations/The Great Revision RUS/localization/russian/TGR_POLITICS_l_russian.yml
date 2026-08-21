@@ -1,11 +1,14 @@
 ﻿l_russian:
 
   #################### MODIFIERS ####################
-  building_group_bg_technology_tax_mult:0 "Налоговый доход от университетских зданий"
+  building_group_bg_technology_tax_mult:0 "Налоговый доход от университетов"
   building_group_bg_technology_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от университетских зданий"
   
   building_group_bg_military_tax_mult:0 "Налоговый доход от военных зданий"
   building_group_bg_military_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от военных зданий"
+  
+  building_group_bg_bureaucracy_tax_mult:0 "Налоговый доход от бюрократических учреждений"
+  building_group_bg_bureaucracy_tax_mult_desc:0 "Бонус или штраф к налоговому доходу от зданий государственного управления"
   
   building_group_bg_bureaucracy_throughput_add:0 "$bg_bureaucracy$ [concept_throughput]"
   building_group_bg_bureaucracy_throughput_add_desc:0 "Бонус или штраф как к входным ресурсам, так и к выходной продукции $bg_bureaucracy$"
@@ -57,21 +60,21 @@
   country_institution_information_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_information$"
   country_institution_information_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_information$"
   
-  country_institution_environment_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_environment$"
-  country_institution_environment_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_environment$"
+  country_institution_environment_max_investment_add:0 "Макс. инвестиции в [concept_institution] «$institution_environment$»"
+  country_institution_environment_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций в [concept_institution] «$institution_environment$»"
   
-  country_institution_defense_max_investment_add:0 "Макс. инвестиции в [concept_institution] $institution_defense$"
-  country_institution_defense_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций [concept_institution] $institution_defense$" 
+  country_institution_defense_max_investment_add:0 "Макс. инвестиции в [concept_institution] «$institution_defense$»"
+  country_institution_defense_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций в [concept_institution] «$institution_defense$»" 
   
-  bg_consumer_goods:0 "Потребительские здания" 
+  country_institution_religion_max_investment_add:0 "Макс. инвестиции в [concept_institution] «$institution_religion$»"
+  country_institution_religion_max_investment_add_desc:0 "Бонус или штраф к максимальному уровню инвестиций в [concept_institution] «$institution_religion$»" 
+  
+  country_institution_cost_institution_pension_mult:0 "Стоимость [GetInstitutionType('institution_pension').GetName] в @bur![Nbsp][concept_bureaucracy]"
+  country_institution_cost_institution_pension_mult_desc:0 "Увеличение или снижение стоимости в @bur![Nbsp][concept_bureaucracy] предоставления [GetInstitutionType('institution_pension').GetName] гражданам"
+  
+  bg_consumer_goods:0 "Здания потребительских товаров" 
   bg_industry_light:0 "Здания лёгкой промышленности" 
-  bg_industry_heavy:0 "Здания тяжёлой промышленности" 
-
-  country_shopkeepers_pol_str_mult:1 "[concept_political_strength] у $shopkeepers$"
-  country_shopkeepers_pol_str_mult_desc:1 "Увеличение или уменьшение [concept_political_strength] у $shopkeepers$"
-  
-  country_clerks_pol_str_mult:1 "[concept_political_strength] у $clerks$"
-  country_clerks_pol_str_mult_desc:1 "Увеличение или уменьшение [concept_political_strength] у $clerks$"
+  bg_industry_heavy:0 "Здания тяжёлой промышленности"
   
   state_aristocrats_consumption_multiplier_add: "Потребление товаров для [GetPopType('aristocrats').GetName]"
   state_aristocrats_consumption_multiplier_add_desc: "Бонус или штраф к потреблению товаров для [GetPopType('aristocrats').GetName]"
@@ -89,6 +92,14 @@
   enact_law_per_capita_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 7\nПодушный налог: с 0 -> 10\nНалог на доход: с 0 -> 4\nНалог на дивиденды: с 0 -> 0"
   enact_law_income_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 5\nПодушный налог: с 0 -> 8\nНалог на доход: с 0 -> 10\nНалог на дивиденды: с 0 -> 8"
   enact_law_dividend_fiscal_reform_desc:0 "Открывает следующие уровни налогов для Налогового ведомства:\nЗемельный налог: с 0 -> 5\nПодушный налог: с 0 -> 8\nНалог на доход: с 0 -> 8\nНалог на дивиденды: с 0 -> 10"
+  
+  tgr_tooltip_policing_1:0 "[GetInterestGroupVariant('ig_petty_bourgeoisie',GetPlayer).GetNameWithCountryVariant] больше НЕ БУДЕТ привлекать [GetPopType('officers').GetName]."
+  tgr_tooltip_policing_2:0 "[GetInterestGroupVariant('ig_petty_bourgeoisie',GetPlayer).GetNameWithCountryVariant] больше НЕ БУДЕТ привлекать [GetPopType('soldiers').GetName]."
+  tgr_tooltip_policing_3:0 "[GetInterestGroupVariant('ig_petty_bourgeoisie',GetPlayer).GetNameWithCountryVariant] начнёт привлекать [GetPopType('officers').GetName]."
+  tgr_tooltip_policing_4:0 "[GetInterestGroupVariant('ig_petty_bourgeoisie',GetPlayer).GetNameWithCountryVariant] начнёт привлекать [GetPopType('soldiers').GetName]."
+  tgr_tooltip_policing_5:0 "[GetInterestGroupVariant('ig_petty_bourgeoisie',GetPlayer).GetNameWithCountryVariant] больше НЕ БУДЕТ привлекать [GetPopType('officers').GetName]."
+  tgr_tooltip_policing_6:0 "[GetInterestGroupVariant('ig_petty_bourgeoisie',GetPlayer).GetNameWithCountryVariant] больше НЕ БУДЕТ привлекать [GetPopType('soldiers').GetName]."
+
 
   
   #################### DECREES ####################
@@ -177,6 +188,9 @@
   
   institution_defense:0 "Министерство обороны"
   institution_defense_desc:0 "Пока мы спокойно спим по ночам, наши дети защищают нас от опасностей за пределами границ. Они — хранители нашего спокойствия."
+  
+  institution_religion:0 "Министерство по делам религии"
+  institution_religion_desc:0 "Церковное учреждение, созданное для определения духовной политики нации."
 
   institution_colonial_affairs:0 "Министерство колониальных дел"
   institution_social_security:0 "Министерство благосостояния"
@@ -185,8 +199,6 @@
   institution_police:0 "Министерство общественной безопасности"
   institution_health_system:0 "Министерство здравоохранения"
   institution_home_affairs:0 "Министерство внутренних дел"
-  institution_environment:0 "Министерство окружающей среды"
-  institution_defense:0 "Министерство обороны"
 
   ########################## LAWS GROUP #########################
   lawgroup_tax_department: "Фискальная реформа"
@@ -237,9 +249,6 @@
   lawgroup_legislative_process: "Законодательный процесс"
   lawgroup_legislative_process_desc: "Законодательный процесс — это формальная процедура, в рамках которой законы предлагаются, обсуждаются, изменяются и утверждаются законодательным органом."
   
-  lawgroup_election_system: "Избирательная система"
-  lawgroup_election_system_desc: "Как устроены выборы в стране."
-  
   ########################## LAWS TITLE #########################  
   law_consumption_fiscal_reform: "Фискальная реформа потребительских товаров"
   law_land_fiscal_reform: "Фискальная реформа землевладения"
@@ -269,6 +278,10 @@
   foreign_policy_authoritarian_representation: "Укрепление международного имиджа"
   foreign_policy_military_expansionism: "Военный экспансионизм"
   foreign_policy_foreign_investments: "Привлечение иностранных инвесторов"
+  foreign_policy_sovranist_policy: "Национальный суверенизм"
+  foreign_policy_religious_embassies: "Религиозные делегации"
+  foreign_policy_diplomatic_isolationism: "Дипломатический изоляционизм"
+  foreign_policy_socialist_ideas: "Распространение социалистических идей"
   
   economic_incentives_no_focus_primary: "Без стимулирующего фокуса"
   economic_incentives_no_focus_secondary: "Без стимулирующего фокуса"
@@ -359,8 +372,11 @@
   foreign_policy_diplomatic_embassies_desc: "В современную эпоху важно выстраивать хорошие отношения с другими странами — близкими и далёкими — чтобы обеспечить правильный баланс на глобальной шахматной доске."
   foreign_policy_authoritarian_representation_desc: "Нашей стране слишком долго уделяли недостаточно внимания в мировых делах. Мы должны укрепить своё правительство и репутацию, чтобы занять заметное место среди Великих держав."
   foreign_policy_military_expansionism_desc: "Неважно, насколько страна влиятельна или богата. Армии всегда будут решающим фактором в мировых делах. Укрепление нашей армии гарантирует, что нас будут бояться и уважать как внутри, так и за пределами нашей нации."
-  #foreign_policy_foreign_investments_desc: "In a World that is becoming increasingly globalized, it is of fundamental importance to be able to establish as many economic and commercial links with other countries. Having economic influence on other countries also means having political influence, but opening ourselves up to the world could also leave us open to other external Powers."
   foreign_policy_foreign_investments_desc: "Мы не можем расширять нашу экономику в одиночку. Нам нужно стимулировать иностранных инвесторов приносить свой капитал в нашу страну. Так мы обеспечим непрерывный и стабильный рост, но открытость миру также может сделать нас уязвимыми к влиянию крупных внешних держав."
+  foreign_policy_sovranist_policy_desc: "Индустриализация привела к открытию рынков и вызванному этим экономическому и политическому влиянию извне. Мы должны защитить свои ценности и принципы, даже ценой отчуждения иностранных держав."
+  foreign_policy_religious_embassies_desc: "Мы должны использовать силу наших институтов, чтобы объединить все народы под словом нашего Господа. Для достижения этой цели мы будем использовать дипломатию."
+  foreign_policy_diplomatic_isolationism_desc: "Выгоды международного рынка привели лишь к переносу производства за рубеж и снижению покупательной способности наших граждан. Отныне мы сосредоточимся исключительно на внутренней политике."
+  foreign_policy_socialist_ideas_desc: "Социалистические и интернационалистские идеалы рабочих смогли проникнуть в самую ткань нашего общества. Несмотря ни на что, мы должны продолжать распространять наши идеалы на другие страны ради лучшего будущего."
   
   economic_incentives_no_focus_primary_desc: "Мы не задаём никаких конкретных стимулов для нашей экономики"
   economic_incentives_no_focus_secondary_desc: "Мы не задаём никаких конкретных стимулов для нашей экономики"

@@ -13,8 +13,7 @@
   migration_agreement_proposal_notification_name: "Миграционное соглашение"
   migration_agreement_proposal_notification_desc: "[INITIATOR_COUNTRY.GetName] предлагает заключить #bold миграционное соглашение#! с нашей [concept_country]."
   
-  concept_migration_agreement: "Миграционное соглашение"
-  
+  concept_migration_agreement: "Миграционное соглашение" 
   concept_migration_agreement:0 "Миграционное соглашение"
   concept_migration_agreements:0 "Миграционные соглашения"
   concept_migration_agreement_short:0 "Соглашение"

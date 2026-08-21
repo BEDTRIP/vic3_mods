@@ -1,4 +1,4 @@
-### Morgenröte (Morgenroete) — общая сводка, что меняет в игре (приоритет `common/`)
+﻿### Morgenröte (Morgenroete) — общая сводка, что меняет в игре (приоритет `common/`)
 
 **Версия**: **2.8.3e «Mitsopoulos»**, `supported_game_version` = **1.13.\*** (коммит `Morgenrote 15.08.2026`).
 Steam ID: `2889925770`.
@@ -160,6 +160,26 @@ Morgenröte — большой «flavor + механики через Journal En
 - **`common/technology/technologies/a_vanilla_*`** — 4 `TRY_REPLACE:`, остальное инжекты.
 - **`common/production_methods/1_mr_vanilla_inject_production_methods.txt`** — инжекты + `TRY_REPLACE:pm_sulfite_pulping`.
 - **`common/pop_needs/` + `common/buy_packages/`** — только `TRY_INJECT`, с E&F не конфликтует.
-- **`common/on_actions/*`** — 29 файлов, все аддитивные; пересечение пульсов с E&F безопасно.
+- **`common/on_actions/*`** — 29 файлов, все аддитивные; пересечение пульсов с E&F и PBE безопасно.
+  Сам мод это и доказывает: `on_yearly_pulse_country` объявлен в 19 своих файлах, `on_monthly_pulse_country` — в 6. Не писать мерджащие компачи под пульсы.
 - **Agassiz / Tesla scripted_triggers** — единственные места, где чужие здания надо явно вписывать (и то Agassiz теперь сам справляется через иерархию `bg_mining`).
 - **`common/journal_entries/Z_overwriting_je.txt`** — смотреть при конфликте JE.
+
+---
+
+### Статус пар
+
+| пара | статус | дата |
+|---|---|---|
+| Morgenröte + PBE | `noneed` — подтверждено. Ноль общих файлов/ключей/loc/событий кроме двух корневых пульсов; PBE не трогает buildings, goods, laws, technology, defines. См. `_morg/morg+pbe noneed/conflicts_mr_vs_pbe_report.md` | 2026-08-21 |
+
+
+---
+
+### Дополнение 2026-08-21 (из сверки MR × TGR)
+
+- `gui/error_deer.gui` — MR перекрывает ванильный файл усечённой копией: 73 строки против 148, потеряны `debug_speed_data`, `debug_current_fps`, `low_fps_warning`, `tick_task_speeds`. Классический признак «минус сотни строк, плюс две-три», но весь виджет висит под `visible = "[And(InDebugMode, ...)]"`, поэтому в обычной игре не стреляет. Держать в уме, если когда-нибудь понадобится debug-режим.
+- Всего MR перекрывает ванильных файлов целиком **19**, из них содержательных четыре: `common/achievement_groups.txt`, `common/history/characters/par - parma.txt`, `events/natural_disasters_events.txt`, `gui/error_deer.gui`. Остальное — `.dds`/`.asset`.
+- Каталогов `common/laws`, `common/law_groups`, `common/institutions`, `common/interest_groups`, `common/defines` у MR **нет вообще**. Это ключевой факт для стыковки с политическими оверхолами.
+- Своих идеологий MR не добавляет.
+- Товаров у MR 5, все новые: `air_travel`, `good_uranium`, `elgar_instruments`, `elgar_music`, `manzoni_prints`. Ванильных goods не переопределяет ни одного.
