@@ -198,7 +198,7 @@
   mutual_fund_supply:0 "Предложение взаимных фондов"
   bond_deemande:0 "Спрос на облигации"
   manufacture_stock_deemande:0 "Спрос на промышленные акции"
-  agricultural_stock_deemande:0 "Спрос на Акции сельского хозяйства"
+  agricultural_stock_deemande:0 "Спрос на акции сельского хозяйства"
   mining_stock_deemande:0 "Спрос на горнодобывающие акции"
   railroad_stock_deemande:0 "Спрос на железнодорожные акции"
 

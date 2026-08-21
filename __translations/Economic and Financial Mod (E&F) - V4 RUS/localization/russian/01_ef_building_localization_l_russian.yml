@@ -22,7 +22,7 @@
 
   ## Financial place
   building_financial_centre_scripted:0 "Фондовая биржа ([ROOT.GetCountry.GetCapital.GetNameNoFormatting])"
-  building_financial_centre:0 "Финансовый центр" 
+  building_financial_centre:0 "Финансовые центры" 
   bg_financial_centre:0 "Финансовые центры"
 
   building_financial_centre_arg:0 "Bolsa de Comercio de Buenos Aires"
@@ -72,15 +72,15 @@
 
   ## CompagnyF
 
-  building_manufacturing_company:0 "Производственная компания"
-  building_mining_company:0 "Горнодобывающая компания"
-  building_railway_company:0 "Железнодорожная компания"
+  building_manufacturing_company:0 "Производственные компании"
+  building_mining_company:0 "Горнодобывающие компании"
+  building_railway_company:0 "Железнодорожные компании"
 
   ## building_ef_private_construction
 
-  building_ef_private_construction:0 "Частный строительный сектор"
+  building_ef_private_construction:0 "Частные строительные сектора"
 
 
   ## building_silver_mine
 
-  building_silver_mine:0 "Серебряный рудник"
+  building_silver_mine:0 "Серебряные рудники"

@@ -113,7 +113,7 @@
 
   #dollar_confederate_states_dollar
   dollar_confederate_states_dollar:0 "Доллар Конфедеративных Штатов"
-  dollar_confederate_states_dollar_short:0 "КС Доллар"
+  dollar_confederate_states_dollar_short:0 "Доллар КША"
   dollar_confederate_states_dollar_good:0 "@dollar_confederate_states_dollar_c!"
   dollar_confederate_states_dollar_ISO_4217:0 "CSD"
   dollar_confederate_states_dollar_texture:0 "@dollar_confederate_states_dollar!"
@@ -253,7 +253,7 @@
 
   #gulden_south_german_gulden
   gulden_south_german_gulden:0 "Южногерманский гульден"
-  gulden_south_german_gulden_short:0 "ЮГ гульден"
+  gulden_south_german_gulden_short:0 "Южногерм. гульден"
   gulden_south_german_gulden_good:0 "@gulden_south_german_gulden_c!"
   gulden_south_german_gulden_ISO_4217:0 "SGG"
   gulden_south_german_gulden_texture:0 "@gulden_south_german_gulden!"
