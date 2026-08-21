@@ -157,6 +157,6 @@ MAX_MANDATE_PROGRESS      = 750
 |---|---|---|
 | E&F + PBE | `noneed` — подтверждено, см. `_ef/ef+pbe noneed/conflicts_ef_vs_pbe_report.md` | 2026-08-19 |
 | Morgenröte + PBE | `noneed` — подтверждено, см. `_morg/morg+pbe noneed/conflicts_mr_vs_pbe_report.md`. Единственное пересечение — два корневых пульса, а `common/on_actions/` аддитивен. Старый мерджащий файл удалён: он ссылался на `kates_*` | 2026-08-21 |
-| PBE + PSC | `noneed` | — |
-| PBE + TR+Kuromi | `noneed` | — |
+| PBE + PSC | `noneed` — подтверждено повторно, см. `_pbe/pbe+psc noneed/`. `scan_conflicts.py`: 0 пересечений по путям файлов, 1 совпадение ключа (`on_monthly_pulse`, PSC vs PBE) — не конфликт, `common/on_actions/` аддитивен. `compare_gui_names.py`: 0 пересечений виджетов. PM/PMG имена не пересекаются (PSC: `pm_*_point_conversion`, `pmg_construction_regulator`; PBE: `pm_manor_house_*`, `pm_company_headquarter_swg_*`, дохлый код, не подключён к зданиям). PBE не трогает `buildings/building_groups/goods/laws/technology` — общих доменов с PSC (экономика строительства) нет | 2026-08-21 |
+| PBE + TR+Kuromi | `noneed` — подтверждено 2026-08-21, см. `_pbe/pbe+tr+kai noneed/conflicts_tr_vs_pbe_report.md`. Единственное пересечение — `on_monthly_pulse_country` (T&R `ztr_on_actions.txt` + PBE `vokaes_power_bloc_on_actions.txt`), `common/on_actions/` аддитивен. Товаров/зданий/законов/gui PBE не добавляет — пересекаться нечему | 2026-08-21 |
 | PBE + VC | `noneed` | — |

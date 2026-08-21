@@ -1,9 +1,9 @@
 ﻿{
-  "name": "E&F 1.13.10 Hotfix",
+  "name": "E&F Hotfix",
   "id": "3786286962",
-  "version": "1.13.10-2",
+  "version": "4.1.7.4",
   "supported_game_version": "1.13.*",
-  "short_description": "Fixes for Economic and Financial on 1.13.10: the 128-goods ceiling, the crash on map load from outdated GUI files, ~70k alert errors per session, history bugs, local_currency flooding markets, the currency-law typo, and two script guards.",
+  "short_description": "Fixes for Economic and Financial=",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
@@ -24,8 +24,8 @@
       {
         "id": "3143591632",
         "display_name": "Economic and Financial Mod (E&F) - V4",
-        "version": "04.07.2026",
-        "date": "2026-08-19"
+        "version": "4.1.7",
+        "date": "2026-08-21"
       }
     ]
   }

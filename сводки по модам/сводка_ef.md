@@ -1,8 +1,8 @@
-### Общая сводка: что меняет **Economic and Financial (E&F)** (фокус на `common/`)
+﻿### Общая сводка: что меняет **Economic and Financial (E&F)** (фокус на `common/`)
 
 **Версия в репозитории**: коммит `E&F 4.07.2026`, игра **1.13.\***.
 Steam ID: `3143591632`. `.metadata/metadata.json` **пустой** (`version` и `supported_game_version` — пустые строки), ориентироваться только на дату коммита.
-**Сверено с файлами: 16.08.2026.**
+**Сверено с файлами: 21.08.2026.**
 
 **E&F** — крупный «оверлей» на экономику: полноценная **денежно‑финансовая подсистема**, вшитая в ванильные здания/рынки через массовые INJECT-патчи. Сам мод почти ничего не переопределяет целиком — единственный крупный `REPLACE:` это технологии (см. ниже).
 
@@ -147,3 +147,67 @@ Steam ID: `3143591632`. `.metadata/metadata.json` **пустой** (`version` и
 - **`common/scripted_effects/*`**, **`on_actions/*`** — пульсы; вешаться add-on'ом, не override.
 - **`common/building_groups/*`** — 4 группы без родителя нужно явно перечислять в чужих исключениях; `bg_silver_mining` наоборот наследуется от `bg_mining`.
 - **`common/modifier_type_definitions/*`** — дубли `goods_output_grain_mult`, `goods_output_wood_mult` с другими модами; низкий риск.
+
+---
+
+### Дополнение 2026-08-21 (из сверки E&F × TGR)
+
+- **`REPLACE:` у E&F почти всегда частичный — и это работает.** Все 14
+  `REPLACE:pm_company_headquarter_*` в `common/production_methods/11_ef_private_infrastructure.txt`
+  содержат **только** `building_modifiers`: ни `texture`, ни
+  `unlocking_company_categories`, ни `disallowing_laws`, ни `unlocking_laws`,
+  ни `unlocking_principles`. Мод в соло при этом не ломается — значит префиксы БД
+  в 1.13 патчат **по под-блокам**: `REPLACE:` подменяет только перечисленные
+  под-блоки, `INJECT:` в них до-мерджит, а всё неупомянутое остаётся от нижнего слоя.
+  Практический вывод для всех компачей: конфликт есть только там, где **оба** мода
+  перечислили один и тот же под-блок. Совпадение ключа в отчёте `scan_conflicts.py`
+  само по себе ничего не значит.
+- **Технологии.** `common/technology/technologies/ef_technology.txt`, 10 `REPLACE:`
+  (`banking`, `currency_standards`, `central_banking`, `mutual_funds`,
+  `corporate_charters`, `investment_banks`, `international_exchange_standards`,
+  `joint_stock_companies`, `postal_savings`, `modern_financial_instruments`) + 9 новых.
+  Важная деталь: у `currency_standards` блока `modifier` **нет**, поэтому чужие
+  INJECT в модификатор этой техно переживают E&F. У остальных девяти `modifier`
+  перечислен и затирается.
+- **`central_banking.on_researched` изменился к 04.07.2026**: теперь
+  `var:gdp_view >= 1` (а не `gdp_view >= 1`) и добавлено исключение `c:JAP` в обеих
+  ветках. Старые копии этого блока в компачах дают ошибку в логе и выдают Японии
+  валюту вопреки замыслу автора.
+- **Закомментированные `unlocking_technologies`.** В `mutual_funds` выключены
+  `central_banking` и `postal_savings`, в `investment_banks` — `mutual_funds`,
+  в `joint_stock_companies` — `central_banking` и `corporate_charters`,
+  в `corporate_charters` — `stock_exchange`. Это решение автора, а не потеря;
+  возвращать их в компачах не надо.
+- **Локализация.** С 04.07.2026 E&F сам определяет `pm_no_private_ownership_*` и
+  `pm_private_ownership_majority_*` (8 ключей) в
+  `01_ef_production_method_localization_l_english.yml`. Не определены только четыре
+  групповых: `pmg_private_ownership_{manufacture,agricultural,mining,railroad}_stock`.
+  Старые compat-файлы на 12 ключей дублируют половину зря.
+- **`buy_packages` не конфликтует ни с кем по определению.** Файл E&F называется
+  `00_ef_buy_packages.txt` и содержит только `INJECT:wealth_1..99`. Совпадение имени
+  файла с ванильным `00_buy_packages.txt` отсутствует, а INJECT ложится поверх любого
+  чужого переопределения `wealth_*` (проверено против TGR, который перекрывает
+  ванильный файл целиком).
+- **`base_values`**: `INJECT` с `country_minting_add = -500` и иконкой. Мерджится
+  с чужими INJECT, пиннить чужие значения рядом не нужно.
+- **Товары и хотфикс.** Сам E&F — 126 из 128 (53 ванильных + 73 своих, из ванильных
+  патчит только `gold`). С «E&F 1.13.10 Hotfix» (Steam `3786286962`) — 118.
+  Хотфикс всегда грузится после E&F и с компачами E&F×TGR не пересекается ни по
+  одному файлу и ключу (у него нет ни `technology`, ни `defines`, ни
+  `production_methods`, ни `buy_packages`, ни `localization`, а из `gui` он трогает
+  `custom_tooltip`, `frontend/shared/lists`, `map_markers`, `military_formation_panel`,
+  `popups`, `right_click_menu` — но не `budget_panel`).
+- **Своя отладочная панель.** Круглая кнопка «1» под вкладками бюджета — виджет
+  `Panel_1` в `gui/00_ef_deported_gui_1.gui`, лежит внутри
+  `type budget_panel_economy_panel_content` и открывает
+  `gui/ef_dev_and_custom_windows/ef_custom_windows.gui` (сетка безымянных тестовых
+  кнопок). Видимость: `EF_debug_mode_visibility` → глобальная переменная
+  `EF_debug_mode`, которую ставит `gui/01_ef_debug_widget.gui` (подключён через
+  `gui/scripted_widgets/EF_scripted_widgets.txt`) зеркалированием `[InDebugMode]`.
+  То есть панель вылезает у всех, кто играет с `-debug_mode` ради консоли.
+  Та же переменная гейтит `Open_Test_Decision` / `Close_Test_Decison` в
+  `common/decisions/00_ef_debug_decisions.txt`. Скрыто в хотфиксе 1.13.10-3
+  (`common/scripted_guis/zz_ef_hide_debug_panel.txt`,
+  `REPLACE_OR_CREATE:EF_debug_mode_visibility` → `always = no`).
+  Побочно это индикатор: если панель не видна в дебаг-режиме, значит вкладка Economy
+  вообще не строится — чей-то `budget_panel.gui` перекрыл её устаревшей копией.

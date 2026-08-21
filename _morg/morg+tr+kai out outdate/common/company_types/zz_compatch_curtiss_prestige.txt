@@ -1,0 +1,101 @@
+﻿# Morgenroete <-> Tech & Res: Curtiss airline companies, prestige goods.
+#
+# Morgenroete gives all six of its airline companies the ability to produce
+# prestige_good_generic_flights, and gates je_mr_prestige_goods_flights on
+#     any_company = { can_potentially_produce_prestige_goods = prestige_good_generic_flights }
+# Tech & Res REPLACE_OR_CREATEs the same six companies and ships that block
+# commented out, together with the prestige good itself in
+# ztr_generic_prestige_goods.txt - correctly so, because without Morgenroete
+# there is no `air_travel` good to base it on:
+#     # possible_prestige_goods = {
+#     # 	prestige_good_generic_flights
+#     # }
+# With both mods the good exists but no company can make it, so the journal
+# entry never appears. Nothing shows up in error.log - this is missing content,
+# not a broken reference, which is why it survived several compatch passes.
+#
+# INJECT rather than REPLACE so T&R keeps ownership of everything else about
+# these companies (they retargeted them at building_aircraft_industry, changed
+# potential/attainable and the prosperity modifiers). If INJECT turns out not to
+# create an absent possible_prestige_goods list, the fallback is a REPLACE of
+# all six with T&R's body plus these two blocks - worse to maintain, so check
+# in game first: a founded KLM / Imperial Airways / basic airline company must
+# offer prestige_good_generic_flights.
+
+INJECT:curtiss_company_basic_air_travel = {
+	possible_prestige_goods = {
+		prestige_good_generic_flights
+	}
+
+	prestige_goods_trigger = {
+		custom_tooltip = {
+			text = je_mr_prestige_goods_flights_complete_tt
+			has_variable = mr_prestige_good_generic_flights_var
+		}
+	}
+}
+
+INJECT:curtiss_company_DLR = {
+	possible_prestige_goods = {
+		prestige_good_generic_flights
+	}
+
+	prestige_goods_trigger = {
+		custom_tooltip = {
+			text = je_mr_prestige_goods_flights_complete_tt
+			has_variable = mr_prestige_good_generic_flights_var
+		}
+	}
+}
+
+INJECT:curtiss_company_KLM = {
+	possible_prestige_goods = {
+		prestige_good_generic_flights
+	}
+
+	prestige_goods_trigger = {
+		custom_tooltip = {
+			text = je_mr_prestige_goods_flights_complete_tt
+			has_variable = mr_prestige_good_generic_flights_var
+		}
+	}
+}
+
+INJECT:curtiss_company_air_france = {
+	possible_prestige_goods = {
+		prestige_good_generic_flights
+	}
+
+	prestige_goods_trigger = {
+		custom_tooltip = {
+			text = je_mr_prestige_goods_flights_complete_tt
+			has_variable = mr_prestige_good_generic_flights_var
+		}
+	}
+}
+
+INJECT:curtiss_company_imperial_airways = {
+	possible_prestige_goods = {
+		prestige_good_generic_flights
+	}
+
+	prestige_goods_trigger = {
+		custom_tooltip = {
+			text = je_mr_prestige_goods_flights_complete_tt
+			has_variable = mr_prestige_good_generic_flights_var
+		}
+	}
+}
+
+INJECT:curtiss_company_swissair = {
+	possible_prestige_goods = {
+		prestige_good_generic_flights
+	}
+
+	prestige_goods_trigger = {
+		custom_tooltip = {
+			text = je_mr_prestige_goods_flights_complete_tt
+			has_variable = mr_prestige_good_generic_flights_var
+		}
+	}
+}

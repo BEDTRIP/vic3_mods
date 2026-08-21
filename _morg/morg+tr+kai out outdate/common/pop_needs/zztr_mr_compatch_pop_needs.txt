@@ -1,182 +1,44 @@
-# Just like Tech&Res but air_travel replace civil_planes consumption
-REPLACE:popneed_entertainment = {
-	default = manzoni_prints
-
-	entry = {
-		goods = manzoni_prints
-		
-		weight = 1
-		max_supply_share = 1.0
-		min_supply_share = 0.2
-	}
-	entry = {
-		goods = elgar_music
-		
-		weight = 1.5
-		max_supply_share = 1.0
-		min_supply_share = 0.1
-	}
-	entry = {
-		goods = radios
-		
-		weight = 1.25
-		max_supply_share = 0.2
-		min_supply_share = 0.0
-	}
-	entry = {
-		goods = televisions
-		
-		weight = 1.75
-		max_supply_share = 0.5
-		min_supply_share = 0.0
-	}
-	entry = {
-		goods = interactive_entertainment
-		
-		weight = 2
-		max_supply_share = 0.5
-		min_supply_share = 0.0
-	}
-	entry = {
-		goods = fine_art
-		
-		weight = 0.5
-		max_supply_share = 0.5
-		min_supply_share = 0.0
-	}
-	entry = {
-		goods = services
-		
-		weight = 0.1
-		max_supply_share = 0.25
-		min_supply_share = 0.0
-	}
-	# Compatch
+﻿# Morgenroete <-> Tech & Res: pop needs.
+#
+# Morgenroete puts `air_travel` into three pop needs: it defines
+# popneed_entertainment outright (air_travel inside) and TRY_INJECTs air_travel
+# into popneed_leisure and popneed_free_movement.
+# Tech & Res loads later and does REPLACE_OR_CREATE:popneed_entertainment plus
+# REPLACE:popneed_leisure, wiping both. popneed_free_movement it only INJECTs,
+# so that one survives on its own and is deliberately absent from this file.
+#
+# INJECT, NOT REPLACE - this is the important part.
+# The previous version of this file REPLACEd both needs with a full copy of
+# T&R's list plus air_travel. That copy was made from T&R 04.05 and by 13.05 had
+# silently reverted a whole balance pass: T&R had dropped `radios` from
+# entertainment, dropped `elgar_music` from leisure and retuned about a dozen
+# supply shares. A REPLACE here has to be rebuilt by hand every single T&R
+# update, and nothing warns you when it goes stale. INJECT only adds the one
+# entry that is actually lost, and survives any future T&R retune untouched.
+#
+# Values are Morgenroete's own, not invented here.
+#
+# Known side effect: T&R's leisure entry for `civil_planes` stays in place
+# alongside air_travel, where the old REPLACE removed it ("pops should buy
+# tickets, not aeroplanes"). Two overlapping entries only widen what pops may
+# buy; if civil_planes demand visibly distorts, that is the thing to revisit -
+# and it would mean going back to a full REPLACE with all its upkeep.
+INJECT:popneed_entertainment = {
 	entry = {
 		goods = air_travel
-		
+
 		weight = 0.25
 		max_supply_share = 0.1
 		min_supply_share = 0.0
 	}
 }
 
-REPLACE:popneed_leisure = {
-	default = services
-	
-	obsession_demand_min = 0.5
-	obsession_demand_mult = 2.0
-	prestige_goods_demand_increase = 1.0
-
-	entry = {
-		goods = services
-
-		weight = 0.1
-		max_supply_share = 1.0
-		min_supply_share = 0.0
-	}
-
-	entry = {
-		goods = elgar_music
-		
-		weight = 1
-		max_supply_share = 0.4
-		min_supply_share = 0.15
-	}
-
-	entry = {
-		goods = fine_art
-		
-		weight = 4
-		max_supply_share = 0.2 #Reduced from 1.0
-		min_supply_share = 0.0
-	}
-	
-	entry = {
-		goods = small_arms
-		
-		weight = 0.75
-		max_supply_share = 0.2
-		min_supply_share = 0.0
-	}
-
-	# Compatch	
+INJECT:popneed_leisure = {
 	entry = {
 		goods = air_travel
-		
-		weight = 1.0 # New Tech
-		max_supply_share = 0.25 # Keeping, radio-esque		# This is what they get instead of buying private planes...
-		min_supply_share = 0.0
-	}
-	
-	entry = {
-		goods = automobiles
-		
-		weight = 1
-		max_supply_share = 0.15
-		min_supply_share = 0.0
-	}
-	
-	entry = {
-		goods = radios
-		
-		weight = 1
+
+		weight = 1.0
 		max_supply_share = 0.25
-		min_supply_share = 0.0
-	}
-
-	entry = {
-		goods = opium
-		
-		weight = 0.5
-		max_supply_share = 0.5
-		min_supply_share = 0.0
-	}
-	
-	entry = {
-		goods = clippers
-		
-		weight = 1
-		max_supply_share = 0.2
-		min_supply_share = 0.0
-	}
-	
-	entry = {
-		goods = steamers
-		
-		weight = 0.75
-		max_supply_share = 0.2
-		min_supply_share = 0.0
-	}
-
-	entry = {
-		goods = televisions
-		
-		weight = 1.25
-		max_supply_share = 0.3
-		min_supply_share = 0.0
-	}
-	entry = {
-		goods = computer
-		
-		weight = 1.25
-		max_supply_share = 0.3
-		min_supply_share = 0.0
-	}
-
-	entry = {
-		goods = interactive_entertainment
-		
-		weight = 1.25
-		max_supply_share = 0.3
-		min_supply_share = 0.0
-	}
-
-	entry = {
-		goods = on_demand_goods
-
-		weight = 1.5
-		max_supply_share = 0.5
 		min_supply_share = 0.0
 	}
 }

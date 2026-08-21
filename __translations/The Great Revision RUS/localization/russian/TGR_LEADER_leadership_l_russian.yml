@@ -26,7 +26,7 @@
   ideology_royalist_tt: "[GetIdeology('ideology_royalist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
   ideology_traditionalist_tt: "[GetIdeology('ideology_traditionalist').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
   ideology_market_liberal_tt: "[GetIdeology('ideology_market_liberal').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
-  ideology_technocratic_tt: "[GetIdeology('ideology_technocratic').GetName] [concept_politician] возглавит [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
+  ideology_positivist_tt: "[GetIdeology('ideology_positivist').GetName] [concept_politician] возглавит [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
   ideology_sovereignist_leader_tt: "[GetIdeology('ideology_sovereignist_leader').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
   ideology_social_democrat_tt: "[GetIdeology('ideology_social_democrat').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
   ideology_authoritarian_tt: "[GetIdeology('ideology_authoritarian').GetName] [concept_politician] станет лидером [SCOPE.gsInterestGroup('great_revision_propaganda_leader_party').GetName]."
@@ -48,7 +48,7 @@
   ethno_nationalist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('nationalism').GetName] станет доступен новый [GetIdeology('ideology_ethno_nationalist').GetName] [concept_politician]." 
   corporatist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('corporatism').GetName] станет доступен новый [GetIdeology('ideology_corporatist_leader').GetName] [concept_politician]." 
   ideology_market_liberal_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('stock_exchange').GetName] станет доступен новый [GetIdeology('ideology_market_liberal').GetName] [concept_politician]." 
-  ideology_technocratic_technology_tt: "Появится случайный лидер. После открытия [GetTechnology('central_archives').GetName] станет доступен новый [GetIdeology('ideology_technocratic').GetName] [concept_politician]."
+  ideology_positivist_technology_tt: "Появится случайный лидер. После открытия [GetTechnology('empiricism').GetName] станет доступен новый [GetIdeology('ideology_positivist').GetName] [concept_politician]."
   ideology_protectionist_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('stock_exchange').GetName] станет доступен новый [GetIdeology('ideology_protectionist').GetName] [concept_politician]." 
   ideology_liberal_leader_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('egalitarianism').GetName] станет доступен новый [GetIdeology('ideology_liberal_leader').GetName] [concept_politician]." 
   ideology_radical_technology_tt: "Появится случайный лидер. После открытия технологии [GetTechnology('egalitarianism').GetName] станет доступен новый [GetIdeology('ideology_radical').GetName] [concept_politician]." 
@@ -58,11 +58,11 @@
   
   politician_progaganda_campaign_pro: "Начать пропагандистскую кампанию"  
   politician_progaganda_campaign_against: "Начать кампанию по дискредитации"
-  politician_progaganda_campaign_agitator_activism: "Организовать демонстрацию"    
+  politician_progaganda_campaign_agitator_activism: "Собрать средства для движения"    
  
   politician_progaganda_campaign_pro_tt: "Начните пропагандистскую кампанию, чтобы повысить популярность этого персонажа; в зависимости от приложенных усилий результат будет более или менее значительным."  
   politician_progaganda_campaign_against_tt: "Начните пропагандистскую кампанию, чтобы дискредитировать этого персонажа; в зависимости от приложенных усилий результат будет более или менее значительным."  
-  politician_progaganda_campaign_agitator_activism_tt: "Организует политическую демонстрацию на площадях главных городов, повышая поддержку и активизм движения."
+  politician_progaganda_campaign_agitator_activism_tt: "Собирает средства для движения, чтобы организовать политическую демонстрацию на площадях главных городов, повышая его поддержку и активизм."
   
   #################### MODIFIERS ####################
   great_revision_politician_progaganda_campaign_pro_alert:0 "Использована пропагандистская кампания"

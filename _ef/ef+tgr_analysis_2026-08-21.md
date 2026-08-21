@@ -1,56 +1,57 @@
-# E&F + TGR — ревизия компача, 21.08.2026
+# E&F + TGR — ревизия и пересборка компача, 21.08.2026
 
 ## Что сверялось
 
 | Мод | Версия / коммит | metadata | Примечание |
 |---|---|---|---|
-| E&F | `E&F 4.07.2026` | пустой (`version`/`supported_game_version` = "") | сводка сверена 16.08.2026 |
-| TheGreatRevision | `TGR 1.3.10 12.08.2026 update` | `2.0`, `1.13.10` | содержит модуль Loans целиком |
-| TGR_Loans (отдельный подмод) | `2.0`, `1.13.11` | — | файлы **побайтово равны** одноимённым в основном TGR |
-| компач `ef+tgr done` | metadata `1.12.3`, `supported_game_version: 1.12.*` | — | контент датирован 10–23.01.2026 |
+| E&F | `E&F 4.07.2026` | пустой (`version`/`supported_game_version` = "") | сводка сверена 21.08.2026 |
+| E&F 1.13.10 Hotfix | `1.13.10-2`, `1.13.*` | Steam `3786286962` | грузится сразу после E&F, всегда |
+| TheGreatRevision | `TGR 1.3.10 12.08.2026 update` | `2.0`, `1.13.10` | модуль Loans лежит внутри |
+| TGR_Loans (подмод) | `2.0`, `1.13.11` | Steam `3452303324` | файлы **побайтово равны** одноимённым в основном TGR |
+| компач `ef+tgr done` до правки | `1.12.3`, `supported_game_version: 1.12.*` | — | контент датирован 10–23.01.2026 |
 
-Компач не обновлялся ни после июльского E&F, ни после августовского TGR. Отчёт
-`conflicts_tgr_vs_ef_report.md` внутри папки — от 23.01.2026, устарел.
+Компач не обновлялся ни после июльского E&F, ни после августовского TGR.
+Прогон `scan_conflicts.py` на 21.08.2026: 148 общих ключей, 29 общих категорий,
+0 общих loc-ключей, 0 общих id событий (отчёт сохранён в папку компача).
 
-Свежий прогон `scan_conflicts.py`: 148 общих ключей, 29 общих категорий,
-0 общих loc-ключей, 0 общих id событий.
+**Хотфикс с компачем не пересекается вообще** — ни по одному файлу и ключу.
+У него нет `technology`, `defines`, `production_methods`, `buy_packages`,
+`localization`, а из `gui` он трогает `custom_tooltip`, `frontend/shared/lists`,
+`map_markers`, `military_formation_panel`, `popups`, `right_click_menu` — но не
+`budget_panel`. Порядок между хотфиксом и компачем значения не имеет.
 
 ---
 
 ## Главный вывод: `REPLACE:` работает **по под-блокам**, а не по записи целиком
 
-Это меняет половину выводов январского разбора и стоит записать в общие правила.
+Это переворачивает половину январского разбора и стоит держать в общих правилах.
 
 Доказательство прямо в E&F: все 14 `REPLACE:pm_company_headquarter_*` в
 `common/production_methods/11_ef_private_infrastructure.txt` содержат **только**
 `building_modifiers`. Если бы `REPLACE:` заменял запись целиком, у E&F в соло
 пропали бы `texture`, `is_hidden_when_unavailable`, `unlocking_company_categories`,
-`disallowing_laws`, `unlocking_laws`, `unlocking_principles` — то есть PM «рабочий
-кооператив» был бы доступен без соответствующего закона, а иконки исчезли бы.
+`disallowing_laws`, `unlocking_laws`, `unlocking_principles` — PM «рабочий
+кооператив» стал бы доступен без соответствующего закона, а иконки исчезли бы.
 Этого не происходит.
 
 Значит: `REPLACE:key = { X = {...} }` заменяет **только** под-блок `X`;
-всё, что мод не перечислил, остаётся от предыдущего слоя (ваниль + моды выше по
-порядку загрузки). `INJECT:` отличается тем, что под-блок не заменяется, а
-до-мерджится.
+всё, что мод не перечислил, остаётся от предыдущего слоя. `INJECT:` отличается
+тем, что под-блок не заменяется, а до-мерджится.
 
-Практическое следствие: **конфликт есть только там, где оба мода перечислили
-один и тот же под-блок.**
+**Конфликт есть только там, где оба мода перечислили один и тот же под-блок.**
+Совпадение ключа в отчёте `scan_conflicts.py` само по себе не значит ничего.
 
 ---
 
-## Пофайловый вердикт
+## Что сделано
 
-### 1. `common/production_methods/ef_tgr_company_hq_pm_compat.txt` (505 строк) — **удалить**
+### Удалено (в git, папка `_to_delete` была затёрта параллельной работой — восстанавливать через `git log --diff-filter=D`)
 
-TGR: `REPLACE_OR_CREATE:pm_company_headquarter_*` с полным определением, включая
-`state_modifiers`.
-E&F: `REPLACE:` тех же ключей, но **только** `building_modifiers`.
-
-Под-блоки не пересекаются → `state_modifiers` от TGR переживает E&F сам по себе.
-Компач ничего не чинит.
-
-Хуже того, он сейчас портит баланс — за январь TGR поменял значения:
+**`common/production_methods/ef_tgr_company_hq_pm_compat.txt`** (505 строк).
+TGR даёт `REPLACE_OR_CREATE:pm_company_headquarter_*` с полным определением,
+включая `state_modifiers`; E&F делает `REPLACE:` тех же ключей, но перечисляет
+только `building_modifiers`. Под-блоки не пересекаются → `state_modifiers`
+переживает E&F сам. Плюс файл вносил устаревшие числа:
 
 | | компач | TGR 12.08.2026 |
 |---|---|---|
@@ -58,69 +59,34 @@ E&F: `REPLACE:` тех же ключей, но **только** `building_modifi
 | `state_trade_capacity_add` | 1 | 1 |
 | `state_tax_capacity_add` | нет | 0.25 |
 
-То есть компач удваивает недельные сделки и съедает налоговую ёмкость во всех
-14 PM штаб-квартир.
+То есть он удваивал недельные сделки и съедал налоговую ёмкость во всех 14 PM.
 
-`building_modifiers` в компаче пока совпадают с E&F один в один — то есть эта
-половина файла просто дублирует E&F.
+**`common/buy_packages/ef_tgr_buy_packages_inject.txt`.** Построчно сравнил с
+`E&F/common/buy_packages/00_ef_buy_packages.txt` — 99 ключей из 99 совпадают
+дословно. Это копия файла E&F. Конфликта нет и не было: TGR перекрывает ванильный
+`00_buy_packages.txt`, E&F грузится позже отдельным именем и делает `INJECT:` в уже
+переопределённые записи. Побочный риск дубля — двойной инжект
+`popneed_currency` / `popneed_financial_products` в один `goods = {}`.
 
-> Перед удалением — дешёвая проверка в игре, см. чеклист п.1.
+**`common/diplomatic_actions/zz_disable_tgr_international_loans.txt`.**
+`issue_a_loan` и `apply_for_a_loan` не определены нигде: ни в ванили, ни в текущем
+TGR, ни в подмоде `TGR_Loans` — остались только иконки в
+`TGR_Loans/gfx/interface/icons/lens_toolbar_icons/`. `REPLACE_OR_CREATE:` на
+несуществующий ключ его **создаёт**, то есть файл не отключал ничего, а порождал
+два фантомных дипдействия без локализации.
 
-### 2. `common/buy_packages/ef_tgr_buy_packages_inject.txt` — **удалить**
+**Январские отчёты** `conflicts_tgr_vs_ef_report.md` и `..._pre_b5525.md` →
+`_to_delete/ef+tgr_stale_reports_2026-08-21/`, вместо них
+`conflicts_tgr_vs_ef_report_2026-08-21.md`.
 
-Сравнил построчно с `E&F/common/buy_packages/00_ef_buy_packages.txt`:
-99 ключей из 99 совпадают дословно. Это копия файла E&F.
+### Переписано
 
-Конфликта нет и не было: TGR перекрывает ванильный `00_buy_packages.txt` (тот же
-относительный путь), E&F грузится позже отдельным файлом `00_ef_buy_packages.txt`
-и делает `INJECT:` в уже переопределённые TGR записи. Разные имена файлов не
-конфликтуют никогда, а `INJECT` в чужое определение отрабатывает штатно.
+**`common/technology/technologies/ef_tgr_technology_compat.txt`** — с ~200 строк
+переписанных чужих определений на 6 точечных `INJECT:`.
 
-Побочный риск от дубля: `popneed_currency`/`popneed_financial_products`
-инжектятся дважды в один и тот же `goods = {}`.
+Разбор по каждой технологии:
 
-### 3. `common/static_modifiers/ef_tgr_base_values_compat.txt` — **сократить до одной строки**
-
-`base_values` патчат четверо, и **все через `INJECT:`** — то есть они мерджатся,
-конфликта нет:
-
-- `E&F/00_ef_static_modifier.txt`: `country_minting_add = -500`
-- `TGR_LOANS_code_static_modifiers.txt`: `country_loan_interest_rate_add = -0.2`
-- `TGR_POLITICS_code_static_modifiers.txt`: bureaucracy/authority/influence = 200, `country_officers_pol_str_mult = -2`, `country_soldiers_pol_str_mult = -1`
-- `TGR_TRADE_code_static_modifiers.txt`: `country_company_construction_efficiency_bonus_add = 0.20`, `state_max_trade_advantage_from_capacity_add = 0.05`
-
-Компач «пиннит» значения января и потому сейчас переписывает TGR неверными
-числами:
-
-| ключ | компач | TGR сегодня |
-|---|---|---|
-| `country_company_throughput_bonus_add` | **0.40** | закомментирован (нигде нет) |
-| `country_company_construction_efficiency_bonus_add` | **−0.05** | **+0.20** |
-| `state_max_trade_advantage_from_capacity_add` | нет | 0.05 |
-
-`+0.40` к пропускной способности компаний — подарок из ниоткуда, `−0.05` вместо
-`+0.20` — потеря 25 п.п. эффективности стройки.
-
-Оправдана только одна строка — нейтрализация базовой ставки TGR, раз модуль
-займов выключен:
-
-```
-INJECT:base_values = {
-    # TGR_LOANS injects -0.2 as the baseline for its own loan mechanic.
-    # This patch disables that mechanic, so the baseline has to go back to 0,
-    # otherwise vanilla/E&F loans become almost free.
-    country_loan_interest_rate_add = 0
-}
-```
-
-### 4. `common/technology/technologies/ef_tgr_technology_compat.txt` — **переписать на `INJECT:`**
-
-Здесь конфликт настоящий: TGR добавляет свои модификаторы в блок `modifier`,
-а E&F перечисляет `modifier` целиком и потому его затирает.
-
-Разбор по каждой технологии (TGR → E&F → что теряется):
-
-| техно | источник в TGR | E&F трогает `modifier`? | теряется |
+| техно | источник в TGR | E&F перечисляет `modifier`? | теряется |
 |---|---|---|---|
 | `banking` | LOANS `REPLACE_OR_CREATE` + TRADE `INJECT` | да | `state_export_advantage_mult = 0.05` |
 | `central_banking` | LOANS + TRADE `INJECT` | да | `country_minting_mult = 0.1`, `state_export_advantage_mult = 0.05`, `state_max_trade_advantage_from_capacity_add = 0.05` |
@@ -128,235 +94,231 @@ INJECT:base_values = {
 | `corporate_charters` | TRADE `INJECT` | да | `state_building_trade_center_max_level_add = 10`, `state_export_advantage_mult = 0.05` |
 | `joint_stock_companies` | TRADE `REPLACE_OR_CREATE` | да | `state_market_access_price_impact = 0.05`, `state_building_trade_center_max_level_add = 10` |
 | `investment_banks` | TRADE `REPLACE_OR_CREATE` | да | `state_max_trade_advantage_from_capacity_add = 0.05`, `state_building_trade_center_max_level_add = 10` |
-| `currency_standards` | TRADE `INJECT` | **нет** (у E&F нет блока `modifier`) | ничего |
-| `international_exchange_standards` | LOANS | да, но E&F — надмножество TGR | ничего |
-| `modern_financial_instruments` | LOANS | да, но E&F — надмножество TGR | ничего |
+| `currency_standards` | TRADE `INJECT` | **нет блока `modifier`** | ничего |
+| `international_exchange_standards` | LOANS | да, но E&F — надмножество | ничего |
+| `modern_financial_instruments` | LOANS | да, но E&F — надмножество | ничего |
 
-Что не так с текущим файлом:
+Что было не так со старым файлом:
 
-- **`corporate_charters` вообще отсутствует** — а он теряется.
-- Нигде нет `state_building_trade_center_max_level_add = 10`. По TGR его дают
-  `currency_standards`, `stock_exchange`, `corporate_charters`, `mutual_funds`,
-  `joint_stock_companies`, `investment_banks` — это ядро масштабирования Trade
-  Center. Из них компач глушит 4 → −40 уровней потолка ТЦ к концу игры.
-- У `investment_banks` прописан `state_import_advantage_mult = 0.25`, которого
-  сегодня нет ни в TGR, ни в E&F. Фантом из старой версии.
-- `banking` и `modern_financial_instruments` скопированы из E&F дословно и не
-  добавляют ничего — мёртвый груз.
+- `corporate_charters` вообще отсутствовал, хотя теряется.
+- Нигде не было `state_building_trade_center_max_level_add`. По TGR его дают шесть
+  технологий по +10; компач глушил четыре из них → ≈40 уровней потолка Trade Center
+  к концу игры.
+- У `investment_banks` был прописан `state_import_advantage_mult = 0.25`, которого
+  нет ни в TGR, ни в E&F. Фантом из старой версии.
+- `banking` и `modern_financial_instruments` были скопированы из E&F дословно и не
+  добавляли ничего.
 - `mutual_funds`, `joint_stock_companies`, `investment_banks`,
-  `international_exchange_standards`: компач возвращает `unlocking_technologies`,
-  которые автор E&F осознанно закомментировал (`# central_banking`,
-  `# postal_savings`, `# corporate_charters`, `# mutual_funds`). Это не мердж,
-  это откат чужого решения.
-- `central_banking.on_researched` в компаче — старая копия E&F: `gdp_view >= 1`
-  вместо `var:gdp_view >= 1` и без исключения `c:JAP`. Первое даёт ошибку в
-  логе, второе выдаёт Японии новую валюту вопреки явному условию автора.
+  `international_exchange_standards` возвращали `unlocking_technologies`, которые
+  автор E&F осознанно закомментировал. Это откат чужого решения, а не мердж.
+- `central_banking.on_researched` был старой копией E&F: `gdp_view >= 1` вместо
+  `var:gdp_view >= 1` (ошибка в логе) и без исключения `c:JAP` — Япония получала
+  новую валюту вопреки явному условию автора.
 
-Правильный вид — не переписывать чужие определения, а до-мерджить потерянные
-ключи. Файл сжимается с ~200 строк до ~40 и перестаёт разъезжаться при
-обновлении любого из модов:
+Открытый вопрос по балансу: TGR_TRADE даёт `banking`
+`state_max_trade_advantage_from_capacity_add = -0.05`, гася собственный `+0.05` из
+TGR_LOANS. С выключенным модулем займов у E&F остаётся свой `+0.05`; возвращать
+`−0.05` не стал — это решение по балансу, не по конфликту.
 
-```
-# Vic3 patch semantics: REPLACE: swaps only the sub-blocks a mod lists.
-# E&F lists `modifier` on these techs, so TGR's own modifier keys are wiped.
-# INJECT: merges into the surviving block instead of restating E&F's definition —
-# that way an E&F or TGR value change does not silently drift out of this patch.
-# Plain INJECT (not TRY_INJECT): these are vanilla techs, they cannot disappear,
-# and a loud log line is better than a silent no-op if that ever changes.
+**`common/static_modifiers/ef_tgr_base_values_compat.txt`** — до одной строки.
+`base_values` патчат четверо и **все через `INJECT:`**, то есть мерджатся:
 
-INJECT:banking = { modifier = { state_export_advantage_mult = 0.05 } }
-INJECT:central_banking = { modifier = {
-    country_minting_mult = 0.1
-    state_export_advantage_mult = 0.05
-    state_max_trade_advantage_from_capacity_add = 0.05
-} }
-INJECT:mutual_funds = { modifier = { state_building_trade_center_max_level_add = 10 } }
-INJECT:corporate_charters = { modifier = {
-    state_building_trade_center_max_level_add = 10
-    state_export_advantage_mult = 0.05
-} }
-INJECT:joint_stock_companies = { modifier = {
-    state_market_access_price_impact = 0.05
-    state_building_trade_center_max_level_add = 10
-} }
-INJECT:investment_banks = { modifier = {
-    state_max_trade_advantage_from_capacity_add = 0.05
-    state_building_trade_center_max_level_add = 10
-} }
-```
+- `E&F/00_ef_static_modifier.txt`: `country_minting_add = -500`
+- `TGR_LOANS_code_static_modifiers.txt`: `country_loan_interest_rate_add = -0.2`
+- `TGR_POLITICS_code_static_modifiers.txt`: bureaucracy/authority/influence = 200, `country_officers_pol_str_mult = -2`, `country_soldiers_pol_str_mult = -1`
+- `TGR_TRADE_code_static_modifiers.txt`: `country_company_construction_efficiency_bonus_add = 0.20`, `state_max_trade_advantage_from_capacity_add = 0.05`
 
-Открытый вопрос по `banking`: TGR_TRADE даёт `state_max_trade_advantage_from_capacity_add = -0.05`,
-гася собственный `+0.05` из TGR_LOANS. С выключенным модулем займов у E&F
-остаётся свой `+0.05`. Возвращать ли −0.05 — решение по балансу, не по конфликту.
+Компач «пиннил» значения января и потому переписывал TGR неверными числами:
 
-### 5. `common/diplomatic_actions/zz_disable_tgr_international_loans.txt` — **удалить**
+| ключ | было в компаче | TGR сегодня |
+|---|---|---|
+| `country_company_throughput_bonus_add` | **0.40** | закомментирован (нигде нет) |
+| `country_company_construction_efficiency_bonus_add` | **−0.05** | **+0.20** |
+| `state_max_trade_advantage_from_capacity_add` | нет | 0.05 |
 
-`issue_a_loan` и `apply_for_a_loan` не определены нигде: ни в ванили, ни в
-текущем TGR (`common/diplomatic_actions/` содержит только
-`TGR_ADJUSTMENTS_doctrine_of_lapse`, `TGR_ADJUSTMENTS_power_bloc_force_regime_change`,
-`TGR_ADJUSTMENTS_trade_states`, `TGR_TRADE_subjects_request_market_control`), ни в
-подмоде `TGR_Loans`. От них остались только иконки в
-`TGR_Loans/gfx/interface/icons/lens_toolbar_icons/`.
+Осталась одна оправданная строка — обнуление базовой ставки TGR, раз модуль займов
+выключен, иначе ванильные/E&F кредиты почти бесплатны всю игру.
 
-`REPLACE_OR_CREATE:` на несуществующий ключ **создаёт** его. То есть файл сейчас
-не отключает ничего, а порождает два фантомных дипдействия без локализации.
+**`common/defines/ef_tgr_defines.txt`** — оставлен только `PRICE_RANGE = 0.85`.
+`GOODS_SHORTAGE_PENALTY_MAX` и `GOLD_RESERVE_RETURNS_FACTOR` TGR не трогает, а E&F
+грузится позже — дублировать их было незачем. В комментарии зафиксировано, что
+`PRICE_RANGE` — это решение по балансу (ваниль 0.75, TGR 0.85, E&F 0.99), и что при
+жалобах на беззубые валютные кризисы E&F первым делом надо пробовать 0.99.
 
-### 6. `common/journal_entries/…` и `common/scripted_buttons/…` — **оставить как есть**
+**`localization/*/zz_ef_tgr_private_ownership_stock_*.yml`** (11 языков) — с 12
+ключей до 4. Восемь `pm_*` E&F с 04.07.2026 определяет сам в
+`01_ef_production_method_localization`. Остались только групповые
+`pmg_private_ownership_{manufacture,agricultural,mining,railroad}_stock`.
+В шапку каждого файла добавлена пометка, что к TGR это отношения не имеет и логичное
+место — хотфикс (та же пачка лежит в `stuff/ef+vc done` и `stuff/_bpm/bpm+ef done`).
 
-`je_international_loans` и `tgr_loans_button_1..8` живы в текущем TGR
-(`TGR_LOANS_panel.txt`, `TGR_LOANS_buttons.txt`), id совпадают, все восемь кнопок
-на месте. Отключение работает.
+**`.metadata/metadata.json`** — `1.12.3 / 1.12.*` → `1.13.0 / 1.13.*`, тег `1.13`,
+`tested_with` обновлён под TGR 12.08.2026, E&F 04.07.2026 и хотфикс.
 
-Замечание по замыслу: это единственная часть компача, которая не чинит конфликт,
-а принимает решение за игрока. Файловых пересечений между займами TGR и финансами
-E&F нет вообще (`journal_entries`, `scripted_buttons`, `scripted_guis`,
-`scripted_progress_bars` — пересечение ключей пустое). Отключение оправдано
-дублированием механик, и это стоит написать в README прямым текстом, а не как
-«fix».
+**`README.md`** — пересобран: хотфикс добавлен в порядок загрузки с пометкой, что
+его позиция относительно компача не важна; расписано, что именно чинится и что
+удалено и почему; предупреждение про потолок товаров.
 
-### 7. `gui/budget_panel.gui` — **пересобрать заново, это самое срочное**
+### Пересобрано с нуля: `gui/budget_panel.gui`
 
-Файл в компаче от 10.01.2026 и собран на базе **1.12**. И E&F (04.07.2026), и TGR
-(12.08.2026) свои копии на 1.13 уже обновили — устарел только компач.
+Старый файл (10.01.2026) был собран на базе **1.12**, тогда как и E&F (04.07.2026),
+и TGR (12.08.2026) свои копии на 1.13 уже обновили. Что в нём было:
 
-Что нашёл:
-
-- `blockoverride "is_selected_visibility_very_low" / _low / _medium / _high / _very_high`
+- `blockoverride "is_selected_visibility_very_low / _low / _medium / _high / _very_high"`
   и парные `is_clickable_alpha_*`. В ванили 1.13.10 таких блоков **нет** — там
-  `is_selected_visibility_1 … _5`. Проверено: `is_selected_visibility_very_low`
-  не встречается ни в одном `gui/*.gui` ванили, `is_selected_visibility_1` есть в
-  `budget_panel.gui`, `construction_panel.gui`, `military_formation_panel.gui`.
-  Итог — блоковеррайды в никуда, логика выбора уровня налога не применяется.
-- Потеряны целые строки бюджета, которые есть и в ванили, и в TGR, и в E&F:
-  `BUDGET_TREATIES` (доход от договоров), `GetSupplyShipMaintenanceExpenses`,
-  обслуживание военных кораблей, `GetShipConstructionGoodsExpenses`.
+  `is_selected_visibility_1 … _5` (проверено: `_very_low` не встречается ни в одном
+  `gui/*.gui` ванили). Блоковеррайды в никуда — логика выбора уровня налога не
+  применялась.
+- Потеряны строки бюджета, которые есть и в ванили, и в TGR, и в E&F:
+  `BUDGET_TREATIES`, `GetSupplyShipMaintenanceExpenses`, обслуживание военных
+  кораблей, `GetShipConstructionGoodsExpenses`.
 - `text = "BUDGET_GOODS_FOR_MILITARY_BUILDINGS"` — ключа в 1.13 нет, ваниль
   использует `[concept_budget_goods_for_military_upkeep]`.
-- По именам виджетов: в компаче отсутствует `tutorial_highlight_tax_level`,
-  который есть и в ванили, и в E&F. Ровно тот признак, о котором речь в общих
-  правилах: пропавшее имя виджета — вылет, а не строчка в логе.
+- Отсутствовало имя виджета `tutorial_highlight_tax_level`.
 
-Пересобирать так: **база — текущий `TheGreatRevision/gui/budget_panel.gui`**
-(он уже 1.13-корректный и несёт весь налоговый блок TGR), сверху накатить дельту
-E&F. Дельта E&F против ванили компактная и вся сводится к:
+Сборка сделана трёхсторонним мерджем `git merge-file` (база — ваниль 1.13.10,
+стороны — E&F и TGR). Шесть конфликтов, все разобраны построчно:
 
-1. `@money!` → `[GetPlayer.GetCustom('currency_symbol')]` (~16 мест, включая новые
-   строки TGR `tgr_land_tax` / `tgr_per_capita_tax`);
-2. вкладка `assets` → `ECONOMY` (`SelectTab('economy')` + вызов
-   `list_generation_when_player_open_tab`), плюс новые `fourth_button` = `FINANCE`
-   и `fifth_button` = `STOCKPILE`;
-3. три новых контейнера в конце: `budget_panel_economy_panel_content`,
-   `budget_panel_financial_panel_content`, `budget_panel_stockpile_panel_content`;
-4. вырезаны ванильные `declare_bankruptcy_button`, `bankruptcy_progress_bar`,
-   `bankruptcy_progressbar` и виджет `declared_bankruptcy` — у E&F своя система
-   банкротства;
-5. `Country.GetMilitaryShipConstructionGoodsExpenses` →
-   `Country.GetShipConstructionGoodsExpenses`, убран блок
-   `GetSupplyShipConstructionGoodsExpenses`.
+- четыре — там, где TGR перестроил налоговые ряды и вставил свои +/−, а E&F в тех же
+  местах менял только `@money!`; взята сторона TGR, символ валюты доехал глобальной
+  заменой;
+- два — чистое `@money!` против `[GetPlayer.GetCustom('currency_symbol')]`; взята
+  сторона E&F.
 
-Всё остальное в файле E&F совпадает с ванилью — значит должно совпадать с TGR.
-После сборки прогнать `compare_gui_names.py` компач vs ваниль: из ванильных имён
-допустимо отсутствие только тех, что убрал сам E&F
-(`declare_bankruptcy_button`, `bankruptcy_progress_bar`, `bankruptcy_progressbar`,
-`tutorial_highlight_assets`). `tutorial_highlight_tax_level` обязан быть.
+Затем `@money!` заменён на `[GetPlayer.GetCustom('currency_symbol')]` по всему файлу
+(46 мест, включая новые строки TGR `tgr_land_tax` / `tgr_per_capita_tax`).
 
-### 8. `localization/*/zz_ef_tgr_private_ownership_stock_*.yml` — **обрезать до 4 ключей**
+Отдельно восстановлено имя `tutorial_highlight_tax_level`. Ваниль и E&F вешают его
+через `blockoverride "tutorial_highilight_name"` на `tax_exp_frame_coin`, но TGR
+заменил этот ряд своим типом `tax_exp_frame_fiscal_reform`, у которого такого блока
+нет — поэтому имя проставлено напрямую атрибутом `name` на виджете, с комментарием
+почему именно так.
 
-Из 12 ключей 8 (`pm_no_private_ownership_*`, `pm_private_ownership_majority_*`)
-E&F теперь определяет сам в
-`01_ef_production_method_localization_l_english.yml`. Не определены только
-четыре групповых:
+Результат — 2500 строк, скобки сходятся, `@money!` не осталось. Проверка имён
+виджетов:
 
-`pmg_private_ownership_manufacture_stock`, `pmg_private_ownership_agricultural_stock`,
-`pmg_private_ownership_mining_stock`, `pmg_private_ownership_railroad_stock`.
+- `E&F − компач`: **пусто**;
+- `TGR − компач`: `tutorial_highlight_assets` — вкладку Assets заменяет вкладка
+  Economy от E&F, у самого E&F этого имени тоже нет;
+- `ваниль − компач`: `bankruptcy_progress_bar`, `bankruptcy_progressbar`,
+  `declare_bankruptcy_button`, `tutorial_highlight_assets` — ровно те четыре, что
+  убирает сам E&F под свою систему банкротства;
+- в компаче нет ни одного имени, которого нет ни у кого из троих.
 
-Плюс это не про TGR вообще — та же пачка файлов лежит в `stuff/ef+vc done` и
-`stuff/_bpm/bpm+ef done`. Логичное место — `ef hotfix 1.13`. Пока хотфикс не
-обязателен к установке, оставить здесь обрезанную версию.
+Всё содержимое обеих сторон на месте: `tgr_land_tax` / `tgr_per_capita_tax` /
+`tgr_income_tax` / `tgr_dividends_tax` / `tgr_consumption_tax` — по 9 вхождений
+(как в TGR); `SelectTab('economy'|'finance'|'stockpile')`,
+`budget_panel_{economy,financial,stockpile}_panel_content`,
+`list_generation_when_player_open_tab` — как в E&F.
 
-### 9. `.metadata/metadata.json` — **обновить**
+---
 
-`version: 1.12.3` → `1.13.0`, `supported_game_version: 1.12.*` → `1.13.*`,
-тег `"1.12"` → `"1.13"`, `tested_with`: E&F `4.07.2026`, TGR `2.0 / 1.13.10 (12.08.2026)`.
+## Итоговый состав компача
+
+```
+.metadata/metadata.json
+README.md
+common/defines/ef_tgr_defines.txt                                  PRICE_RANGE
+common/journal_entries/zz_disable_tgr_international_loans.txt      je_international_loans
+common/scripted_buttons/zz_disable_tgr_international_loans_buttons.txt  tgr_loans_button_1..8
+common/static_modifiers/ef_tgr_base_values_compat.txt              country_loan_interest_rate_add = 0
+common/technology/technologies/ef_tgr_technology_compat.txt        6 x INJECT
+gui/budget_panel.gui                                               трёхсторонний мердж
+localization/<11 языков>/zz_ef_tgr_private_ownership_stock_*.yml   4 ключа
+conflicts_tgr_vs_ef_report_2026-08-21.md
+```
+
+Было 9 файлов `common/` + gui + loc на 12 ключей, стало 5 файлов `common/`, из них
+два — отключение займов.
 
 ---
 
 ## Отдельно: потолок товаров
 
-Ваниль 53, E&F добавляет 73 новых (65 валют + silver, bond, 4 биржевых, mutual_funds,
-local_currency) и патчит только `gold`. TGR новых товаров **не добавляет** —
-все 53 его записи это `REPLACE_OR_CREATE:` ванильных.
+Ваниль 53, E&F добавляет 73 новых и патчит только `gold`. TGR новых товаров **не
+добавляет** — все 53 его записи это `REPLACE_OR_CREATE:` ванильных, причём `gold` у
+него побайтово равен ванильному, а `INJECT:gold` от E&F (`tradeable = yes`,
+`fixed_price = no`) отрабатывает поверх.
 
-**Итого 126 из 128.** Запас — два товара. Любой третий мод с новыми товарами в
-одной сборке = вылет при входе в игру без единой строки в логе. Это надо написать
-в README компача и проверять при каждой сборке мегапака.
+- E&F + TGR без хотфикса: **126 из 128** — запас два товара;
+- E&F + TGR с хотфиксом (он режет 8 валют): **118** — запас десять.
 
-Заодно: `gold` у TGR побайтово равен ванильному (пустой `REPLACE_OR_CREATE`),
-`INJECT:gold` от E&F (`tradeable = yes`, `fixed_price = no`) отрабатывает поверх.
-Конфликта нет.
+Это записано в README компача.
 
 ---
 
 ## Что проверено и конфликта не даёт
 
 - `common/on_actions` — пересечение по `on_half_yearly_pulse_country`,
-  `on_monthly_pulse_country`, `on_yearly_pulse_country`; on_actions аддитивны.
+  `on_monthly_pulse_country`, `on_yearly_pulse_country`; каталог аддитивен.
 - `common/history/global` (`GLOBAL`) и `common/history/buildings` (`BUILDINGS`) — аддитивны.
 - `common/buildings` — 18 общих ключей, но E&F везде `INJECT` (PM-группа
-  `pmg_market_liquidity`), TGR — `REPLACE_OR_CREATE` полного определения.
-  E&F грузится позже и только дописывает.
+  `pmg_market_liquidity`), TGR — `REPLACE_OR_CREATE` полного определения; E&F грузится
+  позже и только дописывает.
 - `common/goods` — только `gold`, см. выше.
-- localization — 0 общих ключей.
-- события — 0 общих id.
+- localization — 0 общих ключей; события — 0 общих id.
 - `journal_entries` / `scripted_buttons` / `scripted_guis` /
-  `scripted_progress_bars` — пересечение ключей пустое.
+  `scripted_progress_bars` — пересечение ключей пустое, то есть займы TGR и финансы
+  E&F не конфликтуют технически вообще. Отключение займов — решение по механикам,
+  и в README это названо своим именем.
+
+---
+
+## Хвост: мегапаки
+
+В `__megapacks/megapack` и `__megapacks/megapack no t&r` лежат копии удалённых
+файлов (`ef_tgr_company_hq_pm_compat.txt`, `ef_tgr_buy_packages_inject.txt`).
+Мегапаки надо пересобрать, иначе в сборке останутся старые значения PM
+штаб-квартир и двойной инжект buy packages.
 
 ---
 
 ## Чеклист проверки в игре (по убыванию риска)
 
-1. **Штаб-квартира компании без файла PM-компача.** Убрать
-   `ef_tgr_company_hq_pm_compat.txt`, зайти в игру, навести на построенную
-   Company HQ. Годно: в тултипе есть `state_trade_capacity_add` и
-   `state_tax_capacity_add`, и при этом занятость капиталистов/клерков — из E&F
-   (3 / 3.5). Не годно: пропала торговая ёмкость → `REPLACE:` всё-таки заменяет
-   запись целиком, файл возвращаем и правим цифры на 0.5 / 1 / 0.25.
-2. **Бюджетная панель.** Открыть, пройти все вкладки: Overview / States /
-   Economy / Finance / Stockpile. Годно: вкладки переключаются, налоговые +/− TGR
-   двигают значения, видны строки Treaties и обслуживания флота, суммы с символом
-   валюты E&F. Не годно: пустая вкладка, `@money!` вместо символа, отсутствующие
-   строки.
-3. **Уровни налогов TGR.** Пощёлкать все пять уровней. Годно: подсветка выбранного
-   уровня меняется. Не годно: подсветка не двигается → блоковеррайды `_1.._5`
-   всё ещё не совпадают.
-4. **Туториал.** Начать игру с включённым туториалом до шага про налоги.
-   Годно: подсказка привязывается к контролу. Не годно: вылет →
-   `tutorial_highlight_tax_level` не восстановлен.
-5. **Займы.** Дипломатия и журнал. Годно: `je_international_loans` не виден,
-   кнопок TGR по займам нет, фантомных «Issue a loan» / «Apply for a loan» в
-   списке дипдействий тоже нет.
-6. **Ставка по кредиту.** Взять заём в 1836. Годно: ставка близка к ванильной
-   базе, а не почти нулевая (значит `country_loan_interest_rate_add = 0`
-   отработал).
-7. **Потолок Trade Center.** Изучить `corporate_charters` + `joint_stock_companies`
-   + `investment_banks` + `mutual_funds`. Годно: максимальный уровень Trade Center
-   в штате вырос примерно на 40. Не годно: не растёт → INJECT в `modifier` не
-   доехал.
-8. **Товары.** Просто зайти в игру со всей сборкой. Вылет без ошибок в
-   `error.log` = уперлись в 128.
-9. **`error.log`.** Пусто по `budget_panel`, по `blockoverride`, по
-   `gdp_view`, по `issue_a_loan` / `apply_for_a_loan`.
+1. **Бюджетная панель.** Открыть, пройти вкладки Overview / States / Economy /
+   Finance / Stockpile. Годно: вкладки переключаются, налоговые +/− TGR двигают
+   значения, видны строки Treaties и обслуживания флота, суммы с символом валюты
+   E&F. Не годно: пустая вкладка, `@money!` вместо символа, отсутствующие строки.
+2. **Уровни налогов TGR.** Пощёлкать все пять уровней. Годно: подсветка выбранного
+   уровня меняется (значит `is_selected_visibility_1..5` теперь совпадают с 1.13).
+3. **Туториал.** Начать игру с включённым туториалом до шага про налоги.
+   Годно: подсказка привязывается к контролу, вылета нет.
+4. **Штаб-квартира компании.** Навести на построенную Company HQ. Годно: в тултипе
+   есть торговая ёмкость и налоговая ёмкость от TGR, занятость капиталистов/клерков
+   от E&F (3 / 3.5). Не годно: торговой ёмкости нет → `REPLACE:` всё-таки заменяет
+   запись целиком, файл PM-мерджа надо вернуть из git и переписать цифры на
+   0.5 / 1 / 0.25.
+5. **Потолок Trade Center.** Изучить `corporate_charters` + `joint_stock_companies` +
+   `investment_banks` + `mutual_funds`. Годно: максимальный уровень Trade Center в
+   штате вырос примерно на 40. Не годно: не растёт → `INJECT` в `modifier` не доехал.
+6. **Займы.** Дипломатия и журнал. Годно: `je_international_loans` не виден, кнопок
+   TGR по займам нет, фантомных «Issue a loan» / «Apply for a loan» в списке
+   дипдействий тоже нет.
+7. **Ставка по кредиту.** Взять заём в 1836. Годно: ставка близка к ванильной базе,
+   а не почти нулевая.
+8. **Потребности попов.** Тултип нужд попа: `popneed_currency` и
+   `popneed_financial_products` присутствуют и в разумных числах (не удвоены).
+9. **Товары.** Просто зайти в игру со всей сборкой — вылет без ошибок в `error.log`
+   означает потолок 128.
+10. **`error.log`.** Пусто по `budget_panel`, по `blockoverride`, по `gdp_view`,
+    по `issue_a_loan` / `apply_for_a_loan`.
 
 ---
 
-## Что записать в сводки
+## Что записано в сводки
 
-- `сводка_tgr.md` — добавить шапку с версией и датой сверки (сейчас её нет),
-  зафиксировать: модуль Loans физически лежит внутри основного TGR и побайтово
-  совпадает с подмодом `TGR_Loans`; `state_building_trade_center_max_level_add = 10`
-  раздаётся шестью технологиями; дипдействия `issue_a_loan` / `apply_for_a_loan`
-  удалены.
-- `сводка_ef.md` — обновить дату сверки; отметить, что `REPLACE:` у E&F
-  повсеместно частичный (только нужные под-блоки), и что 8 из 12 loc-ключей
-  `private_ownership_*` мод теперь закрывает сам.
-- В общие правила по 1.13 — пункт про под-блочную семантику `REPLACE:`.
+- `сводка_tgr.md` — добавлена шапка с версией и датой сверки (её не было) +
+  раздел «Дополнение 2026-08-21»: модуль Loans внутри основного TGR и его
+  побайтовое равенство подмоду `TGR_Loans`; исчезнувшие дипдействия;
+  `state_building_trade_center_max_level_add` по шести технологиям; разделение
+  технологий по LOANS/TRADE; актуальные значения `base_values`; новые числа PM
+  штаб-квартир; нейтральность по товарам; признаки 1.13-корректного
+  `budget_panel.gui`.
+- `сводка_ef.md` — дата сверки 21.08.2026 + раздел «Дополнение 2026-08-21»:
+  под-блочная семантика `REPLACE:` с доказательством; отсутствие `modifier` у
+  `currency_standards`; изменение `central_banking.on_researched`; список
+  закомментированных `unlocking_technologies`; закрытые модом loc-ключи;
+  безопасность `buy_packages`; товары 126 / 118 с хотфиксом и полное отсутствие
+  пересечений хотфикса с компачами.
+- В общие правила по 1.13 просится пункт про под-блочную семантику `REPLACE:` —
+  без него отчёт `scan_conflicts.py` читается неверно.

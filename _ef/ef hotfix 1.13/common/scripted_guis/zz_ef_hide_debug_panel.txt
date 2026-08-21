@@ -1,0 +1,34 @@
+﻿### E&F Hotfix - the leftover dev panel in the Economy tab
+###
+### E&F ships its own debug UI: a small round "1" button under the budget tabs
+### (widget Panel_1 in gui/00_ef_deported_gui_1.gui, inside
+### `type budget_panel_economy_panel_content`) which opens
+### gui/ef_dev_and_custom_windows/ef_custom_windows.gui - a grid of unlabeled
+### test buttons (PA, PL, L, E, I1, T, 14 ... 320).
+###
+### It is gated on the global variable EF_debug_mode, and gui/01_ef_debug_widget.gui
+### (registered through gui/scripted_widgets/EF_scripted_widgets.txt) simply mirrors
+### [InDebugMode] into that variable. So anyone launching with -debug_mode - which is
+### most people who want the console - gets the dev panel in the middle of their
+### budget screen.
+###
+### It only became visible once the E&F + TGR ComPatch started rendering the Economy
+### tab correctly; before that the whole tab content never got built, and the panel
+### was hidden by accident rather than by design.
+###
+### We hide the button rather than clear EF_debug_mode: the variable also gates
+### E&F's own debug decisions (Open_Test_Decision / Close_Test_Decison in
+### common/decisions/00_ef_debug_decisions.txt), which check it directly and are
+### harmless where they are. Removing the variable would be a wider change than
+### this fix needs.
+###
+### REPLACE_OR_CREATE and not a bare redefinition: it says out loud that we are
+### overwriting an E&F key, and it still works if the author ever renames the file.
+###
+### If you WANT the dev panel, comment this block out.
+
+REPLACE_OR_CREATE:EF_debug_mode_visibility = {
+	is_shown = {
+		always = no
+	}
+}

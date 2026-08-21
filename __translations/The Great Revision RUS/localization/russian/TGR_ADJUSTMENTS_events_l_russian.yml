@@ -22,13 +22,13 @@
   
   usa_consolidated_borders:0 "Консолидация границ США"
   mex_consolidated_borders:0 "Консолидация границ Мексики"
-  tur_consolidated_borders:0 "Консолидация границ Османской империи"
-  egy_consolidated_borders:0 "Консолидация границ Египта"
-  mol_consolidated_borders:0 "Консолидация румынских границ"
+  tur_consolidated_borders:0 "Великий восточный кризис"
+  #egy_consolidated_borders:0 "Консолидация границ Египта"
+  #mol_consolidated_borders:0 "Консолидация румынских границ"
   
   ########################### BUILDING MODIFIERS ###########################
   building_group_bg_construction_throughput_add:0 "$bg_construction$ [concept_throughput]"
-  building_group_bg_construction_throughput_add:0 "Бонус или штраф к входу и выходу $bg_construction$"
+  building_group_bg_construction_throughput_add_desc:0 "Бонус или штраф к входу и выходу $bg_construction$"
   
   ########################### EVENTS ###########################
   

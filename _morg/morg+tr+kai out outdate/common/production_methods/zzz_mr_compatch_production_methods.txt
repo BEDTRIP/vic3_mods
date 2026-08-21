@@ -1,6 +1,50 @@
-# Airport with MORGE (As in Tech & Res Air tickets no more exists)
+﻿# Morgenroete <-> Tech & Res: airport production methods.
+#
+# THE ONE CONFLICT THIS FILE EXISTS FOR
+# Morgenroete adds the good `air_travel` and builds a lot on top of it:
+# popneed_entertainment / popneed_leisure / popneed_free_movement,
+# prestige_good_generic_flights, the Curtiss airline journal entries.
+# All of it is produced by the airport and nothing else produces it.
+# Tech & Res cannot ship that standalone - without Morgenroete the good does
+# not exist - so its ztr_modified_mr_production_methods.txt re-points every
+# airport route PM at goods_output_transportation_add instead. T&R loads after
+# Morgenroete, so with both mods on the airport produces zero air_travel and
+# every Morgenroete mechanic above quietly dies. No log error, just missing
+# content - which is why it went unnoticed for a long time.
+#
+# WHY SUBSTITUTE AND NOT ADD
+# The Tech & Res author left the instruction in their own file, next to each
+# affected PM:
+#     # Morgenrote compatch basta sostituire l'output con
+#     # goods_output_air_travel_add = 12
+# i.e. REPLACE the output, do not stack it. The numbers below are theirs
+# (12 / 18 / 24 / 30), not invented here. Morgenroete's own airport PMs also
+# output air_travel only and no transportation, so both authors agree the
+# airport is an air-travel node once Morgenroete is present.
+#
+# BALANCE CONSEQUENCE - CHECK THIS IN GAME
+# In Tech & Res alone the airport is the single biggest transportation source
+# in the game (120 / 100 / 75 / 50 per level, above high-speed rail at 80).
+# Substituting removes that. If late-game transportation goes short, the fix is
+# to put a partial goods_output_transportation_add back here - do NOT cut
+# air_travel, everything Morgenroete-side depends on it.
+# The pre-2026-08-21 version of this file kept a token 5/10/15/20; those
+# numbers came from nowhere in either mod and were dropped for that reason.
+#
+# Bodies below are Tech & Res 13.05.2026 verbatim except for the output line.
+# Re-check them whenever T&R updates: employment and inputs changed silently
+# between 04.05 and 13.05 and the old compatch kept reverting them.
+#
+# NOT here on purpose:
+#   pm_air_mail, pm_air_freight, pm_luxury_requisitions - no air_travel in any
+#     of them, the old compatch only froze stale T&R numbers.
+#   pm_travel_agencies - T&R does not touch it at all, Morgenroete's own
+#     version stands. The old compatch moved its unlock from curtiss_tourism_tech
+#     (era 2) to international_travel (T&R era 6); that is a balance opinion, not
+#     a conflict. If tourism PMs feel too early in T&R's stretched tree, this is
+#     where to put that override back.
 
-# Airport
+# Airport, base group (pmg_base_building_airport)
 REPLACE:pm_private_charters = {
 	texture = "gfx/interface/icons/production_method_icons/air_travel_1.dds"
 
@@ -10,7 +54,6 @@ REPLACE:pm_private_charters = {
 			goods_input_electricity_add = 3
 			goods_input_telephones_add = 2
 			goods_output_air_travel_add = 12
-			goods_output_transportation_add = 5
 		}
 		level_scaled = {
 			building_employment_laborers_add = 1000
@@ -18,7 +61,7 @@ REPLACE:pm_private_charters = {
 			building_employment_clerks_add = 250
 		}
 	}
-	
+
 	state_modifiers = {
 		workforce_scaled = {
 			state_pollution_generation_add = 10
@@ -28,7 +71,7 @@ REPLACE:pm_private_charters = {
 
 REPLACE:pm_regional_routes = {
 	texture = "gfx/interface/icons/production_method_icons/air_travel_2.dds"
-	
+
 	unlocking_technologies = {
 		combustion_engine
 	}
@@ -40,8 +83,6 @@ REPLACE:pm_regional_routes = {
 			goods_input_telecommunications_add = 4
 			goods_input_electricity_add = 3
 			goods_output_air_travel_add = 18
-			goods_output_transportation_add = 10
-
 		}
 		level_scaled = {
 			building_employment_laborers_add = 1000
@@ -49,7 +90,7 @@ REPLACE:pm_regional_routes = {
 			building_employment_clerks_add = 500
 		}
 	}
-	
+
 	state_modifiers = {
 		workforce_scaled = {
 			state_pollution_generation_add = 20
@@ -59,7 +100,7 @@ REPLACE:pm_regional_routes = {
 
 REPLACE:pm_domestic_routes = {
 	texture = "gfx/interface/icons/production_method_icons/air_travel_3_uk.dds"
-	
+
 	unlocking_technologies = {
 		socialdemocracy
 	}
@@ -71,13 +112,13 @@ REPLACE:pm_domestic_routes = {
 			goods_input_telecommunications_add = 7
 			goods_input_electricity_add = 3
 			goods_output_air_travel_add = 24
-			goods_output_transportation_add = 15
 		}
 		level_scaled = {
+			# T&R 13.05 flattened this to 750/750/750; the old compatch still
+			# carried T&R 04.05's 750/750/700 + 50 engineers.
 			building_employment_laborers_add = 750
 			building_employment_machinists_add = 750
-			building_employment_clerks_add = 700
-			building_employment_engineers_add = 50
+			building_employment_clerks_add = 750
 		}
 	}
 
@@ -92,7 +133,7 @@ REPLACE:pm_domestic_routes = {
 
 REPLACE:pm_international_routes = {
 	texture = "gfx/interface/icons/production_method_icons/air_travel_4.dds"
-	
+
 	unlocking_technologies = {
 		international_travel
 	}
@@ -104,13 +145,14 @@ REPLACE:pm_international_routes = {
 			goods_input_telecommunications_add = 10
 			goods_input_electricity_add = 3
 			goods_output_air_travel_add = 30
-			goods_output_transportation_add = 20
+			# merchant_marine is a T&R addition from 13.05 and has nothing to do
+			# with air_travel - kept as-is so convoy capacity is not touched.
+			goods_output_merchant_marine_add = 3
 		}
 		level_scaled = {
 			building_employment_laborers_add = 750
 			building_employment_machinists_add = 500
-			building_employment_engineers_add = 100
-			building_employment_clerks_add = 700
+			building_employment_clerks_add = 800
 		}
 	}
 
@@ -123,87 +165,14 @@ REPLACE:pm_international_routes = {
 	required_input_goods = electricity
 }
 
-
+# Airport, cargo group (pmg_cargo_airport). The other two PMs in that group,
+# pm_air_mail and pm_air_freight, carry no air_travel and are left to T&R.
 REPLACE:pm_air_passenger_only = {
 	texture = "gfx/interface/icons/production_method_icons/air_travel.dds"
+
 	building_modifiers = {
 		workforce_scaled = {
 			goods_output_air_travel_add = 1
 		}
-	}
-}
-
-REPLACE:pm_air_mail = {
-	texture = "gfx/interface/icons/production_method_icons/air_mail.dds"
-
-	building_modifiers = {
-		workforce_scaled = {
-			goods_input_paper_add = 10
-			goods_output_services_add = 20
-		}
-		level_scaled = {
-			building_employment_laborers_add = 100
-			building_employment_clerks_add = 150
-		}
-	}
-	
-	state_modifiers = {
-		unscaled = {
-			building_government_administration_throughput_add = 0.05
-			state_pollution_generation_add = 5
-		}
-	}				
-}
-
-REPLACE:pm_air_freight = {
-	texture = "gfx/interface/icons/production_method_icons/air_freight.dds"
-
-	building_modifiers = {
-		workforce_scaled = {
-			goods_input_paper_add = 5
-			goods_input_light_fuel_add = 5 #350
-			goods_output_services_add = 10 #150
-			goods_output_transportation_add = 20 #600
-		}
-		level_scaled = {
-			building_employment_machinists_add = 150
-			building_employment_clerks_add = 100
-		}
-	}
-	
-	state_modifiers = {
-		workforce_scaled = {
-			state_infrastructure_add = 2
-			state_pollution_generation_add = 10
-		}
-	}	
-}
-
-REPLACE:pm_luxury_requisitions = {
-	texture = "gfx/interface/icons/production_method_icons/civil_aviation_luxury_requisitions.dds"
-	
-	building_modifiers = {
-		workforce_scaled = {
-			goods_output_services_add = 10
-		}	
-	}
-}
-
-REPLACE:pm_travel_agencies = {
-	texture = "gfx/interface/icons/production_method_icons/civil_aviation_travel_agencies.dds"
-	
-	unlocking_technologies = {
-		international_travel #From curtiss_tourism, since it is a era 2 tech
-	}
-	
-	building_modifiers = {
-		workforce_scaled = {
-			goods_output_services_add = 20
-			goods_output_air_travel_add = 1
-		}
-		# level_scaled = {
-		# 	building_employment_laborers_add = -400 (too OP)
-		# 	building_employment_clerks_add = 200
-		# }
 	}
 }

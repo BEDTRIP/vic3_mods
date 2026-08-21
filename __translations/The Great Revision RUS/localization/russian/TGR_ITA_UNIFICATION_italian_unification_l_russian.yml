@@ -25,20 +25,20 @@
   je_austria_hungary_campaign_reason: "В ходе итальянского объединения завоевание Ломбардо-Венеции стало важнейшим шагом. В 1859 году Королевство Сардиния во главе с Виктором Эммануилом II и при поддержке союза с Францией Наполеона III начало Вторую войну за независимость против Австрийской империи, контролировавшей регион.\n\nПосле побед при Мадженте и Сольферино Австрия была вынуждена уступить Ломбардию Франции, которая затем передала её Королевству Сардиния. В 1866 году, во время Третьей войны за независимость, Италия вступила в союз с Пруссией, воевавшей с Австрией. Несмотря на итальянские поражения при Кустоце и Лиссе, победа Пруссии вынудила Австрию уступить Венецию Королевству Италии при посредничестве Франции.\n\nС аннексией Ломбардо-Венеции Италия сделала решительный шаг к объединению, заложив основу для окончательно независимой и единой страны."
 
   ########################### ITALIAN UNIFICATION: MODIFIERS  #######################################
-  great_revision_italian_unification_emilian_trade_agreement:0 "Пьемонтско-эмилийский таможенный союз".
-  great_revision_italian_unification_emilian_integration:0 "Пьемонтско-эмилийская интеграция".
-  great_revision_italian_unification_tuscany_treaty:0 "Пьемонтско-тосканский договор".
-  great_revision_italian_unification_tuscany_alliance:0 "Пьемонтско-тосканский союз".
-  great_revision_italian_unification_two_sicilies_rebels:0 "Профинансированы сицилийские сторонники объединения".
-  great_revision_italian_unification_two_sicilies_rebels_movement:0 "Профинансированы сицилийские сторонники объединения".
-  great_revision_italian_unification_two_sicilies_rebels_civil_war:0 "Красные рубашки".
-  great_revision_italian_unification_two_sicilies_monarchist_civil_war:0 "Распущенные монархисты".
-  great_revision_italian_unification_papal_state_war:0 "Война с Папой".
-  great_revision_italian_unification_papal_state_war_end:0 "Пролом у Порта-Пиа".
-  great_revision_italian_unification_austria_hungary_war_ita:0 "Война на национальной территории".
-  great_revision_italian_unification_austria_hungary_war_aus:0 "Война на чужой территории".
-  great_revision_italian_unification_austria_hungary_war_end:0 "Возвращение Ломбардо-Венеции".
-  great_revision_italian_unification_austria_hungary_war_maneuvers:0 "Дипломатическая игра против Австрии". 
+  great_revision_italian_unification_emilian_trade_agreement:0 "Пьемонтско-эмилийский таможенный союз"
+  great_revision_italian_unification_emilian_integration:0 "Пьемонтско-эмилийская интеграция"
+  great_revision_italian_unification_tuscany_treaty:0 "Пьемонтско-тосканский договор"
+  great_revision_italian_unification_tuscany_alliance:0 "Пьемонтско-тосканский союз"
+  great_revision_italian_unification_two_sicilies_rebels:0 "Профинансированы сицилийские сторонники объединения"
+  great_revision_italian_unification_two_sicilies_rebels_movement:0 "Профинансированы сицилийские сторонники объединения"
+  great_revision_italian_unification_two_sicilies_rebels_civil_war:0 "Красные рубашки"
+  great_revision_italian_unification_two_sicilies_monarchist_civil_war:0 "Распущенные монархисты"
+  great_revision_italian_unification_papal_state_war:0 "Война с Папой"
+  great_revision_italian_unification_papal_state_war_end:0 "Пролом у Порта-Пиа"
+  great_revision_italian_unification_austria_hungary_war_ita:0 "Война на национальной территории"
+  great_revision_italian_unification_austria_hungary_war_aus:0 "Война на чужой территории"
+  great_revision_italian_unification_austria_hungary_war_end:0 "Возвращение Ломбардо-Венеции"
+  great_revision_italian_unification_austria_hungary_war_maneuvers:0 "Дипломатическая игра против Австрии"
   
   ########################### ITALIAN UNIFICATION: MODIFIERS AI STRATEGIES #######################################
   risorgimento_war_of_the_pope: "не хочет участвовать в войне с Папой"
@@ -80,6 +80,7 @@
   
   ########################### ITALIAN UNIFICATION: EVENTS #######################################
   great_revision_italian_unification.10:0 "Шёпот Рисорджименто"
+  great_revision_italian_unification.10.t:0 "Шёпот Рисорджименто"
   great_revision_italian_unification.10.d:0 "Ветры национализма начали проходить через давно разделённые государства итальянского полуострова. Патриоты [ROOT.GetCountry.GetAdjective] и романтические учёные всё чаще призывают к объединению в единое итальянское государство."
   great_revision_italian_unification.10.f:0 ""Нет, синьор. Я не иностранец, и я не [ROOT.GetCountry.GetAdjectiveNoFormatting]. Я — итальянец, а итальянец в Италии никогда не бывает иностранцем.""
   great_revision_italian_unification.10.a:0 "Италия должна быть возвращена из забвения."

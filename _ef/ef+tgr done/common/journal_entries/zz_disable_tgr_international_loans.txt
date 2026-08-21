@@ -1,4 +1,4 @@
-########################################
+﻿########################################
 # Disable TheGreatRevision "International Loans" module when used with E&F
 ########################################
 

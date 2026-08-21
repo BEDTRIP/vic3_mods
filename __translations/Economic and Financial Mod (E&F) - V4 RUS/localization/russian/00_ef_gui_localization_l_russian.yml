@@ -122,7 +122,7 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
   com_topbar_base_game_source_EF:0 "Экономика и Финансы       "
 
   # inflation
-  com_topbar_element_inflation: "Инфляция"
+  com_topbar_element_inflation:0 "com_topbar_element_inflation"
   com_topbar_element_inflation_icon: "@inflation!"
   com_topbar_element_inflation_value: "#bold [GetPlayer.MakeScope.ScriptValue('inflation_value')|%|=-]#!" 
   com_topbar_element_inflation_tooltip: "$INFLATION_TITLE_player$" 
@@ -130,35 +130,35 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
   com_topbar_element_inflation_source_tooltip: "$com_topbar_base_game_source_tooltip$"
 
   # law_fiat_standard
-  com_topbar_element_law_fiat_standard: "Фиатный стандарт"
+  com_topbar_element_law_fiat_standard: "com_topbar_element_law_fiat_standard"
   com_topbar_element_law_fiat_standard_icon: "@law_fiat_standard!"
   com_topbar_element_law_fiat_standard_value: "$money_value_in_paper_top_bar$" 
   com_topbar_element_law_fiat_standard_tooltip: "$MONEY_VALUE_fiat_Player$" 
   com_topbar_element_law_fiat_standard_source: "$com_topbar_base_game_source_EF$"
   com_topbar_element_law_fiat_standard_source_tooltip: "$com_topbar_base_game_source_tooltip$"
   # law_silver_standard
-  com_topbar_element_law_silver_standard: "Серебряный стандарт"
+  com_topbar_element_law_silver_standard: "com_topbar_element_law_silver_standard"
   com_topbar_element_law_silver_standard_icon: "@law_silver_standard!"
   com_topbar_element_law_silver_standard_value: "$money_value_in_silver_top_bar$" 
   com_topbar_element_law_silver_standard_tooltip: "$MONEY_VALUE_silver_Player$" 
   com_topbar_element_law_silver_standard_source: "$com_topbar_base_game_source_EF$"
   com_topbar_element_law_silver_standard_source_tooltip: "$com_topbar_base_game_source_tooltip$"
   # law_bimetallism_standard
-  com_topbar_element_law_bimetallism_standard: "Биметаллический стандарт"
+  com_topbar_element_law_bimetallism_standard: "com_topbar_element_law_bimetallism_standard"
   com_topbar_element_law_bimetallism_standard_icon: "@law_bimetallism_standard!"
   com_topbar_element_law_bimetallism_standard_value: "$money_value_in_bimetallism_top_bar$" 
   com_topbar_element_law_bimetallism_standard_tooltip: "$MONEY_VALUE_bimetallism_Player$" 
   com_topbar_element_law_bimetallism_standard_source: "$com_topbar_base_game_source_EF$"
   com_topbar_element_law_bimetallism_standard_source_tooltip: "$com_topbar_base_game_source_tooltip$"
   # law_gold_standard
-  com_topbar_element_law_gold_standard: "Золотой стандарт"
+  com_topbar_element_law_gold_standard: "com_topbar_element_law_gold_standard"
   com_topbar_element_law_gold_standard_icon: "@law_gold_standard!"
   com_topbar_element_law_gold_standard_value: "$money_value_in_gold_top_bar$" 
   com_topbar_element_law_gold_standard_tooltip: "$MONEY_VALUE_gold_Player$" 
   com_topbar_element_law_gold_standard_source: "$com_topbar_base_game_source_EF$"
   com_topbar_element_law_gold_standard_source_tooltip: "$com_topbar_base_game_source_tooltip$"
   # law_gold_exchange_standard
-  com_topbar_element_law_gold_exchange_standard: "Золотой обменный стандарт"
+  com_topbar_element_law_gold_exchange_standard: "com_topbar_element_law_gold_exchange_standard"
   com_topbar_element_law_gold_exchange_standard_icon: "@law_gold_exchange_standard!"
   com_topbar_element_law_gold_exchange_standard_value: "$money_value_in_gold_exchange_top_bar$" 
   com_topbar_element_law_gold_exchange_standard_tooltip: "$MONEY_VALUE_gold_exchange_Player$" 
@@ -166,7 +166,7 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
   com_topbar_element_law_gold_exchange_standard_source_tooltip: "$com_topbar_base_game_source_tooltip$"
 
   # law_subject
-  com_topbar_element_law_subject: "Валюта субъекта"
+  com_topbar_element_law_subject: "com_topbar_element_law_subject"
   com_topbar_element_law_subject_icon: "@law_subject!"
   com_topbar_element_law_subject_value: "$money_value_subject_country_top_bar$" 
   com_topbar_element_law_subject_tooltip: "$MONEY_VALUE_subject_player$" 
@@ -187,7 +187,7 @@ metal_barometre_7: "#gold Золото @gold!#! #p крайне дорогое#!
 
   money_value_in_reference_currency_top_bar_for_list:0 "#b [Country.MakeScope.ScriptValue('money_value_exchange_rate_with_reference_currency')|D3]#! [Country.GetCustom('global_monetary_reference_texture')]"
 
-  money_value_subject_country_top_bar_for_list:0 "[Country.GetCustom('currency_symbol')] = #b [Country.MakeScope.ScriptValue('money_value_raported_to_overrlord')|D3]#! [Country.GetCustom('overlord_currency_symbol')]"
+  money_value_subject_country_top_bar_for_list:0 "= #b [Country.MakeScope.ScriptValue('money_value_raported_to_overrlord')|D3]#! [Country.GetCustom('overlord_currency_symbol')]"
 
 
   export_import_leader_txt:0 "[Country.GetName] — страна с наибольшим торговым балансом, составляющим [Country.MakeScope.ScriptValue('trade_balance_convert_gold_fixe')|D] @gold!      "
@@ -518,10 +518,10 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   ## no_formated :
 
-  money_value_no_formated:0 "Стоимость денег"
-  money_supply_no_formated:0 "Денежная масса"
-  national_capacity_no_formated:0 "Национальный капитал"
-  inflation_rate_no_formated:0 "Темп инфляции"
+  money_value_no_formated:0 "Курс"
+  money_supply_no_formated:0 "Ден. масса"
+  national_capacity_no_formated:0 "Резерв"
+  inflation_rate_no_formated:0 "Инфляция"
 
 
   customs_union_texture:0 "@customs_union!"
@@ -705,7 +705,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   subject_list:0 "Показать список субъектов"
 
-  national_debt:0 "Государственный долг"
+  national_debt:0 "Госдолг"
   status_and_crisis:0 "Статус и кризис"
 
   central_bank_reserves:0 "Резервы центрального банка"
@@ -1804,7 +1804,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   choose_currency_type_windows:0 "Выбор валюты"
   gold_reserve_window:0 "Металлические резервы"
-  show_gold_reserve_window:0 "Показать металлические резервы"
+  show_gold_reserve_window:0 "Показать"
 
   currency_reserve_window:0 "Валютные резервы"
   show_currency_reserve_window:0 "Показать валютные резервы"
@@ -2673,7 +2673,7 @@ opium_flag_status:0 "[GetPlayer.GetCustom('stokpiling_opium_status')]"
 
   total_at_term:0 "Всего вернут"
   bond_weekly_interest_5Y:0 "Недельный процент (5 лет)"
-  bond_weekly_interest_10Y:0 "Недельный процент (10 лет)"
+  bond_weekly_interest_10Y:0 "Недельный процент "
   remaining_debt:0 "Оставшийся долг"
 
   chek_sell_limit_currency_var_0:0 "Вы #p покупаете #!/#n продаёте #![GetPlayer.MakeScope.Var('sell_limit_currency_var_1').GetValue|D] [GetPlayer.GetCustom('currency_good')] из [GetPlayer.GetCustom('sell_limit_currency_var_0')] [GetPlayer.MakeScope.ScriptValue('sell_limit_currency_var_0')|D] [GetPlayer.GetCustom('currency_good')], разрешённых вашему рангу страны в этом году."

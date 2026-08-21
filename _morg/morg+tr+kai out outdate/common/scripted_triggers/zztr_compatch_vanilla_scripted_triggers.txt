@@ -1,3 +1,16 @@
+﻿# Morgenroete <-> Tech & Res: vanilla scripted triggers.
+#
+# Both mods REPLACE goods_is_industrial to list their own industrial goods, and
+# whoever loads last wins outright - there is no way to inject into an OR list.
+# T&R loads after Morgenroete, so Morgenroete's `air_travel` falls out.
+#
+# The list below is T&R's current list (62 goods, verified 2026-08-21) plus
+# air_travel and nothing else. When T&R adds a good, this has to be regenerated
+# - diff it against ztr_vanilla_triggers.txt, the delta must stay exactly one
+# line. Known T&R-side gap, deliberately not fixed here: T&R's own `androids` is
+# category = industrial but missing from their list, and adding it would make
+# this file diverge by two lines instead of one.
+
 REPLACE:goods_is_industrial = {
 	OR = {
 		this = g:ammunition

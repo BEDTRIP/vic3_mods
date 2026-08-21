@@ -1,23 +1,32 @@
-{
-  "name" : "Tech&Res + MR ComPatch",
-  "id" : "tech.res.Morgen",
-  "version" : "1.6'",
-  "supported_game_version" : "1.13.*",
-  "short_description" : "ComPatch between Morgenröte and Tech & Res mods.",
-  "tags" : [
-        "Economy And Buildings",
-        "Expansion",
-        "Map",
-        "Pops",
-        "Technologies",
-        "Gameplay",
-        "Historical",
-        "Total Conversion",
-        "Warfare",
-        "1.13"
-    ],
-  "relationships" : [],
-  "game_custom_data" : {
-    "multiplayer_synchronized" : true
+﻿{
+  "name": "Tech&Res + MR ComPatch",
+  "id": "tech.res.Morgen",
+  "version": "1.7 (MR 2.8.3e + T&R 1.6')",
+  "supported_game_version": "1.13.*",
+  "short_description": "Compatibility patch between Morgenroete and Tech & Res. Load after both.",
+  "tags": [
+    "Economy And Buildings",
+    "Technologies",
+    "Gameplay",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "2889925770",
+      "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+      "resource_type": "mod",
+      "version": "2.*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "tech.res",
+      "display_name": "[1.13] Tech & Res",
+      "resource_type": "mod",
+      "version": "1.*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
   }
 }

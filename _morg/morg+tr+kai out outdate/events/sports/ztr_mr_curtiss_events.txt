@@ -1,3 +1,16 @@
+﻿# Morgenroete <-> Tech & Res: Curtiss events.
+#
+# Same cause again: these three still test building_automotive_industry running
+# pm_aeroplane_production, which T&R removed from that building. Bodies are
+# Morgenroete 2.8.3e with building_aircraft_industry substituted.
+#
+# curtiss.510 and curtiss.513 used to live here too and were dropped on
+# 2026-08-21: Morgenroete 2.8.3e rewrote them as
+# `modifier:goods_output_aeroplanes_add > 0`, which T&R's aircraft industry
+# satisfies by itself. MFE_trade_good_events.7 went the same way - it now uses
+# has_active_production_method = pm_aeroplane_production with no building type -
+# and its whole file is gone.
+
 namespace = curtiss
 
 curtiss.228 = {
@@ -280,100 +293,3 @@ curtiss.506 = {
 		}
 	}
 }
-
-curtiss.510 = {
-	dlc = dlc_morgenrote
-
-	type = country_event
-
-	title = curtiss.510.t
-
-	desc = curtiss.510.d
-
-	flavor = curtiss.510.f
-	
-	duration = 2
-
-	event_image = { 
-		texture = "gfx/event_pictures/curtiss_pictures/curtiss_zeppelin.dds"
-	}
-
-	icon = "gfx/interface/icons/event_icons/event_zeppelin.dds"
-
-	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
-	on_opened_soundeffect = "event:/SFX/Events/unspecific/airship"
-
-	trigger = {
-	}
-
-	immediate = {
-	}
-
-	option = {	#A great vision!
-		name = curtiss.510.g
-		default_option = yes
-		random_scope_state = {
-			limit = {
-				any_scope_building = {
-					is_building_type = building_aircraft_industry #T&R
-				}
-			}
-			add_modifier = {
-				name = curtiss_zeppelin_wharf_modifier
-			}
-		}
-	}
-}
-
-#Curtiss 513: $COUNTRY$' disaster
-
-curtiss.513 = {
-	dlc = dlc_morgenrote
-
-	type = country_event
-
-	title = curtiss.513.t
-
-	desc = curtiss.513.d
-
-	flavor = curtiss.513.f
-	
-	duration = 2
-
-	event_image = { 
-		texture = "gfx/event_pictures/curtiss_pictures/curtiss_zeppelin_disaster.dds"
-	}
-
-	icon = "gfx/interface/icons/event_icons/event_zeppelin.dds"
-
-	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
-
-	trigger = {
-	}
-
-	immediate = {
-		remove_variable = curtiss_has_hindenburg_var
-		remove_modifier = curtiss_hindenburg_national_modifier
-		remove_modifier = curtiss_hindenburg_international_modifier
-	}
-
-	option = {	#A hard blow for the zeppelin industry.
-		name = curtiss.513.g
-		default_option = yes
-		add_modifier = {
-			name = curtiss_hindenburg_disaster_modifier
-			years = 5
-		}
-		random_scope_state = {
-			limit = {
-				any_scope_building = {
-					is_building_type = building_aircraft_industry #T&R
-					level >= 10
-				}
-			}
-			remove_modifier = curtiss_zeppelin_wharf_modifier
-		}
-	}
-}
-
-######################################################

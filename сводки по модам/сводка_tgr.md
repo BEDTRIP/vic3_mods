@@ -1,4 +1,8 @@
-### Общая сводка по `TheGreatRevision` (TGR): что именно он меняет (приоритет `common/`)
+﻿### Общая сводка по `TheGreatRevision` (TGR): что именно он меняет (приоритет `common/`)
+
+**Версия в репозитории**: коммит `TGR 1.3.10 12.08.2026 update`.
+`.metadata/metadata.json`: `version 2.0`, `supported_game_version 1.13.10`, Steam ID `3215078236`.
+**Сверено с файлами: 21.08.2026.**
 
 TGR — это **оверхаул экономики/торговли/политики**, сделанный в основном через **массовые `REPLACE_OR_CREATE`** в `common/` + крупные скриптовые системы (GUI → scripted_gui → scripted_effects → modifiers/on_actions).
 
@@ -196,3 +200,68 @@ TGR очень сильно “подкручивает” кампанию че
 - **`building_groups` TGR переопределяет ровно четыре**: `bg_trade`, `bg_consumer_goods`, `bg_industry_heavy`, `bg_industry_light`. Всё остальное дерево групп ванильное — чужие группы с родителями вне этой четвёрки не задеваются.
 - **`pop_needs`**: `REPLACE_OR_CREATE` для восьми — `popneed_basic_food`, `popneed_luxury_food`, `popneed_luxury_drinks`, `popneed_intoxicants`, `popneed_crude_items`, `popneed_simple_clothing`, `popneed_household_items`, `popneed_heating`.
 - **`on_actions` TGR трогает всего пять** и без префиксов `REPLACE:`: `on_yearly_pulse_country`, `on_monthly_pulse_country`, `on_half_yearly_pulse_country`, `on_law_activated`, `on_tax_law_change`. Каталог аддитивен, стыкуется с любым модом.
+
+---
+
+### Дополнение 2026-08-21 (из сверки E&F × TGR)
+
+- **Модуль International Loans физически лежит внутри основного TGR.** Отдельный
+  подмод `TGR_Loans` (Steam `3452303324`, «TGR Series: International Loans», metadata
+  `1.13.11`) — не расширение, а вырезка: все шесть общих файлов
+  (`journal_entries/TGR_LOANS_panel.txt`, `scripted_buttons/TGR_LOANS_buttons.txt`,
+  `script_values/TGR_LOANS_script_values.txt`, `static_modifiers/TGR_LOANS_modifiers.txt`,
+  `scripted_progress_bars/TGR_LOANS_interest_rate_bars.txt`,
+  `localization/english/TGR_LOANS_l_english.yml`) **побайтово равны**. Ставить подмод
+  вместе с основным TGR бессмысленно; отключать займы приходится скриптом.
+  Живые id для отключения: `je_international_loans`, `tgr_loans_button_1..8`.
+- **Дипдействий `issue_a_loan` / `apply_for_a_loan` больше нет.** Ни в TGR, ни в
+  `TGR_Loans`, ни в ванили; в `TGR_Loans/gfx/interface/icons/lens_toolbar_icons/`
+  остались только иконки. Старые компачи с `REPLACE_OR_CREATE:` на эти ключи их не
+  отключают, а **создают** — два фантомных действия без локализации.
+- **`state_building_trade_center_max_level_add = 10` — становой хребет trade rework.**
+  Раздаётся шестью технологиями в `TGR_TRADE_society.txt`: `currency_standards`,
+  `stock_exchange`, `corporate_charters`, `mutual_funds`, `joint_stock_companies`,
+  `investment_banks` (плюс `tech_bureaucracy` и `international_trade` через
+  `state_building_trade_center_max_level_add` в тех же INJECT). Любой мод, который
+  переопределяет блок `modifier` этих техно, срезает потолок ТЦ по 10 уровней за штуку.
+- **Технологии TGR разложены по двум файлам с разной стратегией.**
+  `TGR_LOANS_society.txt` — `REPLACE_OR_CREATE` для `banking`, `central_banking`,
+  `mutual_funds`, `international_exchange_standards`, `modern_financial_instruments`.
+  `TGR_TRADE_society.txt` — `INJECT` в `tech_bureaucracy`, `international_trade`,
+  `currency_standards`, `stock_exchange`, `banking`, `central_banking`,
+  `corporate_charters`, `mutual_funds` и `REPLACE_OR_CREATE` для
+  `joint_stock_companies`, `investment_banks`, `corporate_management`, `macroeconomics`.
+  Загружается LOANS раньше TRADE, поэтому INJECT ложится поверх собственного
+  REPLACE_OR_CREATE.
+- **`base_values` TGR патчит тремя файлами и все через `INJECT:`** — они мерджатся,
+  конфликта с чужими INJECT нет. Актуальные значения (12.08.2026):
+  LOANS `country_loan_interest_rate_add = -0.2`;
+  POLITICS bureaucracy/authority/influence `= 200`, `country_officers_pol_str_mult = -2`,
+  `country_soldiers_pol_str_mult = -1`;
+  TRADE `country_company_construction_efficiency_bonus_add = 0.20`,
+  `state_max_trade_advantage_from_capacity_add = 0.05`,
+  `country_company_throughput_bonus_add` **закомментирован**.
+- **PM штаб-квартир компаний** (`TGR_TRADE_private_infrastructure_investors.txt`,
+  21 запись): `state_modifiers { level_scaled { state_weekly_trades_add = 0.5
+  state_trade_capacity_add = 1 state_tax_capacity_add = 0.25 } }`. До 08.2026 было
+  `state_weekly_trades_add = 1` и без `state_tax_capacity_add`.
+- **Новых товаров TGR не добавляет.** Все 53 записи в `common/goods/TGR_TRADE_goods.txt` —
+  `REPLACE_OR_CREATE` ванильных, `gold` при этом побайтово равен ванильному.
+  Для лимита 128 TGR нейтрален.
+- **`gui/budget_panel.gui` у TGR соответствует 1.13.10**: `is_selected_visibility_1..5`,
+  `[concept_budget_goods_for_military_upkeep]`, строки `BUDGET_TREATIES`,
+  `GetSupplyShipMaintenanceExpenses`, `GetShipConstructionGoodsExpenses` на месте.
+  Если в чужом мердже вместо `_1.._5` стоят `_very_low.._very_high`, а
+  `BUDGET_TREATIES` нет — мердж собран на базе 1.12 и его надо пересобирать.
+  TGR при этом заменяет ванильный ряд `tax_exp_frame_coin` («Taxation level») своим
+  `tax_exp_frame_fiscal_reform`, и вместе с ним теряется имя виджета
+  `tutorial_highlight_tax_level`.
+
+---
+
+### Дополнение 2026-08-21 (из сверки PSC × TGR)
+
+- **Компач `psc+tgr noneed` пересверен, вывод не изменился.** Единственное пересечение — `building_construction_sector` (`REPLACE_OR_CREATE` у TGR, `REPLACE` у PSC). Единственная содержательная правка TGR (`required_construction = construction_cost_very_low`) у PSC совпадает дословно, терять нечего. Полный разбор — `_psc/psc+tgr_analysis_2026-08-21.md`.
+- **Старое README компача было ошибочным**: называло себя `pb+tgr` (копипаста) и описывало merged-файл, которого не существовало в папке. Переписано.
+- Пересечения `BUILDINGS`/`GLOBAL` с PSC — те же аддитивные категории, что и с E&F/MR, не конфликт.
+

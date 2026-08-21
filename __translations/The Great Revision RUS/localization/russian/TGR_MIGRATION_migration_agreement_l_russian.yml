@@ -13,12 +13,12 @@
   migration_agreement_proposal_notification_name: "Миграционное соглашение"
   migration_agreement_proposal_notification_desc: "[INITIATOR_COUNTRY.GetName] предлагает заключить #bold миграционное соглашение#! с нашей [concept_country]."
   
-  concept_migration_agreement: "Миграционное соглашение" 
+  #concept_migration_agreement: "Миграционное соглашение" 
   concept_migration_agreement:0 "Миграционное соглашение"
   concept_migration_agreements:0 "Миграционные соглашения"
   concept_migration_agreement_short:0 "Соглашение"
   concept_migration_agreements_short:0 "Соглашения"
-  concept_migration_agreement_desc:3 "[concept_diplomatic_pact], в рамках которого две страны договариваются облегчать и поощрять перемещение людей из одной страны в другую. Страна, которая хочет привлечь население, выплачивает принимающей стране сумму денег в качестве платы за отправку новых мигрантов."
+  #concept_migration_agreement_desc:3 "[concept_diplomatic_pact], в рамках которого две страны договариваются облегчать и поощрять перемещение людей из одной страны в другую. Страна, которая хочет привлечь население, выплачивает принимающей стране сумму денег в качестве платы за отправку новых мигрантов."
   concept_migration_agreement_desc:1 "[concept_diplomatic_pact], в рамках которого две страны договариваются облегчать и поощрять перемещение людей из одной страны в другую. Страна, которая хочет привлечь население, выплачивает принимающей стране сумму денег в качестве платы за отправку новых мигрантов."
 
   DIPLOMATIC_ACCEPTANCE_NUM_MIGRATION_AGREEMENT:1 "Количество [SCOPE.GetRootScope.GetCountry.GetAdjectiveNoFormatting] [Concept('concept_migration_agreement','$concept_migration_agreement$')]"

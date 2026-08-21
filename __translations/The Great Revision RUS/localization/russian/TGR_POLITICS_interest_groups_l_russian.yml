@@ -16,7 +16,7 @@
   
   
   #################### IG ATTRACTION: TECHNOLOGIES ####################
-  YES_EGALITARIANISM:0 "Открыта [concept_technology|l] #v $labor_movement$#!"
+  YES_EGALITARIANISM:0 "Открыта [concept_technology|l] #v $egalitarianism$#!"
   YES_LABOR_MOVEMENT:0 "Открыта [concept_technology|l] #v $labor_movement$#!"
   YES_SOCIALISM:0 "Открыта [concept_technology|l] #v $socialism$#!"
   

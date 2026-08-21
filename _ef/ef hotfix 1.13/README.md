@@ -1,9 +1,9 @@
-# E&F 1.13.10 Hotfix
+﻿# E&F 1.13.10 Hotfix
 
 Fixes for **Economic and Financial**, repository version **04.07.2026**, on Victoria 3 **1.13.10**.
 Load it **after E&F**. It does not depend on the E&F + Morgenröte ComPatch and works without it.
 
-Seven independent blocks: **goods limit**, **history**, **GUI**, **alerts**, **local_currency issuance**, **currency laws**, **script guards**.
+Eight independent blocks: **goods limit**, **history**, **GUI**, **alerts**, **local_currency issuance**, **currency laws**, **script guards**, **dev panel**.
 
 ---
 
@@ -401,6 +401,44 @@ Found while digging, **not fixed**: `00_ef_building.txt:117` calls `initialize_h
 
 ---
 
+## 8. The leftover dev panel in the Economy tab
+
+`common/scripted_guis/zz_ef_hide_debug_panel.txt` (new)
+
+E&F ships its own debug UI: a small round **1** button under the budget tabs — widget
+`Panel_1` in `gui/00_ef_deported_gui_1.gui`, sitting inside
+`type budget_panel_economy_panel_content` — which opens
+`gui/ef_dev_and_custom_windows/ef_custom_windows.gui`, a grid of unlabeled test buttons
+(`PA PL L E I1 T 14 … 320`).
+
+It is gated on the global variable `EF_debug_mode`, and `gui/01_ef_debug_widget.gui`
+(registered through `gui/scripted_widgets/EF_scripted_widgets.txt`) does nothing but
+mirror `[InDebugMode]` into that variable. So anyone launching with `-debug_mode` —
+which is most people who want the console — gets a dev panel in the middle of the
+budget screen.
+
+It stayed invisible for a long time by accident: with E&F + TGR the Economy tab content
+was never built at all, because the ComPatch's `budget_panel.gui` was a 1.12-era merge.
+Once that was rebuilt on 21.08.2026 the tab started rendering — and brought the dev
+panel with it.
+
+```
+REPLACE_OR_CREATE:EF_debug_mode_visibility = {
+	is_shown = {
+		always = no
+	}
+}
+```
+
+The button is hidden rather than the variable cleared: `EF_debug_mode` also gates E&F's
+own debug decisions (`Open_Test_Decision` / `Close_Test_Decison` in
+`common/decisions/00_ef_debug_decisions.txt`), which read it directly and are harmless
+where they are. Removing the variable would be a wider change than this needs.
+
+Comment the block out if you want the dev panel back.
+
+---
+
 ## Left undone
 
 - 34 orphaned modifier type sets (from the cut goods) — the 140 `defined in script but not in code` warnings.
@@ -448,6 +486,7 @@ grep -n -A3 '#GRE'        "E&F/common/history/buildings/00_ef_building.txt"
 grep -c 'currency_standars' "E&F/common/laws/01_ef_currency_type.txt"
 
 # has the goods count crept up? (must stay <= 128 with every mod loaded)
+# is the dev panel still gated on EF_debug_mode? (if the key is renamed, block 8 silently creates a dead entry)
 ```
 
 ---
@@ -516,6 +555,12 @@ Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/shared
 [list]
 [*]All 95 laws required a technology named [i]currency_standars[/i] — the real one has a d. One letter, 95 times, and the whole law group could never be enacted
 [*]Fixed, with a restriction: a law is available only to the tags E&F itself assigns it to, and only once you actually have a central bank
+[/list]
+
+[*][b]E&F's dev panel showing up in the budget screen[/b]
+[list]
+[*]The round [b]1[/b] button under the budget tabs opens E&F's grid of unlabeled test buttons. It is tied to [i]-debug_mode[/i], so anyone playing with the console open sees it
+[*]Hidden. Comment out [i]common/scripted_guis/zz_ef_hide_debug_panel.txt[/i] if you want it back
 [/list]
 [/list]
 

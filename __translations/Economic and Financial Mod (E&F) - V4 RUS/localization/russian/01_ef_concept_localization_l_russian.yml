@@ -207,7 +207,7 @@
   concept_base_interest_value_5Y_s:0 "КСО"
   concept_base_interest_value_5Y_s_desc:0 "[concept_base_interest_value_5Y] — процентная ставка по золотому кредиту, полученному вашим центральным банком от иностранного инвестора."
 
-  concept_base_interest_value_10Y:0 "(Международная) долгосрочная ставка      по облигациям      (10 лет)"
+  concept_base_interest_value_10Y:0 "(Международная) долгосрочная ставка по облигациям (10 лет)"
   concept_base_interest_value_10Y_desc:0 "[concept_base_interest_value_10Y] — процентная ставка по золотому кредиту, полученному вашим центральным банком от иностранного инвестора; эта же ставка применяется, если вы берёте золотой кредит в своём центральном банке."
 
   concept_base_interest_value_10Y_s:0 "ДСО"

@@ -1,20 +1,199 @@
-# Era 1
+﻿# Morgenroete <-> Tech & Res: society technologies.
+#
+# WHY THIS FILE REPLACED A FILE OVERRIDE
+# Until 2026-08-21 the compatch shipped an empty placeholder at
+# common/technology/technologies/ztr_mr_society.txt, blanking T&R's file of that
+# name wholesale. That did protect Morgenroete, but it also threw away T&R's own
+# work on dubois_nature_protection_tech (environmental institution),
+# malaria_prevention (colonial branch) and pharmaceuticals. Those three now stay
+# in T&R's redaction; the entries below are the ones where T&R genuinely breaks
+# a Morgenroete mechanic, patched one at a time.
+#
+# THE PATTERN
+# T&R has to run standalone, so wherever a Morgenroete technology carried a
+# Morgenroete-only modifier type, T&R stripped or commented it out - otherwise
+# the missing type would spam error.log. With Morgenroete present those types
+# exist and the mechanics behind them are alive, so the blocks go back in.
+# Each entry below is T&R's body plus exactly the stripped lines, except where
+# noted.
+#
+# Re-check on every T&R update: if T&R stops shipping one of these keys, the
+# REPLACE here silently becomes a plain override of Morgenroete by itself.
 
-# Era 2
+# --- Elgar / Klimt decorative traditions ---------------------------------
+# country_elgar_decorative_musical_tradition_add and
+# country_klimt_decorative_painting_tradition_add are Morgenroete modifier types
+# (defined in decorative_modifier_types.txt, driven from elgar_modifiers.txt).
+# T&R dropped the whole modifier block from all three technologies; without it
+# the tradition counters never rise and the Elgar/Klimt content stalls.
 
-REPLACE:curtiss_tourism_tech = {
-
-	era = era_2
-	texture = "gfx/interface/icons/invention_icons/curtiss_tourism_tech.dds"
+REPLACE:romanticism = {
+	# Unlocks Arts Academy building
+	# Unlocks Greener Grass Campaign Decree
+	# Unlocks Agrarianism - Economic System Law
+	# Unlocks early romantic orchestra for Opera
+	era = era_2 #Morgenroete: changed from Era 1
+	texture = "gfx/interface/icons/invention_icons/romanticism.dds"
 	category = society
-	
+
+	modifier = {
+		#Morgenroete: Removed Prestige
+		country_elgar_decorative_musical_tradition_add = 1 #Decorative modifier without effect
+		country_klimt_decorative_painting_tradition_add = 1 #Decorative modifier without effect
+	}
+
 	unlocking_technologies = {
-		corporate_charters
-		colonization
+		elgar_classicism_tech #Morgenroete: changed from academia
+	}
+
+	ai_weight = {
+		value = 3 # Very important in general
+	}
+}
+
+REPLACE:elgar_classicism_tech = {
+	# Unlocks Opera House
+	# Unlocks Early romantic orchestra for opera
+
+	era = era_1
+	texture = "gfx/interface/icons/invention_icons/elgar_classicism_tech.dds"
+	category = society
+
+	modifier = {
+		country_elgar_decorative_musical_tradition_add = 1
+		country_klimt_decorative_painting_tradition_add = 1
+	}
+
+	unlocking_technologies = {
+		academia
+	}
+
+	ai_weight = {
+		value = 1.5 # Important tech in general
+
+		if = {
+			limit = { has_journal_entry = je_sick_man_army }
+			add = 5
+		}
+	}
+}
+
+REPLACE:elgar_irrationalism_tech = {
+	# Unlocks Mid-romantic orchestra for opera
+	era = era_2
+	texture = "gfx/interface/icons/invention_icons/elgar_irrationalism_tech.dds" #Created with DALL-E
+	category = society
+
+	modifier = {
+		country_elgar_decorative_musical_tradition_add = 2
+		country_klimt_decorative_painting_tradition_add = 1
+	}
+
+	unlocking_technologies = {
+		romanticism
+	}
+
+	ai_weight = {
+		value = 1.5
+
+		if = {
+			limit = {
+				OR = {
+					country_has_primary_culture = cu:south_german
+					country_has_primary_culture = cu:north_german
+				}
+			}
+			add = 5
+		}
+	}
+}
+
+# --- Modern art gate -----------------------------------------------------
+# These two are Morgenroete's versions restored outright, not a merge.
+#
+# elgar_modern_art_tech is not meant to be researchable at all. Morgenroete
+# grants it from a journal entry and uses it as the switch that guarantees only
+# one of the three modern-art branches (art deco / neoclassicism / new
+# objectivity) can ever be taken. T&R removed can_research = no and moved it to
+# era_4, which turns the gate into an ordinary tech and lets the branches be
+# researched side by side.
+#
+# elgar_mass_culture_tech is the far end of that same gate: Morgenroete requires
+# all three branch endpoints, T&R shortcut it to elgar_modern_art_tech +
+# silent_cinema. Restoring only the gate and leaving the shortcut would give a
+# half-Morgenroete, half-T&R chain, so both go back together.
+# elgar_art_deco_tech / elgar_neoclassicism_tech / elgar_new_objectivity_tech
+# are Morgenroete-only and T&R does not touch them, so the chain reassembles
+# cleanly.
+
+REPLACE:elgar_modern_art_tech = {
+	# NO EFFECT
+	era = era_3
+	texture = "gfx/interface/icons/invention_icons/elgar_modern_art_tech.dds"
+	category = society
+
+	can_research = no #only via journal entry
+
+	unlocking_technologies = {
+		civilizing_mission
+	}
+
+	ai_weight = {
+		value = 0 #Should not research
+	}
+
+	#this technology remains hidden in the entire game and should not be researched; it guarantees that only one of the three modern art tech trees is researched
+}
+
+REPLACE:elgar_mass_culture_tech = {
+	# Unlocks late romantic orchestra for opera
+	# Jazz events
+	era = era_5
+	texture = "gfx/interface/icons/invention_icons/elgar_mass_culture_tech.dds"
+	category = society
+
+	modifier = {
+	}
+
+	unlocking_technologies = {
+		elgar_art_deco_tech
+		elgar_neoclassicism_tech
+		elgar_new_objectivity_tech
+	}
+
+	ai_weight = {
+		value = 0 #Should not research
+	}
+}
+
+# --- Panum epidemics -----------------------------------------------------
+# state_harvest_condition_panum_smallpox_condition_impact_mult and
+# ..._yellow_fever_... are Morgenroete modifier types backing full harvest-
+# condition mechanics (panum_condition_modifier_types.txt, panum_modifiers.txt,
+# plus scripted effects/triggers/values). T&R commented both out - by name, with
+# a "#Morgenroete: Added Modifier" note in malaria_prevention - so with T&R on
+# top, Morgenroete's smallpox and yellow fever have no mitigation at all.
+#
+# Bodies stay T&R's. malaria_prevention in particular keeps T&R's era_4,
+# civilizing_mission prerequisite and colonial-affairs modifier; only the
+# commented Morgenroete line is put back. Morgenroete's own
+# country_institution_health_system_max_investment_add = -1 is deliberately NOT
+# restored - that is a vanilla modifier type T&R chose to drop as part of
+# reworking the tech, not something they had to strip.
+
+REPLACE:panum_vaccination_tech = {
+	# Vaccination for Smallpox
+	era = era_1
+	texture = "gfx/interface/icons/invention_icons/panum_vaccination_tech.dds"
+	category = society
+
+	unlocking_technologies = {
+		medical_degrees
 	}
 
 	modifier = {
-		country_free_charters_add = 1
+		state_mortality_mult = -0.01
+		state_harvest_condition_panum_smallpox_condition_impact_mult = -0.25 #Morgenroete
 	}
 
 	ai_weight = {
@@ -22,17 +201,64 @@ REPLACE:curtiss_tourism_tech = {
 	}
 }
 
-# Era 5
+REPLACE:malaria_prevention = {
+	# Should permit for colonization of state regions with severe malaria
+	era = era_4
+	texture = "gfx/interface/icons/invention_icons/malaria_prevention.dds"
+	category = society
 
+	modifier = {
+		country_institution_colonial_affairs_max_investment_add = 1
+		state_harvest_condition_panum_yellow_fever_condition_impact_mult = -0.25 #Morgenroete
+	}
+
+	unlocking_technologies = {
+		civilizing_mission
+		theiler_microbiology_tech #Morgenroete: Added Tech
+	}
+
+	ai_weight = {
+		value = 1
+
+		# Important for colonizers
+		if = {
+			limit = {
+				navy_size >= 25
+				is_country_type = recognized
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				has_strategy = ai_strategy_colonial_expansion
+			}
+			add = 1
+		}
+	}
+}
+
+# --- Vikelas: a genuine three-way collision ------------------------------
+# Both mods define this key with a plain (unprefixed) block - Morgenroete in
+# mr_sports_vikelas_technologies.txt, T&R in ztr_new_society.txt - so whoever
+# loads last simply wins and the other version vanishes. Somebody has to decide.
+#
+# Chosen: Morgenroete's placement, T&R's payload.
+#   era_4 and organized_sports as the only prerequisite come from Morgenroete -
+#     the Olympic content is built around the 1896 date and its ai_weight below
+#     pushes the AI to get there in time; T&R's era_5 plus
+#     international_organizations puts it well past that window.
+#   the three modifiers come from T&R - Morgenroete ships an empty modifier
+#     block here, and an era_4 society tech that does literally nothing is dead
+#     weight in T&R's much longer tree.
+#   ai_weight is Morgenroete's full five-condition version (T&R kept only the
+#     first two), which is what actually makes France and Greece chase it.
 REPLACE:vikelas_international_sports_tech = {
-	# 
-	era = era_5
+	era = era_4
 	texture = "gfx/interface/icons/invention_icons/vikelas_international_sports_tech.dds"
 	category = society
 
 	unlocking_technologies = {
 		organized_sports
-		international_organizations
 	}
 
 	modifier = {
@@ -44,23 +270,22 @@ REPLACE:vikelas_international_sports_tech = {
 	ai_weight = {
 		value = 1
 
-		#Morgenröte: added this part
 		if = {
-			limit = { 
+			limit = {
 				exists = c:FRA
-				c:FRA = ROOT 
+				c:FRA = ROOT
 			}
 			add = 1 #Pierre de Coubertin
 		}
 
 		if = {
-			limit = { 
+			limit = {
 				exists = c:GRE
-				c:GRE = ROOT 
+				c:GRE = ROOT
 			}
 			add = 1 #Greece should at least try to host the Games
 		}
-		
+
 		if = {
 			limit = {
 				NOT = {
@@ -91,56 +316,4 @@ REPLACE:vikelas_international_sports_tech = {
 			add = 1
 		}
 	}
-}
-
-REPLACE:elgar_mass_culture_tech = {
-	# Unlocks late romantic orchestra for opera
-	# Jazz events
-	era = era_5
-	texture = "gfx/interface/icons/invention_icons/elgar_mass_culture_tech.dds"
-	category = society
-	
-	modifier = {
-	}
-	
-	unlocking_technologies = {
-		elgar_art_deco_tech
-		elgar_neoclassicism_tech
-		elgar_new_objectivity_tech
-	}
-
-	ai_weight = {
-		value = 0 #Should not research
-	}
-}
-
-REPLACE:verrier_nuclear_physics_tech = {
-	# Unlocks Einstein Events
-	era = era_5
-	texture = "gfx/interface/icons/invention_icons/verrier_nuclear_physics_tech.dds"
-	category = production
-
-	unlocking_technologies = {
-		verrier_radioactivity_tech
-	}
-
-	modifier = {
-		building_group_bg_power_throughput_add = 0.05
-	}
-
-	ai_weight = {
-		value = 2 
-
-		if = {
-			limit = { 
-				OR = {
-					c:ITA ?= ROOT
-					c:USA ?= ROOT
-				}
-				
-			}
-			add = 2 #Fermi-Szilard-etc
-		}		
-	}
-	
 }
