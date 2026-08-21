@@ -132,14 +132,14 @@
   goods_output_bond_mult_desc:0 "Высвобождение облигаций"
 
   #agricultural_stock
-  goods_output_agricultural_stock_add:0 "Производство сельскохозяйственных акций"
-  goods_output_agricultural_stock_add_desc:0 "Производство сельскохозяйственных акций"
-  goods_input_agricultural_stock_add:0 "Потребление сельскохозяйственных акций"
-  goods_input_agricultural_stock_add_desc:0 "Потребление сельскохозяйственных акций"
-  goods_input_agricultural_stock_mult:0 "Накопление сельскохозяйственных акций"
-  goods_input_agricultural_stock_mult_desc:0 "Накопление сельскохозяйственных акций"
-  goods_output_agricultural_stock_mult:0 "Высвобождение сельскохозяйственных акций"
-  goods_output_agricultural_stock_mult_desc:0 "Высвобождение сельскохозяйственных акций"
+  goods_output_agricultural_stock_add:0 "Производство акций сельского хозяйства"
+  goods_output_agricultural_stock_add_desc:0 "Производство акций сельского хозяйства"
+  goods_input_agricultural_stock_add:0 "Потребление акций сельского хозяйства"
+  goods_input_agricultural_stock_add_desc:0 "Потребление акций сельского хозяйства"
+  goods_input_agricultural_stock_mult:0 "Накопление акций сельского хозяйства"
+  goods_input_agricultural_stock_mult_desc:0 "Накопление акций сельского хозяйства"
+  goods_output_agricultural_stock_mult:0 "Высвобождение акций сельского хозяйства"
+  goods_output_agricultural_stock_mult_desc:0 "Высвобождение акций сельского хозяйства"
 
   #railroad_stock
   goods_output_railroad_stock_add:0 "Производство железнодорожных акций"

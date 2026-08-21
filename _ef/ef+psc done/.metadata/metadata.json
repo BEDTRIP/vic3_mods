@@ -4,6 +4,7 @@
   "version": "1.13.10-1",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Private Sector Construction (PSC)",
+  "picture": "thumbnail.png",
   "tags": [
     "Fixes",
     "Utilities",
@@ -26,20 +27,12 @@
     },
     {
       "rel_type": "dependency",
-      "id": "3786286962",
-      "display_name": "E&F 1.13.10 Hotfix",
-      "resource_type": "mod",
-      "version": "*"
-    },
-    {
-      "rel_type": "dependency",
       "id": "3420714166",
       "display_name": "[1.13] Private Sector Construction",
       "resource_type": "mod",
       "version": "*"
     }
   ],
-  "picture": "thumbnail.png",
   "game_custom_data": {
     "multiplayer_synchronized": true,
     "tested_with": [

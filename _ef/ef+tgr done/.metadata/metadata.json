@@ -1,14 +1,14 @@
 {
   "name": "ComPatch E&F + The Great Revision",
   "id": "3637554948",
-  "version": "1.12.3",
-  "supported_game_version": "1.12.*",
+  "version": "1.13.0",
+  "supported_game_version": "1.13.*",
   "short_description": "Compatibility patch for Economic and Financial (E&F) + TheGreatRevision (TGR)",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
     "Utilities",
-    "1.12"
+    "1.13"
   ],
   "relationships": [
     {
@@ -43,16 +43,22 @@
         "date": "2025-12-19"
       },
       {
-        "id": "3143591632",
-        "display_name": "Economic and Financial Mod (E&F) - V4",
-        "version": "v4.1.1",
-        "date": "2025-12-22"
-      },
-      {
         "id": "3215078236",
         "display_name": "The Great Revision",
-        "version": "2.0",
-        "date": "2026-01-20"
+        "version": "2.0 (1.13.10, 12.08.2026)",
+        "date": "2026-08-21"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "04.07.2026",
+        "date": "2026-08-21"
+      },
+      {
+        "id": "3786286962",
+        "display_name": "E&F 1.13.10 Hotfix",
+        "version": "1.13.10-2",
+        "date": "2026-08-21"
       }
     ]
   }

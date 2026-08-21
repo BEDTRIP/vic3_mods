@@ -205,7 +205,7 @@
 
   goods_input_railroad_stock_mult:0 "Мультипликатор железнодорожных акций"
   goods_input_mining_stock_mult:0 "Мультипликатор горнодобывающих акций"
-  goods_input_agricultural_stock_mult:0 "Мультипликатор сельскохозяйственных акций"
+  goods_input_agricultural_stock_mult:0 "Мультипликатор акций сельского хозяйства"
   goods_input_bond_mult:0 "Мультипликатор облигаций"
   goods_input_manufacture_stock_mult:0 "Мультипликатор промышленных акций"
   goods_output_mutual_funds_mult:0 "Мультипликатор взаимных фондов"

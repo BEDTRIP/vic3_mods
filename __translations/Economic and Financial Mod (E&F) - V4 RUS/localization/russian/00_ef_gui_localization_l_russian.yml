@@ -623,7 +623,7 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
 
   interest:0 "[concept_interest]:"
 
-  interest_sort:0 "Процентная ставка"
+  interest_sort:0 "Ставка"
 
   money_value:0 "[concept_money_value]"
 
@@ -1323,11 +1323,11 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   FP_NAME:0 "Название"
   FP_QTT:0 "Количество"
   FP_PRICE:0 "Цена"
-  FP_CAP:0 "Капитализация"
+  FP_CAP:0 "Стоимость"
 
   pts:0 "Очки"
-  var:0 "Изменение"
-  pts_year:0 "Очки/Год"
+  var:0 "Изм."
+  pts_year:0 "Очки/г"
 
   bond_01_name_financial_product:0 "[Localize('bond')]"
   manufacture_stock_01_name_financial_product:0 "[Localize('manufacture_stock')]"
@@ -2663,7 +2663,7 @@ opium_flag_status:0 "[GetPlayer.GetCustom('stokpiling_opium_status')]"
   order:0 "Приказ"
   exchange_rate:0 "Курс обмена"
   status:0 "Статус"
-  quantity:0 "Количество"
+  quantity:0 "Кол-во"
 
   goods_order:0 "Заказ товаров"
   goods_order_military:0 "Заказ военных товаров"

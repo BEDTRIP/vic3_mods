@@ -168,8 +168,8 @@
   concept_mining_stock_index:0 "Капитализация горно-\nдобывающих акций"
   concept_mining_stock_index_desc:0 "[concept_mining_stock_index] — это общее количество горнодобывающих акций, умноженное на их цену."
 
-  concept_agricultural_stock_index:0 "Капитализация сельско-\nхозяйственных акций"
-  concept_agricultural_stock_index_desc:0 "[concept_agricultural_stock_index] — это общее количество сельскохозяйственных акций, умноженное на их цену."
+  concept_agricultural_stock_index:0 "Капитализация акций\nсельского хозяйства"
+  concept_agricultural_stock_index_desc:0 "[concept_agricultural_stock_index] — это общее количество акций сельского хозяйства, умноженное на их цену."
 
   concept_railroad_stock_index:0 "Капитализация железно-\nдорожных акций"
   concept_railroad_stock_index_desc:0 "[concept_railroad_stock_index] — это общее количество железнодорожных акций, умноженное на их цену."

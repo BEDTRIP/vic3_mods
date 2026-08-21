@@ -34,13 +34,6 @@
     },
     {
       "rel_type": "dependency",
-      "id": "3786286962",
-      "display_name": "E&F 1.13.10 Hotfix",
-      "resource_type": "mod",
-      "version": "*"
-    },
-    {
-      "rel_type": "dependency",
       "id": "2889925770",
       "display_name": "Morgenroete",
       "resource_type": "mod",

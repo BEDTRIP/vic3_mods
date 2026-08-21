@@ -359,7 +359,7 @@
   pmg_market_operations:0 "Рыночные операции"
   pm_no_open_market_operations:0 "Нет операций на открытом рынке"
   pm_r_railroad_stock:0 "Покупка железнодорожных акций"
-  pm_r_agricultural_stock:0 "Покупка сельскохозяйственных акций"
+  pm_r_agricultural_stock:0 "Покупка акций сельского хозяйства"
   pm_r_mining_stock:0 "Покупка горнодобывающих акций"
   pm_r_manufacture_stock:0 "Покупка промышленных акций"
 
