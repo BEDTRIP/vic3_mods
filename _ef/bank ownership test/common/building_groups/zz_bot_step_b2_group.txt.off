@@ -1,0 +1,36 @@
+﻿### STEP B2 -- bg_bank stops being government funded.
+###
+### Same rule as step B: the whole group is restated, because REPLACE: replaces
+### the entry. A lone `is_government_funded = no` would have left bg_bank with no
+### category, no lens and no urbanization.
+###
+### One field changed from E&F's own definition:
+###
+###     is_government_funded = yes   ->   is_government_funded = no
+###
+### WHAT THIS COSTS. is_government_funded means the treasury pays the building's
+### inputs and wages and takes its output -- the "Правительственные расходы" line
+### in the building panel. Off, the central bank is an ordinary private business.
+### On the current save it makes 200 bonds (~10.4K) plus currency against ~2.5K of
+### inputs and wages; as a government building that gap is state expenditure, as a
+### private one it is profit and dividends, every month, for whoever owns the bank.
+###
+### So the number that decides whether this path is usable is not "did ownership
+### work" but "what does the investment pool look like a decade in".
+
+REPLACE:bg_bank = {
+	category = development
+
+	always_possible = yes
+
+	inheritable_construction = no
+	is_government_funded = no
+
+	economy_of_scale = no
+
+	lens = government
+
+	urbanization = 20
+	infrastructure_usage_per_level = 0
+	economic_contribution = 0 
+}

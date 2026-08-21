@@ -1,0 +1,993 @@
+﻿### Central Bank Ownership Test -- STEP A, the non-invasive half.
+###
+### THE QUESTION: will a company take building_bank at all?
+###
+### E&F has `#building_bank` commented out in every one of its bank companies --
+### company_BankofEngland, company_StateBankRussianEmpire, all of them. The author
+### evidently tried. The vanilla docs say ownership_type describes what a building
+### may OWN, not who may own it ("no_ownership - can't own other buildings,
+### dividends if any are payed to the state"), which would make the bank takeable.
+### But every one of the 48 buildings listed in vanilla company building_types is
+### `self`, without a single exception. Files cannot settle it; the game can.
+###
+### The first version of this test injected into company_BasicBank only. That was
+### useless: Britain gets company_BankofEngland and Russia
+### company_StateBankRussianEmpire, so nothing applied to the countries anyone
+### actually plays. This one covers all 97 of E&F's bank companies.
+###
+### INJECT: merges into E&F's definitions -- their building lists, prosperity
+### modifiers and existing prestige goods are untouched. Nothing is overridden.
+###
+### Note the prestige good needs `company_is_prosperous = yes`, which is built into
+### the engine. Ownership is the first question; the prestige currency only shows
+### up once the company is prosperous. Read them in that order.
+
+INJECT:company_BasicBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankJPMorgan = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankGoldmanSachs = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_ChaseBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankWellsFargo = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankAmericanExpress = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_DeNederlandscheBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_amsterdamschebank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_RotterdamscheBankvereeniging = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BanqueNationaleDeBelgique = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_SocieteGeneraledeBelgique = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BanqueDeBruxelles = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Bankenverein = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_HandelsBanken = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_LandmandsBanken = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_ChristianiaBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankofSpain = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoDeBilbao = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoHispanoColonial = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoDePortugal = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCommercialPortugues = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Bank_Ultramarino = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Rothschild_Bank_ita = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancaDItalia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancaCommercialeItaliana = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_CassaDiRisparmioDiTorino = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankofEngland = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_LloydsBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_barclaysBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_NationalWestminsterBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_RoyalBankOfScotland = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Rothschild_Bank_gbr = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BanqueDeFrance = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankCreditLyonnais = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_SocieteGenerale = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BanqueDeParisEtDesPaysBas = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Rothschild_Bank_fra = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_StateBankRussianEmpire = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_DeutscheBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Reichsbank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_PreussischeSeehandlung = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Rothschild_Bank_ger = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BayerischeHypothekenUndWechselBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_OesterreichischeNationalbank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_OesterreichischeCreditAnstalt = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_WienerBankverein = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Rothschild_Bank_aus = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_bankofgreec = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_OttomanBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_TurkishZiraatBankasi = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BanqueImperialeOttomane = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_ImperialBankofPersia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankMelliIran = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankTejaratPersia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankAngloPersian = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BanqueEgyptienne = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_ChohungBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankHSBC = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankIBC = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankBOCOM = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_DaQingBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_Mitsubishiexchangehousebank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankOfJapan = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_SumitomoBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_ImperialBankofIndia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankOfIndiaCompany = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankOfBombay = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_RoyalBankofCanada = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankOfMontreal = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_CanadianImperialBankOfCommerce = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankDesjardins = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_ColonialBankOfAustralia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_NationalBankOfAustralia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_SouthAustralianBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoDeMexico = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_bancodelondresmexico = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoMercantilMexicano = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCentralDeCostaRica = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCentralDeGuatemala = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCentralDeHonduras = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoNacionalDePanama = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoDoBrasil = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoMercantil = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCommercialDoBrasil = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoNacionArgentina = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoHipotecarioNacional = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoProvincia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoDeChile = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoEstado = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoDeValparaiso = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoNacionalDeBolivia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoRepublicaColombia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCentralDeVenezuela = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoEspanolDeLaHabana = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoCentralDelUruguay = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BancoNacionalDelParaguay = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}
+
+INJECT:company_BankSBoBSA = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_bot_prestige_currency
+	}
+}

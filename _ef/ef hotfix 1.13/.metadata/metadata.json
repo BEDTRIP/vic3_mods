@@ -1,9 +1,9 @@
-{
+﻿{
   "name": "E&F Hotfix",
   "id": "3786286962",
   "version": "4.1.7.4",
   "supported_game_version": "1.13.*",
-  "short_description": "Fixes for Economic and Financial",
+  "short_description": "Fixes for Economic and Financial, plus the currency merge: E&F's 57 currency goods collapse into one, freeing 56 of the game's 128 goods slots so E&F can share a build with Tech & Res. The currencies come back as prestige goods produced by the central bank's company.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",

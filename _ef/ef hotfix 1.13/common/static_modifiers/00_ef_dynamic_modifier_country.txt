@@ -1,0 +1,850 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: E&F's own common/static_modifiers/00_ef_dynamic_modifier_country.txt.
+### These modifiers list every currency with the same value, which was E&F's way of
+### saying "whichever currency this country actually issues". With one currency good
+### the list is one line and the effect is identical.
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+# ██████╗ ██╗██╗   ██╗███████╗██████╗ ███████╗
+# ██╔══██╗██║██║   ██║██╔════╝██╔══██╗██╔════╝
+# ██║  ██║██║██║   ██║█████╗  ██████╔╝███████╗
+# ██║  ██║██║╚██╗ ██╔╝██╔══╝  ██╔══██╗╚════██║
+# ██████╔╝██║ ╚████╔╝ ███████╗██║  ██║███████║
+# ╚═════╝ ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚══════╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+UNI_modifier_1 = {
+    icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_positive.dds
+}
+
+central_bank_metal_purchases = { 
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_positive.dds 
+	country_minting_add = 1 
+}
+need_workforce_modifier = {
+	icon = gfx/interface/icons/timed_modifier_icons/foreign_exchange_controls.dds
+	state_birth_rate_mult = 1
+
+	#country_weekly_innovation_max_add = 150
+	#country_tech_spread_add = 1
+
+	# country_wage_cultural_erasure_mult = 10
+	# country_wage_full_acceptance_mult = 10
+	# country_wage_open_prejudice_mult = 10
+	# country_wage_second_rate_citizen_mult = 10
+	# country_wage_violent_hostility_mult = 10
+
+	country_qualification_growth_cultural_erasure_mult = 100
+	country_qualification_growth_full_acceptance_mult = 100
+	country_qualification_growth_open_prejudice_mult = 100
+	country_qualification_growth_second_rate_citizen_mult = 100
+	country_qualification_growth_violent_hostility_mult = 100
+
+	country_loyalism_increases_cultural_erasure_mult = 100
+	country_loyalism_increases_full_acceptance_mult = 100
+	country_loyalism_increases_open_prejudice_mult = 100
+	country_loyalism_increases_second_rate_citizen_mult = 100
+	country_loyalism_increases_violent_hostility_mult = 100
+	country_loyalists_from_legitimacy_mult = 100
+
+	country_radicalism_increases_cultural_erasure_mult = -100
+	country_radicalism_increases_full_acceptance_mult = -100
+	country_radicalism_increases_open_prejudice_mult = -100
+	country_radicalism_increases_second_rate_citizen_mult = -100
+	country_radicalism_increases_violent_hostility_mult = -100
+	country_radicals_from_conquest_mult = -100
+	country_radicals_from_legitimacy_mult = -100
+
+	# political_movement_radicalism_from_enactment_approval_mult
+	# political_movement_radicalism_from_enactment_disapproval_mult
+
+	#state
+	#state_pop_qualifications_mult
+}
+
+foreign_exchange_controls = {
+	icon = gfx/interface/icons/timed_modifier_icons/foreign_exchange_controls.dds
+}
+monetary_systeme_transition = {
+	icon = gfx/interface/icons/timed_modifier_icons/monetary_systeme_transition.dds
+}
+new_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/monetary_systeme_transition.dds
+	country_prestige_mult = -0.5
+}
+economic_instability = {
+	icon = gfx/interface/icons/timed_modifier_icons/economic_instability.dds
+}
+central_bank_bankruptcy_country = {
+	icon = gfx/interface/icons/timed_modifier_icons/central_bank_bankruptcy.dds
+}
+currency_crisis_country = {
+	icon = gfx/interface/icons/timed_modifier_icons/currency_crisis.dds
+}
+economic_crisis_country = {
+	icon = gfx/interface/icons/timed_modifier_icons/economic_crisis.dds
+}
+financial_crash_country = {
+	icon = gfx/interface/icons/timed_modifier_icons/financial_crash.dds
+	country_company_construction_efficiency_bonus_add = 1
+	country_company_throughput_bonus_add = 1
+}
+
+insufficient_currency_production = {
+	icon = gfx/interface/icons/timed_modifier_icons/central_bank_place.dds
+	#begin_tag_1
+		goods_output_spe_uni_c_mult = -0.01
+		#end_tag_1
+}
+
+#interest_at_the_central_bank
+interest_at_the_central_bank = {
+	icon = gfx/interface/icons/timed_modifier_icons/interest_at_the_central_bank.dds
+	country_expenses_add = 1
+}
+#interest_at_the_central_bank
+interest_from_foreign_debt_investment = {
+	icon = gfx/interface/icons/timed_modifier_icons/interest_from_foreign_debt_investment.dds
+	country_tax_income_add = 1 #0.25 #month -> week
+}
+
+economic_sentiment_index_modifier_1 = {
+	icon = gfx/interface/icons/timed_modifier_icons/bond.dds
+
+	interest_group_ig_industrialists_approval_add = 1
+	interest_group_ig_petty_bourgeoisie_approval_add = 0.5
+	interest_group_ig_trade_unions_approval_add = -1
+}
+economic_sentiment_index_modifier_2 = {
+	icon = gfx/interface/icons/timed_modifier_icons/bond.dds
+
+	country_company_construction_efficiency_bonus_add = -1
+	country_company_throughput_bonus_add = -1
+
+	state_construction_mult = -1
+}
+economic_sentiment_index_modifier_3 = {
+	icon = gfx/interface/icons/timed_modifier_icons/bond.dds
+}
+
+speculative_bubble_modifier = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_bubble_modifier.dds
+	state_construction_mult = 0.01
+	country_weekly_innovation_mult = 0.01
+	country_prestige_mult = 0.01
+}
+speculative_bubble_character_modifier = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_bubble_modifier.dds
+	character_popularity_add = 11000 
+}
+
+speculative_share_modifier_1 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_1.dds
+}
+speculative_share_modifier_2 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_2.dds
+}
+speculative_share_modifier_3 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_3.dds
+}
+speculative_share_modifier_4 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_4.dds
+}
+speculative_share_modifier_5 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_5.dds
+}
+speculative_share_modifier_6 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_6.dds
+}
+speculative_share_modifier_7 = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_share_modifier_7.dds
+}
+ 
+no_money_production = {
+	icon = gfx/interface/icons/timed_modifier_icons/no_money_production.dds
+	state_sell_orders_local_currency_add = 2500
+}
+
+leading_producer_of_oil = {
+	icon = gfx/interface/icons/timed_modifier_icons/leading_producer_of_oil.dds
+}
+
+rise_base_rate = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_positive.dds
+}
+down_base_rate = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_negative.dds
+}
+
+devaluation_currency_target = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_devaluation.dds
+}
+revaluation_currency_target = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_revaluation.dds
+}
+
+
+devaluation_currency_25 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_devaluation.dds 
+}
+devaluation_currency_50 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_devaluation.dds 
+}
+devaluation_currency_75 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_devaluation.dds 
+}
+devaluation_currency_100 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_devaluation.dds 
+}
+
+revaluation_currency_25 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_revaluation.dds 
+}
+revaluation_currency_50 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_revaluation.dds 
+}
+revaluation_currency_75 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_revaluation.dds 
+}
+revaluation_currency_100 = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_revaluation.dds 
+}
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+# ██╗███╗   ██╗███████╗██╗      █████╗ ████████╗██╗ ██████╗ ███╗   ██╗    ██╗██████╗ ███████╗███████╗██╗      █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+# ██║████╗  ██║██╔════╝██║     ██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║   ██╔╝██╔══██╗██╔════╝██╔════╝██║     ██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+# ██║██╔██╗ ██║█████╗  ██║     ███████║   ██║   ██║██║   ██║██╔██╗ ██║  ██╔╝ ██║  ██║█████╗  █████╗  ██║     ███████║   ██║   ██║██║   ██║██╔██╗ ██║
+# ██║██║╚██╗██║██╔══╝  ██║     ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║ ██╔╝  ██║  ██║██╔══╝  ██╔══╝  ██║     ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+# ██║██║ ╚████║██║     ███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║██╔╝   ██████╔╝███████╗██║     ███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+# ╚═╝╚═╝  ╚═══╝╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝    ╚═════╝ ╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+inflation_country = {
+	icon = gfx/interface/icons/timed_modifier_icons/inflation.dds
+
+	#Country moddifier
+	country_minting_mult = -1
+	#country_trade_route_competitiveness_mult = 1
+
+	#Building moddifier
+	#building_economy_of_scale_level_cap_add = 100
+	building_group_bg_manufacturing_throughput_add = 1
+
+	state_dependent_wage_mult = -1
+
+	#State moddifier fonctionne ?
+	state_expected_sol_mult = 1  #marrche qque en positif
+	state_radicals_from_sol_change_mult = 1
+	#state_loyalists_from_sol_change_mult = -1 #-0.00000000001
+	#state_dependent_wage_mult = -1
+
+
+	# country_construction_goods_cost_mult = 1
+	# country_government_dividends_waste_add = 1
+}
+deflation_country = { #la valeur multiplicatrice est négative -+-=+
+	icon = gfx/interface/icons/timed_modifier_icons/inflation.dds
+
+	#Country moddifier
+	country_minting_mult = -1
+	#country_trade_route_competitiveness_mult = 1
+	#country_loan_interest_rate_add = 1
+
+	#Building moddifier
+	building_group_bg_manufacturing_throughput_add = 2
+	#building_economy_of_scale_level_cap_add = -100
+	#building_goods_input_mult = 2
+
+	state_dependent_wage_mult = -1 #this is equivalent to an increase in purchasing power due to the reduction in prices
+
+	#State moddifier fonctionne ?
+	state_expected_sol_mult = 1  #marrche qque en positif
+	state_tax_waste_add = -1
+	state_radicals_from_sol_change_mult = -1 #0.00000000001
+	#state_loyalists_from_sol_change_mult = -1 #-0.00000000001
+
+
+	# country_construction_goods_cost_mult = 1
+	# country_government_dividends_waste_add = 1
+}
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+#  ██████╗██╗   ██╗██████╗ ██████╗ ███████╗███╗   ██╗ ██████╗██╗   ██╗    ██╗   ██╗ █████╗ ██╗     ██╗   ██╗███████╗
+# ██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝████╗  ██║██╔════╝╚██╗ ██╔╝    ██║   ██║██╔══██╗██║     ██║   ██║██╔════╝
+# ██║     ██║   ██║██████╔╝██████╔╝█████╗  ██╔██╗ ██║██║      ╚████╔╝     ██║   ██║███████║██║     ██║   ██║█████╗
+# ██║     ██║   ██║██╔══██╗██╔══██╗██╔══╝  ██║╚██╗██║██║       ╚██╔╝      ╚██╗ ██╔╝██╔══██║██║     ██║   ██║██╔══╝
+# ╚██████╗╚██████╔╝██║  ██║██║  ██║███████╗██║ ╚████║╚██████╗   ██║        ╚████╔╝ ██║  ██║███████╗╚██████╔╝███████╗
+#  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝   ╚═╝         ╚═══╝  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚══════╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+reference_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/strong_currency.dds
+
+	state_export_advantage_mult = -0.01
+	state_import_advantage_mult = -0.01
+}
+reference_currency_no = {
+	icon = gfx/interface/icons/timed_modifier_icons/strong_currency.dds
+}
+
+strong_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/strong_currency.dds
+
+	state_export_advantage_mult = 0.01
+	state_import_advantage_mult = -0.01
+}
+balanced_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/balanced_currency.dds
+	#state_export_advantage_mult = 0.1
+}
+weak_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/weak_currency.dds
+
+	state_export_advantage_mult = 0.01
+	state_import_advantage_mult = -0.01
+}
+extreme_weak_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/extreme_weak_currency.dds
+
+	# state_tariff_import_add = -1
+	# state_subvention_import_add  = -1
+	# state_import_advantage_mult = -1
+
+
+	state_trade_quantity_mult = -1.0
+	state_trade_capacity_mult = -1.0
+	country_disallow_trade_bool = yes
+}
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+#  ██████╗ ██╗      ██████╗ ██████╗  █████╗ ██╗         ██╗     ███████╗ █████╗ ██████╗ ███████╗██████╗
+# ██╔════╝ ██║     ██╔═══██╗██╔══██╗██╔══██╗██║         ██║     ██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗
+# ██║  ███╗██║     ██║   ██║██████╔╝███████║██║         ██║     █████╗  ███████║██║  ██║█████╗  ██████╔╝
+# ██║   ██║██║     ██║   ██║██╔══██╗██╔══██║██║         ██║     ██╔══╝  ██╔══██║██║  ██║██╔══╝  ██╔══██╗
+# ╚██████╔╝███████╗╚██████╔╝██████╔╝██║  ██║███████╗    ███████╗███████╗██║  ██║██████╔╝███████╗██║  ██║
+#  ╚═════╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝    ╚══════╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+global_monetary_reference = {
+	icon = gfx/interface/icons/timed_modifier_icons/global_monetary_reference.dds
+	country_prestige_mult = 0.1
+}
+
+global_financial_power = {
+	icon = gfx/interface/icons/timed_modifier_icons/global_financial_power.dds
+	country_prestige_mult = 0.1
+}
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+# ██╗  ██╗ █████╗ ███████╗    ██████╗ ██╗   ██╗██╗██╗     ██████╗ ██╗███╗   ██╗ ██████╗     ████████╗██╗   ██╗██████╗ ███████╗
+# ██║  ██║██╔══██╗██╔════╝    ██╔══██╗██║   ██║██║██║     ██╔══██╗██║████╗  ██║██╔════╝     ╚══██╔══╝╚██╗ ██╔╝██╔══██╗██╔════╝
+# ███████║███████║███████╗    ██████╔╝██║   ██║██║██║     ██║  ██║██║██╔██╗ ██║██║  ███╗       ██║    ╚████╔╝ ██████╔╝█████╗
+# ██╔══██║██╔══██║╚════██║    ██╔══██╗██║   ██║██║██║     ██║  ██║██║██║╚██╗██║██║   ██║       ██║     ╚██╔╝  ██╔═══╝ ██╔══╝
+# ██║  ██║██║  ██║███████║    ██████╔╝╚██████╔╝██║███████╗██████╔╝██║██║ ╚████║╚██████╔╝       ██║      ██║   ██║     ███████╗
+# ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝    ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ ╚═╝╚═╝  ╚═══╝ ╚═════╝        ╚═╝      ╚═╝   ╚═╝     ╚══════╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+has_central_bank = {
+	icon = gfx/interface/icons/timed_modifier_icons/central_bank_place.dds
+	country_gold_reserve_limit_mult = 4
+	#country_force_privatization_bool = yes
+}
+
+has_financial_center = {
+	icon = gfx/interface/icons/timed_modifier_icons/financial_center_place.dds
+	country_max_companies_add = 1
+}
+
+has_national_stockpile = {
+	icon = gfx/interface/icons/timed_modifier_icons/national_stockpile_place.dds
+}
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+#  ██████╗ ██████╗ ██╗   ██╗███╗   ██╗████████╗██████╗ ██╗   ██╗      ██████╗██████╗ ███████╗██████╗ ██╗████████╗     ██████╗  █████╗ ████████╗██╗███╗   ██╗ ██████╗
+# ██╔════╝██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝██╔══██╗╚██╗ ██╔╝     ██╔════╝██╔══██╗██╔════╝██╔══██╗██║╚══██╔══╝     ██╔══██╗██╔══██╗╚══██╔══╝██║████╗  ██║██╔════╝
+# ██║     ██║   ██║██║   ██║██╔██╗ ██║   ██║   ██████╔╝ ╚████╔╝      ██║     ██████╔╝█████╗  ██║  ██║██║   ██║        ██████╔╝███████║   ██║   ██║██╔██╗ ██║██║  ███╗
+# ██║     ██║   ██║██║   ██║██║╚██╗██║   ██║   ██╔══██╗  ╚██╔╝       ██║     ██╔══██╗██╔══╝  ██║  ██║██║   ██║        ██╔══██╗██╔══██║   ██║   ██║██║╚██╗██║██║   ██║
+# ╚██████╗╚██████╔╝╚██████╔╝██║ ╚████║   ██║   ██║  ██║   ██║███████╗╚██████╗██║  ██║███████╗██████╔╝██║   ██║███████╗██║  ██║██║  ██║   ██║   ██║██║ ╚████║╚██████╔╝
+#  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚══════╝╚═════╝ ╚═╝   ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+country_credit_rating_AAA = {
+	icon = gfx/interface/icons/timed_modifier_icons/AAA.dds
+}
+country_credit_rating_AA = {
+	icon = gfx/interface/icons/timed_modifier_icons/AA.dds
+}
+country_credit_rating_A = {
+	icon = gfx/interface/icons/timed_modifier_icons/A.dds
+}
+country_credit_rating_BBB = {
+	icon = gfx/interface/icons/timed_modifier_icons/BBB.dds
+}
+country_credit_rating_BB = {
+	icon = gfx/interface/icons/timed_modifier_icons/BB.dds
+}
+country_credit_rating_B = {
+	icon = gfx/interface/icons/timed_modifier_icons/B.dds
+}
+country_credit_rating_CCC = {
+	icon = gfx/interface/icons/timed_modifier_icons/CCC.dds
+}
+country_credit_rating_CC = {
+	icon = gfx/interface/icons/timed_modifier_icons/CC.dds
+}
+country_credit_rating_C = {
+	icon = gfx/interface/icons/timed_modifier_icons/C.dds
+}
+country_credit_rating_D = {
+	icon = gfx/interface/icons/timed_modifier_icons/D.dds
+
+	market_disallow_trade_routes_bool = yes
+}
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+#  ██████╗██╗   ██╗██████╗ ██████╗ ███████╗███╗   ██╗ ██████╗██╗   ██╗  ████████╗██╗   ██╗██████╗ ███████╗
+# ██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝████╗  ██║██╔════╝╚██╗ ██╔╝  ╚══██╔══╝╚██╗ ██╔╝██╔══██╗██╔════╝
+# ██║     ██║   ██║██████╔╝██████╔╝█████╗  ██╔██╗ ██║██║      ╚████╔╝      ██║    ╚████╔╝ ██████╔╝█████╗
+# ██║     ██║   ██║██╔══██╗██╔══██╗██╔══╝  ██║╚██╗██║██║       ╚██╔╝       ██║     ╚██╔╝  ██╔═══╝ ██╔══╝
+# ╚██████╗╚██████╔╝██║  ██║██║  ██║███████╗██║ ╚████║╚██████╗   ██║███████╗██║      ██║   ██║     ███████╗
+#  ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝   ╚═╝╚══════╝╚═╝      ╚═╝   ╚═╝     ╚══════╝
+
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+############################################################################################################################################################
+
+#dinar
+dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_algerian_dinar
+dinar_algerian_dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_iraqi_dinar
+dinar_iraqi_dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_libyan_dinar
+dinar_libyan_dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_moroccan_dirham
+dinar_moroccan_dirham_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_omanian_rial
+dinar_omanian_rial_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_qiran
+dinar_qiran_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_saudi_riyal
+dinar_saudi_riyal_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_serbian_dinar
+dinar_serbian_dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_tunisian_dinar
+dinar_tunisian_dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dinar_yugoslav_dinar
+dinar_yugoslav_dinar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_australian_dollar
+dollar_australian_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_canadian_dollar
+dollar_canadian_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_caribbean_dollar
+dollar_caribbean_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_confederate_states_dollar
+dollar_confederate_states_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_liberian_dollar
+dollar_liberian_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_new_zealand_dollar
+dollar_new_zealand_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_sierra_leonean_dollar
+dollar_sierra_leonean_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#dollar_united_states_dollar
+dollar_united_states_dollar_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_ariary
+eco_ariary_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_central_african_eco
+eco_central_african_eco_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_east_african_eco
+eco_east_african_eco_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_ethiopian_birr
+eco_ethiopian_birr_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_ghanaian_pound
+eco_ghanaian_pound_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_nigerian_naira
+eco_nigerian_naira_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_south_african_rand
+eco_south_african_rand_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_tuareg_ouguiya
+eco_tuareg_ouguiya_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#eco_west_african_eco
+eco_west_african_eco_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#franc_belgian_franc
+franc_belgian_franc_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#franc_french_franc
+franc_french_franc_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#franc_luxembourgish_franc
+franc_luxembourgish_franc_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#franc_swiss_franc
+franc_swiss_franc_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#gulden
+gulden_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#gulden_bavarian_gulden
+gulden_bavarian_gulden_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#gulden_florin
+gulden_florin_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#gulden_hungarian_forint
+gulden_hungarian_forint_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#gulden_indies_guilder
+gulden_indies_guilder_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#gulden_south_german_gulden
+gulden_south_german_gulden_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_czech_koruna
+krone_czech_koruna_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_danish_krone
+krone_danish_krone_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_estonian_kroon
+krone_estonian_kroon_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_icelandic_krona
+krone_icelandic_krona_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_norwegian_krone
+krone_norwegian_krone_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_slovak_koruna
+krone_slovak_koruna_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#krone_swedish_krona
+krone_swedish_krona_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#leon_leu
+leon_leu_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#leon_lev
+leon_lev_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#lira
+lira_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#lira_ducato
+lira_ducato_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#lira_ottoman_lira
+lira_ottoman_lira_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#lira_scudo_pontificio
+lira_scudo_pontificio_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#lira_scudo_sardo
+lira_scudo_sardo_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#lira_toscane_lira
+lira_toscane_lira_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#mark
+mark_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#mark_finnish_markka
+mark_finnish_markka_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso
+peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_argentine_peso
+peso_argentine_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_bolivien_peso
+peso_bolivien_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_chilean_peso
+peso_chilean_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_colombian_peso
+peso_colombian_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_costa_rican_colon
+peso_costa_rican_colon_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_cuban_peso
+peso_cuban_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_ecuadorian_peso
+peso_ecuadorian_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_el_salvador_colon
+peso_el_salvador_colon_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_guatemalan_quetzal
+peso_guatemalan_quetzal_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_honduran_lempira
+peso_honduran_lempira_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_mexican_peso
+peso_mexican_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_nicaraguan_cordoba
+peso_nicaraguan_cordoba_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_paraguayan_peso
+peso_paraguayan_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_philippine_peso
+peso_philippine_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_sol_de_oro
+peso_sol_de_oro_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_uruguayan_peso
+peso_uruguayan_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#peso_venezuelan_peso
+peso_venezuelan_peso_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#pound_egyptian_pound
+pound_egyptian_pound_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#pound_irish_pound
+pound_irish_pound_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#pound_sterling
+pound_sterling_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#real
+real_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#real_brazilian_real
+real_brazilian_real_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#rupee_indian_rupee
+rupee_indian_rupee_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#rupee_indonesian_rupiah
+rupee_indonesian_rupiah_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_baht
+spe_baht_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_dong
+spe_dong_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_drachma
+spe_drachma_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_korean_won
+spe_korean_won_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_latvian_lats
+spe_latvian_lats_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_lithuanian_litas
+spe_lithuanian_litas_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_peseta
+spe_peseta_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_ruble
+spe_ruble_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_uni
+spe_uni_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_yen
+spe_yen_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_yuan
+spe_yuan_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#spe_zloti
+spe_zloti_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#thaler_hannoveraner_thaler
+thaler_hannoveraner_thaler_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#thaler_prussian_thaler
+thaler_prussian_thaler_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}
+#thaler_saxon_thaler
+thaler_saxon_thaler_leading_currency_type = {
+	icon = gfx/interface/icons/timed_modifier_icons/reference.dds
+}

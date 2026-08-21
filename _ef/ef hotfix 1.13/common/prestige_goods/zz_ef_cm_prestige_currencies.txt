@@ -1,0 +1,870 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: the 95 currencies E&F declares production methods for.
+###
+### Prestige goods do not count against the 128-goods ceiling -- measured, not
+### assumed: 100 dummies on one base good load fine. So the currencies come back
+### as prestige variants of the one shared good, with their own names, their own
+### icons, a prestige bonus and the engine's +20% throughput for buildings that
+### consume them.
+###
+### Produced only by a company that owns a building making the base good -- which
+### is why building_bank has to be ownable and has to be in the bank companies'
+### building_types. See zz_ef_cm_bank.txt and zz_ef_cm_companies.txt.
+
+dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar.dds"
+}
+
+dinar_algerian_dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_algerian_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_algerian_dinar.dds"
+}
+
+dinar_iraqi_dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_iraqi_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_iraqi_dinar.dds"
+}
+
+dinar_libyan_dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_libyan_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_libyan_dinar.dds"
+}
+
+dinar_moroccan_dirham_c = {
+	possible = {
+		has_law = law_type:law_dinar_moroccan_dirham_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_moroccan_dirham.dds"
+}
+
+dinar_omanian_rial_c = {
+	possible = {
+		has_law = law_type:law_dinar_omanian_rial_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_omanian_rial.dds"
+}
+
+dinar_qiran_c = {
+	possible = {
+		has_law = law_type:law_dinar_qiran_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_qiran.dds"
+}
+
+dinar_saudi_riyal_c = {
+	possible = {
+		has_law = law_type:law_dinar_saudi_riyal_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_saudi_riyal.dds"
+}
+
+dinar_serbian_dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_serbian_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_serbian_dinar.dds"
+}
+
+dinar_tunisian_dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_tunisian_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_tunisian_dinar.dds"
+}
+
+dinar_yugoslav_dinar_c = {
+	possible = {
+		has_law = law_type:law_dinar_yugoslav_dinar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dinar_yugoslav_dinar.dds"
+}
+
+dollar_australian_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_australian_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_australian_dollar.dds"
+}
+
+dollar_canadian_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_canadian_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_canadian_dollar.dds"
+}
+
+dollar_caribbean_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_caribbean_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_caribbean_dollar.dds"
+}
+
+dollar_confederate_states_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_confederate_states_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_confederate_states_dollar.dds"
+}
+
+dollar_liberian_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_liberian_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_liberian_dollar.dds"
+}
+
+dollar_new_zealand_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_new_zealand_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_new_zealand_dollar.dds"
+}
+
+dollar_sierra_leonean_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_sierra_leonean_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_sierra_leonean_dollar.dds"
+}
+
+dollar_united_states_dollar_c = {
+	possible = {
+		has_law = law_type:law_dollar_united_states_dollar_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/dollar_united_states_dollar.dds"
+}
+
+eco_ariary_c = {
+	possible = {
+		has_law = law_type:law_eco_ariary_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_ariary.dds"
+}
+
+eco_central_african_eco_c = {
+	possible = {
+		has_law = law_type:law_eco_central_african_eco_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_central_african_eco.dds"
+}
+
+eco_east_african_eco_c = {
+	possible = {
+		has_law = law_type:law_eco_east_african_eco_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_east_african_eco.dds"
+}
+
+eco_ethiopian_birr_c = {
+	possible = {
+		has_law = law_type:law_eco_ethiopian_birr_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_ethiopian_birr.dds"
+}
+
+eco_ghanaian_pound_c = {
+	possible = {
+		has_law = law_type:law_eco_ghanaian_pound_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_ghanaian_pound.dds"
+}
+
+eco_nigerian_naira_c = {
+	possible = {
+		has_law = law_type:law_eco_nigerian_naira_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_nigerian_naira.dds"
+}
+
+eco_south_african_rand_c = {
+	possible = {
+		has_law = law_type:law_eco_south_african_rand_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_south_african_rand.dds"
+}
+
+eco_tuareg_ouguiya_c = {
+	possible = {
+		has_law = law_type:law_eco_tuareg_ouguiya_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_tuareg_ouguiya.dds"
+}
+
+eco_west_african_eco_c = {
+	possible = {
+		has_law = law_type:law_eco_west_african_eco_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/eco_west_african_eco.dds"
+}
+
+franc_belgian_franc_c = {
+	possible = {
+		has_law = law_type:law_franc_belgian_franc_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/franc_belgian_franc.dds"
+}
+
+franc_french_franc_c = {
+	possible = {
+		has_law = law_type:law_franc_french_franc_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/franc_french_franc.dds"
+}
+
+franc_luxembourgish_franc_c = {
+	possible = {
+		has_law = law_type:law_franc_luxembourgish_franc_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/franc_luxembourgish_franc.dds"
+}
+
+franc_swiss_franc_c = {
+	possible = {
+		has_law = law_type:law_franc_swiss_franc_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/franc_swiss_franc.dds"
+}
+
+gulden_c = {
+	possible = {
+		has_law = law_type:law_gulden_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/gulden.dds"
+}
+
+gulden_bavarian_gulden_c = {
+	possible = {
+		has_law = law_type:law_gulden_bavarian_gulden_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/gulden_bavarian_gulden.dds"
+}
+
+gulden_florin_c = {
+	possible = {
+		has_law = law_type:law_gulden_florin_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/gulden_florin.dds"
+}
+
+gulden_hungarian_forint_c = {
+	possible = {
+		has_law = law_type:law_gulden_hungarian_forint_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/gulden_hungarian_forint.dds"
+}
+
+gulden_indies_guilder_c = {
+	possible = {
+		has_law = law_type:law_gulden_indies_guilder_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/gulden_indies_guilder.dds"
+}
+
+gulden_south_german_gulden_c = {
+	possible = {
+		has_law = law_type:law_gulden_south_german_gulden_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/gulden_south_german_gulden.dds"
+}
+
+krone_czech_koruna_c = {
+	possible = {
+		has_law = law_type:law_krone_czech_koruna_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_czech_koruna.dds"
+}
+
+krone_danish_krone_c = {
+	possible = {
+		has_law = law_type:law_krone_danish_krone_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_danish_krone.dds"
+}
+
+krone_estonian_kroon_c = {
+	possible = {
+		has_law = law_type:law_krone_estonian_kroon_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_estonian_kroon.dds"
+}
+
+krone_icelandic_krona_c = {
+	possible = {
+		has_law = law_type:law_krone_icelandic_krona_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_icelandic_krona.dds"
+}
+
+krone_norwegian_krone_c = {
+	possible = {
+		has_law = law_type:law_krone_norwegian_krone_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_norwegian_krone.dds"
+}
+
+krone_slovak_koruna_c = {
+	possible = {
+		has_law = law_type:law_krone_slovak_koruna_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_slovak_koruna.dds"
+}
+
+krone_swedish_krona_c = {
+	possible = {
+		has_law = law_type:law_krone_swedish_krona_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/krone_swedish_krona.dds"
+}
+
+leon_leu_c = {
+	possible = {
+		has_law = law_type:law_leon_leu_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/leon_leu.dds"
+}
+
+leon_lev_c = {
+	possible = {
+		has_law = law_type:law_leon_lev_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/leon_lev.dds"
+}
+
+lira_c = {
+	possible = {
+		has_law = law_type:law_lira_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/lira.dds"
+}
+
+lira_ducato_c = {
+	possible = {
+		has_law = law_type:law_lira_ducato_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/lira_ducato.dds"
+}
+
+lira_ottoman_lira_c = {
+	possible = {
+		has_law = law_type:law_lira_ottoman_lira_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/lira_ottoman_lira.dds"
+}
+
+lira_scudo_pontificio_c = {
+	possible = {
+		has_law = law_type:law_lira_scudo_pontificio_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/lira_scudo_pontificio.dds"
+}
+
+lira_scudo_sardo_c = {
+	possible = {
+		has_law = law_type:law_lira_scudo_sardo_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/lira_scudo_sardo.dds"
+}
+
+lira_toscane_lira_c = {
+	possible = {
+		has_law = law_type:law_lira_toscane_lira_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/lira_toscane_lira.dds"
+}
+
+mark_c = {
+	possible = {
+		has_law = law_type:law_mark_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/mark.dds"
+}
+
+mark_finnish_markka_c = {
+	possible = {
+		has_law = law_type:law_mark_finnish_markka_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/mark_finnish_markka.dds"
+}
+
+peso_c = {
+	possible = {
+		has_law = law_type:law_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso.dds"
+}
+
+peso_argentine_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_argentine_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_argentine_peso.dds"
+}
+
+peso_bolivien_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_bolivien_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_bolivien_peso.dds"
+}
+
+peso_chilean_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_chilean_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_chilean_peso.dds"
+}
+
+peso_colombian_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_colombian_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_colombian_peso.dds"
+}
+
+peso_costa_rican_colon_c = {
+	possible = {
+		has_law = law_type:law_peso_costa_rican_colon_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_costa_rican_colon.dds"
+}
+
+peso_cuban_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_cuban_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_cuban_peso.dds"
+}
+
+peso_ecuadorian_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_ecuadorian_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_ecuadorian_peso.dds"
+}
+
+peso_el_salvador_colon_c = {
+	possible = {
+		has_law = law_type:law_peso_el_salvador_colon_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_el_salvador_colon.dds"
+}
+
+peso_guatemalan_quetzal_c = {
+	possible = {
+		has_law = law_type:law_peso_guatemalan_quetzal_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_guatemalan_quetzal.dds"
+}
+
+peso_honduran_lempira_c = {
+	possible = {
+		has_law = law_type:law_peso_honduran_lempira_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_honduran_lempira.dds"
+}
+
+peso_mexican_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_mexican_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_mexican_peso.dds"
+}
+
+peso_nicaraguan_cordoba_c = {
+	possible = {
+		has_law = law_type:law_peso_nicaraguan_cordoba_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_nicaraguan_cordoba.dds"
+}
+
+peso_paraguayan_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_paraguayan_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_paraguayan_peso.dds"
+}
+
+peso_philippine_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_philippine_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_philippine_peso.dds"
+}
+
+peso_sol_de_oro_c = {
+	possible = {
+		has_law = law_type:law_peso_sol_de_oro_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_sol_de_oro.dds"
+}
+
+peso_uruguayan_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_uruguayan_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_uruguayan_peso.dds"
+}
+
+peso_venezuelan_peso_c = {
+	possible = {
+		has_law = law_type:law_peso_venezuelan_peso_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/peso_venezuelan_peso.dds"
+}
+
+pound_egyptian_pound_c = {
+	possible = {
+		has_law = law_type:law_pound_egyptian_pound_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/pound_egyptian_pound.dds"
+}
+
+pound_irish_pound_c = {
+	possible = {
+		has_law = law_type:law_pound_irish_pound_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/pound_irish_pound.dds"
+}
+
+pound_sterling_c = {
+	possible = {
+		has_law = law_type:law_pound_sterling_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/pound_sterling.dds"
+}
+
+real_c = {
+	possible = {
+		has_law = law_type:law_real_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/real.dds"
+}
+
+real_brazilian_real_c = {
+	possible = {
+		has_law = law_type:law_real_brazilian_real_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/real_brazilian_real.dds"
+}
+
+rupee_indian_rupee_c = {
+	possible = {
+		has_law = law_type:law_rupee_indian_rupee_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/rupee_indian_rupee.dds"
+}
+
+rupee_indonesian_rupiah_c = {
+	possible = {
+		has_law = law_type:law_rupee_indonesian_rupiah_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/rupee_indonesian_rupiah.dds"
+}
+
+spe_baht_c = {
+	possible = {
+		has_law = law_type:law_spe_baht_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_baht.dds"
+}
+
+spe_dong_c = {
+	possible = {
+		has_law = law_type:law_spe_dong_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_dong.dds"
+}
+
+spe_drachma_c = {
+	possible = {
+		has_law = law_type:law_spe_drachma_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_drachma.dds"
+}
+
+spe_korean_won_c = {
+	possible = {
+		has_law = law_type:law_spe_korean_won_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_korean_won.dds"
+}
+
+spe_latvian_lats_c = {
+	possible = {
+		has_law = law_type:law_spe_latvian_lats_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_latvian_lats.dds"
+}
+
+spe_lithuanian_litas_c = {
+	possible = {
+		has_law = law_type:law_spe_lithuanian_litas_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_lithuanian_litas.dds"
+}
+
+spe_peseta_c = {
+	possible = {
+		has_law = law_type:law_spe_peseta_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_peseta.dds"
+}
+
+spe_ruble_c = {
+	possible = {
+		has_law = law_type:law_spe_ruble_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_ruble.dds"
+}
+
+spe_uni_c = {
+	possible = {
+		has_law = law_type:law_spe_uni_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
+}
+
+spe_yen_c = {
+	possible = {
+		has_law = law_type:law_spe_yen_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_yen.dds"
+}
+
+spe_yuan_c = {
+	possible = {
+		has_law = law_type:law_spe_yuan_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_yuan.dds"
+}
+
+spe_zloti_c = {
+	possible = {
+		has_law = law_type:law_spe_zloti_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_zloti.dds"
+}
+
+thaler_hannoveraner_thaler_c = {
+	possible = {
+		has_law = law_type:law_thaler_hannoveraner_thaler_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/thaler_hannoveraner_thaler.dds"
+}
+
+thaler_prussian_thaler_c = {
+	possible = {
+		has_law = law_type:law_thaler_prussian_thaler_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/thaler_prussian_thaler.dds"
+}
+
+thaler_saxon_thaler_c = {
+	possible = {
+		has_law = law_type:law_thaler_saxon_thaler_currency
+	}
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/thaler_saxon_thaler.dds"
+}
+

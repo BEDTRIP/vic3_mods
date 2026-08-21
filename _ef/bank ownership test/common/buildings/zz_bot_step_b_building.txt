@@ -1,0 +1,54 @@
+﻿### STEP B -- building_bank becomes ownable.
+###
+### THE WHOLE DEFINITION IS RESTATED. The first version of this file was just
+###
+###     REPLACE:building_bank = { ownership_type = self }
+###
+### and in game the central bank vanished outright. REPLACE: swaps the ENTIRE
+### entry, not the fields a mod names, so the bank was left with nothing but an
+### ownership type -- no building_group, no production method groups, no icon.
+###
+### That is the second independent proof of the rule. The first was the currency
+### merge: 285 production methods restated with only `building_modifiers` lost
+### their `unlocking_laws`, and the central bank started offering all 95
+### currencies in a dropdown that is supposed to show one.
+###
+### Everything below is E&F's own building_bank, byte for byte, with a single
+### field changed:
+###
+###     ownership_type = no_ownership   ->   ownership_type = self
+###
+### Re-copy from E&F after an E&F update; nothing here is generated automatically.
+
+REPLACE:building_bank = {
+	building_group = bg_bank
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
+	city_type = city
+	required_construction = construction_cost_very_low
+	levels_per_mesh = 1000
+	residence_points_per_level = 0
+	economic_contribution = 0.0
+	
+	# unlocking_technologies = {
+	# 	central_banking
+	# }
+
+	production_method_groups = {
+		pmg_minting_type
+		pmg_monetary_policy
+		#pmg_monetary_system #caché
+		#pmg_bond_production #caché
+		#pmg_additional_production_method #caché
+		pmg_currency_type #caché
+		#pmg_subject_currency_type #caché suppretion suite à trop de bug et peux d'apport sur le gamplay que du lord
+	}
+
+	buildable = no
+	expandable = no
+	downsizeable = no
+
+	ai_nationalization_desire = 0
+	ownership_type = self  #self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds"
+}

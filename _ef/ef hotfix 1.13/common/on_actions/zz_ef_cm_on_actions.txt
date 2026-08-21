@@ -1,0 +1,17 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### on_actions are additive across mods -- E&F, T&R and the Morgenroete
+### compatch all append to on_monthly_pulse_country and so does this.
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_cm_on_monthly_pulse_country
+	}
+}
+
+zz_ef_cm_on_monthly_pulse_country = {
+	effect = {
+		zz_ef_cm_bank_company_upkeep = yes
+	}
+}

@@ -1,7 +1,7 @@
 ﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
-### Source: _gen_source/ef_00_goods.txt -- the hand-written original.
+### Source: the hotfix's own common/goods/ef_00_goods.txt.
 ### 56 currency goods commented out; everything mints `spe_uni_c`.
 ### Commented rather than deleted, so the file still diffs against its source --
 ### the same way E&F's own author retired 32 currencies when he moved to 1.13.

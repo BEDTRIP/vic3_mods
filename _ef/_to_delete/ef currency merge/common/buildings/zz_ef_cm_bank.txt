@@ -1,0 +1,58 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: E&F's own common/buildings/ef_15_bank.txt, one field changed:
+###   ownership_type = no_ownership  ->  ownership_type = self
+###
+### THE WHOLE DEFINITION IS RESTATED, and it has to be. REPLACE: replaces the
+### entire entry, not the fields a mod names -- shipping just the one line made
+### the central bank vanish from the game, because nothing else was left of it.
+###
+### Why the field has to change at all: a company can only produce a prestige good
+### from a building it owns, and no_ownership means the building has no ownership
+### shares to hold.
+###
+### ai_nationalization_desire is also pushed from 0 to -5. Ownership shares alone
+### are not enough: E&F creates the bank state-owned, and a company can only hold
+### PRIVATISED levels. 0 sits exactly on the engine's privatise threshold
+### (NATIONALIZATION_DESIRE_PRIVATIZE_THRESHOLD = 0.0, nationalise at >= 1.0), so
+### an AI country was as likely to leave it alone as to sell it. -5 is clear of the
+### line. A human player still has to press privatise once.
+###
+### AND THAT IS A DESIGN DECISION, NOT A FIX. A privatised central bank pays its
+### dividends to its owners instead of the treasury -- on the 1836 British save
+### that is about 6K a month leaving the budget. Whether the central bank SHOULD be
+### private is a question about the mod, not about the engine.
+
+REPLACE:building_bank = {
+	building_group = bg_bank
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
+	city_type = city
+	required_construction = construction_cost_very_low
+	levels_per_mesh = 1000
+	residence_points_per_level = 0
+	economic_contribution = 0.0
+	
+	# unlocking_technologies = {
+	# 	central_banking
+	# }
+
+	production_method_groups = {
+		pmg_minting_type
+		pmg_monetary_policy
+		#pmg_monetary_system #caché
+		#pmg_bond_production #caché
+		#pmg_additional_production_method #caché
+		pmg_currency_type #caché
+		#pmg_subject_currency_type #caché suppretion suite à trop de bug et peux d'apport sur le gamplay que du lord
+	}
+
+	buildable = no
+	expandable = no
+	downsizeable = no
+
+	ai_nationalization_desire = -5
+	ownership_type = self  #self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds"
+}

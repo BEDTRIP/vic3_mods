@@ -1,0 +1,15 @@
+﻿### Central Bank Ownership Test -- one prestige variant of the merged currency good.
+###
+### base_good is spe_uni_c, the good every pm_currency_* mints after the currency
+### merge. If a company can own building_bank at all, this is what its output should
+### turn into.
+###
+### The icon is E&F's own pound sterling currency icon. The first version pointed at
+### a vanilla prestige icon that does not exist, which is why the company panel drew
+### a smiley placeholder next to the real prestige good.
+
+zz_bot_prestige_currency = {
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/pound_sterling.dds"
+}

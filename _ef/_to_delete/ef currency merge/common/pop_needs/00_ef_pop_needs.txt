@@ -1,7 +1,7 @@
 ﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
-### Source: _gen_source/00_ef_pop_needs.txt -- the hand-written original.
+### Source: the hotfix's own common/pop_needs/00_ef_pop_needs.txt.
 ### popneed_currency keeps two entries: local_currency (weight 0.1, the fallback
 ### for countries with no monetary system) and spe_uni_c (0.25). The 94 dropped
 ### entries all carried the same weights, so a pop's currency need is satisfied

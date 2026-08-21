@@ -1,5 +1,5 @@
 ﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13)
-### Minting for the three gold-mine tiers the compatch adds.
+### Minting for the gold mine.
 ###
 ### Vanilla ties country_minting_add to gold output on this ladder:
 ###
@@ -10,28 +10,44 @@
 ###
 ### The compatch adds three tiers above diesel -- Electric Fueled Pump (35),
 ### Heavy Machineries (45), A&R Operations (50) -- and gives none of them
-### country_modifiers at all. Its own REPLACE:pm_diesel_pump_building_gold_mine
-### does not list country_modifiers either, so the 1000 there survives (REPLACE:
-### only swaps the sub-blocks a mod names). The break is the upgrade: research
-### thermal_cracking, move the mine one step up, and minting goes 1000 -> 0
-### while gold output goes 30 -> 35. For a gold-standard economy in E&F that
-### turns the whole upper half of the ladder into a downgrade.
+### country_modifiers at all. The cause is visible in the file: it is a copy of the
+### silver-mine block, and E&F's silver mine has no minting, it sells the `silver`
+### good instead. The silver PMs are right; only gold lost something.
 ###
-### The cause is visible in the file: it is a copy of the silver-mine block, and
-### E&F's silver mine has no minting at all -- it sells the `silver` good
-### instead. The silver PMs are right; only gold lost something.
+### THE DIESEL PUMP LOSES IT TOO. The first version of this file left the diesel
+### pump alone, reasoning that the compatch's REPLACE: of it does not name
+### country_modifiers, so vanilla's 1000 survives. That was wrong: REPLACE: replaces
+### the ENTIRE entry, not the sub-blocks a mod names. Proved twice in game on
+### 21.08.2026 --
 ###
-### Values below keep vanilla's ~33 minting per unit of gold output, rounded to
-### vanilla's 250-step grid: 35 -> 1250, 45 -> 1500, 50 -> 1750.
+###   * `REPLACE:building_bank = { ownership_type = self }` made the central bank
+###     disappear outright, since nothing but that one field was left of it;
+###   * 285 production methods restated with only `building_modifiers` lost their
+###     `unlocking_laws`, and E&F's central bank began offering all 95 currencies in
+###     a dropdown that is supposed to show one.
 ###
-### INJECT:, not REPLACE:, on purpose. These PMs have no country_modifiers, so
-### the merge simply adds the block, and the compatch's inputs, employment and
-### pollution stay exactly as its author balanced them. INJECT: into a modifier
-### block sums rather than overwrites -- the compatch relies on that itself in
-### zef_private_construction.txt (goods_input_iron_add = -2 only makes sense as
-### a delta), so a future author-side change to these numbers would add up
-### rather than be silently replaced. That is the intended behaviour here: if
-### the compatch ever ships its own minting, this file must be dropped.
+### So without this file the ladder is 250 / 500 / 750 / 0 / 0 / 0 / 0: minting stops
+### the moment a country researches compression_ignition, and every step up the
+### Mining Equipment group after that is a straight downgrade for a gold-standard
+### economy. Which is expensive in E&F, where minting is base income.
+###
+### Values above diesel keep vanilla's ~33 minting per unit of gold output, rounded
+### to vanilla's 250-step grid: 35 -> 1250, 45 -> 1500, 50 -> 1750.
+###
+### INJECT:, not REPLACE:, on purpose. It merges into whatever the compatch left, so
+### the compatch's inputs, employment and pollution stay exactly as its author
+### balanced them -- and INJECT: into a modifier block sums rather than overwrites,
+### which the compatch relies on itself in zef_private_construction.txt
+### (goods_input_iron_add = -2 only makes sense as a delta). If the compatch ever
+### ships its own minting, these values will add to it and this file must go.
+
+INJECT:pm_diesel_pump_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = 1000
+		}
+	}
+}
 
 INJECT:pm_electric_fueled_pump_building_gold_mine = {
 	country_modifiers = {
