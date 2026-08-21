@@ -1,0 +1,604 @@
+﻿### Prestige goods stress test.
+### 100 dummy prestige goods, all on base_good = clothes.
+### They produce nothing by themselves - they only occupy the database,
+### so that we can see how many entries one base good tolerates.
+
+pgtest_01 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_02 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_03 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_04 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_05 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_06 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_07 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_08 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_09 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_10 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_11 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_12 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_13 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_14 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_15 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_16 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_17 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_18 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_19 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_20 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_21 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_22 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_23 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_24 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_25 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_26 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_27 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_28 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_29 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_30 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_31 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_32 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_33 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_34 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_35 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_36 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_37 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_38 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_39 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_40 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_41 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_42 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_43 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_44 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_45 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_46 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_47 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_48 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_49 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_50 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_51 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_52 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_53 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_54 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_55 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_56 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_57 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_58 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_59 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_60 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_61 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_62 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_63 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_64 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_65 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_66 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_67 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_68 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_69 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_70 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_71 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_72 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_73 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_74 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_75 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_76 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_77 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_78 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_79 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_80 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_81 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_82 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_83 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_84 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_85 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_86 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_87 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_88 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_89 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_90 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_91 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_92 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_93 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_94 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_95 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_96 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_97 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_98 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_99 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
+
+pgtest_100 = {
+	texture = "gfx/interface/icons/goods_icons/prestige_goods/generic_clothes_prestige.dds"
+	base_good = clothes
+	prestige_bonus = 0.1
+}
