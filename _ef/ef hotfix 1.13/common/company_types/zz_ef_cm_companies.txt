@@ -1,23 +1,615 @@
 ﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
-### One line, and it is deliberate.
+### Source: CENTRAL_BANK_COMPANY in the generator -- 49 of E&F's bank
+### companies, the ones that were their country's actual central bank, checked
+### against the tag E&F grants each of them in establish_bank_and_ef_compagnie.
 ###
-### E&F's own bank companies are left exactly as E&F wrote them. They must NOT
-### have building_bank in their building_types: a company can only own building
-### types on its own list, and that list is the only real lock on who ends up
-### holding the central bank. While they had it, Banca d'Italia privatised 4
-### levels of the Papal central bank away from the company that held the
-### monopoly -- a monopoly is a price and construction rule, not a lock.
+### NOT all 97, and that is the whole point. `building_types` is the only real
+### lock on who may own a building: while every bank company carried
+### building_bank, Banca d'Italia privatised four levels of the Papal central
+### bank away from the company holding the monopoly. A monopoly is a price and
+### construction rule; this list is the lock.
 ###
-### The central bank belongs to the generated per-currency companies and to
-### nobody else. See zz_ef_cm_generic_banks.txt.
+### These keep the assets they already own -- the Banque de France comes with
+### its ten levels of private construction and five of the Bourse de Paris -- and
+### the generated per-currency company is used only where no historical central
+### bank exists. See zz_ef_cm_generic_banks.txt.
 ###
-### company_BasicBank is the exception: it is the fallback owner for a country
-### that has neither a currency law nor an entry in E&F's tag list, and a company
-### cannot be given a building type that is not on its list -- create_building
-### with add_ownership fails PostValidate at load and the bank never appears. It
-### carries no currency, so it competes with nothing.
+### INJECT: so E&F's own building list and its own prestige goods survive. Those
+### sit on other base goods (manufacture_stock and friends) and never compete
+### with the three currencies, which all share spe_uni_c.
+###
+### company_BasicBank gets the building and no currency: it is the fallback owner
+### for a country with neither a historical central bank nor a currency law.
+
+INJECT:company_BancoNacionArgentina = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoProvincia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_OesterreichischeNationalbank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BayerischeHypothekenUndWechselBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BanqueNationaleDeBelgique = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_ImperialBankofIndia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoNacionalDeBolivia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoDoBrasil = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_CanadianImperialBankOfCommerce = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_DaQingBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankHSBC = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoEstado = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoDeValparaiso = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoRepublicaColombia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoCentralDeCostaRica = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoEspanolDeLaHabana = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_LandmandsBanken = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BanqueEgyptienne = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BanqueDeFrance = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankofEngland = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_Reichsbank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_PreussischeSeehandlung = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_bankofgreec = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoCentralDeGuatemala = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoCentralDeHonduras = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancaDItalia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_Rothschild_Bank_ita = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankOfJapan = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_Mitsubishiexchangehousebank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoDeMexico = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_DeNederlandscheBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_ChristianiaBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_ColonialBankOfAustralia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_RoyalBankofCanada = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoNacionalDePanama = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankMelliIran = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_ImperialBankofPersia = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoDePortugal = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoNacionalDelParaguay = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankOfMontreal = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_StateBankRussianEmpire = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankSBoBSA = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_CassaDiRisparmioDiTorino = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BankofSpain = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_HandelsBanken = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_Bankenverein = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_OttomanBank = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoCentralDelUruguay = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
+
+INJECT:company_BancoCentralDeVenezuela = {
+	building_types = {
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+}
 
 INJECT:company_BasicBank = {
 	building_types = {

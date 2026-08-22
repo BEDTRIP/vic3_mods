@@ -758,6 +758,50 @@ def gen_loc(keep: str, names: list[str]) -> dict[str, str]:
     return out
 
 
+EF_GOODS_LOC = "localization/{lang}/01_ef_goods_localization_l_{lang}.yml"
+
+
+def gen_goods_loc(ef: Path, keep: str) -> dict[str, str]:
+    """Rename the shared good by OVERRIDING E&F'S OWN FILE, not by adding ours.
+
+    LOCALISATION DOES NOT WORK LIKE THE REST OF THE MOD. Everywhere else, a later
+    mod's definition of a key wins. For localisation the FIRST file to define a key
+    keeps it, and load order does not save you -- so the only way to change a key
+    somebody else already defined is to ship a file with the SAME NAME and let the
+    path override do the work.
+
+    That is why the shared good stayed "Uni" through three attempts. Our own
+    zz_ef_cm_goods_l_*.yml works perfectly for keys nobody else defines -- the three
+    regime currencies, the companies, the modifier -- and did nothing at all for
+    spe_uni_c, which E&F names in 01_ef_goods_localization_l_<lang>.yml. E&F's
+    Russian file spells it "Uni" in Latin too, which is why turning the Russian
+    translation off changed nothing.
+
+    The whole file is copied and one line is swapped: a path override replaces the
+    file entirely, so dropping the other ~300 goods names would blank them.
+    """
+    out = {}
+    for lang in LANGUAGES:
+        src = ef / EF_GOODS_LOC.format(lang=lang)
+        if not src.exists():
+            continue
+        text = read(src)
+        name = (NAMES_RU if lang == "russian" else NAMES_EN)[keep]
+        hit = 0
+        lines = []
+        for line in text.split("\n"):
+            m = re.match(r"^(\s*)" + re.escape(keep) + r"\s*:\s*\d*\s+\".*\"\s*$", line)
+            if m:
+                lines.append(f'{m.group(1)}{keep}:0 "{name}"')
+                hit += 1
+            else:
+                lines.append(line)
+        if not hit:
+            raise SystemExit(f"{src}: no {keep} entry to override")
+        out[lang] = "\n".join(lines)
+    return out
+
+
 # --- prestige currencies ----------------------------------------------------
 
 
@@ -1026,47 +1070,83 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
     return head + "".join(out), len(PRESTIGE_REGIMES)
 
 
-def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
-    """Nothing. E&F's own bank companies are deliberately left untouched.
+def historical_central_banks(ef: Path) -> tuple[list[str], list[str]]:
+    """E&F's own bank companies that ARE the country's historical central bank.
 
-    They used to get `building_bank` in their building_types and a currency in
-    their prestige goods. Both were mistakes:
-
-      * building_bank in their list is what let a company that is NOT the central
-        bank company buy the central bank. In the Papal States, Banca d'Italia
-        privatised 4 levels straight out from under the company holding the
-        monopoly -- a monopoly is a price and construction rule, not a lock, but
-        `building_types` IS a lock, and it was open.
-      * one currency each, derived from the tag E&F grants the company to, is only
-        right while the company sits in that country. It does not: the Papal States
-        hold Banca d'Italia, which E&F's own script only ever grants to ITA.
-
-    So only the generated per-currency companies in zz_ef_cm_generic_banks.txt can
-    own a central bank, and only they carry a currency. One mechanism, no overlap.
+    Checked against establish_bank_and_ef_compagnie so a rename in E&F is reported
+    instead of quietly producing a branch that can never fire.
     """
-    return (BANNER +
-            "### One line, and it is deliberate.\n"
+    notes: list[str] = []
+    banks = {k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))
+             if k.startswith("company_") and k not in BANK_COMPANY_SKIP}
+    granted = establish_mapping(ef, banks)
+    table = {t: ([c] if isinstance(c, str) else list(c))
+             for t, c in CENTRAL_BANK_COMPANY.items()}
+    out: list[str] = []
+    for tag in sorted(table):
+        for comp in table[tag]:
+            if comp not in banks:
+                notes.append(f"WARNING {comp}: no such company in E&F any more")
+                continue
+            if comp not in granted:
+                notes.append(f"WARNING {comp}: E&F grants it to nobody")
+            elif tag not in granted[comp]:
+                notes.append(f"WARNING {comp}: E&F grants it to {granted[comp]}, not {tag}")
+            if comp not in out:
+                out.append(comp)
+    return out, notes
+
+
+def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
+    """building_bank and the three regime currencies, for the historical central
+    banks only -- plus company_BasicBank as the last-resort owner.
+
+    NOT for all 97 of E&F's bank companies, and the difference matters.
+    `building_types` is the only real lock on who may hold a building: while every
+    bank company had building_bank on its list, Banca d'Italia privatised four
+    levels of the Papal central bank out from under the company that held the
+    monopoly. A monopoly is a price and construction rule; the building list is the
+    lock.
+
+    So the list is the curated one: the bank that actually was the country's
+    central bank -- the Bank of England for Britain, the Banque de France for
+    France, the State Bank for Russia. Those keep the assets they already own, and
+    the generated per-currency company is used only where no such bank exists.
+    """
+    hist, notes = historical_central_banks(ef)
+    goods = "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
+    out = []
+    for c in hist:
+        out.append(f"INJECT:{c} = {{\n"
+                   f"\tbuilding_types = {{\n\t\tbuilding_bank\n\t}}\n\n"
+                   f"\tpossible_prestige_goods = {{\n{goods}\t}}\n"
+                   f"}}\n\n")
+    out.append("INJECT:company_BasicBank = {\n"
+               "\tbuilding_types = {\n\t\tbuilding_bank\n\t}\n"
+               "}\n")
+    head = (BANNER +
+            f"### Source: CENTRAL_BANK_COMPANY in the generator -- {len(hist)} of E&F's bank\n"
+            "### companies, the ones that were their country's actual central bank, checked\n"
+            "### against the tag E&F grants each of them in establish_bank_and_ef_compagnie.\n"
             "###\n"
-            "### E&F's own bank companies are left exactly as E&F wrote them. They must NOT\n"
-            "### have building_bank in their building_types: a company can only own building\n"
-            "### types on its own list, and that list is the only real lock on who ends up\n"
-            "### holding the central bank. While they had it, Banca d'Italia privatised 4\n"
-            "### levels of the Papal central bank away from the company that held the\n"
-            "### monopoly -- a monopoly is a price and construction rule, not a lock.\n"
+            "### NOT all 97, and that is the whole point. `building_types` is the only real\n"
+            "### lock on who may own a building: while every bank company carried\n"
+            "### building_bank, Banca d'Italia privatised four levels of the Papal central\n"
+            "### bank away from the company holding the monopoly. A monopoly is a price and\n"
+            "### construction rule; this list is the lock.\n"
             "###\n"
-            "### The central bank belongs to the generated per-currency companies and to\n"
-            "### nobody else. See zz_ef_cm_generic_banks.txt.\n"
+            "### These keep the assets they already own -- the Banque de France comes with\n"
+            "### its ten levels of private construction and five of the Bourse de Paris -- and\n"
+            "### the generated per-currency company is used only where no historical central\n"
+            "### bank exists. See zz_ef_cm_generic_banks.txt.\n"
             "###\n"
-            "### company_BasicBank is the exception: it is the fallback owner for a country\n"
-            "### that has neither a currency law nor an entry in E&F's tag list, and a company\n"
-            "### cannot be given a building type that is not on its list -- create_building\n"
-            "### with add_ownership fails PostValidate at load and the bank never appears. It\n"
-            "### carries no currency, so it competes with nothing.\n\n"
-            "INJECT:company_BasicBank = {\n"
-            "\tbuilding_types = {\n"
-            "\t\tbuilding_bank\n"
-            "\t}\n"
-            "}\n", 1, [])
+            "### INJECT: so E&F's own building list and its own prestige goods survive. Those\n"
+            "### sit on other base goods (manufacture_stock and friends) and never compete\n"
+            "### with the three currencies, which all share spe_uni_c.\n"
+            "###\n"
+            "### company_BasicBank gets the building and no currency: it is the fallback owner\n"
+            "### for a country with neither a historical central bank nor a currency law.\n\n")
+    return head + "".join(out), len(hist) + 1, notes
 
 
 def gen_generic_banks(ef: Path, names: list[str]) -> str:
@@ -1731,12 +1811,17 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
 def bank_company_priority(ef: Path, names: list[str]) -> list[str]:
     """Who may own a central bank, best first.
 
-    Only the generated per-currency companies, then the generic fallback. E&F's
-    own flavoured bank companies are deliberately absent: they do not carry
-    building_bank in their building_types any more, so the engine will not let
-    them hold one, which is the only reliable lock there is.
+    The historical central banks first, then the generated per-currency companies,
+    then the generic fallback. France holds the Banque de France, so France's
+    central bank goes to the Banque de France and keeps the assets it already has;
+    a country with no such bank gets the generated one.
+
+    E&F's other bank companies are deliberately absent, and stay absent from
+    building_types too -- see gen_companies for what happened in the Papal States
+    while they were on the list.
     """
-    return [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"]
+    hist, _ = historical_central_banks(ef)
+    return hist + [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"]
 
 
 def gen_monopoly(ef: Path, names: list[str]) -> str:
@@ -1798,6 +1883,84 @@ def gen_monopoly(ef: Path, names: list[str]) -> str:
             "### of the country's four, which is the route the game itself offers.\n\n"
             "zz_ef_cm_bank_monopoly = {\n" + "".join(out) + "}\n")
 
+
+
+# --- the market panel's currency section -------------------------------------
+
+MARKET_PANEL = "gui/market_panel.gui"
+
+
+def gen_market_panel(ef: Path) -> tuple[str, list[str]]:
+    """Drop E&F's "Currency in Circulation" section from the market panel.
+
+    TWO PROBLEMS, ONE CAUSE. E&F does not show currency goods in the ordinary goods
+    grid; it adds a section of its own underneath, fed by
+
+        datamodel = "[GetGlobalList('gui_market_currency_list')]"
+
+    and that list is a GLOBAL variable list, rebuilt by a scripted GUI from
+    whichever market the panel last ran its `update_cache` / `build_list` states
+    for. Open the currency section on any other market and you are looking at the
+    market it was last built for -- Britain's, in the report that started this.
+
+    A global cannot hold per-market contents, so there is nothing to repair inside
+    it. The section goes, and the currency shows up in the ordinary goods grid
+    above it like any other good -- which is where one currency good belongs, now
+    that there is one instead of fifty-seven.
+
+    The two `on_finish` calls that build the list go with it, so the scripted GUI
+    stops running per frame as well. The financial-products section is left exactly
+    as E&F wrote it: same shape, same latent problem, not ours to change today.
+    """
+    notes: list[str] = []
+    src = read(ef / MARKET_PANEL)
+
+    marker = src.index('text = "currency_GOODS"')
+    best = None
+    for m in re.finditer(r"flowcontainer\s*=\s*\{", src):
+        open_at = src.index("{", m.start())
+        if open_at > marker:
+            break
+        close_at = block_span(src, open_at)
+        if close_at > marker and (best is None or open_at > best[0]):
+            best = (m.start(), close_at)
+    if best is None:
+        raise SystemExit(f"{MARKET_PANEL}: cannot find the flowcontainer around currency_GOODS")
+
+    start, end = best
+    line_start = src.rfind("\n", 0, start) + 1
+    cut = src[line_start:end]
+    notes.append(f"currency section removed: {cut.count(chr(10)) + 1} lines")
+    src = src[:line_start] + src[end:].lstrip("\n")
+
+    kept = []
+    dropped = 0
+    for line in src.split("\n"):
+        if "market_gui_market_currency_list" in line and "on_finish" in line:
+            dropped += 1
+            continue
+        kept.append(line)
+    notes.append(f"list-building on_finish calls removed: {dropped}")
+    src = "\n".join(kept)
+
+    head = ("### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT\n"
+            "### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.\n"
+            "###\n"
+            f"### Source: E&F's own {MARKET_PANEL}, with its \"Currency in Circulation\"\n"
+            "### section removed and the two on_finish calls that built the list with it.\n"
+            "###\n"
+            "### The section was fed by GetGlobalList('gui_market_currency_list') -- a GLOBAL\n"
+            "### variable list, rebuilt for whichever market the panel last cached. Opening it\n"
+            "### on any other market showed the market it was last built for. A global cannot\n"
+            "### hold per-market contents, so there was nothing to repair inside it.\n"
+            "###\n"
+            "### The currency now appears in the ordinary goods grid above, like any other\n"
+            "### good -- which is where one currency good belongs, now that there is one\n"
+            "### instead of fifty-seven.\n"
+            "###\n"
+            "### GUI files are overridden by PATH: this replaces E&F's file wholesale, so it\n"
+            "### is copied rather than edited, and has to be regenerated after an E&F update.\n\n")
+    return head + src, notes
 
 
 # --- self-check -------------------------------------------------------------
@@ -1947,6 +2110,16 @@ def main() -> int:
 
     for rel, text in gen_upkeep(ef, names).items():
         emit(mod / rel, text, args.check, acc)
+
+    text, mnotes = gen_market_panel(ef)
+    for x in mnotes:
+        print(f"     {x}")
+    emit(mod / MARKET_PANEL, text, args.check, acc)
+
+    goods_loc = gen_goods_loc(ef, args.keep)
+    print(f"     E&F goods localisation overridden: {len(goods_loc)} languages")
+    for lang, text in goods_loc.items():
+        emit(mod / EF_GOODS_LOC.format(lang=lang), text, args.check, acc)
 
     loc = gen_loc(args.keep, names)
     print(f"     localisation: {len(loc)} languages")

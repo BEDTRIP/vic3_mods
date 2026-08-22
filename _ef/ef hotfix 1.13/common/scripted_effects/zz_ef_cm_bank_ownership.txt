@@ -74,6 +74,888 @@ zz_ef_cm_create_owned_bank = {
 		if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoNacionArgentina
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoNacionArgentina
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoProvincia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoProvincia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_OesterreichischeNationalbank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_OesterreichischeNationalbank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BayerischeHypothekenUndWechselBank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BayerischeHypothekenUndWechselBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BanqueNationaleDeBelgique
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BanqueNationaleDeBelgique
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_ImperialBankofIndia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_ImperialBankofIndia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoNacionalDeBolivia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoNacionalDeBolivia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoDoBrasil
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoDoBrasil
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_CanadianImperialBankOfCommerce
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_CanadianImperialBankOfCommerce
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_DaQingBank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_DaQingBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankHSBC
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankHSBC
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoEstado
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoEstado
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoDeValparaiso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoDeValparaiso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoRepublicaColombia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoRepublicaColombia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoCentralDeCostaRica
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoCentralDeCostaRica
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoEspanolDeLaHabana
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoEspanolDeLaHabana
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_LandmandsBanken
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_LandmandsBanken
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BanqueEgyptienne
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BanqueEgyptienne
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BanqueDeFrance
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BanqueDeFrance
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankofEngland
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankofEngland
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_Reichsbank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_Reichsbank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_PreussischeSeehandlung
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_PreussischeSeehandlung
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_bankofgreec
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_bankofgreec
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoCentralDeGuatemala
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoCentralDeGuatemala
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoCentralDeHonduras
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoCentralDeHonduras
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancaDItalia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancaDItalia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_Rothschild_Bank_ita
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_Rothschild_Bank_ita
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankOfJapan
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankOfJapan
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_Mitsubishiexchangehousebank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_Mitsubishiexchangehousebank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoDeMexico
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoDeMexico
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_DeNederlandscheBank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_DeNederlandscheBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_ChristianiaBank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_ChristianiaBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_ColonialBankOfAustralia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_ColonialBankOfAustralia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_RoyalBankofCanada
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_RoyalBankofCanada
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoNacionalDePanama
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoNacionalDePanama
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankMelliIran
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankMelliIran
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_ImperialBankofPersia
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_ImperialBankofPersia
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoDePortugal
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoDePortugal
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoNacionalDelParaguay
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoNacionalDelParaguay
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankOfMontreal
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankOfMontreal
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_StateBankRussianEmpire
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_StateBankRussianEmpire
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankSBoBSA
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankSBoBSA
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_CassaDiRisparmioDiTorino
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_CassaDiRisparmioDiTorino
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BankofSpain
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BankofSpain
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_HandelsBanken
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_HandelsBanken
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_Bankenverein
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_Bankenverein
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_OttomanBank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_OttomanBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoCentralDelUruguay
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoCentralDelUruguay
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BancoCentralDeVenezuela
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BancoCentralDeVenezuela
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
 					has_company = company_type:zz_ef_cm_bank_dinar
 				}
 			}

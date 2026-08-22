@@ -4,12 +4,61 @@
 ### Source: the bank companies in E&F's own 00_ef_companies.txt plus the
 ### generated per-currency ones in zz_ef_cm_generic_banks.txt.
 
-### Does this country hold any bank company at all -- one of E&F's 0
+### Does this country hold any bank company at all -- one of E&F's 49
 ### flavoured ones, one of the 95 generated per-currency ones, or the
 ### generic fallback?
 zz_ef_cm_has_bank_company = {
 	any_company = {
 		OR = {
+			is_company_type = company_type:company_BancoNacionArgentina
+			is_company_type = company_type:company_BancoProvincia
+			is_company_type = company_type:company_OesterreichischeNationalbank
+			is_company_type = company_type:company_BayerischeHypothekenUndWechselBank
+			is_company_type = company_type:company_BanqueNationaleDeBelgique
+			is_company_type = company_type:company_ImperialBankofIndia
+			is_company_type = company_type:company_BancoNacionalDeBolivia
+			is_company_type = company_type:company_BancoDoBrasil
+			is_company_type = company_type:company_CanadianImperialBankOfCommerce
+			is_company_type = company_type:company_DaQingBank
+			is_company_type = company_type:company_BankHSBC
+			is_company_type = company_type:company_BancoEstado
+			is_company_type = company_type:company_BancoDeValparaiso
+			is_company_type = company_type:company_BancoRepublicaColombia
+			is_company_type = company_type:company_BancoCentralDeCostaRica
+			is_company_type = company_type:company_BancoEspanolDeLaHabana
+			is_company_type = company_type:company_LandmandsBanken
+			is_company_type = company_type:company_BanqueEgyptienne
+			is_company_type = company_type:company_BanqueDeFrance
+			is_company_type = company_type:company_BankofEngland
+			is_company_type = company_type:company_Reichsbank
+			is_company_type = company_type:company_PreussischeSeehandlung
+			is_company_type = company_type:company_bankofgreec
+			is_company_type = company_type:company_BancoCentralDeGuatemala
+			is_company_type = company_type:company_BancoCentralDeHonduras
+			is_company_type = company_type:company_BancaDItalia
+			is_company_type = company_type:company_Rothschild_Bank_ita
+			is_company_type = company_type:company_BankOfJapan
+			is_company_type = company_type:company_Mitsubishiexchangehousebank
+			is_company_type = company_type:company_BancoDeMexico
+			is_company_type = company_type:company_DeNederlandscheBank
+			is_company_type = company_type:company_ChristianiaBank
+			is_company_type = company_type:company_ColonialBankOfAustralia
+			is_company_type = company_type:company_RoyalBankofCanada
+			is_company_type = company_type:company_BancoNacionalDePanama
+			is_company_type = company_type:company_BankMelliIran
+			is_company_type = company_type:company_ImperialBankofPersia
+			is_company_type = company_type:company_BancoDePortugal
+			is_company_type = company_type:company_BancoNacionalDelParaguay
+			is_company_type = company_type:company_BankOfMontreal
+			is_company_type = company_type:company_StateBankRussianEmpire
+			is_company_type = company_type:company_BankSBoBSA
+			is_company_type = company_type:company_CassaDiRisparmioDiTorino
+			is_company_type = company_type:company_BankofSpain
+			is_company_type = company_type:company_HandelsBanken
+			is_company_type = company_type:company_Bankenverein
+			is_company_type = company_type:company_OttomanBank
+			is_company_type = company_type:company_BancoCentralDelUruguay
+			is_company_type = company_type:company_BancoCentralDeVenezuela
 			is_company_type = company_type:zz_ef_cm_bank_dinar
 			is_company_type = company_type:zz_ef_cm_bank_dinar_algerian_dinar
 			is_company_type = company_type:zz_ef_cm_bank_dinar_iraqi_dinar
