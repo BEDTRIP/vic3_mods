@@ -1,0 +1,16 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: the shape of state_sell_orders_local_currency_add in E&F's own
+### common/modifier_type_definitions/00_ef_state_modifier_types.txt.
+###
+### Needed because local_currency is merged into spe_uni_c and the issuance for
+### countries without a monetary system has to land somewhere.
+
+state_sell_orders_spe_uni_c_add = {
+	decimals = 0
+	color = good
+	game_data = {
+		ai_value = 0
+	}
+}

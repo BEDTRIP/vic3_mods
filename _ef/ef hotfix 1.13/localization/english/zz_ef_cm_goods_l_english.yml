@@ -1,11 +1,9 @@
 ﻿l_english:
 
- # The shared currency good. The bracket asks the market's owner for its
- # currency name through E&F's own currency_name_mk -- an experiment, and
- # one that needs this mod loaded BELOW the E&F Russian translation, which
- # also defines this key. Written as "Currency (...)" so a missing data
- # context leaves a readable name instead of a raw key.
- spe_uni_c:0 "Currency ([Goods.GetMarket.GetOwner.GetCustom('currency_name_mk')])"
+ # The shared currency good -- local_currency was merged into it and this
+ # is its name and icon. Plain money; a central bank raises it to one of
+ # the three standard-backed variants below.
+ spe_uni_c:0 "Local Currency"
 
  # The three regime currencies a company-owned central bank mints.
  zz_ef_cm_metallic_currency:0 "Metallic Standard"

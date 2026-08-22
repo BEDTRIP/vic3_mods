@@ -13,5 +13,10 @@
 
 zz_ef_local_currency_fix = {
 	icon = gfx/interface/icons/timed_modifier_icons/no_money_production.dds
-	state_sell_orders_local_currency_add = 1
+	### local_currency was merged into spe_uni_c: countries without a monetary
+	### system now issue the same good everyone else does, so their money can no
+	### longer undercut a real currency in a shared market -- it IS that currency,
+	### at the same price. What they do not get is a central bank, and so none of
+	### the three prestige variants.
+	state_sell_orders_spe_uni_c_add = 1
 }

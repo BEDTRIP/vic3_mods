@@ -2,7 +2,7 @@
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
 ### Source: E&F's own common/modifier_type_definitions/00_ef_building_modifier_types.txt.
-### 376 modifier types dropped. E&F declares goods_input/output_<currency>_mult by
+### 378 modifier types dropped. E&F declares goods_input/output_<currency>_mult by
 ### hand for every currency; a declaration whose good no longer exists is an orphan.
 ### The ones for the surviving good are untouched.
 
@@ -424,23 +424,6 @@ building_group_bg_financial_centre_throughput_add={
 	}
 } 
  
-goods_input_local_currency_mult={
-	decimals=1
-	color=good
-	percent=yes
-	game_data={
-		ai_value=0
-	}
-}
-goods_output_local_currency_mult={
-	decimals=1
-	color=good
-	percent=yes
-	game_data={
-		ai_value=0
-	}
-}
-
 #####################################################################################################################################################
 #####################################################################################################################################################
 #####################################################################################################################################################

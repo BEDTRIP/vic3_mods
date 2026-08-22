@@ -172,7 +172,7 @@ speculative_share_modifier_7 = {
  
 no_money_production = {
 	icon = gfx/interface/icons/timed_modifier_icons/no_money_production.dds
-	state_sell_orders_local_currency_add = 2500
+	state_sell_orders_spe_uni_c_add = 2500
 }
 
 leading_producer_of_oil = {

@@ -2,7 +2,7 @@
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
 ### Source: _gen_source/ef_00_goods.txt -- the hand-written original.
-### 56 currency goods commented out; everything mints `spe_uni_c`.
+### 57 currency goods commented out; everything mints `spe_uni_c`.
 ### Commented rather than deleted, so the file still diffs against its source --
 ### the same way E&F's own author retired 32 currencies when he moved to 1.13.
 
@@ -117,17 +117,17 @@ mutual_funds = {
 
 # # Economic goods :
  
-local_currency = {
-	texture = "gfx/interface/icons/goods_icons/currencies/local_currency.dds"
-	cost = 1
-	category = staple
-	tradeable = yes
-	fixed_price = no
-	obsession_chance = 0.5
-	consumption_tax_cost = 500
-	traded_quantity = 5 #250
-	convoy_cost_multiplier = 1
-}	
+# local_currency = {
+# 	texture = "gfx/interface/icons/goods_icons/currencies/local_currency.dds"
+# 	cost = 1
+# 	category = staple
+# 	tradeable = yes
+# 	fixed_price = no
+# 	obsession_chance = 0.5
+# 	consumption_tax_cost = 500
+# 	traded_quantity = 5 #250
+# 	convoy_cost_multiplier = 1
+# }	
 
 # #begin_tag_1
 # 	INJECT_OR_CREATE:dinar_c = {
@@ -2060,7 +2060,11 @@ local_currency = {
 # 		convoy_cost_multiplier = 1
 # 	}
 	spe_uni_c = {
-		texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
+		### local_currency was merged into this good and commented out, so its icon
+		### is free -- and it is the right one now: this is the plain money every
+		### country makes, and a central bank turns it into one of the three
+		### standard-backed prestige variants.
+		texture = "gfx/interface/icons/goods_icons/currencies/local_currency.dds"
 		cost = 1
 		category = staple
 		tradeable = yes

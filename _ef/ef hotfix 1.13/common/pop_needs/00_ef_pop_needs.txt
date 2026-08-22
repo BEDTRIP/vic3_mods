@@ -2,10 +2,14 @@
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
 ### Source: _gen_source/00_ef_pop_needs.txt -- the hand-written original.
-### popneed_currency keeps two entries: local_currency (weight 0.1, the fallback
-### for countries with no monetary system) and spe_uni_c (0.25). The 94 dropped
-### entries all carried the same weights, so a pop's currency need is satisfied
-### exactly as before -- out of one good instead of 95 listed / 57 real ones.
+### popneed_currency now keeps ONE entry: spe_uni_c. local_currency was merged
+### into it and dropped with the rest, so a country with no monetary system
+### covers the same need out of the same good as everyone else -- and can no
+### longer undercut a real currency in a shared market, because there is no
+### second, cheaper currency left to undercut it with.
+###
+### The 95 dropped entries all carried the same weights, so a pop's currency
+### need is satisfied exactly as before -- out of one good instead of 95.
 
 # goods						The good being referenced
 # weight					The base weight that is applied to this good based on market Sell Order share
@@ -15,13 +19,6 @@
 popneed_currency = {
 	default = spe_uni_c
 
-	entry = {
-		goods = local_currency
-
-		weight = 0.1		### E&F Hotfix: was 0.25, the same weight real currencies get
-		max_supply_share = 1.0 # Maxes out at 80% of supply share
-		min_supply_share = 0.0
-	}
 
 	#begin_tag_1
 	entry = {

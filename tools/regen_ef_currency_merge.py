@@ -87,6 +87,21 @@ MOD = HOTFIX
 # on -- the ones under common/ are output and get overwritten.
 SRC_DIR = "_gen_source"
 
+# Goods merged into the shared currency good that are NOT one of the 95 currency
+# laws, and so are invisible to the inventory below.
+#
+# local_currency is E&F's money for the ~600 countries with no monetary system. It
+# was a second currency on the belt at its own, lower price, and any currency
+# satisfies popneed_currency -- so pops in real nations covered their currency need
+# with somebody else's cheap local money instead of their own. The hotfix already
+# fought that by recomputing how much of it gets issued; merging it removes the
+# cause instead of the symptom, because there is no longer a cheaper currency to
+# switch to. It is the same good at the same price.
+#
+# It also gives a goods slot back, and frees its icon -- which spe_uni_c now wears,
+# since "the plain money everyone makes" is exactly what it is.
+MERGED_EXTRA = ["local_currency"]
+
 GOODS_FILE = "common/goods/ef_00_goods.txt"
 POPNEED_FILE = "common/pop_needs/00_ef_pop_needs.txt"
 MODTYPE_FILE = "common/modifier_type_definitions/00_ef_building_modifier_types.txt"
@@ -331,10 +346,17 @@ def inventory(ef: Path, hf: Path, keep: str):
              for k in top_keys(bank)
              if k.startswith("pm_currency_") and k.endswith("_currency")]
 
-    commented_out = [g for g in active if g != keep]           # still live today
+    # Goods merged in that do not end in _c and so are not in `active`.
+    live = top_keys(read(goods_src))
+    extra = [g for g in MERGED_EXTRA if g in live]
+    missing = [g for g in MERGED_EXTRA if g not in live]
+    if missing:
+        raise SystemExit(f"MERGED_EXTRA: {missing} not found in {goods_src}")
+
+    commented_out = [g for g in active if g != keep] + extra   # still live today
     # NOTE the parentheses: `A | B - {keep}` binds as `A | (B - {keep})` and would
     # leave the surviving good inside `dead`, which quietly deletes its own entries.
-    dead = sorted(({f"{n}_c" for n in names} | set(active)) - {keep})
+    dead = sorted(({f"{n}_c" for n in names} | set(active) | set(extra)) - {keep})
     return active, commented_out, dead, names
 
 
@@ -474,16 +496,23 @@ def gen_popneed(src: str, dead: set[str], keep: str) -> tuple[str, int]:
             break
     return (BANNER +
             f"### Source: {SRC_DIR}/{Path(POPNEED_FILE).name} -- the hand-written original.\n"
-            f"### popneed_currency keeps two entries: local_currency (weight 0.1, the fallback\n"
-            f"### for countries with no monetary system) and {keep} (0.25). The {n} dropped\n"
-            "### entries all carried the same weights, so a pop's currency need is satisfied\n"
-            "### exactly as before -- out of one good instead of 95 listed / 57 real ones.\n\n"
+            f"### popneed_currency now keeps ONE entry: {keep}. local_currency was merged\n"
+            "### into it and dropped with the rest, so a country with no monetary system\n"
+            "### covers the same need out of the same good as everyone else -- and can no\n"
+            "### longer undercut a real currency in a shared market, because there is no\n"
+            "### second, cheaper currency left to undercut it with.\n"
+            "###\n"
+            f"### The {n} dropped entries all carried the same weights, so a pop's currency\n"
+            "### need is satisfied exactly as before -- out of one good instead of 95.\n\n"
             ) + out, n
 
 
 def gen_modtypes(src: str, dead: set[str]) -> tuple[str, int]:
     out, n = src, 0
-    pat = re.compile(r"^[ \t]*(?:goods_(?:input|output)|state_sell_orders)_([a-z0-9_]+_c)_(?:add|mult|max_add)\s*=\s*\{", re.M)
+    # NOT `([a-z0-9_]+_c)`. local_currency was merged in too and does not end in _c;
+    # anchoring on the suffix left its two modifier types behind, pointing at a good
+    # that no longer exists.
+    pat = re.compile(r"^[ \t]*(?:goods_(?:input|output)|state_sell_orders)_([a-z0-9_]+?)_(?:add|mult|max_add)\s*=\s*\{", re.M)
     while True:
         m = pat.search(out)
         while m and m.group(1) not in dead:
@@ -500,8 +529,16 @@ def gen_modtypes(src: str, dead: set[str]) -> tuple[str, int]:
             ) + out, n
 
 
-def gen_static(src: str, path_name: str, dead: set[str], keep: str) -> tuple[str, list[str]]:
-    """95 identical per-currency lines collapse to one line for the kept good."""
+def gen_static(src: str, path_name: str, dead: set[str], keep: str,
+               rt: "Retarget | None" = None) -> tuple[str, list[str]]:
+    """95 identical per-currency lines collapse to one line for the kept good.
+
+    The collapse only fires on lines that are part of a per-currency LIST. A lone
+    reference somewhere else in the same file is not a list and is not collapsed --
+    no_money_production carries a single `state_sell_orders_local_currency_add`
+    and nothing else. Those are swept at the end by the ordinary retarget, or they
+    survive pointing at a good that no longer exists.
+    """
     notes: list[str] = []
     out: list[str] = []
     seen: set[str] = set()
@@ -509,7 +546,7 @@ def gen_static(src: str, path_name: str, dead: set[str], keep: str) -> tuple[str
         # The trailing `\s*$` used to be `\s*$` with no room for a comment, and E&F
         # marks the end of its currency lists with `#end_tag_1` on the same line as
         # the last entry. One line out of 95 slipped through every time.
-        m = re.match(r"^([ \t]*)(goods_(?:input|output)|state_sell_orders)_([a-z0-9_]+_c)_(add|mult|max_add)\s*=\s*(\S+)\s*(#.*)?$", line)
+        m = re.match(r"^([ \t]*)(goods_(?:input|output)|state_sell_orders)_([a-z0-9_]+?)_(add|mult|max_add)\s*=\s*(\S+)\s*(#.*)?$", line)
         if not m:
             if line.strip() in ("{", "}"):
                 seen.clear()
@@ -536,7 +573,7 @@ def gen_static(src: str, path_name: str, dead: set[str], keep: str) -> tuple[str
             "### These modifiers list every currency with the same value, which was E&F's way of\n"
             "### saying \"whichever currency this country actually issues\". With one currency good\n"
             "### the list is one line and the effect is identical.\n\n"
-            ) + "\n".join(out), notes
+            ) + (rt("\n".join(out)) if rt else "\n".join(out)), notes
 
 
 def gen_colors(src: str, dead: set[str]) -> tuple[str, int]:
@@ -668,40 +705,30 @@ def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
 
 
 def gen_loc(keep: str) -> dict[str, str]:
-    """The shared currency good, and the three regime currencies.
+    """The shared good, and the three regime currencies.
 
-    The good's own name still carries an experiment: E&F ships currency_name_mk, a
-    customizable localization of type = country covering all 95 currencies, and the
-    GUI has Goods.GetMarket and Market.GetOwner. If a goods name is rendered with
-    the market-goods object as its data context, the shared good names itself after
-    whoever owns the market it is shown in.
-
-    IT HAS NOT ACTUALLY BEEN TESTED YET. The first attempt lost to the E&F Russian
-    translation, which defines spe_uni_c and loads after the hotfix, so the game
-    showed its "Уни" and never reached this line. The hotfix has to sit below the
-    translation in the playset for this to be visible at all.
+    The shared good is named after local_currency, which was merged into it, and
+    wears its icon. That is what it is: the plain money every country makes,
+    whether or not it has a monetary system. A central bank turns it into one of
+    the three standard-backed prestige variants -- and a country without a monetary
+    system has no central bank, so it never gets past this.
     """
-    call = "[Goods.GetMarket.GetOwner.GetCustom('currency_name_mk')]"
     return {
         "english": ("l_english:\n\n"
-                    " # The shared currency good. The bracket asks the market's owner for its\n"
-                    " # currency name through E&F's own currency_name_mk -- an experiment, and\n"
-                    " # one that needs this mod loaded BELOW the E&F Russian translation, which\n"
-                    " # also defines this key. Written as \"Currency (...)\" so a missing data\n"
-                    " # context leaves a readable name instead of a raw key.\n"
-                    f' {keep}:0 "Currency ({call})"\n'
+                    " # The shared currency good -- local_currency was merged into it and this\n"
+                    " # is its name and icon. Plain money; a central bank raises it to one of\n"
+                    " # the three standard-backed variants below.\n"
+                    f' {keep}:0 "Local Currency"\n'
                     "\n"
                     " # The three regime currencies a company-owned central bank mints.\n"
                     ' zz_ef_cm_metallic_currency:0 "Metallic Standard"\n'
                     ' zz_ef_cm_exchange_currency:0 "Exchange Money"\n'
                     ' zz_ef_cm_fiat_currency:0 "Fiat Money"\n'),
         "russian": ("l_russian:\n\n"
-                    " # Общий товар-валюта. Скобка спрашивает у владельца рынка название его\n"
-                    " # валюты через родной currency_name_mk из E&F — это эксперимент, и он\n"
-                    " # требует, чтобы мод стоял НИЖЕ русского перевода E&F, который тоже\n"
-                    " # определяет этот ключ. Написано как «Валюта (…)», чтобы при отсутствии\n"
-                    " # контекста осталось читаемое имя, а не сырой ключ.\n"
-                    f' {keep}:0 "Валюта ({call})"\n'
+                    " # Общий товар-валюта — в него слит local_currency, отсюда имя и иконка.\n"
+                    " # Просто деньги; центробанк поднимает их до одного из трёх обеспеченных\n"
+                    " # вариантов ниже.\n"
+                    f' {keep}:0 "Местная валюта"\n'
                     "\n"
                     " # Три режимные валюты, которые чеканит центробанк во владении компании.\n"
                     ' zz_ef_cm_metallic_currency:0 "Металлический стандарт"\n'
@@ -1241,6 +1268,33 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
 
 
 
+def gen_modifier_types(keep: str) -> str:
+    """The state-scope sell-orders modifier for the shared good.
+
+    Modifier types are NOT generated per good by the engine -- E&F declares each one
+    by hand, which is why state_sell_orders_local_currency_add exists in
+    00_ef_state_modifier_types.txt and no equivalent exists for spe_uni_c. Merging
+    local_currency into it needs that equivalent, or the recomputed issuance in
+    zz_ef_local_currency_fix.txt points at a modifier that is not there.
+
+    A new key, so a plain declaration is right -- REPLACE_OR_CREATE: is for
+    overriding something that already exists.
+    """
+    return (BANNER +
+            f"### Source: the shape of state_sell_orders_local_currency_add in E&F's own\n"
+            f"### common/modifier_type_definitions/00_ef_state_modifier_types.txt.\n"
+            f"###\n"
+            f"### Needed because local_currency is merged into {keep} and the issuance for\n"
+            f"### countries without a monetary system has to land somewhere.\n\n"
+            f"state_sell_orders_{keep}_add = {{\n"
+            f"\tdecimals = 0\n"
+            f"\tcolor = good\n"
+            f"\tgame_data = {{\n"
+            f"\t\tai_value = 0\n"
+            f"\t}}\n"
+            f"}}\n")
+
+
 # --- the central bank is born owned ----------------------------------------
 
 # tag -> the flavoured E&F bank company that IS that country's central bank.
@@ -1766,12 +1820,15 @@ def main() -> int:
     print(f"     pop-need entries dropped: {n}")
     emit(mod / POPNEED_FILE, text, args.check, acc)
 
+    emit(mod / "common/modifier_type_definitions/zz_ef_cm_modifier_types.txt",
+         gen_modifier_types(args.keep), args.check, acc)
+
     text, n = gen_modtypes(read(ef / MODTYPE_FILE), dead)
     print(f"     modifier types dropped: {n}")
     emit(mod / MODTYPE_FILE, text, args.check, acc)
 
     for f in STATIC_FILES:
-        text, notes = gen_static(read(ef / f), f, dead, args.keep)
+        text, notes = gen_static(read(ef / f), f, dead, args.keep, rt)
         for x in dict.fromkeys(notes):
             print(f"     {Path(f).stem}: {x}")
         emit(mod / f, text, args.check, acc)
