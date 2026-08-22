@@ -694,16 +694,18 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
     mod, keeps working untouched. Same for the icon. Zero translation work, and no
     second set of names to keep in sync with the first.
 
-    WHICH ONE A COMPANY PRODUCES is decided by `possible`, not by the company.
-    Company -> country cannot be derived from the files: only 6 of E&F's 103
-    companies name a tag at all, the rest go by interest markers and state regions.
-    So every bank company is offered all 95, and each prestige good is gated on the
-    currency law behind it. A country holding law_pound_sterling_currency can only
-    ever match one of them.
+    NO `possible` BLOCK, AND THAT IS THE POINT. These used to carry
+    `possible = { has_law = law_type:law_<cur>_currency }`, on the theory that the
+    gate would pick the right currency for each country. It does not gate anything
+    useful: vanilla only ever writes `has_dlc_feature` in `possible`, and with the
+    law test in there every central bank in the world minted the Iraqi dinar --
+    the same one for everybody, which is exactly what a trigger that cannot see the
+    country looks like.
 
-    That gate is the thing to watch in game. Vanilla only ever uses `possible` here
-    for `has_dlc_feature`, so whether it is evaluated in country scope is not
-    something the files can settle.
+    Selection is the company's job instead: each generated bank company lists
+    exactly one currency and therefore has nothing to choose from. See
+    zz_ef_cm_generic_banks.txt. An ungated `possible` here means "this good exists",
+    which is all vanilla ever uses it for.
     """
     out = []
     n = 0
@@ -713,9 +715,6 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
             icon = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
         out.append(
             f"{name}_c = {{\n"
-            f"\tpossible = {{\n"
-            f"\t\thas_law = law_type:law_{name}_currency\n"
-            f"\t}}\n"
             f"\tbase_good = {keep}\n"
             f"\tprestige_bonus = 0.1\n"
             f'\ttexture = "{icon}"\n'
@@ -732,8 +731,15 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
             "### consume them.\n"
             "###\n"
             "### Produced only by a company that owns a building making the base good -- which\n"
-            "### is why building_bank has to be ownable and has to be in the bank companies'\n"
-            "### building_types. See zz_ef_cm_bank.txt and zz_ef_cm_companies.txt.\n\n")
+            "### is why building_bank has to be ownable and has to be on the owning company's\n"
+            "### building_types. See zz_ef_cm_bank.txt and zz_ef_cm_generic_banks.txt.\n"
+            "###\n"
+            "### DELIBERATELY NO `possible` BLOCK. These carried\n"
+            "### `possible = { has_law = law_type:law_<cur>_currency }` and it gated nothing:\n"
+            "### every central bank on earth minted the Iraqi dinar, the same one for every\n"
+            "### country, which is what a trigger that cannot see the country looks like.\n"
+            "### Vanilla only ever writes has_dlc_feature in `possible`. The choice is made\n"
+            "### by giving each bank company exactly one currency to produce.\n\n")
     return head + "".join(out), n
 
 
