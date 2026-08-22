@@ -835,41 +835,32 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 
 # Currencies that keep their own name and icon, on top of the generic one.
 #
-# CONFIRMED IN GAME: selection is per company, exactly as vanilla wires it --
+# THE BUDGET IS THREE PRESTIGE GOODS PER BASE GOOD, WORLDWIDE. Two runs pinned it
+# down exactly:
 #
-#   company_krupp             -> prestige_good_krupp_guns        base_good=artillery
-#   company_schneider_creusot -> prestige_good_schneider_guns    base_good=artillery
-#   company_trubia            -> prestige_good_generic_artillery base_good=artillery
+#   three defined  -> Britain minted the pound, France the franc, everyone else
+#                     the generic one. All three resolved correctly.
+#   ten defined    -> Britain still minted the pound, and every other country in
+#                     the test minted the FRANC -- including Russia, the USA,
+#                     Austria, Prussia, China, Japan and Turkey, each of which had
+#                     a company pointing at its own currency.
 #
-# -- and `possible` on a prestige good is used for nothing but has_dlc_feature.
-# With three variants on spe_uni_c, Britain minted the pound, France the franc and
-# everybody else the generic one. With ninety-five, every central bank on earth
-# minted the same one. So the breaking point is the COUNT, and three is safe.
+# So only the first three declarations in the file become real slots, and anything
+# declared past them falls back to the third. That also explains the very first
+# symptom, which looked inexplicable at the time: with ninety-five declared, the
+# first three were dinar_c, dinar_algerian_dinar_c and dinar_iraqi_dinar_c, and the
+# whole world minted the Iraqi dinar -- the third one.
 #
-# WHAT IS STILL OPEN, AND WHAT THIS LIST IS NOW TESTING: whether the limit is per
-# base good in the world, or per base good IN A MARKET. Nothing seen so far
-# separates the two -- with 95 candidates and either rule, every market would
-# resolve to the same variant, which is what happened.
+# Vanilla's own numbers say the same thing without being asked: 40 base goods carry
+# prestige variants, 17 with one, 14 with two, 9 with three, and none with four.
 #
-# These nine are the countries that start in their own separate markets, one
-# currency each. If they all mint their own, the limit is per market and the
-# original plan is back on: give every country its own currency, and only worry
-# about a market that ends up holding more than three at once (imports and
-# customs unions can do that). If they collapse to one, the limit is global,
-# three is the whole budget, and this list goes back to two.
-#
-# Vanilla's own numbers, for reference: 40 base goods carry prestige variants,
-# 17 with one, 14 with two, 9 with three, none with four.
+# THE RULE FOR EDITING THIS LIST: at most two entries, because the generic currency
+# takes the third slot and every company that is not on this list points at it.
+# Add a third and the countries that should mint the generic one will mint whatever
+# lands in slot three instead.
 SHOWCASE_CURRENCIES = [
     "pound_sterling",              # GBR
     "franc_french_franc",          # FRA
-    "spe_ruble",                   # RUS
-    "dollar_united_states_dollar", # USA
-    "gulden",                      # AUS
-    "thaler_prussian_thaler",      # PRU
-    "spe_yuan",                    # CHI
-    "spe_yen",                     # JAP
-    "lira_ottoman_lira",           # TUR
 ]
 
 
@@ -908,6 +899,12 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
             f"\tprestige_bonus = 0.1\n"
             f'\ttexture = "{icon}"\n'
             f"}}\n\n")
+    if len(SHOWCASE_CURRENCIES) > 2:
+        raise SystemExit(
+            f"SHOWCASE_CURRENCIES has {len(SHOWCASE_CURRENCIES)} entries. The engine keeps three\n"
+            "prestige goods per base good and the generic currency takes one of them; anything\n"
+            "past the third declaration falls back to whatever is in slot three. Measured in\n"
+            "game -- see the note next to SHOWCASE_CURRENCIES.")
     for cur in SHOWCASE_CURRENCIES:
         if cur not in names:
             raise SystemExit(f"SHOWCASE_CURRENCIES: {cur} is not one of the {len(names)} currencies")

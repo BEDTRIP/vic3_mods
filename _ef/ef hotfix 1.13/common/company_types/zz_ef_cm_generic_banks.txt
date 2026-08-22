@@ -1389,7 +1389,7 @@ zz_ef_cm_bank_dollar_united_states_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_united_states_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2430,7 +2430,7 @@ zz_ef_cm_bank_gulden = {
 	}
 
 	possible_prestige_goods = {
-		gulden_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3699,7 +3699,7 @@ zz_ef_cm_bank_lira_ottoman_lira = {
 	}
 
 	possible_prestige_goods = {
-		lira_ottoman_lira_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6547,7 +6547,7 @@ zz_ef_cm_bank_spe_ruble = {
 	}
 
 	possible_prestige_goods = {
-		spe_ruble_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6696,7 +6696,7 @@ zz_ef_cm_bank_spe_yen = {
 	}
 
 	possible_prestige_goods = {
-		spe_yen_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6771,7 +6771,7 @@ zz_ef_cm_bank_spe_yuan = {
 	}
 
 	possible_prestige_goods = {
-		spe_yuan_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6996,7 +6996,7 @@ zz_ef_cm_bank_thaler_prussian_thaler = {
 	}
 
 	possible_prestige_goods = {
-		thaler_prussian_thaler_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
