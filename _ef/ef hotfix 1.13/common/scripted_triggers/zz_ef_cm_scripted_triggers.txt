@@ -5,8 +5,12 @@
 ### The trigger lists every currency good by key, and the ones we remove would be
 ### unresolvable references. local_currency is deliberately NOT added: the trigger
 ### hides currencies from the ordinary market list, and local_currency belongs there.
+###
+### REPLACE_OR_CREATE: is what makes this override at all. Without it E&F's
+### original 95-good list stayed live and its market GUI logged ~12,000 script
+### errors in two seconds -- see the note next to OVERRIDE in the generator.
 
-market_goods_is_currency = {
+REPLACE_OR_CREATE:market_goods_is_currency = {
 	OR = {
 		goods = g:spe_uni_c
 	}

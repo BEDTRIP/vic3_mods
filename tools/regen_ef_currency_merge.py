@@ -106,6 +106,36 @@ BANNER = ("### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT\n"
           "### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.\n"
           "###\n")
 
+# Overriding an entry that already exists needs the REPLACE_OR_CREATE: prefix.
+# Simply repeating the key in a later file DOES NOTHING -- the first definition
+# stays live. This cost a full test round to find, and it is invisible except in
+# the log: repeating market_goods_is_currency without the prefix left E&F's
+# original list of 95 currency goods in play, 94 of which the merge had removed,
+# and E&F's market GUI calls that trigger per market good every frame:
+#
+#   [jomini_script_system.cpp:247]: Script system error!
+#     Error: Invalid right side during comparison 'g'
+#     Script location: common/scripted_triggers/00_ef_custom_trigger.txt:1467
+#     common/scripted_guis/09_ef_other.txt:2095
+#
+# -- 11,905 of those in two seconds, which rotated the entire error.log buffer and
+# made every other problem invisible. The same silence hid the rewritten central
+# bank spawners: they were never called, so the bank stayed government property.
+#
+# REPLACE_OR_CREATE: rather than REPLACE: because these files mix overrides with
+# new keys, and REPLACE: on a key that does not exist yet is an error.
+#
+# This applies to scripted_triggers, scripted_effects and script_values alike.
+# It does NOT apply to a file that overrides another file BY PATH (goods,
+# pop_needs, the static modifiers) -- there the whole file is replaced.
+OVERRIDE = "REPLACE_OR_CREATE:"
+
+
+def override_keys(text: str) -> str:
+    """Prefix every top-level `key = {` in a generated block with REPLACE_OR_CREATE:."""
+    return re.sub(r"(?m)^(?![\s#])(?!REPLACE|INJECT|TRY_)([A-Za-z_][A-Za-z0-9_]*)(\s*=\s*\{)",
+                  OVERRIDE + r"\1\2", text)
+
 
 # --- parsing helpers --------------------------------------------------------
 
@@ -595,7 +625,7 @@ def gen_values(ef: Path, rt: Retarget) -> tuple[str, int]:
             # has to start with the same key we read in.
             if not re.match(r"^" + re.escape(key) + r"\s*=\s*\{", emitted):
                 raise ValueError(f"{path}: emitted block does not start with {key!r}")
-            out.append(emitted + "\n")
+            out.append(OVERRIDE + emitted + "\n")
             n += 1
     head = (BANNER +
             f"### Source: E&F's own {CURVAL_FILE}\n"
@@ -609,8 +639,11 @@ def gen_values(ef: Path, rt: Retarget) -> tuple[str, int]:
             "### Most of these are dead weight inside E&F already (nothing references\n"
             "### <CUR>_c_market_goods_buy_orders and friends), but a script value pointing at a\n"
             "### good that does not exist is an error line at load, so they are retargeted\n"
-            "### rather than left behind. Same key later in load order wins.\n")
-    return head + "".join(out) + SHARE_BLOCK.replace("KEEP", rt.keep), n + 4
+            "### rather than left behind.\n"
+            "###\n"
+            "### REPLACE_OR_CREATE: on every key -- a bare repeat of the key does not\n"
+            "### override anything, see the note next to OVERRIDE in the generator.\n")
+    return head + "".join(out) + override_keys(SHARE_BLOCK.replace("KEEP", rt.keep)), n + 4
 
 
 def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
@@ -626,8 +659,12 @@ def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
             f"### Source: E&F's own {TRIGGER_FILE}.\n"
             "### The trigger lists every currency good by key, and the ones we remove would be\n"
             "### unresolvable references. local_currency is deliberately NOT added: the trigger\n"
-            "### hides currencies from the ordinary market list, and local_currency belongs there.\n\n"
-            "market_goods_is_currency = {\n\tOR = {\n" + body + "\n\t}\n}\n")
+            "### hides currencies from the ordinary market list, and local_currency belongs there.\n"
+            "###\n"
+            "### REPLACE_OR_CREATE: is what makes this override at all. Without it E&F's\n"
+            "### original 95-good list stayed live and its market GUI logged ~12,000 script\n"
+            "### errors in two seconds -- see the note next to OVERRIDE in the generator.\n\n"
+            + OVERRIDE + "market_goods_is_currency = {\n\tOR = {\n" + body + "\n\t}\n}\n")
 
 
 def gen_loc(keep: str) -> dict[str, str]:
@@ -1203,15 +1240,18 @@ def gen_ownership(ef: Path) -> tuple[dict[str, str], list[str]]:
         if n == 0:
             notes.append(f"WARNING {name}: no create_building rewritten -- E&F changed its shape")
         total += n
-        rewritten.append(body)
+        rewritten.append(override_keys(body))
     notes.append(f"central bank spawn sites rewritten: {total}")
 
     override = (BANNER +
                 f"### Source: E&F's own {SPAWN_FILE}, three effects taken verbatim with every\n"
                 "### create_building of the central bank replaced by zz_ef_cm_create_owned_bank.\n"
                 "###\n"
-                "### Same key later in the load order wins for scripted effects, so these three\n"
-                "### replace E&F's. They are copied rather than edited by hand because\n"
+                "### REPLACE_OR_CREATE: is what makes these three override E&F's -- repeating\n"
+                "### the key in a later file does nothing on its own, and the first round of\n"
+                "### this was silently inert for exactly that reason (see the note next to\n"
+                "### OVERRIDE in the generator). They are copied rather than edited by hand\n"
+                "### because\n"
                 "### macro_facilities_bc alone is 12,000 lines and 1,001 of those call sites --\n"
                 "### a switch over gdp_view crossed with the country list. All 1,001 are shaped\n"
                 "### identically, which is what makes one regex enough.\n"

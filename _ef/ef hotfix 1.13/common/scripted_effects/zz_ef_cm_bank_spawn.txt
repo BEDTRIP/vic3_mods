@@ -4,8 +4,11 @@
 ### Source: E&F's own common/scripted_effects/09_introduction_building_lvl.txt, three effects taken verbatim with every
 ### create_building of the central bank replaced by zz_ef_cm_create_owned_bank.
 ###
-### Same key later in the load order wins for scripted effects, so these three
-### replace E&F's. They are copied rather than edited by hand because
+### REPLACE_OR_CREATE: is what makes these three override E&F's -- repeating
+### the key in a later file does nothing on its own, and the first round of
+### this was silently inert for exactly that reason (see the note next to
+### OVERRIDE in the generator). They are copied rather than edited by hand
+### because
 ### macro_facilities_bc alone is 12,000 lines and 1,001 of those call sites --
 ### a switch over gdp_view crossed with the country list. All 1,001 are shaped
 ### identically, which is what makes one regex enough.
@@ -14,7 +17,7 @@
 ### building_bank, and the dispatcher has to name the building type literally
 ### anyway because add_ownership needs a company that can own that type.
 
-initialize_historic_macro_facilities_bc = { #history
+REPLACE_OR_CREATE:initialize_historic_macro_facilities_bc = { #history
 	add_technology_researched = banking
 	add_technology_researched = currency_standards
 	add_technology_researched = central_banking
@@ -35,7 +38,7 @@ initialize_historic_macro_facilities_bc = { #history
 	central_bank_modifier = yes
 }
 
-macro_facilities_bc = {
+REPLACE_OR_CREATE:macro_facilities_bc = {
 	#for country witch is_valid_country = yes but GDP < 5M
 	if = {
 		limit = {
@@ -8076,7 +8079,7 @@ macro_facilities_bc = {
 	#money_value_target_modification = yes #probleme de set de la currency target
 }
 
-central_bank_respawn_after_crisis = {
+REPLACE_OR_CREATE:central_bank_respawn_after_crisis = {
 	$CTRL_BANK_SITE$ = {
 		zz_ef_cm_create_owned_bank = { CB_SIZE = $CB_SIZE$ }
 	}
