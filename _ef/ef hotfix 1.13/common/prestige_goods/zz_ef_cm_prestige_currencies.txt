@@ -1,42 +1,61 @@
 ﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
-### One prestige variant of the shared currency good.
+### Three prestige variants of the shared currency good, one per monetary
+### regime. Every central bank company carries all three; the good's own
+### `possible` decides which one a country actually mints.
 ###
-### THIS USED TO BE 95, ONE PER CURRENCY, AND THAT IS WHY IT IS NOW ONE.
-### Every central bank on earth minted the Iraqi dinar -- through all 95 being
-### offered to every company, through one currency per company with the law gate
-### still on the good, and through one currency per company with no gate at all.
-### After the last of those NO company anywhere listed dinar_iraqi_dinar_c, and
-### the game still showed it. So the identity is resolved per BASE GOOD, not per
-### producer: 95 variants of spe_uni_c collapse onto one, and it was the third
-### one defined in the file.
+### WHY THREE AND NOT NINETY-FIVE. Only the first three declarations of a base
+### good's variants become real slots; anything past them falls back to the
+### third. Measured three times over: 3 declared -> all three correct; 10
+### declared -> Britain kept the pound and every other country minted the franc,
+### the third declaration; 95 declared -> the whole world minted the Iraqi
+### dinar, again the third. Vanilla never exceeds three either, and no define
+### controls it -- the number is in the executable.
 ###
-### Vanilla never puts more than three variants on one base good -- 40 base goods
-### carry prestige variants, 17 with one, 14 with two, 9 with three. E&F is the
-### only thing here that goes to four.
+### THE `possible` GATE IS UNPROVEN AT THIS SIZE. It was tried once with 95
+### goods and appeared to do nothing, but that test was ruined by the count,
+### and the gate was dropped before it was ever tried at three. Vanilla writes
+### nothing but has_dlc_feature here, so the files cannot say whether it is
+### evaluated in country scope. If it is, changing the monetary system law
+### changes the minted currency by itself -- no company swap, no rebuild, no
+### ownership lost. If it is not, every country will mint the metallic one and
+### the answer is that regimes have to be split across companies instead.
 ###
-### What is kept: the prestige bonus, the +20% throughput for buildings that
-### consume it, and the fact that only a company-owned central bank produces it.
-### What is lost: the per-country name and icon on the belt. The currency itself
-### is untouched -- every country still has its own monetary system law, its own
-### production method in the bank, and its own name in E&F's currency interface.
+### law_no_monetary_system has no entry on purpose: no monetary system means no
+### central bank, so there is nothing to mint.
 
-zz_ef_cm_national_currency = {
+zz_ef_cm_metallic_currency = {
+	possible = {
+		OR = {
+			has_law = law_type:law_gold_standard
+			has_law = law_type:law_silver_standard
+			has_law = law_type:law_bimetallism_standard
+		}
+	}
 	base_good = spe_uni_c
 	prestige_bonus = 0.1
-	texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
+	texture = "gfx/interface/icons/goods_icons/gold.dds"
 }
 
-pound_sterling_c = {
+zz_ef_cm_exchange_currency = {
+	possible = {
+		OR = {
+			has_law = law_type:law_gold_exchange_standard
+			has_law = law_type:law_external_exchange_standard
+		}
+	}
 	base_good = spe_uni_c
 	prestige_bonus = 0.1
-	texture = "gfx/interface/icons/goods_icons/currencies/pound_sterling.dds"
+	texture = "gfx/interface/icons/goods_icons/paper_gold.dds"
 }
 
-franc_french_franc_c = {
+zz_ef_cm_fiat_currency = {
+	possible = {
+		has_law = law_type:law_fiat_standard
+	}
 	base_good = spe_uni_c
 	prestige_bonus = 0.1
-	texture = "gfx/interface/icons/goods_icons/currencies/franc_french_franc.dds"
+	texture = "gfx/interface/icons/goods_icons/paper.dds"
 }
 

@@ -668,55 +668,45 @@ def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
 
 
 def gen_loc(keep: str) -> dict[str, str]:
-    """The shared currency good's name -- and an experiment on getting 95 back.
+    """The shared currency good, and the three regime currencies.
 
-    The three-prestige-goods ceiling is in the engine, so the per-country currency
-    name cannot come from there. This tries the other door: E&F already ships
-    `currency_name_mk`, a customizable localization of type = country covering all
-    95 currencies and resolving to keys the Russian translation already has
-    (pound_sterling -> "Фунт стерлингов", spe_ruble -> "Рубль"). The GUI has
-    Goods.GetMarket and Market.GetOwner. If a goods name is rendered with the
-    market-goods object as its data context, then the good can name itself after
-    whoever owns the market it is being shown in -- all 95, at the cost of nothing.
+    The good's own name still carries an experiment: E&F ships currency_name_mk, a
+    customizable localization of type = country covering all 95 currencies, and the
+    GUI has Goods.GetMarket and Market.GetOwner. If a goods name is rendered with
+    the market-goods object as its data context, the shared good names itself after
+    whoever owns the market it is shown in.
 
-    Written as "Валюта (…)" on purpose rather than as the bare call: if the context
-    is not there, the name still reads as Currency and only the bracket is empty or
-    broken, instead of every currency in the game turning into a raw key. debug.log
-    will name the failing data function either way -- that is how the last four
-    problems in this mod were found.
+    IT HAS NOT ACTUALLY BEEN TESTED YET. The first attempt lost to the E&F Russian
+    translation, which defines spe_uni_c and loads after the hotfix, so the game
+    showed its "Уни" and never reached this line. The hotfix has to sit below the
+    translation in the playset for this to be visible at all.
     """
     call = "[Goods.GetMarket.GetOwner.GetCustom('currency_name_mk')]"
     return {
         "english": ("l_english:\n\n"
-                    " # E&F Currency Merge: one shared currency good.\n"
-                    " #\n"
-                    " # EXPERIMENT: the bracket asks the market's owner for its currency name\n"
-                    " # through E&F's own currency_name_mk. If a goods name is rendered with the\n"
-                    " # market goods as its data context, every country gets its own currency\n"
-                    " # name back without spending a prestige slot -- and there are only three\n"
-                    " # of those per base good, measured in game.\n"
-                    " #\n"
-                    " # If the bracket comes out empty or raw, the answer is no: drop it and\n"
-                    ' # leave the plain name. debug.log names the failing data function.\n'
+                    " # The shared currency good. The bracket asks the market's owner for its\n"
+                    " # currency name through E&F's own currency_name_mk -- an experiment, and\n"
+                    " # one that needs this mod loaded BELOW the E&F Russian translation, which\n"
+                    " # also defines this key. Written as \"Currency (...)\" so a missing data\n"
+                    " # context leaves a readable name instead of a raw key.\n"
                     f' {keep}:0 "Currency ({call})"\n'
                     "\n"
-                    " # The prestige variant a company-owned central bank mints.\n"
-                    ' zz_ef_cm_national_currency:0 "National Currency"\n'),
+                    " # The three regime currencies a company-owned central bank mints.\n"
+                    ' zz_ef_cm_metallic_currency:0 "Metallic Standard"\n'
+                    ' zz_ef_cm_exchange_currency:0 "Exchange Money"\n'
+                    ' zz_ef_cm_fiat_currency:0 "Fiat Money"\n'),
         "russian": ("l_russian:\n\n"
-                    " # E&F Currency Merge: единый товар-валюта.\n"
-                    " #\n"
-                    " # ЭКСПЕРИМЕНТ: скобка спрашивает у владельца рынка название его валюты\n"
-                    " # через родной currency_name_mk из E&F. Если имя товара рисуется в\n"
-                    " # контексте рыночного товара, каждая страна получает своё название\n"
-                    " # обратно, не тратя престижный слот — а их всего три на базовый товар,\n"
-                    " # это измерено в игре.\n"
-                    " #\n"
-                    " # Если скобка окажется пустой или сырой — ответ отрицательный, убираем\n"
-                    " # её и оставляем простое имя. Упавшую функцию назовёт debug.log.\n"
+                    " # Общий товар-валюта. Скобка спрашивает у владельца рынка название его\n"
+                    " # валюты через родной currency_name_mk из E&F — это эксперимент, и он\n"
+                    " # требует, чтобы мод стоял НИЖЕ русского перевода E&F, который тоже\n"
+                    " # определяет этот ключ. Написано как «Валюта (…)», чтобы при отсутствии\n"
+                    " # контекста осталось читаемое имя, а не сырой ключ.\n"
                     f' {keep}:0 "Валюта ({call})"\n'
                     "\n"
-                    " # Престижный вариант, который чеканит центробанк во владении компании.\n"
-                    ' zz_ef_cm_national_currency:0 "Национальная валюта"\n'),
+                    " # Три режимные валюты, которые чеканит центробанк во владении компании.\n"
+                    ' zz_ef_cm_metallic_currency:0 "Металлический стандарт"\n'
+                    ' zz_ef_cm_exchange_currency:0 "Обменные деньги"\n'
+                    ' zz_ef_cm_fiat_currency:0 "Фиатные деньги"\n'),
     }
 
 
@@ -862,111 +852,93 @@ GENERIC_BANK = "zz_ef_cm_bank_"
 
 NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 
-# Currencies that keep their own name and icon, on top of the generic one.
+# The three prestige currencies, one per monetary regime.
 #
-# THE BUDGET IS THREE PRESTIGE GOODS PER BASE GOOD, WORLDWIDE. Two runs pinned it
-# down exactly:
+# THREE IS THE CEILING, MEASURED. Only the first three declarations of a base
+# good's prestige variants become real slots; anything past them falls back to the
+# third. Three declared -> Britain minted the pound, France the franc, everyone
+# else the generic one, all correct. Ten declared -> Britain kept the pound and
+# every other country minted the FRANC, the third declaration. Ninety-five
+# declared -> the whole world minted the Iraqi dinar, again the third. Vanilla
+# never exceeds three either: of its 40 base goods with prestige variants, 17 have
+# one, 14 two, 9 three, none four. No define controls it.
 #
-#   three defined  -> Britain minted the pound, France the franc, everyone else
-#                     the generic one. All three resolved correctly.
-#   ten defined    -> Britain still minted the pound, and every other country in
-#                     the test minted the FRANC -- including Russia, the USA,
-#                     Austria, Prussia, China, Japan and Turkey, each of which had
-#                     a company pointing at its own currency.
+# So the three slots go to the three monetary regimes instead of to three
+# arbitrary countries. Every central bank company carries all three and the good's
+# own `possible` picks which one applies.
 #
-# So only the first three declarations in the file become real slots, and anything
-# declared past them falls back to the third. That also explains the very first
-# symptom, which looked inexplicable at the time: with ninety-five declared, the
-# first three were dinar_c, dinar_algerian_dinar_c and dinar_iraqi_dinar_c, and the
-# whole world minted the Iraqi dinar -- the third one.
+# THAT `possible` IS THE OPEN QUESTION THIS BUILD ANSWERS. It was tried once
+# before, with `has_law = law_type:law_<cur>_currency` on 95 goods, and every
+# country minted the same one -- but that test was ruined by the count, not by the
+# gate, and the gate was removed before it was ever tried at three. Vanilla only
+# ever writes has_dlc_feature here, so the files cannot settle whether it is
+# evaluated in country scope. If it is, a country switching its monetary system
+# law switches currency by itself, with no company change and no rebuild.
 #
-# Vanilla's own numbers say the same thing without being asked: 40 base goods carry
-# prestige variants, 17 with one, 14 with two, 9 with three, and none with four.
-#
-# THE RULE FOR EDITING THIS LIST: at most two entries, because the generic currency
-# takes the third slot and every company that is not on this list points at it.
-# Add a third and the countries that should mint the generic one will mint whatever
-# lands in slot three instead.
-SHOWCASE_CURRENCIES = [
-    "pound_sterling",              # GBR
-    "franc_french_franc",          # FRA
+# law_no_monetary_system is deliberately absent: a country without a monetary
+# system has no central bank, so nothing mints anything.
+PRESTIGE_REGIMES = [
+    ("zz_ef_cm_metallic_currency",
+     ["law_gold_standard", "law_silver_standard", "law_bimetallism_standard"],
+     "gfx/interface/icons/goods_icons/gold.dds"),
+    ("zz_ef_cm_exchange_currency",
+     ["law_gold_exchange_standard", "law_external_exchange_standard"],
+     "gfx/interface/icons/goods_icons/paper_gold.dds"),
+    ("zz_ef_cm_fiat_currency",
+     ["law_fiat_standard"],
+     "gfx/interface/icons/goods_icons/paper.dds"),
 ]
 
 
 def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
-    """ONE prestige variant of the shared currency good. Not ninety-five.
+    """One prestige variant per monetary regime, gated by the law behind it.
 
-    Ninety-five was the plan and it does not work. Every central bank in the world
-    minted the same currency -- the Iraqi dinar -- through three different attempts
-    at making the choice per country:
+    Ninety-five, one per currency, is not possible: see the note on
+    PRESTIGE_REGIMES. Three is, and the three regimes are what fits in three.
 
-      1. all 95 offered to every company, gated by
-         `possible = { has_law = law_type:law_<cur>_currency }`;
-      2. exactly one currency per company, gate still in place;
-      3. exactly one currency per company, gate removed entirely.
-
-    Step 3 is what settles it. After it, NO company anywhere listed
-    dinar_iraqi_dinar_c -- only zz_ef_cm_bank_dinar_iraqi_dinar did, and no country
-    in 1836 holds that law or tag. The game kept showing the Iraqi dinar anyway. So
-    the name does not come from the company's list at all: with many prestige
-    variants sharing one base_good, the engine resolves the identity per BASE GOOD,
-    not per producer, and 95 variants of spe_uni_c collapse onto one of them.
-
-    dinar_iraqi_dinar_c was the third prestige good defined in the file, which is
-    also as far as vanilla ever goes: 40 base goods carry a prestige variant, and
-    the most any of them carries is three.
-
-    One variant cannot be resolved to the wrong one. The country's own currency has
-    not gone anywhere -- it is still its monetary system law, still named in E&F's
-    own currency interface, still its own production method in the bank.
+    Icons are picked for meaning, not decoration: gold coin for the metallic
+    standards, banknote for fiat, and E&F's own paper_gold -- paper backed by gold
+    -- for the two exchange standards.
     """
-    icon = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
-    if not (ef / icon).exists():
-        icon = f"gfx/interface/icons/goods_icons/{keep}.dds"
-    body = (f"{NATIONAL_CURRENCY} = {{\n"
-            f"\tbase_good = {keep}\n"
-            f"\tprestige_bonus = 0.1\n"
-            f'\ttexture = "{icon}"\n'
-            f"}}\n\n")
-    if len(SHOWCASE_CURRENCIES) > 2:
-        raise SystemExit(
-            f"SHOWCASE_CURRENCIES has {len(SHOWCASE_CURRENCIES)} entries. The engine keeps three\n"
-            "prestige goods per base good and the generic currency takes one of them; anything\n"
-            "past the third declaration falls back to whatever is in slot three. Measured in\n"
-            "game -- see the note next to SHOWCASE_CURRENCIES.")
-    for cur in SHOWCASE_CURRENCIES:
-        if cur not in names:
-            raise SystemExit(f"SHOWCASE_CURRENCIES: {cur} is not one of the {len(names)} currencies")
-        own = f"gfx/interface/icons/goods_icons/currencies/{cur}.dds"
-        if not (ef / own).exists():
-            own = icon
-        body += (f"{cur}_c = {{\n"
-                 f"\tbase_good = {keep}\n"
-                 f"\tprestige_bonus = 0.1\n"
-                 f'\ttexture = "{own}"\n'
-                 f"}}\n\n")
+    out = []
+    for key, laws, icon in PRESTIGE_REGIMES:
+        if len(laws) == 1:
+            gate = f"\t\thas_law = law_type:{laws[0]}\n"
+        else:
+            gate = ("\t\tOR = {\n"
+                    + "".join(f"\t\t\thas_law = law_type:{l}\n" for l in laws)
+                    + "\t\t}\n")
+        out.append(f"{key} = {{\n"
+                   f"\tpossible = {{\n{gate}\t}}\n"
+                   f"\tbase_good = {keep}\n"
+                   f"\tprestige_bonus = 0.1\n"
+                   f'\ttexture = "{icon}"\n'
+                   f"}}\n\n")
     head = (BANNER +
-            "### One prestige variant of the shared currency good.\n"
+            "### Three prestige variants of the shared currency good, one per monetary\n"
+            "### regime. Every central bank company carries all three; the good's own\n"
+            "### `possible` decides which one a country actually mints.\n"
             "###\n"
-            "### THIS USED TO BE 95, ONE PER CURRENCY, AND THAT IS WHY IT IS NOW ONE.\n"
-            "### Every central bank on earth minted the Iraqi dinar -- through all 95 being\n"
-            "### offered to every company, through one currency per company with the law gate\n"
-            "### still on the good, and through one currency per company with no gate at all.\n"
-            "### After the last of those NO company anywhere listed dinar_iraqi_dinar_c, and\n"
-            "### the game still showed it. So the identity is resolved per BASE GOOD, not per\n"
-            "### producer: 95 variants of spe_uni_c collapse onto one, and it was the third\n"
-            "### one defined in the file.\n"
+            "### WHY THREE AND NOT NINETY-FIVE. Only the first three declarations of a base\n"
+            "### good's variants become real slots; anything past them falls back to the\n"
+            "### third. Measured three times over: 3 declared -> all three correct; 10\n"
+            "### declared -> Britain kept the pound and every other country minted the franc,\n"
+            "### the third declaration; 95 declared -> the whole world minted the Iraqi\n"
+            "### dinar, again the third. Vanilla never exceeds three either, and no define\n"
+            "### controls it -- the number is in the executable.\n"
             "###\n"
-            "### Vanilla never puts more than three variants on one base good -- 40 base goods\n"
-            "### carry prestige variants, 17 with one, 14 with two, 9 with three. E&F is the\n"
-            "### only thing here that goes to four.\n"
+            "### THE `possible` GATE IS UNPROVEN AT THIS SIZE. It was tried once with 95\n"
+            "### goods and appeared to do nothing, but that test was ruined by the count,\n"
+            "### and the gate was dropped before it was ever tried at three. Vanilla writes\n"
+            "### nothing but has_dlc_feature here, so the files cannot say whether it is\n"
+            "### evaluated in country scope. If it is, changing the monetary system law\n"
+            "### changes the minted currency by itself -- no company swap, no rebuild, no\n"
+            "### ownership lost. If it is not, every country will mint the metallic one and\n"
+            "### the answer is that regimes have to be split across companies instead.\n"
             "###\n"
-            "### What is kept: the prestige bonus, the +20% throughput for buildings that\n"
-            "### consume it, and the fact that only a company-owned central bank produces it.\n"
-            "### What is lost: the per-country name and icon on the belt. The currency itself\n"
-            "### is untouched -- every country still has its own monetary system law, its own\n"
-            "### production method in the bank, and its own name in E&F's currency interface.\n\n")
-    return head + body, 1 + len(SHOWCASE_CURRENCIES)
+            "### law_no_monetary_system has no entry on purpose: no monetary system means no\n"
+            "### central bank, so there is nothing to mint.\n\n")
+    return head + "".join(out), len(PRESTIGE_REGIMES)
 
 
 def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
@@ -1061,9 +1033,9 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
             f"\tuses_dynamic_naming = yes\n\n"
             f"{indent(names_block)}\n\n"
             f"{indent(buildings)}\n\n"
-            f"\tpossible_prestige_goods = {{\n\t\t"
-            f"{cur + '_c' if cur in SHOWCASE_CURRENCIES else NATIONAL_CURRENCY}"
-            f"\n\t}}\n\n"
+            f"\tpossible_prestige_goods = {{\n"
+            + "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
+            + f"\t}}\n\n"
             f"\tpotential = {{\n\t\tOR = {{\n"
             f"\t\t\thas_law = law_type:law_{cur}_currency\n"
             + "".join(f"\t\t\tc:{t} ?= this\n" for t in tags_of.get(cur, ()))
