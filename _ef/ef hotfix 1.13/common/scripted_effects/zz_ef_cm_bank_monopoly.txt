@@ -1,0 +1,636 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: the same tag -> company table as zz_ef_cm_bank_ownership.txt.
+###
+### SYNTAX NOT CONFIRMED IN GAME. add_company_monopoly and
+### company_has_building_type_monopoly are named in vanilla's
+### effect_localization / trigger_localization but called from nowhere in
+### vanilla or in any mod in this repo, so their shape is read off the loc
+### strings: ADD_COMPANY_MONOPOLY_FIRST is "[COMPANY.GetName] gains a company
+### monopoly on [TARGET_BUILDING_TYPE.GetName]", and a `first` slot of COMPANY is
+### how effect_localization marks the scope an effect runs in -- hence company
+### scope, one building type as the value. `bt:building_bank` is the one
+### confirmed part (mp1_charters_of_commerce_achievements.txt:146).
+###
+### CHECK error.log AFTER THE FIRST RUN. Kept in its own file so that if the
+### game rejects it, nothing else in the mod goes down with it.
+###
+### This is the direct grant. The +1 free charter on
+### zz_ef_cm_central_bank_charter stays either way: it is what lets the player
+### hand the company a monopoly charter without spending one of the country's
+### four, which is the route the game itself offers.
+
+zz_ef_cm_bank_monopoly = {
+	if = {
+		limit = {
+			has_company = company_type:company_BasicBank
+			company:company_BasicBank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BasicBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:ARG ?= this
+			has_company = company_type:company_BancoNacionArgentina
+			company:company_BancoNacionArgentina = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoNacionArgentina = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:ARG ?= this
+			has_company = company_type:company_BancoProvincia
+			company:company_BancoProvincia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoProvincia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:AUS ?= this
+			has_company = company_type:company_OesterreichischeNationalbank
+			company:company_OesterreichischeNationalbank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_OesterreichischeNationalbank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:BAV ?= this
+			has_company = company_type:company_BayerischeHypothekenUndWechselBank
+			company:company_BayerischeHypothekenUndWechselBank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BayerischeHypothekenUndWechselBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:BEL ?= this
+			has_company = company_type:company_BanqueNationaleDeBelgique
+			company:company_BanqueNationaleDeBelgique = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BanqueNationaleDeBelgique = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:BIC ?= this
+			has_company = company_type:company_ImperialBankofIndia
+			company:company_ImperialBankofIndia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_ImperialBankofIndia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:BOL ?= this
+			has_company = company_type:company_BancoNacionalDeBolivia
+			company:company_BancoNacionalDeBolivia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoNacionalDeBolivia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:BRZ ?= this
+			has_company = company_type:company_BancoDoBrasil
+			company:company_BancoDoBrasil = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoDoBrasil = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CAN ?= this
+			has_company = company_type:company_CanadianImperialBankOfCommerce
+			company:company_CanadianImperialBankOfCommerce = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_CanadianImperialBankOfCommerce = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CHI ?= this
+			has_company = company_type:company_DaQingBank
+			company:company_DaQingBank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_DaQingBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CHI ?= this
+			has_company = company_type:company_BankHSBC
+			company:company_BankHSBC = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankHSBC = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CHL ?= this
+			has_company = company_type:company_BancoEstado
+			company:company_BancoEstado = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoEstado = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CHL ?= this
+			has_company = company_type:company_BancoDeValparaiso
+			company:company_BancoDeValparaiso = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoDeValparaiso = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CLM ?= this
+			has_company = company_type:company_BancoRepublicaColombia
+			company:company_BancoRepublicaColombia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoRepublicaColombia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:COS ?= this
+			has_company = company_type:company_BancoCentralDeCostaRica
+			company:company_BancoCentralDeCostaRica = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoCentralDeCostaRica = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:CUB ?= this
+			has_company = company_type:company_BancoEspanolDeLaHabana
+			company:company_BancoEspanolDeLaHabana = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoEspanolDeLaHabana = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:DEN ?= this
+			has_company = company_type:company_LandmandsBanken
+			company:company_LandmandsBanken = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_LandmandsBanken = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:EGY ?= this
+			has_company = company_type:company_BanqueEgyptienne
+			company:company_BanqueEgyptienne = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BanqueEgyptienne = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:FRA ?= this
+			has_company = company_type:company_BanqueDeFrance
+			company:company_BanqueDeFrance = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BanqueDeFrance = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:GBR ?= this
+			has_company = company_type:company_BankofEngland
+			company:company_BankofEngland = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankofEngland = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:GER ?= this
+			has_company = company_type:company_Reichsbank
+			company:company_Reichsbank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_Reichsbank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:GER ?= this
+			has_company = company_type:company_PreussischeSeehandlung
+			company:company_PreussischeSeehandlung = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_PreussischeSeehandlung = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:GRE ?= this
+			has_company = company_type:company_bankofgreec
+			company:company_bankofgreec = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_bankofgreec = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:GUA ?= this
+			has_company = company_type:company_BancoCentralDeGuatemala
+			company:company_BancoCentralDeGuatemala = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoCentralDeGuatemala = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:HON ?= this
+			has_company = company_type:company_BancoCentralDeHonduras
+			company:company_BancoCentralDeHonduras = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoCentralDeHonduras = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:ITA ?= this
+			has_company = company_type:company_BancaDItalia
+			company:company_BancaDItalia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancaDItalia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:ITA ?= this
+			has_company = company_type:company_Rothschild_Bank_ita
+			company:company_Rothschild_Bank_ita = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_Rothschild_Bank_ita = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:JAP ?= this
+			has_company = company_type:company_BankOfJapan
+			company:company_BankOfJapan = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankOfJapan = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:JAP ?= this
+			has_company = company_type:company_Mitsubishiexchangehousebank
+			company:company_Mitsubishiexchangehousebank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_Mitsubishiexchangehousebank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:MEX ?= this
+			has_company = company_type:company_BancoDeMexico
+			company:company_BancoDeMexico = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoDeMexico = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:NET ?= this
+			has_company = company_type:company_DeNederlandscheBank
+			company:company_DeNederlandscheBank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_DeNederlandscheBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:NGF ?= this
+			has_company = company_type:company_PreussischeSeehandlung
+			company:company_PreussischeSeehandlung = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_PreussischeSeehandlung = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:NOR ?= this
+			has_company = company_type:company_ChristianiaBank
+			company:company_ChristianiaBank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_ChristianiaBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:NSW ?= this
+			has_company = company_type:company_ColonialBankOfAustralia
+			company:company_ColonialBankOfAustralia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_ColonialBankOfAustralia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:ONT ?= this
+			has_company = company_type:company_RoyalBankofCanada
+			company:company_RoyalBankofCanada = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_RoyalBankofCanada = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:PAN ?= this
+			has_company = company_type:company_BancoNacionalDePanama
+			company:company_BancoNacionalDePanama = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoNacionalDePanama = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:PER ?= this
+			has_company = company_type:company_BankMelliIran
+			company:company_BankMelliIran = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankMelliIran = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:PER ?= this
+			has_company = company_type:company_ImperialBankofPersia
+			company:company_ImperialBankofPersia = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_ImperialBankofPersia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:POR ?= this
+			has_company = company_type:company_BancoDePortugal
+			company:company_BancoDePortugal = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoDePortugal = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:PRG ?= this
+			has_company = company_type:company_BancoNacionalDelParaguay
+			company:company_BancoNacionalDelParaguay = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoNacionalDelParaguay = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:QUE ?= this
+			has_company = company_type:company_BankOfMontreal
+			company:company_BankOfMontreal = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankOfMontreal = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:RUS ?= this
+			has_company = company_type:company_StateBankRussianEmpire
+			company:company_StateBankRussianEmpire = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_StateBankRussianEmpire = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:SAF ?= this
+			has_company = company_type:company_BankSBoBSA
+			company:company_BankSBoBSA = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankSBoBSA = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:SAR ?= this
+			has_company = company_type:company_CassaDiRisparmioDiTorino
+			company:company_CassaDiRisparmioDiTorino = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_CassaDiRisparmioDiTorino = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:SPA ?= this
+			has_company = company_type:company_BankofSpain
+			company:company_BankofSpain = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BankofSpain = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:SWE ?= this
+			has_company = company_type:company_HandelsBanken
+			company:company_HandelsBanken = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_HandelsBanken = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:SWI ?= this
+			has_company = company_type:company_Bankenverein
+			company:company_Bankenverein = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_Bankenverein = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:TUR ?= this
+			has_company = company_type:company_OttomanBank
+			company:company_OttomanBank = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_OttomanBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:URU ?= this
+			has_company = company_type:company_BancoCentralDelUruguay
+			company:company_BancoCentralDelUruguay = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoCentralDelUruguay = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			c:VNZ ?= this
+			has_company = company_type:company_BancoCentralDeVenezuela
+			company:company_BancoCentralDeVenezuela = {
+				NOT = { company_has_building_type_monopoly = bt:building_bank }
+			}
+		}
+		company:company_BancoCentralDeVenezuela = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+}

@@ -44,4 +44,10 @@ zz_ef_cm_bank_company_upkeep = {
 		}
 		add_company = company_type:company_BasicBank
 	}
+
+	### 3. And the monopoly on central banks goes to whoever holds it.
+	if = {
+		limit = { zz_ef_cm_has_central_bank = yes }
+		zz_ef_cm_bank_monopoly = yes
+	}
 }

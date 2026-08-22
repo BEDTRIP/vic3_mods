@@ -901,6 +901,11 @@ def gen_upkeep(ef: Path) -> dict[str, str]:
                "\t\t\tNOT = { zz_ef_cm_has_bank_company = yes }\n"
                "\t\t}\n"
                "\t\tadd_company = company_type:company_BasicBank\n"
+               "\t}\n\n"
+               "\t### 3. And the monopoly on central banks goes to whoever holds it.\n"
+               "\tif = {\n"
+               "\t\tlimit = { zz_ef_cm_has_central_bank = yes }\n"
+               "\t\tzz_ef_cm_bank_monopoly = yes\n"
                "\t}\n"
                "}\n")
 
@@ -1222,6 +1227,81 @@ def gen_ownership(ef: Path) -> tuple[dict[str, str], list[str]]:
     }, notes
 
 
+# --- the monopoly on central banks ------------------------------------------
+
+
+def gen_monopoly(ef: Path) -> str:
+    """Give the bank company a company monopoly on building_bank.
+
+    UNVERIFIED SYNTAX -- read error.log after the first run with this.
+    Nothing in vanilla or in any of the mods here calls these, so the shape is
+    inferred rather than copied:
+
+      * common/effect_localization/00_country_effects_loc.txt names three effects
+        -- add_company_monopoly, add_country_monopoly, remove_monopoly;
+      * their loc strings are "[COMPANY.GetName] gains a company monopoly on
+        [TARGET_BUILDING_TYPE.GetName]" and the `first` slot is COMPANY, which is
+        how effect_localization marks the scope the effect runs in -- so
+        add_company_monopoly is a COMPANY-scope effect taking a building type;
+      * building types are addressed as `bt:building_x`, the one confirmed piece:
+        common/achievements/mp1_charters_of_commerce_achievements.txt:146 has
+        `country_has_building_type_monopoly = bt:building_food_industry`.
+
+    If the game rejects it, it is one effect in one file and nothing else breaks.
+
+    Which company gets it: company_BasicBank first, because in this mod that
+    company exists only as the owner of a central bank -- it is granted when the
+    bank is built and never withdrawn. Otherwise the country's own central bank
+    company, in the same order zz_ef_cm_create_owned_bank picks it, so the
+    monopoly and the ownership land on the same company.
+    """
+    table = {t: ([c] if isinstance(c, str) else list(c))
+             for t, c in CENTRAL_BANK_COMPANY.items()}
+
+    def branch(kind: str, guard: str, comp: str) -> str:
+        return (f"\t{kind} = {{\n"
+                f"\t\tlimit = {{\n"
+                f"{guard}"
+                f"\t\t\tcompany:{comp} = {{\n"
+                f"\t\t\t\tNOT = {{ company_has_building_type_monopoly = bt:building_bank }}\n"
+                f"\t\t\t}}\n"
+                f"\t\t}}\n"
+                f"\t\tcompany:{comp} = {{\n"
+                f"\t\t\tadd_company_monopoly = bt:building_bank\n"
+                f"\t\t}}\n"
+                f"\t}}\n")
+
+    out = [branch("if", "\t\t\thas_company = company_type:company_BasicBank\n", "company_BasicBank")]
+    for tag, comps in sorted(table.items()):
+        for comp in comps:
+            out.append(branch("else_if",
+                              f"\t\t\tc:{tag} ?= this\n"
+                              f"\t\t\thas_company = company_type:{comp}\n",
+                              comp))
+
+    return (BANNER +
+            "### Source: the same tag -> company table as zz_ef_cm_bank_ownership.txt.\n"
+            "###\n"
+            "### SYNTAX NOT CONFIRMED IN GAME. add_company_monopoly and\n"
+            "### company_has_building_type_monopoly are named in vanilla's\n"
+            "### effect_localization / trigger_localization but called from nowhere in\n"
+            "### vanilla or in any mod in this repo, so their shape is read off the loc\n"
+            "### strings: ADD_COMPANY_MONOPOLY_FIRST is \"[COMPANY.GetName] gains a company\n"
+            "### monopoly on [TARGET_BUILDING_TYPE.GetName]\", and a `first` slot of COMPANY is\n"
+            "### how effect_localization marks the scope an effect runs in -- hence company\n"
+            "### scope, one building type as the value. `bt:building_bank` is the one\n"
+            "### confirmed part (mp1_charters_of_commerce_achievements.txt:146).\n"
+            "###\n"
+            "### CHECK error.log AFTER THE FIRST RUN. Kept in its own file so that if the\n"
+            "### game rejects it, nothing else in the mod goes down with it.\n"
+            "###\n"
+            "### This is the direct grant. The +1 free charter on\n"
+            "### zz_ef_cm_central_bank_charter stays either way: it is what lets the player\n"
+            "### hand the company a monopoly charter without spending one of the country's\n"
+            "### four, which is the route the game itself offers.\n\n"
+            "zz_ef_cm_bank_monopoly = {\n" + "".join(out) + "}\n")
+
+
 # --- self-check -------------------------------------------------------------
 
 # Words that can only appear as a top-level key by accident -- they are sub-block
@@ -1350,6 +1430,8 @@ def main() -> int:
     elif gpath.exists() and not args.check:
         gpath.unlink()
         print("  removed    zz_ef_cm_bank_group.txt (no --private-bank)")
+
+    emit(mod / "common/scripted_effects/zz_ef_cm_bank_monopoly.txt", gen_monopoly(ef), args.check, acc)
 
     files, notes = gen_ownership(ef)
     for x in notes:
