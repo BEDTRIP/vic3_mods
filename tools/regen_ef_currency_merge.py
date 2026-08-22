@@ -704,7 +704,7 @@ def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
             + OVERRIDE + "market_goods_is_currency = {\n\tOR = {\n" + body + "\n\t}\n}\n")
 
 
-def gen_loc(keep: str) -> dict[str, str]:
+def gen_loc(keep: str, names: list[str]) -> dict[str, str]:
     """The shared good and the three regime currencies, in every language.
 
     English text everywhere, Russian in Russian. Every language gets a file even
@@ -729,11 +729,31 @@ def gen_loc(keep: str) -> dict[str, str]:
     }
     out = {}
     for lang in LANGUAGES:
-        names = NAMES_RU if lang == "russian" else NAMES_EN
+        ru = lang == "russian"
+        goods = NAMES_RU if ru else NAMES_EN
+        extra = EXTRA_RU if ru else EXTRA_EN
+        company = COMPANY_NAME_RU if ru else COMPANY_NAME_EN
         note = head.get(lang, head["english"])
-        body = f' {keep}:0 "{names[keep]}"\n\n'
+
+        body = f' {keep}:0 "{goods[keep]}"\n\n'
         for key, _, _ in PRESTIGE_REGIMES:
-            body += f' {key}:0 "{names[key]}"\n'
+            body += f' {key}:0 "{goods[key]}"\n'
+
+        body += "\n" + (" # Модификатор, который держит слот компании и оплачивает патент.\n"
+                         if ru else
+                         " # The modifier that holds the company slot and pays for the patent.\n")
+        for key, text in extra.items():
+            body += f' {key}:0 "{text}"\n'
+
+        body += "\n" + ((" # Тип компании центробанка — по одному на валютный закон, но стране\n"
+                          " # видна ровно одна: остальные скрыты `potential`. Игрок видит\n"
+                          " # сгенерированное имя, а это подпись под ним.\n") if ru else
+                         (" # The central bank company type -- one per currency law, but a country\n"
+                          " # only ever sees one, the rest are hidden by `potential`. The player\n"
+                          " # reads the generated name; this is the label under it.\n"))
+        for cur in names:
+            body += f' {GENERIC_BANK}{cur}:0 "{company}"\n'
+
         out[lang] = f"l_{lang}:\n\n" + note + "\n" + body
     return out
 
@@ -936,6 +956,23 @@ NAMES_RU = {
     "zz_ef_cm_fiat_currency": "Фиатная валюта",
 }
 
+# Everything else this mod puts on screen. A key with no entry renders as the raw
+# key -- the company panel read ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR and the
+# modifier tooltip read "+1 from zz_ef_cm_central_bank_charter" until these existed.
+#
+# The 95 generated companies all share one type name on purpose. Only one of them is
+# ever visible to a country -- `potential` gates them on the currency law -- so there
+# is nothing to tell apart, and the name the player actually sees is the generated
+# one anyway. This is the label under it.
+EXTRA_EN = {
+    "zz_ef_cm_central_bank_charter": "Central Bank Charter",
+}
+EXTRA_RU = {
+    "zz_ef_cm_central_bank_charter": "Устав центрального банка",
+}
+COMPANY_NAME_EN = "Central Bank"
+COMPANY_NAME_RU = "Центральный банк"
+
 
 def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
     """One prestige variant per monetary regime, gated by the law behind it.
@@ -1061,7 +1098,10 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
         s = sub_block(basic, name)
         return s if s else f"{name} = {{\n}}"
 
-    icon = field("icon", '"gfx/interface/icons/company_icons/bank/BasicBank.dds"')
+    # The central bank building's own icon, not BasicBank's. These companies are the
+    # central bank -- one per currency law, one visible per country -- so they should
+    # look like it in the company list.
+    icon = '"gfx/interface/icons/building_icons/banks/central_bank.dds"' 
     background = field("background", '"gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"')
     names_block = block("dynamic_company_type_names")
     buildings = block("building_types").rstrip()[:-1].rstrip() + "\n\tbuilding_bank\n}"
@@ -1077,7 +1117,13 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
             f"{GENERIC_BANK}{cur} = {{\n"
             f"\ticon = {icon}\n"
             f"\tbackground = {background}\n\n"
-            f"\tflavored_company = yes\n"
+            f"\t### NOT flavored_company = yes, and that is what makes the name work.\n"
+            f"\t### Every one of vanilla's 10 dynamic naming patterns carries\n"
+            f"\t### use_for_flavored_companies = no, and E&F ships no patterns of its own --\n"
+            f"\t### so a flavoured company gets no generated name and the game falls back to\n"
+            f"\t### the localisation key. That is why the company panel read\n"
+            f"\t### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.\n"
+            f"\tflavored_company = no\n"
             f"\tuses_dynamic_naming = yes\n\n"
             f"{indent(names_block)}\n\n"
             f"{indent(buildings)}\n\n"
@@ -1902,7 +1948,7 @@ def main() -> int:
     for rel, text in gen_upkeep(ef, names).items():
         emit(mod / rel, text, args.check, acc)
 
-    loc = gen_loc(args.keep)
+    loc = gen_loc(args.keep, names)
     print(f"     localisation: {len(loc)} languages")
     for lang, text in loc.items():
         emit(mod / f"localization/{lang}/zz_ef_cm_goods_l_{lang}.yml", text, args.check, acc)

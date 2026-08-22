@@ -20,10 +20,16 @@
 ### points at company_basic_bank, which exists in no mod here.
 
 zz_ef_cm_bank_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -96,10 +102,16 @@ zz_ef_cm_bank_dinar = {
 }
 
 zz_ef_cm_bank_dinar_algerian_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -172,10 +184,16 @@ zz_ef_cm_bank_dinar_algerian_dinar = {
 }
 
 zz_ef_cm_bank_dinar_iraqi_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -248,10 +266,16 @@ zz_ef_cm_bank_dinar_iraqi_dinar = {
 }
 
 zz_ef_cm_bank_dinar_libyan_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -324,10 +348,16 @@ zz_ef_cm_bank_dinar_libyan_dinar = {
 }
 
 zz_ef_cm_bank_dinar_moroccan_dirham = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -401,10 +431,16 @@ zz_ef_cm_bank_dinar_moroccan_dirham = {
 }
 
 zz_ef_cm_bank_dinar_omanian_rial = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -477,10 +513,16 @@ zz_ef_cm_bank_dinar_omanian_rial = {
 }
 
 zz_ef_cm_bank_dinar_qiran = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -554,10 +596,16 @@ zz_ef_cm_bank_dinar_qiran = {
 }
 
 zz_ef_cm_bank_dinar_saudi_riyal = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -630,10 +678,16 @@ zz_ef_cm_bank_dinar_saudi_riyal = {
 }
 
 zz_ef_cm_bank_dinar_serbian_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -707,10 +761,16 @@ zz_ef_cm_bank_dinar_serbian_dinar = {
 }
 
 zz_ef_cm_bank_dinar_tunisian_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -783,10 +843,16 @@ zz_ef_cm_bank_dinar_tunisian_dinar = {
 }
 
 zz_ef_cm_bank_dinar_yugoslav_dinar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -859,10 +925,16 @@ zz_ef_cm_bank_dinar_yugoslav_dinar = {
 }
 
 zz_ef_cm_bank_dollar_australian_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -937,10 +1009,16 @@ zz_ef_cm_bank_dollar_australian_dollar = {
 }
 
 zz_ef_cm_bank_dollar_canadian_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1016,10 +1094,16 @@ zz_ef_cm_bank_dollar_canadian_dollar = {
 }
 
 zz_ef_cm_bank_dollar_caribbean_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1093,10 +1177,16 @@ zz_ef_cm_bank_dollar_caribbean_dollar = {
 }
 
 zz_ef_cm_bank_dollar_confederate_states_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1170,10 +1260,16 @@ zz_ef_cm_bank_dollar_confederate_states_dollar = {
 }
 
 zz_ef_cm_bank_dollar_liberian_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1247,10 +1343,16 @@ zz_ef_cm_bank_dollar_liberian_dollar = {
 }
 
 zz_ef_cm_bank_dollar_new_zealand_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1324,10 +1426,16 @@ zz_ef_cm_bank_dollar_new_zealand_dollar = {
 }
 
 zz_ef_cm_bank_dollar_sierra_leonean_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1400,10 +1508,16 @@ zz_ef_cm_bank_dollar_sierra_leonean_dollar = {
 }
 
 zz_ef_cm_bank_dollar_united_states_dollar = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1477,10 +1591,16 @@ zz_ef_cm_bank_dollar_united_states_dollar = {
 }
 
 zz_ef_cm_bank_eco_ariary = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1553,10 +1673,16 @@ zz_ef_cm_bank_eco_ariary = {
 }
 
 zz_ef_cm_bank_eco_central_african_eco = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1629,10 +1755,16 @@ zz_ef_cm_bank_eco_central_african_eco = {
 }
 
 zz_ef_cm_bank_eco_east_african_eco = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1705,10 +1837,16 @@ zz_ef_cm_bank_eco_east_african_eco = {
 }
 
 zz_ef_cm_bank_eco_ethiopian_birr = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1781,10 +1919,16 @@ zz_ef_cm_bank_eco_ethiopian_birr = {
 }
 
 zz_ef_cm_bank_eco_ghanaian_pound = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1857,10 +2001,16 @@ zz_ef_cm_bank_eco_ghanaian_pound = {
 }
 
 zz_ef_cm_bank_eco_nigerian_naira = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -1933,10 +2083,16 @@ zz_ef_cm_bank_eco_nigerian_naira = {
 }
 
 zz_ef_cm_bank_eco_south_african_rand = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2010,10 +2166,16 @@ zz_ef_cm_bank_eco_south_african_rand = {
 }
 
 zz_ef_cm_bank_eco_tuareg_ouguiya = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2086,10 +2248,16 @@ zz_ef_cm_bank_eco_tuareg_ouguiya = {
 }
 
 zz_ef_cm_bank_eco_west_african_eco = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2162,10 +2330,16 @@ zz_ef_cm_bank_eco_west_african_eco = {
 }
 
 zz_ef_cm_bank_franc_belgian_franc = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2239,10 +2413,16 @@ zz_ef_cm_bank_franc_belgian_franc = {
 }
 
 zz_ef_cm_bank_franc_french_franc = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2316,10 +2496,16 @@ zz_ef_cm_bank_franc_french_franc = {
 }
 
 zz_ef_cm_bank_franc_luxembourgish_franc = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2392,10 +2578,16 @@ zz_ef_cm_bank_franc_luxembourgish_franc = {
 }
 
 zz_ef_cm_bank_franc_swiss_franc = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2469,10 +2661,16 @@ zz_ef_cm_bank_franc_swiss_franc = {
 }
 
 zz_ef_cm_bank_gulden = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2546,10 +2744,16 @@ zz_ef_cm_bank_gulden = {
 }
 
 zz_ef_cm_bank_gulden_bavarian_gulden = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2623,10 +2827,16 @@ zz_ef_cm_bank_gulden_bavarian_gulden = {
 }
 
 zz_ef_cm_bank_gulden_florin = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2700,10 +2910,16 @@ zz_ef_cm_bank_gulden_florin = {
 }
 
 zz_ef_cm_bank_gulden_hungarian_forint = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2777,10 +2993,16 @@ zz_ef_cm_bank_gulden_hungarian_forint = {
 }
 
 zz_ef_cm_bank_gulden_indies_guilder = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2853,10 +3075,16 @@ zz_ef_cm_bank_gulden_indies_guilder = {
 }
 
 zz_ef_cm_bank_gulden_south_german_gulden = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -2929,10 +3157,16 @@ zz_ef_cm_bank_gulden_south_german_gulden = {
 }
 
 zz_ef_cm_bank_krone_czech_koruna = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3005,10 +3239,16 @@ zz_ef_cm_bank_krone_czech_koruna = {
 }
 
 zz_ef_cm_bank_krone_danish_krone = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3082,10 +3322,16 @@ zz_ef_cm_bank_krone_danish_krone = {
 }
 
 zz_ef_cm_bank_krone_estonian_kroon = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3158,10 +3404,16 @@ zz_ef_cm_bank_krone_estonian_kroon = {
 }
 
 zz_ef_cm_bank_krone_icelandic_krona = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3234,10 +3486,16 @@ zz_ef_cm_bank_krone_icelandic_krona = {
 }
 
 zz_ef_cm_bank_krone_norwegian_krone = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3311,10 +3569,16 @@ zz_ef_cm_bank_krone_norwegian_krone = {
 }
 
 zz_ef_cm_bank_krone_slovak_koruna = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3387,10 +3651,16 @@ zz_ef_cm_bank_krone_slovak_koruna = {
 }
 
 zz_ef_cm_bank_krone_swedish_krona = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3464,10 +3734,16 @@ zz_ef_cm_bank_krone_swedish_krona = {
 }
 
 zz_ef_cm_bank_leon_leu = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3541,10 +3817,16 @@ zz_ef_cm_bank_leon_leu = {
 }
 
 zz_ef_cm_bank_leon_lev = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3618,10 +3900,16 @@ zz_ef_cm_bank_leon_lev = {
 }
 
 zz_ef_cm_bank_lira = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3695,10 +3983,16 @@ zz_ef_cm_bank_lira = {
 }
 
 zz_ef_cm_bank_lira_ducato = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3772,10 +4066,16 @@ zz_ef_cm_bank_lira_ducato = {
 }
 
 zz_ef_cm_bank_lira_ottoman_lira = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3849,10 +4149,16 @@ zz_ef_cm_bank_lira_ottoman_lira = {
 }
 
 zz_ef_cm_bank_lira_scudo_pontificio = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -3926,10 +4232,16 @@ zz_ef_cm_bank_lira_scudo_pontificio = {
 }
 
 zz_ef_cm_bank_lira_scudo_sardo = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4003,10 +4315,16 @@ zz_ef_cm_bank_lira_scudo_sardo = {
 }
 
 zz_ef_cm_bank_lira_toscane_lira = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4080,10 +4398,16 @@ zz_ef_cm_bank_lira_toscane_lira = {
 }
 
 zz_ef_cm_bank_mark = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4157,10 +4481,16 @@ zz_ef_cm_bank_mark = {
 }
 
 zz_ef_cm_bank_mark_finnish_markka = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4234,10 +4564,16 @@ zz_ef_cm_bank_mark_finnish_markka = {
 }
 
 zz_ef_cm_bank_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4310,10 +4646,16 @@ zz_ef_cm_bank_peso = {
 }
 
 zz_ef_cm_bank_peso_argentine_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4387,10 +4729,16 @@ zz_ef_cm_bank_peso_argentine_peso = {
 }
 
 zz_ef_cm_bank_peso_bolivien_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4465,10 +4813,16 @@ zz_ef_cm_bank_peso_bolivien_peso = {
 }
 
 zz_ef_cm_bank_peso_chilean_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4542,10 +4896,16 @@ zz_ef_cm_bank_peso_chilean_peso = {
 }
 
 zz_ef_cm_bank_peso_colombian_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4619,10 +4979,16 @@ zz_ef_cm_bank_peso_colombian_peso = {
 }
 
 zz_ef_cm_bank_peso_costa_rican_colon = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4696,10 +5062,16 @@ zz_ef_cm_bank_peso_costa_rican_colon = {
 }
 
 zz_ef_cm_bank_peso_cuban_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4773,10 +5145,16 @@ zz_ef_cm_bank_peso_cuban_peso = {
 }
 
 zz_ef_cm_bank_peso_ecuadorian_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4850,10 +5228,16 @@ zz_ef_cm_bank_peso_ecuadorian_peso = {
 }
 
 zz_ef_cm_bank_peso_el_salvador_colon = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -4927,10 +5311,16 @@ zz_ef_cm_bank_peso_el_salvador_colon = {
 }
 
 zz_ef_cm_bank_peso_guatemalan_quetzal = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5004,10 +5394,16 @@ zz_ef_cm_bank_peso_guatemalan_quetzal = {
 }
 
 zz_ef_cm_bank_peso_honduran_lempira = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5081,10 +5477,16 @@ zz_ef_cm_bank_peso_honduran_lempira = {
 }
 
 zz_ef_cm_bank_peso_mexican_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5159,10 +5561,16 @@ zz_ef_cm_bank_peso_mexican_peso = {
 }
 
 zz_ef_cm_bank_peso_nicaraguan_cordoba = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5236,10 +5644,16 @@ zz_ef_cm_bank_peso_nicaraguan_cordoba = {
 }
 
 zz_ef_cm_bank_peso_paraguayan_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5313,10 +5727,16 @@ zz_ef_cm_bank_peso_paraguayan_peso = {
 }
 
 zz_ef_cm_bank_peso_philippine_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5390,10 +5810,16 @@ zz_ef_cm_bank_peso_philippine_peso = {
 }
 
 zz_ef_cm_bank_peso_sol_de_oro = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5467,10 +5893,16 @@ zz_ef_cm_bank_peso_sol_de_oro = {
 }
 
 zz_ef_cm_bank_peso_uruguayan_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5544,10 +5976,16 @@ zz_ef_cm_bank_peso_uruguayan_peso = {
 }
 
 zz_ef_cm_bank_peso_venezuelan_peso = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5621,10 +6059,16 @@ zz_ef_cm_bank_peso_venezuelan_peso = {
 }
 
 zz_ef_cm_bank_pound_egyptian_pound = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5698,10 +6142,16 @@ zz_ef_cm_bank_pound_egyptian_pound = {
 }
 
 zz_ef_cm_bank_pound_irish_pound = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5774,10 +6224,16 @@ zz_ef_cm_bank_pound_irish_pound = {
 }
 
 zz_ef_cm_bank_pound_sterling = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5851,10 +6307,16 @@ zz_ef_cm_bank_pound_sterling = {
 }
 
 zz_ef_cm_bank_real = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -5928,10 +6390,16 @@ zz_ef_cm_bank_real = {
 }
 
 zz_ef_cm_bank_real_brazilian_real = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6005,10 +6473,16 @@ zz_ef_cm_bank_real_brazilian_real = {
 }
 
 zz_ef_cm_bank_rupee_indian_rupee = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6082,10 +6556,16 @@ zz_ef_cm_bank_rupee_indian_rupee = {
 }
 
 zz_ef_cm_bank_rupee_indonesian_rupiah = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6159,10 +6639,16 @@ zz_ef_cm_bank_rupee_indonesian_rupiah = {
 }
 
 zz_ef_cm_bank_spe_baht = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6236,10 +6722,16 @@ zz_ef_cm_bank_spe_baht = {
 }
 
 zz_ef_cm_bank_spe_dong = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6313,10 +6805,16 @@ zz_ef_cm_bank_spe_dong = {
 }
 
 zz_ef_cm_bank_spe_drachma = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6390,10 +6888,16 @@ zz_ef_cm_bank_spe_drachma = {
 }
 
 zz_ef_cm_bank_spe_korean_won = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6467,10 +6971,16 @@ zz_ef_cm_bank_spe_korean_won = {
 }
 
 zz_ef_cm_bank_spe_latvian_lats = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6543,10 +7053,16 @@ zz_ef_cm_bank_spe_latvian_lats = {
 }
 
 zz_ef_cm_bank_spe_lithuanian_litas = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6619,10 +7135,16 @@ zz_ef_cm_bank_spe_lithuanian_litas = {
 }
 
 zz_ef_cm_bank_spe_peseta = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6696,10 +7218,16 @@ zz_ef_cm_bank_spe_peseta = {
 }
 
 zz_ef_cm_bank_spe_ruble = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6773,10 +7301,16 @@ zz_ef_cm_bank_spe_ruble = {
 }
 
 zz_ef_cm_bank_spe_uni = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6849,10 +7383,16 @@ zz_ef_cm_bank_spe_uni = {
 }
 
 zz_ef_cm_bank_spe_yen = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -6926,10 +7466,16 @@ zz_ef_cm_bank_spe_yen = {
 }
 
 zz_ef_cm_bank_spe_yuan = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -7003,10 +7549,16 @@ zz_ef_cm_bank_spe_yuan = {
 }
 
 zz_ef_cm_bank_spe_zloti = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -7080,10 +7632,16 @@ zz_ef_cm_bank_spe_zloti = {
 }
 
 zz_ef_cm_bank_thaler_hannoveraner_thaler = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -7157,10 +7715,16 @@ zz_ef_cm_bank_thaler_hannoveraner_thaler = {
 }
 
 zz_ef_cm_bank_thaler_prussian_thaler = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
@@ -7235,10 +7799,16 @@ zz_ef_cm_bank_thaler_prussian_thaler = {
 }
 
 zz_ef_cm_bank_thaler_saxon_thaler = {
-	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	icon = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
 
-	flavored_company = yes
+	### NOT flavored_company = yes, and that is what makes the name work.
+	### Every one of vanilla's 10 dynamic naming patterns carries
+	### use_for_flavored_companies = no, and E&F ships no patterns of its own --
+	### so a flavoured company gets no generated name and the game falls back to
+	### the localisation key. That is why the company panel read
+	### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.
+	flavored_company = no
 	uses_dynamic_naming = yes
 
 	dynamic_company_type_names = {
