@@ -1,0 +1,8083 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: E&F's own common/scripted_effects/09_introduction_building_lvl.txt, three effects taken verbatim with every
+### create_building of the central bank replaced by zz_ef_cm_create_owned_bank.
+###
+### Same key later in the load order wins for scripted effects, so these three
+### replace E&F's. They are copied rather than edited by hand because
+### macro_facilities_bc alone is 12,000 lines and 1,001 of those call sites --
+### a switch over gdp_view crossed with the country list. All 1,001 are shaped
+### identically, which is what makes one regex enough.
+###
+### $BANK_BLDG_TYPE$ is dropped on the way: every call site in E&F passes
+### building_bank, and the dispatcher has to name the building type literally
+### anyway because add_ownership needs a company that can own that type.
+
+initialize_historic_macro_facilities_bc = { #history
+	add_technology_researched = banking
+	add_technology_researched = currency_standards
+	add_technology_researched = central_banking
+	add_technology_researched = metalique_standard
+
+	$CTRL_BANK_SITE$ = {
+		zz_ef_cm_create_owned_bank = { CB_SIZE = $CB_SIZE$ }
+		owner = {
+			add_modifier = {
+				name = has_central_bank
+			}
+			set_variable = {
+				name = central_bank_location
+				value = $CTRL_BANK_SITE$
+			}
+		}
+	}
+	central_bank_modifier = yes
+}
+
+macro_facilities_bc = {
+	#for country witch is_valid_country = yes but GDP < 5M
+	if = {
+		limit = {
+			has_technology_researched = central_banking
+			var:gdp_view < 1
+		}
+		$CTRL_BANK_SITE$ = {
+			zz_ef_cm_create_owned_bank = { CB_SIZE = 5 }
+		}
+	}
+
+	#general
+	switch = {
+		trigger = var:gdp_view
+		1 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 5 }
+				}
+			}
+		}
+		2 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 10 }
+				}
+			}
+		}
+		3 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 15 }
+				}
+			}
+		}
+		4 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 20 }
+				}
+			}
+		}
+		5 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 25 }
+				}
+			}
+		}
+		6 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 30 }
+				}
+			}
+		}
+		7 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 35 }
+				}
+			}
+		}
+		8 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 40 }
+				}
+			}
+		}
+		9 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 45 }
+				}
+			}
+		}
+		10 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 50 }
+				}
+			}
+		}
+		11 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 55 }
+				}
+			}
+		}
+		12 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 60 }
+				}
+			}
+		}
+		13 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 65 }
+				}
+			}
+		}
+		14 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 70 }
+				}
+			}
+		}
+		15 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 75 }
+				}
+			}
+		}
+		16 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 80 }
+				}
+			}
+		}
+		17 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 85 }
+				}
+			}
+		}
+		18 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 90 }
+				}
+			}
+		}
+		19 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 95 }
+				}
+			}
+		}
+		20 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 100 }
+				}
+			}
+		}
+		21 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 105 }
+				}
+			}
+		}
+		22 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 110 }
+				}
+			}
+		}
+		23 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 115 }
+				}
+			}
+		}
+		24 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 120 }
+				}
+			}
+		}
+		25 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 125 }
+				}
+			}
+		}
+		26 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 130 }
+				}
+			}
+		}
+		27 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 135 }
+				}
+			}
+		}
+		28 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 140 }
+				}
+			}
+		}
+		29 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 145 }
+				}
+			}
+		}
+		30 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 150 }
+				}
+			}
+		}
+		31 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 155 }
+				}
+			}
+		}
+		32 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 160 }
+				}
+			}
+		}
+		33 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 165 }
+				}
+			}
+		}
+		34 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 170 }
+				}
+			}
+		}
+		35 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 175 }
+				}
+			}
+		}
+		36 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 180 }
+				}
+			}
+		}
+		37 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 185 }
+				}
+			}
+		}
+		38 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 190 }
+				}
+			}
+		}
+		39 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 195 }
+				}
+			}
+		}
+		40 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 200 }
+				}
+			}
+		}
+		41 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 205 }
+				}
+			}
+		}
+		42 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 210 }
+				}
+			}
+		}
+		43 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 215 }
+				}
+			}
+		}
+		44 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 220 }
+				}
+			}
+		}
+		45 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 225 }
+				}
+			}
+		}
+		46 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 230 }
+				}
+			}
+		}
+		47 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 235 }
+				}
+			}
+		}
+		48 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 240 }
+				}
+			}
+		}
+		49 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 245 }
+				}
+			}
+		}
+		50 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 250 }
+				}
+			}
+		}
+		51 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 255 }
+				}
+			}
+		}
+		52 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 260 }
+				}
+			}
+		}
+		53 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 265 }
+				}
+			}
+		}
+		54 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 270 }
+				}
+			}
+		}
+		55 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 275 }
+				}
+			}
+		}
+		56 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 280 }
+				}
+			}
+		}
+		57 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 285 }
+				}
+			}
+		}
+		58 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 290 }
+				}
+			}
+		}
+		59 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 295 }
+				}
+			}
+		}
+		60 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 300 }
+				}
+			}
+		}
+		61 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 305 }
+				}
+			}
+		}
+		62 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 310 }
+				}
+			}
+		}
+		63 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 315 }
+				}
+			}
+		}
+		64 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 320 }
+				}
+			}
+		}
+		65 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 325 }
+				}
+			}
+		}
+		66 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 330 }
+				}
+			}
+		}
+		67 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 335 }
+				}
+			}
+		}
+		68 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 340 }
+				}
+			}
+		}
+		69 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 345 }
+				}
+			}
+		}
+		70 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 350 }
+				}
+			}
+		}
+		71 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 355 }
+				}
+			}
+		}
+		72 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 360 }
+				}
+			}
+		}
+		73 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 365 }
+				}
+			}
+		}
+		74 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 370 }
+				}
+			}
+		}
+		75 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 375 }
+				}
+			}
+		}
+		76 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 380 }
+				}
+			}
+		}
+		77 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 385 }
+				}
+			}
+		}
+		78 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 390 }
+				}
+			}
+		}
+		79 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 395 }
+				}
+			}
+		}
+		80 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 400 }
+				}
+			}
+		}
+		81 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 405 }
+				}
+			}
+		}
+		82 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 410 }
+				}
+			}
+		}
+		83 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 415 }
+				}
+			}
+		}
+		84 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 420 }
+				}
+			}
+		}
+		85 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 425 }
+				}
+			}
+		}
+		86 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 430 }
+				}
+			}
+		}
+		87 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 435 }
+				}
+			}
+		}
+		88 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 440 }
+				}
+			}
+		}
+		89 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 445 }
+				}
+			}
+		}
+		90 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 450 }
+				}
+			}
+		}
+		91 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 455 }
+				}
+			}
+		}
+		92 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 460 }
+				}
+			}
+		}
+		93 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 465 }
+				}
+			}
+		}
+		94 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 470 }
+				}
+			}
+		}
+		95 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 475 }
+				}
+			}
+		}
+		96 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 480 }
+				}
+			}
+		}
+		97 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 485 }
+				}
+			}
+		}
+		98 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 490 }
+				}
+			}
+		}
+		99 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 495 }
+				}
+			}
+		}
+		100 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 500 }
+				}
+			}
+		}
+		101 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 505 }
+				}
+			}
+		}
+		102 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 510 }
+				}
+			}
+		}
+		103 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 515 }
+				}
+			}
+		}
+		104 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 520 }
+				}
+			}
+		}
+		105 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 525 }
+				}
+			}
+		}
+		106 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 530 }
+				}
+			}
+		}
+		107 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 535 }
+				}
+			}
+		}
+		108 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 540 }
+				}
+			}
+		}
+		109 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 545 }
+				}
+			}
+		}
+		110 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 550 }
+				}
+			}
+		}
+		111 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 555 }
+				}
+			}
+		}
+		112 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 560 }
+				}
+			}
+		}
+		113 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 565 }
+				}
+			}
+		}
+		114 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 570 }
+				}
+			}
+		}
+		115 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 575 }
+				}
+			}
+		}
+		116 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 580 }
+				}
+			}
+		}
+		117 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 585 }
+				}
+			}
+		}
+		118 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 590 }
+				}
+			}
+		}
+		119 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 595 }
+				}
+			}
+		}
+		120 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 600 }
+				}
+			}
+		}
+		121 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 605 }
+				}
+			}
+		}
+		122 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 610 }
+				}
+			}
+		}
+		123 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 615 }
+				}
+			}
+		}
+		124 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 620 }
+				}
+			}
+		}
+		125 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 625 }
+				}
+			}
+		}
+		126 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 630 }
+				}
+			}
+		}
+		127 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 635 }
+				}
+			}
+		}
+		128 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 640 }
+				}
+			}
+		}
+		129 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 645 }
+				}
+			}
+		}
+		130 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 650 }
+				}
+			}
+		}
+		131 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 655 }
+				}
+			}
+		}
+		132 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 660 }
+				}
+			}
+		}
+		133 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 665 }
+				}
+			}
+		}
+		134 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 670 }
+				}
+			}
+		}
+		135 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 675 }
+				}
+			}
+		}
+		136 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 680 }
+				}
+			}
+		}
+		137 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 685 }
+				}
+			}
+		}
+		138 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 690 }
+				}
+			}
+		}
+		139 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 695 }
+				}
+			}
+		}
+		140 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 700 }
+				}
+			}
+		}
+		141 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 705 }
+				}
+			}
+		}
+		142 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 710 }
+				}
+			}
+		}
+		143 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 715 }
+				}
+			}
+		}
+		144 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 720 }
+				}
+			}
+		}
+		145 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 725 }
+				}
+			}
+		}
+		146 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 730 }
+				}
+			}
+		}
+		147 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 735 }
+				}
+			}
+		}
+		148 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 740 }
+				}
+			}
+		}
+		149 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 745 }
+				}
+			}
+		}
+		150 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 750 }
+				}
+			}
+		}
+		151 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 755 }
+				}
+			}
+		}
+		152 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 760 }
+				}
+			}
+		}
+		153 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 765 }
+				}
+			}
+		}
+		154 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 770 }
+				}
+			}
+		}
+		155 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 775 }
+				}
+			}
+		}
+		156 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 780 }
+				}
+			}
+		}
+		157 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 785 }
+				}
+			}
+		}
+		158 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 790 }
+				}
+			}
+		}
+		159 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 795 }
+				}
+			}
+		}
+		160 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 800 }
+				}
+			}
+		}
+		161 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 805 }
+				}
+			}
+		}
+		162 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 810 }
+				}
+			}
+		}
+		163 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 815 }
+				}
+			}
+		}
+		164 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 820 }
+				}
+			}
+		}
+		165 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 825 }
+				}
+			}
+		}
+		166 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 830 }
+				}
+			}
+		}
+		167 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 835 }
+				}
+			}
+		}
+		168 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 840 }
+				}
+			}
+		}
+		169 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 845 }
+				}
+			}
+		}
+		170 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 850 }
+				}
+			}
+		}
+		171 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 855 }
+				}
+			}
+		}
+		172 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 860 }
+				}
+			}
+		}
+		173 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 865 }
+				}
+			}
+		}
+		174 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 870 }
+				}
+			}
+		}
+		175 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 875 }
+				}
+			}
+		}
+		176 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 880 }
+				}
+			}
+		}
+		177 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 885 }
+				}
+			}
+		}
+		178 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 890 }
+				}
+			}
+		}
+		179 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 895 }
+				}
+			}
+		}
+		180 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 900 }
+				}
+			}
+		}
+		181 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 905 }
+				}
+			}
+		}
+		182 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 910 }
+				}
+			}
+		}
+		183 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 915 }
+				}
+			}
+		}
+		184 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 920 }
+				}
+			}
+		}
+		185 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 925 }
+				}
+			}
+		}
+		186 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 930 }
+				}
+			}
+		}
+		187 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 935 }
+				}
+			}
+		}
+		188 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 940 }
+				}
+			}
+		}
+		189 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 945 }
+				}
+			}
+		}
+		190 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 950 }
+				}
+			}
+		}
+		191 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 955 }
+				}
+			}
+		}
+		192 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 960 }
+				}
+			}
+		}
+		193 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 965 }
+				}
+			}
+		}
+		194 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 970 }
+				}
+			}
+		}
+		195 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 975 }
+				}
+			}
+		}
+		196 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 980 }
+				}
+			}
+		}
+		197 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 985 }
+				}
+			}
+		}
+		198 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 990 }
+				}
+			}
+		}
+		199 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 995 }
+				}
+			}
+		}
+		200 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1000 }
+				}
+			}
+		}
+				201 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1005 }
+				}
+			}
+		}
+		202 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1010 }
+				}
+			}
+		}
+		203 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1015 }
+				}
+			}
+		}
+		204 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1020 }
+				}
+			}
+		}
+		205 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1025 }
+				}
+			}
+		}
+		206 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1030 }
+				}
+			}
+		}
+		207 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1035 }
+				}
+			}
+		}
+		208 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1040 }
+				}
+			}
+		}
+		209 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1045 }
+				}
+			}
+		}
+		210 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1050 }
+				}
+			}
+		}
+		211 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1055 }
+				}
+			}
+		}
+		212 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1060 }
+				}
+			}
+		}
+		213 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1065 }
+				}
+			}
+		}
+		214 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1070 }
+				}
+			}
+		}
+		215 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1075 }
+				}
+			}
+		}
+		216 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1080 }
+				}
+			}
+		}
+		217 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1085 }
+				}
+			}
+		}
+		218 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1090 }
+				}
+			}
+		}
+		219 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1095 }
+				}
+			}
+		}
+		220 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1100 }
+				}
+			}
+		}
+		221 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1105 }
+				}
+			}
+		}
+		222 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1110 }
+				}
+			}
+		}
+		223 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1115 }
+				}
+			}
+		}
+		224 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1120 }
+				}
+			}
+		}
+		225 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1125 }
+				}
+			}
+		}
+		226 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1130 }
+				}
+			}
+		}
+		227 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1135 }
+				}
+			}
+		}
+		228 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1140 }
+				}
+			}
+		}
+		229 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1145 }
+				}
+			}
+		}
+		230 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1150 }
+				}
+			}
+		}
+		231 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1155 }
+				}
+			}
+		}
+		232 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1160 }
+				}
+			}
+		}
+		233 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1165 }
+				}
+			}
+		}
+		234 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1170 }
+				}
+			}
+		}
+		235 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1175 }
+				}
+			}
+		}
+		236 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1180 }
+				}
+			}
+		}
+		237 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1185 }
+				}
+			}
+		}
+		238 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1190 }
+				}
+			}
+		}
+		239 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1195 }
+				}
+			}
+		}
+		240 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1200 }
+				}
+			}
+		}
+		241 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1205 }
+				}
+			}
+		}
+		242 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1210 }
+				}
+			}
+		}
+		243 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1215 }
+				}
+			}
+		}
+		244 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1220 }
+				}
+			}
+		}
+		245 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1225 }
+				}
+			}
+		}
+		246 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1230 }
+				}
+			}
+		}
+		247 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1235 }
+				}
+			}
+		}
+		248 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1240 }
+				}
+			}
+		}
+		249 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1245 }
+				}
+			}
+		}
+		250 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1250 }
+				}
+			}
+		}
+		251 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1255 }
+				}
+			}
+		}
+		252 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1260 }
+				}
+			}
+		}
+		253 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1265 }
+				}
+			}
+		}
+		254 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1270 }
+				}
+			}
+		}
+		255 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1275 }
+				}
+			}
+		}
+		256 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1280 }
+				}
+			}
+		}
+		257 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1285 }
+				}
+			}
+		}
+		258 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1290 }
+				}
+			}
+		}
+		259 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1295 }
+				}
+			}
+		}
+		260 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1300 }
+				}
+			}
+		}
+		261 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1305 }
+				}
+			}
+		}
+		262 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1310 }
+				}
+			}
+		}
+		263 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1315 }
+				}
+			}
+		}
+		264 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1320 }
+				}
+			}
+		}
+		265 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1325 }
+				}
+			}
+		}
+		266 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1330 }
+				}
+			}
+		}
+		267 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1335 }
+				}
+			}
+		}
+		268 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1340 }
+				}
+			}
+		}
+		269 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1345 }
+				}
+			}
+		}
+		270 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1350 }
+				}
+			}
+		}
+		271 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1355 }
+				}
+			}
+		}
+		272 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1360 }
+				}
+			}
+		}
+		273 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1365 }
+				}
+			}
+		}
+		274 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1370 }
+				}
+			}
+		}
+		275 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1375 }
+				}
+			}
+		}
+		276 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1380 }
+				}
+			}
+		}
+		277 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1385 }
+				}
+			}
+		}
+		278 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1390 }
+				}
+			}
+		}
+		279 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1395 }
+				}
+			}
+		}
+		280 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1400 }
+				}
+			}
+		}
+		281 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1405 }
+				}
+			}
+		}
+		282 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1410 }
+				}
+			}
+		}
+		283 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1415 }
+				}
+			}
+		}
+		284 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1420 }
+				}
+			}
+		}
+		285 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1425 }
+				}
+			}
+		}
+		286 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1430 }
+				}
+			}
+		}
+		287 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1435 }
+				}
+			}
+		}
+		288 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1440 }
+				}
+			}
+		}
+		289 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1445 }
+				}
+			}
+		}
+		290 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1450 }
+				}
+			}
+		}
+		291 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1455 }
+				}
+			}
+		}
+		292 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1460 }
+				}
+			}
+		}
+		293 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1465 }
+				}
+			}
+		}
+		294 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1470 }
+				}
+			}
+		}
+		295 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1475 }
+				}
+			}
+		}
+		296 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1480 }
+				}
+			}
+		}
+		297 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1485 }
+				}
+			}
+		}
+		298 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1490 }
+				}
+			}
+		}
+		299 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1495 }
+				}
+			}
+		}
+		300 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1500 }
+				}
+			}
+		}
+		301 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1505 }
+				}
+			}
+		}
+		302 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1510 }
+				}
+			}
+		}
+		303 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1515 }
+				}
+			}
+		}
+		304 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1520 }
+				}
+			}
+		}
+		305 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1525 }
+				}
+			}
+		}
+		306 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1530 }
+				}
+			}
+		}
+		307 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1535 }
+				}
+			}
+		}
+		308 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1540 }
+				}
+			}
+		}
+		309 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1545 }
+				}
+			}
+		}
+		310 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1550 }
+				}
+			}
+		}
+		311 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1555 }
+				}
+			}
+		}
+		312 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1560 }
+				}
+			}
+		}
+		313 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1565 }
+				}
+			}
+		}
+		314 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1570 }
+				}
+			}
+		}
+		315 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1575 }
+				}
+			}
+		}
+		316 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1580 }
+				}
+			}
+		}
+		317 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1585 }
+				}
+			}
+		}
+		318 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1590 }
+				}
+			}
+		}
+		319 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1595 }
+				}
+			}
+		}
+		320 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1600 }
+				}
+			}
+		}
+		321 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1605 }
+				}
+			}
+		}
+		322 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1610 }
+				}
+			}
+		}
+		323 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1615 }
+				}
+			}
+		}
+		324 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1620 }
+				}
+			}
+		}
+		325 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1625 }
+				}
+			}
+		}
+		326 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1630 }
+				}
+			}
+		}
+		327 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1635 }
+				}
+			}
+		}
+		328 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1640 }
+				}
+			}
+		}
+		329 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1645 }
+				}
+			}
+		}
+		330 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1650 }
+				}
+			}
+		}
+		331 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1655 }
+				}
+			}
+		}
+		332 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1660 }
+				}
+			}
+		}
+		333 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1665 }
+				}
+			}
+		}
+		334 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1670 }
+				}
+			}
+		}
+		335 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1675 }
+				}
+			}
+		}
+		336 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1680 }
+				}
+			}
+		}
+		337 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1685 }
+				}
+			}
+		}
+		338 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1690 }
+				}
+			}
+		}
+		339 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1695 }
+				}
+			}
+		}
+		340 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1700 }
+				}
+			}
+		}
+		341 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1705 }
+				}
+			}
+		}
+		342 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1710 }
+				}
+			}
+		}
+		343 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1715 }
+				}
+			}
+		}
+		344 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1720 }
+				}
+			}
+		}
+		345 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1725 }
+				}
+			}
+		}
+		346 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1730 }
+				}
+			}
+		}
+		347 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1735 }
+				}
+			}
+		}
+		348 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1740 }
+				}
+			}
+		}
+		349 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1745 }
+				}
+			}
+		}
+		350 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1750 }
+				}
+			}
+		}
+		351 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1755 }
+				}
+			}
+		}
+		352 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1760 }
+				}
+			}
+		}
+		353 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1765 }
+				}
+			}
+		}
+		354 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1770 }
+				}
+			}
+		}
+		355 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1775 }
+				}
+			}
+		}
+		356 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1780 }
+				}
+			}
+		}
+		357 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1785 }
+				}
+			}
+		}
+		358 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1790 }
+				}
+			}
+		}
+		359 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1795 }
+				}
+			}
+		}
+		360 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1800 }
+				}
+			}
+		}
+		361 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1805 }
+				}
+			}
+		}
+		362 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1810 }
+				}
+			}
+		}
+		363 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1815 }
+				}
+			}
+		}
+		364 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1820 }
+				}
+			}
+		}
+		365 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1825 }
+				}
+			}
+		}
+		366 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1830 }
+				}
+			}
+		}
+		367 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1835 }
+				}
+			}
+		}
+		368 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1840 }
+				}
+			}
+		}
+		369 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1845 }
+				}
+			}
+		}
+		370 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1850 }
+				}
+			}
+		}
+		371 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1855 }
+				}
+			}
+		}
+		372 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1860 }
+				}
+			}
+		}
+		373 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1865 }
+				}
+			}
+		}
+		374 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1870 }
+				}
+			}
+		}
+		375 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1875 }
+				}
+			}
+		}
+		376 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1880 }
+				}
+			}
+		}
+		377 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1885 }
+				}
+			}
+		}
+		378 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1890 }
+				}
+			}
+		}
+		379 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1895 }
+				}
+			}
+		}
+		380 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1900 }
+				}
+			}
+		}
+		381 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1905 }
+				}
+			}
+		}
+		382 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1910 }
+				}
+			}
+		}
+		383 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1915 }
+				}
+			}
+		}
+		384 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1920 }
+				}
+			}
+		}
+		385 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1925 }
+				}
+			}
+		}
+		386 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1930 }
+				}
+			}
+		}
+		387 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1935 }
+				}
+			}
+		}
+		388 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1940 }
+				}
+			}
+		}
+		389 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1945 }
+				}
+			}
+		}
+		390 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1950 }
+				}
+			}
+		}
+		391 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1955 }
+				}
+			}
+		}
+		392 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1960 }
+				}
+			}
+		}
+		393 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1965 }
+				}
+			}
+		}
+		394 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1970 }
+				}
+			}
+		}
+		395 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1975 }
+				}
+			}
+		}
+		396 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1980 }
+				}
+			}
+		}
+		397 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1985 }
+				}
+			}
+		}
+		398 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1990 }
+				}
+			}
+		}
+		399 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 1995 }
+				}
+			}
+		}
+		400 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2000 }
+				}
+			}
+		}
+		401 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2005 }
+				}
+			}
+		}
+		402 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2010 }
+				}
+			}
+		}
+		403 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2015 }
+				}
+			}
+		}
+		404 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2020 }
+				}
+			}
+		}
+		405 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2025 }
+				}
+			}
+		}
+		406 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2030 }
+				}
+			}
+		}
+		407 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2035 }
+				}
+			}
+		}
+		408 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2040 }
+				}
+			}
+		}
+		409 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2045 }
+				}
+			}
+		}
+		410 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2050 }
+				}
+			}
+		}
+		411 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2055 }
+				}
+			}
+		}
+		412 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2060 }
+				}
+			}
+		}
+		413 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2065 }
+				}
+			}
+		}
+		414 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2070 }
+				}
+			}
+		}
+		415 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2075 }
+				}
+			}
+		}
+		416 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2080 }
+				}
+			}
+		}
+		417 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2085 }
+				}
+			}
+		}
+		418 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2090 }
+				}
+			}
+		}
+		419 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2095 }
+				}
+			}
+		}
+		420 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2100 }
+				}
+			}
+		}
+		421 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2105 }
+				}
+			}
+		}
+		422 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2110 }
+				}
+			}
+		}
+		423 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2115 }
+				}
+			}
+		}
+		424 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2120 }
+				}
+			}
+		}
+		425 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2125 }
+				}
+			}
+		}
+		426 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2130 }
+				}
+			}
+		}
+		427 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2135 }
+				}
+			}
+		}
+		428 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2140 }
+				}
+			}
+		}
+		429 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2145 }
+				}
+			}
+		}
+		430 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2150 }
+				}
+			}
+		}
+		431 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2155 }
+				}
+			}
+		}
+		432 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2160 }
+				}
+			}
+		}
+		433 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2165 }
+				}
+			}
+		}
+		434 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2170 }
+				}
+			}
+		}
+		435 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2175 }
+				}
+			}
+		}
+		436 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2180 }
+				}
+			}
+		}
+		437 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2185 }
+				}
+			}
+		}
+		438 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2190 }
+				}
+			}
+		}
+		439 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2195 }
+				}
+			}
+		}
+		440 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2200 }
+				}
+			}
+		}
+		441 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2205 }
+				}
+			}
+		}
+		442 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2210 }
+				}
+			}
+		}
+		443 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2215 }
+				}
+			}
+		}
+		444 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2220 }
+				}
+			}
+		}
+		445 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2225 }
+				}
+			}
+		}
+		446 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2230 }
+				}
+			}
+		}
+		447 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2235 }
+				}
+			}
+		}
+		448 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2240 }
+				}
+			}
+		}
+		449 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2245 }
+				}
+			}
+		}
+		450 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2250 }
+				}
+			}
+		}
+		451 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2255 }
+				}
+			}
+		}
+		452 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2260 }
+				}
+			}
+		}
+		453 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2265 }
+				}
+			}
+		}
+		454 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2270 }
+				}
+			}
+		}
+		455 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2275 }
+				}
+			}
+		}
+		456 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2280 }
+				}
+			}
+		}
+		457 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2285 }
+				}
+			}
+		}
+		458 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2290 }
+				}
+			}
+		}
+		459 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2295 }
+				}
+			}
+		}
+		460 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2300 }
+				}
+			}
+		}
+		461 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2305 }
+				}
+			}
+		}
+		462 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2310 }
+				}
+			}
+		}
+		463 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2315 }
+				}
+			}
+		}
+		464 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2320 }
+				}
+			}
+		}
+		465 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2325 }
+				}
+			}
+		}
+		466 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2330 }
+				}
+			}
+		}
+		467 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2335 }
+				}
+			}
+		}
+		468 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2340 }
+				}
+			}
+		}
+		469 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2345 }
+				}
+			}
+		}
+		470 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2350 }
+				}
+			}
+		}
+		471 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2355 }
+				}
+			}
+		}
+		472 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2360 }
+				}
+			}
+		}
+		473 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2365 }
+				}
+			}
+		}
+		474 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2370 }
+				}
+			}
+		}
+		475 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2375 }
+				}
+			}
+		}
+		476 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2380 }
+				}
+			}
+		}
+		477 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2385 }
+				}
+			}
+		}
+		478 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2390 }
+				}
+			}
+		}
+		479 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2395 }
+				}
+			}
+		}
+		480 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2400 }
+				}
+			}
+		}
+		481 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2405 }
+				}
+			}
+		}
+		482 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2410 }
+				}
+			}
+		}
+		483 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2415 }
+				}
+			}
+		}
+		484 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2420 }
+				}
+			}
+		}
+		485 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2425 }
+				}
+			}
+		}
+		486 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2430 }
+				}
+			}
+		}
+		487 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2435 }
+				}
+			}
+		}
+		488 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2440 }
+				}
+			}
+		}
+		489 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2445 }
+				}
+			}
+		}
+		490 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2450 }
+				}
+			}
+		}
+		491 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2455 }
+				}
+			}
+		}
+		492 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2460 }
+				}
+			}
+		}
+		493 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2465 }
+				}
+			}
+		}
+		494 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2470 }
+				}
+			}
+		}
+		495 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2475 }
+				}
+			}
+		}
+		496 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2480 }
+				}
+			}
+		}
+		497 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2485 }
+				}
+			}
+		}
+		498 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2490 }
+				}
+			}
+		}
+		499 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2495 }
+				}
+			}
+		}
+		500 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2500 }
+				}
+			}
+		}
+		501 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2505 }
+				}
+			}
+		}
+		502 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2510 }
+				}
+			}
+		}
+		503 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2515 }
+				}
+			}
+		}
+		504 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2520 }
+				}
+			}
+		}
+		505 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2525 }
+				}
+			}
+		}
+		506 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2530 }
+				}
+			}
+		}
+		507 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2535 }
+				}
+			}
+		}
+		508 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2540 }
+				}
+			}
+		}
+		509 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2545 }
+				}
+			}
+		}
+		510 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2550 }
+				}
+			}
+		}
+		511 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2555 }
+				}
+			}
+		}
+		512 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2560 }
+				}
+			}
+		}
+		513 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2565 }
+				}
+			}
+		}
+		514 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2570 }
+				}
+			}
+		}
+		515 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2575 }
+				}
+			}
+		}
+		516 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2580 }
+				}
+			}
+		}
+		517 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2585 }
+				}
+			}
+		}
+		518 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2590 }
+				}
+			}
+		}
+		519 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2595 }
+				}
+			}
+		}
+		520 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2600 }
+				}
+			}
+		}
+		521 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2605 }
+				}
+			}
+		}
+		522 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2610 }
+				}
+			}
+		}
+		523 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2615 }
+				}
+			}
+		}
+		524 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2620 }
+				}
+			}
+		}
+		525 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2625 }
+				}
+			}
+		}
+		526 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2630 }
+				}
+			}
+		}
+		527 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2635 }
+				}
+			}
+		}
+		528 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2640 }
+				}
+			}
+		}
+		529 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2645 }
+				}
+			}
+		}
+		530 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2650 }
+				}
+			}
+		}
+		531 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2655 }
+				}
+			}
+		}
+		532 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2660 }
+				}
+			}
+		}
+		533 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2665 }
+				}
+			}
+		}
+		534 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2670 }
+				}
+			}
+		}
+		535 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2675 }
+				}
+			}
+		}
+		536 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2680 }
+				}
+			}
+		}
+		537 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2685 }
+				}
+			}
+		}
+		538 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2690 }
+				}
+			}
+		}
+		539 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2695 }
+				}
+			}
+		}
+		540 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2700 }
+				}
+			}
+		}
+		541 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2705 }
+				}
+			}
+		}
+		542 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2710 }
+				}
+			}
+		}
+		543 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2715 }
+				}
+			}
+		}
+		544 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2720 }
+				}
+			}
+		}
+		545 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2725 }
+				}
+			}
+		}
+		546 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2730 }
+				}
+			}
+		}
+		547 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2735 }
+				}
+			}
+		}
+		548 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2740 }
+				}
+			}
+		}
+		549 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2745 }
+				}
+			}
+		}
+		550 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2750 }
+				}
+			}
+		}
+		551 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2755 }
+				}
+			}
+		}
+		552 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2760 }
+				}
+			}
+		}
+		553 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2765 }
+				}
+			}
+		}
+		554 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2770 }
+				}
+			}
+		}
+		555 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2775 }
+				}
+			}
+		}
+		556 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2780 }
+				}
+			}
+		}
+		557 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2785 }
+				}
+			}
+		}
+		558 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2790 }
+				}
+			}
+		}
+		559 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2795 }
+				}
+			}
+		}
+		560 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2800 }
+				}
+			}
+		}
+		561 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2805 }
+				}
+			}
+		}
+		562 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2810 }
+				}
+			}
+		}
+		563 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2815 }
+				}
+			}
+		}
+		564 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2820 }
+				}
+			}
+		}
+		565 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2825 }
+				}
+			}
+		}
+		566 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2830 }
+				}
+			}
+		}
+		567 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2835 }
+				}
+			}
+		}
+		568 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2840 }
+				}
+			}
+		}
+		569 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2845 }
+				}
+			}
+		}
+		570 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2850 }
+				}
+			}
+		}
+		571 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2855 }
+				}
+			}
+		}
+		572 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2860 }
+				}
+			}
+		}
+		573 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2865 }
+				}
+			}
+		}
+		574 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2870 }
+				}
+			}
+		}
+		575 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2875 }
+				}
+			}
+		}
+		576 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2880 }
+				}
+			}
+		}
+		577 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2885 }
+				}
+			}
+		}
+		578 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2890 }
+				}
+			}
+		}
+		579 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2895 }
+				}
+			}
+		}
+		580 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2900 }
+				}
+			}
+		}
+		581 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2905 }
+				}
+			}
+		}
+		582 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2910 }
+				}
+			}
+		}
+		583 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2915 }
+				}
+			}
+		}
+		584 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2920 }
+				}
+			}
+		}
+		585 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2925 }
+				}
+			}
+		}
+		586 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2930 }
+				}
+			}
+		}
+		587 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2935 }
+				}
+			}
+		}
+		588 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2940 }
+				}
+			}
+		}
+		589 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2945 }
+				}
+			}
+		}
+		590 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2950 }
+				}
+			}
+		}
+		591 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2955 }
+				}
+			}
+		}
+		592 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2960 }
+				}
+			}
+		}
+		593 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2965 }
+				}
+			}
+		}
+		594 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2970 }
+				}
+			}
+		}
+		595 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2975 }
+				}
+			}
+		}
+		596 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2980 }
+				}
+			}
+		}
+		597 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2985 }
+				}
+			}
+		}
+		598 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2990 }
+				}
+			}
+		}
+		599 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 2995 }
+				}
+			}
+		}
+		600 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3000 }
+				}
+			}
+		}
+		601 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3005 }
+				}
+			}
+		}
+		602 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3010 }
+				}
+			}
+		}
+		603 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3015 }
+				}
+			}
+		}
+		604 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3020 }
+				}
+			}
+		}
+		605 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3025 }
+				}
+			}
+		}
+		606 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3030 }
+				}
+			}
+		}
+		607 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3035 }
+				}
+			}
+		}
+		608 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3040 }
+				}
+			}
+		}
+		609 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3045 }
+				}
+			}
+		}
+		610 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3050 }
+				}
+			}
+		}
+		611 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3055 }
+				}
+			}
+		}
+		612 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3060 }
+				}
+			}
+		}
+		613 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3065 }
+				}
+			}
+		}
+		614 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3070 }
+				}
+			}
+		}
+		615 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3075 }
+				}
+			}
+		}
+		616 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3080 }
+				}
+			}
+		}
+		617 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3085 }
+				}
+			}
+		}
+		618 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3090 }
+				}
+			}
+		}
+		619 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3095 }
+				}
+			}
+		}
+		620 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3100 }
+				}
+			}
+		}
+		621 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3105 }
+				}
+			}
+		}
+		622 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3110 }
+				}
+			}
+		}
+		623 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3115 }
+				}
+			}
+		}
+		624 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3120 }
+				}
+			}
+		}
+		625 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3125 }
+				}
+			}
+		}
+		626 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3130 }
+				}
+			}
+		}
+		627 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3135 }
+				}
+			}
+		}
+		628 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3140 }
+				}
+			}
+		}
+		629 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3145 }
+				}
+			}
+		}
+		630 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3150 }
+				}
+			}
+		}
+		631 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3155 }
+				}
+			}
+		}
+		632 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3160 }
+				}
+			}
+		}
+		633 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3165 }
+				}
+			}
+		}
+		634 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3170 }
+				}
+			}
+		}
+		635 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3175 }
+				}
+			}
+		}
+		636 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3180 }
+				}
+			}
+		}
+		637 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3185 }
+				}
+			}
+		}
+		638 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3190 }
+				}
+			}
+		}
+		639 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3195 }
+				}
+			}
+		}
+		640 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3200 }
+				}
+			}
+		}
+		641 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3205 }
+				}
+			}
+		}
+		642 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3210 }
+				}
+			}
+		}
+		643 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3215 }
+				}
+			}
+		}
+		644 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3220 }
+				}
+			}
+		}
+		645 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3225 }
+				}
+			}
+		}
+		646 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3230 }
+				}
+			}
+		}
+		647 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3235 }
+				}
+			}
+		}
+		648 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3240 }
+				}
+			}
+		}
+		649 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3245 }
+				}
+			}
+		}
+		650 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3250 }
+				}
+			}
+		}
+		651 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3255 }
+				}
+			}
+		}
+		652 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3260 }
+				}
+			}
+		}
+		653 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3265 }
+				}
+			}
+		}
+		654 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3270 }
+				}
+			}
+		}
+		655 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3275 }
+				}
+			}
+		}
+		656 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3280 }
+				}
+			}
+		}
+		657 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3285 }
+				}
+			}
+		}
+		658 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3290 }
+				}
+			}
+		}
+		659 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3295 }
+				}
+			}
+		}
+		660 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3300 }
+				}
+			}
+		}
+		661 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3305 }
+				}
+			}
+		}
+		662 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3310 }
+				}
+			}
+		}
+		663 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3315 }
+				}
+			}
+		}
+		664 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3320 }
+				}
+			}
+		}
+		665 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3325 }
+				}
+			}
+		}
+		666 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3330 }
+				}
+			}
+		}
+		667 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3335 }
+				}
+			}
+		}
+		668 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3340 }
+				}
+			}
+		}
+		669 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3345 }
+				}
+			}
+		}
+		670 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3350 }
+				}
+			}
+		}
+		671 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3355 }
+				}
+			}
+		}
+		672 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3360 }
+				}
+			}
+		}
+		673 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3365 }
+				}
+			}
+		}
+		674 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3370 }
+				}
+			}
+		}
+		675 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3375 }
+				}
+			}
+		}
+		676 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3380 }
+				}
+			}
+		}
+		677 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3385 }
+				}
+			}
+		}
+		678 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3390 }
+				}
+			}
+		}
+		679 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3395 }
+				}
+			}
+		}
+		680 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3400 }
+				}
+			}
+		}
+		681 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3405 }
+				}
+			}
+		}
+		682 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3410 }
+				}
+			}
+		}
+		683 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3415 }
+				}
+			}
+		}
+		684 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3420 }
+				}
+			}
+		}
+		685 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3425 }
+				}
+			}
+		}
+		686 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3430 }
+				}
+			}
+		}
+		687 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3435 }
+				}
+			}
+		}
+		688 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3440 }
+				}
+			}
+		}
+		689 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3445 }
+				}
+			}
+		}
+		690 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3450 }
+				}
+			}
+		}
+		691 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3455 }
+				}
+			}
+		}
+		692 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3460 }
+				}
+			}
+		}
+		693 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3465 }
+				}
+			}
+		}
+		694 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3470 }
+				}
+			}
+		}
+		695 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3475 }
+				}
+			}
+		}
+		696 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3480 }
+				}
+			}
+		}
+		697 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3485 }
+				}
+			}
+		}
+		698 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3490 }
+				}
+			}
+		}
+		699 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3495 }
+				}
+			}
+		}
+		700 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3500 }
+				}
+			}
+		}
+		701 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3505 }
+				}
+			}
+		}
+		702 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3510 }
+				}
+			}
+		}
+		703 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3515 }
+				}
+			}
+		}
+		704 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3520 }
+				}
+			}
+		}
+		705 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3525 }
+				}
+			}
+		}
+		706 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3530 }
+				}
+			}
+		}
+		707 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3535 }
+				}
+			}
+		}
+		708 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3540 }
+				}
+			}
+		}
+		709 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3545 }
+				}
+			}
+		}
+		710 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3550 }
+				}
+			}
+		}
+		711 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3555 }
+				}
+			}
+		}
+		712 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3560 }
+				}
+			}
+		}
+		713 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3565 }
+				}
+			}
+		}
+		714 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3570 }
+				}
+			}
+		}
+		715 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3575 }
+				}
+			}
+		}
+		716 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3580 }
+				}
+			}
+		}
+		717 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3585 }
+				}
+			}
+		}
+		718 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3590 }
+				}
+			}
+		}
+		719 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3595 }
+				}
+			}
+		}
+		720 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3600 }
+				}
+			}
+		}
+		721 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3605 }
+				}
+			}
+		}
+		722 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3610 }
+				}
+			}
+		}
+		723 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3615 }
+				}
+			}
+		}
+		724 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3620 }
+				}
+			}
+		}
+		725 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3625 }
+				}
+			}
+		}
+		726 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3630 }
+				}
+			}
+		}
+		727 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3635 }
+				}
+			}
+		}
+		728 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3640 }
+				}
+			}
+		}
+		729 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3645 }
+				}
+			}
+		}
+		730 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3650 }
+				}
+			}
+		}
+		731 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3655 }
+				}
+			}
+		}
+		732 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3660 }
+				}
+			}
+		}
+		733 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3665 }
+				}
+			}
+		}
+		734 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3670 }
+				}
+			}
+		}
+		735 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3675 }
+				}
+			}
+		}
+		736 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3680 }
+				}
+			}
+		}
+		737 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3685 }
+				}
+			}
+		}
+		738 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3690 }
+				}
+			}
+		}
+		739 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3695 }
+				}
+			}
+		}
+		740 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3700 }
+				}
+			}
+		}
+		741 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3705 }
+				}
+			}
+		}
+		742 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3710 }
+				}
+			}
+		}
+		743 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3715 }
+				}
+			}
+		}
+		744 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3720 }
+				}
+			}
+		}
+		745 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3725 }
+				}
+			}
+		}
+		746 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3730 }
+				}
+			}
+		}
+		747 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3735 }
+				}
+			}
+		}
+		748 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3740 }
+				}
+			}
+		}
+		749 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3745 }
+				}
+			}
+		}
+		750 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3750 }
+				}
+			}
+		}
+		751 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3755 }
+				}
+			}
+		}
+		752 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3760 }
+				}
+			}
+		}
+		753 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3765 }
+				}
+			}
+		}
+		754 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3770 }
+				}
+			}
+		}
+		755 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3775 }
+				}
+			}
+		}
+		756 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3780 }
+				}
+			}
+		}
+		757 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3785 }
+				}
+			}
+		}
+		758 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3790 }
+				}
+			}
+		}
+		759 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3795 }
+				}
+			}
+		}
+		760 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3800 }
+				}
+			}
+		}
+		761 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3805 }
+				}
+			}
+		}
+		762 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3810 }
+				}
+			}
+		}
+		763 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3815 }
+				}
+			}
+		}
+		764 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3820 }
+				}
+			}
+		}
+		765 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3825 }
+				}
+			}
+		}
+		766 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3830 }
+				}
+			}
+		}
+		767 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3835 }
+				}
+			}
+		}
+		768 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3840 }
+				}
+			}
+		}
+		769 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3845 }
+				}
+			}
+		}
+		770 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3850 }
+				}
+			}
+		}
+		771 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3855 }
+				}
+			}
+		}
+		772 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3860 }
+				}
+			}
+		}
+		773 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3865 }
+				}
+			}
+		}
+		774 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3870 }
+				}
+			}
+		}
+		775 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3875 }
+				}
+			}
+		}
+		776 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3880 }
+				}
+			}
+		}
+		777 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3885 }
+				}
+			}
+		}
+		778 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3890 }
+				}
+			}
+		}
+		779 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3895 }
+				}
+			}
+		}
+		780 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3900 }
+				}
+			}
+		}
+		781 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3905 }
+				}
+			}
+		}
+		782 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3910 }
+				}
+			}
+		}
+		783 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3915 }
+				}
+			}
+		}
+		784 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3920 }
+				}
+			}
+		}
+		785 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3925 }
+				}
+			}
+		}
+		786 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3930 }
+				}
+			}
+		}
+		787 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3935 }
+				}
+			}
+		}
+		788 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3940 }
+				}
+			}
+		}
+		789 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3945 }
+				}
+			}
+		}
+		790 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3950 }
+				}
+			}
+		}
+		791 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3955 }
+				}
+			}
+		}
+		792 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3960 }
+				}
+			}
+		}
+		793 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3965 }
+				}
+			}
+		}
+		794 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3970 }
+				}
+			}
+		}
+		795 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3975 }
+				}
+			}
+		}
+		796 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3980 }
+				}
+			}
+		}
+		797 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3985 }
+				}
+			}
+		}
+		798 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3990 }
+				}
+			}
+		}
+		799 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 3995 }
+				}
+			}
+		}
+		800 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4000 }
+				}
+			}
+		}
+		801 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4005 }
+				}
+			}
+		}
+		802 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4010 }
+				}
+			}
+		}
+		803 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4015 }
+				}
+			}
+		}
+		804 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4020 }
+				}
+			}
+		}
+		805 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4025 }
+				}
+			}
+		}
+		806 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4030 }
+				}
+			}
+		}
+		807 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4035 }
+				}
+			}
+		}
+		808 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4040 }
+				}
+			}
+		}
+		809 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4045 }
+				}
+			}
+		}
+		810 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4050 }
+				}
+			}
+		}
+		811 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4055 }
+				}
+			}
+		}
+		812 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4060 }
+				}
+			}
+		}
+		813 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4065 }
+				}
+			}
+		}
+		814 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4070 }
+				}
+			}
+		}
+		815 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4075 }
+				}
+			}
+		}
+		816 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4080 }
+				}
+			}
+		}
+		817 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4085 }
+				}
+			}
+		}
+		818 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4090 }
+				}
+			}
+		}
+		819 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4095 }
+				}
+			}
+		}
+		820 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4100 }
+				}
+			}
+		}
+		821 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4105 }
+				}
+			}
+		}
+		822 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4110 }
+				}
+			}
+		}
+		823 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4115 }
+				}
+			}
+		}
+		824 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4120 }
+				}
+			}
+		}
+		825 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4125 }
+				}
+			}
+		}
+		826 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4130 }
+				}
+			}
+		}
+		827 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4135 }
+				}
+			}
+		}
+		828 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4140 }
+				}
+			}
+		}
+		829 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4145 }
+				}
+			}
+		}
+		830 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4150 }
+				}
+			}
+		}
+		831 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4155 }
+				}
+			}
+		}
+		832 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4160 }
+				}
+			}
+		}
+		833 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4165 }
+				}
+			}
+		}
+		834 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4170 }
+				}
+			}
+		}
+		835 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4175 }
+				}
+			}
+		}
+		836 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4180 }
+				}
+			}
+		}
+		837 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4185 }
+				}
+			}
+		}
+		838 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4190 }
+				}
+			}
+		}
+		839 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4195 }
+				}
+			}
+		}
+		840 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4200 }
+				}
+			}
+		}
+		841 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4205 }
+				}
+			}
+		}
+		842 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4210 }
+				}
+			}
+		}
+		843 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4215 }
+				}
+			}
+		}
+		844 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4220 }
+				}
+			}
+		}
+		845 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4225 }
+				}
+			}
+		}
+		846 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4230 }
+				}
+			}
+		}
+		847 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4235 }
+				}
+			}
+		}
+		848 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4240 }
+				}
+			}
+		}
+		849 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4245 }
+				}
+			}
+		}
+		850 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4250 }
+				}
+			}
+		}
+		851 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4255 }
+				}
+			}
+		}
+		852 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4260 }
+				}
+			}
+		}
+		853 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4265 }
+				}
+			}
+		}
+		854 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4270 }
+				}
+			}
+		}
+		855 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4275 }
+				}
+			}
+		}
+		856 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4280 }
+				}
+			}
+		}
+		857 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4285 }
+				}
+			}
+		}
+		858 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4290 }
+				}
+			}
+		}
+		859 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4295 }
+				}
+			}
+		}
+		860 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4300 }
+				}
+			}
+		}
+		861 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4305 }
+				}
+			}
+		}
+		862 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4310 }
+				}
+			}
+		}
+		863 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4315 }
+				}
+			}
+		}
+		864 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4320 }
+				}
+			}
+		}
+		865 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4325 }
+				}
+			}
+		}
+		866 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4330 }
+				}
+			}
+		}
+		867 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4335 }
+				}
+			}
+		}
+		868 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4340 }
+				}
+			}
+		}
+		869 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4345 }
+				}
+			}
+		}
+		870 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4350 }
+				}
+			}
+		}
+		871 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4355 }
+				}
+			}
+		}
+		872 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4360 }
+				}
+			}
+		}
+		873 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4365 }
+				}
+			}
+		}
+		874 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4370 }
+				}
+			}
+		}
+		875 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4375 }
+				}
+			}
+		}
+		876 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4380 }
+				}
+			}
+		}
+		877 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4385 }
+				}
+			}
+		}
+		878 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4390 }
+				}
+			}
+		}
+		879 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4395 }
+				}
+			}
+		}
+		880 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4400 }
+				}
+			}
+		}
+		881 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4405 }
+				}
+			}
+		}
+		882 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4410 }
+				}
+			}
+		}
+		883 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4415 }
+				}
+			}
+		}
+		884 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4420 }
+				}
+			}
+		}
+		885 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4425 }
+				}
+			}
+		}
+		886 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4430 }
+				}
+			}
+		}
+		887 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4435 }
+				}
+			}
+		}
+		888 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4440 }
+				}
+			}
+		}
+		889 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4445 }
+				}
+			}
+		}
+		890 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4450 }
+				}
+			}
+		}
+		891 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4455 }
+				}
+			}
+		}
+		892 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4460 }
+				}
+			}
+		}
+		893 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4465 }
+				}
+			}
+		}
+		894 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4470 }
+				}
+			}
+		}
+		895 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4475 }
+				}
+			}
+		}
+		896 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4480 }
+				}
+			}
+		}
+		897 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4485 }
+				}
+			}
+		}
+		898 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4490 }
+				}
+			}
+		}
+		899 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4495 }
+				}
+			}
+		}
+		900 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4500 }
+				}
+			}
+		}
+		901 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4505 }
+				}
+			}
+		}
+		902 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4510 }
+				}
+			}
+		}
+		903 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4515 }
+				}
+			}
+		}
+		904 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4520 }
+				}
+			}
+		}
+		905 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4525 }
+				}
+			}
+		}
+		906 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4530 }
+				}
+			}
+		}
+		907 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4535 }
+				}
+			}
+		}
+		908 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4540 }
+				}
+			}
+		}
+		909 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4545 }
+				}
+			}
+		}
+		910 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4550 }
+				}
+			}
+		}
+		911 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4555 }
+				}
+			}
+		}
+		912 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4560 }
+				}
+			}
+		}
+		913 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4565 }
+				}
+			}
+		}
+		914 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4570 }
+				}
+			}
+		}
+		915 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4575 }
+				}
+			}
+		}
+		916 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4580 }
+				}
+			}
+		}
+		917 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4585 }
+				}
+			}
+		}
+		918 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4590 }
+				}
+			}
+		}
+		919 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4595 }
+				}
+			}
+		}
+		920 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4600 }
+				}
+			}
+		}
+		921 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4605 }
+				}
+			}
+		}
+		922 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4610 }
+				}
+			}
+		}
+		923 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4615 }
+				}
+			}
+		}
+		924 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4620 }
+				}
+			}
+		}
+		925 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4625 }
+				}
+			}
+		}
+		926 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4630 }
+				}
+			}
+		}
+		927 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4635 }
+				}
+			}
+		}
+		928 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4640 }
+				}
+			}
+		}
+		929 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4645 }
+				}
+			}
+		}
+		930 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4650 }
+				}
+			}
+		}
+		931 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4655 }
+				}
+			}
+		}
+		932 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4660 }
+				}
+			}
+		}
+		933 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4665 }
+				}
+			}
+		}
+		934 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4670 }
+				}
+			}
+		}
+		935 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4675 }
+				}
+			}
+		}
+		936 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4680 }
+				}
+			}
+		}
+		937 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4685 }
+				}
+			}
+		}
+		938 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4690 }
+				}
+			}
+		}
+		939 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4695 }
+				}
+			}
+		}
+		940 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4700 }
+				}
+			}
+		}
+		941 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4705 }
+				}
+			}
+		}
+		942 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4710 }
+				}
+			}
+		}
+		943 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4715 }
+				}
+			}
+		}
+		944 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4720 }
+				}
+			}
+		}
+		945 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4725 }
+				}
+			}
+		}
+		946 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4730 }
+				}
+			}
+		}
+		947 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4735 }
+				}
+			}
+		}
+		948 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4740 }
+				}
+			}
+		}
+		949 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4745 }
+				}
+			}
+		}
+		950 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4750 }
+				}
+			}
+		}
+		951 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4755 }
+				}
+			}
+		}
+		952 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4760 }
+				}
+			}
+		}
+		953 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4765 }
+				}
+			}
+		}
+		954 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4770 }
+				}
+			}
+		}
+		955 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4775 }
+				}
+			}
+		}
+		956 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4780 }
+				}
+			}
+		}
+		957 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4785 }
+				}
+			}
+		}
+		958 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4790 }
+				}
+			}
+		}
+		959 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4795 }
+				}
+			}
+		}
+		960 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4800 }
+				}
+			}
+		}
+		961 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4805 }
+				}
+			}
+		}
+		962 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4810 }
+				}
+			}
+		}
+		963 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4815 }
+				}
+			}
+		}
+		964 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4820 }
+				}
+			}
+		}
+		965 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4825 }
+				}
+			}
+		}
+		966 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4830 }
+				}
+			}
+		}
+		967 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4835 }
+				}
+			}
+		}
+		968 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4840 }
+				}
+			}
+		}
+		969 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4845 }
+				}
+			}
+		}
+		970 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4850 }
+				}
+			}
+		}
+		971 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4855 }
+				}
+			}
+		}
+		972 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4860 }
+				}
+			}
+		}
+		973 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4865 }
+				}
+			}
+		}
+		974 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4870 }
+				}
+			}
+		}
+		975 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4875 }
+				}
+			}
+		}
+		976 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4880 }
+				}
+			}
+		}
+		977 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4885 }
+				}
+			}
+		}
+		978 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4890 }
+				}
+			}
+		}
+		979 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4895 }
+				}
+			}
+		}
+		980 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4900 }
+				}
+			}
+		}
+		981 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4905 }
+				}
+			}
+		}
+		982 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4910 }
+				}
+			}
+		}
+		983 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4915 }
+				}
+			}
+		}
+		984 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4920 }
+				}
+			}
+		}
+		985 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4925 }
+				}
+			}
+		}
+		986 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4930 }
+				}
+			}
+		}
+		987 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4935 }
+				}
+			}
+		}
+		988 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4940 }
+				}
+			}
+		}
+		989 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4945 }
+				}
+			}
+		}
+		990 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4950 }
+				}
+			}
+		}
+		991 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4955 }
+				}
+			}
+		}
+		992 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4960 }
+				}
+			}
+		}
+		993 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4965 }
+				}
+			}
+		}
+		994 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4970 }
+				}
+			}
+		}
+		995 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4975 }
+				}
+			}
+		}
+		996 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4980 }
+				}
+			}
+		}
+		997 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4985 }
+				}
+			}
+		}
+		998 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4990 }
+				}
+			}
+		}
+		999 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 4995 }
+				}
+			}
+		}
+		1000 = {
+			if = {
+				limit = { has_technology_researched = central_banking }
+				$CTRL_BANK_SITE$ = {
+					zz_ef_cm_create_owned_bank = { CB_SIZE = 5000 }
+				}
+			}
+		}
+	}
+
+	law_no_monetary_system_with_tech_currency_standards = yes #pour avoir le law_fiat_standard si a le law_no_monetary_system
+	central_bank_modifier = yes
+	introduction_new_currency = yes
+	#utile pour les pays qui vienne d'avoir la tech ou si il y a un probleme de bc de loi ou de varriable
+	#doit etre proteégé par law_fiat_standart donc toujour à mettre juste avant cet effect si on veux reset la currency
+	central_bank_modifier = yes
+	central_bank_production_methods = yes
+	if = {
+		limit = {
+			market_owner_is_root = no
+			market_owner_is_root_univ_with_buiding = no #na pas la configuration deja sujet actif evite les répétition
+		}
+		#central_bank_production_methods_2 = yes
+	}
+	if = {
+		limit = {
+			has_law = law_type:law_gold_exchange_standard
+			#securisé avec un trigger qui est invalide si la pm no subjet currency est selectionné
+		}
+		central_bank_production_methods_3 = yes
+	}
+	#money_value_target_modification = yes #probleme de set de la currency target
+}
+
+central_bank_respawn_after_crisis = {
+	$CTRL_BANK_SITE$ = {
+		zz_ef_cm_create_owned_bank = { CB_SIZE = $CB_SIZE$ }
+	}
+}

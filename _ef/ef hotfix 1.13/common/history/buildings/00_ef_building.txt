@@ -1,6 +1,20 @@
 ﻿BUILDINGS = {
 	every_country = {
 
+		### HOTFIX: pulled up from further down this same file (it still runs there,
+		### and is a no-op the second time -- every branch of it is guarded by
+		### NOT = { has_company = ... }).
+		###
+		### It has to happen BEFORE the central banks are built. The bank is now
+		### created already owned by a company (zz_ef_cm_create_owned_bank), and the
+		### company it picks has to exist at that moment -- otherwise Britain's bank
+		### falls through to the generic company_BasicBank and the Bank of England,
+		### established a few hundred lines later, never gets it. Nothing in the game
+		### can move ownership afterwards: add_ownership is a field of create_building
+		### and there is no effect anywhere that hands over a standing building.
+		establish_bank_and_ef_compagnie = yes
+
+
 		#####################################################################################################################################################
 		#####################################################################################################################################################
 		#####################################################################################################################################################

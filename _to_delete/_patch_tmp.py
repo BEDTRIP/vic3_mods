@@ -3,80 +3,55 @@ import re
 p = "tools/regen_ef_currency_merge.py"
 s = open(p, encoding="utf-8").read()
 
-old = '''EF = "E&F"
-HOTFIX = "_ef/ef hotfix 1.13"
-MOD = "_ef/ef currency merge"'''
-new = '''EF = "E&F"
-HOTFIX = "_ef/ef hotfix 1.13"
+start = s.index('    effects = (BANNER +')
+end = s.index('    on_actions = (BANNER +')
+new = '''    effects = (BANNER +
+               "### Keep the central bank company alive.\\n"
+               "###\\n"
+               "### ORDER MATTERS AND IT COST A ROUND TO FIND OUT. The slot has to be granted\\n"
+               "### BEFORE add_company, not after. Finland owns a central bank and no company\\n"
+               "### slots at all in 1836 -- add_company simply had nowhere to put the company,\\n"
+               "### and the +1 arrived a line too late to help. Same on the game-start pass.\\n"
+               "###\\n"
+               "### Run monthly and once at game start. The remove_company branch is what makes\\n"
+               "### the generic company step aside for a flavoured one: it is not chosen for the\\n"
+               "### country up front, it is granted and then withdrawn once something better\\n"
+               "### exists.\\n\\n"
+               "zz_ef_cm_bank_company_upkeep = {\\n"
+               "\\t### 1. The slot first.\\n"
+               "\\tif = {\\n"
+               "\\t\\tlimit = {\\n"
+               "\\t\\t\\tzz_ef_cm_has_central_bank = yes\\n"
+               "\\t\\t\\tNOT = { has_modifier = zz_ef_cm_central_bank_charter }\\n"
+               "\\t\\t}\\n"
+               "\\t\\tadd_modifier = zz_ef_cm_central_bank_charter\\n"
+               "\\t}\\n"
+               "\\tif = {\\n"
+               "\\t\\tlimit = {\\n"
+               "\\t\\t\\thas_modifier = zz_ef_cm_central_bank_charter\\n"
+               "\\t\\t\\tNOT = { zz_ef_cm_has_central_bank = yes }\\n"
+               "\\t\\t}\\n"
+               "\\t\\tremove_modifier = zz_ef_cm_central_bank_charter\\n"
+               "\\t}\\n\\n"
+               "\\t### 2. Then the company.\\n"
+               "\\tif = {\\n"
+               "\\t\\tlimit = {\\n"
+               "\\t\\t\\tzz_ef_cm_has_central_bank = yes\\n"
+               "\\t\\t\\tNOT = { zz_ef_cm_has_bank_company = yes }\\n"
+               "\\t\\t}\\n"
+               "\\t\\tadd_company = company_type:company_BasicBank\\n"
+               "\\t}\\n\\n"
+               "\\t### 3. The flavoured company displaces the generic one.\\n"
+               "\\tif = {\\n"
+               "\\t\\tlimit = {\\n"
+               "\\t\\t\\thas_company = company_type:company_BasicBank\\n"
+               "\\t\\t\\tzz_ef_cm_has_flavoured_bank_company = yes\\n"
+               "\\t\\t}\\n"
+               "\\t\\tremove_company = company_type:company_BasicBank\\n"
+               "\\t}\\n"
+               "}\\n")
 
-# Everything is generated straight INTO the hotfix -- one mod in the game.
-MOD = HOTFIX
-
-# ...which creates a loop: two of the generated files are built FROM the hotfix's
-# own hand-written ones, and if the output lands on the input the generator starts
-# eating its own tail on the second run. So the hand-written originals live in
-# _gen_source/, a folder the game does not read (it scans common/, events/, gui/,
-# localization/, gfx/, map_data/, .metadata/ and nothing else).
-#
-# The folder is created on first run from whatever is in the mod right now, so the
-# bootstrap happens once and by itself. EDIT THE COPIES IN _gen_source/ from then
-# on -- the ones under common/ are output and get overwritten.
-SRC_DIR = "_gen_source"'''
-assert old in s
-s = s.replace(old, new)
-
-# bootstrap + source resolution
-old2 = '''def inventory(ef: Path, hf: Path, keep: str):
-    goods_src = hf / GOODS_FILE if (hf / GOODS_FILE).exists() else ef / GOODS_FILE'''
-new2 = '''def hand_written(hf: Path, rel: str) -> Path:
-    """The hand-written original of a file the generator overwrites.
-
-    First run moves it into _gen_source/; after that the copy there is the source
-    of truth and the one under common/ is output.
-    """
-    src = hf / SRC_DIR / Path(rel).name
-    if not src.exists():
-        live = hf / rel
-        if not live.exists():
-            raise SystemExit(f"neither {src} nor {live} exists")
-        src.parent.mkdir(parents=True, exist_ok=True)
-        src.write_bytes(live.read_bytes())
-        print(f"  bootstrapped  {SRC_DIR}/{src.name}  (hand-written original moved out of the way)")
-    return src
-
-
-def inventory(ef: Path, hf: Path, keep: str):
-    goods_src = hand_written(hf, GOODS_FILE)'''
-assert old2 in s
-s = s.replace(old2, new2)
-
-old3 = """    emit(mod / GOODS_FILE, gen_goods(read(hf / GOODS_FILE), commented_out, args.keep), args.check, acc)
-
-    text, n = gen_popneed(read(hf / POPNEED_FILE), dead, args.keep)"""
-new3 = """    emit(mod / GOODS_FILE, gen_goods(read(hand_written(hf, GOODS_FILE)), commented_out, args.keep),
-         args.check, acc)
-
-    text, n = gen_popneed(read(hand_written(hf, POPNEED_FILE)), dead, args.keep)"""
-assert old3 in s
-s = s.replace(old3, new3)
-
-# headers should say where the source really is
-s = s.replace('f"### Source: the hotfix\'s own {GOODS_FILE}.\\n"',
-              'f"### Source: {SRC_DIR}/{Path(GOODS_FILE).name} -- the hand-written original.\\n"')
-s = s.replace('f"### Source: the hotfix\'s own {POPNEED_FILE}.\\n"',
-              'f"### Source: {SRC_DIR}/{Path(POPNEED_FILE).name} -- the hand-written original.\\n"')
-
-# self-check must not walk _gen_source
-old4 = '''    for path in sorted(mod.rglob("*")):
-        if path.suffix not in (".txt", ".yml") or not path.is_file():
-            continue'''
-new4 = '''    for path in sorted(mod.rglob("*")):
-        if path.suffix not in (".txt", ".yml") or not path.is_file():
-            continue
-        if SRC_DIR in path.parts:
-            continue'''
-assert old4 in s
-s = s.replace(old4, new4)
-
+'''
+s = s[:start] + new + s[end:]
 open(p, "w", encoding="utf-8", newline="\n").write(s)
 print("ok")
