@@ -835,24 +835,42 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 
 # Currencies that keep their own name and icon, on top of the generic one.
 #
-# THE LIMIT IS THREE PER BASE GOOD, INCLUDING THE GENERIC. Vanilla never exceeds
-# it: of its 40 base goods carrying prestige variants, 17 have one, 14 have two,
-# 9 have three, none have four. The save agrees -- every prestige array in it is
-# exactly three long, 44,488 of them, and prestige goods get no market index of
-# their own (goods indices stop at 61, the number of real goods).
-#
-# Vanilla wires them exactly the way we do -- one prestige good per company,
-# `possible` used only for has_dlc_feature:
+# CONFIRMED IN GAME: selection is per company, exactly as vanilla wires it --
 #
 #   company_krupp             -> prestige_good_krupp_guns        base_good=artillery
 #   company_schneider_creusot -> prestige_good_schneider_guns    base_good=artillery
 #   company_trubia            -> prestige_good_generic_artillery base_good=artillery
 #
-# So selection by company works; ninety-five variants on one base good is what
-# did not. These two are the test of exactly that: if Britain mints the pound and
-# France the franc while everyone else mints the generic currency, the rule is
-# confirmed and this list is the whole budget we have. Keep it at two.
-SHOWCASE_CURRENCIES = ["pound_sterling", "franc_french_franc"]
+# -- and `possible` on a prestige good is used for nothing but has_dlc_feature.
+# With three variants on spe_uni_c, Britain minted the pound, France the franc and
+# everybody else the generic one. With ninety-five, every central bank on earth
+# minted the same one. So the breaking point is the COUNT, and three is safe.
+#
+# WHAT IS STILL OPEN, AND WHAT THIS LIST IS NOW TESTING: whether the limit is per
+# base good in the world, or per base good IN A MARKET. Nothing seen so far
+# separates the two -- with 95 candidates and either rule, every market would
+# resolve to the same variant, which is what happened.
+#
+# These nine are the countries that start in their own separate markets, one
+# currency each. If they all mint their own, the limit is per market and the
+# original plan is back on: give every country its own currency, and only worry
+# about a market that ends up holding more than three at once (imports and
+# customs unions can do that). If they collapse to one, the limit is global,
+# three is the whole budget, and this list goes back to two.
+#
+# Vanilla's own numbers, for reference: 40 base goods carry prestige variants,
+# 17 with one, 14 with two, 9 with three, none with four.
+SHOWCASE_CURRENCIES = [
+    "pound_sterling",              # GBR
+    "franc_french_franc",          # FRA
+    "spe_ruble",                   # RUS
+    "dollar_united_states_dollar", # USA
+    "gulden",                      # AUS
+    "thaler_prussian_thaler",      # PRU
+    "spe_yuan",                    # CHI
+    "spe_yen",                     # JAP
+    "lira_ottoman_lira",           # TUR
+]
 
 
 def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
