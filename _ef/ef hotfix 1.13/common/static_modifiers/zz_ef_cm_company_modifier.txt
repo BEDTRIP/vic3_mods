@@ -12,9 +12,6 @@
 ### hand this company. Vanilla's monopoly_charter (00_company_charter_types.txt)
 ### has no `possible` block and no cooldown, so it can be granted from the first
 ### day; this only makes it free instead of spending one of the country's four.
-### The charter still has to be clicked -- the game has no script effect for
-### granting one, only the player action and the AI's ai_possible / ai_weight
-### (which the bank company passes once prosperous and producing its currency).
 
 zz_ef_cm_central_bank_charter = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_positive.dds

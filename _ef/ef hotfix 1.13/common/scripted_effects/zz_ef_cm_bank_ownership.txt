@@ -1799,20 +1799,3451 @@ zz_ef_cm_create_owned_bank = {
 				}
 			}
 		}
-		else = {
-			### No bank company at all. The slot is granted first: a country with no
-			### free company slot -- Finland in 1836 -- cannot take one.
-			scope:zz_ef_cm_bank_owner = {
-				if = {
-					limit = { NOT = { has_modifier = zz_ef_cm_central_bank_charter } }
-					add_modifier = zz_ef_cm_central_bank_charter
-				}
-				if = {
-					limit = { NOT = { has_company = company_type:company_BasicBank } }
-					add_company = company_type:company_BasicBank
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar
 				}
 			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_algerian_dinar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_algerian_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_iraqi_dinar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_iraqi_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_libyan_dinar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_libyan_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_moroccan_dirham
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_moroccan_dirham
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_omanian_rial
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_omanian_rial
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_qiran
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_qiran
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_saudi_riyal
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_saudi_riyal
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_serbian_dinar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_serbian_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_tunisian_dinar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_tunisian_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dinar_yugoslav_dinar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dinar_yugoslav_dinar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_australian_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_australian_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_canadian_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_canadian_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_caribbean_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_caribbean_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_confederate_states_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_confederate_states_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_liberian_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_liberian_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_new_zealand_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_new_zealand_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_sierra_leonean_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_sierra_leonean_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_dollar_united_states_dollar
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_dollar_united_states_dollar
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_ariary
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_ariary
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_central_african_eco
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_central_african_eco
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_east_african_eco
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_east_african_eco
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_ethiopian_birr
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_ethiopian_birr
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_ghanaian_pound
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_ghanaian_pound
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_nigerian_naira
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_nigerian_naira
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_south_african_rand
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_south_african_rand
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_tuareg_ouguiya
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_tuareg_ouguiya
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_eco_west_african_eco
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_eco_west_african_eco
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_franc_belgian_franc
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_franc_belgian_franc
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_franc_french_franc
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_franc_french_franc
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_franc_luxembourgish_franc
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_franc_luxembourgish_franc
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_franc_swiss_franc
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_franc_swiss_franc
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_gulden
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_gulden
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_gulden_bavarian_gulden
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_gulden_bavarian_gulden
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_gulden_florin
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_gulden_florin
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_gulden_hungarian_forint
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_gulden_hungarian_forint
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_gulden_indies_guilder
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_gulden_indies_guilder
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_gulden_south_german_gulden
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_gulden_south_german_gulden
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_czech_koruna
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_czech_koruna
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_danish_krone
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_danish_krone
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_estonian_kroon
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_estonian_kroon
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_icelandic_krona
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_icelandic_krona
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_norwegian_krone
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_norwegian_krone
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_slovak_koruna
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_slovak_koruna
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_krone_swedish_krona
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_krone_swedish_krona
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_leon_leu
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_leon_leu
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_leon_lev
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_leon_lev
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_lira
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_lira
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_lira_ducato
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_lira_ducato
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_lira_ottoman_lira
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_lira_ottoman_lira
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_lira_scudo_pontificio
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_lira_scudo_pontificio
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_lira_scudo_sardo
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_lira_scudo_sardo
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_lira_toscane_lira
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_lira_toscane_lira
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_mark
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_mark
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_mark_finnish_markka
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_mark_finnish_markka
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_argentine_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_argentine_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_bolivien_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_bolivien_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_chilean_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_chilean_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_colombian_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_colombian_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_costa_rican_colon
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_costa_rican_colon
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_cuban_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_cuban_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_ecuadorian_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_ecuadorian_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_el_salvador_colon
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_el_salvador_colon
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_guatemalan_quetzal
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_guatemalan_quetzal
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_honduran_lempira
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_honduran_lempira
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_mexican_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_mexican_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_nicaraguan_cordoba
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_nicaraguan_cordoba
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_paraguayan_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_paraguayan_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_philippine_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_philippine_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_sol_de_oro
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_sol_de_oro
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_uruguayan_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_uruguayan_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_peso_venezuelan_peso
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_peso_venezuelan_peso
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_pound_egyptian_pound
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_pound_egyptian_pound
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_pound_irish_pound
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_pound_irish_pound
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_pound_sterling
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_pound_sterling
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_real
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_real
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_real_brazilian_real
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_real_brazilian_real
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_rupee_indian_rupee
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_rupee_indian_rupee
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_rupee_indonesian_rupiah
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_rupee_indonesian_rupiah
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_baht
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_baht
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_dong
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_dong
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_drachma
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_drachma
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_korean_won
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_korean_won
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_latvian_lats
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_latvian_lats
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_lithuanian_litas
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_lithuanian_litas
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_peseta
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_peseta
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_ruble
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_ruble
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_uni
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_uni
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_yen
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_yen
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_yuan
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_yuan
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_spe_zloti
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_spe_zloti
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_thaler_hannoveraner_thaler
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_thaler_hannoveraner_thaler
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_thaler_prussian_thaler
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_thaler_prussian_thaler
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:zz_ef_cm_bank_thaler_saxon_thaler
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = zz_ef_cm_bank_thaler_saxon_thaler
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BasicBank
+				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BasicBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else = {
+			### No bank company at all yet -- grant the one matching the country's
+			### currency law, then hand it the bank.
+			scope:zz_ef_cm_bank_owner = {
+				zz_ef_cm_grant_bank_company = yes
+			}
 			if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_algerian_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_algerian_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_iraqi_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_iraqi_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_libyan_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_libyan_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_moroccan_dirham
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_moroccan_dirham
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_omanian_rial
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_omanian_rial
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_qiran
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_qiran
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_saudi_riyal
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_saudi_riyal
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_serbian_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_serbian_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_tunisian_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_tunisian_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dinar_yugoslav_dinar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dinar_yugoslav_dinar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_australian_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_australian_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_canadian_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_canadian_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_caribbean_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_caribbean_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_confederate_states_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_confederate_states_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_liberian_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_liberian_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_new_zealand_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_new_zealand_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_sierra_leonean_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_sierra_leonean_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_dollar_united_states_dollar
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_dollar_united_states_dollar
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_ariary
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_ariary
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_central_african_eco
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_central_african_eco
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_east_african_eco
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_east_african_eco
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_ethiopian_birr
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_ethiopian_birr
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_ghanaian_pound
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_ghanaian_pound
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_nigerian_naira
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_nigerian_naira
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_south_african_rand
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_south_african_rand
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_tuareg_ouguiya
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_tuareg_ouguiya
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_eco_west_african_eco
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_eco_west_african_eco
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_franc_belgian_franc
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_franc_belgian_franc
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_franc_french_franc
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_franc_french_franc
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_franc_luxembourgish_franc
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_franc_luxembourgish_franc
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_franc_swiss_franc
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_franc_swiss_franc
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_gulden
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_gulden
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_gulden_bavarian_gulden
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_gulden_bavarian_gulden
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_gulden_florin
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_gulden_florin
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_gulden_hungarian_forint
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_gulden_hungarian_forint
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_gulden_indies_guilder
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_gulden_indies_guilder
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_gulden_south_german_gulden
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_gulden_south_german_gulden
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_czech_koruna
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_czech_koruna
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_danish_krone
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_danish_krone
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_estonian_kroon
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_estonian_kroon
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_icelandic_krona
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_icelandic_krona
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_norwegian_krone
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_norwegian_krone
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_slovak_koruna
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_slovak_koruna
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_krone_swedish_krona
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_krone_swedish_krona
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_leon_leu
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_leon_leu
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_leon_lev
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_leon_lev
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_lira
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_lira
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_lira_ducato
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_lira_ducato
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_lira_ottoman_lira
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_lira_ottoman_lira
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_lira_scudo_pontificio
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_lira_scudo_pontificio
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_lira_scudo_sardo
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_lira_scudo_sardo
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_lira_toscane_lira
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_lira_toscane_lira
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_mark
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_mark
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_mark_finnish_markka
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_mark_finnish_markka
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_argentine_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_argentine_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_bolivien_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_bolivien_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_chilean_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_chilean_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_colombian_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_colombian_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_costa_rican_colon
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_costa_rican_colon
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_cuban_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_cuban_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_ecuadorian_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_ecuadorian_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_el_salvador_colon
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_el_salvador_colon
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_guatemalan_quetzal
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_guatemalan_quetzal
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_honduran_lempira
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_honduran_lempira
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_mexican_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_mexican_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_nicaraguan_cordoba
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_nicaraguan_cordoba
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_paraguayan_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_paraguayan_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_philippine_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_philippine_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_sol_de_oro
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_sol_de_oro
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_uruguayan_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_uruguayan_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_peso_venezuelan_peso
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_peso_venezuelan_peso
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_pound_egyptian_pound
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_pound_egyptian_pound
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_pound_irish_pound
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_pound_irish_pound
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_pound_sterling
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_pound_sterling
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_real
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_real
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_real_brazilian_real
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_real_brazilian_real
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_rupee_indian_rupee
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_rupee_indian_rupee
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_rupee_indonesian_rupiah
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_rupee_indonesian_rupiah
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_baht
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_baht
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_dong
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_dong
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_drachma
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_drachma
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_korean_won
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_korean_won
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_latvian_lats
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_latvian_lats
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_lithuanian_litas
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_lithuanian_litas
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_peseta
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_peseta
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_ruble
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_ruble
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_uni
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_uni
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_yen
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_yen
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_yuan
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_yuan
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_spe_zloti
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_spe_zloti
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_thaler_hannoveraner_thaler
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_thaler_hannoveraner_thaler
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_thaler_prussian_thaler
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_thaler_prussian_thaler
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					scope:zz_ef_cm_bank_owner = {
+						has_company = company_type:zz_ef_cm_bank_thaler_saxon_thaler
+					}
+				}
+				create_building = {
+					building = $BANK_BLDG_TYPE$
+					reserves = 1
+					add_ownership = {
+						company = {
+							type    = zz_ef_cm_bank_thaler_saxon_thaler
+							country = scope:zz_ef_cm_bank_owner
+							levels  = $CB_SIZE$
+						}
+					}
+				}
+			}
+			else_if = {
 				limit = {
 					scope:zz_ef_cm_bank_owner = {
 						has_company = company_type:company_BasicBank

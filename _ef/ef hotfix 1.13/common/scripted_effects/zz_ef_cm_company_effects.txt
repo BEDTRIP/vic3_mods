@@ -1,26 +1,425 @@
 ﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
-### Keep the central bank company alive.
+### Country scope. Grant the bank company that matches this country's currency
+### law, giving it the slot first.
 ###
 ### ORDER MATTERS AND IT COST A ROUND TO FIND OUT. The slot has to be granted
 ### BEFORE add_company, not after. Finland owns a central bank and no company
 ### slots at all in 1836 -- add_company simply had nowhere to put the company,
-### and the +1 arrived a line too late to help. Same on the game-start pass.
+### and the +1 arrived a line too late to help.
+
+zz_ef_cm_grant_bank_company = {
+	if = {
+		limit = { NOT = { has_modifier = zz_ef_cm_central_bank_charter } }
+		add_modifier = zz_ef_cm_central_bank_charter
+	}
+
+	if = {
+		limit = { has_law = law_type:law_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_algerian_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_algerian_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_iraqi_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_iraqi_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_libyan_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_libyan_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_moroccan_dirham_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_moroccan_dirham
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_omanian_rial_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_omanian_rial
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_qiran_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_qiran
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_saudi_riyal_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_saudi_riyal
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_serbian_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_serbian_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_tunisian_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_tunisian_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dinar_yugoslav_dinar_currency }
+		add_company = company_type:zz_ef_cm_bank_dinar_yugoslav_dinar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_australian_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_australian_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_canadian_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_canadian_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_caribbean_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_caribbean_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_confederate_states_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_confederate_states_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_liberian_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_liberian_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_new_zealand_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_new_zealand_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_sierra_leonean_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_sierra_leonean_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_dollar_united_states_dollar_currency }
+		add_company = company_type:zz_ef_cm_bank_dollar_united_states_dollar
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_ariary_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_ariary
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_central_african_eco_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_central_african_eco
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_east_african_eco_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_east_african_eco
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_ethiopian_birr_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_ethiopian_birr
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_ghanaian_pound_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_ghanaian_pound
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_nigerian_naira_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_nigerian_naira
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_south_african_rand_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_south_african_rand
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_tuareg_ouguiya_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_tuareg_ouguiya
+	}
+	else_if = {
+		limit = { has_law = law_type:law_eco_west_african_eco_currency }
+		add_company = company_type:zz_ef_cm_bank_eco_west_african_eco
+	}
+	else_if = {
+		limit = { has_law = law_type:law_franc_belgian_franc_currency }
+		add_company = company_type:zz_ef_cm_bank_franc_belgian_franc
+	}
+	else_if = {
+		limit = { has_law = law_type:law_franc_french_franc_currency }
+		add_company = company_type:zz_ef_cm_bank_franc_french_franc
+	}
+	else_if = {
+		limit = { has_law = law_type:law_franc_luxembourgish_franc_currency }
+		add_company = company_type:zz_ef_cm_bank_franc_luxembourgish_franc
+	}
+	else_if = {
+		limit = { has_law = law_type:law_franc_swiss_franc_currency }
+		add_company = company_type:zz_ef_cm_bank_franc_swiss_franc
+	}
+	else_if = {
+		limit = { has_law = law_type:law_gulden_currency }
+		add_company = company_type:zz_ef_cm_bank_gulden
+	}
+	else_if = {
+		limit = { has_law = law_type:law_gulden_bavarian_gulden_currency }
+		add_company = company_type:zz_ef_cm_bank_gulden_bavarian_gulden
+	}
+	else_if = {
+		limit = { has_law = law_type:law_gulden_florin_currency }
+		add_company = company_type:zz_ef_cm_bank_gulden_florin
+	}
+	else_if = {
+		limit = { has_law = law_type:law_gulden_hungarian_forint_currency }
+		add_company = company_type:zz_ef_cm_bank_gulden_hungarian_forint
+	}
+	else_if = {
+		limit = { has_law = law_type:law_gulden_indies_guilder_currency }
+		add_company = company_type:zz_ef_cm_bank_gulden_indies_guilder
+	}
+	else_if = {
+		limit = { has_law = law_type:law_gulden_south_german_gulden_currency }
+		add_company = company_type:zz_ef_cm_bank_gulden_south_german_gulden
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_czech_koruna_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_czech_koruna
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_danish_krone_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_danish_krone
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_estonian_kroon_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_estonian_kroon
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_icelandic_krona_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_icelandic_krona
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_norwegian_krone_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_norwegian_krone
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_slovak_koruna_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_slovak_koruna
+	}
+	else_if = {
+		limit = { has_law = law_type:law_krone_swedish_krona_currency }
+		add_company = company_type:zz_ef_cm_bank_krone_swedish_krona
+	}
+	else_if = {
+		limit = { has_law = law_type:law_leon_leu_currency }
+		add_company = company_type:zz_ef_cm_bank_leon_leu
+	}
+	else_if = {
+		limit = { has_law = law_type:law_leon_lev_currency }
+		add_company = company_type:zz_ef_cm_bank_leon_lev
+	}
+	else_if = {
+		limit = { has_law = law_type:law_lira_currency }
+		add_company = company_type:zz_ef_cm_bank_lira
+	}
+	else_if = {
+		limit = { has_law = law_type:law_lira_ducato_currency }
+		add_company = company_type:zz_ef_cm_bank_lira_ducato
+	}
+	else_if = {
+		limit = { has_law = law_type:law_lira_ottoman_lira_currency }
+		add_company = company_type:zz_ef_cm_bank_lira_ottoman_lira
+	}
+	else_if = {
+		limit = { has_law = law_type:law_lira_scudo_pontificio_currency }
+		add_company = company_type:zz_ef_cm_bank_lira_scudo_pontificio
+	}
+	else_if = {
+		limit = { has_law = law_type:law_lira_scudo_sardo_currency }
+		add_company = company_type:zz_ef_cm_bank_lira_scudo_sardo
+	}
+	else_if = {
+		limit = { has_law = law_type:law_lira_toscane_lira_currency }
+		add_company = company_type:zz_ef_cm_bank_lira_toscane_lira
+	}
+	else_if = {
+		limit = { has_law = law_type:law_mark_currency }
+		add_company = company_type:zz_ef_cm_bank_mark
+	}
+	else_if = {
+		limit = { has_law = law_type:law_mark_finnish_markka_currency }
+		add_company = company_type:zz_ef_cm_bank_mark_finnish_markka
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_argentine_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_argentine_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_bolivien_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_bolivien_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_chilean_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_chilean_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_colombian_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_colombian_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_costa_rican_colon_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_costa_rican_colon
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_cuban_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_cuban_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_ecuadorian_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_ecuadorian_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_el_salvador_colon_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_el_salvador_colon
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_guatemalan_quetzal_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_guatemalan_quetzal
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_honduran_lempira_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_honduran_lempira
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_mexican_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_mexican_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_nicaraguan_cordoba_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_nicaraguan_cordoba
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_paraguayan_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_paraguayan_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_philippine_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_philippine_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_sol_de_oro_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_sol_de_oro
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_uruguayan_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_uruguayan_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_peso_venezuelan_peso_currency }
+		add_company = company_type:zz_ef_cm_bank_peso_venezuelan_peso
+	}
+	else_if = {
+		limit = { has_law = law_type:law_pound_egyptian_pound_currency }
+		add_company = company_type:zz_ef_cm_bank_pound_egyptian_pound
+	}
+	else_if = {
+		limit = { has_law = law_type:law_pound_irish_pound_currency }
+		add_company = company_type:zz_ef_cm_bank_pound_irish_pound
+	}
+	else_if = {
+		limit = { has_law = law_type:law_pound_sterling_currency }
+		add_company = company_type:zz_ef_cm_bank_pound_sterling
+	}
+	else_if = {
+		limit = { has_law = law_type:law_real_currency }
+		add_company = company_type:zz_ef_cm_bank_real
+	}
+	else_if = {
+		limit = { has_law = law_type:law_real_brazilian_real_currency }
+		add_company = company_type:zz_ef_cm_bank_real_brazilian_real
+	}
+	else_if = {
+		limit = { has_law = law_type:law_rupee_indian_rupee_currency }
+		add_company = company_type:zz_ef_cm_bank_rupee_indian_rupee
+	}
+	else_if = {
+		limit = { has_law = law_type:law_rupee_indonesian_rupiah_currency }
+		add_company = company_type:zz_ef_cm_bank_rupee_indonesian_rupiah
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_baht_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_baht
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_dong_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_dong
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_drachma_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_drachma
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_korean_won_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_korean_won
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_latvian_lats_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_latvian_lats
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_lithuanian_litas_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_lithuanian_litas
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_peseta_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_peseta
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_ruble_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_ruble
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_uni_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_uni
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_yen_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_yen
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_yuan_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_yuan
+	}
+	else_if = {
+		limit = { has_law = law_type:law_spe_zloti_currency }
+		add_company = company_type:zz_ef_cm_bank_spe_zloti
+	}
+	else_if = {
+		limit = { has_law = law_type:law_thaler_hannoveraner_thaler_currency }
+		add_company = company_type:zz_ef_cm_bank_thaler_hannoveraner_thaler
+	}
+	else_if = {
+		limit = { has_law = law_type:law_thaler_prussian_thaler_currency }
+		add_company = company_type:zz_ef_cm_bank_thaler_prussian_thaler
+	}
+	else_if = {
+		limit = { has_law = law_type:law_thaler_saxon_thaler_currency }
+		add_company = company_type:zz_ef_cm_bank_thaler_saxon_thaler
+	}
+	else = {
+		### No currency law at all. company_BasicBank carries no prestige currency
+		### any more -- it cannot, one type serves every such country -- but it can
+		### still own the bank.
+		add_company = company_type:company_BasicBank
+	}
+}
+
+### Keep the central bank company alive.
 ###
 ### This is the safety net, not the main road. The company that owns a central
 ### bank is chosen when the bank is built -- zz_ef_cm_create_owned_bank -- and
-### this pass only catches countries that ended up with a central bank and no
-### bank company at all, from a spawn path that was not rewritten.
-###
-### There is deliberately no remove_company here any more. Withdrawing
-### company_BasicBank in favour of a flavoured company would strip the central
-### bank of its owner, and nothing in the game can hand those levels to the
-### replacement: add_ownership only exists inside create_building. The flavoured
-### company now wins by being picked first, at creation, instead of afterwards.
+### this pass only catches a country that ended up with a central bank and no
+### bank company at all.
 
 zz_ef_cm_bank_company_upkeep = {
-	### 1. The slot first.
+	if = {
+		limit = {
+			zz_ef_cm_has_central_bank = yes
+			NOT = { zz_ef_cm_has_bank_company = yes }
+		}
+		zz_ef_cm_grant_bank_company = yes
+	}
+
+	### The slot, for a country whose company arrived with the bank.
 	if = {
 		limit = {
 			zz_ef_cm_has_central_bank = yes
@@ -36,16 +435,7 @@ zz_ef_cm_bank_company_upkeep = {
 		remove_modifier = zz_ef_cm_central_bank_charter
 	}
 
-	### 2. Then the company.
-	if = {
-		limit = {
-			zz_ef_cm_has_central_bank = yes
-			NOT = { zz_ef_cm_has_bank_company = yes }
-		}
-		add_company = company_type:company_BasicBank
-	}
-
-	### 3. And the monopoly on central banks goes to whoever holds it.
+	### And the monopoly on central banks goes to whoever holds it.
 	if = {
 		limit = { zz_ef_cm_has_central_bank = yes }
 		zz_ef_cm_bank_monopoly = yes

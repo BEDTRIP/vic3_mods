@@ -1,0 +1,6861 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: E&F's company_BasicBank, cloned once per currency.
+###
+### WHY NINETY-FIVE COPIES OF ONE COMPANY
+###
+### A company produces the prestige goods on its own list, and `possible` on a
+### prestige good cannot look at the country -- vanilla only ever puts
+### has_dlc_feature in it. So a company can carry exactly one currency, and
+### company_BasicBank is one type shared by every country that has no flavoured
+### bank of its own. One type cannot mint a hundred different currencies.
+###
+### `potential` is the gate that does work: companies.md calls it "a trigger
+### evaluated in country scope", so exactly one of these is ever visible to a
+### given country -- the one matching its currency law.
+###
+### uses_dynamic_naming, so they come out as "Bank of <somewhere>" rather than as
+### a placeholder. replaces_company is deliberately NOT copied from BasicBank: it
+### points at company_basic_bank, which exists in no mod here.
+
+zz_ef_cm_bank_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_algerian_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_algerian_dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_algerian_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_iraqi_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_iraqi_dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_iraqi_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_libyan_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_libyan_dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_libyan_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_moroccan_dirham = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_moroccan_dirham_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_moroccan_dirham_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_omanian_rial = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_omanian_rial_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_omanian_rial_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_qiran = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_qiran_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_qiran_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_saudi_riyal = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_saudi_riyal_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_saudi_riyal_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_serbian_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_serbian_dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_serbian_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_tunisian_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_tunisian_dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_tunisian_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dinar_yugoslav_dinar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dinar_yugoslav_dinar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dinar_yugoslav_dinar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_australian_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_australian_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_australian_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_canadian_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_canadian_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_canadian_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_caribbean_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_caribbean_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_caribbean_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_confederate_states_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_confederate_states_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_confederate_states_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_liberian_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_liberian_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_liberian_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_new_zealand_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_new_zealand_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_new_zealand_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_sierra_leonean_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_sierra_leonean_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_sierra_leonean_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_dollar_united_states_dollar = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		dollar_united_states_dollar_c
+	}
+
+	potential = {
+		has_law = law_type:law_dollar_united_states_dollar_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_ariary = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_ariary_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_ariary_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_central_african_eco = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_central_african_eco_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_central_african_eco_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_east_african_eco = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_east_african_eco_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_east_african_eco_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_ethiopian_birr = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_ethiopian_birr_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_ethiopian_birr_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_ghanaian_pound = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_ghanaian_pound_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_ghanaian_pound_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_nigerian_naira = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_nigerian_naira_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_nigerian_naira_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_south_african_rand = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_south_african_rand_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_south_african_rand_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_tuareg_ouguiya = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_tuareg_ouguiya_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_tuareg_ouguiya_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_eco_west_african_eco = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		eco_west_african_eco_c
+	}
+
+	potential = {
+		has_law = law_type:law_eco_west_african_eco_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_franc_belgian_franc = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		franc_belgian_franc_c
+	}
+
+	potential = {
+		has_law = law_type:law_franc_belgian_franc_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_franc_french_franc = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		franc_french_franc_c
+	}
+
+	potential = {
+		has_law = law_type:law_franc_french_franc_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_franc_luxembourgish_franc = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		franc_luxembourgish_franc_c
+	}
+
+	potential = {
+		has_law = law_type:law_franc_luxembourgish_franc_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_franc_swiss_franc = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		franc_swiss_franc_c
+	}
+
+	potential = {
+		has_law = law_type:law_franc_swiss_franc_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_gulden = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		gulden_c
+	}
+
+	potential = {
+		has_law = law_type:law_gulden_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_gulden_bavarian_gulden = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		gulden_bavarian_gulden_c
+	}
+
+	potential = {
+		has_law = law_type:law_gulden_bavarian_gulden_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_gulden_florin = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		gulden_florin_c
+	}
+
+	potential = {
+		has_law = law_type:law_gulden_florin_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_gulden_hungarian_forint = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		gulden_hungarian_forint_c
+	}
+
+	potential = {
+		has_law = law_type:law_gulden_hungarian_forint_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_gulden_indies_guilder = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		gulden_indies_guilder_c
+	}
+
+	potential = {
+		has_law = law_type:law_gulden_indies_guilder_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_gulden_south_german_gulden = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		gulden_south_german_gulden_c
+	}
+
+	potential = {
+		has_law = law_type:law_gulden_south_german_gulden_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_czech_koruna = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_czech_koruna_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_czech_koruna_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_danish_krone = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_danish_krone_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_danish_krone_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_estonian_kroon = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_estonian_kroon_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_estonian_kroon_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_icelandic_krona = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_icelandic_krona_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_icelandic_krona_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_norwegian_krone = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_norwegian_krone_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_norwegian_krone_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_slovak_koruna = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_slovak_koruna_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_slovak_koruna_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_krone_swedish_krona = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		krone_swedish_krona_c
+	}
+
+	potential = {
+		has_law = law_type:law_krone_swedish_krona_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_leon_leu = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		leon_leu_c
+	}
+
+	potential = {
+		has_law = law_type:law_leon_leu_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_leon_lev = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		leon_lev_c
+	}
+
+	potential = {
+		has_law = law_type:law_leon_lev_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_lira = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		lira_c
+	}
+
+	potential = {
+		has_law = law_type:law_lira_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_lira_ducato = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		lira_ducato_c
+	}
+
+	potential = {
+		has_law = law_type:law_lira_ducato_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_lira_ottoman_lira = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		lira_ottoman_lira_c
+	}
+
+	potential = {
+		has_law = law_type:law_lira_ottoman_lira_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_lira_scudo_pontificio = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		lira_scudo_pontificio_c
+	}
+
+	potential = {
+		has_law = law_type:law_lira_scudo_pontificio_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_lira_scudo_sardo = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		lira_scudo_sardo_c
+	}
+
+	potential = {
+		has_law = law_type:law_lira_scudo_sardo_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_lira_toscane_lira = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		lira_toscane_lira_c
+	}
+
+	potential = {
+		has_law = law_type:law_lira_toscane_lira_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_mark = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		mark_c
+	}
+
+	potential = {
+		has_law = law_type:law_mark_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_mark_finnish_markka = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		mark_finnish_markka_c
+	}
+
+	potential = {
+		has_law = law_type:law_mark_finnish_markka_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_argentine_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_argentine_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_argentine_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_bolivien_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_bolivien_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_bolivien_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_chilean_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_chilean_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_chilean_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_colombian_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_colombian_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_colombian_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_costa_rican_colon = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_costa_rican_colon_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_costa_rican_colon_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_cuban_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_cuban_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_cuban_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_ecuadorian_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_ecuadorian_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_ecuadorian_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_el_salvador_colon = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_el_salvador_colon_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_el_salvador_colon_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_guatemalan_quetzal = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_guatemalan_quetzal_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_guatemalan_quetzal_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_honduran_lempira = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_honduran_lempira_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_honduran_lempira_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_mexican_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_mexican_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_mexican_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_nicaraguan_cordoba = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_nicaraguan_cordoba_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_nicaraguan_cordoba_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_paraguayan_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_paraguayan_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_paraguayan_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_philippine_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_philippine_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_philippine_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_sol_de_oro = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_sol_de_oro_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_sol_de_oro_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_uruguayan_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_uruguayan_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_uruguayan_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_peso_venezuelan_peso = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		peso_venezuelan_peso_c
+	}
+
+	potential = {
+		has_law = law_type:law_peso_venezuelan_peso_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_pound_egyptian_pound = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		pound_egyptian_pound_c
+	}
+
+	potential = {
+		has_law = law_type:law_pound_egyptian_pound_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_pound_irish_pound = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		pound_irish_pound_c
+	}
+
+	potential = {
+		has_law = law_type:law_pound_irish_pound_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_pound_sterling = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		pound_sterling_c
+	}
+
+	potential = {
+		has_law = law_type:law_pound_sterling_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_real = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		real_c
+	}
+
+	potential = {
+		has_law = law_type:law_real_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_real_brazilian_real = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		real_brazilian_real_c
+	}
+
+	potential = {
+		has_law = law_type:law_real_brazilian_real_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_rupee_indian_rupee = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		rupee_indian_rupee_c
+	}
+
+	potential = {
+		has_law = law_type:law_rupee_indian_rupee_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_rupee_indonesian_rupiah = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		rupee_indonesian_rupiah_c
+	}
+
+	potential = {
+		has_law = law_type:law_rupee_indonesian_rupiah_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_baht = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_baht_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_baht_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_dong = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_dong_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_dong_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_drachma = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_drachma_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_drachma_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_korean_won = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_korean_won_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_korean_won_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_latvian_lats = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_latvian_lats_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_latvian_lats_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_lithuanian_litas = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_lithuanian_litas_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_lithuanian_litas_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_peseta = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_peseta_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_peseta_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_ruble = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_ruble_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_ruble_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_uni = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_uni_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_uni_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_yen = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_yen_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_yen_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_yuan = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_yuan_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_yuan_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_spe_zloti = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		spe_zloti_c
+	}
+
+	potential = {
+		has_law = law_type:law_spe_zloti_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_thaler_hannoveraner_thaler = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		thaler_hannoveraner_thaler_c
+	}
+
+	potential = {
+		has_law = law_type:law_thaler_hannoveraner_thaler_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_thaler_prussian_thaler = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		thaler_prussian_thaler_c
+	}
+
+	potential = {
+		has_law = law_type:law_thaler_prussian_thaler_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
+zz_ef_cm_bank_thaler_saxon_thaler = {
+	icon = "gfx/interface/icons/company_icons/bank/BasicBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	uses_dynamic_naming = yes
+
+	dynamic_company_type_names = {
+			"dynamic_company_type_company"
+			"dynamic_company_type_consortium"
+			"dynamic_company_type_corporation"
+		}
+
+	building_types = {
+			building_ef_private_construction
+			building_railway
+			#building_port
+			building_trade_center
+			building_gold_mine
+			building_silver_mine
+
+			building_financial_centre
+		building_bank
+	}
+
+	possible_prestige_goods = {
+		thaler_saxon_thaler_c
+	}
+
+	potential = {
+		has_law = law_type:law_thaler_saxon_thaler_currency
+	}
+
+	possible = {
+			any_scope_state = {
+				is_incorporated = yes
+				# any_scope_building = {
+				# 	is_building_type = building_financial_district
+				# 	level >= 1
+				# }
+			}
+		}
+
+	prosperity_modifier = {
+			country_minting_mult = 0.075
+			building_group_bg_heavy_industry_throughput_add = 0.05 #invested a lot in heavy industries, steel railways, war...
+
+			country_loan_interest_rate_mult = -0.05
+	        country_private_construction_allocation_mult = 0.05
+
+			state_farmers_investment_pool_contribution_add = 0.01
+			state_shopkeepers_investment_pool_contribution_add = 0.01
+			state_clergymen_investment_pool_contribution_add = 0.04
+			state_aristocrats_investment_pool_contribution_add = 0.04
+			state_capitalists_investment_pool_contribution_add = 0.065
+
+			building_nationalization_investment_return_add = 0.05
+			country_government_dividends_reinvestment_add = 0.05
+			country_government_dividends_efficiency_add = 0.05
+
+			country_max_companies_add = 1
+		}
+
+	ai_will_do = {
+		always = yes
+	}
+
+	ai_weight = {
+		value = 3
+	}
+}
+
