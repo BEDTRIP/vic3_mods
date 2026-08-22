@@ -1,58 +1,23 @@
 ﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
 ### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
 ###
-### Source: the same tag -> company table as zz_ef_cm_bank_ownership.txt.
+### Source: the same company order as zz_ef_cm_bank_ownership.txt, so the
+### monopoly lands on the same company that owns the bank.
 ###
-### SYNTAX CONFIRMED IN GAME 2026-08-22: the guess was right. The engine ran
-### add_company_monopoly = bt:building_bank in company scope and answered with
-### its own assertion -- pdx_assert.cpp:641, "already have monopoly granted to a
-### company" -- which is a complaint about a second grant, not about the syntax.
+### add_company_monopoly = bt:building_bank in company scope. Confirmed in game
+### 2026-08-22 -- see the docstring of gen_monopoly in the generator for how the
+### shape was read off common/effect_localization/ and what the engine answered.
 ###
-### How it was inferred, kept because the same reading works for the other
-### undocumented effects: add_company_monopoly and
-### company_has_building_type_monopoly are named in vanilla's
-### effect_localization / trigger_localization but called from nowhere in
-### vanilla or in any mod in this repo, so their shape is read off the loc
-### strings: ADD_COMPANY_MONOPOLY_FIRST is "[COMPANY.GetName] gains a company
-### monopoly on [TARGET_BUILDING_TYPE.GetName]", and a `first` slot of COMPANY is
-### how effect_localization marks the scope an effect runs in -- hence company
-### scope, one building type as the value. `bt:building_bank` is the one
-### confirmed part (mp1_charters_of_commerce_achievements.txt:146).
-###
-### CHECK error.log AFTER THE FIRST RUN. Kept in its own file so that if the
-### game rejects it, nothing else in the mod goes down with it.
-###
-### This is the direct grant. The +1 free charter on
-### zz_ef_cm_central_bank_charter stays either way: it is what lets the player
-### hand the company a monopoly charter without spending one of the country's
-### four, which is the route the game itself offers.
+### The +1 free charter on zz_ef_cm_central_bank_charter stays either way: it is
+### what lets the player hand the company a monopoly charter without spending one
+### of the country's four, which is the route the game itself offers.
 
 zz_ef_cm_bank_monopoly = {
 	if = {
 		limit = {
-			has_company = company_type:company_BasicBank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
-			NOT = {
-				any_company = {
-					company_has_building_type_monopoly = bt:building_bank
-				}
-			}
-		}
-		company:company_BasicBank = {
-			add_company_monopoly = bt:building_bank
-		}
-	}
-	else_if = {
-		limit = {
-			c:ARG ?= this
 			has_company = company_type:company_BancoNacionArgentina
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -65,12 +30,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:ARG ?= this
 			has_company = company_type:company_BancoProvincia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -83,12 +45,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:AUS ?= this
 			has_company = company_type:company_OesterreichischeNationalbank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -101,12 +60,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:BAV ?= this
 			has_company = company_type:company_BayerischeHypothekenUndWechselBank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -119,12 +75,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:BEL ?= this
 			has_company = company_type:company_BanqueNationaleDeBelgique
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -137,12 +90,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:BIC ?= this
 			has_company = company_type:company_ImperialBankofIndia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -155,12 +105,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:BOL ?= this
 			has_company = company_type:company_BancoNacionalDeBolivia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -173,12 +120,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:BRZ ?= this
 			has_company = company_type:company_BancoDoBrasil
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -191,12 +135,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CAN ?= this
 			has_company = company_type:company_CanadianImperialBankOfCommerce
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -209,12 +150,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CHI ?= this
 			has_company = company_type:company_DaQingBank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -227,12 +165,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CHI ?= this
 			has_company = company_type:company_BankHSBC
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -245,12 +180,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CHL ?= this
 			has_company = company_type:company_BancoEstado
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -263,12 +195,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CHL ?= this
 			has_company = company_type:company_BancoDeValparaiso
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -281,12 +210,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CLM ?= this
 			has_company = company_type:company_BancoRepublicaColombia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -299,12 +225,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:COS ?= this
 			has_company = company_type:company_BancoCentralDeCostaRica
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -317,12 +240,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:CUB ?= this
 			has_company = company_type:company_BancoEspanolDeLaHabana
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -335,12 +255,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:DEN ?= this
 			has_company = company_type:company_LandmandsBanken
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -353,12 +270,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:EGY ?= this
 			has_company = company_type:company_BanqueEgyptienne
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -371,12 +285,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:FRA ?= this
 			has_company = company_type:company_BanqueDeFrance
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -389,12 +300,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:GBR ?= this
 			has_company = company_type:company_BankofEngland
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -407,12 +315,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:GER ?= this
 			has_company = company_type:company_Reichsbank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -425,12 +330,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:GER ?= this
 			has_company = company_type:company_PreussischeSeehandlung
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -443,12 +345,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:GRE ?= this
 			has_company = company_type:company_bankofgreec
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -461,12 +360,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:GUA ?= this
 			has_company = company_type:company_BancoCentralDeGuatemala
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -479,12 +375,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:HON ?= this
 			has_company = company_type:company_BancoCentralDeHonduras
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -497,12 +390,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:ITA ?= this
 			has_company = company_type:company_BancaDItalia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -515,12 +405,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:ITA ?= this
 			has_company = company_type:company_Rothschild_Bank_ita
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -533,12 +420,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:JAP ?= this
 			has_company = company_type:company_BankOfJapan
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -551,12 +435,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:JAP ?= this
 			has_company = company_type:company_Mitsubishiexchangehousebank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -569,12 +450,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:MEX ?= this
 			has_company = company_type:company_BancoDeMexico
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -587,12 +465,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:NET ?= this
 			has_company = company_type:company_DeNederlandscheBank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -605,30 +480,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:NGF ?= this
-			has_company = company_type:company_PreussischeSeehandlung
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
-			NOT = {
-				any_company = {
-					company_has_building_type_monopoly = bt:building_bank
-				}
-			}
-		}
-		company:company_PreussischeSeehandlung = {
-			add_company_monopoly = bt:building_bank
-		}
-	}
-	else_if = {
-		limit = {
-			c:NOR ?= this
 			has_company = company_type:company_ChristianiaBank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -641,12 +495,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:NSW ?= this
 			has_company = company_type:company_ColonialBankOfAustralia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -659,12 +510,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:ONT ?= this
 			has_company = company_type:company_RoyalBankofCanada
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -677,12 +525,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:PAN ?= this
 			has_company = company_type:company_BancoNacionalDePanama
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -695,12 +540,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:PER ?= this
 			has_company = company_type:company_BankMelliIran
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -713,12 +555,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:PER ?= this
 			has_company = company_type:company_ImperialBankofPersia
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -731,12 +570,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:POR ?= this
 			has_company = company_type:company_BancoDePortugal
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -749,12 +585,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:PRG ?= this
 			has_company = company_type:company_BancoNacionalDelParaguay
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -767,12 +600,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:QUE ?= this
 			has_company = company_type:company_BankOfMontreal
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -785,12 +615,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:RUS ?= this
 			has_company = company_type:company_StateBankRussianEmpire
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -803,12 +630,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:SAF ?= this
 			has_company = company_type:company_BankSBoBSA
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -821,12 +645,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:SAR ?= this
 			has_company = company_type:company_CassaDiRisparmioDiTorino
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -839,12 +660,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:SPA ?= this
 			has_company = company_type:company_BankofSpain
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -857,12 +675,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:SWE ?= this
 			has_company = company_type:company_HandelsBanken
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -875,12 +690,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:SWI ?= this
 			has_company = company_type:company_Bankenverein
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -893,12 +705,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:TUR ?= this
 			has_company = company_type:company_OttomanBank
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -911,12 +720,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:URU ?= this
 			has_company = company_type:company_BancoCentralDelUruguay
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -929,12 +735,9 @@ zz_ef_cm_bank_monopoly = {
 	}
 	else_if = {
 		limit = {
-			c:VNZ ?= this
 			has_company = company_type:company_BancoCentralDeVenezuela
-			### Any company holding it, not just this one. Guarding on
-			### company:{this} alone tripped the engine's own assertion:
-			###   pdx_assert.cpp:641: Assertion failed:
-			###   already have monopoly granted to a company
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
 			NOT = {
 				any_company = {
 					company_has_building_type_monopoly = bt:building_bank
@@ -942,6 +745,726 @@ zz_ef_cm_bank_monopoly = {
 			}
 		}
 		company:company_BancoCentralDeVenezuela = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankJPMorgan
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankJPMorgan = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankGoldmanSachs
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankGoldmanSachs = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_ChaseBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_ChaseBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankWellsFargo
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankWellsFargo = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankAmericanExpress
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankAmericanExpress = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_amsterdamschebank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_amsterdamschebank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_RotterdamscheBankvereeniging
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_RotterdamscheBankvereeniging = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_SocieteGeneraledeBelgique
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SocieteGeneraledeBelgique = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BanqueDeBruxelles
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BanqueDeBruxelles = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoDeBilbao
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoDeBilbao = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoHispanoColonial
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoHispanoColonial = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoCommercialPortugues
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoCommercialPortugues = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_Bank_Ultramarino
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Bank_Ultramarino = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancaCommercialeItaliana
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancaCommercialeItaliana = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_LloydsBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_LloydsBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_barclaysBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_barclaysBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_NationalWestminsterBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_NationalWestminsterBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_RoyalBankOfScotland
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_RoyalBankOfScotland = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_gbr
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_gbr = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankCreditLyonnais
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankCreditLyonnais = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_SocieteGenerale
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SocieteGenerale = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BanqueDeParisEtDesPaysBas
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BanqueDeParisEtDesPaysBas = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_fra
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_fra = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_DeutscheBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_DeutscheBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_ger
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_ger = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_OesterreichischeCreditAnstalt
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_OesterreichischeCreditAnstalt = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_WienerBankverein
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_WienerBankverein = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_aus
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_aus = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_TurkishZiraatBankasi
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_TurkishZiraatBankasi = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BanqueImperialeOttomane
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BanqueImperialeOttomane = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankTejaratPersia
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankTejaratPersia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankAngloPersian
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankAngloPersian = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_ChohungBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_ChohungBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankIBC
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankIBC = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankBOCOM
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankBOCOM = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_SumitomoBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SumitomoBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankOfIndiaCompany
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankOfIndiaCompany = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankOfBombay
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankOfBombay = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BankDesjardins
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankDesjardins = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_NationalBankOfAustralia
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_NationalBankOfAustralia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_SouthAustralianBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SouthAustralianBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_bancodelondresmexico
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_bancodelondresmexico = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoMercantilMexicano
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoMercantilMexicano = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoMercantil
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoMercantil = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoCommercialDoBrasil
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoCommercialDoBrasil = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoHipotecarioNacional
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoHipotecarioNacional = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BancoDeChile
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoDeChile = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	else_if = {
+		limit = {
+			has_company = company_type:company_BasicBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BasicBank = {
 			add_company_monopoly = bt:building_bank
 		}
 	}

@@ -8,14 +8,9 @@
 ### the key in a later file does nothing on its own, and the first round of
 ### this was silently inert for exactly that reason (see the note next to
 ### OVERRIDE in the generator). They are copied rather than edited by hand
-### because
-### macro_facilities_bc alone is 12,000 lines and 1,001 of those call sites --
-### a switch over gdp_view crossed with the country list. All 1,001 are shaped
-### identically, which is what makes one regex enough.
-###
-### $BANK_BLDG_TYPE$ is dropped on the way: every call site in E&F passes
-### building_bank, and the dispatcher has to name the building type literally
-### anyway because add_ownership needs a company that can own that type.
+### because macro_facilities_bc alone is 12,000 lines and 1,001 of those call
+### sites -- a switch over gdp_view crossed with the country list. All 1,001
+### are shaped identically, which is what makes one regex enough.
 
 REPLACE_OR_CREATE:initialize_historic_macro_facilities_bc = { #history
 	add_technology_researched = banking
