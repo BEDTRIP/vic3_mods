@@ -2206,7 +2206,7 @@ zz_ef_cm_bank_franc_french_franc = {
 	}
 
 	possible_prestige_goods = {
-		zz_ef_cm_national_currency
+		franc_french_franc_c
 	}
 
 	potential = {
@@ -5649,7 +5649,7 @@ zz_ef_cm_bank_pound_sterling = {
 	}
 
 	possible_prestige_goods = {
-		zz_ef_cm_national_currency
+		pound_sterling_c
 	}
 
 	potential = {

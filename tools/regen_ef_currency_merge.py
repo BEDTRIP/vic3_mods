@@ -833,6 +833,27 @@ GENERIC_BANK = "zz_ef_cm_bank_"
 
 NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 
+# Currencies that keep their own name and icon, on top of the generic one.
+#
+# THE LIMIT IS THREE PER BASE GOOD, INCLUDING THE GENERIC. Vanilla never exceeds
+# it: of its 40 base goods carrying prestige variants, 17 have one, 14 have two,
+# 9 have three, none have four. The save agrees -- every prestige array in it is
+# exactly three long, 44,488 of them, and prestige goods get no market index of
+# their own (goods indices stop at 61, the number of real goods).
+#
+# Vanilla wires them exactly the way we do -- one prestige good per company,
+# `possible` used only for has_dlc_feature:
+#
+#   company_krupp             -> prestige_good_krupp_guns        base_good=artillery
+#   company_schneider_creusot -> prestige_good_schneider_guns    base_good=artillery
+#   company_trubia            -> prestige_good_generic_artillery base_good=artillery
+#
+# So selection by company works; ninety-five variants on one base good is what
+# did not. These two are the test of exactly that: if Britain mints the pound and
+# France the franc while everyone else mints the generic currency, the rule is
+# confirmed and this list is the whole budget we have. Keep it at two.
+SHOWCASE_CURRENCIES = ["pound_sterling", "franc_french_franc"]
+
 
 def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
     """ONE prestige variant of the shared currency good. Not ninety-five.
@@ -868,7 +889,18 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
             f"\tbase_good = {keep}\n"
             f"\tprestige_bonus = 0.1\n"
             f'\ttexture = "{icon}"\n'
-            f"}}\n")
+            f"}}\n\n")
+    for cur in SHOWCASE_CURRENCIES:
+        if cur not in names:
+            raise SystemExit(f"SHOWCASE_CURRENCIES: {cur} is not one of the {len(names)} currencies")
+        own = f"gfx/interface/icons/goods_icons/currencies/{cur}.dds"
+        if not (ef / own).exists():
+            own = icon
+        body += (f"{cur}_c = {{\n"
+                 f"\tbase_good = {keep}\n"
+                 f"\tprestige_bonus = 0.1\n"
+                 f'\ttexture = "{own}"\n'
+                 f"}}\n\n")
     head = (BANNER +
             "### One prestige variant of the shared currency good.\n"
             "###\n"
@@ -890,7 +922,7 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
             "### What is lost: the per-country name and icon on the belt. The currency itself\n"
             "### is untouched -- every country still has its own monetary system law, its own\n"
             "### production method in the bank, and its own name in E&F's currency interface.\n\n")
-    return head + body, 1
+    return head + body, 1 + len(SHOWCASE_CURRENCIES)
 
 
 def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
@@ -985,7 +1017,9 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
             f"\tuses_dynamic_naming = yes\n\n"
             f"{indent(names_block)}\n\n"
             f"{indent(buildings)}\n\n"
-            f"\tpossible_prestige_goods = {{\n\t\t{NATIONAL_CURRENCY}\n\t}}\n\n"
+            f"\tpossible_prestige_goods = {{\n\t\t"
+            f"{cur + '_c' if cur in SHOWCASE_CURRENCIES else NATIONAL_CURRENCY}"
+            f"\n\t}}\n\n"
             f"\tpotential = {{\n\t\tOR = {{\n"
             f"\t\t\thas_law = law_type:law_{cur}_currency\n"
             + "".join(f"\t\t\tc:{t} ?= this\n" for t in tags_of.get(cur, ()))

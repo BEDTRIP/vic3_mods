@@ -27,3 +27,16 @@ zz_ef_cm_national_currency = {
 	prestige_bonus = 0.1
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
 }
+
+pound_sterling_c = {
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/pound_sterling.dds"
+}
+
+franc_french_franc_c = {
+	base_good = spe_uni_c
+	prestige_bonus = 0.1
+	texture = "gfx/interface/icons/goods_icons/currencies/franc_french_franc.dds"
+}
+
