@@ -74,6 +74,7 @@ zz_ef_cm_create_owned_bank = {
 		if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:ARG ?= this
 					has_company = company_type:company_BancoNacionArgentina
 				}
 			}
@@ -92,6 +93,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:ARG ?= this
 					has_company = company_type:company_BancoProvincia
 				}
 			}
@@ -110,6 +112,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:AUS ?= this
 					has_company = company_type:company_OesterreichischeNationalbank
 				}
 			}
@@ -128,6 +131,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:BAV ?= this
 					has_company = company_type:company_BayerischeHypothekenUndWechselBank
 				}
 			}
@@ -146,6 +150,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:BEL ?= this
 					has_company = company_type:company_BanqueNationaleDeBelgique
 				}
 			}
@@ -164,6 +169,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:BIC ?= this
 					has_company = company_type:company_ImperialBankofIndia
 				}
 			}
@@ -182,6 +188,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:BOL ?= this
 					has_company = company_type:company_BancoNacionalDeBolivia
 				}
 			}
@@ -200,6 +207,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:BRZ ?= this
 					has_company = company_type:company_BancoDoBrasil
 				}
 			}
@@ -218,6 +226,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CAN ?= this
 					has_company = company_type:company_CanadianImperialBankOfCommerce
 				}
 			}
@@ -236,6 +245,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CHI ?= this
 					has_company = company_type:company_DaQingBank
 				}
 			}
@@ -254,6 +264,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CHI ?= this
 					has_company = company_type:company_BankHSBC
 				}
 			}
@@ -272,6 +283,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CHL ?= this
 					has_company = company_type:company_BancoEstado
 				}
 			}
@@ -290,6 +302,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CHL ?= this
 					has_company = company_type:company_BancoDeValparaiso
 				}
 			}
@@ -308,6 +321,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CLM ?= this
 					has_company = company_type:company_BancoRepublicaColombia
 				}
 			}
@@ -326,6 +340,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:COS ?= this
 					has_company = company_type:company_BancoCentralDeCostaRica
 				}
 			}
@@ -344,6 +359,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:CUB ?= this
 					has_company = company_type:company_BancoEspanolDeLaHabana
 				}
 			}
@@ -362,6 +378,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:DEN ?= this
 					has_company = company_type:company_LandmandsBanken
 				}
 			}
@@ -380,6 +397,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:EGY ?= this
 					has_company = company_type:company_BanqueEgyptienne
 				}
 			}
@@ -398,6 +416,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:FRA ?= this
 					has_company = company_type:company_BanqueDeFrance
 				}
 			}
@@ -416,6 +435,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:GBR ?= this
 					has_company = company_type:company_BankofEngland
 				}
 			}
@@ -434,6 +454,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:GER ?= this
 					has_company = company_type:company_Reichsbank
 				}
 			}
@@ -452,6 +473,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:GER ?= this
 					has_company = company_type:company_PreussischeSeehandlung
 				}
 			}
@@ -470,6 +492,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:GRE ?= this
 					has_company = company_type:company_bankofgreec
 				}
 			}
@@ -488,6 +511,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:GUA ?= this
 					has_company = company_type:company_BancoCentralDeGuatemala
 				}
 			}
@@ -506,6 +530,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:HON ?= this
 					has_company = company_type:company_BancoCentralDeHonduras
 				}
 			}
@@ -524,6 +549,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:ITA ?= this
 					has_company = company_type:company_BancaDItalia
 				}
 			}
@@ -542,6 +568,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:ITA ?= this
 					has_company = company_type:company_Rothschild_Bank_ita
 				}
 			}
@@ -560,6 +587,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:JAP ?= this
 					has_company = company_type:company_BankOfJapan
 				}
 			}
@@ -578,6 +606,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:JAP ?= this
 					has_company = company_type:company_Mitsubishiexchangehousebank
 				}
 			}
@@ -596,6 +625,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:MEX ?= this
 					has_company = company_type:company_BancoDeMexico
 				}
 			}
@@ -614,6 +644,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:NET ?= this
 					has_company = company_type:company_DeNederlandscheBank
 				}
 			}
@@ -632,6 +663,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:NOR ?= this
 					has_company = company_type:company_ChristianiaBank
 				}
 			}
@@ -650,6 +682,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:NSW ?= this
 					has_company = company_type:company_ColonialBankOfAustralia
 				}
 			}
@@ -668,6 +701,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:ONT ?= this
 					has_company = company_type:company_RoyalBankofCanada
 				}
 			}
@@ -686,6 +720,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:PAN ?= this
 					has_company = company_type:company_BancoNacionalDePanama
 				}
 			}
@@ -704,6 +739,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:PER ?= this
 					has_company = company_type:company_BankMelliIran
 				}
 			}
@@ -722,6 +758,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:PER ?= this
 					has_company = company_type:company_ImperialBankofPersia
 				}
 			}
@@ -740,6 +777,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:POR ?= this
 					has_company = company_type:company_BancoDePortugal
 				}
 			}
@@ -758,6 +796,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:PRG ?= this
 					has_company = company_type:company_BancoNacionalDelParaguay
 				}
 			}
@@ -776,6 +815,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:QUE ?= this
 					has_company = company_type:company_BankOfMontreal
 				}
 			}
@@ -794,6 +834,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:RUS ?= this
 					has_company = company_type:company_StateBankRussianEmpire
 				}
 			}
@@ -812,6 +853,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:SAF ?= this
 					has_company = company_type:company_BankSBoBSA
 				}
 			}
@@ -830,6 +872,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:SAR ?= this
 					has_company = company_type:company_CassaDiRisparmioDiTorino
 				}
 			}
@@ -848,6 +891,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:SPA ?= this
 					has_company = company_type:company_BankofSpain
 				}
 			}
@@ -866,6 +910,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:SWE ?= this
 					has_company = company_type:company_HandelsBanken
 				}
 			}
@@ -884,6 +929,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:SWI ?= this
 					has_company = company_type:company_Bankenverein
 				}
 			}
@@ -902,6 +948,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:TUR ?= this
 					has_company = company_type:company_OttomanBank
 				}
 			}
@@ -920,6 +967,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:URU ?= this
 					has_company = company_type:company_BancoCentralDelUruguay
 				}
 			}
@@ -938,6 +986,7 @@ zz_ef_cm_create_owned_bank = {
 		else_if = {
 			limit = {
 				scope:zz_ef_cm_bank_owner = {
+					c:VNZ ?= this
 					has_company = company_type:company_BancoCentralDeVenezuela
 				}
 			}

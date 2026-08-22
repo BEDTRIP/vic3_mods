@@ -16,6 +16,178 @@ zz_ef_cm_grant_bank_company = {
 	}
 
 	if = {
+		limit = { c:ARG ?= this }
+		add_company = company_type:company_BancoNacionArgentina
+	}
+	else_if = {
+		limit = { c:AUS ?= this }
+		add_company = company_type:company_OesterreichischeNationalbank
+	}
+	else_if = {
+		limit = { c:BAV ?= this }
+		add_company = company_type:company_BayerischeHypothekenUndWechselBank
+	}
+	else_if = {
+		limit = { c:BEL ?= this }
+		add_company = company_type:company_BanqueNationaleDeBelgique
+	}
+	else_if = {
+		limit = { c:BIC ?= this }
+		add_company = company_type:company_ImperialBankofIndia
+	}
+	else_if = {
+		limit = { c:BOL ?= this }
+		add_company = company_type:company_BancoNacionalDeBolivia
+	}
+	else_if = {
+		limit = { c:BRZ ?= this }
+		add_company = company_type:company_BancoDoBrasil
+	}
+	else_if = {
+		limit = { c:CAN ?= this }
+		add_company = company_type:company_CanadianImperialBankOfCommerce
+	}
+	else_if = {
+		limit = { c:CHI ?= this }
+		add_company = company_type:company_DaQingBank
+	}
+	else_if = {
+		limit = { c:CHL ?= this }
+		add_company = company_type:company_BancoEstado
+	}
+	else_if = {
+		limit = { c:CLM ?= this }
+		add_company = company_type:company_BancoRepublicaColombia
+	}
+	else_if = {
+		limit = { c:COS ?= this }
+		add_company = company_type:company_BancoCentralDeCostaRica
+	}
+	else_if = {
+		limit = { c:CUB ?= this }
+		add_company = company_type:company_BancoEspanolDeLaHabana
+	}
+	else_if = {
+		limit = { c:DEN ?= this }
+		add_company = company_type:company_LandmandsBanken
+	}
+	else_if = {
+		limit = { c:EGY ?= this }
+		add_company = company_type:company_BanqueEgyptienne
+	}
+	else_if = {
+		limit = { c:FRA ?= this }
+		add_company = company_type:company_BanqueDeFrance
+	}
+	else_if = {
+		limit = { c:GBR ?= this }
+		add_company = company_type:company_BankofEngland
+	}
+	else_if = {
+		limit = { c:GER ?= this }
+		add_company = company_type:company_Reichsbank
+	}
+	else_if = {
+		limit = { c:GRE ?= this }
+		add_company = company_type:company_bankofgreec
+	}
+	else_if = {
+		limit = { c:GUA ?= this }
+		add_company = company_type:company_BancoCentralDeGuatemala
+	}
+	else_if = {
+		limit = { c:HON ?= this }
+		add_company = company_type:company_BancoCentralDeHonduras
+	}
+	else_if = {
+		limit = { c:ITA ?= this }
+		add_company = company_type:company_BancaDItalia
+	}
+	else_if = {
+		limit = { c:JAP ?= this }
+		add_company = company_type:company_BankOfJapan
+	}
+	else_if = {
+		limit = { c:MEX ?= this }
+		add_company = company_type:company_BancoDeMexico
+	}
+	else_if = {
+		limit = { c:NET ?= this }
+		add_company = company_type:company_DeNederlandscheBank
+	}
+	else_if = {
+		limit = { c:NGF ?= this }
+		add_company = company_type:company_PreussischeSeehandlung
+	}
+	else_if = {
+		limit = { c:NOR ?= this }
+		add_company = company_type:company_ChristianiaBank
+	}
+	else_if = {
+		limit = { c:NSW ?= this }
+		add_company = company_type:company_ColonialBankOfAustralia
+	}
+	else_if = {
+		limit = { c:ONT ?= this }
+		add_company = company_type:company_RoyalBankofCanada
+	}
+	else_if = {
+		limit = { c:PAN ?= this }
+		add_company = company_type:company_BancoNacionalDePanama
+	}
+	else_if = {
+		limit = { c:PER ?= this }
+		add_company = company_type:company_BankMelliIran
+	}
+	else_if = {
+		limit = { c:POR ?= this }
+		add_company = company_type:company_BancoDePortugal
+	}
+	else_if = {
+		limit = { c:PRG ?= this }
+		add_company = company_type:company_BancoNacionalDelParaguay
+	}
+	else_if = {
+		limit = { c:QUE ?= this }
+		add_company = company_type:company_BankOfMontreal
+	}
+	else_if = {
+		limit = { c:RUS ?= this }
+		add_company = company_type:company_StateBankRussianEmpire
+	}
+	else_if = {
+		limit = { c:SAF ?= this }
+		add_company = company_type:company_BankSBoBSA
+	}
+	else_if = {
+		limit = { c:SAR ?= this }
+		add_company = company_type:company_CassaDiRisparmioDiTorino
+	}
+	else_if = {
+		limit = { c:SPA ?= this }
+		add_company = company_type:company_BankofSpain
+	}
+	else_if = {
+		limit = { c:SWE ?= this }
+		add_company = company_type:company_HandelsBanken
+	}
+	else_if = {
+		limit = { c:SWI ?= this }
+		add_company = company_type:company_Bankenverein
+	}
+	else_if = {
+		limit = { c:TUR ?= this }
+		add_company = company_type:company_OttomanBank
+	}
+	else_if = {
+		limit = { c:URU ?= this }
+		add_company = company_type:company_BancoCentralDelUruguay
+	}
+	else_if = {
+		limit = { c:VNZ ?= this }
+		add_company = company_type:company_BancoCentralDeVenezuela
+	}
+	else_if = {
 		limit = { has_law = law_type:law_dinar_currency }
 		add_company = company_type:zz_ef_cm_bank_dinar
 	}

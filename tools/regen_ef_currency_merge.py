@@ -1184,7 +1184,12 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
     icon = '"gfx/interface/icons/building_icons/banks/central_bank.dds"' 
     background = field("background", '"gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"')
     names_block = block("dynamic_company_type_names")
-    buildings = block("building_types").rstrip()[:-1].rstrip() + "\n\tbuilding_bank\n}"
+    # A central bank is not a railway company. company_BasicBank's list is E&F's
+    # generic bank, so it carries the lot; these keep the financial half of it.
+    drop = ("building_railway", "building_trade_center")
+    keep_lines = [l for l in block("building_types").split("\n")
+                  if not any(d in l for d in drop)]
+    buildings = "\n".join(keep_lines).rstrip()[:-1].rstrip() + "\n\tbuilding_bank\n}"
     possible = block("possible")
     prosperity = block("prosperity_modifier")
 
@@ -1268,7 +1273,7 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
     Everything is additive. on_actions stack, GLOBAL blocks stack, the modifier and
     the triggers are new keys. Nothing of E&F's is overridden.
     """
-    order = bank_company_priority(ef, names)
+    order = [c for c, _ in bank_company_priority(ef, names)]
     any_of = "\n".join(f"\t\t\tis_company_type = company_type:{c}" for c in order)
 
     # By law first -- that is the truth once the game is running. By tag second,
@@ -1279,18 +1284,29 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
     # has a currency law yet -- every has_law test is false and every law-gated
     # company is invisible. That is why Finland's bank came out state-owned.
     tags_of = currency_tags(ef)
+    table = {t: ([c] if isinstance(c, str) else list(c))
+             for t, c in CENTRAL_BANK_COMPANY.items()}
+
+    # The country's own historical central bank comes first, by tag. Without this
+    # the generated company took the bank at game start and the historical one
+    # turned up later with nothing to own -- Turkey ended up holding a central bank
+    # AND the Ottoman Bank, Russia the same, and neither of the real banks was the
+    # central bank. add_company ignores E&F's founding dates, which is the point:
+    # the bank exists because the central bank does.
     parts = []
+    for tag in sorted(table):
+        parts.append((f"c:{tag} ?= this", table[tag][0]))
     for cur in names:
-        parts.append((f"has_law = law_type:law_{cur}_currency", cur))
+        parts.append((f"has_law = law_type:law_{cur}_currency", GENERIC_BANK + cur))
     for cur in names:
         for t in tags_of.get(cur, ()):
-            parts.append((f"c:{t} ?= this", cur))
+            parts.append((f"c:{t} ?= this", GENERIC_BANK + cur))
     grant = "".join(
         f"\t{'if' if i == 0 else 'else_if'} = {{\n"
         f"\t\tlimit = {{ {test} }}\n"
-        f"\t\tadd_company = company_type:{GENERIC_BANK}{cur}\n"
+        f"\t\tadd_company = company_type:{comp}\n"
         f"\t}}\n"
-        for i, (test, cur) in enumerate(parts))
+        for i, (test, comp) in enumerate(parts))
 
     triggers = (BANNER +
                 "### Source: the bank companies in E&F's own 00_ef_companies.txt plus the\n"
@@ -1624,8 +1640,23 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
 
     # Priority: the curated central banks first, in tag order, then every other
     # bank company E&F ships, then the generic one as the last resort.
-    priority = bank_company_priority(ef, names)
-    notes.append(f"bank companies in the dispatcher: {len(priority)}")
+    # (company, tag) -- the historical banks are gated on the country they belong
+    # to, the generated ones are not. Without the gate the Papal States, which hold
+    # Banca d'Italia, would hand it the Papal central bank: E&F grants that company
+    # to ITA, and the bank of Italy is not the bank of the Papal States.
+    hist, hnotes = historical_central_banks(ef)
+    notes.extend(hnotes)
+    table = {t: ([c] if isinstance(c, str) else list(c))
+             for t, c in CENTRAL_BANK_COMPANY.items()}
+    tag_of = {}
+    for tag in sorted(table):
+        for comp in table[tag]:
+            tag_of.setdefault(comp, tag)
+    priority = ([(c, tag_of.get(c)) for c in hist]
+                + [(GENERIC_BANK + cur, None) for cur in names]
+                + [("company_BasicBank", None)])
+    notes.append(f"bank companies in the dispatcher: {len(priority)} "
+                 f"({len(hist)} historical, tag-gated)")
 
     def owned_create(indent: str, comp: str) -> str:
         i = indent
@@ -1642,11 +1673,13 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 f"{i}}}\n")
 
     branches = []
-    for comp in priority:
+    for comp, tag in priority:
+        gate = f"\t\t\t\t\tc:{tag} ?= this\n" if tag else ""
         branches.append(
             f"\t\t{'if' if not branches else 'else_if'} = {{\n"
             f"\t\t\tlimit = {{\n"
             f"\t\t\t\tscope:zz_ef_cm_bank_owner = {{\n"
+            f"{gate}"
             f"\t\t\t\t\thas_company = company_type:{comp}\n"
             f"\t\t\t\t}}\n"
             f"\t\t\t}}\n"
@@ -1821,7 +1854,15 @@ def bank_company_priority(ef: Path, names: list[str]) -> list[str]:
     while they were on the list.
     """
     hist, _ = historical_central_banks(ef)
-    return hist + [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"]
+    table = {t: ([c] if isinstance(c, str) else list(c))
+             for t, c in CENTRAL_BANK_COMPANY.items()}
+    tag_of = {}
+    for tag in sorted(table):
+        for comp in table[tag]:
+            tag_of.setdefault(comp, tag)
+    return ([(c, tag_of.get(c)) for c in hist]
+            + [(GENERIC_BANK + cur, None) for cur in names]
+            + [("company_BasicBank", None)])
 
 
 def gen_monopoly(ef: Path, names: list[str]) -> str:
@@ -1849,7 +1890,7 @@ def gen_monopoly(ef: Path, names: list[str]) -> str:
     with someone else. That is what the rebuild in zz_ef_cm_create_owned_bank is
     for -- the monopoly is a price and construction rule, not a lock.
     """
-    order = bank_company_priority(ef, names)
+    order = [c for c, _ in bank_company_priority(ef, names)]
 
     def branch(kind: str, comp: str) -> str:
         return (f"\t{kind} = {{\n"
@@ -1943,6 +1984,32 @@ def gen_market_panel(ef: Path) -> tuple[str, list[str]]:
     notes.append(f"list-building on_finish calls removed: {dropped}")
     src = "\n".join(kept)
 
+    # And the reason the currency still did not show up in the ordinary grid: E&F
+    # hides it there by name. goods_entry_button carries a `visible` built from 105
+    # EqualTo_string(Goods.GetKey, ...) terms -- every financial product and every
+    # one of its currencies, spe_uni_c included. 94 of those goods do not exist any
+    # more, so the whole expression is rebuilt from the eight that do.
+    hidden = ["bond", "manufacture_stock", "agricultural_stock", "mining_stock",
+              "railroad_stock", "war_bond", "mutual_funds", "paper_gold"]
+    expr = "EqualTo_string(Goods.GetKey,'%s')" % hidden[0]
+    for k in hidden[1:]:
+        expr = "Or(%s,EqualTo_string(Goods.GetKey,'%s'))" % (expr, k)
+    replacement = '[Not(%s)]' % expr
+
+    out, swapped = [], 0
+    for line in src.split("\n"):
+        if "EqualTo_string(Goods.GetKey,'spe_uni_c')" in line and "visible" in line:
+            indent = line[:len(line) - len(line.lstrip())]
+            out.append(f'{indent}visible = "{replacement}"')
+            swapped += 1
+        else:
+            out.append(line)
+    if not swapped:
+        raise SystemExit(f"{MARKET_PANEL}: the goods_entry_button visible filter changed shape")
+    notes.append(f"goods_entry_button filters rebuilt: {swapped} "
+                 f"(105 keys -> {len(hidden)}, spe_uni_c no longer hidden)")
+    src = "\n".join(out)
+
     head = ("### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT\n"
             "### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.\n"
             "###\n"
@@ -1956,7 +2023,10 @@ def gen_market_panel(ef: Path) -> tuple[str, list[str]]:
             "###\n"
             "### The currency now appears in the ordinary goods grid above, like any other\n"
             "### good -- which is where one currency good belongs, now that there is one\n"
-            "### instead of fifty-seven.\n"
+            "### instead of fifty-seven. That took a second change: goods_entry_button hides\n"
+            "### goods by name through a `visible` built from 105 EqualTo_string terms, and\n"
+            "### spe_uni_c was one of them. 94 of those goods no longer exist, so the filter\n"
+            "### is rebuilt from the eight financial products that do.\n"
             "###\n"
             "### GUI files are overridden by PATH: this replaces E&F's file wholesale, so it\n"
             "### is copied rather than edited, and has to be regenerated after an E&F update.\n\n")

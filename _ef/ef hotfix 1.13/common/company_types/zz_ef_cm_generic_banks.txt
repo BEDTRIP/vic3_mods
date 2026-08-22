@@ -40,9 +40,7 @@ zz_ef_cm_bank_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -122,9 +120,7 @@ zz_ef_cm_bank_dinar_algerian_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -204,9 +200,7 @@ zz_ef_cm_bank_dinar_iraqi_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -286,9 +280,7 @@ zz_ef_cm_bank_dinar_libyan_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -368,9 +360,7 @@ zz_ef_cm_bank_dinar_moroccan_dirham = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -451,9 +441,7 @@ zz_ef_cm_bank_dinar_omanian_rial = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -533,9 +521,7 @@ zz_ef_cm_bank_dinar_qiran = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -616,9 +602,7 @@ zz_ef_cm_bank_dinar_saudi_riyal = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -698,9 +682,7 @@ zz_ef_cm_bank_dinar_serbian_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -781,9 +763,7 @@ zz_ef_cm_bank_dinar_tunisian_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -863,9 +843,7 @@ zz_ef_cm_bank_dinar_yugoslav_dinar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -945,9 +923,7 @@ zz_ef_cm_bank_dollar_australian_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1029,9 +1005,7 @@ zz_ef_cm_bank_dollar_canadian_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1114,9 +1088,7 @@ zz_ef_cm_bank_dollar_caribbean_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1197,9 +1169,7 @@ zz_ef_cm_bank_dollar_confederate_states_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1280,9 +1250,7 @@ zz_ef_cm_bank_dollar_liberian_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1363,9 +1331,7 @@ zz_ef_cm_bank_dollar_new_zealand_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1446,9 +1412,7 @@ zz_ef_cm_bank_dollar_sierra_leonean_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1528,9 +1492,7 @@ zz_ef_cm_bank_dollar_united_states_dollar = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1611,9 +1573,7 @@ zz_ef_cm_bank_eco_ariary = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1693,9 +1653,7 @@ zz_ef_cm_bank_eco_central_african_eco = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1775,9 +1733,7 @@ zz_ef_cm_bank_eco_east_african_eco = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1857,9 +1813,7 @@ zz_ef_cm_bank_eco_ethiopian_birr = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -1939,9 +1893,7 @@ zz_ef_cm_bank_eco_ghanaian_pound = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2021,9 +1973,7 @@ zz_ef_cm_bank_eco_nigerian_naira = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2103,9 +2053,7 @@ zz_ef_cm_bank_eco_south_african_rand = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2186,9 +2134,7 @@ zz_ef_cm_bank_eco_tuareg_ouguiya = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2268,9 +2214,7 @@ zz_ef_cm_bank_eco_west_african_eco = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2350,9 +2294,7 @@ zz_ef_cm_bank_franc_belgian_franc = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2433,9 +2375,7 @@ zz_ef_cm_bank_franc_french_franc = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2516,9 +2456,7 @@ zz_ef_cm_bank_franc_luxembourgish_franc = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2598,9 +2536,7 @@ zz_ef_cm_bank_franc_swiss_franc = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2681,9 +2617,7 @@ zz_ef_cm_bank_gulden = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2764,9 +2698,7 @@ zz_ef_cm_bank_gulden_bavarian_gulden = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2847,9 +2779,7 @@ zz_ef_cm_bank_gulden_florin = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -2930,9 +2860,7 @@ zz_ef_cm_bank_gulden_hungarian_forint = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3013,9 +2941,7 @@ zz_ef_cm_bank_gulden_indies_guilder = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3095,9 +3021,7 @@ zz_ef_cm_bank_gulden_south_german_gulden = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3177,9 +3101,7 @@ zz_ef_cm_bank_krone_czech_koruna = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3259,9 +3181,7 @@ zz_ef_cm_bank_krone_danish_krone = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3342,9 +3262,7 @@ zz_ef_cm_bank_krone_estonian_kroon = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3424,9 +3342,7 @@ zz_ef_cm_bank_krone_icelandic_krona = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3506,9 +3422,7 @@ zz_ef_cm_bank_krone_norwegian_krone = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3589,9 +3503,7 @@ zz_ef_cm_bank_krone_slovak_koruna = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3671,9 +3583,7 @@ zz_ef_cm_bank_krone_swedish_krona = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3754,9 +3664,7 @@ zz_ef_cm_bank_leon_leu = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3837,9 +3745,7 @@ zz_ef_cm_bank_leon_lev = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -3920,9 +3826,7 @@ zz_ef_cm_bank_lira = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4003,9 +3907,7 @@ zz_ef_cm_bank_lira_ducato = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4086,9 +3988,7 @@ zz_ef_cm_bank_lira_ottoman_lira = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4169,9 +4069,7 @@ zz_ef_cm_bank_lira_scudo_pontificio = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4252,9 +4150,7 @@ zz_ef_cm_bank_lira_scudo_sardo = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4335,9 +4231,7 @@ zz_ef_cm_bank_lira_toscane_lira = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4418,9 +4312,7 @@ zz_ef_cm_bank_mark = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4501,9 +4393,7 @@ zz_ef_cm_bank_mark_finnish_markka = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4584,9 +4474,7 @@ zz_ef_cm_bank_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4666,9 +4554,7 @@ zz_ef_cm_bank_peso_argentine_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4749,9 +4635,7 @@ zz_ef_cm_bank_peso_bolivien_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4833,9 +4717,7 @@ zz_ef_cm_bank_peso_chilean_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4916,9 +4798,7 @@ zz_ef_cm_bank_peso_colombian_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -4999,9 +4879,7 @@ zz_ef_cm_bank_peso_costa_rican_colon = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5082,9 +4960,7 @@ zz_ef_cm_bank_peso_cuban_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5165,9 +5041,7 @@ zz_ef_cm_bank_peso_ecuadorian_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5248,9 +5122,7 @@ zz_ef_cm_bank_peso_el_salvador_colon = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5331,9 +5203,7 @@ zz_ef_cm_bank_peso_guatemalan_quetzal = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5414,9 +5284,7 @@ zz_ef_cm_bank_peso_honduran_lempira = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5497,9 +5365,7 @@ zz_ef_cm_bank_peso_mexican_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5581,9 +5447,7 @@ zz_ef_cm_bank_peso_nicaraguan_cordoba = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5664,9 +5528,7 @@ zz_ef_cm_bank_peso_paraguayan_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5747,9 +5609,7 @@ zz_ef_cm_bank_peso_philippine_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5830,9 +5690,7 @@ zz_ef_cm_bank_peso_sol_de_oro = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5913,9 +5771,7 @@ zz_ef_cm_bank_peso_uruguayan_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -5996,9 +5852,7 @@ zz_ef_cm_bank_peso_venezuelan_peso = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6079,9 +5933,7 @@ zz_ef_cm_bank_pound_egyptian_pound = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6162,9 +6014,7 @@ zz_ef_cm_bank_pound_irish_pound = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6244,9 +6094,7 @@ zz_ef_cm_bank_pound_sterling = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6327,9 +6175,7 @@ zz_ef_cm_bank_real = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6410,9 +6256,7 @@ zz_ef_cm_bank_real_brazilian_real = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6493,9 +6337,7 @@ zz_ef_cm_bank_rupee_indian_rupee = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6576,9 +6418,7 @@ zz_ef_cm_bank_rupee_indonesian_rupiah = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6659,9 +6499,7 @@ zz_ef_cm_bank_spe_baht = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6742,9 +6580,7 @@ zz_ef_cm_bank_spe_dong = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6825,9 +6661,7 @@ zz_ef_cm_bank_spe_drachma = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6908,9 +6742,7 @@ zz_ef_cm_bank_spe_korean_won = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -6991,9 +6823,7 @@ zz_ef_cm_bank_spe_latvian_lats = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7073,9 +6903,7 @@ zz_ef_cm_bank_spe_lithuanian_litas = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7155,9 +6983,7 @@ zz_ef_cm_bank_spe_peseta = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7238,9 +7064,7 @@ zz_ef_cm_bank_spe_ruble = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7321,9 +7145,7 @@ zz_ef_cm_bank_spe_uni = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7403,9 +7225,7 @@ zz_ef_cm_bank_spe_yen = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7486,9 +7306,7 @@ zz_ef_cm_bank_spe_yuan = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7569,9 +7387,7 @@ zz_ef_cm_bank_spe_zloti = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7652,9 +7468,7 @@ zz_ef_cm_bank_thaler_hannoveraner_thaler = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7735,9 +7549,7 @@ zz_ef_cm_bank_thaler_prussian_thaler = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
@@ -7819,9 +7631,7 @@ zz_ef_cm_bank_thaler_saxon_thaler = {
 
 	building_types = {
 			building_ef_private_construction
-			building_railway
 			#building_port
-			building_trade_center
 			building_gold_mine
 			building_silver_mine
 
