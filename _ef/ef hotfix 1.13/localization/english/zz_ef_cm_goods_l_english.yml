@@ -1,10 +1,16 @@
 ﻿l_english:
 
- # E&F Currency Merge: one shared currency good. The name is deliberately
- # generic -- every country still has its own currency LAW, and that is what
- # the monetary-system UI shows.
- spe_uni_c:0 "Currency"
+ # E&F Currency Merge: one shared currency good.
+ #
+ # EXPERIMENT: the bracket asks the market's owner for its currency name
+ # through E&F's own currency_name_mk. If a goods name is rendered with the
+ # market goods as its data context, every country gets its own currency
+ # name back without spending a prestige slot -- and there are only three
+ # of those per base good, measured in game.
+ #
+ # If the bracket comes out empty or raw, the answer is no: drop it and
+ # leave the plain name. debug.log names the failing data function.
+ spe_uni_c:0 "Currency ([Goods.GetMarket.GetOwner.GetCustom('currency_name_mk')])"
 
- # The prestige variant a company-owned central bank mints. One, not one
- # per currency -- see the header of zz_ef_cm_prestige_currencies.txt.
+ # The prestige variant a company-owned central bank mints.
  zz_ef_cm_national_currency:0 "National Currency"

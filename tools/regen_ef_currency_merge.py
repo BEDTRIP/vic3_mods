@@ -668,25 +668,54 @@ def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
 
 
 def gen_loc(keep: str) -> dict[str, str]:
+    """The shared currency good's name -- and an experiment on getting 95 back.
+
+    The three-prestige-goods ceiling is in the engine, so the per-country currency
+    name cannot come from there. This tries the other door: E&F already ships
+    `currency_name_mk`, a customizable localization of type = country covering all
+    95 currencies and resolving to keys the Russian translation already has
+    (pound_sterling -> "Фунт стерлингов", spe_ruble -> "Рубль"). The GUI has
+    Goods.GetMarket and Market.GetOwner. If a goods name is rendered with the
+    market-goods object as its data context, then the good can name itself after
+    whoever owns the market it is being shown in -- all 95, at the cost of nothing.
+
+    Written as "Валюта (…)" on purpose rather than as the bare call: if the context
+    is not there, the name still reads as Currency and only the bracket is empty or
+    broken, instead of every currency in the game turning into a raw key. debug.log
+    will name the failing data function either way -- that is how the last four
+    problems in this mod were found.
+    """
+    call = "[Goods.GetMarket.GetOwner.GetCustom('currency_name_mk')]"
     return {
         "english": ("l_english:\n\n"
-                    " # E&F Currency Merge: one shared currency good. The name is deliberately\n"
-                    " # generic -- every country still has its own currency LAW, and that is what\n"
-                    " # the monetary-system UI shows.\n"
-                    f' {keep}:0 "Currency"\n'
+                    " # E&F Currency Merge: one shared currency good.\n"
+                    " #\n"
+                    " # EXPERIMENT: the bracket asks the market's owner for its currency name\n"
+                    " # through E&F's own currency_name_mk. If a goods name is rendered with the\n"
+                    " # market goods as its data context, every country gets its own currency\n"
+                    " # name back without spending a prestige slot -- and there are only three\n"
+                    " # of those per base good, measured in game.\n"
+                    " #\n"
+                    " # If the bracket comes out empty or raw, the answer is no: drop it and\n"
+                    ' # leave the plain name. debug.log names the failing data function.\n'
+                    f' {keep}:0 "Currency ({call})"\n'
                     "\n"
-                    " # The prestige variant a company-owned central bank mints. One, not one\n"
-                    " # per currency -- see the header of zz_ef_cm_prestige_currencies.txt.\n"
+                    " # The prestige variant a company-owned central bank mints.\n"
                     ' zz_ef_cm_national_currency:0 "National Currency"\n'),
         "russian": ("l_russian:\n\n"
-                    " # E&F Currency Merge: единый товар-валюта. Название намеренно обезличено —\n"
-                    " # у каждой страны по-прежнему свой ЗАКОН о валюте, и в интерфейсе денежной\n"
-                    " # системы виден именно он.\n"
-                    f' {keep}:0 "Валюта"\n'
+                    " # E&F Currency Merge: единый товар-валюта.\n"
+                    " #\n"
+                    " # ЭКСПЕРИМЕНТ: скобка спрашивает у владельца рынка название его валюты\n"
+                    " # через родной currency_name_mk из E&F. Если имя товара рисуется в\n"
+                    " # контексте рыночного товара, каждая страна получает своё название\n"
+                    " # обратно, не тратя престижный слот — а их всего три на базовый товар,\n"
+                    " # это измерено в игре.\n"
+                    " #\n"
+                    " # Если скобка окажется пустой или сырой — ответ отрицательный, убираем\n"
+                    " # её и оставляем простое имя. Упавшую функцию назовёт debug.log.\n"
+                    f' {keep}:0 "Валюта ({call})"\n'
                     "\n"
                     " # Престижный вариант, который чеканит центробанк во владении компании.\n"
-                    " # Один, а не по одному на валюту — почему, написано в шапке\n"
-                    " # zz_ef_cm_prestige_currencies.txt.\n"
                     ' zz_ef_cm_national_currency:0 "Национальная валюта"\n'),
     }
 
