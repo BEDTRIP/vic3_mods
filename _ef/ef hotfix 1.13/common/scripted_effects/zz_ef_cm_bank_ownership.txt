@@ -13,8 +13,20 @@
 ### into company hands is privatisation, which is the AI's call and its timing.
 ### That is why the central bank had to be born owned instead of handed over.
 ###
-### State scope. $CB_SIZE$ is the level, passed straight through from whichever
-### E&F spawner called it.
+### State scope. $CB_SIZE$ and $BANK_BLDG_TYPE$ come straight through from
+### whichever E&F spawner called it.
+###
+### $BANK_BLDG_TYPE$ IS PASSED ON PURPOSE, even though every caller sets it to
+### building_bank and this could name the building directly. An argument the
+### callers pass and the effect does not use is a fatal compile error, not a
+### warning, and it takes the whole effect down with it:
+###
+###   [jomini_script_argument.cpp:182]: Compiling source for failed for unknown
+###   arguments: BANK_BLDG_TYPE. At
+###   common/scripted_effects/09_introduction_building_lvl.txt:23498
+###
+### The result was every central bank in the world missing at game start, and
+### not one line about it in error.log -- it is in debug.log.
 
 zz_ef_cm_create_owned_bank = {
 	owner = {
@@ -29,7 +41,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -49,7 +61,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -69,7 +81,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -89,7 +101,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -109,7 +121,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -129,7 +141,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -149,7 +161,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -169,7 +181,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -189,7 +201,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -209,7 +221,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -229,7 +241,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -249,7 +261,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -269,7 +281,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -289,7 +301,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -309,7 +321,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -329,7 +341,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -349,7 +361,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -369,7 +381,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -389,7 +401,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -409,7 +421,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -429,7 +441,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -449,7 +461,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -469,7 +481,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -489,7 +501,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -509,7 +521,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -529,7 +541,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -549,7 +561,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -569,7 +581,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -589,7 +601,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -609,7 +621,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -629,7 +641,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -649,7 +661,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -669,7 +681,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -689,7 +701,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -709,7 +721,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -729,7 +741,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -749,7 +761,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -769,7 +781,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -789,7 +801,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -809,7 +821,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -829,7 +841,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -849,7 +861,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -869,7 +881,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -889,7 +901,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -909,7 +921,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -929,7 +941,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -949,7 +961,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -969,7 +981,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -989,7 +1001,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -1009,7 +1021,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 		create_building = {
-			building = building_bank
+			building = $BANK_BLDG_TYPE$
 			level    = $CB_SIZE$
 			reserves = 1
 			add_ownership = {
@@ -1025,23 +1037,46 @@ zz_ef_cm_create_owned_bank = {
 		### No flavoured central bank, or the country does not hold it yet --
 		### Germany's Reichsbank is 1876 and its central bank is built in 1836.
 		### company_BasicBank has uses_dynamic_naming, so it comes out as a named
-		### bank rather than a placeholder.
+		### bank rather than a placeholder. The slot is granted first: a country
+		### with no free company slot -- Finland in 1836 -- cannot take one.
 		scope:zz_ef_cm_bank_owner = {
+			if = {
+				limit = { NOT = { has_modifier = zz_ef_cm_central_bank_charter } }
+				add_modifier = zz_ef_cm_central_bank_charter
+			}
 			if = {
 				limit = { NOT = { has_company = company_type:company_BasicBank } }
 				add_company = company_type:company_BasicBank
 			}
 		}
-		create_building = {
-			building = building_bank
-			level    = $CB_SIZE$
-			reserves = 1
-			add_ownership = {
-				company = {
-					type    = company_BasicBank
-					country = scope:zz_ef_cm_bank_owner
-					levels  = $CB_SIZE$
+		if = {
+			limit = {
+				scope:zz_ef_cm_bank_owner = {
+					has_company = company_type:company_BasicBank
 				}
+			}
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				level    = $CB_SIZE$
+				reserves = 1
+				add_ownership = {
+					company = {
+						type    = company_BasicBank
+						country = scope:zz_ef_cm_bank_owner
+						levels  = $CB_SIZE$
+					}
+				}
+			}
+		}
+		else = {
+			### LAST RESORT, AND IT EXISTS FOR A REASON. This is E&F's own line,
+			### untouched. When the dispatcher failed the first time, every central
+			### bank in the world simply stopped existing -- there was no path left
+			### that just builds the thing. A state-owned bank beats no bank.
+			create_building = {
+				building = $BANK_BLDG_TYPE$
+				level    = $CB_SIZE$
+				reserves = 1
 			}
 		}
 	}
