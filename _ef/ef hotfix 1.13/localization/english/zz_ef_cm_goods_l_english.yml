@@ -4,3 +4,7 @@
  # generic -- every country still has its own currency LAW, and that is what
  # the monetary-system UI shows.
  spe_uni_c:0 "Currency"
+
+ # The prestige variant a company-owned central bank mints. One, not one
+ # per currency -- see the header of zz_ef_cm_prestige_currencies.txt.
+ zz_ef_cm_national_currency:0 "National Currency"

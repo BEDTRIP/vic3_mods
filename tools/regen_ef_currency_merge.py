@@ -673,85 +673,25 @@ def gen_loc(keep: str) -> dict[str, str]:
                     " # E&F Currency Merge: one shared currency good. The name is deliberately\n"
                     " # generic -- every country still has its own currency LAW, and that is what\n"
                     " # the monetary-system UI shows.\n"
-                    f' {keep}:0 "Currency"\n'),
+                    f' {keep}:0 "Currency"\n'
+                    "\n"
+                    " # The prestige variant a company-owned central bank mints. One, not one\n"
+                    " # per currency -- see the header of zz_ef_cm_prestige_currencies.txt.\n"
+                    ' zz_ef_cm_national_currency:0 "National Currency"\n'),
         "russian": ("l_russian:\n\n"
                     " # E&F Currency Merge: единый товар-валюта. Название намеренно обезличено —\n"
                     " # у каждой страны по-прежнему свой ЗАКОН о валюте, и в интерфейсе денежной\n"
                     " # системы виден именно он.\n"
-                    f' {keep}:0 "Валюта"\n'),
+                    f' {keep}:0 "Валюта"\n'
+                    "\n"
+                    " # Престижный вариант, который чеканит центробанк во владении компании.\n"
+                    " # Один, а не по одному на валюту — почему, написано в шапке\n"
+                    " # zz_ef_cm_prestige_currencies.txt.\n"
+                    ' zz_ef_cm_national_currency:0 "Национальная валюта"\n'),
     }
 
 
 # --- prestige currencies ----------------------------------------------------
-
-
-def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
-    """One prestige variant of the shared good per currency.
-
-    THE KEY IS THE OLD GOOD'S KEY. `pound_sterling_c` stopped being a good when the
-    merge commented it out, so the name is free -- and every piece of localisation
-    E&F ships for it, in eleven languages, plus the separate Russian translation
-    mod, keeps working untouched. Same for the icon. Zero translation work, and no
-    second set of names to keep in sync with the first.
-
-    NO `possible` BLOCK, AND THAT IS THE POINT. These used to carry
-    `possible = { has_law = law_type:law_<cur>_currency }`, on the theory that the
-    gate would pick the right currency for each country. It does not gate anything
-    useful: vanilla only ever writes `has_dlc_feature` in `possible`, and with the
-    law test in there every central bank in the world minted the Iraqi dinar --
-    the same one for everybody, which is exactly what a trigger that cannot see the
-    country looks like.
-
-    Selection is the company's job instead: each generated bank company lists
-    exactly one currency and therefore has nothing to choose from. See
-    zz_ef_cm_generic_banks.txt. An ungated `possible` here means "this good exists",
-    which is all vanilla ever uses it for.
-    """
-    out = []
-    n = 0
-    for name in names:
-        icon = f"gfx/interface/icons/goods_icons/currencies/{name}.dds"
-        if not (ef / icon).exists():
-            icon = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
-        out.append(
-            f"{name}_c = {{\n"
-            f"\tbase_good = {keep}\n"
-            f"\tprestige_bonus = 0.1\n"
-            f'\ttexture = "{icon}"\n'
-            f"}}\n\n"
-        )
-        n += 1
-    head = (BANNER +
-            "### Source: the 95 currencies E&F declares production methods for.\n"
-            "###\n"
-            "### Prestige goods do not count against the 128-goods ceiling -- measured, not\n"
-            "### assumed: 100 dummies on one base good load fine. So the currencies come back\n"
-            "### as prestige variants of the one shared good, with their own names, their own\n"
-            "### icons, a prestige bonus and the engine's +20% throughput for buildings that\n"
-            "### consume them.\n"
-            "###\n"
-            "### Produced only by a company that owns a building making the base good -- which\n"
-            "### is why building_bank has to be ownable and has to be on the owning company's\n"
-            "### building_types. See zz_ef_cm_bank.txt and zz_ef_cm_generic_banks.txt.\n"
-            "###\n"
-            "### DELIBERATELY NO `possible` BLOCK. These carried\n"
-            "### `possible = { has_law = law_type:law_<cur>_currency }` and it gated nothing:\n"
-            "### every central bank on earth minted the Iraqi dinar, the same one for every\n"
-            "### country, which is what a trigger that cannot see the country looks like.\n"
-            "### Vanilla only ever writes has_dlc_feature in `possible`. The choice is made\n"
-            "### by giving each bank company exactly one currency to produce.\n\n")
-    return head + "".join(out), n
-
-
-BANK_COMPANY_SKIP = {
-    "company_private_construction", "company_basic_gold_and_silver_mining_2",
-    "company_basic_silver_mining_mex", "company_basic_gold_mining_rus",
-    "company_PennsylvaniaRailroad", "company_standard_oil",
-}
-
-
-CURRENCY_LAW_FILE = "common/history/global/99_ef_history_global_variable.txt"
-GENERIC_BANK = "zz_ef_cm_bank_"
 
 
 def gen_bank(ef: Path, private: bool) -> tuple[str, str | None]:
@@ -883,6 +823,76 @@ def currency_tags(ef: Path) -> dict[str, list[str]]:
     return out
 
 
+BANK_COMPANY_SKIP = {
+    "company_private_construction", "company_basic_gold_and_silver_mining_2",
+    "company_basic_silver_mining_mex", "company_basic_gold_mining_rus",
+    "company_PennsylvaniaRailroad", "company_standard_oil",
+}
+CURRENCY_LAW_FILE = "common/history/global/99_ef_history_global_variable.txt"
+GENERIC_BANK = "zz_ef_cm_bank_"
+
+NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
+
+
+def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
+    """ONE prestige variant of the shared currency good. Not ninety-five.
+
+    Ninety-five was the plan and it does not work. Every central bank in the world
+    minted the same currency -- the Iraqi dinar -- through three different attempts
+    at making the choice per country:
+
+      1. all 95 offered to every company, gated by
+         `possible = { has_law = law_type:law_<cur>_currency }`;
+      2. exactly one currency per company, gate still in place;
+      3. exactly one currency per company, gate removed entirely.
+
+    Step 3 is what settles it. After it, NO company anywhere listed
+    dinar_iraqi_dinar_c -- only zz_ef_cm_bank_dinar_iraqi_dinar did, and no country
+    in 1836 holds that law or tag. The game kept showing the Iraqi dinar anyway. So
+    the name does not come from the company's list at all: with many prestige
+    variants sharing one base_good, the engine resolves the identity per BASE GOOD,
+    not per producer, and 95 variants of spe_uni_c collapse onto one of them.
+
+    dinar_iraqi_dinar_c was the third prestige good defined in the file, which is
+    also as far as vanilla ever goes: 40 base goods carry a prestige variant, and
+    the most any of them carries is three.
+
+    One variant cannot be resolved to the wrong one. The country's own currency has
+    not gone anywhere -- it is still its monetary system law, still named in E&F's
+    own currency interface, still its own production method in the bank.
+    """
+    icon = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
+    if not (ef / icon).exists():
+        icon = f"gfx/interface/icons/goods_icons/{keep}.dds"
+    body = (f"{NATIONAL_CURRENCY} = {{\n"
+            f"\tbase_good = {keep}\n"
+            f"\tprestige_bonus = 0.1\n"
+            f'\ttexture = "{icon}"\n'
+            f"}}\n")
+    head = (BANNER +
+            "### One prestige variant of the shared currency good.\n"
+            "###\n"
+            "### THIS USED TO BE 95, ONE PER CURRENCY, AND THAT IS WHY IT IS NOW ONE.\n"
+            "### Every central bank on earth minted the Iraqi dinar -- through all 95 being\n"
+            "### offered to every company, through one currency per company with the law gate\n"
+            "### still on the good, and through one currency per company with no gate at all.\n"
+            "### After the last of those NO company anywhere listed dinar_iraqi_dinar_c, and\n"
+            "### the game still showed it. So the identity is resolved per BASE GOOD, not per\n"
+            "### producer: 95 variants of spe_uni_c collapse onto one, and it was the third\n"
+            "### one defined in the file.\n"
+            "###\n"
+            "### Vanilla never puts more than three variants on one base good -- 40 base goods\n"
+            "### carry prestige variants, 17 with one, 14 with two, 9 with three. E&F is the\n"
+            "### only thing here that goes to four.\n"
+            "###\n"
+            "### What is kept: the prestige bonus, the +20% throughput for buildings that\n"
+            "### consume it, and the fact that only a company-owned central bank produces it.\n"
+            "### What is lost: the per-country name and icon on the belt. The currency itself\n"
+            "### is untouched -- every country still has its own monetary system law, its own\n"
+            "### production method in the bank, and its own name in E&F's currency interface.\n\n")
+    return head + body, 1
+
+
 def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
     """Nothing. E&F's own bank companies are deliberately left untouched.
 
@@ -975,7 +985,7 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
             f"\tuses_dynamic_naming = yes\n\n"
             f"{indent(names_block)}\n\n"
             f"{indent(buildings)}\n\n"
-            f"\tpossible_prestige_goods = {{\n\t\t{cur}_c\n\t}}\n\n"
+            f"\tpossible_prestige_goods = {{\n\t\t{NATIONAL_CURRENCY}\n\t}}\n\n"
             f"\tpotential = {{\n\t\tOR = {{\n"
             f"\t\t\thas_law = law_type:law_{cur}_currency\n"
             + "".join(f"\t\t\tc:{t} ?= this\n" for t in tags_of.get(cur, ()))

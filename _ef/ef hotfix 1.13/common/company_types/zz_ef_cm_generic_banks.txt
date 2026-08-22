@@ -45,7 +45,7 @@ zz_ef_cm_bank_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -119,7 +119,7 @@ zz_ef_cm_bank_dinar_algerian_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_algerian_dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -193,7 +193,7 @@ zz_ef_cm_bank_dinar_iraqi_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_iraqi_dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -267,7 +267,7 @@ zz_ef_cm_bank_dinar_libyan_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_libyan_dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -341,7 +341,7 @@ zz_ef_cm_bank_dinar_moroccan_dirham = {
 	}
 
 	possible_prestige_goods = {
-		dinar_moroccan_dirham_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -416,7 +416,7 @@ zz_ef_cm_bank_dinar_omanian_rial = {
 	}
 
 	possible_prestige_goods = {
-		dinar_omanian_rial_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -490,7 +490,7 @@ zz_ef_cm_bank_dinar_qiran = {
 	}
 
 	possible_prestige_goods = {
-		dinar_qiran_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -565,7 +565,7 @@ zz_ef_cm_bank_dinar_saudi_riyal = {
 	}
 
 	possible_prestige_goods = {
-		dinar_saudi_riyal_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -639,7 +639,7 @@ zz_ef_cm_bank_dinar_serbian_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_serbian_dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -714,7 +714,7 @@ zz_ef_cm_bank_dinar_tunisian_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_tunisian_dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -788,7 +788,7 @@ zz_ef_cm_bank_dinar_yugoslav_dinar = {
 	}
 
 	possible_prestige_goods = {
-		dinar_yugoslav_dinar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -862,7 +862,7 @@ zz_ef_cm_bank_dollar_australian_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_australian_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -938,7 +938,7 @@ zz_ef_cm_bank_dollar_canadian_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_canadian_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1015,7 +1015,7 @@ zz_ef_cm_bank_dollar_caribbean_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_caribbean_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1090,7 +1090,7 @@ zz_ef_cm_bank_dollar_confederate_states_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_confederate_states_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1165,7 +1165,7 @@ zz_ef_cm_bank_dollar_liberian_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_liberian_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1240,7 +1240,7 @@ zz_ef_cm_bank_dollar_new_zealand_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_new_zealand_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1315,7 +1315,7 @@ zz_ef_cm_bank_dollar_sierra_leonean_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_sierra_leonean_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1389,7 +1389,7 @@ zz_ef_cm_bank_dollar_united_states_dollar = {
 	}
 
 	possible_prestige_goods = {
-		dollar_united_states_dollar_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1464,7 +1464,7 @@ zz_ef_cm_bank_eco_ariary = {
 	}
 
 	possible_prestige_goods = {
-		eco_ariary_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1538,7 +1538,7 @@ zz_ef_cm_bank_eco_central_african_eco = {
 	}
 
 	possible_prestige_goods = {
-		eco_central_african_eco_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1612,7 +1612,7 @@ zz_ef_cm_bank_eco_east_african_eco = {
 	}
 
 	possible_prestige_goods = {
-		eco_east_african_eco_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1686,7 +1686,7 @@ zz_ef_cm_bank_eco_ethiopian_birr = {
 	}
 
 	possible_prestige_goods = {
-		eco_ethiopian_birr_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1760,7 +1760,7 @@ zz_ef_cm_bank_eco_ghanaian_pound = {
 	}
 
 	possible_prestige_goods = {
-		eco_ghanaian_pound_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1834,7 +1834,7 @@ zz_ef_cm_bank_eco_nigerian_naira = {
 	}
 
 	possible_prestige_goods = {
-		eco_nigerian_naira_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1908,7 +1908,7 @@ zz_ef_cm_bank_eco_south_african_rand = {
 	}
 
 	possible_prestige_goods = {
-		eco_south_african_rand_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -1983,7 +1983,7 @@ zz_ef_cm_bank_eco_tuareg_ouguiya = {
 	}
 
 	possible_prestige_goods = {
-		eco_tuareg_ouguiya_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2057,7 +2057,7 @@ zz_ef_cm_bank_eco_west_african_eco = {
 	}
 
 	possible_prestige_goods = {
-		eco_west_african_eco_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2131,7 +2131,7 @@ zz_ef_cm_bank_franc_belgian_franc = {
 	}
 
 	possible_prestige_goods = {
-		franc_belgian_franc_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2206,7 +2206,7 @@ zz_ef_cm_bank_franc_french_franc = {
 	}
 
 	possible_prestige_goods = {
-		franc_french_franc_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2281,7 +2281,7 @@ zz_ef_cm_bank_franc_luxembourgish_franc = {
 	}
 
 	possible_prestige_goods = {
-		franc_luxembourgish_franc_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2355,7 +2355,7 @@ zz_ef_cm_bank_franc_swiss_franc = {
 	}
 
 	possible_prestige_goods = {
-		franc_swiss_franc_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2430,7 +2430,7 @@ zz_ef_cm_bank_gulden = {
 	}
 
 	possible_prestige_goods = {
-		gulden_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2505,7 +2505,7 @@ zz_ef_cm_bank_gulden_bavarian_gulden = {
 	}
 
 	possible_prestige_goods = {
-		gulden_bavarian_gulden_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2580,7 +2580,7 @@ zz_ef_cm_bank_gulden_florin = {
 	}
 
 	possible_prestige_goods = {
-		gulden_florin_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2655,7 +2655,7 @@ zz_ef_cm_bank_gulden_hungarian_forint = {
 	}
 
 	possible_prestige_goods = {
-		gulden_hungarian_forint_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2730,7 +2730,7 @@ zz_ef_cm_bank_gulden_indies_guilder = {
 	}
 
 	possible_prestige_goods = {
-		gulden_indies_guilder_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2804,7 +2804,7 @@ zz_ef_cm_bank_gulden_south_german_gulden = {
 	}
 
 	possible_prestige_goods = {
-		gulden_south_german_gulden_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2878,7 +2878,7 @@ zz_ef_cm_bank_krone_czech_koruna = {
 	}
 
 	possible_prestige_goods = {
-		krone_czech_koruna_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -2952,7 +2952,7 @@ zz_ef_cm_bank_krone_danish_krone = {
 	}
 
 	possible_prestige_goods = {
-		krone_danish_krone_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3027,7 +3027,7 @@ zz_ef_cm_bank_krone_estonian_kroon = {
 	}
 
 	possible_prestige_goods = {
-		krone_estonian_kroon_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3101,7 +3101,7 @@ zz_ef_cm_bank_krone_icelandic_krona = {
 	}
 
 	possible_prestige_goods = {
-		krone_icelandic_krona_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3175,7 +3175,7 @@ zz_ef_cm_bank_krone_norwegian_krone = {
 	}
 
 	possible_prestige_goods = {
-		krone_norwegian_krone_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3250,7 +3250,7 @@ zz_ef_cm_bank_krone_slovak_koruna = {
 	}
 
 	possible_prestige_goods = {
-		krone_slovak_koruna_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3324,7 +3324,7 @@ zz_ef_cm_bank_krone_swedish_krona = {
 	}
 
 	possible_prestige_goods = {
-		krone_swedish_krona_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3399,7 +3399,7 @@ zz_ef_cm_bank_leon_leu = {
 	}
 
 	possible_prestige_goods = {
-		leon_leu_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3474,7 +3474,7 @@ zz_ef_cm_bank_leon_lev = {
 	}
 
 	possible_prestige_goods = {
-		leon_lev_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3549,7 +3549,7 @@ zz_ef_cm_bank_lira = {
 	}
 
 	possible_prestige_goods = {
-		lira_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3624,7 +3624,7 @@ zz_ef_cm_bank_lira_ducato = {
 	}
 
 	possible_prestige_goods = {
-		lira_ducato_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3699,7 +3699,7 @@ zz_ef_cm_bank_lira_ottoman_lira = {
 	}
 
 	possible_prestige_goods = {
-		lira_ottoman_lira_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3774,7 +3774,7 @@ zz_ef_cm_bank_lira_scudo_pontificio = {
 	}
 
 	possible_prestige_goods = {
-		lira_scudo_pontificio_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3849,7 +3849,7 @@ zz_ef_cm_bank_lira_scudo_sardo = {
 	}
 
 	possible_prestige_goods = {
-		lira_scudo_sardo_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3924,7 +3924,7 @@ zz_ef_cm_bank_lira_toscane_lira = {
 	}
 
 	possible_prestige_goods = {
-		lira_toscane_lira_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -3999,7 +3999,7 @@ zz_ef_cm_bank_mark = {
 	}
 
 	possible_prestige_goods = {
-		mark_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4074,7 +4074,7 @@ zz_ef_cm_bank_mark_finnish_markka = {
 	}
 
 	possible_prestige_goods = {
-		mark_finnish_markka_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4149,7 +4149,7 @@ zz_ef_cm_bank_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4223,7 +4223,7 @@ zz_ef_cm_bank_peso_argentine_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_argentine_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4298,7 +4298,7 @@ zz_ef_cm_bank_peso_bolivien_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_bolivien_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4374,7 +4374,7 @@ zz_ef_cm_bank_peso_chilean_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_chilean_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4449,7 +4449,7 @@ zz_ef_cm_bank_peso_colombian_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_colombian_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4524,7 +4524,7 @@ zz_ef_cm_bank_peso_costa_rican_colon = {
 	}
 
 	possible_prestige_goods = {
-		peso_costa_rican_colon_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4599,7 +4599,7 @@ zz_ef_cm_bank_peso_cuban_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_cuban_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4674,7 +4674,7 @@ zz_ef_cm_bank_peso_ecuadorian_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_ecuadorian_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4749,7 +4749,7 @@ zz_ef_cm_bank_peso_el_salvador_colon = {
 	}
 
 	possible_prestige_goods = {
-		peso_el_salvador_colon_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4824,7 +4824,7 @@ zz_ef_cm_bank_peso_guatemalan_quetzal = {
 	}
 
 	possible_prestige_goods = {
-		peso_guatemalan_quetzal_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4899,7 +4899,7 @@ zz_ef_cm_bank_peso_honduran_lempira = {
 	}
 
 	possible_prestige_goods = {
-		peso_honduran_lempira_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -4974,7 +4974,7 @@ zz_ef_cm_bank_peso_mexican_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_mexican_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5050,7 +5050,7 @@ zz_ef_cm_bank_peso_nicaraguan_cordoba = {
 	}
 
 	possible_prestige_goods = {
-		peso_nicaraguan_cordoba_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5125,7 +5125,7 @@ zz_ef_cm_bank_peso_paraguayan_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_paraguayan_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5200,7 +5200,7 @@ zz_ef_cm_bank_peso_philippine_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_philippine_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5275,7 +5275,7 @@ zz_ef_cm_bank_peso_sol_de_oro = {
 	}
 
 	possible_prestige_goods = {
-		peso_sol_de_oro_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5350,7 +5350,7 @@ zz_ef_cm_bank_peso_uruguayan_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_uruguayan_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5425,7 +5425,7 @@ zz_ef_cm_bank_peso_venezuelan_peso = {
 	}
 
 	possible_prestige_goods = {
-		peso_venezuelan_peso_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5500,7 +5500,7 @@ zz_ef_cm_bank_pound_egyptian_pound = {
 	}
 
 	possible_prestige_goods = {
-		pound_egyptian_pound_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5575,7 +5575,7 @@ zz_ef_cm_bank_pound_irish_pound = {
 	}
 
 	possible_prestige_goods = {
-		pound_irish_pound_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5649,7 +5649,7 @@ zz_ef_cm_bank_pound_sterling = {
 	}
 
 	possible_prestige_goods = {
-		pound_sterling_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5724,7 +5724,7 @@ zz_ef_cm_bank_real = {
 	}
 
 	possible_prestige_goods = {
-		real_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5799,7 +5799,7 @@ zz_ef_cm_bank_real_brazilian_real = {
 	}
 
 	possible_prestige_goods = {
-		real_brazilian_real_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5874,7 +5874,7 @@ zz_ef_cm_bank_rupee_indian_rupee = {
 	}
 
 	possible_prestige_goods = {
-		rupee_indian_rupee_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -5949,7 +5949,7 @@ zz_ef_cm_bank_rupee_indonesian_rupiah = {
 	}
 
 	possible_prestige_goods = {
-		rupee_indonesian_rupiah_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6024,7 +6024,7 @@ zz_ef_cm_bank_spe_baht = {
 	}
 
 	possible_prestige_goods = {
-		spe_baht_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6099,7 +6099,7 @@ zz_ef_cm_bank_spe_dong = {
 	}
 
 	possible_prestige_goods = {
-		spe_dong_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6174,7 +6174,7 @@ zz_ef_cm_bank_spe_drachma = {
 	}
 
 	possible_prestige_goods = {
-		spe_drachma_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6249,7 +6249,7 @@ zz_ef_cm_bank_spe_korean_won = {
 	}
 
 	possible_prestige_goods = {
-		spe_korean_won_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6324,7 +6324,7 @@ zz_ef_cm_bank_spe_latvian_lats = {
 	}
 
 	possible_prestige_goods = {
-		spe_latvian_lats_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6398,7 +6398,7 @@ zz_ef_cm_bank_spe_lithuanian_litas = {
 	}
 
 	possible_prestige_goods = {
-		spe_lithuanian_litas_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6472,7 +6472,7 @@ zz_ef_cm_bank_spe_peseta = {
 	}
 
 	possible_prestige_goods = {
-		spe_peseta_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6547,7 +6547,7 @@ zz_ef_cm_bank_spe_ruble = {
 	}
 
 	possible_prestige_goods = {
-		spe_ruble_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6622,7 +6622,7 @@ zz_ef_cm_bank_spe_uni = {
 	}
 
 	possible_prestige_goods = {
-		spe_uni_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6696,7 +6696,7 @@ zz_ef_cm_bank_spe_yen = {
 	}
 
 	possible_prestige_goods = {
-		spe_yen_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6771,7 +6771,7 @@ zz_ef_cm_bank_spe_yuan = {
 	}
 
 	possible_prestige_goods = {
-		spe_yuan_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6846,7 +6846,7 @@ zz_ef_cm_bank_spe_zloti = {
 	}
 
 	possible_prestige_goods = {
-		spe_zloti_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6921,7 +6921,7 @@ zz_ef_cm_bank_thaler_hannoveraner_thaler = {
 	}
 
 	possible_prestige_goods = {
-		thaler_hannoveraner_thaler_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -6996,7 +6996,7 @@ zz_ef_cm_bank_thaler_prussian_thaler = {
 	}
 
 	possible_prestige_goods = {
-		thaler_prussian_thaler_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
@@ -7072,7 +7072,7 @@ zz_ef_cm_bank_thaler_saxon_thaler = {
 	}
 
 	possible_prestige_goods = {
-		thaler_saxon_thaler_c
+		zz_ef_cm_national_currency
 	}
 
 	potential = {
