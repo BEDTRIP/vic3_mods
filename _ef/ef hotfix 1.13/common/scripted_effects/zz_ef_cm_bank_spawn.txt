@@ -8079,3 +8079,139 @@ REPLACE_OR_CREATE:central_bank_respawn_after_crisis = {
 		zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = $BANK_BLDG_TYPE$ CB_SIZE = $CB_SIZE$ }
 	}
 }
+
+REPLACE_OR_CREATE:introduction_new_currency = {
+	#objectif de cet effect doit etre de réinitialiser à 100% la currency d'un pays comme si il venais d'avoir la tech
+	#ce qui n'ai pas le cas car les pret étranger ne sont pas reset
+	#doit utiliser le activate_law = law_type:law_no_market_liquidity avant d'appler l'effet si on veut un reset
+
+	if = {
+		limit = {
+			not = {
+				any_scope_state = {
+					has_building = building_bank
+				}
+			}
+		}
+		# gdp_view_on_action = yes
+		# macro_facilities_on_action_bc = yes #pas le choix que de le codé en dure car trop d'interaction
+		capital = {
+			save_scope_as = central_bank_site
+		}
+		scope:central_bank_site = {
+			zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 5 }
+		}
+		central_bank_modifier = yes
+		central_bank_production_methods = yes
+	}
+
+	#Event for spe currency -> ef_introduction_events
+	introduction_of_dinar = yes
+	introduction_of_dinar_algerian_dinar = yes
+	introduction_of_dinar_iraqi_dinar = yes
+	introduction_of_dinar_libyan_dinar = yes
+	introduction_of_dinar_moroccan_dirham = yes
+	introduction_of_dinar_omanian_rial = yes
+	introduction_of_dinar_qiran = yes
+	introduction_of_dinar_saudi_riyal = yes
+	introduction_of_dinar_serbian_dinar = yes
+	introduction_of_dinar_tunisian_dinar = yes
+	introduction_of_dinar_yugoslav_dinar = yes
+	introduction_of_dollar_australian_dollar = yes
+	introduction_of_dollar_canadian_dollar = yes
+	introduction_of_dollar_caribbean_dollar = yes
+	introduction_of_dollar_confederate_states_dollar = yes
+	introduction_of_dollar_liberian_dollar = yes
+	introduction_of_dollar_new_zealand_dollar = yes
+	introduction_of_dollar_sierra_leonean_dollar = yes
+	introduction_of_dollar_united_states_dollar = yes
+	introduction_of_eco_ariary = yes
+	introduction_of_eco_central_african_eco = yes
+	introduction_of_eco_east_african_eco = yes
+	introduction_of_eco_ethiopian_birr = yes
+	introduction_of_eco_ghanaian_pound = yes
+	introduction_of_eco_nigerian_naira = yes
+	introduction_of_eco_south_african_rand = yes
+	introduction_of_eco_tuareg_ouguiya = yes
+	introduction_of_eco_west_african_eco = yes
+	introduction_of_franc_belgian_franc = yes
+	introduction_of_franc_french_franc = yes
+	introduction_of_franc_luxembourgish_franc = yes
+	introduction_of_franc_swiss_franc = yes
+	introduction_of_gulden = yes
+	introduction_of_gulden_bavarian_gulden = yes
+	introduction_of_gulden_florin = yes
+	introduction_of_gulden_hungarian_forint = yes
+	introduction_of_gulden_indies_guilder = yes
+	introduction_of_gulden_south_german_gulden = yes
+	introduction_of_krone_czech_koruna = yes
+	introduction_of_krone_danish_krone = yes
+	introduction_of_krone_estonian_kroon = yes
+	introduction_of_krone_icelandic_krona = yes
+	introduction_of_krone_norwegian_krone = yes
+	introduction_of_krone_slovak_koruna = yes
+	introduction_of_krone_swedish_krona = yes
+	introduction_of_leon_leu = yes
+	introduction_of_leon_lev = yes
+	introduction_of_lira = yes
+	introduction_of_lira_ducato = yes
+	introduction_of_lira_ottoman_lira = yes
+	introduction_of_lira_scudo_pontificio = yes
+	introduction_of_lira_scudo_sardo = yes
+	introduction_of_lira_toscane_lira = yes
+	introduction_of_mark = yes  #activate_law = law_type:law_gold_standard
+	introduction_of_mark_finnish_markka = yes
+	introduction_of_peso = yes
+	introduction_of_peso_argentine_peso = yes
+	introduction_of_peso_bolivien_peso = yes
+	introduction_of_peso_chilean_peso = yes
+	introduction_of_peso_colombian_peso = yes
+	introduction_of_peso_costa_rican_colon = yes
+	introduction_of_peso_cuban_peso = yes
+	introduction_of_peso_ecuadorian_peso = yes
+	introduction_of_peso_el_salvador_colon = yes
+	introduction_of_peso_guatemalan_quetzal = yes
+	introduction_of_peso_honduran_lempira = yes
+	introduction_of_peso_mexican_peso = yes
+	introduction_of_peso_nicaraguan_cordoba = yes
+	introduction_of_peso_paraguayan_peso = yes
+	introduction_of_peso_philippine_peso = yes
+	introduction_of_peso_sol_de_oro = yes
+	introduction_of_peso_uruguayan_peso = yes
+	introduction_of_peso_venezuelan_peso = yes
+	introduction_of_pound_egyptian_pound = yes
+	introduction_of_pound_irish_pound = yes
+	introduction_of_pound_sterling = yes
+	introduction_of_real = yes
+	introduction_of_real_brazilian_real = yes
+	introduction_of_rupee_indian_rupee = yes
+	introduction_of_rupee_indonesian_rupiah = yes
+	introduction_of_spe_baht = yes
+	introduction_of_spe_dong = yes
+	introduction_of_spe_drachma = yes
+	introduction_of_spe_korean_won = yes
+	introduction_of_spe_latvian_lats = yes
+	introduction_of_spe_lithuanian_litas = yes
+	introduction_of_spe_peseta = yes
+	introduction_of_spe_ruble = yes
+	introduction_of_spe_uni = yes
+	introduction_of_spe_yen = yes
+	introduction_of_spe_yuan = yes
+	introduction_of_spe_zloti = yes
+	introduction_of_thaler_hannoveraner_thaler = yes
+	introduction_of_thaler_prussian_thaler = yes
+	introduction_of_thaler_saxon_thaler = yes
+
+	if = { #super important car des pays peuvent trigger la bc ect et etre en isolationiste, ducoup tout ce set pui le fiat standart revient pour bloquer les échage - c'est parfait
+		limit = {
+			has_law = law_type:law_isolationism
+			market_owner_is_root = yes #pas de switch vers Fiat standart loi si le pays est sujet et isolationiste, ce qui veux dire que il est en currency obligatoirement ouvert si il est sujet, ce qui pose pas de probleme puisque il est dans le marché du overlord -> quand devien independent la boucle reprend ici pour appliquer le fiat standart et donc fermer le marcher
+		}
+		activate_law = law_type:law_fiat_standard
+		set_variable = {
+			name = money_value_target_1
+			value = 0.01
+		}
+		money_value_global_var = yes
+	}
+}

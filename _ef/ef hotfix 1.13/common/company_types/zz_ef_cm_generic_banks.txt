@@ -49,7 +49,9 @@ zz_ef_cm_bank_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_currency
+		}
 	}
 
 	possible = {
@@ -121,7 +123,9 @@ zz_ef_cm_bank_dinar_algerian_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_algerian_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_algerian_dinar_currency
+		}
 	}
 
 	possible = {
@@ -193,7 +197,9 @@ zz_ef_cm_bank_dinar_iraqi_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_iraqi_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_iraqi_dinar_currency
+		}
 	}
 
 	possible = {
@@ -265,7 +271,9 @@ zz_ef_cm_bank_dinar_libyan_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_libyan_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_libyan_dinar_currency
+		}
 	}
 
 	possible = {
@@ -337,7 +345,10 @@ zz_ef_cm_bank_dinar_moroccan_dirham = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_moroccan_dirham_currency
+		OR = {
+			has_law = law_type:law_dinar_moroccan_dirham_currency
+			c:MOR ?= this
+		}
 	}
 
 	possible = {
@@ -409,7 +420,9 @@ zz_ef_cm_bank_dinar_omanian_rial = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_omanian_rial_currency
+		OR = {
+			has_law = law_type:law_dinar_omanian_rial_currency
+		}
 	}
 
 	possible = {
@@ -481,7 +494,10 @@ zz_ef_cm_bank_dinar_qiran = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_qiran_currency
+		OR = {
+			has_law = law_type:law_dinar_qiran_currency
+			c:PER ?= this
+		}
 	}
 
 	possible = {
@@ -553,7 +569,9 @@ zz_ef_cm_bank_dinar_saudi_riyal = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_saudi_riyal_currency
+		OR = {
+			has_law = law_type:law_dinar_saudi_riyal_currency
+		}
 	}
 
 	possible = {
@@ -625,7 +643,10 @@ zz_ef_cm_bank_dinar_serbian_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_serbian_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_serbian_dinar_currency
+			c:SER ?= this
+		}
 	}
 
 	possible = {
@@ -697,7 +718,9 @@ zz_ef_cm_bank_dinar_tunisian_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_tunisian_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_tunisian_dinar_currency
+		}
 	}
 
 	possible = {
@@ -769,7 +792,9 @@ zz_ef_cm_bank_dinar_yugoslav_dinar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dinar_yugoslav_dinar_currency
+		OR = {
+			has_law = law_type:law_dinar_yugoslav_dinar_currency
+		}
 	}
 
 	possible = {
@@ -841,7 +866,11 @@ zz_ef_cm_bank_dollar_australian_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_australian_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_australian_dollar_currency
+			c:AST ?= this
+			c:NSW ?= this
+		}
 	}
 
 	possible = {
@@ -913,7 +942,12 @@ zz_ef_cm_bank_dollar_canadian_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_canadian_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_canadian_dollar_currency
+			c:CAN ?= this
+			c:ONT ?= this
+			c:QUE ?= this
+		}
 	}
 
 	possible = {
@@ -985,7 +1019,10 @@ zz_ef_cm_bank_dollar_caribbean_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_caribbean_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_caribbean_dollar_currency
+			c:HAI ?= this
+		}
 	}
 
 	possible = {
@@ -1057,7 +1094,10 @@ zz_ef_cm_bank_dollar_confederate_states_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_confederate_states_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_confederate_states_dollar_currency
+			c:CSA ?= this
+		}
 	}
 
 	possible = {
@@ -1129,7 +1169,10 @@ zz_ef_cm_bank_dollar_liberian_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_liberian_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_liberian_dollar_currency
+			c:LIB ?= this
+		}
 	}
 
 	possible = {
@@ -1201,7 +1244,10 @@ zz_ef_cm_bank_dollar_new_zealand_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_new_zealand_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_new_zealand_dollar_currency
+			c:NZL ?= this
+		}
 	}
 
 	possible = {
@@ -1273,7 +1319,9 @@ zz_ef_cm_bank_dollar_sierra_leonean_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_sierra_leonean_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_sierra_leonean_dollar_currency
+		}
 	}
 
 	possible = {
@@ -1345,7 +1393,10 @@ zz_ef_cm_bank_dollar_united_states_dollar = {
 	}
 
 	potential = {
-		has_law = law_type:law_dollar_united_states_dollar_currency
+		OR = {
+			has_law = law_type:law_dollar_united_states_dollar_currency
+			c:USA ?= this
+		}
 	}
 
 	possible = {
@@ -1417,7 +1468,9 @@ zz_ef_cm_bank_eco_ariary = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_ariary_currency
+		OR = {
+			has_law = law_type:law_eco_ariary_currency
+		}
 	}
 
 	possible = {
@@ -1489,7 +1542,9 @@ zz_ef_cm_bank_eco_central_african_eco = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_central_african_eco_currency
+		OR = {
+			has_law = law_type:law_eco_central_african_eco_currency
+		}
 	}
 
 	possible = {
@@ -1561,7 +1616,9 @@ zz_ef_cm_bank_eco_east_african_eco = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_east_african_eco_currency
+		OR = {
+			has_law = law_type:law_eco_east_african_eco_currency
+		}
 	}
 
 	possible = {
@@ -1633,7 +1690,9 @@ zz_ef_cm_bank_eco_ethiopian_birr = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_ethiopian_birr_currency
+		OR = {
+			has_law = law_type:law_eco_ethiopian_birr_currency
+		}
 	}
 
 	possible = {
@@ -1705,7 +1764,9 @@ zz_ef_cm_bank_eco_ghanaian_pound = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_ghanaian_pound_currency
+		OR = {
+			has_law = law_type:law_eco_ghanaian_pound_currency
+		}
 	}
 
 	possible = {
@@ -1777,7 +1838,9 @@ zz_ef_cm_bank_eco_nigerian_naira = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_nigerian_naira_currency
+		OR = {
+			has_law = law_type:law_eco_nigerian_naira_currency
+		}
 	}
 
 	possible = {
@@ -1849,7 +1912,10 @@ zz_ef_cm_bank_eco_south_african_rand = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_south_african_rand_currency
+		OR = {
+			has_law = law_type:law_eco_south_african_rand_currency
+			c:SAF ?= this
+		}
 	}
 
 	possible = {
@@ -1921,7 +1987,9 @@ zz_ef_cm_bank_eco_tuareg_ouguiya = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_tuareg_ouguiya_currency
+		OR = {
+			has_law = law_type:law_eco_tuareg_ouguiya_currency
+		}
 	}
 
 	possible = {
@@ -1993,7 +2061,9 @@ zz_ef_cm_bank_eco_west_african_eco = {
 	}
 
 	potential = {
-		has_law = law_type:law_eco_west_african_eco_currency
+		OR = {
+			has_law = law_type:law_eco_west_african_eco_currency
+		}
 	}
 
 	possible = {
@@ -2065,7 +2135,10 @@ zz_ef_cm_bank_franc_belgian_franc = {
 	}
 
 	potential = {
-		has_law = law_type:law_franc_belgian_franc_currency
+		OR = {
+			has_law = law_type:law_franc_belgian_franc_currency
+			c:BEL ?= this
+		}
 	}
 
 	possible = {
@@ -2137,7 +2210,10 @@ zz_ef_cm_bank_franc_french_franc = {
 	}
 
 	potential = {
-		has_law = law_type:law_franc_french_franc_currency
+		OR = {
+			has_law = law_type:law_franc_french_franc_currency
+			c:FRA ?= this
+		}
 	}
 
 	possible = {
@@ -2209,7 +2285,9 @@ zz_ef_cm_bank_franc_luxembourgish_franc = {
 	}
 
 	potential = {
-		has_law = law_type:law_franc_luxembourgish_franc_currency
+		OR = {
+			has_law = law_type:law_franc_luxembourgish_franc_currency
+		}
 	}
 
 	possible = {
@@ -2281,7 +2359,10 @@ zz_ef_cm_bank_franc_swiss_franc = {
 	}
 
 	potential = {
-		has_law = law_type:law_franc_swiss_franc_currency
+		OR = {
+			has_law = law_type:law_franc_swiss_franc_currency
+			c:SWI ?= this
+		}
 	}
 
 	possible = {
@@ -2353,7 +2434,10 @@ zz_ef_cm_bank_gulden = {
 	}
 
 	potential = {
-		has_law = law_type:law_gulden_currency
+		OR = {
+			has_law = law_type:law_gulden_currency
+			c:AUS ?= this
+		}
 	}
 
 	possible = {
@@ -2425,7 +2509,10 @@ zz_ef_cm_bank_gulden_bavarian_gulden = {
 	}
 
 	potential = {
-		has_law = law_type:law_gulden_bavarian_gulden_currency
+		OR = {
+			has_law = law_type:law_gulden_bavarian_gulden_currency
+			c:BAV ?= this
+		}
 	}
 
 	possible = {
@@ -2497,7 +2584,10 @@ zz_ef_cm_bank_gulden_florin = {
 	}
 
 	potential = {
-		has_law = law_type:law_gulden_florin_currency
+		OR = {
+			has_law = law_type:law_gulden_florin_currency
+			c:NET ?= this
+		}
 	}
 
 	possible = {
@@ -2569,7 +2659,10 @@ zz_ef_cm_bank_gulden_hungarian_forint = {
 	}
 
 	potential = {
-		has_law = law_type:law_gulden_hungarian_forint_currency
+		OR = {
+			has_law = law_type:law_gulden_hungarian_forint_currency
+			c:HUN ?= this
+		}
 	}
 
 	possible = {
@@ -2641,7 +2734,9 @@ zz_ef_cm_bank_gulden_indies_guilder = {
 	}
 
 	potential = {
-		has_law = law_type:law_gulden_indies_guilder_currency
+		OR = {
+			has_law = law_type:law_gulden_indies_guilder_currency
+		}
 	}
 
 	possible = {
@@ -2713,7 +2808,9 @@ zz_ef_cm_bank_gulden_south_german_gulden = {
 	}
 
 	potential = {
-		has_law = law_type:law_gulden_south_german_gulden_currency
+		OR = {
+			has_law = law_type:law_gulden_south_german_gulden_currency
+		}
 	}
 
 	possible = {
@@ -2785,7 +2882,9 @@ zz_ef_cm_bank_krone_czech_koruna = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_czech_koruna_currency
+		OR = {
+			has_law = law_type:law_krone_czech_koruna_currency
+		}
 	}
 
 	possible = {
@@ -2857,7 +2956,10 @@ zz_ef_cm_bank_krone_danish_krone = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_danish_krone_currency
+		OR = {
+			has_law = law_type:law_krone_danish_krone_currency
+			c:DEN ?= this
+		}
 	}
 
 	possible = {
@@ -2929,7 +3031,9 @@ zz_ef_cm_bank_krone_estonian_kroon = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_estonian_kroon_currency
+		OR = {
+			has_law = law_type:law_krone_estonian_kroon_currency
+		}
 	}
 
 	possible = {
@@ -3001,7 +3105,9 @@ zz_ef_cm_bank_krone_icelandic_krona = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_icelandic_krona_currency
+		OR = {
+			has_law = law_type:law_krone_icelandic_krona_currency
+		}
 	}
 
 	possible = {
@@ -3073,7 +3179,10 @@ zz_ef_cm_bank_krone_norwegian_krone = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_norwegian_krone_currency
+		OR = {
+			has_law = law_type:law_krone_norwegian_krone_currency
+			c:NOR ?= this
+		}
 	}
 
 	possible = {
@@ -3145,7 +3254,9 @@ zz_ef_cm_bank_krone_slovak_koruna = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_slovak_koruna_currency
+		OR = {
+			has_law = law_type:law_krone_slovak_koruna_currency
+		}
 	}
 
 	possible = {
@@ -3217,7 +3328,10 @@ zz_ef_cm_bank_krone_swedish_krona = {
 	}
 
 	potential = {
-		has_law = law_type:law_krone_swedish_krona_currency
+		OR = {
+			has_law = law_type:law_krone_swedish_krona_currency
+			c:SWE ?= this
+		}
 	}
 
 	possible = {
@@ -3289,7 +3403,10 @@ zz_ef_cm_bank_leon_leu = {
 	}
 
 	potential = {
-		has_law = law_type:law_leon_leu_currency
+		OR = {
+			has_law = law_type:law_leon_leu_currency
+			c:ROM ?= this
+		}
 	}
 
 	possible = {
@@ -3361,7 +3478,10 @@ zz_ef_cm_bank_leon_lev = {
 	}
 
 	potential = {
-		has_law = law_type:law_leon_lev_currency
+		OR = {
+			has_law = law_type:law_leon_lev_currency
+			c:BUL ?= this
+		}
 	}
 
 	possible = {
@@ -3433,7 +3553,10 @@ zz_ef_cm_bank_lira = {
 	}
 
 	potential = {
-		has_law = law_type:law_lira_currency
+		OR = {
+			has_law = law_type:law_lira_currency
+			c:ITA ?= this
+		}
 	}
 
 	possible = {
@@ -3505,7 +3628,10 @@ zz_ef_cm_bank_lira_ducato = {
 	}
 
 	potential = {
-		has_law = law_type:law_lira_ducato_currency
+		OR = {
+			has_law = law_type:law_lira_ducato_currency
+			c:SIC ?= this
+		}
 	}
 
 	possible = {
@@ -3577,7 +3703,10 @@ zz_ef_cm_bank_lira_ottoman_lira = {
 	}
 
 	potential = {
-		has_law = law_type:law_lira_ottoman_lira_currency
+		OR = {
+			has_law = law_type:law_lira_ottoman_lira_currency
+			c:TUR ?= this
+		}
 	}
 
 	possible = {
@@ -3649,7 +3778,10 @@ zz_ef_cm_bank_lira_scudo_pontificio = {
 	}
 
 	potential = {
-		has_law = law_type:law_lira_scudo_pontificio_currency
+		OR = {
+			has_law = law_type:law_lira_scudo_pontificio_currency
+			c:PAP ?= this
+		}
 	}
 
 	possible = {
@@ -3721,7 +3853,10 @@ zz_ef_cm_bank_lira_scudo_sardo = {
 	}
 
 	potential = {
-		has_law = law_type:law_lira_scudo_sardo_currency
+		OR = {
+			has_law = law_type:law_lira_scudo_sardo_currency
+			c:SAR ?= this
+		}
 	}
 
 	possible = {
@@ -3793,7 +3928,10 @@ zz_ef_cm_bank_lira_toscane_lira = {
 	}
 
 	potential = {
-		has_law = law_type:law_lira_toscane_lira_currency
+		OR = {
+			has_law = law_type:law_lira_toscane_lira_currency
+			c:TUS ?= this
+		}
 	}
 
 	possible = {
@@ -3865,7 +4003,10 @@ zz_ef_cm_bank_mark = {
 	}
 
 	potential = {
-		has_law = law_type:law_mark_currency
+		OR = {
+			has_law = law_type:law_mark_currency
+			c:GER ?= this
+		}
 	}
 
 	possible = {
@@ -3937,7 +4078,10 @@ zz_ef_cm_bank_mark_finnish_markka = {
 	}
 
 	potential = {
-		has_law = law_type:law_mark_finnish_markka_currency
+		OR = {
+			has_law = law_type:law_mark_finnish_markka_currency
+			c:FIN ?= this
+		}
 	}
 
 	possible = {
@@ -4009,7 +4153,9 @@ zz_ef_cm_bank_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_currency
+		OR = {
+			has_law = law_type:law_peso_currency
+		}
 	}
 
 	possible = {
@@ -4081,7 +4227,10 @@ zz_ef_cm_bank_peso_argentine_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_argentine_peso_currency
+		OR = {
+			has_law = law_type:law_peso_argentine_peso_currency
+			c:ARG ?= this
+		}
 	}
 
 	possible = {
@@ -4153,7 +4302,11 @@ zz_ef_cm_bank_peso_bolivien_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_bolivien_peso_currency
+		OR = {
+			has_law = law_type:law_peso_bolivien_peso_currency
+			c:BOL ?= this
+			c:PBC ?= this
+		}
 	}
 
 	possible = {
@@ -4225,7 +4378,10 @@ zz_ef_cm_bank_peso_chilean_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_chilean_peso_currency
+		OR = {
+			has_law = law_type:law_peso_chilean_peso_currency
+			c:CHL ?= this
+		}
 	}
 
 	possible = {
@@ -4297,7 +4453,10 @@ zz_ef_cm_bank_peso_colombian_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_colombian_peso_currency
+		OR = {
+			has_law = law_type:law_peso_colombian_peso_currency
+			c:CLM ?= this
+		}
 	}
 
 	possible = {
@@ -4369,7 +4528,10 @@ zz_ef_cm_bank_peso_costa_rican_colon = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_costa_rican_colon_currency
+		OR = {
+			has_law = law_type:law_peso_costa_rican_colon_currency
+			c:COS ?= this
+		}
 	}
 
 	possible = {
@@ -4441,7 +4603,10 @@ zz_ef_cm_bank_peso_cuban_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_cuban_peso_currency
+		OR = {
+			has_law = law_type:law_peso_cuban_peso_currency
+			c:CUB ?= this
+		}
 	}
 
 	possible = {
@@ -4513,7 +4678,10 @@ zz_ef_cm_bank_peso_ecuadorian_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_ecuadorian_peso_currency
+		OR = {
+			has_law = law_type:law_peso_ecuadorian_peso_currency
+			c:ECU ?= this
+		}
 	}
 
 	possible = {
@@ -4585,7 +4753,10 @@ zz_ef_cm_bank_peso_el_salvador_colon = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_el_salvador_colon_currency
+		OR = {
+			has_law = law_type:law_peso_el_salvador_colon_currency
+			c:ELS ?= this
+		}
 	}
 
 	possible = {
@@ -4657,7 +4828,10 @@ zz_ef_cm_bank_peso_guatemalan_quetzal = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_guatemalan_quetzal_currency
+		OR = {
+			has_law = law_type:law_peso_guatemalan_quetzal_currency
+			c:GUA ?= this
+		}
 	}
 
 	possible = {
@@ -4729,7 +4903,10 @@ zz_ef_cm_bank_peso_honduran_lempira = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_honduran_lempira_currency
+		OR = {
+			has_law = law_type:law_peso_honduran_lempira_currency
+			c:HON ?= this
+		}
 	}
 
 	possible = {
@@ -4801,7 +4978,11 @@ zz_ef_cm_bank_peso_mexican_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_mexican_peso_currency
+		OR = {
+			has_law = law_type:law_peso_mexican_peso_currency
+			c:MEX ?= this
+			c:Y44 ?= this
+		}
 	}
 
 	possible = {
@@ -4873,7 +5054,10 @@ zz_ef_cm_bank_peso_nicaraguan_cordoba = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_nicaraguan_cordoba_currency
+		OR = {
+			has_law = law_type:law_peso_nicaraguan_cordoba_currency
+			c:NIC ?= this
+		}
 	}
 
 	possible = {
@@ -4945,7 +5129,10 @@ zz_ef_cm_bank_peso_paraguayan_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_paraguayan_peso_currency
+		OR = {
+			has_law = law_type:law_peso_paraguayan_peso_currency
+			c:PRG ?= this
+		}
 	}
 
 	possible = {
@@ -5017,7 +5204,10 @@ zz_ef_cm_bank_peso_philippine_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_philippine_peso_currency
+		OR = {
+			has_law = law_type:law_peso_philippine_peso_currency
+			c:PHI ?= this
+		}
 	}
 
 	possible = {
@@ -5089,7 +5279,10 @@ zz_ef_cm_bank_peso_sol_de_oro = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_sol_de_oro_currency
+		OR = {
+			has_law = law_type:law_peso_sol_de_oro_currency
+			c:PEU ?= this
+		}
 	}
 
 	possible = {
@@ -5161,7 +5354,10 @@ zz_ef_cm_bank_peso_uruguayan_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_uruguayan_peso_currency
+		OR = {
+			has_law = law_type:law_peso_uruguayan_peso_currency
+			c:URU ?= this
+		}
 	}
 
 	possible = {
@@ -5233,7 +5429,10 @@ zz_ef_cm_bank_peso_venezuelan_peso = {
 	}
 
 	potential = {
-		has_law = law_type:law_peso_venezuelan_peso_currency
+		OR = {
+			has_law = law_type:law_peso_venezuelan_peso_currency
+			c:VNZ ?= this
+		}
 	}
 
 	possible = {
@@ -5305,7 +5504,10 @@ zz_ef_cm_bank_pound_egyptian_pound = {
 	}
 
 	potential = {
-		has_law = law_type:law_pound_egyptian_pound_currency
+		OR = {
+			has_law = law_type:law_pound_egyptian_pound_currency
+			c:EGY ?= this
+		}
 	}
 
 	possible = {
@@ -5377,7 +5579,9 @@ zz_ef_cm_bank_pound_irish_pound = {
 	}
 
 	potential = {
-		has_law = law_type:law_pound_irish_pound_currency
+		OR = {
+			has_law = law_type:law_pound_irish_pound_currency
+		}
 	}
 
 	possible = {
@@ -5449,7 +5653,10 @@ zz_ef_cm_bank_pound_sterling = {
 	}
 
 	potential = {
-		has_law = law_type:law_pound_sterling_currency
+		OR = {
+			has_law = law_type:law_pound_sterling_currency
+			c:GBR ?= this
+		}
 	}
 
 	possible = {
@@ -5521,7 +5728,10 @@ zz_ef_cm_bank_real = {
 	}
 
 	potential = {
-		has_law = law_type:law_real_currency
+		OR = {
+			has_law = law_type:law_real_currency
+			c:POR ?= this
+		}
 	}
 
 	possible = {
@@ -5593,7 +5803,10 @@ zz_ef_cm_bank_real_brazilian_real = {
 	}
 
 	potential = {
-		has_law = law_type:law_real_brazilian_real_currency
+		OR = {
+			has_law = law_type:law_real_brazilian_real_currency
+			c:BRZ ?= this
+		}
 	}
 
 	possible = {
@@ -5665,7 +5878,10 @@ zz_ef_cm_bank_rupee_indian_rupee = {
 	}
 
 	potential = {
-		has_law = law_type:law_rupee_indian_rupee_currency
+		OR = {
+			has_law = law_type:law_rupee_indian_rupee_currency
+			c:BIC ?= this
+		}
 	}
 
 	possible = {
@@ -5737,7 +5953,10 @@ zz_ef_cm_bank_rupee_indonesian_rupiah = {
 	}
 
 	potential = {
-		has_law = law_type:law_rupee_indonesian_rupiah_currency
+		OR = {
+			has_law = law_type:law_rupee_indonesian_rupiah_currency
+			c:DEI ?= this
+		}
 	}
 
 	possible = {
@@ -5809,7 +6028,10 @@ zz_ef_cm_bank_spe_baht = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_baht_currency
+		OR = {
+			has_law = law_type:law_spe_baht_currency
+			c:SIA ?= this
+		}
 	}
 
 	possible = {
@@ -5881,7 +6103,10 @@ zz_ef_cm_bank_spe_dong = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_dong_currency
+		OR = {
+			has_law = law_type:law_spe_dong_currency
+			c:DAI ?= this
+		}
 	}
 
 	possible = {
@@ -5953,7 +6178,10 @@ zz_ef_cm_bank_spe_drachma = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_drachma_currency
+		OR = {
+			has_law = law_type:law_spe_drachma_currency
+			c:GRE ?= this
+		}
 	}
 
 	possible = {
@@ -6025,7 +6253,10 @@ zz_ef_cm_bank_spe_korean_won = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_korean_won_currency
+		OR = {
+			has_law = law_type:law_spe_korean_won_currency
+			c:KOR ?= this
+		}
 	}
 
 	possible = {
@@ -6097,7 +6328,9 @@ zz_ef_cm_bank_spe_latvian_lats = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_latvian_lats_currency
+		OR = {
+			has_law = law_type:law_spe_latvian_lats_currency
+		}
 	}
 
 	possible = {
@@ -6169,7 +6402,9 @@ zz_ef_cm_bank_spe_lithuanian_litas = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_lithuanian_litas_currency
+		OR = {
+			has_law = law_type:law_spe_lithuanian_litas_currency
+		}
 	}
 
 	possible = {
@@ -6241,7 +6476,10 @@ zz_ef_cm_bank_spe_peseta = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_peseta_currency
+		OR = {
+			has_law = law_type:law_spe_peseta_currency
+			c:SPA ?= this
+		}
 	}
 
 	possible = {
@@ -6313,7 +6551,10 @@ zz_ef_cm_bank_spe_ruble = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_ruble_currency
+		OR = {
+			has_law = law_type:law_spe_ruble_currency
+			c:RUS ?= this
+		}
 	}
 
 	possible = {
@@ -6385,7 +6626,9 @@ zz_ef_cm_bank_spe_uni = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_uni_currency
+		OR = {
+			has_law = law_type:law_spe_uni_currency
+		}
 	}
 
 	possible = {
@@ -6457,7 +6700,10 @@ zz_ef_cm_bank_spe_yen = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_yen_currency
+		OR = {
+			has_law = law_type:law_spe_yen_currency
+			c:JAP ?= this
+		}
 	}
 
 	possible = {
@@ -6529,7 +6775,10 @@ zz_ef_cm_bank_spe_yuan = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_yuan_currency
+		OR = {
+			has_law = law_type:law_spe_yuan_currency
+			c:CHI ?= this
+		}
 	}
 
 	possible = {
@@ -6601,7 +6850,10 @@ zz_ef_cm_bank_spe_zloti = {
 	}
 
 	potential = {
-		has_law = law_type:law_spe_zloti_currency
+		OR = {
+			has_law = law_type:law_spe_zloti_currency
+			c:POL ?= this
+		}
 	}
 
 	possible = {
@@ -6673,7 +6925,10 @@ zz_ef_cm_bank_thaler_hannoveraner_thaler = {
 	}
 
 	potential = {
-		has_law = law_type:law_thaler_hannoveraner_thaler_currency
+		OR = {
+			has_law = law_type:law_thaler_hannoveraner_thaler_currency
+			c:HAN ?= this
+		}
 	}
 
 	possible = {
@@ -6745,7 +7000,11 @@ zz_ef_cm_bank_thaler_prussian_thaler = {
 	}
 
 	potential = {
-		has_law = law_type:law_thaler_prussian_thaler_currency
+		OR = {
+			has_law = law_type:law_thaler_prussian_thaler_currency
+			c:NGF ?= this
+			c:PRU ?= this
+		}
 	}
 
 	possible = {
@@ -6817,7 +7076,10 @@ zz_ef_cm_bank_thaler_saxon_thaler = {
 	}
 
 	potential = {
-		has_law = law_type:law_thaler_saxon_thaler_currency
+		OR = {
+			has_law = law_type:law_thaler_saxon_thaler_currency
+			c:SAX ?= this
+		}
 	}
 
 	possible = {

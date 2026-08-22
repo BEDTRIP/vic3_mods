@@ -748,137 +748,6 @@ CURRENCY_LAW_FILE = "common/history/global/99_ef_history_global_variable.txt"
 GENERIC_BANK = "zz_ef_cm_bank_"
 
 
-def currency_by_tag(ef: Path) -> dict[str, str]:
-    """tag -> the currency E&F starts that country on.
-
-    E&F's global history is one long tree of `if = { limit = { c:XXX ?= this } ...
-    activate_law = law_type:law_<cur>_currency }`, 154 assignments over 73 tags.
-    Read structurally, not by proximity: the tags come from the *direct* `limit`
-    child of the enclosing if-block, so an activate_law nested three blocks deep
-    inside a great-power branch is not misfiled to whoever was mentioned last.
-    """
-    src = strip_comments(read(ef / CURRENCY_LAW_FILE))
-    law_re = re.compile(r"activate_law\s*=\s*law_type:(law_(\w+)_currency)\b")
-    key_re = re.compile(r"(\w+)\s*=\s*\{")
-    out: dict[str, str] = {}
-
-    def walk(start: int, end: int, tags: list[str]) -> None:
-        i = start
-        while i < end:
-            m = key_re.match(src, i)
-            if m:
-                open_at = src.index("{", m.start())
-                close_at = block_span(src, open_at)
-                key = m.group(1)
-                if key == "limit":                       # already consumed by the parent
-                    i = close_at + 1
-                    continue
-                sub = tags
-                if key in ("if", "else_if", "else"):
-                    lm = re.compile(r"\s*limit\s*=\s*\{").match(src, open_at + 1)
-                    if lm:
-                        lb = src.index("{", lm.start())
-                        found = list(dict.fromkeys(TAG_IS_THIS.findall(src[lb: block_span(src, lb)])))
-                        if found:
-                            sub = found
-                walk(open_at + 1, close_at, sub)
-                i = close_at + 1
-                continue
-            m2 = law_re.match(src, i)
-            if m2:
-                for t in tags:
-                    out.setdefault(t, m2.group(2))
-                i = m2.end()
-                continue
-            i += 1
-
-    walk(0, len(src), [])
-    return out
-
-
-def company_currency(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]]:
-    """bank company -> the one currency it produces, and what could not be resolved.
-
-    Two E&F sources chained: establish_bank_and_ef_compagnie says which tag each
-    flavoured bank company is granted to, and the global history says which
-    currency that tag starts on.
-    """
-    notes: list[str] = []
-    by_tag = currency_by_tag(ef)
-    banks = {k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))
-             if k.startswith("company_") and k not in BANK_COMPANY_SKIP}
-    tags = establish_mapping(ef, banks)
-    live = set(names)
-    out: dict[str, str] = {}
-    for comp, tag_list in tags.items():
-        for tag in tag_list:
-            cur = by_tag.get(tag)
-            if cur and cur in live:
-                out[comp] = cur
-                break
-        else:
-            notes.append(f"no currency for {comp} (tags {tag_list or 'none'}) -- no prestige good")
-    return out, notes
-
-
-def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
-    """Wire building_bank and ONE currency into each of E&F's bank companies.
-
-    ONE, not ninety-five, and that is the whole point of this pass.
-    `possible` on a prestige good is not a per-country trigger -- vanilla only ever
-    puts `has_dlc_feature` in it -- so gating 95 currencies on
-    `has_law = law_type:law_<cur>_currency` did nothing useful: the engine picked
-    one candidate off the pile and every central bank in the world minted the Iraqi
-    dinar, while the company panel showed whichever currency belonged to the
-    country you happened to be playing.
-
-    A company with a single currency has nothing to pick from. E&F's own prestige
-    goods (manufacture_stock_gbr and friends) are left alone -- they sit on a
-    different base good and never compete with the currency.
-    """
-    src = read(ef / "common/company_types/00_ef_companies.txt")
-    companies = [k for k, _, _ in iter_top_blocks(src)
-                 if k.startswith("company_") and k not in BANK_COMPANY_SKIP]
-    cur_of, notes = company_currency(ef, names)
-    out = []
-    for c in companies:
-        goods = ""
-        if c in cur_of:
-            goods = (f"\n\tpossible_prestige_goods = {{\n"
-                     f"\t\t{cur_of[c]}_c\n"
-                     f"\t}}\n")
-        out.append(f"INJECT:{c} = {{\n"
-                   f"\tbuilding_types = {{\n"
-                   f"\t\tbuilding_bank\n"
-                   f"\t}}\n"
-                   f"{goods}"
-                   f"}}\n\n")
-    head = (BANNER +
-            f"### Source: E&F's own common/company_types/00_ef_companies.txt -- all {len(companies)}\n"
-            "### of its bank companies -- crossed with the tag each one is granted to in\n"
-            "### establish_bank_and_ef_compagnie and the currency that tag starts on in\n"
-            f"### {CURRENCY_LAW_FILE}.\n"
-            "###\n"
-            "### INJECT: so nothing E&F wrote is overridden -- its building list, its\n"
-            "### prosperity modifier and its own prestige goods stay exactly as they are.\n"
-            "###\n"
-            "### building_bank: E&F keeps `#building_bank` commented out in every one of them.\n"
-            "### It could not have worked before -- the building was no_ownership and its group\n"
-            "### government funded, so no company could hold it. zz_ef_cm_bank.txt fixes that.\n"
-            "###\n"
-            "### ONE currency per company. `possible` on a prestige good is not a per-country\n"
-            "### trigger: vanilla only ever writes has_dlc_feature in it. Offering all 95 and\n"
-            "### gating them on the currency law therefore gated nothing -- the engine took one\n"
-            "### off the pile and every central bank on earth minted the Iraqi dinar, while the\n"
-            "### company panel showed whichever currency belonged to the country being played.\n"
-            "### A company with a single candidate has nothing to pick from.\n"
-            "###\n"
-            f"### {len(cur_of)} of {len(companies)} companies resolve to a currency this way. The rest, and\n"
-            "### every country without a flavoured bank company, are served by the generated\n"
-            "### per-currency companies in zz_ef_cm_generic_banks.txt.\n\n")
-    return head + "".join(out), len(companies), notes
-
-
 def gen_bank(ef: Path, private: bool) -> tuple[str, str | None]:
     """building_bank, ownable. Optionally bg_bank, no longer government funded."""
     b = next((read(ef / "common/buildings/ef_15_bank.txt")[a:c]
@@ -950,6 +819,107 @@ def gen_bank(ef: Path, private: bool) -> tuple[str, str | None]:
     return bank, group
 
 
+def currency_by_tag(ef: Path) -> dict[str, str]:
+    """tag -> the currency E&F starts that country on.
+
+    E&F's global history is one long tree of `if = { limit = { c:XXX ?= this } ...
+    activate_law = law_type:law_<cur>_currency }`, 154 assignments over 73 tags.
+    Read structurally, not by proximity: the tags come from the *direct* `limit`
+    child of the enclosing if-block, so an activate_law nested three blocks deep
+    inside a great-power branch is not misfiled to whoever was mentioned last.
+    """
+    src = strip_comments(read(ef / CURRENCY_LAW_FILE))
+    law_re = re.compile(r"activate_law\s*=\s*law_type:(law_(\w+)_currency)\b")
+    key_re = re.compile(r"(\w+)\s*=\s*\{")
+    out: dict[str, str] = {}
+
+    def walk(start: int, end: int, tags: list[str]) -> None:
+        i = start
+        while i < end:
+            m = key_re.match(src, i)
+            if m:
+                open_at = src.index("{", m.start())
+                close_at = block_span(src, open_at)
+                key = m.group(1)
+                if key == "limit":                       # already consumed by the parent
+                    i = close_at + 1
+                    continue
+                sub = tags
+                if key in ("if", "else_if", "else"):
+                    lm = re.compile(r"\s*limit\s*=\s*\{").match(src, open_at + 1)
+                    if lm:
+                        lb = src.index("{", lm.start())
+                        found = list(dict.fromkeys(TAG_IS_THIS.findall(src[lb: block_span(src, lb)])))
+                        if found:
+                            sub = found
+                walk(open_at + 1, close_at, sub)
+                i = close_at + 1
+                continue
+            m2 = law_re.match(src, i)
+            if m2:
+                for t in tags:
+                    out.setdefault(t, m2.group(2))
+                i = m2.end()
+                continue
+            i += 1
+
+    walk(0, len(src), [])
+    return out
+
+
+def currency_tags(ef: Path) -> dict[str, list[str]]:
+    """currency -> the tags E&F starts on it. The inverse of currency_by_tag."""
+    out: dict[str, list[str]] = {}
+    for tag, cur in currency_by_tag(ef).items():
+        out.setdefault(cur, []).append(tag)
+    for cur in out:
+        out[cur].sort()
+    return out
+
+
+def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
+    """Nothing. E&F's own bank companies are deliberately left untouched.
+
+    They used to get `building_bank` in their building_types and a currency in
+    their prestige goods. Both were mistakes:
+
+      * building_bank in their list is what let a company that is NOT the central
+        bank company buy the central bank. In the Papal States, Banca d'Italia
+        privatised 4 levels straight out from under the company holding the
+        monopoly -- a monopoly is a price and construction rule, not a lock, but
+        `building_types` IS a lock, and it was open.
+      * one currency each, derived from the tag E&F grants the company to, is only
+        right while the company sits in that country. It does not: the Papal States
+        hold Banca d'Italia, which E&F's own script only ever grants to ITA.
+
+    So only the generated per-currency companies in zz_ef_cm_generic_banks.txt can
+    own a central bank, and only they carry a currency. One mechanism, no overlap.
+    """
+    return (BANNER +
+            "### One line, and it is deliberate.\n"
+            "###\n"
+            "### E&F's own bank companies are left exactly as E&F wrote them. They must NOT\n"
+            "### have building_bank in their building_types: a company can only own building\n"
+            "### types on its own list, and that list is the only real lock on who ends up\n"
+            "### holding the central bank. While they had it, Banca d'Italia privatised 4\n"
+            "### levels of the Papal central bank away from the company that held the\n"
+            "### monopoly -- a monopoly is a price and construction rule, not a lock.\n"
+            "###\n"
+            "### The central bank belongs to the generated per-currency companies and to\n"
+            "### nobody else. See zz_ef_cm_generic_banks.txt.\n"
+            "###\n"
+            "### company_BasicBank is the exception: it is the fallback owner for a country\n"
+            "### that has neither a currency law nor an entry in E&F's tag list, and a company\n"
+            "### cannot be given a building type that is not on its list -- create_building\n"
+            "### with add_ownership fails PostValidate at load and the bank never appears. It\n"
+            "### carries no currency, so it competes with nothing.\n\n"
+            "INJECT:company_BasicBank = {\n"
+            "\tbuilding_types = {\n"
+            "\t\tbuilding_bank\n"
+            "\t}\n"
+            "}\n", 1, [])
+
+
 def gen_generic_banks(ef: Path, names: list[str]) -> str:
     """One bank company per currency, for every country without a flavoured one.
 
@@ -969,6 +939,7 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
     """
     src = read(ef / "common/company_types/00_ef_companies.txt")
     basic = next(src[a:b] for k, a, b in iter_top_blocks(src) if k == "company_BasicBank")
+    tags_of = currency_tags(ef)
 
     def field(name: str, default: str) -> str:
         m = re.search(r"^\s*" + name + r"\s*=\s*(\S+)", basic, re.M)
@@ -999,7 +970,10 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
             f"{indent(names_block)}\n\n"
             f"{indent(buildings)}\n\n"
             f"\tpossible_prestige_goods = {{\n\t\t{cur}_c\n\t}}\n\n"
-            f"\tpotential = {{\n\t\thas_law = law_type:law_{cur}_currency\n\t}}\n\n"
+            f"\tpotential = {{\n\t\tOR = {{\n"
+            f"\t\t\thas_law = law_type:law_{cur}_currency\n"
+            + "".join(f"\t\t\tc:{t} ?= this\n" for t in tags_of.get(cur, ()))
+            + f"\t\t}}\n\t}}\n\n"
             f"{indent(possible)}\n\n"
             f"{indent(prosperity)}\n\n"
             f"\tai_will_do = {{\n\t\talways = yes\n\t}}\n\n"
@@ -1057,12 +1031,26 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
     order = bank_company_priority(ef, names)
     any_of = "\n".join(f"\t\t\tis_company_type = company_type:{c}" for c in order)
 
+    # By law first -- that is the truth once the game is running. By tag second,
+    # because at history time it is the ONLY thing available: E&F activates the
+    # currency laws in common/history/global, and history/buildings runs BEFORE
+    # that (E&F's own global history reads var:central_bank_location, which the
+    # buildings history sets). So when the central banks are built, not one country
+    # has a currency law yet -- every has_law test is false and every law-gated
+    # company is invisible. That is why Finland's bank came out state-owned.
+    tags_of = currency_tags(ef)
+    parts = []
+    for cur in names:
+        parts.append((f"has_law = law_type:law_{cur}_currency", cur))
+    for cur in names:
+        for t in tags_of.get(cur, ()):
+            parts.append((f"c:{t} ?= this", cur))
     grant = "".join(
         f"\t{'if' if i == 0 else 'else_if'} = {{\n"
-        f"\t\tlimit = {{ has_law = law_type:law_{cur}_currency }}\n"
+        f"\t\tlimit = {{ {test} }}\n"
         f"\t\tadd_company = company_type:{GENERIC_BANK}{cur}\n"
         f"\t}}\n"
-        for i, cur in enumerate(names))
+        for i, (test, cur) in enumerate(parts))
 
     triggers = (BANNER +
                 "### Source: the bank companies in E&F's own 00_ef_companies.txt plus the\n"
@@ -1263,11 +1251,15 @@ BANK_SPAWN_EFFECTS = [
     "initialize_historic_macro_facilities_bc",
     "macro_facilities_bc",
     "central_bank_respawn_after_crisis",
+    # This one spells the building out instead of taking it as a parameter, and it
+    # is the path a country takes when it adopts a currency mid-game. Missed on the
+    # first pass, which left one way for a central bank to appear state-owned.
+    "introduction_new_currency",
 ]
 
 CREATE_BANK_RE = re.compile(
     r"create_building\s*=\s*\{\s*"
-    r"building\s*=\s*\$BANK_BLDG_TYPE\$\s*"
+    r"building\s*=\s*(\$BANK_BLDG_TYPE\$|building_bank)\s*"
     r"level\s*=\s*(\S+)\s*"
     r"reserves\s*=\s*1\s*\}")
 
@@ -1518,8 +1510,8 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
     for name in BANK_SPAWN_EFFECTS:
         body = effect_body(src, name)
         body, n = CREATE_BANK_RE.subn(
-            lambda m: ("zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = $BANK_BLDG_TYPE$ "
-                       "CB_SIZE = %s }" % m.group(1)), body)
+            lambda m: ("zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = %s CB_SIZE = %s }"
+                       % (m.group(1), m.group(2))), body)
         if n == 0:
             notes.append(f"WARNING {name}: no create_building rewritten -- E&F changed its shape")
         total += n
@@ -1550,31 +1542,14 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
 
 
 def bank_company_priority(ef: Path, names: list[str]) -> list[str]:
-    """Every E&F bank company, most-central-bank-like first, generic one last.
+    """Who may own a central bank, best first.
 
-    CENTRAL_BANK_COMPANY decides only the order, not the eligibility: a country
-    gets whichever bank company it actually holds. The table exists because a
-    country can hold several -- Britain holds six -- and founding date picks the
-    wrong one (Barclays 1690 over the Bank of England 1694).
+    Only the generated per-currency companies, then the generic fallback. E&F's
+    own flavoured bank companies are deliberately absent: they do not carry
+    building_bank in their building_types any more, so the engine will not let
+    them hold one, which is the only reliable lock there is.
     """
-    banks = [k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))
-             if k.startswith("company_") and k not in BANK_COMPANY_SKIP]
-    table = {t: ([c] if isinstance(c, str) else list(c))
-             for t, c in CENTRAL_BANK_COMPANY.items()}
-    out: list[str] = []
-    for tag in sorted(table):
-        for comp in table[tag]:
-            if comp not in out:
-                out.append(comp)
-    for comp in banks:
-        if comp != "company_BasicBank" and comp not in out:
-            out.append(comp)
-    # The generated per-currency companies come after E&F's flavoured ones: a
-    # country holding both should give the bank to the Bank of England, not to the
-    # generic stand-in it was handed before the Bank of England existed.
-    out.extend(GENERIC_BANK + cur for cur in names)
-    out.append("company_BasicBank")
-    return out
+    return [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"]
 
 
 def gen_monopoly(ef: Path, names: list[str]) -> str:
