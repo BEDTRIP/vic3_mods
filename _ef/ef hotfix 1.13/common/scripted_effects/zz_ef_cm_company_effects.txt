@@ -895,9 +895,426 @@ zz_ef_cm_bank_company_upkeep = {
 		remove_modifier = zz_ef_cm_central_bank_charter
 	}
 
+	### The historical bank has turned up while a stand-in holds the central
+	### bank. Ownership cannot be moved, so ask zz_ef_cm_create_owned_bank to
+	### build the thing again -- it picks the historical bank first.
+	if = {
+		limit = {
+			zz_ef_cm_has_central_bank = yes
+			zz_ef_cm_holds_own_historical_bank = yes
+			zz_ef_cm_holds_stand_in_bank = yes
+			NOT = { has_variable = zz_ef_cm_bank_rebuild }
+		}
+		set_variable = zz_ef_cm_bank_rebuild
+	}
+
+	### ...and once it has, the stand-in owns nothing and has no reason to exist.
+	### Retired only after the rebuild cleared the variable, so the country is
+	### never left with a central bank and nobody holding it.
+	if = {
+		limit = {
+			zz_ef_cm_holds_own_historical_bank = yes
+			zz_ef_cm_holds_stand_in_bank = yes
+			NOT = { has_variable = zz_ef_cm_bank_rebuild }
+		}
+		zz_ef_cm_retire_stand_in_bank = yes
+	}
+
 	### And the monopoly on central banks goes to whoever holds it.
 	if = {
 		limit = { zz_ef_cm_has_central_bank = yes }
 		zz_ef_cm_bank_monopoly = yes
+	}
+}
+
+### Drop the generated stand-in once the country's own historical bank has
+### taken the central bank over. Every one of them, not the first match: a
+### country that changed currency law along the way can be holding more than
+### one.
+
+zz_ef_cm_retire_stand_in_bank = {
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_algerian_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar_algerian_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_iraqi_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar_iraqi_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_libyan_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar_libyan_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_moroccan_dirham }
+		remove_company = company_type:zz_ef_cm_bank_dinar_moroccan_dirham
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_omanian_rial }
+		remove_company = company_type:zz_ef_cm_bank_dinar_omanian_rial
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_qiran }
+		remove_company = company_type:zz_ef_cm_bank_dinar_qiran
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_saudi_riyal }
+		remove_company = company_type:zz_ef_cm_bank_dinar_saudi_riyal
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_serbian_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar_serbian_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_tunisian_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar_tunisian_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dinar_yugoslav_dinar }
+		remove_company = company_type:zz_ef_cm_bank_dinar_yugoslav_dinar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_australian_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_australian_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_canadian_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_canadian_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_caribbean_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_caribbean_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_confederate_states_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_confederate_states_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_liberian_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_liberian_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_new_zealand_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_new_zealand_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_sierra_leonean_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_sierra_leonean_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_dollar_united_states_dollar }
+		remove_company = company_type:zz_ef_cm_bank_dollar_united_states_dollar
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_ariary }
+		remove_company = company_type:zz_ef_cm_bank_eco_ariary
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_central_african_eco }
+		remove_company = company_type:zz_ef_cm_bank_eco_central_african_eco
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_east_african_eco }
+		remove_company = company_type:zz_ef_cm_bank_eco_east_african_eco
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_ethiopian_birr }
+		remove_company = company_type:zz_ef_cm_bank_eco_ethiopian_birr
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_ghanaian_pound }
+		remove_company = company_type:zz_ef_cm_bank_eco_ghanaian_pound
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_nigerian_naira }
+		remove_company = company_type:zz_ef_cm_bank_eco_nigerian_naira
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_south_african_rand }
+		remove_company = company_type:zz_ef_cm_bank_eco_south_african_rand
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_tuareg_ouguiya }
+		remove_company = company_type:zz_ef_cm_bank_eco_tuareg_ouguiya
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_eco_west_african_eco }
+		remove_company = company_type:zz_ef_cm_bank_eco_west_african_eco
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_franc_belgian_franc }
+		remove_company = company_type:zz_ef_cm_bank_franc_belgian_franc
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_franc_french_franc }
+		remove_company = company_type:zz_ef_cm_bank_franc_french_franc
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_franc_luxembourgish_franc }
+		remove_company = company_type:zz_ef_cm_bank_franc_luxembourgish_franc
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_franc_swiss_franc }
+		remove_company = company_type:zz_ef_cm_bank_franc_swiss_franc
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_gulden }
+		remove_company = company_type:zz_ef_cm_bank_gulden
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_gulden_bavarian_gulden }
+		remove_company = company_type:zz_ef_cm_bank_gulden_bavarian_gulden
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_gulden_florin }
+		remove_company = company_type:zz_ef_cm_bank_gulden_florin
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_gulden_hungarian_forint }
+		remove_company = company_type:zz_ef_cm_bank_gulden_hungarian_forint
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_gulden_indies_guilder }
+		remove_company = company_type:zz_ef_cm_bank_gulden_indies_guilder
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_gulden_south_german_gulden }
+		remove_company = company_type:zz_ef_cm_bank_gulden_south_german_gulden
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_czech_koruna }
+		remove_company = company_type:zz_ef_cm_bank_krone_czech_koruna
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_danish_krone }
+		remove_company = company_type:zz_ef_cm_bank_krone_danish_krone
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_estonian_kroon }
+		remove_company = company_type:zz_ef_cm_bank_krone_estonian_kroon
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_icelandic_krona }
+		remove_company = company_type:zz_ef_cm_bank_krone_icelandic_krona
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_norwegian_krone }
+		remove_company = company_type:zz_ef_cm_bank_krone_norwegian_krone
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_slovak_koruna }
+		remove_company = company_type:zz_ef_cm_bank_krone_slovak_koruna
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_krone_swedish_krona }
+		remove_company = company_type:zz_ef_cm_bank_krone_swedish_krona
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_leon_leu }
+		remove_company = company_type:zz_ef_cm_bank_leon_leu
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_leon_lev }
+		remove_company = company_type:zz_ef_cm_bank_leon_lev
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_lira }
+		remove_company = company_type:zz_ef_cm_bank_lira
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_lira_ducato }
+		remove_company = company_type:zz_ef_cm_bank_lira_ducato
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_lira_ottoman_lira }
+		remove_company = company_type:zz_ef_cm_bank_lira_ottoman_lira
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_lira_scudo_pontificio }
+		remove_company = company_type:zz_ef_cm_bank_lira_scudo_pontificio
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_lira_scudo_sardo }
+		remove_company = company_type:zz_ef_cm_bank_lira_scudo_sardo
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_lira_toscane_lira }
+		remove_company = company_type:zz_ef_cm_bank_lira_toscane_lira
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_mark }
+		remove_company = company_type:zz_ef_cm_bank_mark
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_mark_finnish_markka }
+		remove_company = company_type:zz_ef_cm_bank_mark_finnish_markka
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_argentine_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_argentine_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_bolivien_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_bolivien_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_chilean_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_chilean_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_colombian_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_colombian_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_costa_rican_colon }
+		remove_company = company_type:zz_ef_cm_bank_peso_costa_rican_colon
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_cuban_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_cuban_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_ecuadorian_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_ecuadorian_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_el_salvador_colon }
+		remove_company = company_type:zz_ef_cm_bank_peso_el_salvador_colon
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_guatemalan_quetzal }
+		remove_company = company_type:zz_ef_cm_bank_peso_guatemalan_quetzal
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_honduran_lempira }
+		remove_company = company_type:zz_ef_cm_bank_peso_honduran_lempira
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_mexican_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_mexican_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_nicaraguan_cordoba }
+		remove_company = company_type:zz_ef_cm_bank_peso_nicaraguan_cordoba
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_paraguayan_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_paraguayan_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_philippine_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_philippine_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_sol_de_oro }
+		remove_company = company_type:zz_ef_cm_bank_peso_sol_de_oro
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_uruguayan_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_uruguayan_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_peso_venezuelan_peso }
+		remove_company = company_type:zz_ef_cm_bank_peso_venezuelan_peso
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_pound_egyptian_pound }
+		remove_company = company_type:zz_ef_cm_bank_pound_egyptian_pound
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_pound_irish_pound }
+		remove_company = company_type:zz_ef_cm_bank_pound_irish_pound
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_pound_sterling }
+		remove_company = company_type:zz_ef_cm_bank_pound_sterling
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_real }
+		remove_company = company_type:zz_ef_cm_bank_real
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_real_brazilian_real }
+		remove_company = company_type:zz_ef_cm_bank_real_brazilian_real
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_rupee_indian_rupee }
+		remove_company = company_type:zz_ef_cm_bank_rupee_indian_rupee
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_rupee_indonesian_rupiah }
+		remove_company = company_type:zz_ef_cm_bank_rupee_indonesian_rupiah
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_baht }
+		remove_company = company_type:zz_ef_cm_bank_spe_baht
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_dong }
+		remove_company = company_type:zz_ef_cm_bank_spe_dong
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_drachma }
+		remove_company = company_type:zz_ef_cm_bank_spe_drachma
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_korean_won }
+		remove_company = company_type:zz_ef_cm_bank_spe_korean_won
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_latvian_lats }
+		remove_company = company_type:zz_ef_cm_bank_spe_latvian_lats
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_lithuanian_litas }
+		remove_company = company_type:zz_ef_cm_bank_spe_lithuanian_litas
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_peseta }
+		remove_company = company_type:zz_ef_cm_bank_spe_peseta
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_ruble }
+		remove_company = company_type:zz_ef_cm_bank_spe_ruble
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_uni }
+		remove_company = company_type:zz_ef_cm_bank_spe_uni
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_yen }
+		remove_company = company_type:zz_ef_cm_bank_spe_yen
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_yuan }
+		remove_company = company_type:zz_ef_cm_bank_spe_yuan
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_spe_zloti }
+		remove_company = company_type:zz_ef_cm_bank_spe_zloti
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_thaler_hannoveraner_thaler }
+		remove_company = company_type:zz_ef_cm_bank_thaler_hannoveraner_thaler
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_thaler_prussian_thaler }
+		remove_company = company_type:zz_ef_cm_bank_thaler_prussian_thaler
+	}
+	if = {
+		limit = { has_company = company_type:zz_ef_cm_bank_thaler_saxon_thaler }
+		remove_company = company_type:zz_ef_cm_bank_thaler_saxon_thaler
+	}
+	if = {
+		limit = { has_company = company_type:company_BasicBank }
+		remove_company = company_type:company_BasicBank
 	}
 }

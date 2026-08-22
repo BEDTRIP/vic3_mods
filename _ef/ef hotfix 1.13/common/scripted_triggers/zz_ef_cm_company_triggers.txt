@@ -159,6 +159,290 @@ zz_ef_cm_has_bank_company = {
 	}
 }
 
+### Does this country hold the bank that WAS its central bank? Tag-gated: the
+### Papal States hold Banca d'Italia, and the bank of Italy is not theirs.
+zz_ef_cm_holds_own_historical_bank = {
+	OR = {
+		if = {
+			limit = { c:ARG ?= this }
+			has_company = company_type:company_BancoNacionArgentina
+		}
+		else_if = {
+			limit = { c:AUS ?= this }
+			has_company = company_type:company_OesterreichischeNationalbank
+		}
+		else_if = {
+			limit = { c:BAV ?= this }
+			has_company = company_type:company_BayerischeHypothekenUndWechselBank
+		}
+		else_if = {
+			limit = { c:BEL ?= this }
+			has_company = company_type:company_BanqueNationaleDeBelgique
+		}
+		else_if = {
+			limit = { c:BIC ?= this }
+			has_company = company_type:company_ImperialBankofIndia
+		}
+		else_if = {
+			limit = { c:BOL ?= this }
+			has_company = company_type:company_BancoNacionalDeBolivia
+		}
+		else_if = {
+			limit = { c:BRZ ?= this }
+			has_company = company_type:company_BancoDoBrasil
+		}
+		else_if = {
+			limit = { c:CAN ?= this }
+			has_company = company_type:company_CanadianImperialBankOfCommerce
+		}
+		else_if = {
+			limit = { c:CHI ?= this }
+			has_company = company_type:company_DaQingBank
+		}
+		else_if = {
+			limit = { c:CHL ?= this }
+			has_company = company_type:company_BancoEstado
+		}
+		else_if = {
+			limit = { c:CLM ?= this }
+			has_company = company_type:company_BancoRepublicaColombia
+		}
+		else_if = {
+			limit = { c:COS ?= this }
+			has_company = company_type:company_BancoCentralDeCostaRica
+		}
+		else_if = {
+			limit = { c:CUB ?= this }
+			has_company = company_type:company_BancoEspanolDeLaHabana
+		}
+		else_if = {
+			limit = { c:DEN ?= this }
+			has_company = company_type:company_LandmandsBanken
+		}
+		else_if = {
+			limit = { c:EGY ?= this }
+			has_company = company_type:company_BanqueEgyptienne
+		}
+		else_if = {
+			limit = { c:FRA ?= this }
+			has_company = company_type:company_BanqueDeFrance
+		}
+		else_if = {
+			limit = { c:GBR ?= this }
+			has_company = company_type:company_BankofEngland
+		}
+		else_if = {
+			limit = { c:GER ?= this }
+			has_company = company_type:company_Reichsbank
+		}
+		else_if = {
+			limit = { c:GRE ?= this }
+			has_company = company_type:company_bankofgreec
+		}
+		else_if = {
+			limit = { c:GUA ?= this }
+			has_company = company_type:company_BancoCentralDeGuatemala
+		}
+		else_if = {
+			limit = { c:HON ?= this }
+			has_company = company_type:company_BancoCentralDeHonduras
+		}
+		else_if = {
+			limit = { c:ITA ?= this }
+			has_company = company_type:company_BancaDItalia
+		}
+		else_if = {
+			limit = { c:JAP ?= this }
+			has_company = company_type:company_BankOfJapan
+		}
+		else_if = {
+			limit = { c:MEX ?= this }
+			has_company = company_type:company_BancoDeMexico
+		}
+		else_if = {
+			limit = { c:NET ?= this }
+			has_company = company_type:company_DeNederlandscheBank
+		}
+		else_if = {
+			limit = { c:NGF ?= this }
+			has_company = company_type:company_PreussischeSeehandlung
+		}
+		else_if = {
+			limit = { c:NOR ?= this }
+			has_company = company_type:company_ChristianiaBank
+		}
+		else_if = {
+			limit = { c:NSW ?= this }
+			has_company = company_type:company_ColonialBankOfAustralia
+		}
+		else_if = {
+			limit = { c:ONT ?= this }
+			has_company = company_type:company_RoyalBankofCanada
+		}
+		else_if = {
+			limit = { c:PAN ?= this }
+			has_company = company_type:company_BancoNacionalDePanama
+		}
+		else_if = {
+			limit = { c:PER ?= this }
+			has_company = company_type:company_BankMelliIran
+		}
+		else_if = {
+			limit = { c:POR ?= this }
+			has_company = company_type:company_BancoDePortugal
+		}
+		else_if = {
+			limit = { c:PRG ?= this }
+			has_company = company_type:company_BancoNacionalDelParaguay
+		}
+		else_if = {
+			limit = { c:QUE ?= this }
+			has_company = company_type:company_BankOfMontreal
+		}
+		else_if = {
+			limit = { c:RUS ?= this }
+			has_company = company_type:company_StateBankRussianEmpire
+		}
+		else_if = {
+			limit = { c:SAF ?= this }
+			has_company = company_type:company_BankSBoBSA
+		}
+		else_if = {
+			limit = { c:SAR ?= this }
+			has_company = company_type:company_CassaDiRisparmioDiTorino
+		}
+		else_if = {
+			limit = { c:SPA ?= this }
+			has_company = company_type:company_BankofSpain
+		}
+		else_if = {
+			limit = { c:SWE ?= this }
+			has_company = company_type:company_HandelsBanken
+		}
+		else_if = {
+			limit = { c:SWI ?= this }
+			has_company = company_type:company_Bankenverein
+		}
+		else_if = {
+			limit = { c:TUR ?= this }
+			has_company = company_type:company_OttomanBank
+		}
+		else_if = {
+			limit = { c:URU ?= this }
+			has_company = company_type:company_BancoCentralDelUruguay
+		}
+		else_if = {
+			limit = { c:VNZ ?= this }
+			has_company = company_type:company_BancoCentralDeVenezuela
+		}
+	}
+}
+
+### ...and a generated stand-in, which it should not still be holding once the
+### real one has arrived.
+zz_ef_cm_holds_stand_in_bank = {
+	any_company = {
+		OR = {
+			is_company_type = company_type:zz_ef_cm_bank_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dinar_algerian_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dinar_iraqi_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dinar_libyan_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dinar_moroccan_dirham
+			is_company_type = company_type:zz_ef_cm_bank_dinar_omanian_rial
+			is_company_type = company_type:zz_ef_cm_bank_dinar_qiran
+			is_company_type = company_type:zz_ef_cm_bank_dinar_saudi_riyal
+			is_company_type = company_type:zz_ef_cm_bank_dinar_serbian_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dinar_tunisian_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dinar_yugoslav_dinar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_australian_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_canadian_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_caribbean_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_confederate_states_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_liberian_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_new_zealand_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_sierra_leonean_dollar
+			is_company_type = company_type:zz_ef_cm_bank_dollar_united_states_dollar
+			is_company_type = company_type:zz_ef_cm_bank_eco_ariary
+			is_company_type = company_type:zz_ef_cm_bank_eco_central_african_eco
+			is_company_type = company_type:zz_ef_cm_bank_eco_east_african_eco
+			is_company_type = company_type:zz_ef_cm_bank_eco_ethiopian_birr
+			is_company_type = company_type:zz_ef_cm_bank_eco_ghanaian_pound
+			is_company_type = company_type:zz_ef_cm_bank_eco_nigerian_naira
+			is_company_type = company_type:zz_ef_cm_bank_eco_south_african_rand
+			is_company_type = company_type:zz_ef_cm_bank_eco_tuareg_ouguiya
+			is_company_type = company_type:zz_ef_cm_bank_eco_west_african_eco
+			is_company_type = company_type:zz_ef_cm_bank_franc_belgian_franc
+			is_company_type = company_type:zz_ef_cm_bank_franc_french_franc
+			is_company_type = company_type:zz_ef_cm_bank_franc_luxembourgish_franc
+			is_company_type = company_type:zz_ef_cm_bank_franc_swiss_franc
+			is_company_type = company_type:zz_ef_cm_bank_gulden
+			is_company_type = company_type:zz_ef_cm_bank_gulden_bavarian_gulden
+			is_company_type = company_type:zz_ef_cm_bank_gulden_florin
+			is_company_type = company_type:zz_ef_cm_bank_gulden_hungarian_forint
+			is_company_type = company_type:zz_ef_cm_bank_gulden_indies_guilder
+			is_company_type = company_type:zz_ef_cm_bank_gulden_south_german_gulden
+			is_company_type = company_type:zz_ef_cm_bank_krone_czech_koruna
+			is_company_type = company_type:zz_ef_cm_bank_krone_danish_krone
+			is_company_type = company_type:zz_ef_cm_bank_krone_estonian_kroon
+			is_company_type = company_type:zz_ef_cm_bank_krone_icelandic_krona
+			is_company_type = company_type:zz_ef_cm_bank_krone_norwegian_krone
+			is_company_type = company_type:zz_ef_cm_bank_krone_slovak_koruna
+			is_company_type = company_type:zz_ef_cm_bank_krone_swedish_krona
+			is_company_type = company_type:zz_ef_cm_bank_leon_leu
+			is_company_type = company_type:zz_ef_cm_bank_leon_lev
+			is_company_type = company_type:zz_ef_cm_bank_lira
+			is_company_type = company_type:zz_ef_cm_bank_lira_ducato
+			is_company_type = company_type:zz_ef_cm_bank_lira_ottoman_lira
+			is_company_type = company_type:zz_ef_cm_bank_lira_scudo_pontificio
+			is_company_type = company_type:zz_ef_cm_bank_lira_scudo_sardo
+			is_company_type = company_type:zz_ef_cm_bank_lira_toscane_lira
+			is_company_type = company_type:zz_ef_cm_bank_mark
+			is_company_type = company_type:zz_ef_cm_bank_mark_finnish_markka
+			is_company_type = company_type:zz_ef_cm_bank_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_argentine_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_bolivien_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_chilean_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_colombian_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_costa_rican_colon
+			is_company_type = company_type:zz_ef_cm_bank_peso_cuban_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_ecuadorian_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_el_salvador_colon
+			is_company_type = company_type:zz_ef_cm_bank_peso_guatemalan_quetzal
+			is_company_type = company_type:zz_ef_cm_bank_peso_honduran_lempira
+			is_company_type = company_type:zz_ef_cm_bank_peso_mexican_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_nicaraguan_cordoba
+			is_company_type = company_type:zz_ef_cm_bank_peso_paraguayan_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_philippine_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_sol_de_oro
+			is_company_type = company_type:zz_ef_cm_bank_peso_uruguayan_peso
+			is_company_type = company_type:zz_ef_cm_bank_peso_venezuelan_peso
+			is_company_type = company_type:zz_ef_cm_bank_pound_egyptian_pound
+			is_company_type = company_type:zz_ef_cm_bank_pound_irish_pound
+			is_company_type = company_type:zz_ef_cm_bank_pound_sterling
+			is_company_type = company_type:zz_ef_cm_bank_real
+			is_company_type = company_type:zz_ef_cm_bank_real_brazilian_real
+			is_company_type = company_type:zz_ef_cm_bank_rupee_indian_rupee
+			is_company_type = company_type:zz_ef_cm_bank_rupee_indonesian_rupiah
+			is_company_type = company_type:zz_ef_cm_bank_spe_baht
+			is_company_type = company_type:zz_ef_cm_bank_spe_dong
+			is_company_type = company_type:zz_ef_cm_bank_spe_drachma
+			is_company_type = company_type:zz_ef_cm_bank_spe_korean_won
+			is_company_type = company_type:zz_ef_cm_bank_spe_latvian_lats
+			is_company_type = company_type:zz_ef_cm_bank_spe_lithuanian_litas
+			is_company_type = company_type:zz_ef_cm_bank_spe_peseta
+			is_company_type = company_type:zz_ef_cm_bank_spe_ruble
+			is_company_type = company_type:zz_ef_cm_bank_spe_uni
+			is_company_type = company_type:zz_ef_cm_bank_spe_yen
+			is_company_type = company_type:zz_ef_cm_bank_spe_yuan
+			is_company_type = company_type:zz_ef_cm_bank_spe_zloti
+			is_company_type = company_type:zz_ef_cm_bank_thaler_hannoveraner_thaler
+			is_company_type = company_type:zz_ef_cm_bank_thaler_prussian_thaler
+			is_company_type = company_type:zz_ef_cm_bank_thaler_saxon_thaler
+			is_company_type = company_type:company_BasicBank
+		}
+	}
+}
+
 ### The central bank is a state building placed by E&F, not something anyone
 ### builds, so ownership of it is the only honest test for "has a central bank".
 zz_ef_cm_has_central_bank = {

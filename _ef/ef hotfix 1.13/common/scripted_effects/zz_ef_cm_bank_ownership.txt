@@ -49,11 +49,22 @@ zz_ef_cm_create_owned_bank = {
 	### Already at least this big -- nothing to do. E&F calls its spawners on a
 	### pulse and lets create_building expand the bank as gdp_view rises, so this
 	### effect runs over and over on a bank that is already the right size.
+	###
+	### zz_ef_cm_bank_rebuild is how the swap gets asked for. Ownership cannot be
+	### moved -- add_ownership exists only inside create_building -- so when a
+	### country's historical bank finally shows up years after its central bank
+	### was built, the only way to hand it over is to build the thing again. The
+	### monthly pass sets the variable; this is what makes it stop skipping.
 	if = {
 		limit = {
 			any_scope_building = {
 				is_building_type = $BANK_BLDG_TYPE$
 				level >= $CB_SIZE$
+			}
+			NOT = {
+				scope:zz_ef_cm_bank_owner = {
+					has_variable = zz_ef_cm_bank_rebuild
+				}
 			}
 		}
 	}
@@ -4481,6 +4492,7 @@ zz_ef_cm_create_owned_bank = {
 		### choosing them -- the same call its spawners make after building a bank.
 		owner = {
 			central_bank_production_methods = yes
+			remove_variable = zz_ef_cm_bank_rebuild
 		}
 	}
 }

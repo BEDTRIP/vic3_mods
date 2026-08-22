@@ -1276,6 +1276,19 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
     order = [c for c, _ in bank_company_priority(ef, names)]
     any_of = "\n".join(f"\t\t\tis_company_type = company_type:{c}" for c in order)
 
+    hist, _ = historical_central_banks(ef)
+    table = {t: ([c] if isinstance(c, str) else list(c))
+             for t, c in CENTRAL_BANK_COMPANY.items()}
+    own_hist = "".join(
+        f"\t\t{'if' if i == 0 else 'else_if'} = {{\n"
+        f"\t\t\tlimit = {{ c:{tag} ?= this }}\n"
+        f"\t\t\thas_company = company_type:{table[tag][0]}\n"
+        f"\t\t}}\n"
+        for i, tag in enumerate(sorted(table)))
+    stand_in = "\n".join(
+        f"\t\t\tis_company_type = company_type:{c}"
+        for c in [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"])
+
     # By law first -- that is the truth once the game is running. By tag second,
     # because at history time it is the ONLY thing available: E&F activates the
     # currency laws in common/history/global, and history/buildings runs BEFORE
@@ -1317,6 +1330,15 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                 "zz_ef_cm_has_bank_company = {\n"
                 "\tany_company = {\n"
                 "\t\tOR = {\n" + any_of + "\n\t\t}\n\t}\n}\n\n"
+                "### Does this country hold the bank that WAS its central bank? Tag-gated: the\n"
+                "### Papal States hold Banca d'Italia, and the bank of Italy is not theirs.\n"
+                "zz_ef_cm_holds_own_historical_bank = {\n"
+                "\tOR = {\n" + own_hist + "\t}\n}\n\n"
+                "### ...and a generated stand-in, which it should not still be holding once the\n"
+                "### real one has arrived.\n"
+                "zz_ef_cm_holds_stand_in_bank = {\n"
+                "\tany_company = {\n"
+                "\t\tOR = {\n" + stand_in + "\n\t\t}\n\t}\n}\n\n"
                 "### The central bank is a state building placed by E&F, not something anyone\n"
                 "### builds, so ownership of it is the only honest test for \"has a central bank\".\n"
                 "zz_ef_cm_has_central_bank = {\n"
@@ -1374,12 +1396,47 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                "\t\t}\n"
                "\t\tremove_modifier = zz_ef_cm_central_bank_charter\n"
                "\t}\n\n"
+               "\t### The historical bank has turned up while a stand-in holds the central\n"
+               "\t### bank. Ownership cannot be moved, so ask zz_ef_cm_create_owned_bank to\n"
+               "\t### build the thing again -- it picks the historical bank first.\n"
+               "\tif = {\n"
+               "\t\tlimit = {\n"
+               "\t\t\tzz_ef_cm_has_central_bank = yes\n"
+               "\t\t\tzz_ef_cm_holds_own_historical_bank = yes\n"
+               "\t\t\tzz_ef_cm_holds_stand_in_bank = yes\n"
+               "\t\t\tNOT = { has_variable = zz_ef_cm_bank_rebuild }\n"
+               "\t\t}\n"
+               "\t\tset_variable = zz_ef_cm_bank_rebuild\n"
+               "\t}\n\n"
+               "\t### ...and once it has, the stand-in owns nothing and has no reason to exist.\n"
+               "\t### Retired only after the rebuild cleared the variable, so the country is\n"
+               "\t### never left with a central bank and nobody holding it.\n"
+               "\tif = {\n"
+               "\t\tlimit = {\n"
+               "\t\t\tzz_ef_cm_holds_own_historical_bank = yes\n"
+               "\t\t\tzz_ef_cm_holds_stand_in_bank = yes\n"
+               "\t\t\tNOT = { has_variable = zz_ef_cm_bank_rebuild }\n"
+               "\t\t}\n"
+               "\t\tzz_ef_cm_retire_stand_in_bank = yes\n"
+               "\t}\n\n"
                "\t### And the monopoly on central banks goes to whoever holds it.\n"
                "\tif = {\n"
                "\t\tlimit = { zz_ef_cm_has_central_bank = yes }\n"
                "\t\tzz_ef_cm_bank_monopoly = yes\n"
                "\t}\n"
                "}\n")
+
+    retire = "".join(
+        f"\tif = {{\n"
+        f"\t\tlimit = {{ has_company = company_type:{c} }}\n"
+        f"\t\tremove_company = company_type:{c}\n"
+        f"\t}}\n"
+        for c in [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"])
+    effects += ("\n### Drop the generated stand-in once the country's own historical bank has\n"
+                "### taken the central bank over. Every one of them, not the first match: a\n"
+                "### country that changed currency law along the way can be holding more than\n"
+                "### one.\n\n"
+                "zz_ef_cm_retire_stand_in_bank = {\n" + retire + "}\n")
 
     on_actions = (BANNER +
                   "### on_actions are additive across mods -- E&F, T&R and the Morgenroete\n"
@@ -1748,11 +1805,22 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 "\t### Already at least this big -- nothing to do. E&F calls its spawners on a\n"
                 "\t### pulse and lets create_building expand the bank as gdp_view rises, so this\n"
                 "\t### effect runs over and over on a bank that is already the right size.\n"
+                "\t###\n"
+                "\t### zz_ef_cm_bank_rebuild is how the swap gets asked for. Ownership cannot be\n"
+                "\t### moved -- add_ownership exists only inside create_building -- so when a\n"
+                "\t### country's historical bank finally shows up years after its central bank\n"
+                "\t### was built, the only way to hand it over is to build the thing again. The\n"
+                "\t### monthly pass sets the variable; this is what makes it stop skipping.\n"
                 "\tif = {\n"
                 "\t\tlimit = {\n"
                 "\t\t\tany_scope_building = {\n"
                 "\t\t\t\tis_building_type = $BANK_BLDG_TYPE$\n"
                 "\t\t\t\tlevel >= $CB_SIZE$\n"
+                "\t\t\t}\n"
+                "\t\t\tNOT = {\n"
+                "\t\t\t\tscope:zz_ef_cm_bank_owner = {\n"
+                "\t\t\t\t\thas_variable = zz_ef_cm_bank_rebuild\n"
+                "\t\t\t\t}\n"
                 "\t\t\t}\n"
                 "\t\t}\n"
                 "\t}\n"
@@ -1801,6 +1869,7 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 "\t\t### choosing them -- the same call its spawners make after building a bank.\n"
                 "\t\towner = {\n"
                 "\t\t\tcentral_bank_production_methods = yes\n"
+                "\t\t\tremove_variable = zz_ef_cm_bank_rebuild\n"
                 "\t\t}\n"
                 "\t}\n"
                 "}\n")
