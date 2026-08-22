@@ -705,36 +705,37 @@ def gen_triggers(ef: Path, dead: set[str], keep: str) -> str:
 
 
 def gen_loc(keep: str) -> dict[str, str]:
-    """The shared good, and the three regime currencies.
+    """The shared good and the three regime currencies, in every language.
+
+    English text everywhere, Russian in Russian. Every language gets a file even
+    though most of them get the same words: a key with no entry for the player's
+    language renders as the raw key on screen -- `zz_ef_cm_pegged_currency` -- not
+    as the English name. E&F itself ships all eleven, so leaving one out is the
+    one that breaks.
 
     The shared good is named after local_currency, which was merged into it, and
     wears its icon. That is what it is: the plain money every country makes,
-    whether or not it has a monetary system. A central bank turns it into one of
-    the three standard-backed prestige variants -- and a country without a monetary
-    system has no central bank, so it never gets past this.
+    whether or not it has a monetary system. A central bank raises it to one of the
+    three standard-backed variants -- and a country without a monetary system has
+    no central bank, so it never gets past this.
     """
-    return {
-        "english": ("l_english:\n\n"
-                    " # The shared currency good -- local_currency was merged into it and this\n"
-                    " # is its name and icon. Plain money; a central bank raises it to one of\n"
-                    " # the three standard-backed variants below.\n"
-                    f' {keep}:0 "Local Currency"\n'
-                    "\n"
-                    " # The three regime currencies a company-owned central bank mints.\n"
-                    ' zz_ef_cm_metallic_currency:0 "Metallic Standard"\n'
-                    ' zz_ef_cm_exchange_currency:0 "Exchange Money"\n'
-                    ' zz_ef_cm_fiat_currency:0 "Fiat Money"\n'),
-        "russian": ("l_russian:\n\n"
-                    " # Общий товар-валюта — в него слит local_currency, отсюда имя и иконка.\n"
+    head = {
+        "english": (" # The shared currency good -- local_currency was merged into it, and this is\n"
+                    " # its name and icon. Plain money; a central bank raises it to one of the\n"
+                    " # three standard-backed variants below, picked by the monetary system law.\n"),
+        "russian": (" # Общий товар-валюта — в него слит local_currency, отсюда имя и иконка.\n"
                     " # Просто деньги; центробанк поднимает их до одного из трёх обеспеченных\n"
-                    " # вариантов ниже.\n"
-                    f' {keep}:0 "Местная валюта"\n'
-                    "\n"
-                    " # Три режимные валюты, которые чеканит центробанк во владении компании.\n"
-                    ' zz_ef_cm_metallic_currency:0 "Металлический стандарт"\n'
-                    ' zz_ef_cm_exchange_currency:0 "Обменные деньги"\n'
-                    ' zz_ef_cm_fiat_currency:0 "Фиатные деньги"\n'),
+                    " # вариантов ниже, а какого именно — решает закон денежной системы.\n"),
     }
+    out = {}
+    for lang in LANGUAGES:
+        names = NAMES_RU if lang == "russian" else NAMES_EN
+        note = head.get(lang, head["english"])
+        body = f' {keep}:0 "{names[keep]}"\n\n'
+        for key, _, _ in PRESTIGE_REGIMES:
+            body += f' {key}:0 "{names[key]}"\n'
+        out[lang] = f"l_{lang}:\n\n" + note + "\n" + body
+    return out
 
 
 # --- prestige currencies ----------------------------------------------------
@@ -905,16 +906,35 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 # law_no_monetary_system is deliberately absent: a country without a monetary
 # system has no central bank, so nothing mints anything.
 PRESTIGE_REGIMES = [
-    ("zz_ef_cm_metallic_currency",
+    ("zz_ef_cm_representative_currency",
      ["law_gold_standard", "law_silver_standard", "law_bimetallism_standard"],
-     "gfx/interface/icons/goods_icons/gold.dds"),
-    ("zz_ef_cm_exchange_currency",
+     "gfx/interface/icons/goods_icons/currencies/zz_ef_cm_representative_currency.dds"),
+    ("zz_ef_cm_pegged_currency",
      ["law_gold_exchange_standard", "law_external_exchange_standard"],
-     "gfx/interface/icons/goods_icons/paper_gold.dds"),
+     "gfx/interface/icons/goods_icons/currencies/zz_ef_cm_pegged_currency.dds"),
     ("zz_ef_cm_fiat_currency",
      ["law_fiat_standard"],
-     "gfx/interface/icons/goods_icons/paper.dds"),
+     "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"),
 ]
+
+# Every language the game ships. English text in all of them, Russian in Russian --
+# a missing key falls back to the raw key on screen, not to English, so a language
+# left out would show `zz_ef_cm_pegged_currency` to that player.
+LANGUAGES = ["braz_por", "english", "french", "german", "japanese", "korean",
+             "polish", "russian", "simp_chinese", "spanish", "turkish"]
+
+NAMES_EN = {
+    "spe_uni_c": "Local Currency",
+    "zz_ef_cm_representative_currency": "Representative Currency",
+    "zz_ef_cm_pegged_currency": "Pegged Currency",
+    "zz_ef_cm_fiat_currency": "Fiat Currency",
+}
+NAMES_RU = {
+    "spe_uni_c": "Местная валюта",
+    "zz_ef_cm_representative_currency": "Обеспеченная валюта",
+    "zz_ef_cm_pegged_currency": "Привязанная валюта",
+    "zz_ef_cm_fiat_currency": "Фиатная валюта",
+}
 
 
 def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
@@ -923,9 +943,10 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
     Ninety-five, one per currency, is not possible: see the note on
     PRESTIGE_REGIMES. Three is, and the three regimes are what fits in three.
 
-    Icons are picked for meaning, not decoration: gold coin for the metallic
-    standards, banknote for fiat, and E&F's own paper_gold -- paper backed by gold
-    -- for the two exchange standards.
+    Icons: two drawn for this mod, in E&F's own idiom -- period coins for the
+    representative standards, a sovereign exchanging into colonial notes for the
+    pegged ones -- and E&F's spe_uni banknote for fiat, which came free when the
+    shared good took local_currency's icon instead.
     """
     out = []
     for key, laws, icon in PRESTIGE_REGIMES:
@@ -1881,7 +1902,9 @@ def main() -> int:
     for rel, text in gen_upkeep(ef, names).items():
         emit(mod / rel, text, args.check, acc)
 
-    for lang, text in gen_loc(args.keep).items():
+    loc = gen_loc(args.keep)
+    print(f"     localisation: {len(loc)} languages")
+    for lang, text in loc.items():
         emit(mod / f"localization/{lang}/zz_ef_cm_goods_l_{lang}.yml", text, args.check, acc)
 
     if not args.check:

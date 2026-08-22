@@ -25,7 +25,7 @@
 ### law_no_monetary_system has no entry on purpose: no monetary system means no
 ### central bank, so there is nothing to mint.
 
-zz_ef_cm_metallic_currency = {
+zz_ef_cm_representative_currency = {
 	possible = {
 		OR = {
 			has_law = law_type:law_gold_standard
@@ -35,10 +35,10 @@ zz_ef_cm_metallic_currency = {
 	}
 	base_good = spe_uni_c
 	prestige_bonus = 0.1
-	texture = "gfx/interface/icons/goods_icons/gold.dds"
+	texture = "gfx/interface/icons/goods_icons/currencies/zz_ef_cm_representative_currency.dds"
 }
 
-zz_ef_cm_exchange_currency = {
+zz_ef_cm_pegged_currency = {
 	possible = {
 		OR = {
 			has_law = law_type:law_gold_exchange_standard
@@ -47,7 +47,7 @@ zz_ef_cm_exchange_currency = {
 	}
 	base_good = spe_uni_c
 	prestige_bonus = 0.1
-	texture = "gfx/interface/icons/goods_icons/paper_gold.dds"
+	texture = "gfx/interface/icons/goods_icons/currencies/zz_ef_cm_pegged_currency.dds"
 }
 
 zz_ef_cm_fiat_currency = {
@@ -56,6 +56,6 @@ zz_ef_cm_fiat_currency = {
 	}
 	base_good = spe_uni_c
 	prestige_bonus = 0.1
-	texture = "gfx/interface/icons/goods_icons/paper.dds"
+	texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
 }
 
