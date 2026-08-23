@@ -1,13 +1,16 @@
-﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT
+﻿### Tech & Res + E&F ComPatch, fixed (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT
 ###
 ### Source: Tech & Res common/buildings/ztr_vanilla_modified_buildings.txt, plus the two E&F PM groups.
 ### Regenerate with tools/regen_ef_tr_copies.py after any T&R update.
 ###
-### T&R fully REPLACE:s these three vanilla buildings, which wipes E&F's
-### earlier INJECT: of pmg_market_liquidity. The compatch re-adds it, but its
-### copy is one T&R revision old, and because REPLACE: swaps whole sub-blocks
-### its stale production_method_groups wins over T&R's current one. This file
-### loads after the compatch, carrying T&R's list as it is today.
+### Replaces the compatch's file of the same name. T&R fully REPLACE:s these
+### three vanilla buildings, which wipes E&F's earlier INJECT: of
+### pmg_market_liquidity. The compatch re-adds it -- but from a T&R revision
+### one update old, and because REPLACE: swaps whole sub-blocks its stale
+### production_method_groups wins over T&R's current one. The power plant lost
+### pmg_power_transmission that way, and the automotive industry fell back from
+### algorithmic dispatch to plain data optimisation. This is T&R's list as it
+### is today, with E&F's two groups appended.
 
 REPLACE:building_automotive_industry = {
 	building_group = bg_heavy_industry

@@ -1,9 +1,9 @@
 {
-  "name": "E&F + Tech & Res ComPatch Fix",
+  "name": "Tech & Res + E&F ComPatch (fixed)",
   "id": "ef.tr.fix",
-  "version": "1.13.10-1",
+  "version": "1.6-fix2",
   "supported_game_version": "1.13.*",
-  "short_description": "Fixes for the Tech & Res + E&F ComPatch on 1.13.10: gold-mine minting, T&R production method groups the compatch reverts, dead building names, the consumer-electronics ownership switch, and two T&R industries it never wires into E&F.",
+  "short_description": "A standalone replacement for the Tech & Res + E&F ComPatch: everything it does, plus gold-mine minting, the T&R production method groups it reverts, dead building names, the consumer-electronics ownership switch, the inflation baskets, and two T&R industries it never wires into E&F. Run this INSTEAD of the compatch.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
@@ -43,19 +43,19 @@
       },
       {
         "id": "3786286962",
-        "display_name": "E&F 1.13.10 Hotfix",
-        "version": "1.13.10-2",
-        "date": "2026-08-19"
+        "display_name": "E&F Hotfix",
+        "version": "4.1.7.4",
+        "date": "2026-08-23"
       },
       {
         "id": "3472248460",
         "display_name": "Tech & Res",
-        "version": "1.6'",
+        "version": "1.6",
         "date": "2026-05-13"
       },
       {
         "id": "tech.res.e&f",
-        "display_name": "Tech & Res + E&F ComPatch",
+        "display_name": "Tech & Res + E&F ComPatch (replaced by this mod)",
         "version": "1.6",
         "date": "2026-05-08"
       }

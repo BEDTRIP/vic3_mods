@@ -1,21 +1,23 @@
-[h1]E&F + Tech & Res ComPatch Fix [1.13][/h1]
-Fixes for the [b]Tech & Res + E&F ComPatch[/b] (version 1.6) on Victoria 3 [b]1.13.10[/b], checked against E&F 04.07.2026 and Tech & Res 13.05.2026. It patches the compatch, it does not replace it — run both.
+[h1]Tech & Res + E&F ComPatch (fixed) [1.13][/h1]
+A standalone replacement for the [b]Tech & Res + E&F ComPatch[/b] (version 1.6) on Victoria 3 [b]1.13[/b], checked against E&F 04.07.2026 and Tech & Res 13.05.2026. It carries everything the compatch does and repairs what it gets wrong.
+
+[b]Run this INSTEAD of the compatch, not alongside it.[/b] Twelve of the compatch's fifteen files are carried through unchanged and three are rebuilt; with both enabled you get every key defined twice and whichever loads last wins at random.
 
 [h2]Load order[/h2]
 [list]
 [*]Community Mod Framework (CMF)
 [*]Expanded Topbar Framework
 [*]Economic and Financial (E&F)
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]E&F Hotfix[/url] — [b]required[/b]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]E&F Hotfix[/url] — [b]required[/b], and it must be the version with the currency merge (see below)
 [*]Tech & Res
 [*]Kuromi's AI
-[*]Tech & Res + E&F ComPatch
 [*][b]This mod[/b]
 [/list]
-[i]This mod must load after the compatch. Everything it does is either an INJECT: on top of the compatch's work or a re-statement of a key the compatch already re-stated — put it earlier and it does nothing.[/i]
 
-[h2]The goods ceiling is NOT solved here[/h2]
-Victoria 3 1.13 caps the goods database at [b]128[/b] and crashes on entering a campaign above that — silently, with nothing in error.log. Vanilla ships 53, E&F with the Hotfix adds 65, Tech & Res adds 39: [b]157[/b]. E&F and Tech & Res do not run together until roughly 29 more goods are cut. That is a separate job; this mod assumes it is already done.
+[h2]The goods ceiling[/h2]
+Victoria 3 1.13 caps the goods database at [b]128[/b] and crashes on entering a campaign above that — silently, with nothing in error.log. Vanilla ships 53, E&F adds 73, Tech & Res adds 35: [b]161[/b]. E&F and Tech & Res simply cannot share a build at those numbers.
+
+The [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]E&F Hotfix[/url] is what makes them fit. Its currency merge collapses E&F's 57 currency goods into one, leaving E&F with 8: [b]53 + 8 + 35 = 96[/b]. Nothing in this mod touches the goods database — if you are crashing on load, check that the Hotfix you have enabled is the one with the merge.
 
 [h2]What this fixes[/h2]
 [list]
@@ -80,13 +82,15 @@ As shipped, this mod carries the E&F + T&R basket only, matching its declared de
 
 ## Maintenance
 
-Три файла мода генерируются, руками не правятся:
+Мод — самостоятельная замена компача, и почти весь он сгенерирован из чужих файлов.
+Руками не правится ничего из перечисленного ниже.
 
 | файл | источник |
 |---|---|
-| `common/buildings/zzzz_ef_tr_fix_buildings_gen.txt` | T&R `ztr_vanilla_modified_buildings.txt` + 2 группы E&F |
-| `common/scripted_effects/zzzz_ef_tr_fix_effects_gen.txt` | компач `zef_01_financial_scripted_effects.txt`, имена зданий исправлены |
-| `common/script_values/zzzz_ef_tr_fix_inflation_gen.txt` | компач `zef_00_economic_scripted_value.txt`, корзины сведены (+ `ef+morg done` при `--morg`) |
+| двенадцать файлов компача | копируются из `_ef/ef+tr+kai out` байт в байт |
+| `common/buildings/zztr_vanilla_buildings.txt` | T&R `ztr_vanilla_modified_buildings.txt` + 2 группы E&F |
+| `common/scripted_effects/zef_01_financial_scripted_effects.txt` | файл компача, два эффекта с исправленными именами зданий |
+| `common/script_values/zef_00_economic_scripted_value.txt` | файл компача, корзины сведены (+ `ef+morg done` при `--morg`) |
 
 ```
 python3 tools/regen_ef_tr_copies.py --check    # разъехалось ли
@@ -95,10 +99,10 @@ python3 tools/regen_ef_tr_copies.py --morg    # пересобрать для с
 ```
 
 Гонять после каждого обновления Tech & Res и после каждого обновления компача.
+Свежую распаковку компача класть в `_ef/ef+tr+kai out` — генератор читает её оттуда.
 `--check` возвращает 1, если что-то разъехалось, — годится для хука перед сборкой мегапака.
-Каждый прогон печатает в шапку сгенерированного файла список того, что он поправил:
+Каждый прогон печатает в шапку правленого файла список того, что он поправил:
 если список внезапно пуст или в нём появилось новое — значит источник изменился, и это надо прочитать.
 
-Остальные файлы (`zzzz_ef_tr_fix_buildings.txt`, `..._gold_minting.txt`, `..._effects.txt`,
-`..._on_actions.txt`, `history/global`, локализация) правятся руками: они ничего не копируют,
-а только дописывают своё.
+Файлы с префиксом `zzzz_` правятся руками: они ничего не копируют, а только дописывают своё —
+инжект зданий, чеканка золота, эффект приватизации, `on_actions`, `history/global`, локализация.

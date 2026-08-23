@@ -66,9 +66,9 @@ DEFAULT_ROOT = Path(__file__).resolve().parent.parent          # vic3_mods/
 DEFAULT_OUT_ROOT = DEFAULT_ROOT.parent / "vic3_mods_out"       # vic3_mods_out/
 
 TR = "TechRes+Kuromi/t&r"
-COMPATCH = "_ef/ef+tr+kai out outdate"
+COMPATCH = "_ef/ef+tr+kai out"
 MORG = "_ef/ef+morg done"
-FIX = "_ef/ef+tr fix"
+FIX = "_ef/ef+tr+kai fixed"
 
 # --- 1. buildings taken from T&R -------------------------------------------
 
@@ -358,6 +358,109 @@ def note_lines(notes: list[str]) -> str:
     return "".join(f"###   {n}\n" for n in sorted(set(notes))).rstrip("\n")
 
 
+# --- carrying the compatch itself -------------------------------------------
+
+# The three compatch files this mod rewrites. Everything else under the
+# compatch's common/ and localization/ is copied through byte for byte.
+PATCHED = {
+    "common/buildings/zztr_vanilla_buildings.txt",
+    CP_EFFECTS_FILE,
+    CP_VALUES_FILE,
+}
+
+# What the old build shipped as separate zzzz_*_gen.txt files, layered on top of
+# a compatch that had to be running underneath. They have no reason to exist now
+# that their content goes into the compatch's own files, and leaving them behind
+# would define the same keys twice.
+STALE = [
+    "common/buildings/zzzz_ef_tr_fix_buildings_gen.txt",
+    "common/scripted_effects/zzzz_ef_tr_fix_effects_gen.txt",
+    "common/script_values/zzzz_ef_tr_fix_inflation_gen.txt",
+]
+
+
+# Dead keys inside files that are otherwise copied through untouched. Now that
+# this mod carries the compatch's files instead of layering on top of them, a
+# wrong key can be corrected in place rather than worked around -- which is what
+# the old build had to do, and it left one error.log line per load behind.
+COPY_FIXUPS = {
+    "common/buildings/zzef_vanilla_mines.txt": {
+        # No such building. Vanilla 1.13 has building_gold_mine and
+        # building_gold_field, and neither declares an alias with an "s"
+        # (checked against 1.12.3 too, in case of a rename). So gold mines never
+        # got T&R's data layer, and the bad key logged on every load.
+        "building_gold_mines": "building_gold_mine",
+    },
+}
+
+
+def mirror(cp: Path, fix: Path, check: bool) -> bool:
+    """Copy the compatch's untouched files into this mod, byte for byte.
+
+    This mod replaces the compatch instead of layering on top of it, so it has to
+    carry everything the compatch carried. Twelve of its fifteen files are copied
+    unchanged and are not ours to edit -- no generated banner is added to them,
+    precisely so that a diff against a new version of the compatch stays readable.
+    """
+    changed = False
+    for src in sorted(cp.rglob("*")):
+        if not src.is_file():
+            continue
+        rel = src.relative_to(cp).as_posix()
+        if rel in PATCHED or rel.startswith(".metadata/") or not (
+                rel.startswith("common/") or rel.startswith("localization/")):
+            continue
+        dst = fix / rel
+        data = src.read_bytes()
+        for bad, good in COPY_FIXUPS.get(rel, {}).items():
+            data = data.replace(bad.encode(), good.encode())
+        old = dst.read_bytes() if dst.exists() else None
+        if old != data:
+            changed = True
+            if not check:
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                dst.write_bytes(data)
+        print(f"  {'DRIFT' if check and old != data else 'ok   ' if check else 'copied   ' if old != data else 'unchanged'}  {rel}")
+    return changed
+
+
+def splice(text: str, blocks: dict[str, str]) -> str:
+    """Swap named top-level blocks inside a file, leaving the rest of it alone."""
+    for key, new in blocks.items():
+        old = top_block(text, key)
+        text = text.replace(old, new, 1)
+    return text
+
+
+def emit_text(path: Path, text: str, check: bool) -> bool:
+    if text.count("{") != text.count("}"):
+        raise ValueError(f"{path}: unbalanced braces")
+    old = path.read_text(encoding="utf-8-sig") if path.exists() else None
+    changed = old != text
+    if check:
+        print(f"  {'DRIFT' if changed else 'ok   '}  {path.name}")
+    else:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8-sig", newline="\n")
+        print(f"  {'written  ' if changed else 'unchanged'}  {path.name}")
+    return changed
+
+
+def retire(fix: Path, check: bool) -> None:
+    for rel in STALE:
+        p = fix / rel
+        if not p.exists():
+            continue
+        if check:
+            print(f"  STALE  {rel}")
+            continue
+        try:
+            p.unlink()
+            print(f"  removed    {p.name} (its content is in the compatch file now)")
+        except OSError as e:
+            print(f"  DELETE ME  {p} ({e.strerror}) -- duplicate definitions until it goes")
+
+
 # --- main -------------------------------------------------------------------
 
 
@@ -389,49 +492,63 @@ def main() -> int:
     print(f"mode: {'E&F + T&R + Morgenroete' if args.morg else 'E&F + T&R'}")
     drift = False
 
+    # 0. everything of the compatch's we do not touch -----------------------
+    print("carrying the compatch:")
+    drift |= mirror(cp, fix, args.check)
+    retire(fix, args.check)
+
     # 1. buildings ----------------------------------------------------------
+    print("rebuilt from source:")
     src = read(tr / TR_BUILDINGS_FILE)
-    blocks = [add_groups(top_block(src, n), EF_GROUPS) for n in TR_BUILDINGS]
+    # T&R already writes these as REPLACE:; top_block returns the prefix with the
+    # block, so adding another one produces REPLACE:REPLACE:building_x and the
+    # entry silently never loads.
+    blocks = []
+    for n in TR_BUILDINGS:
+        b = add_groups(top_block(src, n), EF_GROUPS)
+        blocks.append(b if re.match(r"^\w+:", b) else "REPLACE:" + b)
     header = (
-        "### E&F + Tech & Res ComPatch Fix (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT\n"
+        "### Tech & Res + E&F ComPatch, fixed (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT\n"
         "###\n"
         "### Source: Tech & Res " + TR_BUILDINGS_FILE + ", plus the two E&F PM groups.\n"
         "### Regenerate with tools/regen_ef_tr_copies.py after any T&R update.\n"
         "###\n"
-        "### T&R fully REPLACE:s these three vanilla buildings, which wipes E&F's\n"
-        "### earlier INJECT: of pmg_market_liquidity. The compatch re-adds it, but its\n"
-        "### copy is one T&R revision old, and because REPLACE: swaps whole sub-blocks\n"
-        "### its stale production_method_groups wins over T&R's current one. This file\n"
-        "### loads after the compatch, carrying T&R's list as it is today."
+        "### Replaces the compatch's file of the same name. T&R fully REPLACE:s these\n"
+        "### three vanilla buildings, which wipes E&F's earlier INJECT: of\n"
+        "### pmg_market_liquidity. The compatch re-adds it -- but from a T&R revision\n"
+        "### one update old, and because REPLACE: swaps whole sub-blocks its stale\n"
+        "### production_method_groups wins over T&R's current one. The power plant lost\n"
+        "### pmg_power_transmission that way, and the automotive industry fell back from\n"
+        "### algorithmic dispatch to plain data optimisation. This is T&R's list as it\n"
+        "### is today, with E&F's two groups appended."
     )
-    drift |= emit(fix / "common/buildings/zzzz_ef_tr_fix_buildings_gen.txt", header, blocks, args.check)
+    drift |= emit(fix / "common/buildings/zztr_vanilla_buildings.txt", header, blocks, args.check)
 
     # 2. crisis effects -----------------------------------------------------
     src = read(cp / CP_EFFECTS_FILE)
-    blocks, notes = [], []
+    fixed, notes = {}, []
     for name in CP_EFFECTS:
         block, n = fix_names(top_block(src, name))
-        blocks.append(block)
+        fixed[name] = block
         notes += [f"{name}: {x}" for x in n]
-    header = (
-        "### E&F + Tech & Res ComPatch Fix (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT\n"
+    text = splice(src, fixed)
+    banner = (
+        "### The compatch's own file, with two effects corrected -- see\n"
+        "### tools/regen_ef_tr_copies.py. Everything else here is the compatch's.\n"
         "###\n"
-        "### Source: the compatch's own " + CP_EFFECTS_FILE + ",\n"
-        "### with building names corrected. Regenerate with tools/regen_ef_tr_copies.py\n"
-        "### after any update of the compatch.\n"
+        "### The compatch rewrote eleven vanilla building names into their plural\n"
+        "### `aliases` form. Nine of those aliases are real; building_artillery_foundries\n"
+        "### never existed and building_military_shipyard was removed from vanilla in\n"
+        "### 1.13. Two of E&F's own typos ride along in the same lists.\n"
         "###\n"
-        "### A scripted_effect cannot be extended from another mod, so the only way to\n"
-        "### repair the `or` list is to re-state the effect. Same key later in load\n"
-        "### order wins, and this mod loads after the compatch.\n"
-        "###\n"
-        "### Corrections applied this run:\n" + note_lines(notes)
+        "### Corrections applied this run:\n" + note_lines(notes) + "\n\n"
     )
-    drift |= emit(fix / "common/scripted_effects/zzzz_ef_tr_fix_effects_gen.txt", header, blocks, args.check)
+    drift |= emit_text(fix / CP_EFFECTS_FILE, banner + text, args.check)
 
     # 3. inflation baskets --------------------------------------------------
     cp_src, ef_src = read(cp / CP_VALUES_FILE), read(ef / EF_VALUES_FILE)
     morg_src = read(morg / MORG_VALUES_FILE) if args.morg else ""
-    blocks, notes = [], []
+    fixed, notes = {}, []
     for name in (CP_VALUES_MORG_ONLY + CP_VALUES) if args.morg else CP_VALUES:
         extra: list[str] = []
         if morg_src:
@@ -443,17 +560,16 @@ def main() -> int:
             except KeyError:
                 pass  # the Morgenroete patch only touches two of the five
         block, n = fix_inflation(top_block(cp_src, name), extra, top_block(ef_src, name))
-        block = re.sub(r"^REPLACE:", "", block)  # plain key: later definition wins
-        blocks.append(block)
+        fixed[name] = block
         notes += [f"{name}: {x}" for x in n]
-    header = (
-        "### E&F + Tech & Res ComPatch Fix (Vic3 1.13) -- GENERATED FILE, DO NOT EDIT\n"
+    text = splice(cp_src, fixed)
+    banner = (
+        "### The compatch's own file, with the inflation baskets corrected -- see\n"
+        "### tools/regen_ef_tr_copies.py. Everything else here is the compatch's.\n"
         "###\n"
-        "### Source: the compatch's own " + CP_VALUES_FILE + "\n"
-        + ("### merged with the E&F + Morgenroete ComPatch's " + MORG_VALUES_FILE + ".\n" if args.morg
-           else "### (Morgenroete goods NOT merged -- rerun with --morg for a build with it).\n")
-        + "### Regenerate with tools/regen_ef_tr_copies.py after any update of either.\n"
-        "###\n"
+        + ("### Morgenroete goods merged in.\n" if args.morg
+           else "### Morgenroete goods NOT merged -- rerun with --morg for a build with it.\n")
+        + "###\n"
         "### Each basket is a weighted average: sum(price deviation * buy orders) over\n"
         "### the goods, divided by 0.1 + sum(buy orders) over the same goods. A good in\n"
         "### the numerator but not the divisor pushes the reading up; a good in the\n"
@@ -463,9 +579,9 @@ def main() -> int:
         "### E&F's own hardwood-in-the-divisor-only quirk is left alone here -- it is\n"
         "### in E&F itself, in three baskets, and belongs in the E&F hotfix.\n"
         "###\n"
-        "### Fixes applied this run:\n" + note_lines(notes)
+        "### Fixes applied this run:\n" + note_lines(notes) + "\n\n"
     )
-    drift |= emit(fix / "common/script_values/zzzz_ef_tr_fix_inflation_gen.txt", header, blocks, args.check)
+    drift |= emit_text(fix / CP_VALUES_FILE, banner + text, args.check)
 
     if args.check and drift:
         print("\ndrift detected -- rerun without --check")

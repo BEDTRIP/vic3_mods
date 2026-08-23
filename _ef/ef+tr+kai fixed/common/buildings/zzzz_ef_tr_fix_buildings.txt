@@ -3,28 +3,22 @@
 ###
 ### Everything in this file is INJECT:, so nothing T&R or the compatch defines
 ### is overwritten -- the PM groups are appended to whatever list survives.
-### The three buildings that DO need a full re-statement live in the generated
-### file next to this one (zzzz_ef_tr_fix_buildings_gen.txt).
+### The three buildings that DO need a full re-statement are rebuilt straight
+### into the compatch's own zztr_vanilla_buildings.txt.
 
-### The compatch writes INJECT:building_gold_mines -- plural. No such building
-### exists: vanilla 1.13 has building_gold_mine and building_gold_field, and
-### neither declares an alias with an "s" (checked against 1.12.3 as well, in
-### case it was renamed). So gold mines never got T&R's data layer, and the bad
-### key costs one line in error.log at load -- TRY_INJECT: would have been
-### silent, plain INJECT: is not.
-###
-### We can only add the right key from here; the compatch's bad one stays and
-### keeps logging. Removing it means editing the compatch itself.
+### Gold mines are NOT here any more, and that is the point of this mod being a
+### replacement rather than a patch. The compatch writes
+### INJECT:building_gold_mines -- plural, no such building -- so gold mines never
+### got T&R's data layer, and a plain INJECT: of a bad key costs one line in
+### error.log on every load. Layered on top, all we could do was add the right
+### key and leave the wrong one logging. Carrying the compatch's own file, the
+### key is simply corrected in place; see zzef_vanilla_mines.txt and COPY_FIXUPS
+### in tools/regen_ef_tr_copies.py.
 ###
 ### building_gold_field is deliberately left alone: the compatch author patched
 ### silver and gold mines only, and T&R itself puts pmg_data_optimization_* into
 ### 30 vanilla buildings without touching any precious-metal mine. Adding the
 ### group to gold fields would be a design decision, not a repair.
-INJECT:building_gold_mine = {
-	production_method_groups = {
-		pmg_data_optimization_primary_sector #T&R
-	}
-}
 
 ### Two T&R industries the compatch never wires into E&F.
 ###

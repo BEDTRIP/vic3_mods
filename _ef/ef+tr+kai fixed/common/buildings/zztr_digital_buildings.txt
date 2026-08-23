@@ -1,0 +1,51 @@
+#Office
+
+INJECT:building_office = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Software Industry
+
+INJECT:building_software_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+INJECT:building_interactive_media_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Telecommunications
+
+INJECT:building_telecommunications_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# Data Center
+
+INJECT:building_datacenter_industry = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
+
+# E-Commerce Logistic Building
+
+INJECT:building_ecommerce_logistics = {
+	production_method_groups = {
+		pmg_market_liquidity #E&F
+		pmg_private_ownership_manufacture_stock
+	}
+}
