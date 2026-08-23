@@ -499,22 +499,31 @@ Company → country is not in the files: 6 of E&F's 103 companies name a tag, th
 go by interest markers. So every bank company is offered all 95 and each prestige
 good carries `possible = { has_law = law_type:law_<cur>_currency }`.
 
-### The central bank is now a private business
+### The central bank is owned, but still government funded
 
-A company can only produce a prestige good from a building it owns, so three things
-had to change on `building_bank`, and each was found the hard way:
+A company can only produce a prestige good from a building it owns, so
+`building_bank` had to change:
 
 | what | why |
 |---|---|
-| `ownership_type = no_ownership` → `self` | no ownership shares meant nothing to hold. Not enough on its own |
-| `bg_bank: is_government_funded = yes` → `no` | a government-funded building is state-run and has no owners at all. This is the one that mattered |
+| `ownership_type = no_ownership` → `self` | no ownership shares meant nothing to hold |
 | `ai_nationalization_desire = 0` → `-5` | 0 is exactly the engine's privatise threshold; a company can only hold privatised levels |
 
-**This is a design decision, not a fix.** A private central bank pays its dividends
-to its owners instead of the treasury — about 6K a month on a 1836 British save —
-and the treasury no longer pays for its gold and paper either. If that is not
-wanted, run the generator without `--private-bank` and drop the prestige currencies;
-the goods ceiling is closed either way.
+**`bg_bank: is_government_funded` is deliberately left at `yes`.** Ownership shares
+and government funding are separate switches, and only the first one is thrown here.
+The treasury goes on paying the central bank's inputs and wages and taking its
+output, so the company that owns the bank collects no dividends from it.
+
+The visible consequence is that the building panel calls the central bank a
+government building even though a company is named on its ownership tab. That reads
+like a bug and is not one — the money really does move the government way, and the
+panel is telling the truth about it.
+
+The company holds the bank so that it can mint the country's prestige currency, and
+so that no rival can buy the bank out from under it. Not so that it can collect the
+bank's profits. `--private-bank` emits the `bg_bank` override and hands those
+profits to the owner — about 6K a month on a 1836 British save — which is a
+different mod.
 
 ### The company that owns it always exists
 

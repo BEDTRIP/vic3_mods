@@ -1,0 +1,39 @@
+﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
+### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+###
+### Source: E&F's own common/building_groups/00_ef_building_groups.txt,
+### one field changed:
+###   is_government_funded = yes  ->  is_government_funded = no
+###
+### THIS IS HALF OF THE OWNERSHIP CHANGE, not an optional extra, and
+### leaving it out was a regression that cost a test round. building_bank
+### with ownership_type = self gives the bank shares for a company to hold;
+### this is what stops the treasury from paying for it. Without it the
+### building panel reads "government" -- correctly, because the money still
+### moves that way -- with a company named on the ownership tab that earns
+### nothing from it. Suppress it with --government-funded-bank.
+###
+### And it is not a free switch. is_government_funded means the treasury pays
+### the building's inputs and wages and takes its output. Off, the central
+### bank is an ordinary private business, and on a 1836 British save it makes
+### 200 bonds plus currency against about 2.5K of inputs and wages. As a
+### government building that gap is state spending; as a private one it is
+### profit, dividends and investment-pool inflow, every month, for whoever
+### owns the central bank. That is the price of the ownership working at all.
+
+REPLACE:bg_bank = {
+	category = development
+
+	always_possible = yes
+
+	inheritable_construction = no
+	is_government_funded = no
+
+	economy_of_scale = no
+
+	lens = government
+
+	urbanization = 20
+	infrastructure_usage_per_level = 0
+	economic_contribution = 0 
+}
