@@ -969,6 +969,13 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 #
 # law_no_monetary_system is deliberately absent: a country without a monetary
 # system has no central bank, so nothing mints anything.
+# Two buildings a central bank must never end up holding. E&F's flavoured bank
+# companies -- the Bank of England, the Banque de France -- carry both, and once
+# such a company becomes the country's central bank the player is handed a railway
+# monopoly nobody asked for. 97 building_railway and 98 building_trade_center lines
+# across E&F's companies file; only the curated central banks are touched here.
+CENTRAL_BANK_FORBIDDEN = {"building_railway", "building_trade_center"}
+
 PRESTIGE_REGIMES = [
     ("zz_ef_cm_representative_currency",
      ["law_gold_standard", "law_silver_standard", "law_bimetallism_standard"],
@@ -1097,6 +1104,47 @@ def historical_central_banks(ef: Path) -> tuple[list[str], list[str]]:
     return out, notes
 
 
+def _strip_bank_buildings(body: str, name: str, add_bank: bool) -> tuple[str, int]:
+    """Drop building_railway / building_trade_center from one building list.
+
+    Only uncommented entries are touched: E&F keeps `#building_port` and
+    `#building_bank` in these lists as notes to itself, and rewriting those would
+    make every diff against a new E&F version unreadable.
+    """
+    m = re.search(r"\b" + name + r"\s*=\s*\{", body)
+    if not m:
+        return body, 0
+    end = block_span(body, m.end() - 1)
+    inner = body[m.end():end - 1]
+    kept, dropped = [], 0
+    for ln in inner.splitlines():
+        if ln.strip() in CENTRAL_BANK_FORBIDDEN:
+            dropped += 1
+            continue
+        kept.append(ln)
+    indent = next((re.match(r"[ \t]*", ln).group(0) for ln in kept if ln.strip()), "\t\t")
+    if add_bank and not any(ln.strip() == "building_bank" for ln in kept):
+        # after the leading empty line, not before it: the slice starts right after
+        # the brace, so index 0 is the tail of the `building_types = {` line itself
+        # and inserting there welds the entry onto it.
+        kept.insert(1 if kept and not kept[0].strip() else 0, indent + "building_bank")
+    return body[:m.end()] + "\n".join(kept) + body[end - 1:], dropped
+
+
+def _merge_prestige(body: str, goods: list[str]) -> str:
+    """Add the three regime currencies to possible_prestige_goods, creating the
+    block when E&F gave the company none."""
+    have = sub_block(body, "possible_prestige_goods")
+    lines = "".join(f"\t\t{g}\n" for g in goods)
+    if have is None:
+        return body[:body.rindex("}")].rstrip() + f"\n\n\tpossible_prestige_goods = {{\n{lines}\t}}\n}}"
+    at = body.index(have)
+    # rstrip the old block's tail before appending, or the last existing good keeps
+    # its trailing newline and indent and the first new one lands on that line
+    merged = have[:-1].rstrip(" \t\n") + "\n" + lines + "\t}"
+    return body[:at] + merged + body[at + len(have):]
+
+
 def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
     """building_bank and the three regime currencies, for the historical central
     banks only -- plus company_BasicBank as the last-resort owner.
@@ -1112,15 +1160,33 @@ def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
     central bank -- the Bank of England for Britain, the Banque de France for
     France, the State Bank for Russia. Those keep the assets they already own, and
     the generated per-currency company is used only where no such bank exists.
+
+    REPLACE:, not INJECT:, and that is the second half of the same lesson. INJECT:
+    can only add, so the first version of this file added building_bank and left
+    E&F's own building_railway and building_trade_center sitting on the list --
+    the Bank of England went on buying railways exactly as before. Taking an entry
+    off a list needs the whole entry restated.
+
+    Restating it means copying E&F's block verbatim and editing only the building
+    list and the prestige goods, so everything else -- the flavoured icon,
+    replaces_company, potential, attainable, the prosperity modifier -- keeps
+    working and keeps tracking E&F on the next regeneration.
     """
     hist, notes = historical_central_banks(ef)
-    goods = "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
-    out = []
+    src = read(ef / "common/company_types/00_ef_companies.txt")
+    blocks = {k: src[a:b] for k, a, b in iter_top_blocks(src)}
+    goods = [k for k, _, _ in PRESTIGE_REGIMES]
+    out, dropped = [], 0
     for c in hist:
-        out.append(f"INJECT:{c} = {{\n"
-                   f"\tbuilding_types = {{\n\t\tbuilding_bank\n\t}}\n\n"
-                   f"\tpossible_prestige_goods = {{\n{goods}\t}}\n"
-                   f"}}\n\n")
+        body = blocks.get(c)
+        if body is None:
+            notes.append(f"WARNING {c}: no block in E&F to replace, skipped")
+            continue
+        for lst in ("building_types", "extension_building_types"):
+            body, n = _strip_bank_buildings(body, lst, add_bank=(lst == "building_types"))
+            dropped += n
+        out.append("REPLACE:" + _merge_prestige(body, goods).rstrip() + "\n\n")
+    notes.append(f"{dropped} railway/trade-centre entries removed across {len(hist)} companies")
     out.append("INJECT:company_BasicBank = {\n"
                "\tbuilding_types = {\n\t\tbuilding_bank\n\t}\n"
                "}\n")
@@ -1140,12 +1206,21 @@ def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
             "### the generated per-currency company is used only where no historical central\n"
             "### bank exists. See zz_ef_cm_generic_banks.txt.\n"
             "###\n"
-            "### INJECT: so E&F's own building list and its own prestige goods survive. Those\n"
-            "### sit on other base goods (manufacture_stock and friends) and never compete\n"
-            "### with the three currencies, which all share spe_uni_c.\n"
+            "### REPLACE:, because INJECT: can only add. The first version of this file was an\n"
+            "### INJECT: and the Bank of England kept buying railways: E&F's own list still\n"
+            "### held building_railway and building_trade_center, and nothing short of\n"
+            "### restating the entry takes an entry off it. Each block below is E&F's own,\n"
+            "### copied verbatim, with three edits -- building_bank added, those two removed,\n"
+            "### the three regime currencies appended to possible_prestige_goods.\n"
+            "###\n"
+            "### E&F's own prestige goods stay: they sit on other base goods\n"
+            "### (manufacture_stock and friends) and never compete with the three currencies,\n"
+            "### which all share spe_uni_c.\n"
             "###\n"
             "### company_BasicBank gets the building and no currency: it is the fallback owner\n"
-            "### for a country with neither a historical central bank nor a currency law.\n\n")
+            "### for a country with neither a historical central bank nor a currency law. It\n"
+            "### stays an INJECT: -- E&F offers it to every country as an ordinary company,\n"
+            "### not only as a central bank, so its railways are not ours to take away.\n\n")
     return head + "".join(out), len(hist) + 1, notes
 
 
@@ -2236,8 +2311,14 @@ def main() -> int:
     if group is not None:
         emit(gpath, group, args.check, acc)
     elif gpath.exists() and not args.check:
-        gpath.unlink()
-        print("  removed    zz_ef_cm_bank_group.txt (no --private-bank)")
+        # This can fail: the desktop bridge that reaches the disk refuses unlink
+        # outright ("Operation not permitted"). A leftover file is a wrong bg_bank,
+        # not a crash -- name it and let the rest of the run finish.
+        try:
+            gpath.unlink()
+            print("  removed    zz_ef_cm_bank_group.txt (no --private-bank)")
+        except OSError as e:
+            print(f"  DELETE ME  {gpath} ({e.strerror}) -- stale --private-bank output")
 
     emit(mod / "common/scripted_effects/zz_ef_cm_bank_monopoly.txt", gen_monopoly(ef, names), args.check, acc)
 

@@ -16,16 +16,83 @@
 ### the generated per-currency company is used only where no historical central
 ### bank exists. See zz_ef_cm_generic_banks.txt.
 ###
-### INJECT: so E&F's own building list and its own prestige goods survive. Those
-### sit on other base goods (manufacture_stock and friends) and never compete
-### with the three currencies, which all share spe_uni_c.
+### REPLACE:, because INJECT: can only add. The first version of this file was an
+### INJECT: and the Bank of England kept buying railways: E&F's own list still
+### held building_railway and building_trade_center, and nothing short of
+### restating the entry takes an entry off it. Each block below is E&F's own,
+### copied verbatim, with three edits -- building_bank added, those two removed,
+### the three regime currencies appended to possible_prestige_goods.
+###
+### E&F's own prestige goods stay: they sit on other base goods
+### (manufacture_stock and friends) and never compete with the three currencies,
+### which all share spe_uni_c.
 ###
 ### company_BasicBank gets the building and no currency: it is the fallback owner
-### for a country with neither a historical central bank nor a currency law.
+### for a country with neither a historical central bank nor a currency law. It
+### stays an INJECT: -- E&F offers it to every country as an ordinary company,
+### not only as a central bank, so its railways are not ours to take away.
 
-INJECT:company_BancoNacionArgentina = {
+REPLACE:company_BancoNacionArgentina = { #Banco de la Nación Argentina
+	icon = "gfx/interface/icons/company_icons/bank/banco_nacion_argentina.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_BUENOS_AIRES }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_arg
+	}
+
+	potential = {
+		country_has_primary_culture = cu:platinean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_BUENOS_AIRES # Buenos Aires
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -35,9 +102,67 @@ INJECT:company_BancoNacionArgentina = {
 	}
 }
 
-INJECT:company_BancoProvincia = {
+REPLACE:company_BancoProvincia = { #Banco de la Provincia de Buenos Aires
+	icon = "gfx/interface/icons/company_icons/bank/banco_provincia.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_BUENOS_AIRES }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_arg
+	}
+
+	potential = {
+		country_has_primary_culture = cu:platinean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_BUENOS_AIRES # Buenos Aires
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -47,9 +172,67 @@ INJECT:company_BancoProvincia = {
 	}
 }
 
-INJECT:company_OesterreichischeNationalbank = {
+REPLACE:company_OesterreichischeNationalbank = { #Österreichische Nationalbank
+	icon = "gfx/interface/icons/company_icons/bank/oesterreichische_nationalbank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_AUSTRIA }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_aus
+	}
+
+	potential = {
+		country_has_primary_culture = cu:south_german
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_AUSTRIA
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -59,9 +242,67 @@ INJECT:company_OesterreichischeNationalbank = {
 	}
 }
 
-INJECT:company_BayerischeHypothekenUndWechselBank = {
+REPLACE:company_BayerischeHypothekenUndWechselBank = { #Bayerische Hypotheken- und Wechsel-Bank
+	icon = "gfx/interface/icons/company_icons/bank/bayerische_hypo_bank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_BAVARIA }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_bav
+	}
+
+	potential = {
+		country_has_primary_culture = cu:south_german
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_BAVARIA # Munich
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -71,9 +312,70 @@ INJECT:company_BayerischeHypothekenUndWechselBank = {
 	}
 }
 
-INJECT:company_BanqueNationaleDeBelgique = {
+REPLACE:company_BanqueNationaleDeBelgique = { #Banque Nationale de Belgique
+	icon = "gfx/interface/icons/company_icons/bank/banque_nationale_belgique.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_FLANDERS }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_bel
+	}
+
+	potential = {
+		or = {
+			country_has_primary_culture = cu:flemish
+			country_has_primary_culture = cu:wallonian
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_FLANDERS # Bruxelles
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -83,9 +385,68 @@ INJECT:company_BanqueNationaleDeBelgique = {
 	}
 }
 
-INJECT:company_ImperialBankofIndia = {
+REPLACE:company_ImperialBankofIndia = {
+	icon = "gfx/interface/icons/company_icons/bank/imperial_bank_of_india.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Imperial_Bank_of_India
+
+	preferred_headquarters = { STATE_WEST_BENGAL }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_bic
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_bengal
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_WEST_BENGAL # Maharashtra (Mumbai)
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -95,9 +456,67 @@ INJECT:company_ImperialBankofIndia = {
 	}
 }
 
-INJECT:company_BancoNacionalDeBolivia = {
+REPLACE:company_BancoNacionalDeBolivia = { #Banco Nacional de Bolivia
+	icon = "gfx/interface/icons/company_icons/bank/banco_nacional_de_bolivia.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_LA_PAZ }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:south_andean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_LA_PAZ # La Paz
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -107,9 +526,68 @@ INJECT:company_BancoNacionalDeBolivia = {
 	}
 }
 
-INJECT:company_BancoDoBrasil = {
+REPLACE:company_BancoDoBrasil = { #Banco do Brasil
+	icon = "gfx/interface/icons/company_icons/bank/banco_do_brasil.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	replaces_company = company_Bank_of_Brazil
+	preferred_headquarters = { STATE_RIO_DE_JANEIRO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_brz
+	}
+
+	potential = {
+		country_has_primary_culture = cu:brazilian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_RIO_DE_JANEIRO # Rio de Janeiro
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -119,9 +597,69 @@ INJECT:company_BancoDoBrasil = {
 	}
 }
 
-INJECT:company_CanadianImperialBankOfCommerce = {
+REPLACE:company_CanadianImperialBankOfCommerce = { #Banque Canadienne Impériale de Commerce
+	icon = "gfx/interface/icons/company_icons/bank/canadian_imperial_bank_of_commerce.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_ONTARIO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_ont
+		building_financial_centre_que
+
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_new_england
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_ONTARIO
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -131,9 +669,62 @@ INJECT:company_CanadianImperialBankOfCommerce = {
 	}
 }
 
-INJECT:company_DaQingBank = {
+REPLACE:company_DaQingBank = {
+	icon = "gfx/interface/icons/company_icons/bank/Da_QingBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	replaces_company = company_Da_Qing_Bank
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_chi
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_north_china
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_BEIJING
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_trade_route_competitiveness_mult = 0.1
+
+		country_loan_interest_rate_mult = -0.025
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.02 #<--
+		state_shopkeepers_investment_pool_contribution_add = 0.02 #<--
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.075 #<--
+		country_government_dividends_reinvestment_add = 0.075 #<--
+		country_government_dividends_efficiency_add = 0.075 #<--
+
+		country_max_companies_add = 1
 	}
 
 	possible_prestige_goods = {
@@ -143,9 +734,73 @@ INJECT:company_DaQingBank = {
 	}
 }
 
-INJECT:company_BankHSBC = {
+REPLACE:company_BankHSBC = {
+	icon = "gfx/interface/icons/company_icons/bank/Bank_HSBC.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	replaces_company = company_Bank_HSBC
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_hkh
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_south_china
+		OR = {
+			country_has_primary_culture = cu:british
+			AND = {
+				NOT = { country_has_primary_culture = cu:british }
+				any_scope_state = {
+					state_region = s:STATE_SHAOZHOU
+					is_split_state = no
+				}
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_SHAOZHOU
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_trade_route_competitiveness_mult = 0.075
+		country_trade_route_cost_mult = -0.075
+
+		country_loan_interest_rate_mult = -0.05
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.02 #<--
+		state_shopkeepers_investment_pool_contribution_add = 0.02 #<--
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
 	}
 
 	possible_prestige_goods = {
@@ -155,9 +810,67 @@ INJECT:company_BankHSBC = {
 	}
 }
 
-INJECT:company_BancoEstado = {
+REPLACE:company_BancoEstado = { #Banco Estado
+	icon = "gfx/interface/icons/company_icons/bank/banco_estado.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_SANTIAGO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_chl
+	}
+
+	potential = {
+		country_has_primary_culture = cu:south_andean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_SANTIAGO # Santiago
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -167,9 +880,67 @@ INJECT:company_BancoEstado = {
 	}
 }
 
-INJECT:company_BancoDeValparaiso = {
+REPLACE:company_BancoDeValparaiso = { #Banco de Valparaíso
+	icon = "gfx/interface/icons/company_icons/bank/banco_de_valparaiso.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_SANTIAGO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_chl
+	}
+
+	potential = {
+		country_has_primary_culture = cu:south_andean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_SANTIAGO # Santiago
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -179,9 +950,67 @@ INJECT:company_BancoDeValparaiso = {
 	}
 }
 
-INJECT:company_BancoRepublicaColombia = {
+REPLACE:company_BancoRepublicaColombia = { #Banco de la República
+	icon = "gfx/interface/icons/company_icons/bank/banco_republica_colombia.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_CUNDINAMARCA}
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_col
+	}
+
+	potential = {
+		country_has_primary_culture = cu:north_andean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_CUNDINAMARCA # Bogota
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -191,9 +1020,67 @@ INJECT:company_BancoRepublicaColombia = {
 	}
 }
 
-INJECT:company_BancoCentralDeCostaRica = {
+REPLACE:company_BancoCentralDeCostaRica = { #Banco Central de Costa Rica
+	icon = "gfx/interface/icons/company_icons/bank/banco_central_de_costa_rica.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_COSTA_RICA }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:central_american
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_COSTA_RICA # San José
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -203,9 +1090,67 @@ INJECT:company_BancoCentralDeCostaRica = {
 	}
 }
 
-INJECT:company_BancoEspanolDeLaHabana = {
+REPLACE:company_BancoEspanolDeLaHabana = { #Banco Español de la Habana
+	icon = "gfx/interface/icons/company_icons/bank/banco_espanol_de_la_habana.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_WESTERN_CUBA }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:caribeno
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_WESTERN_CUBA # Havana
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -215,9 +1160,68 @@ INJECT:company_BancoEspanolDeLaHabana = {
 	}
 }
 
-INJECT:company_LandmandsBanken = {
+REPLACE:company_LandmandsBanken = {
+	icon = "gfx/interface/icons/company_icons/bank/LandmandsBanken.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_ZEALAND }
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_den
+	}
+
+	potential = {
+		country_has_primary_culture = cu:danish
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_ZEALAND
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.02
+		state_shopkeepers_investment_pool_contribution_add = 0.02
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.07
+
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+	ai_weight = {
+		value = 2
+	}
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -227,9 +1231,67 @@ INJECT:company_LandmandsBanken = {
 	}
 }
 
-INJECT:company_BanqueEgyptienne = {
+REPLACE:company_BanqueEgyptienne = { #البنك المصري
+	icon = "gfx/interface/icons/company_icons/bank/banque_egyptienne.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_LOWER_EGYPT}
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_egy
+	}
+
+	potential = {
+		country_has_primary_culture = cu:misri
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_LOWER_EGYPT
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -239,9 +1301,62 @@ INJECT:company_BanqueEgyptienne = {
 	}
 }
 
-INJECT:company_BanqueDeFrance = {
+REPLACE:company_BanqueDeFrance = {
+	icon = "gfx/interface/icons/company_icons/bank/BankeFrance.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	#replaces_company = company_bank_of_france
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_fra
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_france
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_ILE_DE_FRANCE
+			}
+		}
+	}
+
+	possible = {
+		# any_scope_state = {
+		# 	is_incorporated = yes
+		# 	any_scope_building = {
+		# 		is_building_type = building_financial_district
+		# 		level >= 1
+		# 	}
+		# }
+		always = yes
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.15
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.065
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
 	}
 
 	possible_prestige_goods = {
@@ -251,9 +1366,145 @@ INJECT:company_BanqueDeFrance = {
 	}
 }
 
-INJECT:company_BankofEngland = {
+REPLACE:company_BankofEngland = {
+    icon = "gfx/interface/icons/company_icons/bank/Bank_of_England.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Bank_of_England
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_gbr
+		building_financial_centre_gbr_2
+	}
+
+	possible_prestige_goods = {
+		manufacture_stock_gbr
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_england
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_HOME_COUNTIES
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_shipyard_throughput_add = 0.05
+		building_military_shipyard_throughput_add = 0.05
+		interest_group_ig_landowners_approval_add = 2
+
+		country_loan_interest_rate_mult = -0.10 #<-- #price stability, was the main focus
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.04 #<-- middle class, merchants, esquires
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.045 #<--- and aristo
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
+	}
+
+	ai_weight = {
+		value = 3 # Higher base value for flavored companies
+	}
+}
+
+REPLACE:company_Reichsbank = { #Reichsbank
+	icon = "gfx/interface/icons/company_icons/bank/reichsbank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_BRANDENBURG }
+
+	building_types = {
+		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_pru
+		building_financial_centre_frm
+	}
+
+	potential = {
+		OR = {
+			c:GER ?= this
+			was_formed_from = GER
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_BRANDENBURG
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -263,9 +1514,70 @@ INJECT:company_BankofEngland = {
 	}
 }
 
-INJECT:company_Reichsbank = {
+REPLACE:company_PreussischeSeehandlung = { #Preußische Seehandlung
+	icon = "gfx/interface/icons/company_icons/bank/preussische_seehandlung.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_BRANDENBURG }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_pru
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_north_germany
+	}
+	# potential = {
+	# 	country_has_primary_culture = cu:north_german
+	# }
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_BRANDENBURG
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -275,9 +1587,69 @@ INJECT:company_Reichsbank = {
 	}
 }
 
-INJECT:company_PreussischeSeehandlung = {
+REPLACE:company_bankofgreec = {
+	icon = "gfx/interface/icons/company_icons/bank/bank_of_greec.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_bank_of_greec
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_gre
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_balkans
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_PELOPONNESE
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_iron_mine_throughput_add = 0.05
+		building_railway_throughput_add = 0.05
+		building_chemical_plant_throughput_add = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.065
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
+	}
+
+	ai_weight = {
+		value = 3 # Higher base value for flavored companies
 	}
 
 	possible_prestige_goods = {
@@ -287,9 +1659,67 @@ INJECT:company_PreussischeSeehandlung = {
 	}
 }
 
-INJECT:company_bankofgreec = {
+REPLACE:company_BancoCentralDeGuatemala = { #Banco Central de Guatemala
+	icon = "gfx/interface/icons/company_icons/bank/banco_central_de_guatemala.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_GUATEMALA}
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:central_american
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_GUATEMALA # Guatemala City
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -299,9 +1729,67 @@ INJECT:company_bankofgreec = {
 	}
 }
 
-INJECT:company_BancoCentralDeGuatemala = {
+REPLACE:company_BancoCentralDeHonduras = { #Banco Central de Honduras
+	icon = "gfx/interface/icons/company_icons/bank/banco_central_de_honduras.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_HONDURAS }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:central_american
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_HONDURAS # Tegucigalpa
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -311,9 +1799,70 @@ INJECT:company_BancoCentralDeGuatemala = {
 	}
 }
 
-INJECT:company_BancoCentralDeHonduras = {
+REPLACE:company_BancaDItalia = { #Banca d'Italia
+	icon = "gfx/interface/icons/company_icons/bank/banca_d_italia.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_LAZIO } # Rien ici comme demandé
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_ita
+	}
+
+	potential = {
+		or = {
+			country_has_primary_culture = cu:north_italian
+			country_has_primary_culture = cu:south_italian
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_LAZIO
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -323,9 +1872,66 @@ INJECT:company_BancoCentralDeHonduras = {
 	}
 }
 
-INJECT:company_BancaDItalia = {
+REPLACE:company_Rothschild_Bank_ita = {
+	icon = "gfx/interface/icons/company_icons/bank/company_Rothschild_Bank_ita.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	preferred_headquarters = { STATE_CAMPANIA } # Rien ici comme demandé
+	flavored_company = yes
+
+	replaces_company = company_Rothschild_Bank_Europe
 	building_types = {
 		building_bank
+		building_financial_centre_ita
+		building_financial_centre_tus
+		building_financial_centre_sic
+		building_financial_centre_sar
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_italy
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_CAMPANIA
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 5
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_military_goods_cost_mult = -0.075 #War Financing
+		country_max_weekly_construction_progress_add = 7.5 #Many Infrastructure Projects
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.07
+		state_capitalists_investment_pool_contribution_add = 0.05
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
+	}
+
+	ai_weight = {
+		value = 3 # Higher base value for flavored companies
 	}
 
 	possible_prestige_goods = {
@@ -335,9 +1941,79 @@ INJECT:company_BancaDItalia = {
 	}
 }
 
-INJECT:company_Rothschild_Bank_ita = {
+REPLACE:company_BankOfJapan = { #日本銀行
+	icon = "gfx/interface/icons/company_icons/bank/bank_of_japan.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_KANTO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_jap
+	}
+
+	potential = {
+		country_has_primary_culture = cu:japanese
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+		OR = {
+			AND = {
+				this = c:JAP
+				custom_tooltip = {
+					text = is_meiji_japan
+					has_variable = japan_restoration_complete
+				}
+			}
+			NOT = {
+				this = c:JAP
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_KANTO # Tokyo
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -347,9 +2023,80 @@ INJECT:company_Rothschild_Bank_ita = {
 	}
 }
 
-INJECT:company_BankOfJapan = {
+REPLACE:company_Mitsubishiexchangehousebank = {
+	icon = "gfx/interface/icons/company_icons/bank/japanese_mitsubishi.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Mitsubishi_exchange_house_bank
+
+	preferred_headquarters = { STATE_KANTO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_jap
+	}
+
+	potential = {
+		country_has_primary_culture = cu:japanese
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+		OR = {
+			AND = {
+				this = c:JAP
+				custom_tooltip = {
+					text = is_meiji_japan
+					has_variable = japan_restoration_complete
+				}
+			}
+			NOT = {
+				this = c:JAP
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_KANTO # Tokyo
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -359,9 +2106,68 @@ INJECT:company_BankOfJapan = {
 	}
 }
 
-INJECT:company_Mitsubishiexchangehousebank = {
+REPLACE:company_BancoDeMexico = { #Banco de México
+	icon = "gfx/interface/icons/company_icons/bank/banco_de_mexico.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_MEXICO }
+	replaces_company = company_Bank_of_Mexico
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_mex
+	}
+
+	potential = {
+		country_has_primary_culture = cu:mexican
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_MEXICO # Guadalajara
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -371,9 +2177,67 @@ INJECT:company_Mitsubishiexchangehousebank = {
 	}
 }
 
-INJECT:company_BancoDeMexico = {
+REPLACE:company_DeNederlandscheBank = { #De Nederlandsche Bank
+	icon = "gfx/interface/icons/company_icons/bank/de_nederlandsche_bank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_HOLLAND }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_net
+	}
+
+	potential = {
+		country_has_primary_culture = cu:dutch
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_HOLLAND # Noord-Holland
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -383,9 +2247,69 @@ INJECT:company_BancoDeMexico = {
 	}
 }
 
-INJECT:company_DeNederlandscheBank = {
+REPLACE:company_ChristianiaBank = {
+	icon = "gfx/interface/icons/company_icons/bank/ChristianiaBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_EASTERN_NORWAY }
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+
+	potential = {
+		country_has_primary_culture = cu:norwegian
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_EASTERN_NORWAY
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.02
+		state_shopkeepers_investment_pool_contribution_add = 0.02
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.07
+
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+	ai_weight = {
+		value = 2
+	}
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -395,9 +2319,67 @@ INJECT:company_DeNederlandscheBank = {
 	}
 }
 
-INJECT:company_ChristianiaBank = {
+REPLACE:company_ColonialBankOfAustralia = { #Colonial Bank of Australia
+	icon = "gfx/interface/icons/company_icons/bank/colonial_bank_of_australia.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_NEW_SOUTH_WALES }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_nsw
+	}
+
+	potential = {
+		country_has_primary_culture = cu:australian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_NEW_SOUTH_WALES # Nouvelle-Galles du Sud (Sydney)
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -407,9 +2389,68 @@ INJECT:company_ChristianiaBank = {
 	}
 }
 
-INJECT:company_ColonialBankOfAustralia = {
+REPLACE:company_RoyalBankofCanada = {
+	icon = "gfx/interface/icons/company_icons/bank/RBC.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Royal_Bank_of_Canada
+
+	preferred_headquarters = { STATE_ONTARIO }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_ont
+	}
+
+	potential = {
+		country_has_primary_culture = cu:anglo_canadian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_ONTARIO # Québec
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -419,9 +2460,67 @@ INJECT:company_ColonialBankOfAustralia = {
 	}
 }
 
-INJECT:company_RoyalBankofCanada = {
+REPLACE:company_BancoNacionalDePanama = { #Banco Nacional de Panamá
+	icon = "gfx/interface/icons/company_icons/bank/banco_nacional_de_panama.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_PANAMA }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:central_american
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_PANAMA # Tegucigalpa
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -431,9 +2530,67 @@ INJECT:company_RoyalBankofCanada = {
 	}
 }
 
-INJECT:company_BancoNacionalDePanama = {
+REPLACE:company_BankMelliIran = { #بانک ملی ایران
+	icon = "gfx/interface/icons/company_icons/bank/bank_melli_iran.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_IRAKAJEMI }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:persian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_IRAKAJEMI
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -443,9 +2600,68 @@ INJECT:company_BancoNacionalDePanama = {
 	}
 }
 
-INJECT:company_BankMelliIran = {
+REPLACE:company_ImperialBankofPersia = {
+	icon = "gfx/interface/icons/company_icons/bank/PersiaImperialBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Bank_IBP
+
+	preferred_headquarters = { STATE_IRAKAJEMI }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:persian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_IRAKAJEMI
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -455,9 +2671,67 @@ INJECT:company_BankMelliIran = {
 	}
 }
 
-INJECT:company_ImperialBankofPersia = {
+REPLACE:company_BancoDePortugal = { #Banco de Portugal
+	icon = "gfx/interface/icons/company_icons/bank/banco_de_portugal.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_ESTREMADURA } # Rien ici comme demandé
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_por
+	}
+
+	potential = {
+		country_has_primary_culture = cu:portuguese
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_ESTREMADURA
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -467,9 +2741,67 @@ INJECT:company_ImperialBankofPersia = {
 	}
 }
 
-INJECT:company_BancoDePortugal = {
+REPLACE:company_BancoNacionalDelParaguay = { #Banco Nacional del Paraguay
+	icon = "gfx/interface/icons/company_icons/bank/banco_nacional_del_paraguay.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_BAJO_PARAGUAY }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
+	}
+
+	potential = {
+		country_has_primary_culture = cu:platinean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_BAJO_PARAGUAY # Asuncion
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -479,9 +2811,68 @@ INJECT:company_BancoDePortugal = {
 	}
 }
 
-INJECT:company_BancoNacionalDelParaguay = {
+REPLACE:company_BankOfMontreal = { #Banque de Montréal
+	icon = "gfx/interface/icons/company_icons/bank/bank_of_montreal.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Bank_of_Montreal
+
+	preferred_headquarters = { STATE_QUEBEC }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_que
+	}
+
+	potential = {
+		country_has_primary_culture = cu:franco_canadian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_QUEBEC # Québec
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -491,9 +2882,136 @@ INJECT:company_BancoNacionalDelParaguay = {
 	}
 }
 
-INJECT:company_BankOfMontreal = {
+REPLACE:company_StateBankRussianEmpire = {
+	icon = "gfx/interface/icons/company_icons/bank/Russian_EmpireBank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+	replaces_company = company_Bank_SBRE
+
+	preferred_headquarters = { STATE_INGRIA STATE_MOSCOW }
+
+	possible_prestige_goods = {
+		agricultural_stock_rus
+		zz_ef_cm_representative_currency
+		zz_ef_cm_pegged_currency
+		zz_ef_cm_fiat_currency
+	}
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_rye_farm
+		building_wheat_farm
+		building_livestock_ranch
+
+		building_financial_centre_rus
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_russia
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_INGRIA
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_loyalists_from_legitimacy_mult = 0.1 #(first) state owned bank, it was used to finance their current needs
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075  #<--
+		country_government_dividends_efficiency_add = 0.075 #<--
+
+		country_max_companies_add = 1
+	}
+}
+
+REPLACE:company_BankSBoBSA = {
+	icon = "gfx/interface/icons/company_icons/bank/BankOfSouthAfrica.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	replaces_company = company_Bank_SBoBSA
+	building_types = {
+		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_saf
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_southern_africa
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				OR = {
+					state_region = s:STATE_EASTERN_CAPE
+					state_region = s:STATE_CAPE_COLONY
+				}
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_gold_mine_throughput_add = 0.15 #involved in diamond/gold trade
+
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.04
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
 	}
 
 	possible_prestige_goods = {
@@ -503,9 +3021,67 @@ INJECT:company_BankOfMontreal = {
 	}
 }
 
-INJECT:company_StateBankRussianEmpire = {
+REPLACE:company_CassaDiRisparmioDiTorino = { #Cassa di Risparmio di Torino
+	icon = "gfx/interface/icons/company_icons/bank/cassa_di_risparmio_di_torino.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_PIEDMONT } # Rien ici comme demandé
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_sar
+	}
+
+	potential = {
+		country_has_primary_culture = cu:north_italian
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_PIEDMONT
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -515,9 +3091,62 @@ INJECT:company_StateBankRussianEmpire = {
 	}
 }
 
-INJECT:company_BankSBoBSA = {
+REPLACE:company_BankofSpain = {
+	icon = "gfx/interface/icons/company_icons/bank/BankSpain.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	replaces_company = company_Bank_of_Spain
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_spa
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_iberia
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_NEW_CASTILE
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_diplomatic_play_maneuvers_add = 10 #aided the thirteen colonies in their independence war, PLUS we didnt use this before
+
+		country_loan_interest_rate_mult = -0.05
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.045 #<--
+		state_capitalists_investment_pool_contribution_add = 0.07 #<--
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.05
+
+		country_max_companies_add = 1
 	}
 
 	possible_prestige_goods = {
@@ -527,9 +3156,68 @@ INJECT:company_BankSBoBSA = {
 	}
 }
 
-INJECT:company_CassaDiRisparmioDiTorino = {
+REPLACE:company_HandelsBanken = {
+	icon = "gfx/interface/icons/company_icons/bank/HandelsBanken.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_SVEALAND }
+
+	flavored_company = yes
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_swe
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_baltic
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_SVEALAND
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.02
+		state_shopkeepers_investment_pool_contribution_add = 0.02
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.07
+
+		country_government_dividends_reinvestment_add = 0.05
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_weight = {
+		value = 3 # Higher base value for flavored companies
 	}
 
 	possible_prestige_goods = {
@@ -539,9 +3227,66 @@ INJECT:company_CassaDiRisparmioDiTorino = {
 	}
 }
 
-INJECT:company_BankofSpain = {
+REPLACE:company_Bankenverein = {
+	icon = "gfx/interface/icons/company_icons/bank/UBS.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_EAST_SWITZERLAND }
+
 	building_types = {
 		building_bank
+		#building_bank
+		#building_financial_district
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_swi
+	}
+
+	potential = {
+		has_interest_marker_in_region = region_south_germany
+	}
+
+	attainable = {
+		hidden_trigger = { # Hide attainable if it's always fulfilled by possible
+			any_scope_state = {
+				state_region = s:STATE_EAST_SWITZERLAND
+			}
+		}
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	prosperity_modifier = {
+	    building_railway_throughput_add = 0.1
+		interest_group_ig_trade_unions_approval_add = 2
+
+		country_loan_interest_rate_mult = -0.15
+        country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.025
+		country_government_dividends_efficiency_add = 0.025
+
+		country_max_companies_add = 1
 	}
 
 	possible_prestige_goods = {
@@ -551,9 +3296,67 @@ INJECT:company_BankofSpain = {
 	}
 }
 
-INJECT:company_HandelsBanken = {
+REPLACE:company_OttomanBank = { #Osmanlı Bankası
+	icon = "gfx/interface/icons/company_icons/bank/ottoman_bank.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = {STATE_EASTERN_THRACE}
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_tur
+	}
+
+	potential = {
+		country_has_primary_culture = cu:turkish
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_EASTERN_THRACE
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -563,9 +3366,67 @@ INJECT:company_HandelsBanken = {
 	}
 }
 
-INJECT:company_Bankenverein = {
+REPLACE:company_BancoCentralDelUruguay = { #Banco Central del Uruguay
+	icon = "gfx/interface/icons/company_icons/bank/banco_central_del_uruguay.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_URUGUAY }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre_uru
+	}
+
+	potential = {
+		country_has_primary_culture = cu:platinean
+	}
+
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
+	}
+
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_URUGUAY # Montevideo
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
@@ -575,33 +3436,67 @@ INJECT:company_Bankenverein = {
 	}
 }
 
-INJECT:company_OttomanBank = {
+REPLACE:company_BancoCentralDeVenezuela = { #Banco Central de Venezuela
+	icon = "gfx/interface/icons/company_icons/bank/banco_central_de_venezuela.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"
+
+	flavored_company = yes
+
+	preferred_headquarters = { STATE_MIRANDA }
+
 	building_types = {
 		building_bank
+		building_ef_private_construction
+		#building_port
+		building_gold_mine
+		building_silver_mine
+
+		building_financial_centre
 	}
 
-	possible_prestige_goods = {
-		zz_ef_cm_representative_currency
-		zz_ef_cm_pegged_currency
-		zz_ef_cm_fiat_currency
-	}
-}
-
-INJECT:company_BancoCentralDelUruguay = {
-	building_types = {
-		building_bank
+	potential = {
+		country_has_primary_culture = cu:north_andean
 	}
 
-	possible_prestige_goods = {
-		zz_ef_cm_representative_currency
-		zz_ef_cm_pegged_currency
-		zz_ef_cm_fiat_currency
+	possible = {
+		any_scope_state = {
+			is_incorporated = yes
+			any_scope_building = {
+				is_building_type = building_financial_district
+				level >= 1
+			}
+		}
 	}
-}
 
-INJECT:company_BancoCentralDeVenezuela = {
-	building_types = {
-		building_bank
+	attainable = {
+		hidden_trigger = {
+			any_scope_state = {
+				state_region = s:STATE_MIRANDA # Caracas
+			}
+		}
+	}
+
+	prosperity_modifier = {
+		building_cash_reserves_mult = 0.05
+
+		country_loan_interest_rate_mult = -0.05
+		country_private_construction_allocation_mult = 0.05
+
+		state_farmers_investment_pool_contribution_add = 0.015
+		state_shopkeepers_investment_pool_contribution_add = 0.015
+		state_clergymen_investment_pool_contribution_add = 0.04
+		state_aristocrats_investment_pool_contribution_add = 0.04
+		state_capitalists_investment_pool_contribution_add = 0.065
+
+		building_nationalization_investment_return_add = 0.05
+		country_government_dividends_reinvestment_add = 0.075
+		country_government_dividends_efficiency_add = 0.075
+
+		country_max_companies_add = 1
+	}
+
+	ai_will_do = {
+		always = yes
 	}
 
 	possible_prestige_goods = {
