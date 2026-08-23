@@ -1,5 +1,0 @@
-INJECT:pmg_base_building_private_construction_sector = {
-	production_methods = {
-		pm_prefabricated_concrete_buildings_private
-	}
-}
