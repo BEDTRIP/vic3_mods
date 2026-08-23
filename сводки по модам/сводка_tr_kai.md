@@ -5,6 +5,33 @@
 `vic3_mods_out/_cmf` (`CMF 13.08.2026`).
 **Сверено с файлами: 21.08.2026.**
 
+### Уточнено 21.08.2026 (разбор пары PSC + T&R)
+
+- **Строительные PM: в 13.05 T&R перешёл с `REPLACE:` на `INJECT:`-дельты.**
+  `ztr_construction_production_methods.txt` схлопнулся со 157 строк до 38: раньше мод
+  целиком переопределял `pm_wooden_buildings / pm_iron_frame_buildings /
+  pm_steel_frame_buildings / pm_arc_welded_buildings`, теперь правит их дельтами —
+  iron `commonores +5, iron -5, wood -5`; steel `alloys +10, steel -10`;
+  arc `alloys +10, steel -10, country_construction_add -2`; wooden не трогает вовсе.
+  **Любой компач, скопировавший старые полные блоки, разъехался.**
+- **Лестница очков строительства (ваниль + дельты T&R): 2 / 5 / 10 / 13 / 15**
+  (wooden / iron frame / steel frame / arc welded / prefab concrete).
+  До 13.05 было 2 / 5 / 9 / 11 / 13.
+- **`pm_prefabricated_concrete_buildings`** создаётся T&R (в ванили его нет) и
+  инжектится в `pmg_base_building_construction_sector`. В 13.05 у него
+  `country_construction_add` 13 -> 15 и `goods_input_electricity_add` 40 -> 30.
+- **С PSC пересечений ровно три ключа** (`scan_conflicts.py`) — те самые три
+  строительных PM. Остальное аддитивно: `BUILDINGS`, `GLOBAL`,
+  `on_acquired_technology`. `building_construction_sector` T&R не трогает вообще,
+  `common/defines` — только `NWar`, `NEconomy`, `NPops`, без `NCountry`.
+- **KAI x PSC: компач не нужен.** Единственное пересечение —
+  `INJECT:building_construction_sector { ai_value }` в `kai/common/buildings/kai_buildings.txt`;
+  оно затирается `REPLACE:` от PSC (`kai_` грузится раньше `zz_PSC_`), но потери нет:
+  PSC уже держит ту же логику у себя, там дословно лежит комментарий
+  `# KAI: Prefer states with iron` и та же `add = 500`, плюс бонус за первый сектор.
+- **Товаров ваниль 53 + PSC 4 + T&R 39 + KAI 0 = 96**, с `concrete_construction`
+  из компача — 97 при потолке 128.
+
 ### Что уточнено 21.08.2026 (разбор E&F + T&R)
 
 - **Товаров T&R добавляет 39** поверх ванили: `advancedores, ai_systems, alloys,

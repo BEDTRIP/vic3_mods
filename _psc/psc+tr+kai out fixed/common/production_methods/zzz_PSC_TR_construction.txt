@@ -1,0 +1,142 @@
+﻿# PSC + Tech & Res -- construction sector production methods.
+#
+# Why INJECT: and not a full REPLACE: of each method.
+# T&R patches the vanilla construction PMs with INJECT: deltas in
+# ztr_construction_production_methods.txt. It used full REPLACE: blocks until
+# the 13.05.2026 update, which is what this file used to be copied from.
+# PSC REPLACE:s the same methods and loads later -- common/production_methods/
+# is read in filename order and
+#   ztr_construction_production_methods.txt < zz_PSC_construction.txt < this file
+# -- so T&R's deltas are wiped, silently, with nothing in error.log. All this
+# file has to do is put them back on top of PSC's version.
+#
+# Repeated modifier keys inside one modifier block add up. That is exactly how
+# T&R applies these deltas to vanilla, so relying on it here is safe.
+#
+# Do not go back to copying whole PM bodies. That is how the previous version
+# lost `unlocking_technologies = { urban_planning }` from pm_iron_frame_buildings
+# and made iron frame construction available in 1836, and it forced every PSC
+# change to employment, icons or mortality to be re-copied by hand.
+
+INJECT:pm_iron_frame_buildings = {
+	building_modifiers = {
+		workforce_scaled = {
+			# T&R delta, re-applied over PSC: wood 40->35, iron 50->45, commonores 0->5
+			goods_input_commonores_add = 5
+			goods_input_iron_add = -5
+			goods_input_wood_add = -5
+		}
+	}
+}
+
+INJECT:pm_steel_frame_buildings = {
+	building_modifiers = {
+		workforce_scaled = {
+			# T&R delta, re-applied over PSC: steel 50->40, alloys 0->10
+			goods_input_alloys_add = 10
+			goods_input_steel_add = -10
+		}
+	}
+}
+
+INJECT:pm_arc_welded_buildings = {
+	building_modifiers = {
+		workforce_scaled = {
+			# T&R delta, re-applied over PSC: steel 50->40, alloys 0->10
+			goods_input_alloys_add = 10
+			goods_input_steel_add = -10
+
+			# T&R also lowers this method from vanilla's 15 construction points to
+			# 13 (country_construction_add = -2). Under PSC the sector emits a local
+			# good instead of points, at construction_goods_per_point = 10, so the
+			# same cut has to be made on the output side: 150 -> 130.
+			goods_output_arc_welded_construction_add = -20
+		}
+	}
+}
+
+# T&R's top construction method, converted to PSC's model.
+#
+# REPLACE_OR_CREATE: and not INJECT: because this is not a delta: the whole
+# point-producing half of T&R's method has to go and be replaced by goods
+# output, and the employment ladder has to follow PSC's sector -- under PSC the
+# bureaucrats staff building_construction_regulator, not the sector.
+# REPLACE_OR_CREATE: rather than REPLACE: because the entry does not exist in
+# vanilla, it is created by T&R.
+#
+# Numbers follow T&R 13.05.2026: 15 construction points -> 150 goods, inputs as
+# T&R has them. The previous version of this patch was calibrated against T&R
+# 1.5, where the method gave 13 points, and carried hand-tuned inputs
+# (steel 30, plastics 20, electricity 40) and output 140 with no recorded
+# reason. If play-testing says this tier needs a nudge, change it here and
+# write down why.
+REPLACE_OR_CREATE:pm_prefabricated_concrete_buildings = {
+	texture = "gfx/interface/icons/production_method_icons/prefabricated_concrete_buildings.dds"
+
+	unlocking_technologies = {
+		prefabricated_concrete_buildings
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			#input goods -- as in T&R 13.05.2026
+			goods_input_steel_add = 40
+			goods_input_aluminium_add = 10
+			goods_input_alloys_add = 10
+			goods_input_glass_add = 40
+			goods_input_plastics_add = 10
+			goods_input_explosives_add = 20
+			goods_input_robotics_add = 15
+			goods_input_electricity_add = 30
+
+			#output goods: T&R's 15 construction points x 10 goods per point
+			goods_output_concrete_construction_add = 150
+		}
+
+		level_scaled = {
+			building_employment_clerks_add = 100
+			building_employment_engineers_add = 190
+			building_employment_machinists_add = 160
+			building_employment_laborers_add = 500
+		}
+		unscaled = {
+			building_laborers_mortality_mult = 0.05
+		}
+	}
+
+	# T&R also grants state_construction_mult = 0.01 here. Dropped on purpose:
+	# none of PSC's construction methods carry it, and PSC computes the state's
+	# construction efficiency itself in calculate_state_construction_efficiency.
+	# Keeping it would make the concrete tier better in a way no other tier is.
+
+	# Kept from T&R and from vanilla's arc welded method. The previous version of
+	# this patch dropped it, so the concrete tier kept running at zero electricity.
+	required_input_goods = electricity
+}
+
+# The fifth conversion method for building_construction_regulator, mirroring
+# PSC's four. Shape copied from PSC on purpose -- it is a new entry, not a
+# patch of an existing one.
+REPLACE_OR_CREATE:pm_concrete_point_conversion = {
+	texture = "gfx/interface/icons/production_method_icons/construction_bureaucrats.dds"
+	is_hidden_when_unavailable = yes
+
+	country_modifiers = {
+		workforce_scaled = {
+			country_construction_add = 1
+		}
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_concrete_construction_add = 10
+		}
+		level_scaled = {
+			building_employment_bureaucrats_add = 20
+		}
+	}
+
+	unlocking_production_methods = {
+		pm_concrete_point_conversion
+	}
+}

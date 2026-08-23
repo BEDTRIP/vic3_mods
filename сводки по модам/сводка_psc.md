@@ -1,4 +1,4 @@
-**Версия в репозитории**: `.metadata/metadata.json` → `version = 1.3.7`, имя мода `[1.13] Private Sector Construction`, `supported_game_version` пустой. Коммит папки — `PSC 2.05.2026`.
+﻿**Версия в репозитории**: `.metadata/metadata.json` → `version = 1.3.7`, имя мода `[1.13] Private Sector Construction`, `supported_game_version` пустой. Коммит папки — `PSC 2.05.2026`.
 Steam ID: `3420714166`.
 **Сверено с файлами: 19.08.2026.**
 
@@ -13,6 +13,24 @@ Steam ID: `3420714166`.
 - **`gui` конфликтует по именам виджетов**: `construction_panel`, `state_buildings`, `state_panel_types` (`state_panel_buildings_content`, `state_panel_buildings_fixed_bottom`), `urban_building_list`, `construction_queue_pages`, `construction_sector_or_no_sector`, `domestic_queue` — оба мода переопределяют одни и те же ванильные окна разными файлами.
 
 ---
+
+### Уточнено 21.08.2026 (разбор пары PSC + T&R)
+
+- **Выходы строительных PM у PSC = ванильные очки x 10.** wooden 20, iron frame 50,
+  steel frame 100, arc welded 150 — ровно `construction_goods_per_point = 10`
+  из `PSC_set_values.txt`. Это готовый курс пересчёта: чужой мод меняет
+  `country_construction_add` у строительного PM -> в компаче правится
+  `goods_output_*_construction_add` в десять раз большим числом.
+- **`common/{goods,production_methods,script_values,scripted_effects}` у PSC
+  не менялись с `Initial commit`** — обновление `PSC 2.05.2026` их не тронуло.
+  Копии этих блоков в компачах можно не перепроверять построчно, пока git молчит.
+- **`production_method_building_switch` и `set_new_regulator_point_conversion_method`
+  живые**, вызываются из `set_construction_regulator_level` в `PSC_scripted_effects.txt`.
+  Индексы `production_method_chosen` там 0=arc … 3=wood; компач, добавляющий пятый
+  тир, обязан править **оба** места синхронно.
+- **Текст-иконки товаров PSC** лежат в `gui/PSC_goods_texticons.gui` (4 блока
+  `texticon`). Компач, добавляющий свой `*_construction`, обязан завести такой же
+  файл, иначе `@good!` в его локализации рисуется буквами.
 
 ### Общая идея PSC (сверено по файлам мода `PSC` и ванили `.vanillaVIC3`)
 
