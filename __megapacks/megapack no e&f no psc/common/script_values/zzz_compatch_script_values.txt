@@ -1,12 +1,18 @@
-REPLACE:curtiss_aeroplane_production_score = {
-	value = 0
-	every_scope_building = {
-		limit = {
-			is_building_type = building_aircraft_industry #T&R
-		}
-		add = level
-	}
-}
+﻿# Morgenroete <-> Tech & Res: Curtiss script values.
+#
+# Tech & Res moves aeroplane production out of building_automotive_industry into
+# its own building_aircraft_industry - its REPLACE of the automotive industry
+# keeps only automobile, tank, automation and data PM groups. Every Morgenroete
+# check written as "automotive industry running pm_aeroplane_production"
+# therefore never fires.
+#
+# Only the entries where Morgenroete still hardcodes the building type need
+# patching. Morgenroete 2.8.3e rewrote several of its own checks as
+# `modifier:goods_output_aeroplanes_add > 0`, which is building-agnostic and
+# matches T&R's aircraft industry on its own - curtiss_aeroplane_production_score
+# used to be REPLACEd here and was dropped on 2026-08-21 for exactly that
+# reason. Check the rest again after each Morgenroete update; the more of them
+# go generic, the less of this file is needed.
 
 REPLACE:curtiss_schneider_trophy_before_race_points_score = {
 	###TRAINING### max 3

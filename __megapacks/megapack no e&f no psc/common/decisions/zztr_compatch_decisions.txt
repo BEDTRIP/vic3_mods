@@ -1,3 +1,11 @@
+﻿# Morgenroete <-> Tech & Res: Curtiss decisions.
+#
+# Same cause as common/script_values/zzz_compatch_script_values.txt: Morgenroete
+# still tests building_automotive_industry + pm_aeroplane_production here, and
+# T&R took aeroplanes out of the automotive industry, so the decision can never
+# become possible. Body is Morgenroete 2.8.3e with the building type swapped for
+# building_aircraft_industry; nothing else differs.
+
 REPLACE:curtiss_found_pilot_school_decision = {
 	is_shown = {
 		has_technology_researched = military_aviation
