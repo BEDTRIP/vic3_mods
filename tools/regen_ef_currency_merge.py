@@ -969,23 +969,10 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 #
 # law_no_monetary_system is deliberately absent: a country without a monetary
 # system has no central bank, so nothing mints anything.
-# Two buildings a central bank must never end up holding. E&F's flavoured bank
-# companies -- the Bank of England, the Banque de France -- carry both, and once
-# such a company becomes the country's central bank the player is handed a railway
-# monopoly nobody asked for. 97 building_railway and 98 building_trade_center lines
-# across E&F's companies file; only the curated central banks are touched here.
-# The one central bank company every country without a historical one gets.
-# It was ninety-five types, one per currency law, identical but for the key --
-# see gen_generic_banks for what that cost and why it is one now.
-# How tall a central bank the rebuild ladder can put back. E&F's own spawners go
-# up to 70 in steps of 5; private growth can land anywhere between, so the ladder
-# tests every level rather than every fifth one.
 MAX_BANK_LEVEL = 100
 
 GENERIC_COMPANY = "zz_ef_cm_central_bank"
 CENTRAL_BANK_ICON = "gfx/interface/icons/building_icons/banks/central_bank.dds"
-
-CENTRAL_BANK_FORBIDDEN = {"building_railway", "building_trade_center"}
 
 PRESTIGE_REGIMES = [
     ("zz_ef_cm_representative_currency",
@@ -1174,31 +1161,26 @@ def historical_central_banks(ef: Path) -> tuple[list[str], list[str]]:
     return out, notes
 
 
-def _strip_bank_buildings(body: str, name: str, add_bank: bool) -> tuple[str, int]:
-    """Drop building_railway / building_trade_center from one building list.
+def _add_bank_to_list(body: str, name: str) -> str:
+    """Put building_bank at the top of one building list, if it is not there.
 
-    Only uncommented entries are touched: E&F keeps `#building_port` and
-    `#building_bank` in these lists as notes to itself, and rewriting those would
-    make every diff against a new E&F version unreadable.
+    Only the uncommented entries count: E&F keeps `#building_bank` in several of
+    these lists as a note to itself, and reading that as "already present" would
+    leave the company unable to own the thing.
     """
     m = re.search(r"\b" + name + r"\s*=\s*\{", body)
     if not m:
-        return body, 0
+        return body
     end = block_span(body, m.end() - 1)
-    inner = body[m.end():end - 1]
-    kept, dropped = [], 0
-    for ln in inner.splitlines():
-        if ln.strip() in CENTRAL_BANK_FORBIDDEN:
-            dropped += 1
-            continue
-        kept.append(ln)
-    indent = next((re.match(r"[ \t]*", ln).group(0) for ln in kept if ln.strip()), "\t\t")
-    if add_bank and not any(ln.strip() == "building_bank" for ln in kept):
-        # after the leading empty line, not before it: the slice starts right after
-        # the brace, so index 0 is the tail of the `building_types = {` line itself
-        # and inserting there welds the entry onto it.
-        kept.insert(1 if kept and not kept[0].strip() else 0, indent + "building_bank")
-    return body[:m.end()] + "\n".join(kept) + body[end - 1:], dropped
+    lines = body[m.end():end - 1].splitlines()
+    if any(ln.strip() == "building_bank" for ln in lines):
+        return body
+    indent = next((re.match(r"[ \t]*", ln).group(0) for ln in lines if ln.strip()), "\t\t")
+    # after the leading empty line, not before it: the slice starts right after the
+    # brace, so index 0 is the tail of the `building_types = {` line itself and
+    # inserting there welds the entry onto it.
+    lines.insert(1 if lines and not lines[0].strip() else 0, indent + "building_bank")
+    return body[:m.end()] + "\n".join(lines) + body[end - 1:]
 
 
 def _merge_prestige(body: str, goods: list[str]) -> str:
@@ -1216,80 +1198,59 @@ def _merge_prestige(body: str, goods: list[str]) -> str:
 
 
 def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
-    """building_bank and the three regime currencies, for the historical central
-    banks only -- plus company_BasicBank as the last-resort owner.
+    """building_bank and the three regime currencies, for every bank company E&F
+    ships.
 
-    NOT for all 97 of E&F's bank companies, and the difference matters.
-    `building_types` is the only real lock on who may hold a building: while every
-    bank company had building_bank on its list, Banca d'Italia privatised four
-    levels of the Papal central bank out from under the company that held the
-    monopoly. A monopoly is a price and construction rule; the building list is the
-    lock.
+    INJECT:, because adding is all this does. It was a REPLACE: for one round, in
+    order to take building_railway and building_trade_center off the central
+    banks' lists -- INJECT: can only add, so removing an entry means restating the
+    whole entry. That reason has expired: while there were ninety-five generated
+    company types the railways came with a company that was ONLY ever a central
+    bank, and now there is one generated type and the rest are E&F's own banks,
+    which are ordinary companies that happen to be eligible. Taking the Bank of
+    England's railways away because it might hold a central bank is the tail
+    wagging the dog, so they keep what E&F gave them.
 
-    So the list is the curated one: the bank that actually was the country's
-    central bank -- the Bank of England for Britain, the Banque de France for
-    France, the State Bank for Russia. Those keep the assets they already own, and
-    the generated per-currency company is used only where no such bank exists.
+    Which also means 98 REPLACE: blocks of E&F's text -- some 7,000 lines that had
+    to be re-diffed against every E&F update -- collapse back to 98 four-line
+    additions.
 
-    REPLACE:, not INJECT:, and that is the second half of the same lesson. INJECT:
-    can only add, so the first version of this file added building_bank and left
-    E&F's own building_railway and building_trade_center sitting on the list --
-    the Bank of England went on buying railways exactly as before. Taking an entry
-    off a list needs the whole entry restated.
-
-    Restating it means copying E&F's block verbatim and editing only the building
-    list and the prestige goods, so everything else -- the flavoured icon,
-    replaces_company, potential, attainable, the prosperity modifier -- keeps
-    working and keeps tracking E&F on the next regeneration.
+    WHY ALL OF THEM, and not a curated few. See historical_central_banks: the
+    curated table decides ORDER, not membership. Whatever bank a country holds is
+    its central bank, so any of them can end up owning one, and every one of them
+    needs building_bank on its list -- that list is the only real lock on who may
+    own a building.
     """
     hist, notes = historical_central_banks(ef)
-    src = read(ef / "common/company_types/00_ef_companies.txt")
-    blocks = {k: src[a:b] for k, a, b in iter_top_blocks(src)}
-    goods = [k for k, _, _ in PRESTIGE_REGIMES]
-    out, dropped = [], 0
+    goods = "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
+    out = []
     for c in hist:
-        body = blocks.get(c)
-        if body is None:
-            notes.append(f"WARNING {c}: no block in E&F to replace, skipped")
-            continue
-        for lst in ("building_types", "extension_building_types"):
-            body, n = _strip_bank_buildings(body, lst, add_bank=(lst == "building_types"))
-            dropped += n
-        out.append("REPLACE:" + _merge_prestige(body, goods).rstrip() + "\n\n")
-    notes.append(f"{dropped} railway/trade-centre entries removed across {len(hist)} companies")
+        out.append(f"INJECT:{c} = {{\n"
+                   f"\tbuilding_types = {{\n\t\tbuilding_bank\n\t}}\n\n"
+                   f"\tpossible_prestige_goods = {{\n{goods}\t}}\n"
+                   f"}}\n\n")
     head = (BANNER +
-            f"### Source: CENTRAL_BANK_COMPANY in the generator -- {len(hist)} of E&F's bank\n"
-            "### companies, the ones that were their country's actual central bank, checked\n"
-            "### against the tag E&F grants each of them in establish_bank_and_ef_compagnie.\n"
+            f"### Source: the {len(hist)} bank companies E&F itself lists in private_bank_type,\n"
+            "### ordered by CENTRAL_BANK_COMPANY -- see historical_central_banks in the\n"
+            "### generator for why that table decides order and not membership.\n"
             "###\n"
-            "### NOT all 97, and that is the whole point. `building_types` is the only real\n"
-            "### lock on who may own a building: while every bank company carried\n"
-            "### building_bank, Banca d'Italia privatised four levels of the Papal central\n"
-            "### bank away from the company holding the monopoly. A monopoly is a price and\n"
-            "### construction rule; this list is the lock.\n"
+            "### Two additions each, and nothing taken away:\n"
             "###\n"
-            "### These keep the assets they already own -- the Banque de France comes with\n"
-            "### its ten levels of private construction and five of the Bourse de Paris -- and\n"
-            "### the generated per-currency company is used only where no historical central\n"
-            "### bank exists. See zz_ef_cm_generic_banks.txt.\n"
+            "###   building_bank -- `building_types` is the only real lock on who may own a\n"
+            "###   building, and any of these can end up holding a central bank. Without it\n"
+            "###   the add_ownership in zz_ef_cm_bank_ownership.txt has nothing to hand the\n"
+            "###   bank to and the country's own bank never takes it over.\n"
             "###\n"
-            "### REPLACE:, because INJECT: can only add. The first version of this file was an\n"
-            "### INJECT: and the Bank of England kept buying railways: E&F's own list still\n"
-            "### held building_railway and building_trade_center, and nothing short of\n"
-            "### restating the entry takes an entry off it. Each block below is E&F's own,\n"
-            "### copied verbatim, with three edits -- building_bank added, those two removed,\n"
-            "### the three regime currencies appended to possible_prestige_goods.\n"
+            "###   the three regime currencies -- E&F's own prestige goods are left in place;\n"
+            "###   they sit on other base goods (manufacture_stock and friends) and never\n"
+            "###   compete with the three currencies, which all share spe_uni_c.\n"
             "###\n"
-            "### E&F's own prestige goods stay: they sit on other base goods\n"
-            "### (manufacture_stock and friends) and never compete with the three currencies,\n"
-            "### which all share spe_uni_c.\n"
-            "###\n"
-            "### company_BasicBank is NOT here any more. It used to be the fallback owner,\n"
-            "### with building_bank injected onto it -- but E&F offers it to every country\n"
-            "### as an ordinary company, so that quietly let any bank company anywhere buy\n"
-            "### a central bank, and it showed up in Bunyoro as a company called \"Bank\"\n"
-            "### owning railways. The fallback is zz_ef_cm_central_bank now; see\n"
-            "### zz_ef_cm_generic_banks.txt.\n\n")
+            "### INJECT:, which can only add, and that is now enough. For one round this file\n"
+            "### was 98 REPLACE: blocks carrying E&F's full definitions, in order to strip\n"
+            "### building_railway and building_trade_center -- 7,000 lines of E&F's text to\n"
+            "### re-diff on every update. These are ordinary companies that happen to be\n"
+            "### eligible for a central bank, not central banks as such, so they keep the\n"
+            "### buildings E&F gave them.\n\n")
     return head + "".join(out), len(hist), notes
 
 
@@ -1335,7 +1296,7 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
         s = sub_block(basic, name)
         return s if s else f"{name} = {{\n}}"
 
-    buildings, dropped = _strip_bank_buildings(block("building_types"), "building_types", True)
+    buildings = _add_bank_to_list(block("building_types"), "building_types")
     goods = "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
 
     body = (f"{GENERIC_COMPANY} = {{\n"
@@ -1365,9 +1326,6 @@ def gen_generic_banks(ef: Path, names: list[str]) -> str:
             "### key -- and the branch chains they forced on the dispatcher, the grant and the\n"
             "### monopoly pass overflowed the stack for any country that fell through all of\n"
             "### them. See gen_generic_banks in the generator for the crash report.\n"
-            "###\n"
-            f"### {dropped} ownership entries dropped from E&F's list (railway, trade centre) and\n"
-            "### building_bank added: a central bank owns banks, not railways.\n"
             "###\n"
             "### `replaces_company` is deliberately not copied from BasicBank -- it points at\n"
             "### company_basic_bank, which exists nowhere.\n\n"

@@ -10,9 +10,6 @@
 ### monopoly pass overflowed the stack for any country that fell through all of
 ### them. See gen_generic_banks in the generator for the crash report.
 ###
-### 2 ownership entries dropped from E&F's list (railway, trade centre) and
-### building_bank added: a central bank owns banks, not railways.
-###
 ### `replaces_company` is deliberately not copied from BasicBank -- it points at
 ### company_basic_bank, which exists nowhere.
 
@@ -25,7 +22,9 @@ zz_ef_cm_central_bank = {
 	building_types = {
 		building_bank
 		building_ef_private_construction
+		building_railway
 		#building_port
+		building_trade_center
 		building_gold_mine
 		building_silver_mine
 
