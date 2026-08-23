@@ -4,9 +4,8 @@
 ### Gives back the company slot the central bank company sits in.
 ###
 ### company_BasicBank already carries country_max_companies_add = 1, but inside
-### its prosperity_modifier -- that is, only once the company is prosperous, and
-### only for the generic one. This is unconditional and applies to the
-### flavoured companies too.
+### its prosperity_modifier -- that is, only once the company is prosperous. This
+### is unconditional and applies to the flavoured companies too.
 ###
 ### country_free_charters_add pays for the monopoly patent the player is meant to
 ### hand this company. Vanilla's monopoly_charter (00_company_charter_types.txt)

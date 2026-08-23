@@ -745,14 +745,14 @@ def gen_loc(keep: str, names: list[str]) -> dict[str, str]:
         for key, text in extra.items():
             body += f' {key}:0 "{text}"\n'
 
-        body += "\n" + ((" # Тип компании центробанка — по одному на валютный закон, но стране\n"
-                          " # видна ровно одна: остальные скрыты `potential`. Игрок видит\n"
-                          " # сгенерированное имя, а это подпись под ним.\n") if ru else
-                         (" # The central bank company type -- one per currency law, but a country\n"
-                          " # only ever sees one, the rest are hidden by `potential`. The player\n"
-                          " # reads the generated name; this is the label under it.\n"))
-        for cur in names:
-            body += f' {GENERIC_BANK}{cur}:0 "{company}"\n'
+        body += "\n" + ((" # Компания центробанка для стран без своего исторического банка.\n"
+                          " # Одна на всех: престижный товар выбирает закон денежного стандарта,\n"
+                          " # а не валюта, так что 95 отдельных типов не давали ничего.\n") if ru else
+                         (" # The central bank company, for countries with no historical bank of\n"
+                          " # their own. One for all of them: the prestige good is chosen by the\n"
+                          " # monetary standard law, not by the currency, so ninety-five separate\n"
+                          " # types selected nothing.\n"))
+        body += f' {GENERIC_COMPANY}:0 "{company}"\n'
 
         out[lang] = f"l_{lang}:\n\n" + note + "\n" + body
     return out
@@ -974,6 +974,12 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 # such a company becomes the country's central bank the player is handed a railway
 # monopoly nobody asked for. 97 building_railway and 98 building_trade_center lines
 # across E&F's companies file; only the curated central banks are touched here.
+# The one central bank company every country without a historical one gets.
+# It was ninety-five types, one per currency law, identical but for the key --
+# see gen_generic_banks for what that cost and why it is one now.
+GENERIC_COMPANY = "zz_ef_cm_central_bank"
+CENTRAL_BANK_ICON = "gfx/interface/icons/building_icons/banks/central_bank.dds"
+
 CENTRAL_BANK_FORBIDDEN = {"building_railway", "building_trade_center"}
 
 PRESTIGE_REGIMES = [
@@ -1187,9 +1193,6 @@ def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
             dropped += n
         out.append("REPLACE:" + _merge_prestige(body, goods).rstrip() + "\n\n")
     notes.append(f"{dropped} railway/trade-centre entries removed across {len(hist)} companies")
-    out.append("INJECT:company_BasicBank = {\n"
-               "\tbuilding_types = {\n\t\tbuilding_bank\n\t}\n"
-               "}\n")
     head = (BANNER +
             f"### Source: CENTRAL_BANK_COMPANY in the generator -- {len(hist)} of E&F's bank\n"
             "### companies, the ones that were their country's actual central bank, checked\n"
@@ -1217,112 +1220,94 @@ def gen_companies(ef: Path, names: list[str]) -> tuple[str, int, list[str]]:
             "### (manufacture_stock and friends) and never compete with the three currencies,\n"
             "### which all share spe_uni_c.\n"
             "###\n"
-            "### company_BasicBank gets the building and no currency: it is the fallback owner\n"
-            "### for a country with neither a historical central bank nor a currency law. It\n"
-            "### stays an INJECT: -- E&F offers it to every country as an ordinary company,\n"
-            "### not only as a central bank, so its railways are not ours to take away.\n\n")
-    return head + "".join(out), len(hist) + 1, notes
+            "### company_BasicBank is NOT here any more. It used to be the fallback owner,\n"
+            "### with building_bank injected onto it -- but E&F offers it to every country\n"
+            "### as an ordinary company, so that quietly let any bank company anywhere buy\n"
+            "### a central bank, and it showed up in Bunyoro as a company called \"Bank\"\n"
+            "### owning railways. The fallback is zz_ef_cm_central_bank now; see\n"
+            "### zz_ef_cm_generic_banks.txt.\n\n")
+    return head + "".join(out), len(hist), notes
 
 
 def gen_generic_banks(ef: Path, names: list[str]) -> str:
-    """One bank company per currency, for every country without a flavoured one.
+    """ONE central bank company, for every country without a historical one.
 
-    company_BasicBank is a single type shared by every such country, so it can
-    carry only one prestige good for all of them -- which is exactly the ambiguity
-    that had to go. Ninety-five copies of it, each gated on one currency law and
-    each producing that one currency, give every country its own name and icon back.
+    There used to be ninety-five of these, one per currency law, and every one was
+    the same block with a different key: same icon, same building list, the same
+    three prestige goods. Which prestige good a central bank makes is decided by
+    the MONETARY STANDARD law, not by the currency -- so the currency never had
+    anything left to select, and the ninety-five types bought nothing. What they
+    cost:
 
-    `potential` IS a reliable country-scope trigger (companies.md: "A trigger
-    evaluated in country scope"), unlike `possible` on the prestige good, so the
-    law gate belongs here and works.
+      * a 145-branch if/else_if chain in the ownership dispatcher, another in the
+        monopoly pass, another in the grant. An if/else_if chain NESTS, so a
+        country that matched no branch walked all 145 frames down, inside E&F's
+        own already-deep call stack. That is
+        `Unhandled Exception C00000FD (EXCEPTION_STACK_OVERFLOW)` in
+        crashes/victoria3_.../exception.txt -- the crash on researching the
+        central bank in a country whose currency is not one of the ninety-five,
+        because that country is exactly the one that reaches the bottom.
+      * ninety-five ways for the dispatcher, the grant, the retire list and the
+        triggers to disagree about which company a country is meant to hold. That
+        is where Austria's and Spain's ghost companies came from.
 
-    Everything else -- icon, background, dynamic names, building list, prosperity
-    modifier -- is copied from E&F's company_BasicBank so these read as the same
-    thing. `replaces_company` is deliberately not copied: it points at
-    company_basic_bank, which exists nowhere.
+    So: one type, one name, one branch. It also replaces company_BasicBank as the
+    fallback owner, which fixes the last of the three complaints -- BasicBank is
+    E&F's ordinary bank company, offered to every country, and it came with a
+    railway and a trade centre and the name "Bank".
+
+    flavored_company = yes ON PURPOSE, and it is not the usual meaning. It blocks
+    dynamic naming -- all ten of vanilla's naming patterns carry
+    use_for_flavored_companies = no -- and the game then falls back to the type's
+    localisation key. That key is the name we want: "Central Bank". Dynamic naming
+    would splice the tag into the middle of the pattern instead
+    ("[Adjective] $TAG$ $TYPE_NAME$"), which is how the panel came to read
+    "Австрийская ZZ_EF_CM_BANK_GULDEN_DYNAMIC_NAME_TAG_SINGULAR компания".
     """
     src = read(ef / "common/company_types/00_ef_companies.txt")
     basic = next(src[a:b] for k, a, b in iter_top_blocks(src) if k == "company_BasicBank")
-    tags_of = currency_tags(ef)
-
-    def field(name: str, default: str) -> str:
-        m = re.search(r"^\s*" + name + r"\s*=\s*(\S+)", basic, re.M)
-        return m.group(1) if m else default
 
     def block(name: str) -> str:
         s = sub_block(basic, name)
         return s if s else f"{name} = {{\n}}"
 
-    # The central bank building's own icon, not BasicBank's. These companies are the
-    # central bank -- one per currency law, one visible per country -- so they should
-    # look like it in the company list.
-    icon = '"gfx/interface/icons/building_icons/banks/central_bank.dds"' 
-    background = field("background", '"gfx/interface/icons/company_icons/company_backgrounds/comp_illu_manufacturing_light.dds"')
-    names_block = block("dynamic_company_type_names")
-    # A central bank is not a railway company. company_BasicBank's list is E&F's
-    # generic bank, so it carries the lot; these keep the financial half of it.
-    drop = ("building_railway", "building_trade_center")
-    keep_lines = [l for l in block("building_types").split("\n")
-                  if not any(d in l for d in drop)]
-    buildings = "\n".join(keep_lines).rstrip()[:-1].rstrip() + "\n\tbuilding_bank\n}"
-    possible = block("possible")
-    prosperity = block("prosperity_modifier")
+    buildings, dropped = _strip_bank_buildings(block("building_types"), "building_types", True)
+    goods = "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
 
-    def indent(text: str) -> str:
-        return "\n".join(("\t" + l) if l.strip() else l for l in text.split("\n"))
-
-    out = []
-    for cur in names:
-        out.append(
-            f"{GENERIC_BANK}{cur} = {{\n"
-            f"\ticon = {icon}\n"
-            f"\tbackground = {background}\n\n"
-            f"\t### NOT flavored_company = yes, and that is what makes the name work.\n"
-            f"\t### Every one of vanilla's 10 dynamic naming patterns carries\n"
-            f"\t### use_for_flavored_companies = no, and E&F ships no patterns of its own --\n"
-            f"\t### so a flavoured company gets no generated name and the game falls back to\n"
-            f"\t### the localisation key. That is why the company panel read\n"
-            f"\t### ZZ_EF_CM_BANK_DOLLAR_UNITED_STATES_DOLLAR.\n"
-            f"\tflavored_company = no\n"
-            f"\tuses_dynamic_naming = yes\n\n"
-            f"{indent(names_block)}\n\n"
-            f"{indent(buildings)}\n\n"
-            f"\tpossible_prestige_goods = {{\n"
-            + "".join(f"\t\t{k}\n" for k, _, _ in PRESTIGE_REGIMES)
-            + f"\t}}\n\n"
-            f"\tpotential = {{\n\t\tOR = {{\n"
-            f"\t\t\thas_law = law_type:law_{cur}_currency\n"
-            + "".join(f"\t\t\tc:{t} ?= this\n" for t in tags_of.get(cur, ()))
-            + f"\t\t}}\n\t}}\n\n"
-            f"{indent(possible)}\n\n"
-            f"{indent(prosperity)}\n\n"
+    body = (f"{GENERIC_COMPANY} = {{\n"
+            f'\ticon = "{CENTRAL_BANK_ICON}"\n'
+            f'\tbackground = "gfx/interface/icons/company_icons/company_backgrounds/'
+            f'comp_illu_manufacturing_light.dds"\n\n'
+            f"\tflavored_company = yes\n\n"
+            f"\t{buildings.strip()}\n\n"
+            f"\tpossible_prestige_goods = {{\n{goods}\t}}\n\n"
+            f"\tpotential = {{\n"
+            f"\t\t### Not offered to a country that already holds the bank that WAS its\n"
+            f"\t\t### central bank. Britain has the Bank of England; it has no use for this.\n"
+            f"\t\tNOT = {{ zz_ef_cm_holds_own_historical_bank = yes }}\n"
+            f"\t}}\n\n"
+            f"\t{block('possible').strip()}\n\n"
+            f"\t{block('prosperity_modifier').strip()}\n\n"
             f"\tai_will_do = {{\n\t\talways = yes\n\t}}\n\n"
             f"\tai_weight = {{\n\t\tvalue = 3\n\t}}\n"
-            f"}}\n\n")
+            f"}}\n")
 
     return (BANNER +
-            "### Source: E&F's company_BasicBank, cloned once per currency.\n"
+            "### Source: E&F's own company_BasicBank, with the building list filtered and the\n"
+            "### three regime currencies added.\n"
             "###\n"
-            "### WHY NINETY-FIVE COPIES OF ONE COMPANY\n"
+            "### ONE company for every country that has no historical central bank of its own.\n"
+            "### There were ninety-five of these, one per currency law, identical but for the\n"
+            "### key -- and the branch chains they forced on the dispatcher, the grant and the\n"
+            "### monopoly pass overflowed the stack for any country that fell through all of\n"
+            "### them. See gen_generic_banks in the generator for the crash report.\n"
             "###\n"
-            "### A company produces the prestige goods on its own list, and `possible` on a\n"
-            "### prestige good cannot look at the country -- vanilla only ever puts\n"
-            "### has_dlc_feature in it. So a company can carry exactly one currency, and\n"
-            "### company_BasicBank is one type shared by every country that has no flavoured\n"
-            "### bank of its own. One type cannot mint a hundred different currencies.\n"
+            f"### {dropped} ownership entries dropped from E&F's list (railway, trade centre) and\n"
+            "### building_bank added: a central bank owns banks, not railways.\n"
             "###\n"
-            "### `potential` is the gate that does work: companies.md calls it \"a trigger\n"
-            "### evaluated in country scope\", so exactly one of these is ever visible to a\n"
-            "### given country -- the one matching its currency law.\n"
-            "###\n"
-            "### uses_dynamic_naming, so they come out as \"Bank of <somewhere>\" rather than as\n"
-            "### a placeholder. replaces_company is deliberately NOT copied from BasicBank: it\n"
-            "### points at company_basic_bank, which exists in no mod here.\n\n"
-            + "".join(out))
-
-
-
-# --- the central bank company always exists ---------------------------------
+            "### `replaces_company` is deliberately not copied from BasicBank -- it points at\n"
+            "### company_basic_bank, which exists nowhere.\n\n"
+            + body)
 
 
 def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
@@ -1338,82 +1323,58 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
       * make it undeletable -- there is no such flag, so it is imitated: delete it
         and the monthly pass puts it back.
 
-    There is deliberately no remove_company here. Withdrawing one bank company in
-    favour of a better one would strip the central bank of its owner, and nothing
-    in the game can hand those levels to the replacement -- add_ownership only
-    exists inside create_building. The right company wins at creation instead, and
-    the rebuild in zz_ef_cm_create_owned_bank moves the bank when a better one
-    appears later.
+    NO TAG GATE ANY MORE, and that is the fix for Prussia. The old
+    zz_ef_cm_holds_own_historical_bank asked "is this country AUS and does it hold
+    the Oesterreichische Nationalbank" -- a table of tag-to-company written here,
+    against which E&F's actual grants were only checked, not derived. E&F hands the
+    Preussische Seehandlung to PRU; the table said NGF. So Prussia held its own
+    historical bank, the trigger said no, the upkeep pass concluded it had no bank
+    company and granted it a second one. That is the duplicate in the screenshot.
+
+    The question that actually matters has no tag in it: does this country hold one
+    of the curated central bank companies at all? Whoever E&F gave it to is the
+    country it belongs to.
 
     Everything is additive. on_actions stack, GLOBAL blocks stack, the modifier and
     the triggers are new keys. Nothing of E&F's is overridden.
     """
-    order = [c for c, _ in bank_company_priority(ef, names)]
-    any_of = "\n".join(f"\t\t\tis_company_type = company_type:{c}" for c in order)
-
     hist, _ = historical_central_banks(ef)
-    table = {t: ([c] if isinstance(c, str) else list(c))
-             for t, c in CENTRAL_BANK_COMPANY.items()}
-    own_hist = "".join(
-        f"\t\t{'if' if i == 0 else 'else_if'} = {{\n"
-        f"\t\t\tlimit = {{ c:{tag} ?= this }}\n"
-        f"\t\t\thas_company = company_type:{table[tag][0]}\n"
-        f"\t\t}}\n"
-        for i, tag in enumerate(sorted(table)))
-    stand_in = "\n".join(
-        f"\t\t\tis_company_type = company_type:{c}"
-        for c in [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"])
-
-    # By law first -- that is the truth once the game is running. By tag second,
-    # because at history time it is the ONLY thing available: E&F activates the
-    # currency laws in common/history/global, and history/buildings runs BEFORE
-    # that (E&F's own global history reads var:central_bank_location, which the
-    # buildings history sets). So when the central banks are built, not one country
-    # has a currency law yet -- every has_law test is false and every law-gated
-    # company is invisible. That is why Finland's bank came out state-owned.
-    tags_of = currency_tags(ef)
-    table = {t: ([c] if isinstance(c, str) else list(c))
-             for t, c in CENTRAL_BANK_COMPANY.items()}
-
-    # The country's own historical central bank comes first, by tag. Without this
-    # the generated company took the bank at game start and the historical one
-    # turned up later with nothing to own -- Turkey ended up holding a central bank
-    # AND the Ottoman Bank, Russia the same, and neither of the real banks was the
-    # central bank. add_company ignores E&F's founding dates, which is the point:
-    # the bank exists because the central bank does.
-    parts = []
-    for tag in sorted(table):
-        parts.append((f"c:{tag} ?= this", table[tag][0]))
-    for cur in names:
-        parts.append((f"has_law = law_type:law_{cur}_currency", GENERIC_BANK + cur))
-    for cur in names:
-        for t in tags_of.get(cur, ()):
-            parts.append((f"c:{t} ?= this", GENERIC_BANK + cur))
-    grant = "".join(
-        f"\t{'if' if i == 0 else 'else_if'} = {{\n"
-        f"\t\tlimit = {{ {test} }}\n"
-        f"\t\tadd_company = company_type:{comp}\n"
-        f"\t}}\n"
-        for i, (test, comp) in enumerate(parts))
+    any_of = "\n".join(f"\t\t\tis_company_type = company_type:{c}"
+                       for c in hist + [GENERIC_COMPANY])
+    own_hist = "\n".join(f"\t\t\tis_company_type = company_type:{c}" for c in hist)
 
     triggers = (BANNER +
-                "### Source: the bank companies in E&F's own 00_ef_companies.txt plus the\n"
-                "### generated per-currency ones in zz_ef_cm_generic_banks.txt.\n\n"
-                f"### Does this country hold any bank company at all -- one of E&F's {len(order) - len(names) - 1}\n"
-                f"### flavoured ones, one of the {len(names)} generated per-currency ones, or the\n"
-                "### generic fallback?\n"
+                "### Source: the curated central bank companies in E&F's own\n"
+                "### 00_ef_companies.txt plus the one generated in zz_ef_cm_generic_banks.txt.\n"
+                "###\n"
+                "### FLAT `any_company` LISTS, NOT if/else_if CHAINS. A chain nests, and the\n"
+                "### previous version of this file had a 49-deep one inside an OR. Between that\n"
+                "### one, the 145-deep chain in the dispatcher and the 145-deep chain in the\n"
+                "### monopoly pass, a country that matched nothing walked far enough down to\n"
+                "### take the game with it:\n"
+                "###\n"
+                "###   Unhandled Exception C00000FD (EXCEPTION_STACK_OVERFLOW)\n"
+                "###\n"
+                f"### Does this country hold any central bank company at all -- one of the\n"
+                f"### {len(hist)} curated historical ones, or the generated one?\n"
                 "zz_ef_cm_has_bank_company = {\n"
                 "\tany_company = {\n"
                 "\t\tOR = {\n" + any_of + "\n\t\t}\n\t}\n}\n\n"
-                "### Does this country hold the bank that WAS its central bank? Tag-gated: the\n"
-                "### Papal States hold Banca d'Italia, and the bank of Italy is not theirs.\n"
+                "### Does this country hold the bank that WAS its central bank?\n"
+                "###\n"
+                "### No tag gate. The table of tag-to-company this used to test against\n"
+                "### disagreed with E&F -- E&F gives the Preussische Seehandlung to PRU, the\n"
+                "### table said NGF -- and every disagreement produced a country holding two\n"
+                "### central bank companies at once. Whoever E&F handed the bank to is who it\n"
+                "### belongs to.\n"
                 "zz_ef_cm_holds_own_historical_bank = {\n"
-                "\tOR = {\n" + own_hist + "\t}\n}\n\n"
-                "### ...and a generated stand-in, which it should not still be holding once the\n"
-                "### real one has arrived.\n"
-                "zz_ef_cm_holds_stand_in_bank = {\n"
                 "\tany_company = {\n"
-                "\t\tOR = {\n" + stand_in + "\n\t\t}\n\t}\n}\n\n"
+                "\t\tOR = {\n" + own_hist + "\n\t\t}\n\t}\n}\n\n"
+                "### ...and the generated stand-in, which it should not still be holding once\n"
+                "### the real one has arrived.\n"
+                "zz_ef_cm_holds_stand_in_bank = {\n"
+                f"\thas_company = company_type:{GENERIC_COMPANY}\n"
+                "}\n\n"
                 "### The central bank is a state building placed by E&F, not something anyone\n"
                 "### builds, so ownership of it is the only honest test for \"has a central bank\".\n"
                 "zz_ef_cm_has_central_bank = {\n"
@@ -1422,24 +1383,25 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                 "\t}\n}\n")
 
     effects = (BANNER +
-               "### Country scope. Grant the bank company that matches this country's currency\n"
-               "### law, giving it the slot first.\n"
+               "### Country scope. Give the country a central bank company if it has none.\n"
                "###\n"
                "### ORDER MATTERS AND IT COST A ROUND TO FIND OUT. The slot has to be granted\n"
                "### BEFORE add_company, not after. Finland owns a central bank and no company\n"
                "### slots at all in 1836 -- add_company simply had nowhere to put the company,\n"
-               "### and the +1 arrived a line too late to help.\n\n"
+               "### and the +1 arrived a line too late to help.\n"
+               "###\n"
+               "### There is nothing to choose between any more. The historical banks are\n"
+               "### E&F's to hand out and it has already done so by the time this runs; the\n"
+               "### generated one is a single type for everybody else. The ninety-five-branch\n"
+               "### chain that used to stand here is what overflowed the stack.\n\n"
                "zz_ef_cm_grant_bank_company = {\n"
                "\tif = {\n"
                "\t\tlimit = { NOT = { has_modifier = zz_ef_cm_central_bank_charter } }\n"
                "\t\tadd_modifier = zz_ef_cm_central_bank_charter\n"
                "\t}\n\n"
-               + grant +
-               "\telse = {\n"
-               "\t\t### No currency law at all. company_BasicBank carries no prestige currency\n"
-               "\t\t### any more -- it cannot, one type serves every such country -- but it can\n"
-               "\t\t### still own the bank.\n"
-               "\t\tadd_company = company_type:company_BasicBank\n"
+               "\tif = {\n"
+               "\t\tlimit = { NOT = { zz_ef_cm_has_bank_company = yes } }\n"
+               f"\t\tadd_company = company_type:{GENERIC_COMPANY}\n"
                "\t}\n"
                "}\n\n"
                "### Keep the central bank company alive.\n"
@@ -1471,7 +1433,7 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                "\t\t}\n"
                "\t\tremove_modifier = zz_ef_cm_central_bank_charter\n"
                "\t}\n\n"
-               "\t### The historical bank has turned up while a stand-in holds the central\n"
+               "\t### The historical bank has turned up while the stand-in holds the central\n"
                "\t### bank. Ownership cannot be moved, so ask zz_ef_cm_create_owned_bank to\n"
                "\t### build the thing again -- it picks the historical bank first.\n"
                "\tif = {\n"
@@ -1499,19 +1461,15 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                "\t\tlimit = { zz_ef_cm_has_central_bank = yes }\n"
                "\t\tzz_ef_cm_bank_monopoly = yes\n"
                "\t}\n"
+               "}\n"
+               "\n### Drop the generated stand-in once the country's own historical bank has\n"
+               "### taken the central bank over. One line now: there is one stand-in type.\n\n"
+               "zz_ef_cm_retire_stand_in_bank = {\n"
+               "\tif = {\n"
+               f"\t\tlimit = {{ has_company = company_type:{GENERIC_COMPANY} }}\n"
+               f"\t\tremove_company = company_type:{GENERIC_COMPANY}\n"
+               "\t}\n"
                "}\n")
-
-    retire = "".join(
-        f"\tif = {{\n"
-        f"\t\tlimit = {{ has_company = company_type:{c} }}\n"
-        f"\t\tremove_company = company_type:{c}\n"
-        f"\t}}\n"
-        for c in [GENERIC_BANK + cur for cur in names] + ["company_BasicBank"])
-    effects += ("\n### Drop the generated stand-in once the country's own historical bank has\n"
-                "### taken the central bank over. Every one of them, not the first match: a\n"
-                "### country that changed currency law along the way can be holding more than\n"
-                "### one.\n\n"
-                "zz_ef_cm_retire_stand_in_bank = {\n" + retire + "}\n")
 
     on_actions = (BANNER +
                   "### on_actions are additive across mods -- E&F, T&R and the Morgenroete\n"
@@ -1539,9 +1497,8 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                 "### Gives back the company slot the central bank company sits in.\n"
                 "###\n"
                 "### company_BasicBank already carries country_max_companies_add = 1, but inside\n"
-                "### its prosperity_modifier -- that is, only once the company is prosperous, and\n"
-                "### only for the generic one. This is unconditional and applies to the\n"
-                "### flavoured companies too.\n"
+                "### its prosperity_modifier -- that is, only once the company is prosperous. This\n"
+                "### is unconditional and applies to the flavoured companies too.\n"
                 "###\n"
                 "### country_free_charters_add pays for the monopoly patent the player is meant to\n"
                 "### hand this company. Vanilla's monopoly_charter (00_company_charter_types.txt)\n"
@@ -1560,7 +1517,6 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
         "common/history/global/zz_ef_cm_init.txt": init,
         "common/static_modifiers/zz_ef_cm_company_modifier.txt": modifier,
     }
-
 
 
 def gen_modifier_types(keep: str) -> str:
@@ -1741,101 +1697,61 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
     States, Banca d'Italia privatised 4 of the state's levels out from under the
     company that held the monopoly.
 
-    WHICH COMPANY. Not a fixed table any more. E&F grants its flavoured bank
-    companies to hardcoded tags, but the game hands them out more loosely than
-    that -- the Papal States hold Banca d'Italia, which E&F's own script only ever
-    gives to ITA. So the rule is the one that survives contact: whatever bank
-    company the country already holds gets the bank, and CENTRAL_BANK_COMPANY only
-    decides who goes first when a country holds several (Britain holds six, and by
-    founding date Barclays 1690 would beat the Bank of England 1694).
+    WHICH COMPANY. Whatever central bank company the country already holds --
+    E&F's flavoured one if it has one, the generated one otherwise. No `c:TAG`
+    conditions: E&F hands its banks out more loosely than any table written here
+    can predict, and every disagreement between the table and E&F produced a
+    country holding two central bank companies at once.
 
-    No `c:TAG` conditions and no literal country in add_ownership either -- the
-    owner comes from a saved scope, which the fallback branch already proved works
-    in game.
+    FLAT `if` BLOCKS, NOT AN if/else_if CHAIN, and this is the whole reason the
+    game stopped crashing. A chain nests: `else_if` number fifty is fifty frames
+    deep, and this one had 145 branches sitting inside E&F's own deep call stack.
+    A country that matched an early branch was fine; a country that matched none
+    -- one whose currency was not among the ninety-five -- walked to the bottom
+    and took the process with it:
+
+      Unhandled Exception C00000FD (EXCEPTION_STACK_OVERFLOW) at 0x00007FF67B9E2FC7
+
+    So the branches are siblings now, and a variable on the owner carries the "not
+    built yet" state between them instead of the else chain. Depth 1, whatever the
+    country.
     """
     notes: list[str] = []
-    # The effect grants E&F's industrial companies too (Krupp, Ganz, Skoda...);
-    # only the bank ones are relevant, and only they carry a tag worth reading.
-    banks = [k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))
-             if k.startswith("company_") and k not in BANK_COMPANY_SKIP]
-    bankset = set(banks)
-    mapping = establish_mapping(ef, bankset)
-
-    table = {t: ([c] if isinstance(c, str) else list(c))
-             for t, c in CENTRAL_BANK_COMPANY.items()}
-    for tag, comps in sorted(table.items()):
-        for comp in comps:
-            if comp not in mapping:
-                notes.append(f"WARNING {comp}: E&F no longer grants it anywhere")
-            elif tag not in mapping[comp]:
-                notes.append(f"WARNING {comp}: E&F grants it to {mapping[comp]}, not {tag}")
-
-    # Priority: the curated central banks first, in tag order, then every other
-    # bank company E&F ships, then the generic one as the last resort.
-    # (company, tag) -- the historical banks are gated on the country they belong
-    # to, the generated ones are not. Without the gate the Papal States, which hold
-    # Banca d'Italia, would hand it the Papal central bank: E&F grants that company
-    # to ITA, and the bank of Italy is not the bank of the Papal States.
     hist, hnotes = historical_central_banks(ef)
     notes.extend(hnotes)
-    table = {t: ([c] if isinstance(c, str) else list(c))
-             for t, c in CENTRAL_BANK_COMPANY.items()}
-    tag_of = {}
-    for tag in sorted(table):
-        for comp in table[tag]:
-            tag_of.setdefault(comp, tag)
-    priority = ([(c, tag_of.get(c)) for c in hist]
-                + [(GENERIC_BANK + cur, None) for cur in names]
-                + [("company_BasicBank", None)])
+    priority = hist + [GENERIC_COMPANY]
     notes.append(f"bank companies in the dispatcher: {len(priority)} "
-                 f"({len(hist)} historical, tag-gated)")
+                 f"({len(hist)} historical, flat branches)")
 
-    def owned_create(indent: str, comp: str) -> str:
-        i = indent
-        return (f"{i}create_building = {{\n"
-                f"{i}\tbuilding = $BANK_BLDG_TYPE$\n"
-                f"{i}\treserves = 1\n"
-                f"{i}\tadd_ownership = {{\n"
-                f"{i}\t\tcompany = {{\n"
-                f"{i}\t\t\ttype    = {comp}\n"
-                f"{i}\t\t\tcountry = scope:zz_ef_cm_bank_owner\n"
-                f"{i}\t\t\tlevels  = $CB_SIZE$\n"
-                f"{i}\t\t}}\n"
-                f"{i}\t}}\n"
-                f"{i}}}\n")
+    def owned_branch(comp: str) -> str:
+        return ("\t\tif = {\n"
+                "\t\t\tlimit = {\n"
+                "\t\t\t\tscope:zz_ef_cm_bank_owner = {\n"
+                "\t\t\t\t\thas_variable = zz_ef_cm_bank_unbuilt\n"
+                f"\t\t\t\t\thas_company = company_type:{comp}\n"
+                "\t\t\t\t}\n"
+                "\t\t\t}\n"
+                "\t\t\tcreate_building = {\n"
+                "\t\t\t\tbuilding = $BANK_BLDG_TYPE$\n"
+                "\t\t\t\treserves = 1\n"
+                "\t\t\t\tadd_ownership = {\n"
+                "\t\t\t\t\tcompany = {\n"
+                f"\t\t\t\t\t\ttype    = {comp}\n"
+                "\t\t\t\t\t\tcountry = scope:zz_ef_cm_bank_owner\n"
+                "\t\t\t\t\t\tlevels  = $CB_SIZE$\n"
+                "\t\t\t\t\t}\n"
+                "\t\t\t\t}\n"
+                "\t\t\t}\n"
+                "\t\t\tscope:zz_ef_cm_bank_owner = {\n"
+                "\t\t\t\tremove_variable = zz_ef_cm_bank_unbuilt\n"
+                "\t\t\t}\n"
+                "\t\t}\n")
 
-    branches = []
-    for comp, tag in priority:
-        gate = f"\t\t\t\t\tc:{tag} ?= this\n" if tag else ""
-        branches.append(
-            f"\t\t{'if' if not branches else 'else_if'} = {{\n"
-            f"\t\t\tlimit = {{\n"
-            f"\t\t\t\tscope:zz_ef_cm_bank_owner = {{\n"
-            f"{gate}"
-            f"\t\t\t\t\thas_company = company_type:{comp}\n"
-            f"\t\t\t\t}}\n"
-            f"\t\t\t}}\n"
-            + owned_create("\t\t\t", comp) +
-            f"\t\t}}\n")
-
-    # The second chain, after the grant: only the generated per-currency companies
-    # can have appeared, so it need not repeat the flavoured ones.
-    second = []
-    for cur in names:
-        comp = GENERIC_BANK + cur
-        second.append(
-            f"\t\t\t{'if' if not second else 'else_if'} = {{\n"
-            f"\t\t\t\tlimit = {{\n"
-            f"\t\t\t\t\tscope:zz_ef_cm_bank_owner = {{\n"
-            f"\t\t\t\t\t\thas_company = company_type:{comp}\n"
-            f"\t\t\t\t\t}}\n"
-            f"\t\t\t\t}}\n"
-            + owned_create("\t\t\t\t", comp) +
-            f"\t\t\t}}\n")
+    branches = "".join(owned_branch(c) for c in priority)
 
     dispatch = (BANNER +
-                "### Source: the bank companies in E&F's own 00_ef_companies.txt, ordered by\n"
-                "### CENTRAL_BANK_COMPANY in the generator.\n"
+                "### Source: the curated central bank companies in E&F's own\n"
+                "### 00_ef_companies.txt, in CENTRAL_BANK_COMPANY order, then the generated one.\n"
                 "###\n"
                 "### WHY THIS EXISTS\n"
                 "###\n"
@@ -1850,6 +1766,18 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 "###\n"
                 "### State scope. $CB_SIZE$ and $BANK_BLDG_TYPE$ come straight through from\n"
                 "### whichever E&F spawner called it.\n"
+                "###\n"
+                "### FLAT BRANCHES, AND THAT IS NOT A STYLE CHOICE. This was a 145-deep\n"
+                "### if/else_if chain, and an else_if chain nests. A country that matched no\n"
+                "### branch -- one whose currency was not among the ninety-five -- walked every\n"
+                "### frame of it inside E&F's own deep call stack, and the game died with\n"
+                "###\n"
+                "###   Unhandled Exception C00000FD (EXCEPTION_STACK_OVERFLOW)\n"
+                "###\n"
+                "### in crashes/victoria3_.../exception.txt, with nothing at all in error.log.\n"
+                "### zz_ef_cm_bank_unbuilt is what replaces the chain: set on the owner before\n"
+                "### the branches, cleared by whichever one fires, tested by all of them. Same\n"
+                "### first-match-wins behaviour, depth 1.\n"
                 "###\n"
                 "### $BANK_BLDG_TYPE$ IS PASSED ON PURPOSE, even though every caller sets it to\n"
                 "### building_bank and this could name the building directly. An argument the\n"
@@ -1912,32 +1840,29 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 "\t\t\tlimit = { has_building = $BANK_BLDG_TYPE$ }\n"
                 "\t\t\tremove_building = $BANK_BLDG_TYPE$\n"
                 "\t\t}\n\n"
-                + "".join(branches) +
-                "\t\telse = {\n"
-                "\t\t\t### No bank company at all yet -- grant the one matching the country's\n"
-                "\t\t\t### currency law, then hand it the bank.\n"
-                "\t\t\tscope:zz_ef_cm_bank_owner = {\n"
-                "\t\t\t\tzz_ef_cm_grant_bank_company = yes\n"
-                "\t\t\t}\n"
-                + "".join(second) +
-                "\t\t\telse_if = {\n"
-                "\t\t\t\tlimit = {\n"
-                "\t\t\t\t\tscope:zz_ef_cm_bank_owner = {\n"
-                "\t\t\t\t\t\thas_company = company_type:company_BasicBank\n"
-                "\t\t\t\t\t}\n"
+                "\t\t### Make sure there is somebody to hand it to, and arm the flag the\n"
+                "\t\t### branches below read. grant is a no-op for a country that already holds\n"
+                "\t\t### a central bank company.\n"
+                "\t\tscope:zz_ef_cm_bank_owner = {\n"
+                "\t\t\tzz_ef_cm_grant_bank_company = yes\n"
+                "\t\t\tset_variable = zz_ef_cm_bank_unbuilt\n"
+                "\t\t}\n\n"
+                + branches +
+                "\n"
+                "\t\t### LAST RESORT, AND IT EXISTS FOR A REASON. E&F's own line, untouched.\n"
+                "\t\t### When the dispatcher failed once before, every central bank in the\n"
+                "\t\t### world simply stopped existing -- there was no path left that just\n"
+                "\t\t### builds the thing. A state-owned bank beats no bank.\n"
+                "\t\tif = {\n"
+                "\t\t\tlimit = {\n"
+                "\t\t\t\tscope:zz_ef_cm_bank_owner = {\n"
+                "\t\t\t\t\thas_variable = zz_ef_cm_bank_unbuilt\n"
                 "\t\t\t\t}\n"
-                + owned_create("\t\t\t\t", "company_BasicBank") +
                 "\t\t\t}\n"
-                "\t\t\telse = {\n"
-                "\t\t\t\t### LAST RESORT, AND IT EXISTS FOR A REASON. E&F's own line, untouched.\n"
-                "\t\t\t\t### When the dispatcher failed once before, every central bank in the\n"
-                "\t\t\t\t### world simply stopped existing -- there was no path left that just\n"
-                "\t\t\t\t### builds the thing. A state-owned bank beats no bank.\n"
-                "\t\t\t\tcreate_building = {\n"
-                "\t\t\t\t\tbuilding = $BANK_BLDG_TYPE$\n"
-                "\t\t\t\t\tlevel    = $CB_SIZE$\n"
-                "\t\t\t\t\treserves = 1\n"
-                "\t\t\t\t}\n"
+                "\t\t\tcreate_building = {\n"
+                "\t\t\t\tbuilding = $BANK_BLDG_TYPE$\n"
+                "\t\t\t\tlevel    = $CB_SIZE$\n"
+                "\t\t\t\treserves = 1\n"
                 "\t\t\t}\n"
                 "\t\t}\n\n"
                 "\t\t### The rebuild resets the production methods. This is E&F's own effect for\n"
@@ -1945,6 +1870,7 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 "\t\towner = {\n"
                 "\t\t\tcentral_bank_production_methods = yes\n"
                 "\t\t\tremove_variable = zz_ef_cm_bank_rebuild\n"
+                "\t\t\tremove_variable = zz_ef_cm_bank_unbuilt\n"
                 "\t\t}\n"
                 "\t}\n"
                 "}\n")
@@ -1982,31 +1908,24 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
 
 
 
+
 # --- the monopoly on central banks ------------------------------------------
 
 
 def bank_company_priority(ef: Path, names: list[str]) -> list[str]:
     """Who may own a central bank, best first.
 
-    The historical central banks first, then the generated per-currency companies,
-    then the generic fallback. France holds the Banque de France, so France's
-    central bank goes to the Banque de France and keeps the assets it already has;
-    a country with no such bank gets the generated one.
+    The curated historical central banks, then the one generated company. France
+    holds the Banque de France, so France's central bank goes to the Banque de
+    France and keeps the assets it already has; a country with no such bank gets
+    the generated one.
 
     E&F's other bank companies are deliberately absent, and stay absent from
     building_types too -- see gen_companies for what happened in the Papal States
     while they were on the list.
     """
     hist, _ = historical_central_banks(ef)
-    table = {t: ([c] if isinstance(c, str) else list(c))
-             for t, c in CENTRAL_BANK_COMPANY.items()}
-    tag_of = {}
-    for tag in sorted(table):
-        for comp in table[tag]:
-            tag_of.setdefault(comp, tag)
-    return ([(c, tag_of.get(c)) for c in hist]
-            + [(GENERIC_BANK + cur, None) for cur in names]
-            + [("company_BasicBank", None)])
+    return hist + [GENERIC_COMPANY]
 
 
 def gen_monopoly(ef: Path, names: list[str]) -> str:
@@ -2028,32 +1947,40 @@ def gen_monopoly(ef: Path, names: list[str]) -> str:
     syntax: "pdx_assert.cpp:641: Assertion failed: already have monopoly granted to
     a company". Hence the guard below looks at every company in the country.
 
+    FLAT `if` BLOCKS. This was a 145-deep else_if chain and it was one of the three
+    that overflowed the stack (see gen_ownership). Siblings are safe here without
+    any extra bookkeeping, because every branch already carries the guard that
+    makes it first-match-wins: once one company has the monopoly, the
+    `NOT = { any_company = { company_has_building_type_monopoly } }` test fails for
+    all the rest.
+
     Note what the monopoly does NOT do: it does not stop another company
     privatising the building. In the Papal States, Banca d'Italia bought 4 levels
     that the state had gained through E&F's growth step while the monopoly sat
     with someone else. That is what the rebuild in zz_ef_cm_create_owned_bank is
     for -- the monopoly is a price and construction rule, not a lock.
     """
-    order = [c for c, _ in bank_company_priority(ef, names)]
+    order = bank_company_priority(ef, names)
 
-    def branch(kind: str, comp: str) -> str:
-        return (f"\t{kind} = {{\n"
-                f"\t\tlimit = {{\n"
+    def branch(comp: str) -> str:
+        return ("\tif = {\n"
+                "\t\tlimit = {\n"
                 f"\t\t\thas_company = company_type:{comp}\n"
-                f"\t\t\t### Any company holding it, not just this one -- guarding on\n"
-                f"\t\t\t### company:{{this}} alone tripped the engine's own assertion.\n"
-                f"\t\t\tNOT = {{\n"
-                f"\t\t\t\tany_company = {{\n"
-                f"\t\t\t\t\tcompany_has_building_type_monopoly = bt:building_bank\n"
-                f"\t\t\t\t}}\n"
-                f"\t\t\t}}\n"
-                f"\t\t}}\n"
+                "\t\t\t### Any company holding it, not just this one -- guarding on\n"
+                "\t\t\t### company:{this} alone tripped the engine's own assertion. It is\n"
+                "\t\t\t### also what makes these flat branches first-match-wins.\n"
+                "\t\t\tNOT = {\n"
+                "\t\t\t\tany_company = {\n"
+                "\t\t\t\t\tcompany_has_building_type_monopoly = bt:building_bank\n"
+                "\t\t\t\t}\n"
+                "\t\t\t}\n"
+                "\t\t}\n"
                 f"\t\tcompany:{comp} = {{\n"
-                f"\t\t\tadd_company_monopoly = bt:building_bank\n"
-                f"\t\t}}\n"
-                f"\t}}\n")
+                "\t\t\tadd_company_monopoly = bt:building_bank\n"
+                "\t\t}\n"
+                "\t}\n")
 
-    out = [branch("if" if i == 0 else "else_if", c) for i, c in enumerate(order)]
+    out = [branch(c) for c in order]
 
     return (BANNER +
             "### Source: the same company order as zz_ef_cm_bank_ownership.txt, so the\n"
@@ -2067,6 +1994,7 @@ def gen_monopoly(ef: Path, names: list[str]) -> str:
             "### what lets the player hand the company a monopoly charter without spending one\n"
             "### of the country's four, which is the route the game itself offers.\n\n"
             "zz_ef_cm_bank_monopoly = {\n" + "".join(out) + "}\n")
+
 
 
 

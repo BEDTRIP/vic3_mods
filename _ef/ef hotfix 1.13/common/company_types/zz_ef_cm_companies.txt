@@ -27,10 +27,12 @@
 ### (manufacture_stock and friends) and never compete with the three currencies,
 ### which all share spe_uni_c.
 ###
-### company_BasicBank gets the building and no currency: it is the fallback owner
-### for a country with neither a historical central bank nor a currency law. It
-### stays an INJECT: -- E&F offers it to every country as an ordinary company,
-### not only as a central bank, so its railways are not ours to take away.
+### company_BasicBank is NOT here any more. It used to be the fallback owner,
+### with building_bank injected onto it -- but E&F offers it to every country
+### as an ordinary company, so that quietly let any bank company anywhere buy
+### a central bank, and it showed up in Bunyoro as a company called "Bank"
+### owning railways. The fallback is zz_ef_cm_central_bank now; see
+### zz_ef_cm_generic_banks.txt.
 
 REPLACE:company_BancoNacionArgentina = { #Banco de la Nación Argentina
 	icon = "gfx/interface/icons/company_icons/bank/banco_nacion_argentina.dds"
@@ -3506,8 +3508,3 @@ REPLACE:company_BancoCentralDeVenezuela = { #Banco Central de Venezuela
 	}
 }
 
-INJECT:company_BasicBank = {
-	building_types = {
-		building_bank
-	}
-}
