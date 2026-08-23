@@ -4,7 +4,16 @@
 ### Source: the curated central bank companies in E&F's own
 ### 00_ef_companies.txt plus the one generated in zz_ef_cm_generic_banks.txt.
 ###
-### FLAT `any_company` LISTS, NOT if/else_if CHAINS. A chain nests, and the
+### FLAT `has_company` LISTS. Two separate reasons, both paid for in test
+### rounds.
+###
+### `has_company` and not `any_company = { is_company_type = ... }`: the second
+### shape is what E&F itself commented out in 08_list_effect.txt, and it is the
+### only construct in this file that was never independently confirmed to fire.
+### `has_company = company_type:X` is what E&F uses everywhere and what the
+### dispatcher has been picking the right owner with all along.
+###
+### Flat, not if/else_if. A chain nests, and the
 ### previous version of this file had a 49-deep one inside an OR. Between that
 ### one, the 145-deep chain in the dispatcher and the 145-deep chain in the
 ### monopoly pass, a country that matched nothing walked far enough down to
@@ -15,59 +24,57 @@
 ### Does this country hold any central bank company at all -- one of the
 ### 49 curated historical ones, or the generated one?
 zz_ef_cm_has_bank_company = {
-	any_company = {
-		OR = {
-			is_company_type = company_type:company_BancoNacionArgentina
-			is_company_type = company_type:company_BancoProvincia
-			is_company_type = company_type:company_OesterreichischeNationalbank
-			is_company_type = company_type:company_BayerischeHypothekenUndWechselBank
-			is_company_type = company_type:company_BanqueNationaleDeBelgique
-			is_company_type = company_type:company_ImperialBankofIndia
-			is_company_type = company_type:company_BancoNacionalDeBolivia
-			is_company_type = company_type:company_BancoDoBrasil
-			is_company_type = company_type:company_CanadianImperialBankOfCommerce
-			is_company_type = company_type:company_DaQingBank
-			is_company_type = company_type:company_BankHSBC
-			is_company_type = company_type:company_BancoEstado
-			is_company_type = company_type:company_BancoDeValparaiso
-			is_company_type = company_type:company_BancoRepublicaColombia
-			is_company_type = company_type:company_BancoCentralDeCostaRica
-			is_company_type = company_type:company_BancoEspanolDeLaHabana
-			is_company_type = company_type:company_LandmandsBanken
-			is_company_type = company_type:company_BanqueEgyptienne
-			is_company_type = company_type:company_BanqueDeFrance
-			is_company_type = company_type:company_BankofEngland
-			is_company_type = company_type:company_Reichsbank
-			is_company_type = company_type:company_PreussischeSeehandlung
-			is_company_type = company_type:company_bankofgreec
-			is_company_type = company_type:company_BancoCentralDeGuatemala
-			is_company_type = company_type:company_BancoCentralDeHonduras
-			is_company_type = company_type:company_BancaDItalia
-			is_company_type = company_type:company_Rothschild_Bank_ita
-			is_company_type = company_type:company_BankOfJapan
-			is_company_type = company_type:company_Mitsubishiexchangehousebank
-			is_company_type = company_type:company_BancoDeMexico
-			is_company_type = company_type:company_DeNederlandscheBank
-			is_company_type = company_type:company_ChristianiaBank
-			is_company_type = company_type:company_ColonialBankOfAustralia
-			is_company_type = company_type:company_RoyalBankofCanada
-			is_company_type = company_type:company_BancoNacionalDePanama
-			is_company_type = company_type:company_BankMelliIran
-			is_company_type = company_type:company_ImperialBankofPersia
-			is_company_type = company_type:company_BancoDePortugal
-			is_company_type = company_type:company_BancoNacionalDelParaguay
-			is_company_type = company_type:company_BankOfMontreal
-			is_company_type = company_type:company_StateBankRussianEmpire
-			is_company_type = company_type:company_BankSBoBSA
-			is_company_type = company_type:company_CassaDiRisparmioDiTorino
-			is_company_type = company_type:company_BankofSpain
-			is_company_type = company_type:company_HandelsBanken
-			is_company_type = company_type:company_Bankenverein
-			is_company_type = company_type:company_OttomanBank
-			is_company_type = company_type:company_BancoCentralDelUruguay
-			is_company_type = company_type:company_BancoCentralDeVenezuela
-			is_company_type = company_type:zz_ef_cm_central_bank
-		}
+	OR = {
+		has_company = company_type:company_BancoNacionArgentina
+		has_company = company_type:company_BancoProvincia
+		has_company = company_type:company_OesterreichischeNationalbank
+		has_company = company_type:company_BayerischeHypothekenUndWechselBank
+		has_company = company_type:company_BanqueNationaleDeBelgique
+		has_company = company_type:company_ImperialBankofIndia
+		has_company = company_type:company_BancoNacionalDeBolivia
+		has_company = company_type:company_BancoDoBrasil
+		has_company = company_type:company_CanadianImperialBankOfCommerce
+		has_company = company_type:company_DaQingBank
+		has_company = company_type:company_BankHSBC
+		has_company = company_type:company_BancoEstado
+		has_company = company_type:company_BancoDeValparaiso
+		has_company = company_type:company_BancoRepublicaColombia
+		has_company = company_type:company_BancoCentralDeCostaRica
+		has_company = company_type:company_BancoEspanolDeLaHabana
+		has_company = company_type:company_LandmandsBanken
+		has_company = company_type:company_BanqueEgyptienne
+		has_company = company_type:company_BanqueDeFrance
+		has_company = company_type:company_BankofEngland
+		has_company = company_type:company_Reichsbank
+		has_company = company_type:company_PreussischeSeehandlung
+		has_company = company_type:company_bankofgreec
+		has_company = company_type:company_BancoCentralDeGuatemala
+		has_company = company_type:company_BancoCentralDeHonduras
+		has_company = company_type:company_BancaDItalia
+		has_company = company_type:company_Rothschild_Bank_ita
+		has_company = company_type:company_BankOfJapan
+		has_company = company_type:company_Mitsubishiexchangehousebank
+		has_company = company_type:company_BancoDeMexico
+		has_company = company_type:company_DeNederlandscheBank
+		has_company = company_type:company_ChristianiaBank
+		has_company = company_type:company_ColonialBankOfAustralia
+		has_company = company_type:company_RoyalBankofCanada
+		has_company = company_type:company_BancoNacionalDePanama
+		has_company = company_type:company_BankMelliIran
+		has_company = company_type:company_ImperialBankofPersia
+		has_company = company_type:company_BancoDePortugal
+		has_company = company_type:company_BancoNacionalDelParaguay
+		has_company = company_type:company_BankOfMontreal
+		has_company = company_type:company_StateBankRussianEmpire
+		has_company = company_type:company_BankSBoBSA
+		has_company = company_type:company_CassaDiRisparmioDiTorino
+		has_company = company_type:company_BankofSpain
+		has_company = company_type:company_HandelsBanken
+		has_company = company_type:company_Bankenverein
+		has_company = company_type:company_OttomanBank
+		has_company = company_type:company_BancoCentralDelUruguay
+		has_company = company_type:company_BancoCentralDeVenezuela
+		has_company = company_type:zz_ef_cm_central_bank
 	}
 }
 
@@ -79,58 +86,56 @@ zz_ef_cm_has_bank_company = {
 ### central bank companies at once. Whoever E&F handed the bank to is who it
 ### belongs to.
 zz_ef_cm_holds_own_historical_bank = {
-	any_company = {
-		OR = {
-			is_company_type = company_type:company_BancoNacionArgentina
-			is_company_type = company_type:company_BancoProvincia
-			is_company_type = company_type:company_OesterreichischeNationalbank
-			is_company_type = company_type:company_BayerischeHypothekenUndWechselBank
-			is_company_type = company_type:company_BanqueNationaleDeBelgique
-			is_company_type = company_type:company_ImperialBankofIndia
-			is_company_type = company_type:company_BancoNacionalDeBolivia
-			is_company_type = company_type:company_BancoDoBrasil
-			is_company_type = company_type:company_CanadianImperialBankOfCommerce
-			is_company_type = company_type:company_DaQingBank
-			is_company_type = company_type:company_BankHSBC
-			is_company_type = company_type:company_BancoEstado
-			is_company_type = company_type:company_BancoDeValparaiso
-			is_company_type = company_type:company_BancoRepublicaColombia
-			is_company_type = company_type:company_BancoCentralDeCostaRica
-			is_company_type = company_type:company_BancoEspanolDeLaHabana
-			is_company_type = company_type:company_LandmandsBanken
-			is_company_type = company_type:company_BanqueEgyptienne
-			is_company_type = company_type:company_BanqueDeFrance
-			is_company_type = company_type:company_BankofEngland
-			is_company_type = company_type:company_Reichsbank
-			is_company_type = company_type:company_PreussischeSeehandlung
-			is_company_type = company_type:company_bankofgreec
-			is_company_type = company_type:company_BancoCentralDeGuatemala
-			is_company_type = company_type:company_BancoCentralDeHonduras
-			is_company_type = company_type:company_BancaDItalia
-			is_company_type = company_type:company_Rothschild_Bank_ita
-			is_company_type = company_type:company_BankOfJapan
-			is_company_type = company_type:company_Mitsubishiexchangehousebank
-			is_company_type = company_type:company_BancoDeMexico
-			is_company_type = company_type:company_DeNederlandscheBank
-			is_company_type = company_type:company_ChristianiaBank
-			is_company_type = company_type:company_ColonialBankOfAustralia
-			is_company_type = company_type:company_RoyalBankofCanada
-			is_company_type = company_type:company_BancoNacionalDePanama
-			is_company_type = company_type:company_BankMelliIran
-			is_company_type = company_type:company_ImperialBankofPersia
-			is_company_type = company_type:company_BancoDePortugal
-			is_company_type = company_type:company_BancoNacionalDelParaguay
-			is_company_type = company_type:company_BankOfMontreal
-			is_company_type = company_type:company_StateBankRussianEmpire
-			is_company_type = company_type:company_BankSBoBSA
-			is_company_type = company_type:company_CassaDiRisparmioDiTorino
-			is_company_type = company_type:company_BankofSpain
-			is_company_type = company_type:company_HandelsBanken
-			is_company_type = company_type:company_Bankenverein
-			is_company_type = company_type:company_OttomanBank
-			is_company_type = company_type:company_BancoCentralDelUruguay
-			is_company_type = company_type:company_BancoCentralDeVenezuela
-		}
+	OR = {
+		has_company = company_type:company_BancoNacionArgentina
+		has_company = company_type:company_BancoProvincia
+		has_company = company_type:company_OesterreichischeNationalbank
+		has_company = company_type:company_BayerischeHypothekenUndWechselBank
+		has_company = company_type:company_BanqueNationaleDeBelgique
+		has_company = company_type:company_ImperialBankofIndia
+		has_company = company_type:company_BancoNacionalDeBolivia
+		has_company = company_type:company_BancoDoBrasil
+		has_company = company_type:company_CanadianImperialBankOfCommerce
+		has_company = company_type:company_DaQingBank
+		has_company = company_type:company_BankHSBC
+		has_company = company_type:company_BancoEstado
+		has_company = company_type:company_BancoDeValparaiso
+		has_company = company_type:company_BancoRepublicaColombia
+		has_company = company_type:company_BancoCentralDeCostaRica
+		has_company = company_type:company_BancoEspanolDeLaHabana
+		has_company = company_type:company_LandmandsBanken
+		has_company = company_type:company_BanqueEgyptienne
+		has_company = company_type:company_BanqueDeFrance
+		has_company = company_type:company_BankofEngland
+		has_company = company_type:company_Reichsbank
+		has_company = company_type:company_PreussischeSeehandlung
+		has_company = company_type:company_bankofgreec
+		has_company = company_type:company_BancoCentralDeGuatemala
+		has_company = company_type:company_BancoCentralDeHonduras
+		has_company = company_type:company_BancaDItalia
+		has_company = company_type:company_Rothschild_Bank_ita
+		has_company = company_type:company_BankOfJapan
+		has_company = company_type:company_Mitsubishiexchangehousebank
+		has_company = company_type:company_BancoDeMexico
+		has_company = company_type:company_DeNederlandscheBank
+		has_company = company_type:company_ChristianiaBank
+		has_company = company_type:company_ColonialBankOfAustralia
+		has_company = company_type:company_RoyalBankofCanada
+		has_company = company_type:company_BancoNacionalDePanama
+		has_company = company_type:company_BankMelliIran
+		has_company = company_type:company_ImperialBankofPersia
+		has_company = company_type:company_BancoDePortugal
+		has_company = company_type:company_BancoNacionalDelParaguay
+		has_company = company_type:company_BankOfMontreal
+		has_company = company_type:company_StateBankRussianEmpire
+		has_company = company_type:company_BankSBoBSA
+		has_company = company_type:company_CassaDiRisparmioDiTorino
+		has_company = company_type:company_BankofSpain
+		has_company = company_type:company_HandelsBanken
+		has_company = company_type:company_Bankenverein
+		has_company = company_type:company_OttomanBank
+		has_company = company_type:company_BancoCentralDelUruguay
+		has_company = company_type:company_BancoCentralDeVenezuela
 	}
 }
 

@@ -21,6 +21,7 @@ zz_ef_cm_grant_bank_company = {
 
 	if = {
 		limit = { NOT = { zz_ef_cm_has_bank_company = yes } }
+		log = "ZZCM grant: [This.GetName] gets the generated central bank company"
 		add_company = company_type:zz_ef_cm_central_bank
 	}
 }
@@ -58,16 +59,39 @@ zz_ef_cm_bank_company_upkeep = {
 	}
 
 	### The historical bank has turned up while the stand-in holds the central
-	### bank. Ownership cannot be moved, so ask zz_ef_cm_create_owned_bank to
-	### build the thing again -- it picks the historical bank first.
+	### bank. Ownership cannot be moved -- add_ownership exists only inside
+	### create_building -- so the only way to hand it over is to build it again.
+	###
+	### THE REBUILD IS CALLED FROM HERE, not merely asked for. The old version set
+	### zz_ef_cm_bank_rebuild and waited for E&F to call a spawner again, which is
+	### why Austria and Spain sat on their stand-in for the rest of the campaign:
+	### E&F calls macro_facilities_bc when gdp_view crosses a threshold, not on a
+	### schedule, so for a country whose economy is not growing that call never
+	### comes. The variable still goes up, because it is what makes the dispatcher
+	### stop skipping a bank that is already the right size.
+	###
+	### The size has to be read and stored BEFORE the call: the dispatcher removes
+	### the building first, and a level count taken after that is zero.
 	if = {
 		limit = {
 			zz_ef_cm_has_central_bank = yes
 			zz_ef_cm_holds_own_historical_bank = yes
 			zz_ef_cm_holds_stand_in_bank = yes
-			NOT = { has_variable = zz_ef_cm_bank_rebuild }
 		}
+		log = "ZZCM rebuild: [This.GetName] takes its central bank back"
 		set_variable = zz_ef_cm_bank_rebuild
+		random_scope_state = {
+			limit = { has_building = building_bank }
+			set_variable = {
+				name  = zz_ef_cm_bank_size
+				value = zz_ef_cm_bank_current_level
+			}
+			zz_ef_cm_create_owned_bank = {
+				BANK_BLDG_TYPE = building_bank
+				CB_SIZE        = var:zz_ef_cm_bank_size
+			}
+			remove_variable = zz_ef_cm_bank_size
+		}
 	}
 
 	### ...and once it has, the stand-in owns nothing and has no reason to exist.
@@ -95,6 +119,7 @@ zz_ef_cm_bank_company_upkeep = {
 zz_ef_cm_retire_stand_in_bank = {
 	if = {
 		limit = { has_company = company_type:zz_ef_cm_central_bank }
+		log = "ZZCM retire: [This.GetName] drops the generated stand-in"
 		remove_company = company_type:zz_ef_cm_central_bank
 	}
 }
