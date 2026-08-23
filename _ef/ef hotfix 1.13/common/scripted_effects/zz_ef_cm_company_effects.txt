@@ -70,27 +70,925 @@ zz_ef_cm_bank_company_upkeep = {
 	### comes. The variable still goes up, because it is what makes the dispatcher
 	### stop skipping a bank that is already the right size.
 	###
-	### The size has to be read and stored BEFORE the call: the dispatcher removes
-	### the building first, and a level count taken after that is zero.
+	### THE SIZE IS A LITERAL, one branch per level, and that is not verbosity.
+	### $CB_SIZE$ is a macro argument -- pasted in as text, and it lands inside
+	### `add_ownership = { company = { levels = $CB_SIZE$ } }`, where a `var:` read
+	### does not resolve. Passing one there cost four countries their central bank
+	### outright: the dispatcher removed the building, created it with zero levels,
+	### and logged nothing at all -- Persia, Turkey, Sicily and Spain simply had no
+	### bank any more. Every one of E&F's own 1,004 call sites passes a literal.
+	###
+	### Only one branch can match: they test the level for equality, and a rebuild
+	### puts back exactly what it took away.
 	if = {
 		limit = {
 			zz_ef_cm_has_central_bank = yes
 			zz_ef_cm_holds_own_historical_bank = yes
 			zz_ef_cm_holds_stand_in_bank = yes
 		}
-		log = "ZZCM rebuild: [This.GetName] takes its central bank back"
 		set_variable = zz_ef_cm_bank_rebuild
 		random_scope_state = {
 			limit = { has_building = building_bank }
-			set_variable = {
-				name  = zz_ef_cm_bank_size
-				value = zz_ef_cm_bank_current_level
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 1
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 1 }
 			}
-			zz_ef_cm_create_owned_bank = {
-				BANK_BLDG_TYPE = building_bank
-				CB_SIZE        = var:zz_ef_cm_bank_size
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 2
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 2 }
 			}
-			remove_variable = zz_ef_cm_bank_size
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 3
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 3 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 4
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 4 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 5
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 5 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 6
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 6 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 7
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 7 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 8
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 8 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 9
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 9 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 10
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 10 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 11
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 11 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 12
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 12 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 13
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 13 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 14
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 14 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 15
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 15 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 16
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 16 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 17
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 17 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 18
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 18 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 19
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 19 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 20
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 20 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 21
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 21 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 22
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 22 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 23
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 23 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 24
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 24 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 25
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 25 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 26
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 26 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 27
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 27 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 28
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 28 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 29
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 29 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 30
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 30 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 31
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 31 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 32
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 32 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 33
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 33 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 34
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 34 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 35
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 35 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 36
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 36 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 37
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 37 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 38
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 38 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 39
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 39 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 40
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 40 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 41
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 41 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 42
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 42 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 43
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 43 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 44
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 44 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 45
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 45 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 46
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 46 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 47
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 47 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 48
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 48 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 49
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 49 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 50
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 50 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 51
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 51 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 52
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 52 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 53
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 53 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 54
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 54 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 55
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 55 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 56
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 56 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 57
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 57 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 58
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 58 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 59
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 59 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 60
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 60 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 61
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 61 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 62
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 62 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 63
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 63 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 64
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 64 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 65
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 65 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 66
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 66 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 67
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 67 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 68
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 68 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 69
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 69 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 70
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 70 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 71
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 71 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 72
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 72 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 73
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 73 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 74
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 74 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 75
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 75 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 76
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 76 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 77
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 77 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 78
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 78 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 79
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 79 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 80
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 80 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 81
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 81 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 82
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 82 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 83
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 83 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 84
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 84 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 85
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 85 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 86
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 86 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 87
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 87 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 88
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 88 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 89
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 89 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 90
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 90 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 91
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 91 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 92
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 92 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 93
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 93 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 94
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 94 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 95
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 95 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 96
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 96 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 97
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 97 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 98
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 98 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 99
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 99 }
+			}
+			if = {
+				limit = {
+					any_scope_building = {
+						is_building_type = building_bank
+						level = 100
+					}
+				}
+				zz_ef_cm_create_owned_bank = { BANK_BLDG_TYPE = building_bank CB_SIZE = 100 }
+			}
 		}
 	}
 

@@ -977,6 +977,11 @@ NATIONAL_CURRENCY = "zz_ef_cm_national_currency"
 # The one central bank company every country without a historical one gets.
 # It was ninety-five types, one per currency law, identical but for the key --
 # see gen_generic_banks for what that cost and why it is one now.
+# How tall a central bank the rebuild ladder can put back. E&F's own spawners go
+# up to 70 in steps of 5; private growth can land anywhere between, so the ladder
+# tests every level rather than every fifth one.
+MAX_BANK_LEVEL = 100
+
 GENERIC_COMPANY = "zz_ef_cm_central_bank"
 CENTRAL_BANK_ICON = "gfx/interface/icons/building_icons/banks/central_bank.dds"
 
@@ -1083,30 +1088,89 @@ def gen_prestige(ef: Path, names: list[str], keep: str) -> tuple[str, int]:
     return head + "".join(out), len(PRESTIGE_REGIMES)
 
 
-def historical_central_banks(ef: Path) -> tuple[list[str], list[str]]:
-    """E&F's own bank companies that ARE the country's historical central bank.
+def bank_companies(ef: Path) -> list[str]:
+    """Every company E&F itself calls a bank, straight out of E&F.
 
-    Checked against establish_bank_and_ef_compagnie so a rename in E&F is reported
-    instead of quietly producing a branch that can never fire.
+    Source: the `private_bank_type` block in
+    common/customizable_localization/00_ef_localization_ custom.txt -- 99 entries,
+    one `is_company_type = company_type:X` per bank, which is E&F's own answer to
+    "is this company a bank" and the only list of them it keeps.
+
+    This replaces a hand-written table, and the table is why the Imperial Bank of
+    China never became China's central bank: CENTRAL_BANK_COMPANY named the
+    Da-Qing Bank for CHI, the Da-Qing Bank is founded in 1905, and the bank China
+    actually holds in 1836 is company_BankIBC -- which was on no list of ours at
+    all. Mexico, Persia, Turkey and Sicily were the same shape of miss. Any table
+    written here is a race against E&F's roster that it eventually loses.
+
+    company_BasicBank is dropped: it is E&F's generic bank, offered to every
+    country, and letting it stand for "this country has its own historical bank"
+    would mean nobody ever gets the generated one.
+    """
+    src = read(ef / "common/customizable_localization/00_ef_localization_ custom.txt")
+    m = re.search(r"^private_bank_type\s*=\s*\{", src, re.M)
+    if not m:
+        return []
+    blk = src[m.start():block_span(src, m.end() - 1)]
+    # The list is checked against the company types that actually exist: E&F's own
+    # copy of it names company_BankSBoBS, and the company is company_BankSBoBSA.
+    # A REPLACE: of a key that does not exist is a load error, not a warning.
+    real = {k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))}
+    out, seen = [], set()
+    for name in re.findall(r"is_company_type\s*=\s*company_type:(\w+)", blk):
+        if name != "company_BasicBank" and name not in seen and name in real:
+            seen.add(name)
+            out.append(name)
+    return out
+
+
+def historical_central_banks(ef: Path) -> tuple[list[str], list[str]]:
+    """Every bank company E&F ships, best candidate for the central bank first.
+
+    ORDER, NOT MEMBERSHIP, is what CENTRAL_BANK_COMPANY decides now. It used to
+    decide both, and that is why four countries kept a stand-in they should have
+    handed over: the table named one bank per tag, and the bank the country
+    actually held was a different one. China holds the Imperial Bank of China in
+    1836, not the Da-Qing Bank of 1905. The rule that survives contact is the
+    loose one -- whatever bank this country holds is its central bank -- with the
+    curated table breaking ties, because Britain holds six and the Bank of England
+    should win.
+
+    E&F's grants are still checked against the table, so a rename is reported
+    rather than quietly producing a branch that can never fire.
     """
     notes: list[str] = []
-    banks = {k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))
-             if k.startswith("company_") and k not in BANK_COMPANY_SKIP}
-    granted = establish_mapping(ef, banks)
+    every = bank_companies(ef)
+    if not every:
+        notes.append("WARNING private_bank_type: no bank list found in E&F, "
+                     "falling back to the curated table alone")
+    known = set(every)
+    real = {k for k, _, _ in iter_top_blocks(read(ef / "common/company_types/00_ef_companies.txt"))}
+    granted = establish_mapping(ef, known | {c for cs in CENTRAL_BANK_COMPANY.values()
+                                             for c in ([cs] if isinstance(cs, str) else cs)})
     table = {t: ([c] if isinstance(c, str) else list(c))
              for t, c in CENTRAL_BANK_COMPANY.items()}
     out: list[str] = []
     for tag in sorted(table):
         for comp in table[tag]:
-            if comp not in banks:
+            if comp not in real:
                 notes.append(f"WARNING {comp}: no such company in E&F any more")
                 continue
+            if comp not in known:
+                notes.append(f"NOTE {comp}: curated, but missing from E&F's private_bank_type "
+                             f"list -- kept anyway")
             if comp not in granted:
                 notes.append(f"WARNING {comp}: E&F grants it to nobody")
             elif tag not in granted[comp]:
                 notes.append(f"WARNING {comp}: E&F grants it to {granted[comp]}, not {tag}")
             if comp not in out:
                 out.append(comp)
+    curated = len(out)
+    for comp in every:
+        if comp not in out:
+            out.append(comp)
+    notes.append(f"bank companies: {len(out)} ({curated} curated first, "
+                 f"{len(out) - curated} from E&F's own list)")
     return out, notes
 
 
@@ -1343,6 +1407,18 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                        for c in hist + [GENERIC_COMPANY])
     own_hist = "\n".join(f"\t\thas_company = company_type:{c}" for c in hist)
 
+    rebuild_levels = "".join(
+        f"\t\t\tif = {{\n"
+        f"\t\t\t\tlimit = {{\n"
+        f"\t\t\t\t\tany_scope_building = {{\n"
+        f"\t\t\t\t\t\tis_building_type = building_bank\n"
+        f"\t\t\t\t\t\tlevel = {n}\n"
+        f"\t\t\t\t\t}}\n"
+        f"\t\t\t\t}}\n"
+        f"\t\t\t\tzz_ef_cm_create_owned_bank = {{ BANK_BLDG_TYPE = building_bank CB_SIZE = {n} }}\n"
+        f"\t\t\t}}\n"
+        for n in range(1, MAX_BANK_LEVEL + 1))
+
     triggers = (BANNER +
                 "### Source: the curated central bank companies in E&F's own\n"
                 "### 00_ef_companies.txt plus the one generated in zz_ef_cm_generic_banks.txt.\n"
@@ -1453,27 +1529,26 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                "\t### comes. The variable still goes up, because it is what makes the dispatcher\n"
                "\t### stop skipping a bank that is already the right size.\n"
                "\t###\n"
-               "\t### The size has to be read and stored BEFORE the call: the dispatcher removes\n"
-               "\t### the building first, and a level count taken after that is zero.\n"
+               "\t### THE SIZE IS A LITERAL, one branch per level, and that is not verbosity.\n"
+               "\t### $CB_SIZE$ is a macro argument -- pasted in as text, and it lands inside\n"
+               "\t### `add_ownership = { company = { levels = $CB_SIZE$ } }`, where a `var:` read\n"
+               "\t### does not resolve. Passing one there cost four countries their central bank\n"
+               "\t### outright: the dispatcher removed the building, created it with zero levels,\n"
+               "\t### and logged nothing at all -- Persia, Turkey, Sicily and Spain simply had no\n"
+               "\t### bank any more. Every one of E&F's own 1,004 call sites passes a literal.\n"
+               "\t###\n"
+               "\t### Only one branch can match: they test the level for equality, and a rebuild\n"
+               "\t### puts back exactly what it took away.\n"
                "\tif = {\n"
                "\t\tlimit = {\n"
                "\t\t\tzz_ef_cm_has_central_bank = yes\n"
                "\t\t\tzz_ef_cm_holds_own_historical_bank = yes\n"
                "\t\t\tzz_ef_cm_holds_stand_in_bank = yes\n"
                "\t\t}\n"
-               "\t\tlog = \"ZZCM rebuild: [This.GetName] takes its central bank back\"\n"
                "\t\tset_variable = zz_ef_cm_bank_rebuild\n"
                "\t\trandom_scope_state = {\n"
                "\t\t\tlimit = { has_building = building_bank }\n"
-               "\t\t\tset_variable = {\n"
-               "\t\t\t\tname  = zz_ef_cm_bank_size\n"
-               "\t\t\t\tvalue = zz_ef_cm_bank_current_level\n"
-               "\t\t\t}\n"
-               "\t\t\tzz_ef_cm_create_owned_bank = {\n"
-               "\t\t\t\tBANK_BLDG_TYPE = building_bank\n"
-               "\t\t\t\tCB_SIZE        = var:zz_ef_cm_bank_size\n"
-               "\t\t\t}\n"
-               "\t\t\tremove_variable = zz_ef_cm_bank_size\n"
+               + rebuild_levels +
                "\t\t}\n"
                "\t}\n\n"
                "\t### ...and once it has, the stand-in owns nothing and has no reason to exist.\n"
@@ -1542,24 +1617,7 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                 "\tcountry_free_charters_add = 1\n"
                 "}\n")
 
-    values = (BANNER +
-              "### State scope. How many levels of central bank stand here.\n"
-              "###\n"
-              "### The rebuild in zz_ef_cm_bank_company_upkeep needs the size of the bank it is\n"
-              "### about to tear down, and $CB_SIZE$ is a macro argument -- it is pasted in as\n"
-              "### text, so it has to name something the engine can read at both use sites:\n"
-              "### `level >= $CB_SIZE$` and `levels = $CB_SIZE$`. A variable set from this\n"
-              "### value, passed as `var:zz_ef_cm_bank_size`, satisfies both.\n\n"
-              "zz_ef_cm_bank_current_level = {\n"
-              "\tvalue = 0\n"
-              "\tevery_scope_building = {\n"
-              "\t\tlimit = { is_building_type = building_bank }\n"
-              "\t\tadd = level\n"
-              "\t}\n"
-              "}\n")
-
     return {
-        "common/script_values/zz_ef_cm_bank_values.txt": values,
         "common/scripted_triggers/zz_ef_cm_company_triggers.txt": triggers,
         "common/scripted_effects/zz_ef_cm_company_effects.txt": effects,
         "common/on_actions/zz_ef_cm_on_actions.txt": on_actions,

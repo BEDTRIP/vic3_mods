@@ -799,6 +799,790 @@ zz_ef_cm_bank_monopoly = {
 	}
 	if = {
 		limit = {
+			has_company = company_type:company_BankJPMorgan
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankJPMorgan = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankGoldmanSachs
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankGoldmanSachs = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_ChaseBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_ChaseBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankWellsFargo
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankWellsFargo = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankAmericanExpress
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankAmericanExpress = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_amsterdamschebank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_amsterdamschebank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_RotterdamscheBankvereeniging
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_RotterdamscheBankvereeniging = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_SocieteGeneraledeBelgique
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SocieteGeneraledeBelgique = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BanqueDeBruxelles
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BanqueDeBruxelles = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoDeBilbao
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoDeBilbao = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoHispanoColonial
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoHispanoColonial = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoCommercialPortugues
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoCommercialPortugues = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_Bank_Ultramarino
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Bank_Ultramarino = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancaCommercialeItaliana
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancaCommercialeItaliana = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_LloydsBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_LloydsBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_barclaysBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_barclaysBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_NationalWestminsterBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_NationalWestminsterBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_RoyalBankOfScotland
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_RoyalBankOfScotland = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_gbr
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_gbr = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankCreditLyonnais
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankCreditLyonnais = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_SocieteGenerale
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SocieteGenerale = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BanqueDeParisEtDesPaysBas
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BanqueDeParisEtDesPaysBas = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_fra
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_fra = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:saint_petersburg_international_commercial_bank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:saint_petersburg_international_commercial_bank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:russo_chinese_bank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:russo_chinese_bank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_DeutscheBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_DeutscheBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_ger
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_ger = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_OesterreichischeCreditAnstalt
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_OesterreichischeCreditAnstalt = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_WienerBankverein
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_WienerBankverein = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_Rothschild_Bank_aus
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_Rothschild_Bank_aus = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_TurkishZiraatBankasi
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_TurkishZiraatBankasi = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BanqueImperialeOttomane
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BanqueImperialeOttomane = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankTejaratPersia
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankTejaratPersia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankAngloPersian
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankAngloPersian = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_ChohungBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_ChohungBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankIBC
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankIBC = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankBOCOM
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankBOCOM = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_SumitomoBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SumitomoBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankOfIndiaCompany
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankOfIndiaCompany = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankOfBombay
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankOfBombay = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BankDesjardins
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BankDesjardins = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_NationalBankOfAustralia
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_NationalBankOfAustralia = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_SouthAustralianBank
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_SouthAustralianBank = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_bancodelondresmexico
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_bancodelondresmexico = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoMercantilMexicano
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoMercantilMexicano = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoMercantil
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoMercantil = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoCommercialDoBrasil
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoCommercialDoBrasil = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoHipotecarioNacional
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoHipotecarioNacional = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
+			has_company = company_type:company_BancoDeChile
+			### Any company holding it, not just this one -- guarding on
+			### company:{this} alone tripped the engine's own assertion. It is
+			### also what makes these flat branches first-match-wins.
+			NOT = {
+				any_company = {
+					company_has_building_type_monopoly = bt:building_bank
+				}
+			}
+		}
+		company:company_BancoDeChile = {
+			add_company_monopoly = bt:building_bank
+		}
+	}
+	if = {
+		limit = {
 			has_company = company_type:zz_ef_cm_central_bank
 			### Any company holding it, not just this one -- guarding on
 			### company:{this} alone tripped the engine's own assertion. It is
