@@ -1,0 +1,54 @@
+﻿# ComPatch: The Great Revision + Kuromi AI + Tech & Res
+# New file, 2026-08-23.
+#
+# TGR's trade overhaul rewrites all 53 vanilla goods and systematically cuts
+# traded_quantity while raising convoy_cost_multiplier -- that pair is what makes
+# TGR's trade routes small and expensive, and every other TGR trade mechanic is
+# balanced around it. T&R re-issues exactly three of those goods (aeroplanes,
+# automobiles, clothes) with vanilla-shaped trade numbers and loads after TGR, so
+# those three quietly opt out of the overhaul. Nothing shows up in the log.
+#
+# Merge: T&R's cost / prestige_factor (its own economy rebalance) plus TGR's
+# traded_quantity and convoy_cost_multiplier (its trade system).
+# aeroplanes additionally gets obsession_chance back: vanilla and TGR both set it,
+# T&R's rewrite simply omits the key, and a missing obsession_chance silently stops
+# the good from ever becoming an obsession.
+
+REPLACE:aeroplanes = {
+	texture = "gfx/interface/icons/goods_icons/aeroplanes.dds"
+	cost = 100							# T&R
+	category = military
+
+	obsession_chance = 0.5				# vanilla + TGR; T&R drops the key
+	prestige_factor = 8					# T&R
+
+	traded_quantity = 1					# TGR
+	convoy_cost_multiplier = 2.0		# TGR
+}
+
+REPLACE:automobiles = {
+	texture = "gfx/interface/icons/goods_icons/automobiles.dds"
+	cost = 120							# T&R
+	category = luxury
+
+	obsession_chance = 1.0
+	prestige_factor = 10
+
+	traded_quantity = 2					# TGR
+	convoy_cost_multiplier = 1.5		# TGR
+
+	pop_consumption_can_add_infrastructure = yes
+}
+
+REPLACE:clothes = {
+	texture = "gfx/interface/icons/goods_icons/clothes.dds"
+	cost = 35							# T&R
+	category = staple
+
+	prestige_factor = 4
+
+	traded_quantity = 4					# TGR
+	convoy_cost_multiplier = 0.5		# TGR
+
+	consumption_tax_cost = 300
+}

@@ -273,3 +273,47 @@ TGR очень сильно “подкручивает” кампанию че
 - **`country_influence_add`** (TGR `decimals = 0` против ванильного `1` у PBE) и **`state_bureaucrats_investment_pool_contribution_add`** (TGR `color = neutral` против ванильного `good`) — различия только в отображении, PBE грузится последним и даёт ванильный результат. Пин-файл в компаче удалён как бесполезный.
 - TGR не трогает `power_bloc_principles`, `power_bloc_identities`, `cohesion_levels`, `scripted_rules` — весь основной домен PBE. GUI не пересекается (`budget_panel.gui` против панелей блока). Товаров TGR не добавляет: 53 ключа, все ванильные, через `REPLACE_OR_CREATE:`.
 - Разбор целиком — `_pbe/pbe+tgr done/conflicts_tgr_vs_pbe_report.md`.
+
+### Дополнение 2026-08-23 (из сверки пары TGR × T&R × KAI, компач `_tgr/tgr+tr+kai done`)
+
+**Статус пары: `done`, компач переписан.** Отчёты — `_tgr/tgr+tr+kai done/conflicts_tgr_vs_tr_report.md`
+и `conflicts_tgr_vs_kai_report.md` (в шапке каждого — таблица «почему это конфликт / почему нет»).
+Порядок загрузки: CMF → TGR → KAI → **T&R** → компач. В старом компаче в комментарии было
+написано, что последним грузится KAI, — неверно, исправлено.
+
+Что TGR теряет молча и что за это отвечает в компаче:
+
+- **`law_extraction_economy`** — T&R 1.6 делает `INJECT:` только на `on_activate`. `on_activate` —
+  блок, а не список, поэтому инъекция встаёт на место TGR-овского, и **своп
+  `law_administrative_centralism` → `law_local_autonomies` исчезает**. В логе — ничего.
+  Патч оставлен, тело пересобрано на нынешнем TGR (у старого компача был `can_enact = is_subject = yes`
+  без защиты по дате 1836, лишние `disallowing_laws` и `state_bureaucrats_investment_pool_efficiency_mult`).
+- **Колониальные законы** (`law_colonial_exploitation`, `law_colonial_resettlement`,
+  `law_frontier_colonization`) — **новая точка конфликта**: UN-система T&R переписывает их целиком
+  `REPLACE:` и не имеет ключа `institution_modifier`, а у TGR там `country_engineers_pol_str_mult` /
+  `country_farmers_pol_str_mult = 0.20`. Перенесено в компач. `progressiveness` (TGR 25 против T&R 0)
+  не переносим — там оба автора выставили значение осознанно.
+- **Товары** — TGR правит все 53 ванильных товара, срезая `traded_quantity` и поднимая
+  `convoy_cost_multiplier`. T&R переиздаёт три (`aeroplanes`, `automobiles`, `clothes`) с
+  околованильными числами и грузится позже, то есть **три товара выпадают из торгового оверхола TGR**.
+  Новый файл `common/goods/` в компаче. У `aeroplanes` заодно возвращён `obsession_chance` — T&R
+  просто не переносит ключ, и товар молча перестаёт быть obsession.
+- **`malaria_prevention`** — TGR вешает `country_institution_environment_max_investment_add = 1`
+  через `INJECT:`, T&R пересоздаёт технологию `REPLACE_OR_CREATE:` и грузится позже. Строка TGR
+  теряется, институт Environment TGR теряет уровень вложений. Новый файл `common/technology/technologies/`.
+- **`bg_industry_heavy` / `bg_industry_light`** — TGR вешает на них декрет
+  (`common/decrees/TGR_POLITICS_decree.txt`) и законы экономических стимулов
+  (`TGR_POLITICS_economic_incentives_industry.txt`). `bg_heavy_industry` у T&R — **сестринская**
+  группа (обе дочерние к `bg_manufacturing`), `is_building_group` до неё не дотягивается.
+  Поэтому в двух зданиях, которые T&R всё ещё перекрывает целиком, группа берётся у TGR.
+
+Что **не** патчится осознанно (и почему — чтобы через полгода не проверять заново):
+
+- `buy_packages` `wealth_1..99` — TGR определяет их обычным ключом, T&R сверху `TRY_INJECT:`.
+  Аддитивно, порядок правильный, 90 «дубликатов» в машинном отчёте — ложное срабатывание.
+- `popneed_heating` — T&R `REPLACE:` с новыми товарами (`gas`, `homeappliances`), TGR правит
+  доли снабжения. Сохранить схему TGR = придумать доли для товаров, которых TGR не видел.
+- `law_no_womens_rights`, `law_women_own_property`, детские законы — расхождение чисто числовое.
+- `wanted_army_size_script_value`, `NAI` `MONEY_SPENDING_*` (8 подключей, пересечение с KAI),
+  `ai_strategy_industrial_expansion` / `plantation_economy` / `placate_population` — у обоих
+  авторов полные осознанно разные версии.

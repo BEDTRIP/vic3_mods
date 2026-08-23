@@ -1,0 +1,51 @@
+﻿# ComPatch: The Great Revision + Kuromi AI + Tech & Res
+# New file, 2026-08-23.
+#
+# TGR hangs one extra line on malaria_prevention with INJECT:, T&R re-creates the
+# whole technology with REPLACE_OR_CREATE: and loads later, so TGR's injection is
+# discarded. Only that one line is at stake, so the entry below is T&R's body with
+# TGR's modifier line put back into the modifier block.
+#
+# Symptom without this file is silent: TGR's Environment institution simply caps one
+# investment level lower than TGR intends. No log line -- the modifier is not
+# missing, it was never applied.
+#
+# atmospheric_engine, mechanical_tools and mutual_funds also show up as duplicates in
+# the report, but there both sides use INJECT: (or TGR REPLACE_OR_CREATE + T&R
+# INJECT), which merges. No patch needed.
+
+REPLACE:malaria_prevention = {
+	# Should permit for colonization of state regions with severe malaria
+	era = era_4
+	texture = "gfx/interface/icons/invention_icons/malaria_prevention.dds"
+	category = society
+
+	modifier = {
+		country_institution_colonial_affairs_max_investment_add = 1		# T&R / vanilla
+		country_institution_environment_max_investment_add = 1			# TGR (INJECT lost to T&R's REPLACE_OR_CREATE)
+	}
+
+	unlocking_technologies = {
+		civilizing_mission
+		theiler_microbiology_tech #Morgenrote: Added Tech
+	}
+
+	ai_weight = {
+		value = 1
+
+		# Important for colonizers
+		if = {
+			limit = {
+				navy_size >= 25
+				is_country_type = recognized
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				has_strategy = ai_strategy_colonial_expansion
+			}
+			add = 1
+		}
+	}
+}

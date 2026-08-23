@@ -1,37 +1,56 @@
-# ComPatch: Tech & Res + Kuromi + TGR
-# Base: Tech&Res REPLACE PMs (inputs/outputs/new goods)
-# Add: TGR market access price impact on ports/railways
+﻿# ComPatch: The Great Revision + Kuromi AI + Tech & Res
+# Load order: CMF -> TGR -> KAI -> T&R -> this patch.
+#
+# Base = T&R's reworked PMs (new goods, new inputs), because T&R loads last.
+# Carried over from TGR: exactly one line per PM,
+#   state_modifiers = { unscaled = { state_market_access_price_impact = 0.05 } }
+# TGR adds it to every port and railway PM (it does not exist in vanilla) and its
+# market-access economy is balanced around it; T&R's rewrite has no opinion on the
+# key at all, it simply does not carry it.
+#
+# 2026-08-23 changes:
+#  * Ports resynced with T&R 1.6. The previous patch was still on T&R 1.5 numbers
+#    (basic: clippers 5 / laborers 650 / infra 4; industrial: laborers 450;
+#    modern: merchant_marine 30 / laborers 350) and, worse, it re-added
+#    country_convoys_capacity_add to all three ports. Neither TGR nor T&R has that
+#    key any more -- both dropped it independently -- so the patch was inventing
+#    convoy capacity that no author wants. Removed.
+#  * Dropped five entries that had become exact copies of T&R and therefore did
+#    nothing: pm_assembly_lines_building_arms_industry,
+#    pm_assembly_lines_building_automotive_industry,
+#    pm_assembly_lines_building_motor_industry, pm_automatic_power_looms,
+#    pm_electric_fencing. TGR and T&R differ on them, but only in balance numbers,
+#    and T&R already wins by load order -- pinning T&R's own values changed nothing.
+#  * Still not patched, on purpose: pm_compression_ignition_tractors and
+#    pm_rail_transport_mine. Both mods set different numbers there and neither adds
+#    state_market_access_price_impact, so there is nothing structural to preserve.
+
+# --- Ports: T&R 1.6 bodies + TGR's state_market_access_price_impact ---
 
 REPLACE:pm_basic_port = {
 	texture = "gfx/interface/icons/production_method_icons/basic_port.dds"
-	
+
 	building_modifiers = {
-		workforce_scaled = {	
-			goods_input_clippers_add = 5
-			goods_output_merchant_marine_add = 10 # 500
-			#goods_output_organized_data_add = 0.5
+		workforce_scaled = {
+			goods_input_clippers_add = 6 # 360
+			goods_output_merchant_marine_add = 10 # 450
 		}
 		level_scaled = {
-			building_employment_laborers_add = 650
+			building_employment_laborers_add = 700
 			building_employment_clerks_add = 200
 			building_employment_bureaucrats_add = 100
 		}
 	}
 
-	country_modifiers = {
-		workforce_scaled = {
-			country_convoys_capacity_add = 100
-		}
-	}
 	state_modifiers = {
 		workforce_scaled = {
-			state_infrastructure_add = 4
+			state_infrastructure_add = 3
 		}
 		unscaled = {
-			state_market_access_price_impact = 0.05
+			state_market_access_price_impact = 0.05		# TGR
 		}
 	}
-}		
+}
 
 REPLACE:pm_industrial_port = {
 	texture = "gfx/interface/icons/production_method_icons/industrial_port.dds"
@@ -45,46 +64,40 @@ REPLACE:pm_industrial_port = {
 			goods_input_steamers_add = 5 # 350
 			goods_input_coal_add = 5 # 150
 			goods_output_merchant_marine_add = 20 # 1000
-			#goods_output_organized_data_add = 1
 		}
 		level_scaled = {
-			building_employment_laborers_add = 450
+			building_employment_laborers_add = 500
 			building_employment_machinists_add = 200
 			building_employment_clerks_add = 200
 			building_employment_bureaucrats_add = 100
 		}
 	}
 
-	country_modifiers = {
-		workforce_scaled = {
-			country_convoys_capacity_add = 150
-		}
-	}
 	state_modifiers = {
 		workforce_scaled = {
 			state_infrastructure_add = 5
 		}
 		unscaled = {
-			state_market_access_price_impact = 0.05
+			state_market_access_price_impact = 0.05		# TGR
 		}
-	}	
+	}
 }
 
 REPLACE:pm_modern_port = {
 	texture = "gfx/interface/icons/production_method_icons/modern_port.dds"
+
 	unlocking_technologies = {
 		concrete_dockyards
 	}
-	
+
 	building_modifiers = {
 		workforce_scaled = {
 			goods_input_steamers_add = 5 # 350
 			goods_input_heavy_fuel_add = 5 # 400
-			goods_output_merchant_marine_add = 30 # 1500
-			#goods_output_organized_data_add = 2
+			goods_output_merchant_marine_add = 25 # 1500
 		}
 		level_scaled = {
-			building_employment_laborers_add = 350
+			building_employment_laborers_add = 400
 			building_employment_machinists_add = 250
 			building_employment_engineers_add = 50
 			building_employment_clerks_add = 200
@@ -92,20 +105,17 @@ REPLACE:pm_modern_port = {
 		}
 	}
 
-	country_modifiers = {
-		workforce_scaled = {
-			country_convoys_capacity_add = 200
-		}
-	}
 	state_modifiers = {
 		workforce_scaled = {
 			state_infrastructure_add = 7
 		}
 		unscaled = {
-			state_market_access_price_impact = 0.05
+			state_market_access_price_impact = 0.05		# TGR
 		}
 	}
-}	
+}
+
+# --- Railways: unchanged, verified line-for-line against T&R 1.6 on 2026-08-23 ---
 
 REPLACE:pm_steam_trains = {
 	texture = "gfx/interface/icons/production_method_icons/trains_steam.dds"
@@ -321,137 +331,5 @@ REPLACE:pm_diesel_trains_principle_transport_3 = {
 			state_market_access_price_impact = 0.05
 		}
 	}
-}
-
-REPLACE:pm_assembly_lines_building_arms_industry = {
-	texture = "gfx/interface/icons/production_method_icons/assembly_lines.dds"
-	
-	state_modifiers = {
-		workforce_scaled = {
-			state_pollution_generation_add = 10
-		}
-	}
-
-	unlocking_technologies = {
-		conveyors
-	}
-	
-	building_modifiers = {
-		workforce_scaled = {
-			goods_input_lubricant_add = 6
-			goods_input_electricity_add = 5
-		}
-
-		level_scaled = {
-			building_employment_laborers_add = -2500
-		}
-	}
-
-	required_input_goods = electricity
-}
-
-REPLACE:pm_assembly_lines_building_automotive_industry = {
-	texture = "gfx/interface/icons/production_method_icons/assembly_lines.dds"
-	state_modifiers = {
-		workforce_scaled = {
-			state_pollution_generation_add = 10
-		}
-	}
-
-	unlocking_technologies = {
-		conveyors
-	}
-
-	building_modifiers = {
-		workforce_scaled = {
-			# input goods
-			goods_input_tools_add = 5
-			goods_input_lubricant_add = 3
-			goods_input_electricity_add = 5
-		}
-
-		level_scaled = {
-			building_employment_laborers_add = -1500
-			building_employment_machinists_add = -500
-		}
-	}
-
-	required_input_goods = electricity
-}
-
-REPLACE:pm_assembly_lines_building_motor_industry = {
-	texture = "gfx/interface/icons/production_method_icons/assembly_lines.dds"
-	state_modifiers = {
-		workforce_scaled = {
-			state_pollution_generation_add = 10
-		}
-	}
-	
-	unlocking_technologies = {
-		conveyors
-	}
-	
-	building_modifiers = {
-		workforce_scaled = {
-			# input goods
-			goods_input_tools_add = 5
-			goods_input_lubricant_add = 3
-			goods_input_electricity_add = 5 #400
-		}
-
-		level_scaled = {
-			building_employment_laborers_add = -1500
-			building_employment_machinists_add = -500
-		}
-	}
-
-	required_input_goods = electricity
-}
-
-REPLACE:pm_automatic_power_looms = {
-	texture = "gfx/interface/icons/production_method_icons/automatic_power_looms.dds"
-	
-	unlocking_technologies = {
-		electrical_capacitors
-	}
-
-	disallowing_laws = {
-		law_industry_banned
-	}
-	
-	building_modifiers = {
-		workforce_scaled = {
-			# input goods
-			goods_input_tools_add = 5 # 200
-			goods_input_copperwires_add = 3 # 200
-			goods_input_electricity_add = 5 # 150
-		}
-
-		level_scaled = {
-			# profit = -500 (break-even when annual laborer wage > 10.4)
-			building_employment_laborers_add = -2500
-		}
-	}
-
-	required_input_goods = electricity
-}
-
-REPLACE:pm_electric_fencing = {
-	texture = "gfx/interface/icons/production_method_icons/electric_fencing.dds"
-	unlocking_technologies = {
-		electrical_generation
-	}
-	building_modifiers = {
-		workforce_scaled = {
-			goods_input_copperwires_add = 1
-			goods_input_electricity_add = 0.5
-		}
-
-		level_scaled = {
-			building_employment_laborers_add = -1000
-		}
-	}
-
-	required_input_goods = electricity
 }
 

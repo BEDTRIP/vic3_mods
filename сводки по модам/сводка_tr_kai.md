@@ -274,3 +274,39 @@
 - **`common/pop_needs/` и `pop_types/`**: новые потребности и ребаланс квалификаций инженеров/капиталистов.
 - **`common/combat_unit_types/` + `mobilization_options/`**: новые юниты/опции и новые goods в военном снабжении.
 - **`common/laws/` + `law_groups/`**: новые группы законов (особенно mining/uranium/data/env).
+
+### Уточнено 23.08.2026 (разбор пары TGR × T&R × KAI)
+
+**T&R 1.6 продолжил переход на `INJECT:`-дельты, и это отменило половину старого компача.**
+
+- **Компании: все шесть спорных перешли на `INJECT:`** (`company_krupp`, `company_lkab`,
+  `company_philips`, `company_east_india_company`, `company_altos_hornos_de_vizcaya`,
+  `company_united_fruit`) — только `building_types` / `extension_building_types` добавками.
+  `INJECT:` в список добавляет, поэтому тела чужого мода остаются целыми и мердж происходит сам.
+  **`company_imperial_arsenal` T&R больше не трогает вовсе.** Файл `zz_tr_kai_tgr_company_types.txt`
+  из компача удалён — он не просто стал не нужен, он вёз копии тел TGR полугодовой давности.
+- **`law_industry_banned` — теперь `INJECT:`**, список сноса T&R = ванильные 8 + производства T&R,
+  то есть строгое надмножество TGR. Патч удалён. **`law_extraction_economy` — тоже `INJECT:`,
+  но патч нужен**: `on_activate` — блок, инъекция вытесняет TGR-овский вместе со свопом централизации.
+- **Здания: полным `REPLACE:` у T&R остались ровно два** — `building_automotive_industry` и
+  `building_synthetics_plant`. Остальные 15 из отчёта (`arms_industry`, `steel_mill`,
+  `chemical_plant`, …) — `INJECT:` только `production_method_groups`.
+  У automotive PMG-группа сменилась: `pmg_data_optimization_heavy_industry` →
+  **`pmg_data_optimization_heavy_industry_algorithmic_dispatch`** (старое имя живо, поэтому
+  устаревшая ссылка грузилась молча и просто не давала новый ряд ПМ).
+  Также `has_law` → `has_law_or_variant` в `possible`, `levels_per_mesh` 5 → 50.
+- **Порты: из `pm_basic_port` / `pm_industrial_port` / `pm_modern_port` убран
+  `country_convoys_capacity_add`** — его нет ни у TGR, ни у T&R. Числа T&R 1.6:
+  basic `clippers 6 / merchant_marine 10 / laborers 700 / infra 3`;
+  industrial `laborers 500`; modern `merchant_marine 25 / laborers 400 / infra 7`.
+- **`ai_strategy_colonial_extraction` T&R везёт сам** — `kai_has_high_supply` + те же семь
+  ресурсных товаров, что были в компаче. Патч на неё удалён.
+  `ai_strategy_resource_expansion` T&R **не трогает**, там побеждает KAI, и патч нужен.
+- **Новое у T&R: UN human rights** (`ztr_un_updated_*`) — полный `REPLACE:` на колониальные
+  законы, законы о женщинах и `INJECT:` на детские. Это новая площадь пересечения с любым модом,
+  который трогает `lawgroup_colonization` / `lawgroup_womens_rights` / `lawgroup_childrens_rights`.
+- **Опечатка в T&R** (обе версии `law_industry_banned` и `law_extraction_economy`):
+  `has_building = building_ecommerce_logistics` → `remove_building = building_aircraft_industry`.
+  Авиапром сносится дважды, e-commerce не сносится никогда. В компаче исправлено с пометкой.
+- **Товары: ваниль 53 + T&R 39 + TGR 0 + KAI 0 = 92** при потолке 128.
+- `wanted_army_size_script_value` — три разные формулы (TGR / KAI / T&R), побеждает T&R.
