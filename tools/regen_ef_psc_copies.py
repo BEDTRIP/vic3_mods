@@ -39,6 +39,14 @@ The same check runs the other way: --check reports any E&F file the hotfix
 overrides that this script does NOT copy, so a new hotfix override cannot
 quietly fall out of the compatch's view.
 
+Path overlap is only half of it. The hotfix can also INJECT: into keys that sit
+inside a file we copy wholesale -- our plain copy then wins and the injection is
+gone with nothing in the log. That is exactly what happened to the 98 bank
+companies: the hotfix's zz_ef_cm_companies.txt adds building_bank and the three
+regime currencies to keys that live in 00_ef_companies.txt. So the run also
+checks by KEY, and files that collide are carried here verbatim
+(VERBATIM_HOTFIX_JOBS); an uncovered collision fails --check.
+
 Localization is emitted as a small `zz_` overlay instead of a same-path copy.
 The old build shipped the whole 01_ef_je_localization file per language, which
 dropped 73 keys E&F had added since (fc_fso_situation, the crisis counters, the
@@ -70,6 +78,13 @@ NEW_NAME = "building_construction_sector"
 WHOLE_FILE_JOBS = [
     "common/company_types/00_ef_companies.txt",
     "common/history/buildings/00_ef_building.txt",
+]
+
+# Files that exist ONLY in the hotfix and are carried here byte for byte,
+# because their keys collide with a WHOLE_FILE_JOBS copy above. See
+# VERBATIM_BANNER for why a collision here is silent and what it costs.
+VERBATIM_HOTFIX_JOBS = [
+    "common/company_types/zz_ef_cm_companies.txt",
 ]
 
 # Single key lifted out of a much bigger E&F file.
@@ -114,6 +129,26 @@ HISTORY_NOTE = (
 
 EXTRA_NOTES = {"common/history/buildings/00_ef_building.txt": HISTORY_NOTE}
 
+VERBATIM_BANNER = (
+    "# GENERATED FILE -- do not edit by hand.\n"
+    "# Rebuilt by tools/regen_ef_psc_copies.py -- verbatim copy of the E&F\n"
+    "# hotfix's {src}. No rename is applied: the body below is the hotfix's\n"
+    "# file byte for byte, so it still diffs cleanly against the new hotfix.\n"
+    "#\n"
+    "# WHY IT IS HERE. The hotfix INJECT:s into 98 company_types keys that this\n"
+    "# compatch also redefines, in its copy of 00_ef_companies.txt. A plain key\n"
+    "# in a later-loaded mod overrides -- prefix or no prefix -- and the compatch\n"
+    "# loads after the hotfix. Without this file the hotfix's INJECT is simply\n"
+    "# gone: the 98 bank companies lose building_bank from building_types,\n"
+    "# add_ownership in the hotfix's zz_ef_cm_bank_ownership.txt then has no\n"
+    "# company that may hold a bank, and no country ever takes over its own\n"
+    "# central bank. The three regime currencies drop out of their\n"
+    "# possible_prestige_goods at the same time. Nothing is logged for any of it.\n"
+    "#\n"
+    "# Inside one mod files load by name, so zz_ lands on 00_ -- this INJECT\n"
+    "# applies to THIS mod's copy of the companies, not to E&F's.\n"
+)
+
 LOC_BANNER = (
     "# GENERATED FILE -- do not edit by hand.\n"
     "# Rebuilt by tools/regen_ef_psc_copies.py from {origin}: {src}\n"
@@ -140,6 +175,28 @@ def balance(text: str) -> int:
         line = raw.split("#", 1)[0]
         depth += line.count("{") - line.count("}")
     return depth
+
+
+TOP_KEY_RE = re.compile(r"^\s*([A-Za-z0-9_.\-:]+)\s*=\s*\{")
+
+# Keys that ADD rather than override when several files declare them, so two
+# files naming one of these is not a collision at all. history/buildings and
+# history/global stack their blocks; common/on_actions/ root hooks stack too.
+ADDITIVE_KEYS = {"BUILDINGS", "GLOBAL", "POPS", "STATES", "COUNTRIES", "CHARACTERS"}
+
+
+def top_level_keys(text: str) -> set[str]:
+    """Top-level `key = {` names, database prefix stripped (INJECT:foo -> foo)."""
+    depth = 0
+    out: set[str] = set()
+    for raw in text.split("\n"):
+        line = raw.split("#", 1)[0]
+        if depth == 0:
+            m = TOP_KEY_RE.match(line)
+            if m:
+                out.add(m.group(1).split(":")[-1])
+        depth += line.count("{") - line.count("}")
+    return out
 
 
 def extract_block(text: str, key: str) -> str:
@@ -208,12 +265,57 @@ def main() -> int:
         print(f"  {rel:<52} {mark}")
     print()
 
+    # --- guard: hotfix keys that collide with a file we copy -----------------
+    # Path overlap is not the only way to undo the hotfix. The hotfix may also
+    # INJECT: into keys that live inside a file we copy wholesale; our plain copy
+    # then wins and the injection is gone. Check by key, not only by path.
+    print("Hotfix keys landing inside a file this script copies:")
+    any_collision = False
+    for rel in WHOLE_FILE_JOBS:
+        src, _ = pick_source(rel)
+        copied = top_level_keys(read(src))
+        category = rel.rsplit("/", 1)[0]
+        for p in sorted((hotfix / category).glob("*.txt")) if (hotfix / category).is_dir() else []:
+            rel_p = p.relative_to(hotfix).as_posix()
+            if rel_p == rel:
+                continue
+            overlap = {
+                k for k in top_level_keys(read(p)) & copied
+                if k not in ADDITIVE_KEYS and not k.startswith("on_")
+            }
+            if not overlap:
+                continue
+            any_collision = True
+            covered = rel_p in VERBATIM_HOTFIX_JOBS
+            print(f"  {rel_p}")
+            print(f"      {len(overlap)} key(s) also defined by our copy of {rel}")
+            print(f"      {'carried here verbatim' if covered else 'NOT CARRIED -- the hotfix loses these keys'}")
+            if not covered:
+                print(
+                    f"ERROR: {rel_p} is not in VERBATIM_HOTFIX_JOBS; "
+                    f"{len(overlap)} hotfix key(s) would be silently undone "
+                    f"(e.g. {sorted(overlap)[0]})",
+                    file=sys.stderr,
+                )
+                rc = 1
+    if not any_collision:
+        print("  none")
+    print()
+
     # --- build the job list -------------------------------------------------
     jobs = []   # (relpath_out, src, body, is_loc)
 
     for rel in WHOLE_FILE_JOBS:
         src, origin = pick_source(rel)
         jobs.append((rel, src, origin, read(src), False))
+
+    for rel in VERBATIM_HOTFIX_JOBS:
+        src = hotfix / rel
+        if not src.is_file():
+            print(f"ERROR: verbatim job missing from the hotfix: {rel}", file=sys.stderr)
+            rc = 1
+            continue
+        jobs.append((rel, src, "hotfix", read(src), False))
 
     src_rel, key, dst_rel = KEY_JOB
     src, origin = pick_source(src_rel)
@@ -252,6 +354,12 @@ def main() -> int:
     for rel, src, origin, body, is_loc in jobs:
         if is_loc:
             text, n, bal = body, body.count(NEW_NAME), 0
+        elif rel in VERBATIM_HOTFIX_JOBS:
+            n = -1
+            text = VERBATIM_BANNER.format(src=src.name) + "\n" + body.lstrip("\ufeff")
+            if not text.endswith("\n"):
+                text += "\n"
+            bal = balance(text)
         else:
             body, n = BUILDING_RE.subn(NEW_NAME, body)
             banner = BANNER.format(origin=origin, src=src.name, old=OLD_NAME, new=NEW_NAME)
@@ -266,7 +374,7 @@ def main() -> int:
 
         print(f"[{'OK ' if bal == 0 else 'BAD'}] {rel}")
         print(f"        source  : {origin} -- {src}")
-        print(f"        renamed : {n} occurrence(s)")
+        print(f"        renamed : {'n/a (verbatim copy)' if n < 0 else str(n) + ' occurrence(s)'}")
         print(f"        lines   : {old.count(chr(10))} -> {text.count(chr(10))}")
         print(f"        braces  : {bal:+d} (must be 0)")
         print(f"        changed : {'yes' if changed else 'no'}")
@@ -275,7 +383,7 @@ def main() -> int:
             print("        REFUSING TO WRITE: unbalanced braces", file=sys.stderr)
             rc = 1
             continue
-        if n == 0:
+        if n == 0 and rel not in VERBATIM_HOTFIX_JOBS:
             print(f"        WARNING: nothing renamed -- did E&F drop {OLD_NAME}?", file=sys.stderr)
         if not a.check and changed:
             write_bom(dst, text)

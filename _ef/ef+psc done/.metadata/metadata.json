@@ -1,7 +1,7 @@
 {
   "name": "ComPatch E&F + PSC",
   "id": "3640702353",
-  "version": "1.13.10.2",
+  "version": "1.13.10.3",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility patch for Economic and Financial Mod (E&F) + Private Sector Construction (PSC)",
   "picture": "thumbnail.png",
@@ -52,7 +52,7 @@
         "id": "3786286962",
         "display_name": "E&F Hotfix",
         "version": "4.1.7.4",
-        "date": "2026-08-21"
+        "date": "2026-08-23"
       },
       {
         "id": "3420714166",

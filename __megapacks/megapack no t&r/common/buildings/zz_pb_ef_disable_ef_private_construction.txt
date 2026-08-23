@@ -1,4 +1,4 @@
-
+﻿
 # Disable E&F's second construction sector building type.
 # All E&F mechanics are remapped to vanilla `building_construction_sector`.
 

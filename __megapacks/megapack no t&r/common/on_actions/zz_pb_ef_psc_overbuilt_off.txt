@@ -1,0 +1,72 @@
+﻿#############################################
+# pb+ef: switch off E&F's "Overbuilt Economy" bubble under PSC.
+#
+# WHY THE MECHANIC DOES NOT APPLY HERE
+# E&F grows `speculative_share_2` every month while
+#   building_ef_private_construction_lvl > building_urban_center_lvl_by_base_rate
+# and turns it into `overbuilt_economy_modifier` on the sectors. In pb+ef that
+# script_value is remapped (zz_pb_ef_remap_pcs_values.txt) onto
+# `building_construction_sector`, i.e. onto the country's real construction
+# capacity. PSC already charges for over-building the honest way: sectors no
+# longer emit construction points, they emit wood/iron/steel/arc_welded
+# construction goods, and set_construction_point_demand bills the treasury and
+# the investment pool for them. Stacking E&F's debuff on top charges twice for
+# the same thing.
+#
+# WHY WE DO NOT JUST REMAP E&F's DRAIN
+# The counter's only sink in E&F is speculative_share_13_button:
+#   random_scope_state = {
+#       limit = { has_building = building_ef_private_construction }
+#       remove_building = building_ef_private_construction }
+# `remove_building` takes the WHOLE building, it has no level argument. In E&F
+# that costs a side contraption; under PSC a state holds exactly one
+# building_construction_sector and its level IS that state's entire
+# construction capacity -- PSC's own script says so:
+#   construction_regulator_level = {
+#       if = { limit = { has_building = building_construction_sector }
+#              b:building_construction_sector = { value = level } } }
+# A 1:1 remap would have the AI bulldoze a full 20-50 level sector once a
+# month, and PSC's regulator would keep converting goods it no longer has for
+# up to four more weeks (set_construction_regulator_level only shrinks at
+# `var:week_count >= 4`). So the drain stays disabled and we hold the counter
+# at zero instead.
+#
+# SIDE EFFECTS, ON PURPOSE
+# - speculative_share_9..12 stay usable: their `possible` requires
+#   `var:speculative_share_2 = 0`.
+# - speculative_share_13 never becomes visible: its `visible` requires
+#   `var:speculative_share_2 > 0`.
+# - the JE progress bar reads 0 instead of sitting parked at a clamped 100%.
+#
+# on_actions are additive, so this adds to E&F's hooks instead of replacing
+# them -- no need to touch financial_center_je_2 at all.
+#############################################
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_pb_ef_psc_overbuilt_off
+	}
+}
+
+zz_pb_ef_psc_overbuilt_off = {
+	effect = {
+		if = {
+			limit = {
+				has_variable = speculative_share_2
+				var:speculative_share_2 > 0
+			}
+			set_variable = { name = speculative_share_2 value = 0 }
+
+			# Housekeeping for saves carried over from an earlier pb+ef build,
+			# where the debuff was applied to the unified sector.
+			every_scope_state = {
+				every_scope_building = {
+					limit = {
+						is_building_type = building_construction_sector
+					}
+					remove_modifier = overbuilt_economy_modifier
+				}
+			}
+		}
+	}
+}

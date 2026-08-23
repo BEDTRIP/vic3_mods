@@ -1,20 +1,26 @@
- ########################################
-# E&F + TheGreatRevision (TGR) - Static modifiers compatibility
-# Both mods INJECT into base_values. This compatch (loaded last) "pins" the intended final values.
+﻿########################################
+# E&F + The Great Revision (TGR) - base_values compatibility
+#
+# base_values is patched by four files and ALL of them use INJECT:, so they merge
+# and there is no conflict to fix here:
+#   E&F/00_ef_static_modifier.txt        country_minting_add = -500
+#   TGR_LOANS_code_static_modifiers.txt  country_loan_interest_rate_add = -0.2
+#   TGR_POLITICS_code_static_modifiers.txt  bureaucracy/authority/influence = 200, officer/soldier pol str
+#   TGR_TRADE_code_static_modifiers.txt  company construction efficiency +0.20, trade advantage +0.05
+#
+# The previous version of this file "pinned" all of those values as of 01.2026 and
+# by 08.2026 was feeding the game numbers that exist nowhere any more
+# (country_company_throughput_bonus_add = 0.40 - commented out in TGR today;
+#  country_company_construction_efficiency_bonus_add = -0.05 - TGR now says +0.20).
+# Never pin what nobody else overwrites.
+#
+# Exactly one key genuinely needs us.
 ########################################
 
 INJECT:base_values = {
-	# E&F: negative minting baseline for its financial system
-	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
-	country_minting_add = -500
-
-	# TGR POLITICS: higher baseline pools
-	country_bureaucracy_add = 200
-	country_authority_add = 200
-	country_influence_add = 200
-
-	# TGR TRADE: company baseline tweaks
-	country_company_throughput_bonus_add = 0.40
-	country_company_construction_efficiency_bonus_add = -0.05
+	# TGR_LOANS sets -0.2 as the baseline for its own interest-rate mechanic.
+	# This patch disables that mechanic (see the journal_entries / scripted_buttons
+	# files), so the baseline has to go back to 0 - otherwise vanilla/E&F loans are
+	# handed out at almost no interest for the whole game.
+	country_loan_interest_rate_add = 0
 }
-

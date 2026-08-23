@@ -1,17 +1,10 @@
-﻿l_braz_por:
+﻿# ComPatch note: nothing here is TGR-specific.
+# E&F defines the pm_* keys itself since 04.07.2026 (01_ef_production_method_localization),
+# but never defined the four production_method_GROUP names, so the PM selector shows raw keys.
+# Kept in this patch so it works standalone; if you always run the E&F 1.13 Hotfix, this
+# belongs there instead - the same file is duplicated in ef+vc and bpm+ef today.
+l_braz_por:
  pmg_private_ownership_manufacture_stock: "Propriedade privada por ações (indústria)"
- pm_no_private_ownership_manufacture_stock: "Sem propriedade privada por ações (indústria)"
- pm_private_ownership_majority_manufacture_stock: "Propriedade privada majoritária (indústria)"
-
  pmg_private_ownership_agricultural_stock: "Propriedade privada por ações (agricultura)"
- pm_no_private_ownership_agricultural_stock: "Sem propriedade privada por ações (agricultura)"
- pm_private_ownership_majority_agricultural_stock: "Propriedade privada majoritária (agricultura)"
-
  pmg_private_ownership_mining_stock: "Propriedade privada por ações (mineração)"
- pm_no_private_ownership_mining_stock: "Sem propriedade privada por ações (mineração)"
- pm_private_ownership_majority_mining_stock: "Propriedade privada majoritária (mineração)"
-
  pmg_private_ownership_railroad_stock: "Propriedade privada por ações (ferrovias)"
- pm_no_private_ownership_railroad_stock: "Sem propriedade privada por ações (ferrovias)"
- pm_private_ownership_majority_railroad_stock: "Propriedade privada majoritária (ferrovias)"
-

@@ -1,4 +1,4 @@
-## AI helpers for PSC construction-goods chain in pb+ef
+﻿## AI helpers for PSC construction-goods chain in pb+ef
 ##
 ## Uses PSC construction goods:
 ## - wood_construction / iron_construction / steel_construction / arc_welded_construction

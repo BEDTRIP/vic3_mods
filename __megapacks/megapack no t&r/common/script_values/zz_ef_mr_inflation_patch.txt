@@ -1,11 +1,19 @@
-### E&F + Morgenroete ComPatch (Vic3 1.12)
+﻿### E&F + Morgenroete ComPatch (Vic3 1.13)
 ### Make E&F inflation scripted values account for Morgenroete goods.
+###
+### E&F 4.07.2026 split inflation into five baskets:
+###   inflation_on_consumer_goods, inflation_on_energy, inflation_on_raw_material,
+###   inflation_on_manufactured_goods, inflation_on_military_equipment.
+### Only the two baskets below need Morgenroete goods; the energy / manufactured /
+### military baskets contain no Morgenroete goods.
+###
+### The vanilla-side content of both values below was diffed against
+### E&F 4.07.2026 (common/script_values/00_economic_scripted_value.txt) and is
+### identical - only the Morgenroete entries are added. Re-diff on every E&F update.
+###
+### Morgenroete goods: air_travel, elgar_music, elgar_instruments, manzoni_prints
+### (consumer) and good_uranium (raw material).
 
-# NOTE: We override only the specific scripted values we need, to keep the compatch minimal.
-
-# ------------------------
-# Consumer goods inflation
-# ------------------------
 inflation_on_consumer_goods = {
 	add = {
 		market = {
