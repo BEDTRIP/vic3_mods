@@ -806,7 +806,16 @@ def gen_goods_loc(ef: Path, keep: str) -> dict[str, str]:
 
 
 def gen_bank(ef: Path, private: bool) -> tuple[str, str | None]:
-    """building_bank, ownable. Optionally bg_bank, no longer government funded."""
+    """building_bank, ownable, and bg_bank, no longer government funded.
+
+    The two go together and shipping only the first is what makes the central bank
+    read as a government building while a company is named on it. Ownership shares
+    and government funding are separate switches in the engine: the shares say who
+    holds the levels, `is_government_funded` says the treasury pays the inputs and
+    wages and takes the output. With the second still on, the panel shows what the
+    engine is actually doing with the money -- government expenditure -- and the
+    company on the ownership tab is along for the ride, earning nothing.
+    """
     b = next((read(ef / "common/buildings/ef_15_bank.txt")[a:c]
               for k, a, c in iter_top_blocks(read(ef / "common/buildings/ef_15_bank.txt"))
               if k == "building_bank"), None)
@@ -860,18 +869,22 @@ def gen_bank(ef: Path, private: bool) -> tuple[str, str | None]:
                  "### one field changed:\n"
                  "###   is_government_funded = yes  ->  is_government_funded = no\n"
                  "###\n"
-                 "### EMITTED ONLY UNDER --private-bank, and it is not a free switch.\n"
+                 "### THIS IS HALF OF THE OWNERSHIP CHANGE, not an optional extra, and\n"
+                 "### leaving it out was a regression that cost a test round. building_bank\n"
+                 "### with ownership_type = self gives the bank shares for a company to hold;\n"
+                 "### this is what stops the treasury from paying for it. Without it the\n"
+                 "### building panel reads \"government\" -- correctly, because the money still\n"
+                 "### moves that way -- with a company named on the ownership tab that earns\n"
+                 "### nothing from it. Suppress it with --government-funded-bank.\n"
                  "###\n"
-                 "### is_government_funded means the treasury pays the building's inputs and\n"
-                 "### wages and takes its output -- the government expenditure line in the\n"
-                 "### building panel. Off, the central bank is an ordinary private business, and\n"
-                 "### on a 1836 British save it makes 200 bonds plus currency against about 2.5K\n"
-                 "### of inputs and wages. As a government building that gap is state spending;\n"
-                 "### as a private one it is profit, dividends and investment-pool inflow, every\n"
-                 "### month, for whoever owns the central bank.\n"
-                 "###\n"
-                 "### Turn this on only if ownership does not work without it, and then watch\n"
-                 "### the investment pool rather than the ownership tab.\n\n")
+
+                 "### And it is not a free switch. is_government_funded means the treasury pays\n"
+                 "### the building's inputs and wages and takes its output. Off, the central\n"
+                 "### bank is an ordinary private business, and on a 1836 British save it makes\n"
+                 "### 200 bonds plus currency against about 2.5K of inputs and wages. As a\n"
+                 "### government building that gap is state spending; as a private one it is\n"
+                 "### profit, dividends and investment-pool inflow, every month, for whoever\n"
+                 "### owns the central bank. That is the price of the ownership working at all.\n\n")
         group = ghead + g + "\n"
     return bank, group
 
@@ -2231,8 +2244,10 @@ def main() -> int:
     ap.add_argument("--root", type=Path, default=DEFAULT_ROOT)
     ap.add_argument("--out-root", type=Path, default=DEFAULT_OUT_ROOT)
     ap.add_argument("--keep", default="spe_uni_c")
-    ap.add_argument("--private-bank", action="store_true",
-                    help="also drop is_government_funded from bg_bank -- see the file it emits")
+    ap.add_argument("--government-funded-bank", action="store_true",
+                    help="keep is_government_funded = yes on bg_bank: the treasury goes on "
+                         "paying for the central bank and the panel calls it a government "
+                         "building, even though a company holds its levels")
     ap.add_argument("--check", action="store_true")
     args = ap.parse_args()
 
@@ -2298,7 +2313,7 @@ def main() -> int:
     emit(mod / "common/company_types/zz_ef_cm_generic_banks.txt",
          gen_generic_banks(ef, names), args.check, acc)
 
-    bank, group = gen_bank(ef, args.private_bank)
+    bank, group = gen_bank(ef, not args.government_funded_bank)
     emit(mod / "common/buildings/zz_ef_cm_bank.txt", bank, args.check, acc)
     gpath = mod / "common/building_groups/zz_ef_cm_bank_group.txt"
     if group is not None:
@@ -2309,9 +2324,9 @@ def main() -> int:
         # not a crash -- name it and let the rest of the run finish.
         try:
             gpath.unlink()
-            print("  removed    zz_ef_cm_bank_group.txt (no --private-bank)")
+            print("  removed    zz_ef_cm_bank_group.txt (--government-funded-bank)")
         except OSError as e:
-            print(f"  DELETE ME  {gpath} ({e.strerror}) -- stale --private-bank output")
+            print(f"  DELETE ME  {gpath} ({e.strerror}) -- stale bg_bank override")
 
     emit(mod / "common/scripted_effects/zz_ef_cm_bank_monopoly.txt", gen_monopoly(ef, names), args.check, acc)
 
