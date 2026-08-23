@@ -1,6 +1,0 @@
-﻿l_english:
-
- # E&F Currency Merge: one shared currency good. The name is deliberately
- # generic -- every country still has its own currency LAW, and that is what
- # the monetary-system UI shows.
- spe_uni_c:0 "Currency"
