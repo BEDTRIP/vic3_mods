@@ -1,52 +1,320 @@
-# E&F 1.13.10 Hotfix
+# E&F Hotfix
 
-Fixes for **Economic and Financial**, repository version **04.07.2026**, on Victoria 3 **1.13.10**.
-Load it **after E&F**. It does not depend on the E&F + Morgenröte ComPatch and works without it.
+Fixes for **Economic and Financial**, repository version **04.07.2026**, on Victoria 3 **1.13**.
+Load it **after E&F**. It does not depend on any compatch and works without them.
 
-Eight independent blocks: **goods limit**, **history**, **GUI**, **alerts**, **local_currency issuance**, **currency laws**, **script guards**, **dev panel**.
+The headline change is the **currency merge**: E&F's 57 currency goods become one, which is
+what lets E&F share a build with Tech & Res, Morgenröte or PSC at all. Around it sits the
+machinery that merge needed — three monetary standards as prestige goods, a central bank
+owned by a company, a rewritten money-issuance controller — and then a list of independent
+repairs: history, GUI, alerts, local currency, currency laws, script guards, dev panel.
+
+Most of the mod is **generated** from E&F's own files by `tools/regen_ef_currency_merge.py`.
+Anything with a `zz_ef_cm_` prefix is its output and must not be edited by hand; see
+[Maintenance](#maintenance).
 
 ---
 
-## 1. The goods limit — the big one
+## The currency merge — 57 goods into one
 
-Victoria 3 1.13 cannot digest more than **128** goods. Established empirically with dummy filler goods: 128 loads, 130 and 131 crash on entering the game, without a single script error in the log.
+### The arithmetic
 
-E&F on its own brings **126** (53 vanilla + 73 of its own). That leaves two slots. Any mod adding three or more goods breaks the game:
+Victoria 3 1.13 cannot digest more than **128** goods. Established empirically with dummy
+filler goods: 128 loads, 130 and 131 crash on entering the game, without a single script
+error in the log.
 
-| build | goods | result |
-|---|---:|---|
-| E&F | 126 | works |
-| E&F + Morgenröte (+5) | 131 | **crash** |
-| E&F + Morgenröte + PSC (+4) | 135 | **crash** |
+E&F brings 73 goods of its own on top of vanilla's 53 — **126**, two slots left. Any mod
+adding three or more breaks the game, and it breaks silently.
 
-The E&F author seems to have hit the same ceiling: moving to 1.13 he cut 32 goods from the mod and added none, landing on 126.
+57 of those 73 are currencies, one per monetary system law. Merging them into a single good
+takes E&F down to **8**:
 
-### What is cut here
+| build | before | after |
+|---|---:|---:|
+| vanilla | 53 | 53 |
+| + E&F | 126 | **61** |
+| + Morgenröte (+5) | 131 — crash | 66 |
+| + PSC (+4) | 135 — crash | 70 |
+| + Tech & Res (+35) | 161 — crash | **96** |
 
-Eight currencies are commented out in `common/goods/ef_00_goods.txt`, the same way the author cut his own 32. Laws, production methods, variables and localisation stay behind; they do not count towards the goods total.
+Tech & Res is the point of the exercise: it and E&F simply could not coexist, and now they
+do, with neither side cut.
 
-| currency | why it is safe |
-|---|---|
-| `eco_central_african_eco_c` | `currency_identifiers` is always 0 — no country and no tag stands behind it |
-| `eco_east_african_eco_c` | same |
-| `eco_west_african_eco_c` | same |
-| `dinar_c` | the generic base currency, always 0, handed to nobody |
-| `peso_c` | the generic base currency, always 0, and there are eight named pesos besides |
-| `gulden_indies_guilder_c` | bound to `c:DEI`, but history gives DEI `rupee_indonesian_rupiah` — a duplicate that never fires |
-| `dollar_caribbean_dollar_c` | Haiti is moved to "no currency" (see below) |
-| `dollar_new_zealand_dollar_c` | New Zealand is moved to "no currency" |
+### What is not lost
 
-Result: **118** goods instead of 126.
+All 95 currency laws stay. Every country keeps its own law, its own `pm_currency_*`, its own
+exchange rate and money supply. The bank still mints, buildings still pay for liquidity.
+Only the good on the belt is shared.
 
-| build | now |
+`local_currency` is merged in too, and that is a fix in its own right rather than a side
+effect: it was a separate, cheaper good that also satisfied `popneed_currency`, so pops in
+real nations covered their currency need with somebody else's local money instead of their
+own. The hotfix used to fight that by recomputing how much of it gets issued (see the
+`local_currency` section); merging removes the cause instead of the symptom, because there is
+no longer a cheaper currency to switch to. It is the same good at the same price.
+
+It also frees a name and an icon. The surviving good is called **Local Currency** and wears
+`local_currency`'s icon, because that is what it is: the plain money every country makes.
+
+### Why it was safe to do
+
+E&F's exchange rates, money supply, gold and silver standard, stockpiles, imports and
+exports run on country and global **variables**, not on the market data of the currency
+goods. Of the 36 script-value families E&F defines per currency, 14 are referenced nowhere
+at all — including every one that reads `market.mg:<X>_c.market_goods_*`.
+
+The one live consumer of a currency good's market data was the money-issuance controller,
+which needed rewriting; that has a section of its own below.
+
+### What the generator rewrites
+
+Not just the goods file. Every reference to a dead currency has to be retargeted, and the
+two shapes have to be handled separately — a bare key (`mg:pound_sterling_c`) and a key
+baked into a modifier name (`goods_input_pound_sterling_c_add`), where a `\b`-anchored
+pattern silently misses.
+
+| | count |
 |---|---:|
-| E&F + hotfix | 118 |
-| + Morgenröte | **123** |
-| + Morgenröte + PSC | **127** |
+| currency laws / production methods left intact | 95 |
+| production methods retargeted | 285 |
+| script values retargeted | 475 |
+| orphaned modifier types dropped | 378 |
+| pop-need entries dropped | 95 |
+| goods colours dropped | 94 |
+| languages localised | 11 |
 
 ---
 
-## 2. History
+## The three monetary standards
+
+The currencies come back — not as 95 separate prestige goods, which was the first attempt,
+but as **three**, one per monetary standard.
+
+### Three is the ceiling, and it is measured
+
+A base good gets **three prestige slots**. Only the first three declarations become real
+slots; everything past them silently falls back into the third. There is no define for it —
+the number is in the executable. The symptom was the entire world minting the Iraqi dinar.
+
+### The three
+
+| prestige good | monetary standard laws |
+|---|---|
+| **Representative Currency** | gold standard, silver standard, bimetallism |
+| **Pegged Currency** | gold exchange standard, external exchange standard |
+| **Fiat Currency** | fiat standard |
+
+Each carries `possible = { has_law = law_type:law_<standard> }`, which **is** evaluated in
+country scope — confirmed in game at three goods, after it had been dismissed as unreliable
+at ninety-five. So the central bank of a country on the gold standard mints Representative
+Currency, and the same bank mints Fiat Currency after the law changes. The prestige bonus
+and the engine's +20% throughput for buildings consuming it come along for free.
+
+Prestige goods do not count against the 128 — measured with a hundred dummies on one base
+good, not assumed.
+
+Fiat reuses E&F's `spe_uni` icon; the other two are new icons drawn in E&F's style, 350×350
+uncompressed DDS in `gfx/interface/icons/goods_icons/currencies/`.
+
+**The "Currency Issued" row is back in the bank panel.** E&F hides that production method
+group — and eleven others — by name in `building_details_panel.gui`, so the bank showed two
+rows and not three. `pmg_currency_type` is taken off that list; the other eleven stay hidden,
+they are E&F's internal plumbing. It does nothing mechanically and never did; it says which
+currency this bank issues.
+
+---
+
+## The central bank and the company that owns it
+
+A company can only produce a prestige good from a building it **owns**, so the central bank
+had to become ownable. That turned out to be the largest single block in the mod.
+
+### Ownership can only happen at creation
+
+There is no effect in the game that gives an existing building to a company. `add_ownership`
+is a field of `create_building` and nothing else — all ~1900 uses in vanilla are inside one,
+and no ownership effect appears in `effects_l_english.yml` or `common/effect_localization/`.
+The only other route into company hands is privatisation, which is the AI's decision on its
+own schedule.
+
+So the bank has to be **born owned**. All 1,004 of E&F's `create_building` calls for the
+central bank are rewritten to go through `zz_ef_cm_create_owned_bank`, which picks the owner
+and creates the building already in its hands.
+
+Two engine rules learned the hard way here:
+
+* **`level` cannot stand next to `add_ownership`** in one `create_building`. The level is the
+  sum of the ownership levels; writing both makes the engine throw the whole block away at
+  load (`PostValidate of effect 'create_building' returned false`). Vanilla says the same by
+  example: 3128 blocks with `add_ownership`, not one with `level`.
+* **`$CB_SIZE$` has to be a literal.** It is a macro argument, pasted in as text, and it lands
+  inside `add_ownership = { company = { levels = $CB_SIZE$ } }` where a `var:` read does not
+  resolve. Passing one there cost four countries their central bank outright: the building was
+  removed and recreated with zero levels, with nothing in any log.
+
+### Which company
+
+Whatever bank company the country already holds. E&F ships 98 of them and lists them itself,
+in the `private_bank_type` block of its customizable localisation — that list is the source
+of truth. A hand-written table of tag → company was tried first and kept losing the race
+against E&F's roster: it named the Da-Qing Bank for China, which is founded in 1905, while
+the bank China actually holds in 1836 is the Imperial Bank of China. Mexico, Belgium,
+Portugal and Turkey were the same shape of miss.
+
+The curated table survives, but it only decides **order** — Britain holds six banks and the
+Bank of England should win.
+
+Countries with no bank of their own get one generated company, `zz_ef_cm_central_bank`,
+named "Central Bank" with the central bank icon. There used to be ninety-five of these, one
+per currency law and identical but for the key; since the prestige good is chosen by the
+monetary standard law rather than by the currency, the currency had nothing left to select.
+
+All 98 get `building_bank` on their `building_types` and the three regime currencies on
+their `possible_prestige_goods`, by `INJECT:` — nothing is taken away, so nothing needs
+restating, and they keep the railways and trade centres E&F gave them.
+
+**`building_types` is the only real lock on who may own a building.** A monopoly is a price
+and construction rule, not a lock: in the Papal States, Banca d'Italia privatised four levels
+of the central bank out from under the company that held the monopoly.
+
+### Growing versus changing hands
+
+The bank is **torn down only to change hands** — when the country's own historical bank turns
+up years after a stand-in took the central bank. Ownership cannot be moved, so the only way
+to hand it over is to build it again, and the upkeep pass calls that rebuild itself rather
+than waiting for E&F, whose spawners fire on gdp_view thresholds and may never come for a
+country that is not growing.
+
+Ordinary growth is an ordinary `create_building` on top of what is there. It used to be a
+tear-down as well, and that had a price worth writing down: E&F calls its spawners from
+`ef_on_yearly_pulse_country` with a size that grows with `gdp_view`, so a growing country
+crosses a threshold about once a year. Each rebuild dropped that country's entire issuance
+for a month while the new building staffed up, and the currency price fell to 0.01 and came
+back — which is why the countries that grow fastest spiked and Austria did not.
+
+A rebuilt bank also comes back bare, so both of E&F's setup effects have to run:
+`central_bank_production_methods` picks the methods and `central_bank_modifier` re-applies
+`currency_demande`, the mult that turns the production method's ~27 units into Britain's
+100K. That modifier lives on the building, so tearing the building down takes it with it.
+
+### Owned, but still government funded
+
+| what | why |
+|---|---|
+| `ownership_type = no_ownership` → `self` | no ownership shares meant nothing to hold |
+| `ai_nationalization_desire = 0` → `-5` | 0 is exactly the engine's privatise threshold; a company can only hold privatised levels |
+
+**`bg_bank: is_government_funded` is deliberately left at `yes`.** Ownership shares and
+government funding are separate switches, and only the first one is thrown here. The treasury
+goes on paying the central bank's inputs and wages and taking its output, so the company that
+owns the bank collects no dividends from it.
+
+The visible consequence is that the building panel calls the central bank a government
+building even though a company is named on its ownership tab. That reads like a bug and is
+not one — the money really does move the government way, and the panel is telling the truth.
+The company holds the bank so it can mint the country's prestige currency and so no rival can
+buy the bank out from under it, not so it can collect the bank's profits.
+
+`--private-bank` emits the `bg_bank` override and hands those profits to the owner — about 6K
+a month on a 1836 British save — which is a different mod.
+
+### The company always exists, and costs nothing
+
+* **granted** at game start and monthly — a country that owns a central bank and holds no bank
+  company is given one;
+* **free** — a country modifier with `country_max_companies_add = 1` while the central bank
+  stands. E&F's own +1 sits inside `prosperity_modifier`, so it only ever reached a prosperous
+  company;
+* **undeletable** — no such flag exists in the engine, so it is imitated: delete it and the
+  monthly pass puts it back;
+* **holds the monopoly** on `building_bank`, with a free charter so the patent does not cost
+  one of the country's four.
+
+---
+
+## Money issuance — the one thing the merge broke
+
+E&F's bank drives its output until it equals market demand for its currency:
+
+```
+target_demand_currency              = market.mg:<own currency>.market_goods_buy_orders
+target_demand_currency_for_modifier = (target − current output) / current × 100
+currency_demande on the bank        = goods_output_<cur>_mult 0.01 × that
+```
+
+That was self-limiting while every country had its own good — "demand for the pound" was,
+near enough, Britain's demand. With one shared good it became the whole market's demand and
+every bank chased all of it: six banks on the British market issued ~196K each against ~192K
+of buy orders, price −99%.
+
+### Splitting the demand
+
+Each issuer takes the share of its market's currency demand that its **GDP** is of the summed
+GDP of that market's central banks. GDP is one field, always available, and it tracks both
+halves of currency demand at once — pops through `popneed_currency`, roughly half the buy
+orders, and buildings through `pmg_market_liquidity` at 98 per workforce unit, the other half.
+
+Two things about that sum are not obvious, and both cost a test round:
+
+* **It is computed in an effect, not in the script value.** Global list iterators do not run
+  inside script values. `every_scope_state` does, which is what made `every_country` look
+  plausible — so the sum silently stayed 0, `min = 1` turned it into 1, and every share came
+  out as `gdp / 1` clamped to the maximum of 1. Every bank on a market then chased the entire
+  market's demand: 1.22M of currency against 214K of buy orders on the British market, price
+  −98%, West Bengal alone printing 1.08M. Nothing in any log says so — a script value that
+  quietly evaluates to zero is indistinguishable from one that legitimately is zero.
+* **There is one copy per market, kept on the market's owner.** Every country computes the
+  same sum, but each on its own day — the monthly pulse is spread across the days of the month
+  — so several issuers on one market held several slightly different ideas of one number and
+  their shares did not add to one.
+
+Membership in the sum is "does a central bank stand in this country", not
+`has_modifier = has_central_bank`. That modifier is E&F's bookkeeping, applied and removed on
+its own pulses, and a country between pulses would drop out of the denominator for a month
+while everyone else overprinted to cover the gap.
+
+Countries on `law_no_market_liquidity` issue nothing and take no share, but their pops and
+buildings still buy — so their demand is covered by the market's issuers pro rata, which is
+what one expects of a colonial market.
+
+### The divisor, and two wrong fixes
+
+`base_demande_currency_fix` is the bank's flat output —
+`scope:central_bank_scope.modifier:goods_output_spe_uni_c_add`, the production method's
+workforce-scaled `= 1`, about 27 on a level 20 bank. The percentage computed from it feeds a
+**mult**, so taking a bank from 27 units to Britain's 100K needs roughly 370,000. Hundreds of
+thousands is the working range, not an overflow.
+
+Which is why there is no cap. Capping it at the author's commented-out 25000 cut Britain to a
+fifteenth of what it should print; 100000 cut it to a quarter. Nor the `if fix > 0` guard the
+five other financial goods use — their divisor is a financial-centre count that grows on its
+own, this one is what the bank is already issuing, and skipping at zero locks the bank at bare
+production method output forever (Britain went from 100K to 6.77).
+
+The only thing actually wrong is the divide by zero, on the tick after a bank is rebuilt
+before its production methods are back. The divisor is clamped at 1, the way E&F clamps
+`building_financial_num` elsewhere; with a healthy divisor the arithmetic is bit-identical to
+E&F's.
+
+---
+
+## The market panel
+
+E&F gives currencies their own tab, "Currency in Circulation", built from a hard-coded list of
+all 95. With one currency the tab is a list of one, and it had a bug of its own: it always
+showed the **player's own market**, whichever market panel you opened it from. It was fed by
+`GetGlobalList('gui_market_currency_list')` — a global variable list rebuilt for whichever
+market the panel last cached, so there was nothing to repair inside it.
+
+The tab is removed, along with the two list-builders that fed it, and the currency now appears
+in the ordinary goods grid. That took a second change: `goods_entry_button` hides goods by name
+through a `visible` built from 105 `EqualTo_string` terms, and `spe_uni_c` was one of them. 94
+of those goods no longer exist, so the filter is rebuilt from the eight financial products that
+do.
+
+---
+
+## History
 
 ### `common/history/global/zz_ef_currency_fix.txt` (new, additive)
 
@@ -54,7 +322,7 @@ Result: **118** goods instead of 126.
 
 **Württemberg.** E&F gives it `law_gulden_south_german_gulde_currency` — no trailing `n`. No such law exists, `activate_law` silently does nothing, and WUR ends up with no currency at all even though the good `gulden_south_german_gulden_c` is alive. We hand it the correct law.
 
-**Thirteen countries → `law_no_market_liquidity`.** Eleven of them hold currencies the author cut while forgetting to remove the `activate_law`: Liberia, Costa Rica, Ecuador, El Salvador, Guatemala, Honduras, Nicaragua, Paraguay, Uruguay, Venezuela, Dai Viet. Plus Haiti and New Zealand, whose currencies we cut ourselves.
+**Thirteen countries → `law_no_market_liquidity`.** Eleven of them hold currencies the author cut while forgetting to remove the `activate_law`: Liberia, Costa Rica, Ecuador, El Salvador, Guatemala, Honduras, Nicaragua, Paraguay, Uruguay, Venezuela, Dai Viet. Plus Haiti and New Zealand, whose currencies an earlier build of this hotfix cut to stay under the goods ceiling — the merge made that unnecessary, but both laws are still duplicates of currencies their neighbours already carry, so they stay where they were put.
 
 Why this matters. A named currency law with no good behind it is a worse state than having no currency: the stock `pm_no_currency_type` and `pm_no_market_liquidity` never switch on (`law_no_market_liquidity` is what unlocks them), and the named production methods that run instead point at nothing. The bank mints nothing, buildings pay nothing for liquidity. `law_no_market_liquidity` is the first law in `lawgroup_currency_type`, with no requirements and no effects — most of the world already lives on it.
 
@@ -70,7 +338,7 @@ The target state was picked from the deposit, not from history: Spain's `silver_
 
 ---
 
-## 3. GUI
+## GUI
 
 E&F overrides **32** vanilla `.gui` files. Some are genuine reworks for the financial system, but six had fallen hundreds of lines behind 1.13. That is more dangerous than it sounds: the engine looks some widgets up **by name**, and when the name is missing from the overriding file the game does not complain quietly — it crashes.
 
@@ -109,7 +377,7 @@ These cannot be swapped for vanilla: they are real E&F reworks (−145/+218 and 
 
 ---
 
-## 4. Alerts — 70,000 errors per session
+## Alerts — 70,000 errors per session
 
 `common/alert_types/00_ef_alert_types.txt` holds 32 alerts, 31 of which read variables that are uninitialised in most games:
 
@@ -139,7 +407,7 @@ One caveat: where an alert reads five variables through an `or`, all five are no
 
 ---
 
-## 5. `local_currency` issuance — computed, not handed out flat
+## `local_currency` issuance — computed, not handed out flat
 
 **What it was.** E&F puts the `no_money_production` modifier on every country without a monetary system:
 
@@ -244,7 +512,7 @@ Side effect of a country-scoped modifier: states of one country get equal shares
 | `common/scripted_triggers/zz_ef_local_currency_triggers.txt` | who it applies to. **Currently everyone with `no_money_production`**; the market condition is commented out |
 | `common/script_values/zz_ef_local_currency_values.txt` | the curve and the calculation. One knob — `rate` |
 | `common/on_actions/zz_ef_local_currency_on_actions.txt` | monthly recalculation |
-| block 4 in `zz_ef_currency_fix.txt` | the initial grant, so the first month is not spent without currency |
+| the last block in `zz_ef_currency_fix.txt` | the initial grant, so the first month is not spent without currency |
 
 Also in `common/pop_needs/00_ef_pop_needs.txt` the weight of `local_currency` inside `popneed_currency` is lowered from `0.25` to `0.1`: a real currency should be more attractive than a generic local one. All 65 real currencies keep `0.25`.
 
@@ -252,7 +520,7 @@ Also in `common/pop_needs/00_ef_pop_needs.txt` the weight of `local_currency` in
 
 ---
 
-## 6. Currency laws — a typo removed
+## Currency laws — a typo removed
 
 All 95 laws in `common/laws/01_ef_currency_type.txt` required:
 
@@ -326,7 +594,7 @@ What follows for the hotfix: **handing these countries banks and currencies at g
 
 ---
 
-## 7. Two script guards, moved here from the PSC compatch
+## Two script guards, moved here from the PSC compatch
 
 These fix E&F on its own and have nothing to do with PSC, so they were moved out of the E&F + PSC compatch and into this mod. Both are key-level `REPLACE_OR_CREATE:` overrides — no E&F file is overwritten, so they cost nothing on the next E&F update beyond a re-check.
 
@@ -401,7 +669,7 @@ Found while digging, **not fixed**: `00_ef_building.txt:117` calls `initialize_h
 
 ---
 
-## 8. The leftover dev panel in the Economy tab
+## The leftover dev panel in the Economy tab
 
 `common/scripted_guis/zz_ef_hide_debug_panel.txt` (new)
 
@@ -439,161 +707,60 @@ Comment the block out if you want the dev panel back.
 
 ---
 
-## 9. Currencies merged into one good — and given back as prestige goods
-
-This is the block that turned the hotfix from a patch into something bigger, and it
-is the reason E&F can now share a build with Tech & Res at all.
-
-### The arithmetic
-
-Vanilla 53, PSC 4, E&F with this hotfix 65, Morgenröte 5, Tech & Res 35 — **162**
-against a ceiling of 128. 57 of E&F's 65 goods are currencies, one per monetary
-system law.
-
-Collapsing 56 of them into `spe_uni_c` takes the pack to **106**, with 22 slots to
-spare and Tech & Res whole — no cutting eras, data goods or androids.
-
-Nothing about the monetary system is removed. All 95 currency laws stay, every
-country keeps its own law and its own `pm_currency_*`, the bank still mints, the
-buildings still pay for liquidity. Only the good on the belt is shared.
-
-### Why it was safe to do
-
-E&F's exchange rates, money supply, gold and silver standard, stockpiles, imports
-and exports run on country and global **variables**, not on the market data of the
-currency goods. Of the 36 script-value families E&F defines per currency, 14 are
-referenced nowhere at all — including every one that reads
-`market.mg:<X>_c.market_goods_*`.
-
-The one live consumer of a currency good's market data was the money-issuance
-controller:
-
-```
-target_demand_currency              = market.mg:<own currency>.market_goods_buy_orders
-target_demand_currency_for_modifier = (target − current output) / current * 100
-currency_demande on the bank        = goods_output_<cur>_mult 0.01 * that
-```
-
-The bank drives its output until it equals market demand for its currency. That was
-self-limiting while every country had its own good — "demand for the pound" was,
-near enough, Britain's demand. With one shared good it became the whole market's
-demand and every bank chased all of it: six banks on the British market issued
-~196K each against ~192K of buy orders, price −99%. Rewritten to split the market's
-demand between its issuers by GDP — one field that tracks both halves of the demand,
-pops through `popneed_currency` and buildings through `pmg_market_liquidity`.
-
-### The currencies came back as prestige goods
-
-Prestige goods do not count against the 128 — measured with a hundred dummies on one
-base good, not assumed. So all 95 currencies return as prestige variants of the
-shared good, with their own names, their own icons, a prestige bonus and the
-engine's +20% throughput for buildings that consume them.
-
-**The prestige good reuses the old good's key** (`pound_sterling_c`). It stopped
-being a good when the merge commented it out, so the name was free — and every
-piece of localisation E&F ships for it, in eleven languages, plus the separate
-Russian translation mod, keeps working untouched. Zero translation work.
-
-**Which one a company produces is decided by the currency law, not by the company.**
-Company → country is not in the files: 6 of E&F's 103 companies name a tag, the rest
-go by interest markers. So every bank company is offered all 95 and each prestige
-good carries `possible = { has_law = law_type:law_<cur>_currency }`.
-
-### The central bank is owned, but still government funded
-
-A company can only produce a prestige good from a building it owns, so
-`building_bank` had to change:
-
-| what | why |
-|---|---|
-| `ownership_type = no_ownership` → `self` | no ownership shares meant nothing to hold |
-| `ai_nationalization_desire = 0` → `-5` | 0 is exactly the engine's privatise threshold; a company can only hold privatised levels |
-
-**`bg_bank: is_government_funded` is deliberately left at `yes`.** Ownership shares
-and government funding are separate switches, and only the first one is thrown here.
-The treasury goes on paying the central bank's inputs and wages and taking its
-output, so the company that owns the bank collects no dividends from it.
-
-The visible consequence is that the building panel calls the central bank a
-government building even though a company is named on its ownership tab. That reads
-like a bug and is not one — the money really does move the government way, and the
-panel is telling the truth about it.
-
-The company holds the bank so that it can mint the country's prestige currency, and
-so that no rival can buy the bank out from under it. Not so that it can collect the
-bank's profits. `--private-bank` emits the `bg_bank` override and hands those
-profits to the owner — about 6K a month on a 1836 British save — which is a
-different mod.
-
-### The company that owns it always exists
-
-Every country with a central bank gets a bank company, keeps it, and does not pay a
-company slot for it:
-
-* **spawned** monthly and once at game start — a country that owns a central bank
-  and holds no bank company is given `company_BasicBank`;
-* **free** — a country modifier with `country_max_companies_add = 1` while the
-  central bank stands. E&F's own +1 sat inside `prosperity_modifier`, so it only
-  ever reached a prosperous generic company;
-* **undeletable** — no such flag exists in the engine, so it is imitated: delete it
-  and the monthly pass puts it back;
-* **replaced by the flavoured one** where E&F has it. It cannot be picked for the
-  country, so the generic one is granted and withdraws itself the moment any of
-  E&F's 96 flavoured bank companies appears.
-
-### A rule worth writing down
-
-`REPLACE:key = { ... }` is a **complete definition of the entry. Everything not
-listed disappears.** The difference from `INJECT:` is not "list versus block", it is
-"replace everything versus append".
-
-Proved twice, both times by breakage: `REPLACE:building_bank = { ownership_type =
-self }` made the central bank vanish from the game, and 285 production methods
-restated with only `building_modifiers` lost their `unlocking_laws` — the central
-bank started offering all 95 currencies in a dropdown meant to show one.
-
-So everything here that changes one field in an E&F entry restates the whole entry,
-taken from E&F by the generator rather than copied by hand.
-
+---
 
 ## Left undone
 
-- 34 orphaned modifier type sets (from the cut goods) — the 140 `defined in script but not in code` warnings.
-- The Tunisian and Yugoslav dinars are left in: tags `c:TUN` and `c:YUG` stand behind them, and if a player forms those countries they land in the same state block 2 fixes.
-- `bank_je_central_1` cannot complete (see section 6). A bug report for the E&F author, not something to patch here.
+- The Tunisian and Yugoslav dinars are left in: tags `c:TUN` and `c:YUG` stand behind them.
+- `bank_je_central_1` cannot complete (see the currency laws section). A bug report for the
+  E&F author, not something to patch here.
+- 39 of the 95 currency laws still carry `possible = { always = no }`, from the days when
+  their goods were commented out by E&F's own author. Their production methods are retargeted
+  now like every other, so the block may well be obsolete — worth a look before the next
+  release.
+- `budget_panel.gui` and `construction_panel.gui` are as far behind vanilla as the six files
+  that were restored, but they hold real E&F reworks and need a manual merge rather than a
+  vanilla swap.
 
 All of this is worth sending to the E&F author — it is far cheaper to fix on his side.
 
 ---
 
-## ⚠️ Maintenance
+## Maintenance
 
-The mod overrides four E&F files (`ef_00_goods.txt`, `00_ef_building.txt`, `00_ef_alert_types.txt`, `01_ef_currency_type.txt`) plus `00_ef_pop_needs.txt` and six vanilla `.gui` files. Which means:
+The mod overrides E&F files by **path** (`ef_00_goods.txt`, `00_ef_building.txt`,
+`00_ef_alert_types.txt`, `01_ef_currency_type.txt`, `00_ef_pop_needs.txt`, seven `.gui` files)
+and E&F **keys** by prefix (everything `zz_ef_cm_`). Which means:
 
-- **after every E&F update** the edits have to be re-applied, otherwise the hotfix rolls his changes back;
-- **after every game patch** the `.gui` files have to be re-copied from the new vanilla.
+- **after every E&F update** the generator has to be re-run, otherwise the hotfix rolls his
+  changes back;
+- **after every game patch** the six restored vanilla `.gui` files have to be re-copied from
+  the new vanilla.
 
-The three files in section 7 override **keys**, not files (`REPLACE_OR_CREATE:`), so an E&F update cannot silently roll them back — but it can make them obsolete. Re-check with:
+```
+python3 tools/regen_ef_currency_merge.py --check    # has anything drifted
+python3 tools/regen_ef_currency_merge.py            # rebuild
+python3 tools/regen_ef_currency_merge.py --private-bank   # ...with a privately funded bank
+```
+
+Hand-written originals of the two path-overridden data files live in `_gen_source/` — the game
+does not read that folder, and those are the ones to edit. `common/goods/ef_00_goods.txt` and
+`common/pop_needs/00_ef_pop_needs.txt` in the mod are generator output and get overwritten.
+
+Every run prints what it changed and self-checks the result: top-level key names, duplicate
+keys, brace balance with comments stripped, and that what was read is what was written. Two
+bugs that each killed the game before the main menu are caught by that check.
+
+Things worth re-checking against a new E&F by hand:
 
 ```bash
-cd C:/Users/Andrey/Projects/vic3_mods_out
+cd vic3_mods_out
 
 # is the div/0 still there? (the author's own comment marks it)
 grep -n -A3 'target_demand_bond_ajusted' "E&F/common/script_values/00_financial_scripted_value.txt"
 
 # is the seller scope still dereferenced unguarded?
 grep -n -A2 'scope:seller.owner' "E&F/common/scripted_effects/01_economic_scripted_effects.txt"
-
-# does E&F still init the stockpile state vars itself? (if yes, drop 7c)
-grep -n -B2 'stockpiling_bond_var_state_1' "E&F/common/history/global/01_ef_state_global_variable.txt"
-```
-
-```bash
-cd C:/Users/Andrey/Projects/vic3_mods_out
-
-# did the goods source change?
-diff "E&F/common/goods/ef_00_goods.txt" \
-     "../vic3_mods/_ef/ef hotfix 1.13/common/goods/ef_00_goods.txt"
 
 # are both history bugs still alive?
 grep -n 'STATE_ANDALUSIA' "E&F/common/history/buildings/00_ef_building.txt"
@@ -602,68 +769,66 @@ grep -n -A3 '#GRE'        "E&F/common/history/buildings/00_ef_building.txt"
 # is the typo still there? (if not, the laws override can be dropped)
 grep -c 'currency_standars' "E&F/common/laws/01_ef_currency_type.txt"
 
-# has the goods count crept up? (must stay <= 128 with every mod loaded)
-# is the dev panel still gated on EF_debug_mode? (if the key is renamed, block 8 silently creates a dead entry)
+# is the dev panel still gated on EF_debug_mode?
 ```
 
 ---
 
-### Блоки 9 — генерируются целиком
-
-```
-python3 tools/regen_ef_currency_merge.py --private-bank --check   # разъехалось ли
-python3 tools/regen_ef_currency_merge.py --private-bank           # пересобрать
-```
-
-Гонять после каждого обновления E&F. Рукописные оригиналы двух перекрываемых файлов
-лежат в `_gen_source/` — игра эту папку не читает, и править надо именно их:
-`common/goods/ef_00_goods.txt` и `common/pop_needs/00_ef_pop_needs.txt` в моде это
-выход генератора, он их перезаписывает.
-
-Без `--private-bank` центробанк остаётся казённым, а престижные валюты не работают
-(компания не может владеть казённым зданием). Лимит товаров при этом всё равно закрыт.
-
-Генератор после каждой сборки прогоняет самопроверку: имена под-блоков на верхнем
-уровне, дубли ключей, баланс скобок с учётом комментариев, совпадение прочитанного и
-записанного ключа. Две ошибки, каждая из которых роняла игру до меню, ловятся именно ей.
-
 ## For Steam
 
-Short description in Steam BBCode — paste as is into the workshop page.
+Paste as is into the workshop page.
 
 ```
 [h1]E&F Hotfix [1.13][/h1]
-Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13.10[/b].
-Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637341756]E&F + Morgenröte ComPatch[/url] — works with or without it.
+Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13[/b].
+Load [b]after E&F[/b]. Works with or without any of the compatches.
+
+[h2]E&F can finally share a build with other big mods[/h2]
+Victoria 3 crashes on entering a game above [b]128[/b] goods, silently, with nothing in the log. Vanilla ships 53 and E&F adds 73 — [b]126[/b], two slots left. Any mod bringing three or more goods breaks the game, which is why E&F and Tech & Res could never run together.
+
+57 of E&F's 73 goods are currencies, one per monetary system law. This mod merges them into one, taking E&F from 73 goods to [b]8[/b]:
+[list]
+[*]E&F alone: 126 → [b]61[/b]
+[*]+ Morgenröte: crash → 66
+[*]+ PSC: crash → 70
+[*]+ Tech & Res: crash → [b]96[/b]
+[/list]
+
+[b]Nothing about the monetary system is removed.[/b] All 95 currency laws stay, every country keeps its own law, its own mint, its own exchange rate and money supply. Only the good on the belt is shared, and it is called Local Currency.
+
+[h2]Your currency is a prestige good now[/h2]
+A base good gets three prestige slots — measured, not guessed — so the currencies come back as three, one per monetary standard:
+[list]
+[*][b]Representative Currency[/b] — gold, silver, bimetallic standard
+[*][b]Pegged Currency[/b] — gold exchange, external exchange standard
+[*][b]Fiat Currency[/b] — fiat standard
+[/list]
+Each with its own name and icon, a prestige bonus, and the engine's +20% throughput for buildings that consume it. Change your monetary standard law and the central bank starts minting the matching one.
+
+To produce a prestige good a company has to own the building, so [b]the central bank is now owned by a bank company[/b] — the country's own historical one where E&F ships it (Bank of England, Banque de France, the State Bank), a generated "Central Bank" company otherwise. It is granted free of a company slot, it cannot be deleted, and it holds the monopoly on banks so no rival buys it out.
+
+The treasury still funds the central bank, so the company collects no dividends from it and the building panel still calls it a government building. That is deliberate: the company holds the bank to mint the currency, not to profit from it.
 
 [h2]Load order[/h2]
 [list]
 [*]Community Mod Framework (CMF)
-[*]Expanded Topbar Framework (or Dence UI)
+[*]Expanded Topbar Framework (or Dense UI)
 [*]Economic and Financial (E&F)
 [*][b]E&F Hotfix (this mod)[/b]
 [/list]
 
-[h2]What it fixes[/h2]
+[h2]What else it fixes[/h2]
 [list]
-[*][b]The 128 goods limit — the reason E&F + any goods mod crashes[/b]
-[list]
-[*]Vic3 1.13 crashes on entering a game above 128 goods, with nothing in the log. E&F alone brings 126, so two free slots
-[*]Eight dead currencies are commented out — ones with no country behind them, or duplicates. Down to [b]118[/b], which leaves room for Morgenröte (123) and PSC (127)
-[/list]
-
 [*][b]The crash when the world map appears[/b]
 [list]
-[*]Six vanilla GUI files E&F still ships in their 1.12 form are restored to 1.13.10, keeping the [i]@money![/i] → currency symbol substitution
+[*]Six vanilla GUI files E&F still ships in their 1.12 form are restored, keeping the [i]@money![/i] → currency symbol substitution
 [*][i]map_markers.gui[/i] was missing [i]enemy_naval_mission_marker[/i] — the engine looks that widget up by name and crashes when it is gone
-[*]Also restored: [i]custom_tooltip[/i], [i]military_formation_panel[/i], [i]popups[/i], [i]right_click_menu[/i], [i]frontend/shared/lists[/i]
 [/list]
 
 [*][b]~70,000 script errors per session[/b]
 [list]
 [*]31 of 32 E&F alerts read variables that are never initialised — the national stockpile they belong to ships inside a .zip the game does not read
-[*]Every alert now checks [i]has_variable[/i] first. No data, no evaluation, no log spam
-[*]Two bond alerts ran with [i]script_context = player_market[/i] while reading country variables — markets have no variables in Vic3, so those two could never work. Fixed to [i]player_country[/i]
+[*]Every alert now checks [i]has_variable[/i] first. Two bond alerts also ran in market scope while reading country variables, and markets have no variables in Vic3
 [/list]
 
 [*][b]History bugs[/b]
@@ -674,41 +839,33 @@ Load [b]after E&F[/b]. Independent of the [url=https://steamcommunity.com/shared
 [*]Thirteen countries held a named currency law whose good does not exist — worse than having no currency. Moved to [i]law_no_market_liquidity[/i]
 [/list]
 
+[*][b]Currency laws were unavailable to everyone[/b]
+[list]
+[*]All 95 required a technology named [i]currency_standars[/i] — the real one has a d. One letter, 95 times, and the whole law group could never be enacted by hand
+[*]Fixed, with a restriction: a law is available only to the tags E&F itself assigns it to, and only once you actually have a central bank
+[/list]
+
 [*][b]Local currency flooding every market[/b]
 [list]
 [*]E&F handed countries without a monetary system a flat 2500 local currency [b]per state[/b], regardless of size. ~600 of 724 countries qualify, and their cheap currency crowded real national currencies out of [i]popneed_currency[/i]
-[*]Replaced with an amount computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve
+[*]Now computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve — and local currency is part of the merge, so there is no cheaper currency to switch to any more
 [/list]
 
 [*][b]Three script guards[/b]
 [list]
-[*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], which is zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
-[*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist when the source list comes back empty
-[*]The historic financial centres are set up from [i]history/buildings[/i], which runs before [i]history/global[/i] — so the two variables that setup reads do not exist yet. Besides the log spam, one of them is a modifier multiplier, so those centres started the game mis-sized
+[*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
+[*]The same division by zero in the currency, which he left unguarded, and which was Britain and China printing a million currency at random
+[*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist
 [/list]
 
-[*][b]Currency laws were unavailable to everyone[/b]
-[list]
-[*]All 95 laws required a technology named [i]currency_standars[/i] — the real one has a d. One letter, 95 times, and the whole law group could never be enacted
-[*]Fixed, with a restriction: a law is available only to the tags E&F itself assigns it to, and only once you actually have a central bank
+[*][b]E&F's dev panel showing up in the budget screen[/b] — the round [b]1[/b] button under the budget tabs. Tied to [i]-debug_mode[/i], so anyone playing with the console open sees it. Hidden
 [/list]
-
-[*][b]E&F's dev panel showing up in the budget screen[/b]
-[list]
-[*]The round [b]1[/b] button under the budget tabs opens E&F's grid of unlabeled test buttons. It is tied to [i]-debug_mode[/i], so anyone playing with the console open sees it
-[*]Hidden. Comment out [i]common/scripted_guis/zz_ef_hide_debug_panel.txt[/i] if you want it back
-[/list]
-[/list]
-
-[h2]Currencies are one good now[/h2]
-E&F ships one market good per currency — 57 of them — against a hard ceiling of 128 for the whole game. That is what kept it out of any build with another large mod. They are merged into a single good, which takes a full megapack from 162 goods to 106 and lets Tech & Res run alongside E&F untouched.
-Nothing is lost: every country keeps its own currency law, its own mint and its own exchange rate. The currencies come back as [b]prestige goods[/b] with their own names and icons, produced by the central bank's company — which means the central bank is now privately owned and pays dividends rather than being a line in the state budget.
 
 [h2]Not fixed[/h2]
 [list]
 [*][i]budget_panel.gui[/i] and [i]construction_panel.gui[/i] are equally out of date but hold real E&F reworks — they need a manual merge, not a vanilla swap. Expect trouble at bankruptcy and in the ship construction queue
 [/list]
 
-[i]Overrides five E&F files and six vanilla .gui files, so it has to be rebuilt after every E&F update and every game patch.[/i]
+[i]Overrides five E&F data files and seven .gui files, so it has to be rebuilt after every E&F update and every game patch.[/i]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 ```
