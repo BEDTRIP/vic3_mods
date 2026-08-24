@@ -202,9 +202,10 @@ REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
 }
 
 #############################################
-# 7d. The same division by zero, in the currency
+# 7d. The same division by zero, in the currency -- and why the guard the other
+#     five use is WRONG here
 #
-# target_demand_currency_for_modifier is built exactly like the five above --
+# target_demand_currency_for_modifier is built like the five above:
 #
 #   value    = target_demand_currency_ajusted
 #   subtract = base_demande_currency_fix
@@ -212,32 +213,35 @@ REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
 #   multiply = 100
 #   #max = 25000                           # <-- author's own, commented out
 #
-# -- and it is the one the author left unguarded. base_demande_currency_fix is
-# var:base_demande_currency_fix, set to 0 in history/global and only refreshed by
-# central_bank_modifier_fixed_var on E&F's pulse. Any moment where it is near zero
-# while demand is not -- a bank that was just rebuilt under a new owner, a country
-# whose pulse has not come round yet, a central bank scope that is not set when
-# base_demande_currency reads it -- turns a percentage into a number with no upper
-# bound. It reaches the bank as goods_output_spe_uni_c_mult at 0.01 per point, so
-# 100,000 there is a thousandfold multiplier. That is the "Britain and China print
-# a million currency now and then".
+# It is a PERCENTAGE: how far this month's target sits from what the bank is
+# already issuing. It reaches the bank as goods_output_spe_uni_c_mult at 0.01 per
+# point, so 100 means "double it". Unbounded, with a divisor near zero, it means
+# Britain and China printing a million now and then.
 #
-# The currency merge did not create this, but it did widen it: demand is now the
-# whole market's, split by GDP, so the numerator on a big market is far larger
-# than it was when every country had its own good.
+# THE `if base_demande_..._fix > 0` GUARD FROM 7a-7c MUST NOT BE USED HERE, and
+# that was one round of everybody being broke. For bonds and stocks the divisor is
+# a financial-centre count that becomes positive on its own. For the currency it is
+# var:base_demande_currency_fix, refreshed from base_demande_currency, which reads
+# what the central bank is ALREADY issuing. Zero until the bank issues something,
+# and the modifier is what makes it issue -- so skipping the block at zero locks
+# the bank at its bare production method output forever. Britain went from 100K to
+# 6.77.
 #
-# Fix: same shape as the five above, and the max is the author's own number,
-# uncommented. With a healthy divisor the maths is bit-identical to E&F's.
+# So the divisor is clamped instead, the way E&F clamps building_financial_num in
+# 7a: at zero output the value becomes target x 100, which is enormous but finite,
+# and the cap turns it into a fast ramp rather than an explosion. From a standing
+# start the bank reaches its target in two or three monthly ticks.
+#
+# The cap is a percentage, not a quantity -- 100000 is "up to a thousandfold in one
+# tick", not "at most 100K currency". It exists only to keep a near-zero divisor
+# from producing infinity; it never touches a bank running near its target, where
+# the value sits close to zero.
 #############################################
 
 REPLACE_OR_CREATE:target_demand_currency_for_modifier = {
-	value = 0
-	if = {
-		limit = { base_demande_currency_fix > 0 }
-		value = target_demand_currency_ajusted
-		subtract = base_demande_currency_fix
-		divide = base_demande_currency_fix
-		multiply = 100
-	}
-	max = 25000
+	value = target_demand_currency_ajusted
+	subtract = base_demande_currency_fix
+	divide = { value = base_demande_currency_fix min = 1 }
+	multiply = 100
+	max = 100000
 }
