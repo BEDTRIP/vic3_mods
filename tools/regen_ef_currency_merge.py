@@ -593,7 +593,6 @@ def gen_pms(ef: Path, names: list[str], rt: Retarget) -> tuple[str, int, list[st
     out: list[str] = []
     missing: list[str] = []
     icons = [0]
-    hidden = [0]
     n = 0
     for src, prefix in ((bank, "pm_currency_"), (liq, "pm_market_liquidity_"), (bank, "pm_subject_currency_")):
         out.append(f"\n### {prefix}* -- {len(names)} currencies\n\n")
@@ -614,22 +613,6 @@ def gen_pms(ef: Path, names: list[str], rt: Retarget) -> tuple[str, int, list[st
                 if (ef / icon).exists():
                     body = re.sub(r'texture\s*=\s*"[^"]*"', f'texture = "{icon}"', body, count=1)
                     icons[0] += 1
-                # is_hidden_when_unavailable = yes is dropped, and the whole "Currency
-                # Issued" row in the bank panel depends on it. The group holds 96 methods:
-                # 95 currencies, each gated on its own law, plus pm_no_currency_type gated
-                # on law_no_market_liquidity. A country therefore has EXACTLY ONE of them
-                # available, the other 95 are hidden by this flag -- and Victoria 3 does not
-                # draw a production method group with nothing to choose between. The group
-                # was never visible in E&F either; it showed up here only during the build
-                # that lost unlocking_laws (see the note below), which is what made it look
-                # like a regression when it went away again.
-                #
-                # Without the flag the row comes back: the country's own currency selected,
-                # the rest listed and greyed out. They stay unpickable -- unlocking_laws is
-                # untouched, and that is the difference from the broken build.
-                body = re.sub(r"^[ \t]*is_hidden_when_unavailable\s*=\s*yes[ \t]*\n", "",
-                              body, count=1, flags=re.M)
-                hidden[0] += 1
             body = re.sub(r"^\s*(?:\w+:)?" + re.escape(key) + r"\s*=\s*\{", "", body, count=1).rstrip()
             body = body[:body.rindex("}")].rstrip("\n")
             out.append(f"REPLACE:{key} = {{{body}\n}}\n\n")
@@ -660,11 +643,12 @@ def gen_pms(ef: Path, names: list[str], rt: Retarget) -> tuple[str, int, list[st
             f"### {icons[0]} of the pm_currency_* got their own currency icon instead of the\n"
             "### shared currency_type.dds.\n"
             "###\n"
-            f"### is_hidden_when_unavailable dropped from {hidden[0]} pm_currency_*, so the\n"
-            "### \"Currency Issued\" row exists at all. With the flag every country has exactly\n"
-            "### one available method in that group -- its own currency -- and Victoria 3 does\n"
-            "### not draw a group with nothing to choose between. unlocking_laws stays, so the\n"
-            "### other currencies are listed and greyed out rather than selectable.\n")
+            "### is_hidden_when_unavailable is KEPT, and one build dropped it by mistake. The\n"
+            "### missing \"Currency Issued\" row in the bank panel looked like a group with\n"
+            "### nothing to choose between; it is not. E&F hides that group by name in\n"
+            "### building_details_panel.gui, and the flag has nothing to do with it. With the\n"
+            "### flag the row lists two entries, the country's currency and \"no currency\";\n"
+            "### without it, all ninety-six.\n")
     return head + "".join(out), n, missing
 
 
@@ -2205,6 +2189,75 @@ def gen_market_panel(ef: Path) -> tuple[str, list[str]]:
     return head + src, notes
 
 
+BUILDING_PANEL = "gui/building_details_panel.gui"
+
+
+def gen_building_panel(ef: Path) -> tuple[str, list[str]]:
+    """Give the bank panel its "Currency Issued" row back.
+
+    THE ROW IS HIDDEN BY E&F, IN THE GUI, BY NAME. building_details_panel.gui
+    carries one `visible` on the production method group container built from a
+    dozen EqualTo_string(ProductionMethodGroup.GetKey, ...) terms, and
+    pmg_currency_type is one of them -- along with pmg_market_liquidity, the four
+    private-ownership groups, pmg_bond_exchange, pmg_monetary_system,
+    pmg_bond_production, pmg_additional_production_method, pmg_subject_currency_type
+    and pmg_market_liquidity_urban_center. Those are exactly the groups E&F marks
+    `#cache` in the building definition.
+
+    So the row was never visible in E&F either. It appeared here for exactly one
+    build -- the one that restated only building_modifiers and lost unlocking_laws
+    -- and that had nothing to do with this filter; what it changed was how many
+    currencies were selectable, which is a different widget.
+
+    Chasing it through the data cost a round: unlocking_laws, the group membership,
+    the law list, the textures and the flag were all checked and all correct,
+    because the answer was never in common/ at all.
+
+    Only pmg_currency_type is taken off the list -- the other eleven stay hidden,
+    they are E&F's internal plumbing. The list is read out of the line rather than
+    written down here, so an E&F update that adds a group to it keeps working.
+    """
+    src = read(ef / BUILDING_PANEL)
+    notes: list[str] = []
+    out, swapped = [], 0
+    for line in src.split("\n"):
+        keys = re.findall(r"ProductionMethodGroup\.GetKey,'(\w+)'\)", line)
+        if "visible" in line and "pmg_currency_type" in keys:
+            kept = [k for k in keys if k != "pmg_currency_type"]
+            expr = "EqualTo_string(ProductionMethodGroup.GetKey,'%s')" % kept[0]
+            for k in kept[1:]:
+                expr = "Or(%s,EqualTo_string(ProductionMethodGroup.GetKey,'%s'))" % (expr, k)
+            indent = line[:len(line) - len(line.lstrip())]
+            out.append(f'{indent}visible = "[Not({expr})]"')
+            swapped += 1
+            notes.append(f"production method group filter rebuilt: {len(keys)} keys -> "
+                         f"{len(kept)}, pmg_currency_type no longer hidden")
+        else:
+            out.append(line)
+    if not swapped:
+        raise SystemExit(f"{BUILDING_PANEL}: the production method group filter changed shape")
+
+    head = ("### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT\n"
+            "### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.\n"
+            "###\n"
+            f"### Source: E&F's own {BUILDING_PANEL}, with pmg_currency_type taken off the\n"
+            "### list of production method groups the panel hides by name.\n"
+            "###\n"
+            "### That list is why the central bank showed two rows and not three: E&F hides\n"
+            "### twelve groups there, its own internal plumbing, and the one that says which\n"
+            "### currency the bank issues was among them. Nothing in common/ was wrong -- the\n"
+            "### methods, their unlocking_laws, the group membership, the laws and the\n"
+            "### textures all check out, which is what made this take a round to find.\n"
+            "###\n"
+            "### The other eleven stay hidden. The list is parsed out of the line rather than\n"
+            "### written down in the generator, so an E&F update that adds a group to it does\n"
+            "### not silently drop that group back into view.\n"
+            "###\n"
+            "### GUI files are overridden by PATH: this replaces E&F's file wholesale, so it\n"
+            "### is copied rather than edited, and has to be regenerated after an E&F update.\n\n")
+    return head + "\n".join(out), notes
+
+
 # --- self-check -------------------------------------------------------------
 
 # Words that can only appear as a top-level key by accident -- they are sub-block
@@ -2360,6 +2413,11 @@ def main() -> int:
 
     for rel, text in gen_upkeep(ef, names).items():
         emit(mod / rel, text, args.check, acc)
+
+    text, bnotes = gen_building_panel(ef)
+    for x in bnotes:
+        print(f"     {x}")
+    emit(mod / BUILDING_PANEL, text, args.check, acc)
 
     text, mnotes = gen_market_panel(ef)
     for x in mnotes:

@@ -26,16 +26,18 @@
 ### 95 of the pm_currency_* got their own currency icon instead of the
 ### shared currency_type.dds.
 ###
-### is_hidden_when_unavailable dropped from 95 pm_currency_*, so the
-### "Currency Issued" row exists at all. With the flag every country has exactly
-### one available method in that group -- its own currency -- and Victoria 3 does
-### not draw a group with nothing to choose between. unlocking_laws stays, so the
-### other currencies are listed and greyed out rather than selectable.
+### is_hidden_when_unavailable is KEPT, and one build dropped it by mistake. The
+### missing "Currency Issued" row in the bank panel looked like a group with
+### nothing to choose between; it is not. E&F hides that group by name in
+### building_details_panel.gui, and the flag has nothing to do with it. With the
+### flag the row lists two entries, the country's currency and "no currency";
+### without it, all ninety-six.
 
 ### pm_currency_* -- 95 currencies
 
 REPLACE:pm_currency_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_currency
@@ -49,6 +51,7 @@ REPLACE:pm_currency_dinar_currency = {
 
 REPLACE:pm_currency_dinar_algerian_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_algerian_dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_algerian_dinar_currency
@@ -62,6 +65,7 @@ REPLACE:pm_currency_dinar_algerian_dinar_currency = {
 
 REPLACE:pm_currency_dinar_iraqi_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_iraqi_dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_iraqi_dinar_currency
@@ -75,6 +79,7 @@ REPLACE:pm_currency_dinar_iraqi_dinar_currency = {
 
 REPLACE:pm_currency_dinar_libyan_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_libyan_dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_libyan_dinar_currency
@@ -88,6 +93,7 @@ REPLACE:pm_currency_dinar_libyan_dinar_currency = {
 
 REPLACE:pm_currency_dinar_moroccan_dirham_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_moroccan_dirham.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_moroccan_dirham_currency
@@ -101,6 +107,7 @@ REPLACE:pm_currency_dinar_moroccan_dirham_currency = {
 
 REPLACE:pm_currency_dinar_omanian_rial_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_omanian_rial.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_omanian_rial_currency
@@ -114,6 +121,7 @@ REPLACE:pm_currency_dinar_omanian_rial_currency = {
 
 REPLACE:pm_currency_dinar_qiran_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_qiran.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_qiran_currency
@@ -127,6 +135,7 @@ REPLACE:pm_currency_dinar_qiran_currency = {
 
 REPLACE:pm_currency_dinar_saudi_riyal_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_saudi_riyal.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_saudi_riyal_currency
@@ -140,6 +149,7 @@ REPLACE:pm_currency_dinar_saudi_riyal_currency = {
 
 REPLACE:pm_currency_dinar_serbian_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_serbian_dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_serbian_dinar_currency
@@ -153,6 +163,7 @@ REPLACE:pm_currency_dinar_serbian_dinar_currency = {
 
 REPLACE:pm_currency_dinar_tunisian_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_tunisian_dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_tunisian_dinar_currency
@@ -166,6 +177,7 @@ REPLACE:pm_currency_dinar_tunisian_dinar_currency = {
 
 REPLACE:pm_currency_dinar_yugoslav_dinar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dinar_yugoslav_dinar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dinar_yugoslav_dinar_currency
@@ -179,6 +191,7 @@ REPLACE:pm_currency_dinar_yugoslav_dinar_currency = {
 
 REPLACE:pm_currency_dollar_australian_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_australian_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_australian_dollar_currency
@@ -192,6 +205,7 @@ REPLACE:pm_currency_dollar_australian_dollar_currency = {
 
 REPLACE:pm_currency_dollar_canadian_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_canadian_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_canadian_dollar_currency
@@ -205,6 +219,7 @@ REPLACE:pm_currency_dollar_canadian_dollar_currency = {
 
 REPLACE:pm_currency_dollar_caribbean_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_caribbean_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_caribbean_dollar_currency
@@ -218,6 +233,7 @@ REPLACE:pm_currency_dollar_caribbean_dollar_currency = {
 
 REPLACE:pm_currency_dollar_confederate_states_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_confederate_states_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_confederate_states_dollar_currency
@@ -231,6 +247,7 @@ REPLACE:pm_currency_dollar_confederate_states_dollar_currency = {
 
 REPLACE:pm_currency_dollar_liberian_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_liberian_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_liberian_dollar_currency
@@ -244,6 +261,7 @@ REPLACE:pm_currency_dollar_liberian_dollar_currency = {
 
 REPLACE:pm_currency_dollar_new_zealand_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_new_zealand_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_new_zealand_dollar_currency
@@ -257,6 +275,7 @@ REPLACE:pm_currency_dollar_new_zealand_dollar_currency = {
 
 REPLACE:pm_currency_dollar_sierra_leonean_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_sierra_leonean_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_sierra_leonean_dollar_currency
@@ -270,6 +289,7 @@ REPLACE:pm_currency_dollar_sierra_leonean_dollar_currency = {
 
 REPLACE:pm_currency_dollar_united_states_dollar_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/dollar_united_states_dollar.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_dollar_united_states_dollar_currency
@@ -283,6 +303,7 @@ REPLACE:pm_currency_dollar_united_states_dollar_currency = {
 
 REPLACE:pm_currency_eco_ariary_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_ariary.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_ariary_currency
@@ -296,6 +317,7 @@ REPLACE:pm_currency_eco_ariary_currency = {
 
 REPLACE:pm_currency_eco_central_african_eco_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_central_african_eco.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_central_african_eco_currency
@@ -309,6 +331,7 @@ REPLACE:pm_currency_eco_central_african_eco_currency = {
 
 REPLACE:pm_currency_eco_east_african_eco_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_east_african_eco.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_east_african_eco_currency
@@ -322,6 +345,7 @@ REPLACE:pm_currency_eco_east_african_eco_currency = {
 
 REPLACE:pm_currency_eco_ethiopian_birr_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_ethiopian_birr.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_ethiopian_birr_currency
@@ -335,6 +359,7 @@ REPLACE:pm_currency_eco_ethiopian_birr_currency = {
 
 REPLACE:pm_currency_eco_ghanaian_pound_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_ghanaian_pound.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_ghanaian_pound_currency
@@ -348,6 +373,7 @@ REPLACE:pm_currency_eco_ghanaian_pound_currency = {
 
 REPLACE:pm_currency_eco_nigerian_naira_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_nigerian_naira.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_nigerian_naira_currency
@@ -361,6 +387,7 @@ REPLACE:pm_currency_eco_nigerian_naira_currency = {
 
 REPLACE:pm_currency_eco_south_african_rand_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_south_african_rand.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_south_african_rand_currency
@@ -374,6 +401,7 @@ REPLACE:pm_currency_eco_south_african_rand_currency = {
 
 REPLACE:pm_currency_eco_tuareg_ouguiya_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_tuareg_ouguiya.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_tuareg_ouguiya_currency
@@ -387,6 +415,7 @@ REPLACE:pm_currency_eco_tuareg_ouguiya_currency = {
 
 REPLACE:pm_currency_eco_west_african_eco_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/eco_west_african_eco.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_eco_west_african_eco_currency
@@ -400,6 +429,7 @@ REPLACE:pm_currency_eco_west_african_eco_currency = {
 
 REPLACE:pm_currency_franc_belgian_franc_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/franc_belgian_franc.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_franc_belgian_franc_currency
@@ -413,6 +443,7 @@ REPLACE:pm_currency_franc_belgian_franc_currency = {
 
 REPLACE:pm_currency_franc_french_franc_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/franc_french_franc.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_franc_french_franc_currency
@@ -426,6 +457,7 @@ REPLACE:pm_currency_franc_french_franc_currency = {
 
 REPLACE:pm_currency_franc_luxembourgish_franc_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/franc_luxembourgish_franc.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_franc_luxembourgish_franc_currency
@@ -439,6 +471,7 @@ REPLACE:pm_currency_franc_luxembourgish_franc_currency = {
 
 REPLACE:pm_currency_franc_swiss_franc_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/franc_swiss_franc.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_franc_swiss_franc_currency
@@ -452,6 +485,7 @@ REPLACE:pm_currency_franc_swiss_franc_currency = {
 
 REPLACE:pm_currency_gulden_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/gulden.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_gulden_currency
@@ -465,6 +499,7 @@ REPLACE:pm_currency_gulden_currency = {
 
 REPLACE:pm_currency_gulden_bavarian_gulden_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/gulden_bavarian_gulden.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_gulden_bavarian_gulden_currency
@@ -478,6 +513,7 @@ REPLACE:pm_currency_gulden_bavarian_gulden_currency = {
 
 REPLACE:pm_currency_gulden_florin_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/gulden_florin.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_gulden_florin_currency
@@ -491,6 +527,7 @@ REPLACE:pm_currency_gulden_florin_currency = {
 
 REPLACE:pm_currency_gulden_hungarian_forint_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/gulden_hungarian_forint.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_gulden_hungarian_forint_currency
@@ -504,6 +541,7 @@ REPLACE:pm_currency_gulden_hungarian_forint_currency = {
 
 REPLACE:pm_currency_gulden_indies_guilder_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/gulden_indies_guilder.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_gulden_indies_guilder_currency
@@ -517,6 +555,7 @@ REPLACE:pm_currency_gulden_indies_guilder_currency = {
 
 REPLACE:pm_currency_gulden_south_german_gulden_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/gulden_south_german_gulden.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_gulden_south_german_gulden_currency
@@ -530,6 +569,7 @@ REPLACE:pm_currency_gulden_south_german_gulden_currency = {
 
 REPLACE:pm_currency_krone_czech_koruna_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_czech_koruna.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_czech_koruna_currency
@@ -543,6 +583,7 @@ REPLACE:pm_currency_krone_czech_koruna_currency = {
 
 REPLACE:pm_currency_krone_danish_krone_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_danish_krone.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_danish_krone_currency
@@ -556,6 +597,7 @@ REPLACE:pm_currency_krone_danish_krone_currency = {
 
 REPLACE:pm_currency_krone_estonian_kroon_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_estonian_kroon.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_estonian_kroon_currency
@@ -569,6 +611,7 @@ REPLACE:pm_currency_krone_estonian_kroon_currency = {
 
 REPLACE:pm_currency_krone_icelandic_krona_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_icelandic_krona.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_icelandic_krona_currency
@@ -582,6 +625,7 @@ REPLACE:pm_currency_krone_icelandic_krona_currency = {
 
 REPLACE:pm_currency_krone_norwegian_krone_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_norwegian_krone.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_norwegian_krone_currency
@@ -595,6 +639,7 @@ REPLACE:pm_currency_krone_norwegian_krone_currency = {
 
 REPLACE:pm_currency_krone_slovak_koruna_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_slovak_koruna.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_slovak_koruna_currency
@@ -608,6 +653,7 @@ REPLACE:pm_currency_krone_slovak_koruna_currency = {
 
 REPLACE:pm_currency_krone_swedish_krona_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/krone_swedish_krona.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_krone_swedish_krona_currency
@@ -621,6 +667,7 @@ REPLACE:pm_currency_krone_swedish_krona_currency = {
 
 REPLACE:pm_currency_leon_leu_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/leon_leu.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_leon_leu_currency
@@ -634,6 +681,7 @@ REPLACE:pm_currency_leon_leu_currency = {
 
 REPLACE:pm_currency_leon_lev_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/leon_lev.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_leon_lev_currency
@@ -647,6 +695,7 @@ REPLACE:pm_currency_leon_lev_currency = {
 
 REPLACE:pm_currency_lira_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/lira.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_lira_currency
@@ -660,6 +709,7 @@ REPLACE:pm_currency_lira_currency = {
 
 REPLACE:pm_currency_lira_ducato_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/lira_ducato.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_lira_ducato_currency
@@ -673,6 +723,7 @@ REPLACE:pm_currency_lira_ducato_currency = {
 
 REPLACE:pm_currency_lira_ottoman_lira_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/lira_ottoman_lira.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_lira_ottoman_lira_currency
@@ -686,6 +737,7 @@ REPLACE:pm_currency_lira_ottoman_lira_currency = {
 
 REPLACE:pm_currency_lira_scudo_pontificio_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/lira_scudo_pontificio.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_lira_scudo_pontificio_currency
@@ -699,6 +751,7 @@ REPLACE:pm_currency_lira_scudo_pontificio_currency = {
 
 REPLACE:pm_currency_lira_scudo_sardo_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/lira_scudo_sardo.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_lira_scudo_sardo_currency
@@ -712,6 +765,7 @@ REPLACE:pm_currency_lira_scudo_sardo_currency = {
 
 REPLACE:pm_currency_lira_toscane_lira_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/lira_toscane_lira.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_lira_toscane_lira_currency
@@ -725,6 +779,7 @@ REPLACE:pm_currency_lira_toscane_lira_currency = {
 
 REPLACE:pm_currency_mark_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/mark.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_mark_currency
@@ -738,6 +793,7 @@ REPLACE:pm_currency_mark_currency = {
 
 REPLACE:pm_currency_mark_finnish_markka_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/mark_finnish_markka.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_mark_finnish_markka_currency
@@ -751,6 +807,7 @@ REPLACE:pm_currency_mark_finnish_markka_currency = {
 
 REPLACE:pm_currency_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_currency
@@ -764,6 +821,7 @@ REPLACE:pm_currency_peso_currency = {
 
 REPLACE:pm_currency_peso_argentine_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_argentine_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_argentine_peso_currency
@@ -777,6 +835,7 @@ REPLACE:pm_currency_peso_argentine_peso_currency = {
 
 REPLACE:pm_currency_peso_bolivien_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_bolivien_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_bolivien_peso_currency
@@ -790,6 +849,7 @@ REPLACE:pm_currency_peso_bolivien_peso_currency = {
 
 REPLACE:pm_currency_peso_chilean_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_chilean_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_chilean_peso_currency
@@ -803,6 +863,7 @@ REPLACE:pm_currency_peso_chilean_peso_currency = {
 
 REPLACE:pm_currency_peso_colombian_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_colombian_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_colombian_peso_currency
@@ -816,6 +877,7 @@ REPLACE:pm_currency_peso_colombian_peso_currency = {
 
 REPLACE:pm_currency_peso_costa_rican_colon_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_costa_rican_colon.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_costa_rican_colon_currency
@@ -829,6 +891,7 @@ REPLACE:pm_currency_peso_costa_rican_colon_currency = {
 
 REPLACE:pm_currency_peso_cuban_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_cuban_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_cuban_peso_currency
@@ -842,6 +905,7 @@ REPLACE:pm_currency_peso_cuban_peso_currency = {
 
 REPLACE:pm_currency_peso_ecuadorian_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_ecuadorian_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_ecuadorian_peso_currency
@@ -855,6 +919,7 @@ REPLACE:pm_currency_peso_ecuadorian_peso_currency = {
 
 REPLACE:pm_currency_peso_el_salvador_colon_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_el_salvador_colon.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_el_salvador_colon_currency
@@ -868,6 +933,7 @@ REPLACE:pm_currency_peso_el_salvador_colon_currency = {
 
 REPLACE:pm_currency_peso_guatemalan_quetzal_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_guatemalan_quetzal.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_guatemalan_quetzal_currency
@@ -881,6 +947,7 @@ REPLACE:pm_currency_peso_guatemalan_quetzal_currency = {
 
 REPLACE:pm_currency_peso_honduran_lempira_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_honduran_lempira.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_honduran_lempira_currency
@@ -894,6 +961,7 @@ REPLACE:pm_currency_peso_honduran_lempira_currency = {
 
 REPLACE:pm_currency_peso_mexican_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_mexican_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_mexican_peso_currency
@@ -907,6 +975,7 @@ REPLACE:pm_currency_peso_mexican_peso_currency = {
 
 REPLACE:pm_currency_peso_nicaraguan_cordoba_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_nicaraguan_cordoba.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_nicaraguan_cordoba_currency
@@ -920,6 +989,7 @@ REPLACE:pm_currency_peso_nicaraguan_cordoba_currency = {
 
 REPLACE:pm_currency_peso_paraguayan_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_paraguayan_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_paraguayan_peso_currency
@@ -933,6 +1003,7 @@ REPLACE:pm_currency_peso_paraguayan_peso_currency = {
 
 REPLACE:pm_currency_peso_philippine_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_philippine_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_philippine_peso_currency
@@ -946,6 +1017,7 @@ REPLACE:pm_currency_peso_philippine_peso_currency = {
 
 REPLACE:pm_currency_peso_sol_de_oro_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_sol_de_oro.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_sol_de_oro_currency
@@ -959,6 +1031,7 @@ REPLACE:pm_currency_peso_sol_de_oro_currency = {
 
 REPLACE:pm_currency_peso_uruguayan_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_uruguayan_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_uruguayan_peso_currency
@@ -972,6 +1045,7 @@ REPLACE:pm_currency_peso_uruguayan_peso_currency = {
 
 REPLACE:pm_currency_peso_venezuelan_peso_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/peso_venezuelan_peso.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_peso_venezuelan_peso_currency
@@ -985,6 +1059,7 @@ REPLACE:pm_currency_peso_venezuelan_peso_currency = {
 
 REPLACE:pm_currency_pound_egyptian_pound_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/pound_egyptian_pound.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_pound_egyptian_pound_currency
@@ -998,6 +1073,7 @@ REPLACE:pm_currency_pound_egyptian_pound_currency = {
 
 REPLACE:pm_currency_pound_irish_pound_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/pound_irish_pound.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_pound_irish_pound_currency
@@ -1011,6 +1087,7 @@ REPLACE:pm_currency_pound_irish_pound_currency = {
 
 REPLACE:pm_currency_pound_sterling_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/pound_sterling.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_pound_sterling_currency
@@ -1024,6 +1101,7 @@ REPLACE:pm_currency_pound_sterling_currency = {
 
 REPLACE:pm_currency_real_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/real.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_real_currency
@@ -1037,6 +1115,7 @@ REPLACE:pm_currency_real_currency = {
 
 REPLACE:pm_currency_real_brazilian_real_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/real_brazilian_real.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_real_brazilian_real_currency
@@ -1050,6 +1129,7 @@ REPLACE:pm_currency_real_brazilian_real_currency = {
 
 REPLACE:pm_currency_rupee_indian_rupee_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/rupee_indian_rupee.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_rupee_indian_rupee_currency
@@ -1063,6 +1143,7 @@ REPLACE:pm_currency_rupee_indian_rupee_currency = {
 
 REPLACE:pm_currency_rupee_indonesian_rupiah_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/rupee_indonesian_rupiah.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_rupee_indonesian_rupiah_currency
@@ -1076,6 +1157,7 @@ REPLACE:pm_currency_rupee_indonesian_rupiah_currency = {
 
 REPLACE:pm_currency_spe_baht_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_baht.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_baht_currency
@@ -1089,6 +1171,7 @@ REPLACE:pm_currency_spe_baht_currency = {
 
 REPLACE:pm_currency_spe_dong_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_dong.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_dong_currency
@@ -1102,6 +1185,7 @@ REPLACE:pm_currency_spe_dong_currency = {
 
 REPLACE:pm_currency_spe_drachma_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_drachma.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_drachma_currency
@@ -1115,6 +1199,7 @@ REPLACE:pm_currency_spe_drachma_currency = {
 
 REPLACE:pm_currency_spe_korean_won_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_korean_won.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_korean_won_currency
@@ -1128,6 +1213,7 @@ REPLACE:pm_currency_spe_korean_won_currency = {
 
 REPLACE:pm_currency_spe_latvian_lats_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_latvian_lats.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_latvian_lats_currency
@@ -1141,6 +1227,7 @@ REPLACE:pm_currency_spe_latvian_lats_currency = {
 
 REPLACE:pm_currency_spe_lithuanian_litas_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_lithuanian_litas.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_lithuanian_litas_currency
@@ -1154,6 +1241,7 @@ REPLACE:pm_currency_spe_lithuanian_litas_currency = {
 
 REPLACE:pm_currency_spe_peseta_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_peseta.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_peseta_currency
@@ -1167,6 +1255,7 @@ REPLACE:pm_currency_spe_peseta_currency = {
 
 REPLACE:pm_currency_spe_ruble_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_ruble.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_ruble_currency
@@ -1180,6 +1269,7 @@ REPLACE:pm_currency_spe_ruble_currency = {
 
 REPLACE:pm_currency_spe_uni_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_uni_currency
@@ -1193,6 +1283,7 @@ REPLACE:pm_currency_spe_uni_currency = {
 
 REPLACE:pm_currency_spe_yen_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_yen.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_yen_currency
@@ -1206,6 +1297,7 @@ REPLACE:pm_currency_spe_yen_currency = {
 
 REPLACE:pm_currency_spe_yuan_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_yuan.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_yuan_currency
@@ -1219,6 +1311,7 @@ REPLACE:pm_currency_spe_yuan_currency = {
 
 REPLACE:pm_currency_spe_zloti_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_zloti.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_spe_zloti_currency
@@ -1232,6 +1325,7 @@ REPLACE:pm_currency_spe_zloti_currency = {
 
 REPLACE:pm_currency_thaler_hannoveraner_thaler_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/thaler_hannoveraner_thaler.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_thaler_hannoveraner_thaler_currency
@@ -1245,6 +1339,7 @@ REPLACE:pm_currency_thaler_hannoveraner_thaler_currency = {
 
 REPLACE:pm_currency_thaler_prussian_thaler_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/thaler_prussian_thaler.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_thaler_prussian_thaler_currency
@@ -1258,6 +1353,7 @@ REPLACE:pm_currency_thaler_prussian_thaler_currency = {
 
 REPLACE:pm_currency_thaler_saxon_thaler_currency = {
 	texture = "gfx/interface/icons/goods_icons/currencies/thaler_saxon_thaler.dds"
+	is_hidden_when_unavailable = yes
 
 	unlocking_laws = {
 		law_thaler_saxon_thaler_currency
