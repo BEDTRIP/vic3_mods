@@ -1,4 +1,4 @@
-## AI helpers for PSC construction-goods chain in pb+ef
+﻿## AI helpers for PSC construction-goods chain in pb+ef
 ##
 ## Uses PSC construction goods:
 ## - wood_construction / iron_construction / steel_construction / arc_welded_construction
@@ -11,7 +11,6 @@ REPLACE_OR_CREATE:market_construction_goods_pricier_avg = {
 	add = market.mg:iron_construction.market_goods_pricier
 	add = market.mg:steel_construction.market_goods_pricier
 	add = market.mg:arc_welded_construction.market_goods_pricier
-	add = market.mg:concrete_construction.market_goods_pricier
 
 	# sanity clamp (prevents runaway ai_value)
 	min = 0

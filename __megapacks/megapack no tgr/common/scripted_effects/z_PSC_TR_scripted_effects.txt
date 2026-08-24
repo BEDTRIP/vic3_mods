@@ -218,7 +218,7 @@ REPLACE:set_point_conversion_method_from_tech = {
                     NOR = {
                         has_building = building_construction_sector
                         b:building_construction_regulator = {
-                            has_active_production_method = pm_prefabricated_concrete_buildings
+                            has_active_production_method = pm_concrete_point_conversion
                         }
                     }
                 }

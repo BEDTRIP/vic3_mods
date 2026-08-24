@@ -1,0 +1,42 @@
+﻿########################################
+# E&F + The Great Revision (TGR) - remove the TGR International Loans baseline
+#
+# FILE OVERRIDE, on purpose. This path exists in TGR itself
+# (common/static_modifiers/TGR_LOANS_code_static_modifiers.txt) and, byte for
+# byte identical, in the standalone "TGR International Loans" mini-mod. In both
+# it contains exactly one thing:
+#
+#     INJECT:base_values = { country_loan_interest_rate_add = -0.2 }
+#
+# This patch switches the whole TGR loan module off - journal entry
+# je_international_loans and buttons tgr_loans_button_1..8, see the files of the
+# same name in common/journal_entries/ and common/scripted_buttons/ - because it
+# overlaps E&F's own credit system. The baseline has to go with it, otherwise
+# vanilla and E&F loans keep being handed out at nearly no interest for the whole
+# game while the mechanic that was supposed to justify it is gone.
+#
+# WHY AN OVERRIDE AND NOT AN INJECT OF OUR OWN.
+# The previous version of this patch shipped
+# ef_tgr_base_values_compat.txt with `INJECT:base_values = {
+# country_loan_interest_rate_add = 0 }` and called that a reset. It is not:
+# repeated modifier keys inside one modifier block ADD UP - the same property the
+# T&R compatch relies on in zef_private_construction.txt, where
+# goods_input_iron_add = -2 only makes sense as a delta. Adding 0 to -0.2 leaves
+# -0.2. Nothing is logged; the interest rate simply stays where TGR put it.
+#
+# A counterweight of +0.2 would work only if the sum reading is right, and would
+# be exactly backwards if it is not. REPLACE:base_values is worse still: four
+# files INJECT into base_values (E&F's minting, TGR_POLITICS' bureaucracy and
+# authority, TGR_TRADE's company and trade bonuses, and this one), and replacing
+# the entry would pin all of their numbers as of today - which is how the old
+# version of this file ended up feeding the game
+# country_company_throughput_bonus_add = 0.40 months after TGR commented it out.
+#
+# Overriding the path removes the line itself, with no assumption about how the
+# engine merges anything. Same technique as stuff/anti_tgr_loans, which blanks
+# these same paths for the standalone module.
+#
+# !! MAINTENANCE !! This blanks the whole file, so anything TGR adds to it later
+# is blanked too. Re-diff against TGR's copy on every TGR update: today it holds
+# that one INJECT and nothing else.
+########################################

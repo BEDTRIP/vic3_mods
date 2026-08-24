@@ -1,13 +1,21 @@
-##############################
+﻿##############################
 # E&F + Morgenroete ComPatch #
 # Tesla: E&F building support#
 ##############################
+#
+# Base copied from Morgenroete 2.8.3e
+# (common/scripted_triggers/mr_science_tesla_scripted_triggers.txt),
+# with the E&F additions marked below.
+#
+# Re-check both triggers against Morgenroete whenever it updates.
 
-# Make Tesla construction-sector improvement accept E&F private construction building too.
+# Make Tesla construction-sector improvement accept E&F private construction too.
 tesla_construction_sector_valid_for_improvement_trigger = {
 	level > 0
 	OR = {
 		is_building_type = building_construction_sector
+
+		# E&F
 		is_building_type = building_ef_private_construction
 	}
 	NAND = {
@@ -17,7 +25,9 @@ tesla_construction_sector_valid_for_improvement_trigger = {
 	}
 }
 
-# Prevent Tesla mechanical improvement project from targeting E&F financial building groups.
+# Prevent Tesla mechanical improvement project from targeting E&F financial buildings.
+# The four E&F groups below have no parent_group, so Morgenroete's own
+# bg_government / bg_urban_facilities exclusions do not catch them.
 tesla_building_valid_for_mechanical_improvement_trigger = {
 	level > 0
 	NOR = {
@@ -28,7 +38,10 @@ tesla_building_valid_for_mechanical_improvement_trigger = {
 		is_building_group = bg_infrastructure
 		is_building_group = bg_military
 		is_building_group = bg_subsistence_agriculture
+		is_building_group = bg_subsistence_ranching
 		is_building_type = building_elgar_opera
+		is_building_group = bg_monuments
+		is_building_group = bg_monuments_hidden
 
 		# E&F
 		is_building_group = bg_bank
@@ -42,4 +55,3 @@ tesla_building_valid_for_mechanical_improvement_trigger = {
 		has_modifier = gaudi_building_goods_input_mult_modifier
 	}
 }
-

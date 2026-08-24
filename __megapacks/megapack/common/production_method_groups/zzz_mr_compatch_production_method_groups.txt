@@ -1,16 +1,23 @@
-# Nella patch riabilito manzoni_pm_cylinder_presses di Morgenrote
-
+﻿# Morgenroete <-> Tech & Res: production method groups.
+#
+# T&R's ztr_modified_mr_production_method_groups.txt rebuilds this group and
+# drops manzoni_pm_cylinder_presses, one of Morgenroete's four press tiers, so
+# the printing chain jumps straight from flatbed to rotary. Put it back in
+# order. REPLACE because a PM group is an ordered list and INJECT would only
+# append the tier at the end, after the digital press.
+#
+# Texture follows T&R 13.05 (mixed_icon_automation); the old compatch still
+# carried the pre-13.05 mixed_icon_refining.
 REPLACE:manzoni_pmg_building_publishing_industry_automation = {
-	texture = "gfx/interface/icons/generic_icons/mixed_icon_refining.dds"
+	texture = "gfx/interface/icons/generic_icons/mixed_icon_automation.dds"
 	production_methods = {
-		# Publishing Industry (Production of Media Content)
 		pm_no_publishing_industry
-		manzoni_pm_printing_presses #Printing Press
-		manzoni_pm_cylinder_presses #Circular Pressure Printing Machine
-		manzoni_pm_rotary_presses #Rotary Press
-		manzoni_pm_linotype #Linotype
-		pm_offset_printing
-		pm_digital_press
+		manzoni_pm_printing_presses    # Morgenroete
+		manzoni_pm_cylinder_presses    # Morgenroete, dropped by T&R
+		manzoni_pm_rotary_presses      # Morgenroete
+		manzoni_pm_linotype            # Morgenroete
+		pm_offset_printing             # T&R
+		pm_digital_press               # T&R
 	}
 	ai_selection = most_productive
 }

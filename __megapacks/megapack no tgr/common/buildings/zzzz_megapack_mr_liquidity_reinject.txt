@@ -1,0 +1,26 @@
+﻿# MEGAPACK ONLY -- this file does not exist in any of the five ComPatches.
+#
+# The Morgenroete + Tech & Res patch REPLACE:s building_manzoni_publishing_industry
+# (zztr_compatch_buildings.txt) because it has to merge two PMG lists in a
+# specific order. REPLACE swaps the whole production_method_groups sub-block, and
+# inside one mod files load by name:
+#     zz_ef_mr_buildings_inject.txt  <  zztr_compatch_buildings.txt  <  this file
+# so E&F's two groups, injected by the E&F + Morgenroete patch, are gone by the
+# time the game reads the building. The panel then shows a publishing industry
+# with no market liquidity and no private stock ownership. Nothing is logged.
+#
+# INJECT and not a fourth copy of the building: we only need to ADD two groups
+# back, and re-stating the body is exactly the drift the T&R patches were
+# rebuilt to remove -- the old megapack's zzzz_megacompack_buildings.txt did
+# re-state it and was still handing the building
+# pmg_data_optimization_heavy_industry after T&R had moved everything to the
+# _no_shopkeepers variant.
+#
+# building_airport needs nothing here: the MR + T&R patch injects into it.
+
+INJECT:building_manzoni_publishing_industry = {
+	production_method_groups = {
+		pmg_market_liquidity                        # E&F
+		pmg_private_ownership_manufacture_stock     # E&F
+	}
+}

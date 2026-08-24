@@ -13,7 +13,4 @@ REPLACE:steel_construction_good_base_price = {
 REPLACE:arc_welded_construction_good_base_price = {
     value = 92
 }
-
-REPLACE_OR_CREATE:concrete_construction_good_base_price = {
-    value = 86
-}
+concrete_construction_good_base_price = 86

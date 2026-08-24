@@ -1,0 +1,64 @@
+﻿# MEGAPACK ONLY -- this file does not exist in any of the eight ComPatches.
+#
+# Three mods want a line in malaria_prevention's modifier block and T&R
+# REPLACE_OR_CREATE:s the whole technology, so each patch that restores one line
+# has to restate the entry -- and only the last file loaded survives:
+#
+#   zz_tr_kai_tgr_technologies.txt  (TGR + T&R)   puts back TGR's
+#       country_institution_environment_max_investment_add = 1
+#   zzz_compatch_mr_society.txt     (MR + T&R)    puts back Morgenroete's
+#       state_harvest_condition_panum_yellow_fever_condition_impact_mult = -0.25
+#
+# zz_tr_ sorts before zzz_, so in the megapack the Morgenroete patch wins and
+# TGR's line is gone: TGR's Environment institution caps one investment level
+# lower than TGR intends. Silent -- the modifier is not missing or misspelled,
+# it was simply never applied, so nothing reaches error.log.
+#
+# Body below is the Morgenroete patch's (which is T&R's body plus Morgenroete's
+# yellow-fever line and theiler_microbiology_tech prerequisite) with TGR's line
+# added. The two patches' bodies are otherwise identical, checked line by line.
+#
+# Morgenroete's own country_institution_health_system_max_investment_add = -1
+# stays out, exactly as the MR + T&R patch decided: that is a vanilla modifier
+# type T&R chose to drop while reworking the tech, not one it had to strip to
+# run standalone.
+#
+# !! MAINTENANCE !! Re-derive from zzz_compatch_mr_society.txt after every T&R
+# update.
+
+REPLACE:malaria_prevention = {
+	# Should permit for colonization of state regions with severe malaria
+	era = era_4
+	texture = "gfx/interface/icons/invention_icons/malaria_prevention.dds"
+	category = society
+
+	modifier = {
+		country_institution_colonial_affairs_max_investment_add = 1
+		country_institution_environment_max_investment_add = 1			# TGR
+		state_harvest_condition_panum_yellow_fever_condition_impact_mult = -0.25 #Morgenroete
+	}
+
+	unlocking_technologies = {
+		civilizing_mission
+		theiler_microbiology_tech #Morgenroete: Added Tech
+	}
+
+	ai_weight = {
+		value = 1
+
+		# Important for colonizers
+		if = {
+			limit = {
+				navy_size >= 25
+				is_country_type = recognized
+			}
+			add = 1
+		}
+		if = {
+			limit = {
+				has_strategy = ai_strategy_colonial_expansion
+			}
+			add = 1
+		}
+	}
+}

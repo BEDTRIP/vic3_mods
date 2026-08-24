@@ -1,17 +1,10 @@
-﻿l_spanish:
+﻿# ComPatch note: nothing here is TGR-specific.
+# E&F defines the pm_* keys itself since 04.07.2026 (01_ef_production_method_localization),
+# but never defined the four production_method_GROUP names, so the PM selector shows raw keys.
+# Kept in this patch so it works standalone; if you always run the E&F 1.13 Hotfix, this
+# belongs there instead - the same file is duplicated in ef+vc and bpm+ef today.
+l_spanish:
  pmg_private_ownership_manufacture_stock: "Propiedad privada accionaria (industria)"
- pm_no_private_ownership_manufacture_stock: "Sin propiedad privada accionaria (industria)"
- pm_private_ownership_majority_manufacture_stock: "Propiedad privada mayoritaria (industria)"
-
  pmg_private_ownership_agricultural_stock: "Propiedad privada accionaria (agricultura)"
- pm_no_private_ownership_agricultural_stock: "Sin propiedad privada accionaria (agricultura)"
- pm_private_ownership_majority_agricultural_stock: "Propiedad privada mayoritaria (agricultura)"
-
  pmg_private_ownership_mining_stock: "Propiedad privada accionaria (minería)"
- pm_no_private_ownership_mining_stock: "Sin propiedad privada accionaria (minería)"
- pm_private_ownership_majority_mining_stock: "Propiedad privada mayoritaria (minería)"
-
  pmg_private_ownership_railroad_stock: "Propiedad privada accionaria (ferrocarriles)"
- pm_no_private_ownership_railroad_stock: "Sin propiedad privada accionaria (ferrocarriles)"
- pm_private_ownership_majority_railroad_stock: "Propiedad privada mayoritaria (ferrocarriles)"
-

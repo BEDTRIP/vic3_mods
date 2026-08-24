@@ -1,0 +1,451 @@
+﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13)
+### The "private ownership -> stocks" switch for buildings the compatch leaves
+### stuck.
+###
+### Three separate problems, one effect:
+###
+### 1. building_consumer_electronics_industry. The compatch's block inside
+###    private_ownership_production_stocks is the only one of its 167 that is
+###    written wrong -- the ">= half" branch reads
+###
+###        is_production_method_active = pm_private_ownership_majority_manufacture_stock
+###        activate_production_method  = pm_private_ownership_majority_manufacture_stock
+###
+###    i.e. "if it is already majority, set it to majority". Every other block
+###    tests pm_no_private_ownership_manufacture_stock there. The building can
+###    therefore never leave the "no stock" method.
+###
+### 2. building_computer_assembly_plant. New in T&R 13.05.2026, absent from the
+###    compatch entirely.
+###
+### 3. The ten vanilla industries the compatch renamed into their plural
+###    `aliases` form (building_textile_mills, building_shipyards, ...). Nine of
+###    those aliases are declared by vanilla and may well resolve in
+###    has_building / b: / is_production_method_active; building_artillery_foundries
+###    never existed at all. Rather than guess whether aliases resolve in script
+###    scopes, this effect repeats the switch under the canonical names. If the
+###    aliases do work, every block here is a no-op -- the condition cannot match,
+###    because the compatch already put the building on the right method. If they
+###    do not, this is what makes the mechanic work.
+###
+### Why an on_action and not an override of private_ownership_production_stocks:
+### that effect is 82 KB and is itself a pinned copy of E&F's. Overriding it
+### would mean re-syncing 82 KB after every E&F update to fix twelve blocks.
+### on_actions are additive, so this file overrides nothing. Wired up in
+### common/on_actions/ and called once at game start from common/history/global/.
+###
+### All twelve buildings use the manufacture stock pair -- checked against the
+### compatch's own blocks, which is also where the plural names came from.
+
+ef_tr_fix_private_ownership_stocks = {
+	every_scope_state = {
+
+		# building_textile_mill -- compatch calls it building_textile_mills
+		if = {
+			limit = {
+				has_building = building_textile_mill
+				b:building_textile_mill = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_textile_mill
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_textile_mill
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_textile_mill
+				b:building_textile_mill = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_textile_mill
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_textile_mill
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_furniture_manufactory -- compatch calls it building_furniture_manufacturies
+		if = {
+			limit = {
+				has_building = building_furniture_manufactory
+				b:building_furniture_manufactory = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_furniture_manufactory
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_furniture_manufactory
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_furniture_manufactory
+				b:building_furniture_manufactory = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_furniture_manufactory
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_furniture_manufactory
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_tooling_workshop -- compatch calls it building_tooling_workshops
+		if = {
+			limit = {
+				has_building = building_tooling_workshop
+				b:building_tooling_workshop = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_tooling_workshop
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_tooling_workshop
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_tooling_workshop
+				b:building_tooling_workshop = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_tooling_workshop
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_tooling_workshop
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_paper_mill -- compatch calls it building_paper_mills
+		if = {
+			limit = {
+				has_building = building_paper_mill
+				b:building_paper_mill = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_paper_mill
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_paper_mill
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_paper_mill
+				b:building_paper_mill = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_paper_mill
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_paper_mill
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_chemical_plant -- compatch calls it building_chemical_plants
+		if = {
+			limit = {
+				has_building = building_chemical_plant
+				b:building_chemical_plant = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_chemical_plant
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_chemical_plant
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_chemical_plant
+				b:building_chemical_plant = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_chemical_plant
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_chemical_plant
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_synthetics_plant -- compatch calls it building_synthetics_plants
+		if = {
+			limit = {
+				has_building = building_synthetics_plant
+				b:building_synthetics_plant = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_synthetics_plant
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_synthetics_plant
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_synthetics_plant
+				b:building_synthetics_plant = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_synthetics_plant
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_synthetics_plant
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_steel_mill -- compatch calls it building_steel_mills
+		if = {
+			limit = {
+				has_building = building_steel_mill
+				b:building_steel_mill = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_steel_mill
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_steel_mill
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_steel_mill
+				b:building_steel_mill = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_steel_mill
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_steel_mill
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_shipyard -- compatch calls it building_shipyards
+		if = {
+			limit = {
+				has_building = building_shipyard
+				b:building_shipyard = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_shipyard
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_shipyard
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_shipyard
+				b:building_shipyard = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_shipyard
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_shipyard
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_munition_plant -- compatch calls it building_munition_plants
+		if = {
+			limit = {
+				has_building = building_munition_plant
+				b:building_munition_plant = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_munition_plant
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_munition_plant
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_munition_plant
+				b:building_munition_plant = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_munition_plant
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_munition_plant
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_artillery_foundry -- compatch calls it building_artillery_foundries -- no such alias, ever
+		if = {
+			limit = {
+				has_building = building_artillery_foundry
+				b:building_artillery_foundry = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_artillery_foundry
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_artillery_foundry
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_artillery_foundry
+				b:building_artillery_foundry = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_artillery_foundry
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_artillery_foundry
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_consumer_electronics_industry -- compatch block is inverted, see above
+		if = {
+			limit = {
+				has_building = building_consumer_electronics_industry
+				b:building_consumer_electronics_industry = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_consumer_electronics_industry
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_consumer_electronics_industry
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_consumer_electronics_industry
+				b:building_consumer_electronics_industry = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_consumer_electronics_industry
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_consumer_electronics_industry
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+
+		# building_computer_assembly_plant -- new in T&R 13.05.2026, absent from the compatch
+		if = {
+			limit = {
+				has_building = building_computer_assembly_plant
+				b:building_computer_assembly_plant = {
+					private_ownership_fraction > 0.5
+				}
+				is_production_method_active = {
+					building_type = building_computer_assembly_plant
+					production_method = pm_no_private_ownership_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_computer_assembly_plant
+				production_method = pm_private_ownership_majority_manufacture_stock
+			}
+		}
+		if = {
+			limit = {
+				has_building = building_computer_assembly_plant
+				b:building_computer_assembly_plant = {
+					private_ownership_fraction <= 0.5
+				}
+				is_production_method_active = {
+					building_type = building_computer_assembly_plant
+					production_method = pm_private_ownership_majority_manufacture_stock
+				}
+			}
+			activate_production_method = {
+				building_type = building_computer_assembly_plant
+				production_method = pm_no_private_ownership_manufacture_stock
+			}
+		}
+	}
+}

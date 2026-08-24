@@ -1,4 +1,4 @@
-This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
+﻿This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]Economic and Financial (E&F) + The Great Revision (TGR) ComPatch[/h1]
 
 Compatibility patch for using [b]Economic and Financial (E&F)[/b] together with [b]The Great Revision (TGR)[/b].
@@ -37,7 +37,8 @@ Rebuilt 21.08.2026 against [b]TGR 2.0 (1.13.10, 12.08.2026)[/b] and [b]E&F 04.07
 [*][b]Disables the TGR "International Loans" module[/b]
 [list]
 [*]TGR bundles the same loan / interest-rate system as the standalone "TGR International Loans" module. It overlaps E&F's own credit system, so this patch switches it off: journal entry [i]je_international_loans[/i] and buttons [i]tgr_loans_button_1..8[/i].
-[*]Its baseline [i]country_loan_interest_rate_add = -0.2[/i] is reset to 0, otherwise vanilla/E&F loans would be handed out at nearly no interest.
+[*]Its baseline [i]country_loan_interest_rate_add = -0.2[/i] goes with it, otherwise vanilla/E&F loans keep being handed out at nearly no interest while the mechanic that justified it is gone. The patch overrides TGR's [i]common/static_modifiers/TGR_LOANS_code_static_modifiers.txt[/i], which holds that one line and nothing else - the same path the standalone "TGR International Loans" mini-mod ships, so one file covers both.
+[*][i]Fixed 24.08.2026:[/i] the previous version injected [i]country_loan_interest_rate_add = 0[/i] and called that a reset. Repeated modifier keys inside one modifier block add up, so 0 + (-0.2) is still -0.2 - the baseline had never actually been removed, and nothing was logged about it.
 [*]This is a design call, not a conflict fix - the two systems do not share a single file or key.
 [/list]
 
@@ -56,7 +57,7 @@ Rebuilt 21.08.2026 against [b]TGR 2.0 (1.13.10, 12.08.2026)[/b] and [b]E&F 04.07
 [list]
 [*][b]Company HQ production methods.[/b] Vic3 1.13 database prefixes patch per sub-block: E&F's [i]REPLACE:[/i] only lists [i]building_modifiers[/i], so TGR's [i]state_modifiers[/i] survives on its own. The old merge file was also feeding stale numbers.
 [*][b]Buy packages.[/b] The two mods use different file names and E&F only injects, so nothing was ever lost. The patch was shipping a byte-for-byte copy of E&F's file.
-[*][b]base_values.[/b] All four patches of it use [i]INJECT:[/i] and merge cleanly.
+[*][b]Pinning base_values.[/b] Four files INJECT into it - E&F's minting, TGR_POLITICS, TGR_TRADE and this patch - and they merge cleanly. The old file restated all of their numbers as of 01.2026 and by 08.2026 was feeding values that exist nowhere any more. Only the one key this patch actually needs to remove is touched now, and by overriding TGR's own file rather than by pinning anything.
 [*][b]issue_a_loan / apply_for_a_loan.[/b] These diplomatic actions no longer exist in TGR; the old file was creating them from scratch instead of disabling them.
 [/list]
 

@@ -1,4 +1,30 @@
-### Advanced Tanks ###
+﻿# Morgenroete <-> Tech & Res: Gaudi's advanced tank mobilization options.
+#
+# Morgenroete gates these three tiers on the vanilla armour line only
+# (light_tanks / heavy_tank / mechanized_infantry). Tech & Res adds six
+# successor unit types, and an army that has upgraded past vanilla armour stops
+# qualifying - the option silently greys out mid-game. This file re-states the
+# three options with the T&R units added to the OR; nothing else is changed.
+#
+# Bodies are Morgenroete 2.8.3e verbatim. Two things came from that and matter:
+#
+# 1. military_formation_army_movement_speed_mult, NOT
+#    military_formation_movement_speed_mult. The old compatch used the latter on
+#    all three tiers; that modifier type does not exist in 1.13.10 at all (zero
+#    hits in vanilla 00_modifier_types.txt and modifiers_l_english.yml), so the
+#    movement bonus did nothing and the game complained at load. Morgenroete
+#    had already fixed it on their side by 2.8.3e.
+#
+# 2. ai_weight became conditional in 2.8.3e: a tier returns -1000 once the
+#    country's gaudi_military_engineer_advanced_tanks var has passed it, so the
+#    AI moves up instead of sitting on tier 1 forever. The old compatch still
+#    carried a flat value = 1 on every tier. Tier 3 is flat by design - there is
+#    nothing above it.
+#
+# Re-check the OR lists against T&R's combat_unit_types on every T&R update:
+# a renamed or removed unit type here fails silently, exactly like the modifier
+# name above did.
+
 REPLACE:mobilization_option_advanced_tanks_1 = {
 	texture = "gfx/interface/icons/mobilization_options/mr_advanced_tanks_tier_1_mobilization_option.dds"
 
@@ -16,11 +42,12 @@ REPLACE:mobilization_option_advanced_tanks_1 = {
 			any_combat_unit = {
 				OR = {
 					has_unit_type = unit_type:combat_unit_type_light_tanks
-					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
 					has_unit_type = unit_type:combat_unit_type_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+					# Tech & Res successor units - all nine verified present 2026-08-21.
+					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
 					has_unit_type = unit_type:combat_unit_type_modern_heavy_tank
 					has_unit_type = unit_type:combat_unit_type_main_battle_tanks
-					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_advanced_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_modern_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_giant_death_robot
@@ -61,12 +88,23 @@ REPLACE:mobilization_option_advanced_tanks_1 = {
 	unit_modifier = {
 		unit_kill_rate_add = 0.03
 		unit_offense_mult = 0.03
-		military_formation_movement_speed_mult = 0.1
+		military_formation_army_movement_speed_mult = 0.1
 		character_battle_condition_rapid_advance_mult = 1
 	}
 
 	ai_weight = {
-		value = 1
+		value = {
+			if = {
+				limit = {
+					has_variable = gaudi_military_engineer_advanced_tanks
+					var:gaudi_military_engineer_advanced_tanks > 1
+				}
+				value = -1000
+			}
+			else = {
+				value = 1
+			}
+		}
 	}
 
 	group = advanced_tanks
@@ -89,11 +127,12 @@ REPLACE:mobilization_option_advanced_tanks_2 = {
 			any_combat_unit = {
 				OR = {
 					has_unit_type = unit_type:combat_unit_type_light_tanks
-					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
 					has_unit_type = unit_type:combat_unit_type_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+					# Tech & Res successor units - all nine verified present 2026-08-21.
+					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
 					has_unit_type = unit_type:combat_unit_type_modern_heavy_tank
 					has_unit_type = unit_type:combat_unit_type_main_battle_tanks
-					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_advanced_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_modern_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_giant_death_robot
@@ -134,12 +173,23 @@ REPLACE:mobilization_option_advanced_tanks_2 = {
 	unit_modifier = {
 		unit_kill_rate_add = 0.06
 		unit_offense_mult = 0.06
-		military_formation_movement_speed_mult = 0.2
+		military_formation_army_movement_speed_mult = 0.2
 		character_battle_condition_rapid_advance_mult = 1.5
 	}
 
 	ai_weight = {
-		value = 1
+		value = {
+			if = {
+				limit = {
+					has_variable = gaudi_military_engineer_advanced_tanks
+					var:gaudi_military_engineer_advanced_tanks > 2
+				}
+				value = -1000
+			}
+			else = {
+				value = 1
+			}
+		}
 	}
 
 	group = advanced_tanks
@@ -162,11 +212,12 @@ REPLACE:mobilization_option_advanced_tanks_3 = {
 			any_combat_unit = {
 				OR = {
 					has_unit_type = unit_type:combat_unit_type_light_tanks
-					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
 					has_unit_type = unit_type:combat_unit_type_heavy_tank
+					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
+					# Tech & Res successor units - all nine verified present 2026-08-21.
+					has_unit_type = unit_type:combat_unit_type_modern_light_tanks
 					has_unit_type = unit_type:combat_unit_type_modern_heavy_tank
 					has_unit_type = unit_type:combat_unit_type_main_battle_tanks
-					has_unit_type = unit_type:combat_unit_type_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_advanced_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_modern_mechanized_infantry
 					has_unit_type = unit_type:combat_unit_type_giant_death_robot
@@ -207,7 +258,7 @@ REPLACE:mobilization_option_advanced_tanks_3 = {
 	unit_modifier = {
 		unit_kill_rate_add = 0.1
 		unit_offense_mult = 0.1
-		military_formation_movement_speed_mult = 0.3
+		military_formation_army_movement_speed_mult = 0.3
 		character_battle_condition_rapid_advance_mult = 2
 	}
 

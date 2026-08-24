@@ -1,0 +1,16 @@
+﻿# Text icon for the good this patch adds.
+#
+# Vanilla ships gui/goods_texticons.gui, PSC ships gui/PSC_goods_texticons.gui
+# for its four construction goods and T&R ships gui/01_goods_texticons.gui plus
+# gui/ztr_texticons.gui for its own. None of them knows concrete_construction,
+# so without this file the `@concrete_construction!` references in
+# PSC_TR_modifiers_l_*.yml render as literal text in every tooltip.
+texticon = {
+    icon = concrete_construction
+	iconsize = {
+		texture = "gfx/interface/icons/invention_icons/prefabricated_concrete_buildings.dds"
+		size = { 25 25 }
+		offset = { 0 7 }
+		fontsize = 18
+	}
+}

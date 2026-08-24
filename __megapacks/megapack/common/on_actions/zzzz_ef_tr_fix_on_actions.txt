@@ -1,0 +1,38 @@
+﻿### E&F + Tech & Res ComPatch Fix (Vic3 1.13)
+### Hook the stock switch into the same two pulses E&F uses.
+###
+### on_actions are additive across mods: E&F, T&R and the E&F + Morgenroete
+### ComPatch all append to on_yearly_pulse_country, and this file appends to it
+### as well. Nothing here overrides anything.
+###
+### Both hooks mirror E&F's own wiring in common/on_actions/00_ef_on_action.txt:
+### on_yearly_pulse_country is the regular sweep, and on_production_method_changed
+### catches the case the yearly sweep is too slow for -- the player switching a
+### method by hand. In on_production_method_changed the root scope is the
+### building, hence the `owner = { }` wrapper; E&F does exactly the same.
+
+on_yearly_pulse_country = {
+	on_actions = {
+		ef_tr_fix_on_yearly_pulse_country
+	}
+}
+
+ef_tr_fix_on_yearly_pulse_country = {
+	effect = {
+		ef_tr_fix_private_ownership_stocks = yes
+	}
+}
+
+on_production_method_changed = {
+	on_actions = {
+		ef_tr_fix_on_production_method_changed
+	}
+}
+
+ef_tr_fix_on_production_method_changed = {
+	effect = {
+		owner = {
+			ef_tr_fix_private_ownership_stocks = yes
+		}
+	}
+}

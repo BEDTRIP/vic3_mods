@@ -1,4 +1,4 @@
-
+﻿
 # Remap E&F "private construction sector" script_values to the unified building type.
 # Keep the script_value names used by E&F JE/UI, but point them to building_construction_sector.
 

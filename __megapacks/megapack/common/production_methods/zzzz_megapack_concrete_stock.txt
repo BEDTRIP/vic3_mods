@@ -1,0 +1,24 @@
+﻿# MEGAPACK ONLY -- this file does not exist in any of the five ComPatches.
+#
+# The E&F + PSC patch gives every construction method an E&F stock output equal
+# to its construction-goods output: 20 / 50 / 100 / 150 for wood / iron / steel /
+# arc welded (zz_pb_ef_construction_pm.txt). The concrete tier does not exist in
+# that patch -- it comes from PSC + Tech & Res, which knows nothing about E&F --
+# so researching Prefabricated Concrete Buildings moved the whole construction
+# sector onto a method that issues no manufacture_stock at all.
+#
+# Same shape of bug as the gold mines that stopped minting when Tech & Res added
+# tiers above Diesel Pump: an upgrade quietly zeroes an output nobody re-declared.
+#
+# 150, matching the method's goods_output_concrete_construction_add and the arc
+# welded tier it replaces. INJECT, not REPLACE: repeated modifier keys inside one
+# modifier block add up, which is how the PSC + T&R patch applies its own deltas.
+# Loads after zzz_PSC_TR_construction.txt by name.
+
+INJECT:pm_prefabricated_concrete_buildings = {
+	building_modifiers = {
+		workforce_scaled = {
+			goods_output_manufacture_stock_add = 150
+		}
+	}
+}

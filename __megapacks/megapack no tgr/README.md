@@ -16,6 +16,7 @@ This is no-TGR version of [url=https://steamcommunity.com/sharedfiles/filedetail
 [*]Kuromi AI (KAI)
 [*]Economic and Financial (E&F)
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
+[*]E&F Hotfix (currency merge -- required, frees goods slots for Tech & Res)
 [*]Morgenröte
 [*]Tech & Res
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3551090576]Tech & Res RU Localization (if u need)[/url]
