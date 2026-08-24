@@ -2298,10 +2298,27 @@ zz_ef_cm_create_owned_bank = {
 			}
 		}
 
-		### The rebuild resets the production methods. This is E&F's own effect for
-		### choosing them -- the same call its spawners make after building a bank.
+		### A rebuilt bank comes back bare, and both of E&F's setup effects have to
+		### run or it spends a month printing nothing.
+		###
+		### central_bank_production_methods picks the methods. central_bank_modifier
+		### is the one that was missing, and it is where the money actually comes
+		### from: it finds the bank, takes the base_demande_currency_fix snapshot and
+		### re-applies `currency_demande`, the mult that turns the production
+		### method's ~27 units into Britain's 100K. The modifier lives ON THE
+		### BUILDING, so tearing the building down takes it with it.
+		###
+		### That is the annual crash in the currency price. E&F calls its spawners
+		### from ef_on_yearly_pulse_country, and Victoria 3 spreads a yearly pulse
+		### across the days of the year -- so every country has its own date and
+		### hits it again every year. West Bengal on 1 January two years running,
+		### China in April. Whenever gdp_view had grown enough to ask for a bigger
+		### bank, the rebuild dropped that country's whole issuance for a month and
+		### the market price went to 0.01 until the next pulse put the modifier
+		### back.
 		owner = {
 			central_bank_production_methods = yes
+			central_bank_modifier = yes
 			remove_variable = zz_ef_cm_bank_rebuild
 			remove_variable = zz_ef_cm_bank_unbuilt
 		}
