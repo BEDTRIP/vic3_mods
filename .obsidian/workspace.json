@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Таблица совместимостей.md",
+                "file": "План проекта.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Таблица совместимостей"
+              "title": "План проекта"
             }
           }
         ]
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Таблица совместимостей.md",
+                "file": "План проекта.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Таблица совместимостей.md",
+                "file": "План проекта.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Таблица совместимостей.md",
+                "file": "План проекта.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,17 +190,25 @@
   },
   "active": "ef9d9e95e55d7924",
   "lastOpenFiles": [
+    "Правила работы с модами Victoria 3.md",
+    "План проекта.md",
+    "tools/conflicts_megapack_vs_TheGreatRevision_report.md",
+    "tools/conflicts_PSC_vs_kai_report.md",
+    "tools/conflicts_PSC_vs_t&r_report.md",
+    "tools/conflicts_PSC_vs_PBE_report.md",
+    "conflicts_addon_vs_megapack_report.md",
+    "README.md",
+    "__addon/промпт_аддон.md",
+    "tools/blocks.json",
+    "tools/pair_matrix.py",
+    "tools/vfs_order.py",
+    "tools/index_mod.py",
     "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/PSC_modifiers_l_russian.yml",
     "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/PSC_interfaces_l_russian.yml",
     "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/PSC_goods_l_russian.yml",
     "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/PSC_construction_panel_l_russian.yml",
     "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/PSC_buildings_l_russian.yml",
     "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/PSC_production_methods_l_russian.yml",
-    "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/psc/PSC_modifiers_l_russian.yml",
-    "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/psc/PSC_production_methods_l_russian.yml",
-    "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/psc/PSC_interfaces_l_russian.yml",
-    "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/psc/PSC_goods_l_russian.yml",
-    "__translations/Economic and Financial Mod (E&F) - V4 RUS/localization/russian/psc/PSC_construction_panel_l_russian.yml",
     "__addon/план_работ_аддон.md",
     "__addon/conflicts_addon_internal.md",
     "_addon/conflicts_addon_internal.md",
@@ -210,7 +218,6 @@
     "_llwa/llwa_morgen out/thumbnail.png",
     "_llwa/llwa_morgen щге/thumbnail.png",
     "_llwa/llwa_morgen compatch/thumbnail.png",
-    "_greys/usu_llwa comatch/thumbnail.png",
-    "Таблица совместимостей.md"
+    "_greys/usu_llwa comatch/thumbnail.png"
   ]
 }
