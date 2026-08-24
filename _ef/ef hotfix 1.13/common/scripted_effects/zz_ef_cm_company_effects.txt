@@ -34,6 +34,38 @@ zz_ef_cm_grant_bank_company = {
 ### bank company at all.
 
 zz_ef_cm_bank_company_upkeep = {
+	### The denominator of this country's share of its market's currency demand:
+	### the summed GDP of every central bank on the same market.
+	###
+	### It is computed HERE, in an effect, and read from the variable by
+	### zz_ef_cm_issuer_share, because a global list iterator does not run inside
+	### a script value. every_scope_state does, which is exactly why the first
+	### version looked right: the same shape, one scope narrower, works. There
+	### the sum silently stayed 0, min = 1 made it 1, and every country's share
+	### came out clamped to the maximum of 1 -- so every bank on a market chased
+	### the whole market's demand. The British market ran 1.22M of currency
+	### against 214K of buy orders and the price sat at -98%.
+	###
+	### The scope is saved rather than compared with prev or root: inside
+	### every_country, prev is the country being tested, and a saved scope is the
+	### only unambiguous way back to the one being summed for.
+	save_scope_as = zz_ef_cm_share_country
+	set_variable = { name = zz_ef_cm_market_weight  value = 0 }
+	every_country = {
+		limit = {
+			market = scope:zz_ef_cm_share_country.market
+			has_modifier = has_central_bank
+			NOT = { has_law = law_type:law_no_market_liquidity }
+		}
+		save_scope_as = zz_ef_cm_share_issuer
+		scope:zz_ef_cm_share_country = {
+			change_variable = {
+				name = zz_ef_cm_market_weight
+				add  = scope:zz_ef_cm_share_issuer.zz_ef_cm_issuer_weight
+			}
+		}
+	}
+
 	if = {
 		limit = {
 			zz_ef_cm_has_central_bank = yes

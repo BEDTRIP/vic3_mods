@@ -396,12 +396,22 @@ SHARE_BLOCK = """
 ### industrial economy; the hotfix's population x SoL curve is the right shape for
 ### pops but knows nothing about factories.
 ###
-### `root.market`, not `prev.market`. Both should mean the country the value is
-### being computed for, but only one of them is attested: E&F compares
-### `market.owner = root` inside a script value and that works, while its one use
-### of `prev.market` sits in a scripted trigger nothing calls. A filter that
-### silently matches nothing would leave the denominator at its `min = 1`, and
-### every country would then claim the whole market's demand as its own share.
+### THE DENOMINATOR IS A VARIABLE, NOT AN ITERATOR, AND THAT IS THE WHOLE FIX.
+### This used to sum the market's issuers with `every_country` inside the script
+### value. Global list iterators do not run in script values -- `every_scope_state`
+### does, which is what made it look plausible -- so the sum stayed 0, `min = 1`
+### turned it into 1, and every country's share came out as `gdp / 1` clamped to
+### the maximum of 1. Every bank on a market then chased the ENTIRE market's demand
+### instead of its slice: the British market ran 1.22M of currency against 214K of
+### buy orders, price -98%, which is very close to one full share per issuer times
+### the number of issuers. West Bengal alone was printing 1.08M.
+###
+### Nothing in the log says so. A script value that quietly evaluates to zero looks
+### exactly like one that legitimately is zero.
+###
+### So the sum is computed monthly in zz_ef_cm_bank_company_upkeep, where iterators
+### do work, and parked in var:zz_ef_cm_market_weight on each country. All that is
+### left here is a division, which script values are good at.
 ###
 ### Countries sitting on law_no_market_liquidity issue nothing and take no share,
 ### but their pops and buildings still buy -- so their demand is covered by the
@@ -412,22 +422,9 @@ zz_ef_cm_issuer_weight = {
 	min = 1
 }
 
-zz_ef_cm_market_issuer_weight = {
-	value = 0
-	every_country = {
-		limit = {
-			market = root.market
-			has_modifier = has_central_bank
-			NOT = { has_law = law_type:law_no_market_liquidity }
-		}
-		add = zz_ef_cm_issuer_weight
-	}
-	min = 1
-}
-
 zz_ef_cm_issuer_share = {
 	value = zz_ef_cm_issuer_weight
-	divide = zz_ef_cm_market_issuer_weight
+	divide = { value = var:zz_ef_cm_market_weight  min = 1 }
 	min = 0.0001
 	max = 1
 }
@@ -446,6 +443,7 @@ currency_market_goods_sell_orders = {
 	}
 }
 """
+
 
 
 # --- output -----------------------------------------------------------------
@@ -1479,6 +1477,37 @@ def gen_upkeep(ef: Path, names: list[str]) -> dict[str, str]:
                "### this pass only catches a country that ended up with a central bank and no\n"
                "### bank company at all.\n\n"
                "zz_ef_cm_bank_company_upkeep = {\n"
+               "\t### The denominator of this country's share of its market's currency demand:\n"
+               "\t### the summed GDP of every central bank on the same market.\n"
+               "\t###\n"
+               "\t### It is computed HERE, in an effect, and read from the variable by\n"
+               "\t### zz_ef_cm_issuer_share, because a global list iterator does not run inside\n"
+               "\t### a script value. every_scope_state does, which is exactly why the first\n"
+               "\t### version looked right: the same shape, one scope narrower, works. There\n"
+               "\t### the sum silently stayed 0, min = 1 made it 1, and every country's share\n"
+               "\t### came out clamped to the maximum of 1 -- so every bank on a market chased\n"
+               "\t### the whole market's demand. The British market ran 1.22M of currency\n"
+               "\t### against 214K of buy orders and the price sat at -98%.\n"
+               "\t###\n"
+               "\t### The scope is saved rather than compared with prev or root: inside\n"
+               "\t### every_country, prev is the country being tested, and a saved scope is the\n"
+               "\t### only unambiguous way back to the one being summed for.\n"
+               "\tsave_scope_as = zz_ef_cm_share_country\n"
+               "\tset_variable = { name = zz_ef_cm_market_weight  value = 0 }\n"
+               "\tevery_country = {\n"
+               "\t\tlimit = {\n"
+               "\t\t\tmarket = scope:zz_ef_cm_share_country.market\n"
+               "\t\t\thas_modifier = has_central_bank\n"
+               "\t\t\tNOT = { has_law = law_type:law_no_market_liquidity }\n"
+               "\t\t}\n"
+               "\t\tsave_scope_as = zz_ef_cm_share_issuer\n"
+               "\t\tscope:zz_ef_cm_share_country = {\n"
+               "\t\t\tchange_variable = {\n"
+               "\t\t\t\tname = zz_ef_cm_market_weight\n"
+               "\t\t\t\tadd  = scope:zz_ef_cm_share_issuer.zz_ef_cm_issuer_weight\n"
+               "\t\t\t}\n"
+               "\t\t}\n"
+               "\t}\n\n"
                "\tif = {\n"
                "\t\tlimit = {\n"
                "\t\t\tzz_ef_cm_has_central_bank = yes\n"
