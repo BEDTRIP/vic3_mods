@@ -202,40 +202,46 @@ REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
 }
 
 #############################################
-# 7d. The same division by zero, in the currency -- and why the guard the other
-#     five use is WRONG here
+# 7d. The currency's divisor -- clamped, NOT capped, and NOT guarded
 #
-# target_demand_currency_for_modifier is built like the five above:
+#   target_demand_currency_for_modifier = {
+#       value    = target_demand_currency_ajusted
+#       subtract = base_demande_currency_fix
+#       divide   = base_demande_currency_fix   # <-- can be 0
+#       multiply = 100
+#       #max = 25000                           # <-- author's own, commented out
+#   }
 #
-#   value    = target_demand_currency_ajusted
-#   subtract = base_demande_currency_fix
-#   divide   = base_demande_currency_fix   # <-- can be 0
-#   multiply = 100
-#   #max = 25000                           # <-- author's own, commented out
+# WHAT THE NUMBER IS, because two wrong fixes came out of misreading it.
+# base_demande_currency_fix is scope:central_bank_scope.modifier:
+# goods_output_spe_uni_c_add -- the flat part of the bank's output, which is the
+# production method's `goods_output_spe_uni_c_add = 1` workforce-scaled. On a level
+# 20 bank that is about 27. The value computed here is fed straight into
+# `add_modifier = { name = currency_demande multiplier = ... }`, and currency_demande
+# is a MULT. So to take a bank from 27 units to Britain's 100K, the number has to be
+# around 370,000, and China needs more. It is a multiplier in the hundreds of
+# thousands BY DESIGN.
 #
-# It is a PERCENTAGE: how far this month's target sits from what the bank is
-# already issuing. It reaches the bank as goods_output_spe_uni_c_mult at 0.01 per
-# point, so 100 means "double it". Unbounded, with a divisor near zero, it means
-# Britain and China printing a million now and then.
+# Which is why there is no cap here. 25000 cut the bank to a fifteenth of what it
+# should print, 100000 to a quarter -- both looked like "the formula is broken"
+# because they broke it. The author's commented-out 25000 was not a safety net he
+# forgot to enable; it would have crippled his own mechanic.
 #
-# THE `if base_demande_..._fix > 0` GUARD FROM 7a-7c MUST NOT BE USED HERE, and
-# that was one round of everybody being broke. For bonds and stocks the divisor is
-# a financial-centre count that becomes positive on its own. For the currency it is
-# var:base_demande_currency_fix, refreshed from base_demande_currency, which reads
-# what the central bank is ALREADY issuing. Zero until the bank issues something,
-# and the modifier is what makes it issue -- so skipping the block at zero locks
-# the bank at its bare production method output forever. Britain went from 100K to
-# 6.77.
+# Nor the `if ..._fix > 0` guard the five blocks above use. Their divisor is a
+# financial-centre count that grows on its own; this one is what the bank is already
+# issuing, and this modifier is what makes it issue. Skipping at zero locks the bank
+# at bare production method output forever -- Britain went from 100K to 6.77.
 #
-# So the divisor is clamped instead, the way E&F clamps building_financial_num in
-# 7a: at zero output the value becomes target x 100, which is enormous but finite,
-# and the cap turns it into a fast ramp rather than an explosion. From a standing
-# start the bank reaches its target in two or three monthly ticks.
+# The one thing actually wrong is the divide by zero. It happens on the tick after
+# the bank is rebuilt under a new owner, before the production methods are back:
+# the add is 0, so the percentage is infinite and the mult is whatever infinity
+# becomes. That is the "Britain and China print a million now and then".
 #
-# The cap is a percentage, not a quantity -- 100000 is "up to a thousandfold in one
-# tick", not "at most 100K currency". It exists only to keep a near-zero divisor
-# from producing infinity; it never touches a bank running near its target, where
-# the value sits close to zero.
+# Clamping the divisor at 1 -- the way E&F clamps building_financial_num in 7a --
+# makes that tick finite instead. It is also harmless: a bank with no add to
+# multiply produces nothing however large the mult is, and the next tick has its
+# production methods back and divides by the real number again. With a healthy
+# divisor the arithmetic is bit-identical to E&F's.
 #############################################
 
 REPLACE_OR_CREATE:target_demand_currency_for_modifier = {
@@ -243,5 +249,4 @@ REPLACE_OR_CREATE:target_demand_currency_for_modifier = {
 	subtract = base_demande_currency_fix
 	divide = { value = base_demande_currency_fix min = 1 }
 	multiply = 100
-	max = 100000
 }
