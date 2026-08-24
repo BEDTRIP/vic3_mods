@@ -1,0 +1,8 @@
+﻿# Fixes selection of Airship/Airplane PM based on current techs unlocked since the game is apparently too dumb (or too
+# passive) to do it for us. If both (or neither, somehow) techs are available, does nothing.
+LLWA_oa_airway_pm_handler = {
+    effect = {
+        # NOP
+        # Airfield building PMs in MR eliminate the zeppelin/airplanes PM issue
+    }
+}

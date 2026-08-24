@@ -1,0 +1,38 @@
+{
+    "name" : "LLWA + Morgenröte Compatch",
+    "id" : "xyz.1230james.LLWA_morgenrote_compatch",
+    "version" : "1.0.8",
+    "game_id" : "victoria3",
+    "supported_game_version" : "",
+    "short_description" : "",
+    "tags" : [
+        "Balance",
+        "Events",
+        "Expansion",
+        "Economy And Buildings",
+        "Gameplay",
+        "Historical",
+        "Journal Entries",
+        "Sound",
+        "Technologies"
+    ],
+    "relationships" : [
+        {
+            "rel_type" : "dependency",
+            "id" : "xyz.1230james.locomotion",
+            "display_name" : "Locomotion: Land, Water, & Air",
+            "resource_type" : "mod",
+            "version" : ""
+        },
+        {
+            "rel_type" : "dependency",
+            "id" : "2889925770",
+            "display_name" : "Morgenroete",
+            "resource_type" : "mod",
+            "version" : ""
+        }
+    ],
+    "game_custom_data" : {
+        "multiplayer_synchronized" : true
+    }
+}

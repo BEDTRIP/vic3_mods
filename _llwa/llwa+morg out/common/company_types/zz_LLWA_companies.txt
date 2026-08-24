@@ -1,0 +1,79 @@
+﻿LLWA_company_airline = {
+    icon       = "gfx/interface/icons/company_icons/LLWA_airline_logo.dds"
+	background = "gfx/interface/icons/company_icons/company_backgrounds/LLWA_comp_illu_planes.dds"
+    
+    category = capitalist_owned
+    flavored_company = no
+    uses_dynamic_naming = yes
+    
+    dynamic_company_type_names = {
+        dynamic_company_type_company
+    }
+    
+    building_types = {
+        building_airport
+    }
+
+    extension_building_types = {
+        building_port
+    }
+
+    possible_prestige_goods = {
+        prestige_good_generic_flights
+    }
+
+    prestige_goods_trigger = {
+        custom_tooltip = {
+            text = je_mr_prestige_goods_flights_complete_tt
+            has_variable = mr_prestige_good_generic_flights_var
+        }
+    }
+    
+    potential = {
+        has_technology_researched = zeppelins
+    }
+    
+    attainable = {
+        always = yes
+    }
+    
+    possible = {
+        any_scope_state = {
+            any_scope_building = {
+                is_building_type = building_airport
+                level >= 5
+            }
+        }
+    }
+
+    prosperity_modifier = {
+        state_trade_advantage_mult = 0.25
+    }
+
+    ai_will_do = {
+        num_companies <= {
+            add      = max_num_companies
+            subtract = 2
+        }
+        any_scope_state = {
+            any_scope_building = {
+                is_building_type = building_airport
+                level >= 3
+            }
+        }
+    }
+    
+    ai_construction_targets = {
+        building_airport = {
+			level = 5
+			state_trigger = {
+                is_incorporated = yes
+                infrastructure_delta < 10
+			}
+		}
+    }
+    
+    ai_weight = {
+        value = 0.5
+    }
+}

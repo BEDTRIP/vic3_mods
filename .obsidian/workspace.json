@@ -1,0 +1,212 @@
+{
+  "main": {
+    "id": "74982348d166df0c",
+    "type": "split",
+    "children": [
+      {
+        "id": "8d740e4bd448bcf3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ef9d9e95e55d7924",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Таблица совместимостей.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Таблица совместимостей"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d0e723d17cd7c39b",
+    "type": "split",
+    "children": [
+      {
+        "id": "c0007fe01c67c901",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a5e4bdc013bc986c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "c03efca09258d82e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "7612d839e5c2d79a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "0d14a0e42b0e63dd",
+    "type": "split",
+    "children": [
+      {
+        "id": "217e9b72946ee193",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f1090dd0c91959ad",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Таблица совместимостей.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки"
+            }
+          },
+          {
+            "id": "064e63c705e93df5",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Таблица совместимостей.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки"
+            }
+          },
+          {
+            "id": "89c03364d32fd184",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "fabe127812907de4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Все свойства"
+            }
+          },
+          {
+            "id": "553febf3a74d6348",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Таблица совместимостей.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "bases:Создать новую базу": false
+    }
+  },
+  "active": "ef9d9e95e55d7924",
+  "lastOpenFiles": [
+    "_greys/usu_llwa out outdate/gfx/interface/icons/production_method_icons/travel_agencies.dds",
+    "_greys/usu_llwa out outdate/gfx/interface/icons/production_method_icons/luxury_requisitions.dds",
+    "_greys/usu_llwa out outdate/gfx/interface/icons/production_method_icons/gaudi_telegraph_no_pm.dds",
+    "_greys/usu_llwa out outdate/gfx/interface/icons/production_method_icons",
+    "_greys/usu_llwa out outdate/gfx/interface/icons",
+    "_greys/usu_llwa out outdate/common/scripted_triggers/Mog_USU_LLWA_check.txt",
+    "_greys/usu_llwa out outdate/common/production_method_groups/MoG_USU_air_tourism_pmgs.txt",
+    "_greys/usu_llwa out outdate/common/production_method_groups/aMoG_USU_MR_LLWA_pmgs.txt",
+    "_greys/usu_llwa out outdate/common/production_methods/aMoG_USU_MR_LLWA_pms.txt",
+    "_greys/usu_llwa out outdate/common/production_methods/aMoG_USU_LLWA_civil_aviation_pms.txt",
+    "_greys/usu_llwa out outdate/common/buildings/zzzzzMoG_USU_LLWA_railway.txt",
+    "_greys/usu_llwa out outdate/thumbnail.png",
+    "_llwa/llwa+morg out/thumbnail.png",
+    "_llwa/llwa_morgen out/thumbnail.png",
+    "_llwa/llwa_morgen щге/thumbnail.png",
+    "_llwa/llwa_morgen compatch/thumbnail.png",
+    "_greys/usu_llwa comatch/thumbnail.png",
+    "Таблица совместимостей.md"
+  ]
+}

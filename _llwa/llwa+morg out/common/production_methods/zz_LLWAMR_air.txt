@@ -1,0 +1,93 @@
+﻿# Aircraft
+LLWA_pm_airships = {
+    texture = "gfx/interface/icons/production_method_icons/LLWA_airships.dds"
+    
+    unlocking_technologies = {
+        zeppelins
+    }
+
+    building_modifiers = {
+        workforce_scaled = {
+            goods_input_engines_add = 5
+            goods_input_steel_add   = 10
+            goods_input_fabric_add  = 25
+            goods_input_oil_add     = 2
+            goods_input_radios_add  = 2
+            goods_output_transportation_add = 70
+            goods_output_air_travel_add     = 5
+        }
+        level_scaled = {
+            building_employment_laborers_add   = 800
+            building_employment_machinists_add = 800
+            building_employment_engineers_add  = 200
+            building_employment_clerks_add     = 200
+        }
+    }
+
+    state_modifiers = {
+        workforce_scaled = {
+            state_infrastructure_add = 15
+            state_pollution_generation_add = 15
+        }
+    }
+}
+
+LLWA_pm_airplanes = {
+    texture = "gfx/interface/icons/production_method_icons/aeroplanes.dds"
+    
+    unlocking_technologies = {
+        curtiss_modern_aviation_tech
+    }
+
+    building_modifiers = {
+        workforce_scaled = {
+            goods_input_aeroplanes_add = 10
+            goods_input_oil_add        = 4
+            goods_input_radios_add     = 4
+            goods_output_transportation_add = 90
+            goods_output_air_travel_add     = 10
+        }
+        level_scaled = {
+            building_employment_laborers_add   = 600
+            building_employment_machinists_add = 1000
+            building_employment_engineers_add  = 200
+            building_employment_clerks_add     = 200
+        }
+    }
+
+    state_modifiers = {
+        workforce_scaled = {
+            state_infrastructure_add = 30
+            state_pollution_generation_add = 10
+        }
+        unscaled = {
+            state_migration_pull_add = 5
+        }
+    }
+}
+
+# Air traffic
+LLWA_pm_air_travel = {
+    texture = "gfx/interface/icons/production_method_icons/LLWA_air_fare.dds"
+    
+    unlocking_production_methods = {
+        LLWA_pm_airships
+        LLWA_pm_airplanes
+    }
+    
+    building_modifiers = {
+        workforce_scaled = {
+            goods_input_luxury_furniture_add = 10
+            goods_output_air_travel_add      = 40
+        }
+        level_scaled = {
+            building_employment_clerks_add = 200
+        }
+    }
+    
+    state_modifiers = {
+        unscaled = {
+            state_migration_pull_add = 5
+        }
+    }
+}
