@@ -201,3 +201,43 @@ REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
 	max = 25000
 }
 
+#############################################
+# 7d. The same division by zero, in the currency
+#
+# target_demand_currency_for_modifier is built exactly like the five above --
+#
+#   value    = target_demand_currency_ajusted
+#   subtract = base_demande_currency_fix
+#   divide   = base_demande_currency_fix   # <-- can be 0
+#   multiply = 100
+#   #max = 25000                           # <-- author's own, commented out
+#
+# -- and it is the one the author left unguarded. base_demande_currency_fix is
+# var:base_demande_currency_fix, set to 0 in history/global and only refreshed by
+# central_bank_modifier_fixed_var on E&F's pulse. Any moment where it is near zero
+# while demand is not -- a bank that was just rebuilt under a new owner, a country
+# whose pulse has not come round yet, a central bank scope that is not set when
+# base_demande_currency reads it -- turns a percentage into a number with no upper
+# bound. It reaches the bank as goods_output_spe_uni_c_mult at 0.01 per point, so
+# 100,000 there is a thousandfold multiplier. That is the "Britain and China print
+# a million currency now and then".
+#
+# The currency merge did not create this, but it did widen it: demand is now the
+# whole market's, split by GDP, so the numerator on a big market is far larger
+# than it was when every country had its own good.
+#
+# Fix: same shape as the five above, and the max is the author's own number,
+# uncommented. With a healthy divisor the maths is bit-identical to E&F's.
+#############################################
+
+REPLACE_OR_CREATE:target_demand_currency_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_demande_currency_fix > 0 }
+		value = target_demand_currency_ajusted
+		subtract = base_demande_currency_fix
+		divide = base_demande_currency_fix
+		multiply = 100
+	}
+	max = 25000
+}

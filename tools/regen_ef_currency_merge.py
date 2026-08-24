@@ -396,6 +396,13 @@ SHARE_BLOCK = """
 ### industrial economy; the hotfix's population x SoL curve is the right shape for
 ### pops but knows nothing about factories.
 ###
+### `root.market`, not `prev.market`. Both should mean the country the value is
+### being computed for, but only one of them is attested: E&F compares
+### `market.owner = root` inside a script value and that works, while its one use
+### of `prev.market` sits in a scripted trigger nothing calls. A filter that
+### silently matches nothing would leave the denominator at its `min = 1`, and
+### every country would then claim the whole market's demand as its own share.
+###
 ### Countries sitting on law_no_market_liquidity issue nothing and take no share,
 ### but their pops and buildings still buy -- so their demand is covered by the
 ### market's issuers pro rata, which is what one expects of a colonial market.
@@ -409,7 +416,7 @@ zz_ef_cm_market_issuer_weight = {
 	value = 0
 	every_country = {
 		limit = {
-			market = prev.market
+			market = root.market
 			has_modifier = has_central_bank
 			NOT = { has_law = law_type:law_no_market_liquidity }
 		}
