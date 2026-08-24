@@ -3730,8 +3730,14 @@ REPLACE_OR_CREATE:thaler_saxon_thaler_price = {
 ### exactly like one that legitimately is zero.
 ###
 ### So the sum is computed monthly in zz_ef_cm_bank_company_upkeep, where iterators
-### do work, and parked in var:zz_ef_cm_market_weight on each country. All that is
-### left here is a division, which script values are good at.
+### do work, and parked in var:zz_ef_cm_market_weight. All that is left here is a
+### division, which script values are good at.
+###
+### The divisor is read off the MARKET'S OWNER, not off each country's own copy.
+### Every country computes the same sum, but each on its own day -- the monthly
+### pulse is spread across the days of the month -- so six issuers on one market
+### held six slightly different ideas of the same denominator and their shares did
+### not add up to one. One copy per market, read by everyone on it, and they do.
 ###
 ### Countries sitting on law_no_market_liquidity issue nothing and take no share,
 ### but their pops and buildings still buy -- so their demand is covered by the
@@ -3744,7 +3750,7 @@ REPLACE_OR_CREATE:zz_ef_cm_issuer_weight = {
 
 REPLACE_OR_CREATE:zz_ef_cm_issuer_share = {
 	value = zz_ef_cm_issuer_weight
-	divide = { value = var:zz_ef_cm_market_weight  min = 1 }
+	divide = { value = market.owner.var:zz_ef_cm_market_weight  min = 1 }
 	min = 0.0001
 	max = 1
 }

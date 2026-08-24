@@ -81,16 +81,36 @@ zz_ef_cm_create_owned_bank = {
 		}
 	}
 	else = {
-		### THE BANK IS REBUILT, NOT EXPANDED, AND THAT IS DELIBERATE.
-		### Expanding an existing building hands the NEW levels to the state --
-		### add_ownership only covers levels created together with the building.
-		### E&F grows the central bank exactly that way, by calling create_building
-		### again with a bigger level, so Finland came out 5 levels company-owned
-		### and 5 state-owned, and in the Papal States a rival bank company then
-		### privatised 4 of the state's five. Rebuilding is the only way to keep
-		### the whole bank in one pair of hands.
+		### THE BANK IS TORN DOWN ONLY TO CHANGE HANDS. Growing it is an ordinary
+		### create_building on top of what is there.
+		###
+		### It used to be torn down every time, because add_ownership is documented
+		### here as covering only levels created together with the building -- and
+		### E&F grows the bank by calling create_building again with a bigger level,
+		### which is how Finland ended up 5 levels company-owned and 5 state-owned.
+		### But E&F's call carries no add_ownership at all, so that observation
+		### never actually tested what ours does.
+		###
+		### And the tear-down has a price that took a while to see. E&F calls its
+		### spawners from ef_on_yearly_pulse_country with a size that grows with
+		### gdp_view, so a growing country crosses a size threshold about once a
+		### year and the bank was demolished and rebuilt each time. A new building
+		### staffs up over a month, and a bank with no workforce issues nothing --
+		### the currency price fell to 0.01 and came back. That is why the countries
+		### that grow fastest were the ones that kept spiking (Britain, France,
+		### China, Russia) while Austria and the Netherlands sat quiet, and why it
+		### did not track the number of issuers on the market at all.
+		###
+		### If the levels added on top do turn out to land with the state, the bank
+		### goes part government-owned -- worse than before but visible and
+		### recoverable, where a month of no money every year was neither.
 		if = {
-			limit = { has_building = $BANK_BLDG_TYPE$ }
+			limit = {
+				has_building = $BANK_BLDG_TYPE$
+				scope:zz_ef_cm_bank_owner = {
+					has_variable = zz_ef_cm_bank_rebuild
+				}
+			}
 			remove_building = $BANK_BLDG_TYPE$
 		}
 

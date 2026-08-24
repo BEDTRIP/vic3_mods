@@ -410,8 +410,14 @@ SHARE_BLOCK = """
 ### exactly like one that legitimately is zero.
 ###
 ### So the sum is computed monthly in zz_ef_cm_bank_company_upkeep, where iterators
-### do work, and parked in var:zz_ef_cm_market_weight on each country. All that is
-### left here is a division, which script values are good at.
+### do work, and parked in var:zz_ef_cm_market_weight. All that is left here is a
+### division, which script values are good at.
+###
+### The divisor is read off the MARKET'S OWNER, not off each country's own copy.
+### Every country computes the same sum, but each on its own day -- the monthly
+### pulse is spread across the days of the month -- so six issuers on one market
+### held six slightly different ideas of the same denominator and their shares did
+### not add up to one. One copy per market, read by everyone on it, and they do.
 ###
 ### Countries sitting on law_no_market_liquidity issue nothing and take no share,
 ### but their pops and buildings still buy -- so their demand is covered by the
@@ -424,7 +430,7 @@ zz_ef_cm_issuer_weight = {
 
 zz_ef_cm_issuer_share = {
 	value = zz_ef_cm_issuer_weight
-	divide = { value = var:zz_ef_cm_market_weight  min = 1 }
+	divide = { value = market.owner.var:zz_ef_cm_market_weight  min = 1 }
 	min = 0.0001
 	max = 1
 }
@@ -1957,16 +1963,36 @@ def gen_ownership(ef: Path, names: list[str]) -> tuple[dict[str, str], list[str]
                 "\t\t}\n"
                 "\t}\n"
                 "\telse = {\n"
-                "\t\t### THE BANK IS REBUILT, NOT EXPANDED, AND THAT IS DELIBERATE.\n"
-                "\t\t### Expanding an existing building hands the NEW levels to the state --\n"
-                "\t\t### add_ownership only covers levels created together with the building.\n"
-                "\t\t### E&F grows the central bank exactly that way, by calling create_building\n"
-                "\t\t### again with a bigger level, so Finland came out 5 levels company-owned\n"
-                "\t\t### and 5 state-owned, and in the Papal States a rival bank company then\n"
-                "\t\t### privatised 4 of the state's five. Rebuilding is the only way to keep\n"
-                "\t\t### the whole bank in one pair of hands.\n"
+                "\t\t### THE BANK IS TORN DOWN ONLY TO CHANGE HANDS. Growing it is an ordinary\n"
+                "\t\t### create_building on top of what is there.\n"
+                "\t\t###\n"
+                "\t\t### It used to be torn down every time, because add_ownership is documented\n"
+                "\t\t### here as covering only levels created together with the building -- and\n"
+                "\t\t### E&F grows the bank by calling create_building again with a bigger level,\n"
+                "\t\t### which is how Finland ended up 5 levels company-owned and 5 state-owned.\n"
+                "\t\t### But E&F's call carries no add_ownership at all, so that observation\n"
+                "\t\t### never actually tested what ours does.\n"
+                "\t\t###\n"
+                "\t\t### And the tear-down has a price that took a while to see. E&F calls its\n"
+                "\t\t### spawners from ef_on_yearly_pulse_country with a size that grows with\n"
+                "\t\t### gdp_view, so a growing country crosses a size threshold about once a\n"
+                "\t\t### year and the bank was demolished and rebuilt each time. A new building\n"
+                "\t\t### staffs up over a month, and a bank with no workforce issues nothing --\n"
+                "\t\t### the currency price fell to 0.01 and came back. That is why the countries\n"
+                "\t\t### that grow fastest were the ones that kept spiking (Britain, France,\n"
+                "\t\t### China, Russia) while Austria and the Netherlands sat quiet, and why it\n"
+                "\t\t### did not track the number of issuers on the market at all.\n"
+                "\t\t###\n"
+                "\t\t### If the levels added on top do turn out to land with the state, the bank\n"
+                "\t\t### goes part government-owned -- worse than before but visible and\n"
+                "\t\t### recoverable, where a month of no money every year was neither.\n"
                 "\t\tif = {\n"
-                "\t\t\tlimit = { has_building = $BANK_BLDG_TYPE$ }\n"
+                "\t\t\tlimit = {\n"
+                "\t\t\t\thas_building = $BANK_BLDG_TYPE$\n"
+                "\t\t\t\tscope:zz_ef_cm_bank_owner = {\n"
+                "\t\t\t\t\thas_variable = zz_ef_cm_bank_rebuild\n"
+                "\t\t\t\t}\n"
+                "\t\t\t}\n"
                 "\t\t\tremove_building = $BANK_BLDG_TYPE$\n"
                 "\t\t}\n\n"
                 "\t\t### Make sure there is somebody to hand it to, and arm the flag the\n"
