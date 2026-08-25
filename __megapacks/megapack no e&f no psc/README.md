@@ -1,4 +1,6 @@
-﻿This is the no-E&F, no-PSC version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url].
+﻿[b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
+
+This is the no-E&F, no-PSC version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url].
 [h1]Compatibility patch for using these big mods together:[/h1]
 [list]
     [*][b]The Great Revision (TGR)[/b]

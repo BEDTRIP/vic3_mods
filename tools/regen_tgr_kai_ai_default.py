@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Generator for the TGR x KAI half of common/ai_strategies in the TGR+T&R+KAI compatch.
+"""Generator for the TGR x KAI half of common/ai_strategies.
 
 Writes one file:
 
-    _tgr/tgr+tr+kai done/common/ai_strategies/zz_tr_kai_tgr_ai_default_strategy.txt
+    _tgr/tgr+kai done/common/ai_strategies/zz_kai_tgr_ai_default_strategy.txt
+
+Tech & Res left the main set on 25.08.2026 and the old three-way TGR + T&R + KAI
+compatch was split: its TGR x T&R half is now _tr/tgr+tr done, its KAI x T&R half
+is _tr/kai+tr done, and what is left of the TGR x KAI pair is this one entry.
+Of the 37 keys the two mods share it is the only one that needs a file -- see
+conflicts_tgr_vs_kai_report.md next to the output for the other 36.
 
 Kuromi's AI ships its default strategy as a bare body at the vanilla path, which
 erases The Great Revision's three INJECT: files into the same entry.  Nothing in
@@ -24,12 +30,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from vic3lib import read, write, entry, brace_balance
 import tgr_default_strategy as tgrds
 
-REL = '_tgr/tgr+tr+kai done/common/ai_strategies/zz_tr_kai_tgr_ai_default_strategy.txt'
+REL = '_tgr/tgr+kai done/common/ai_strategies/zz_kai_tgr_ai_default_strategy.txt'
 
 HEADER = """\
-### ComPatch: The Great Revision + Kuromi AI + Tech & Res -- ai_strategy_default
+### ComPatch: The Great Revision + Kuromi AI -- ai_strategy_default
 ###
-### Load order (see README): CMF -> TGR -> KAI -> T&R -> this patch.
+### Load order (see README): CMF -> TGR -> KAI -> this patch.
 ###
 ### ai_strategy_default is the entry every AI country loads before its own
 ### strategy.  The Great Revision writes it with three INJECT: files
@@ -46,15 +52,16 @@ HEADER = """\
 ###
 ### What this file re-issues, and what it deliberately does not:
 ###
-###   institution_scores          TGR's twelve institutions, restored.  TGR also
-###                               raises vanilla's police / health_system /
-###                               home_affairs from 10 to 500; those three are
-###                               NOT restored, because Tech & Res re-states all
-###                               seven vanilla institutions at 10 in an
-###                               injection that loads after this patch.  In the
-###                               authors' own order TGR's 500s are already gone,
-###                               and putting them back here would decide the
-###                               TGR x T&R pair, not this one.
+###   institution_scores          TGR's block re-issued whole: its twelve own
+###                               institutions plus its 10 -> 500 on vanilla's
+###                               police / health_system / home_affairs.  Until
+###                               25.08.2026 those three were NOT restored,
+###                               because Tech & Res re-stated all seven vanilla
+###                               institutions at 10 in an injection that loaded
+###                               after this patch, so in the authors' own order
+###                               TGR's 500s were already gone and putting them
+###                               back would have decided the TGR x T&R pair
+###                               rather than this one.  T&R has left the set.
 ###   combat_unit_group_weights   TGR's three naval groups (light / capital /
 ###                               support ship), restored.  The rest of TGR's
 ###                               block is byte-identical to vanilla.
@@ -92,8 +99,7 @@ HEADER = """\
 def build(root):
     src = tgrds.read_sources(
         tgr_dir=os.path.join(root, 'TheGreatRevision'),
-        van_dir=os.path.join(root, '.vanillaVIC3'),
-        tr_dir=os.path.join(root, 'TechRes+Kuromi', 't&r'))
+        van_dir=os.path.join(root, '.vanillaVIC3'))
     kai = read(os.path.join(root, 'TechRes+Kuromi', 'kai',
                             'common/ai_strategies/00_default_strategy.txt'))
     base = entry(kai, 'ai_strategy_default')[1]

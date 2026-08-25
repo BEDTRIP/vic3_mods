@@ -18,9 +18,8 @@ MODS = {
     'moh':  ('top.sleepingbed.moh', 'Mandate of Heaven', '1.4.6.1'),
     'morg': ('2889925770', '[1.13] Morgenroete - Dawn of Flavor', '2.8.3e Mitsopoulos'),
     'tgr':  ('3215078236', 'The Great Revision', "2.0 (1.13.10, 12.08.2026)"),
-    'tr':   ('tech.res', '[1.13] Tech & Res', "1.6'"),
     'kai':  ('kai.kuromi', "Kuromi's AI", '7.5'),
-    'mega': ('3638078714', 'MegaComPatch TGR + PSC + E&F + MR + T&R + PBE', '1.13.11-3'),
+    'mega': ('3640735868', 'MegaComPatch TGR + PSC + KAI + E&F + MR + PBE', '1.13.11-2'),
 }
 # Hail, Columbia! ships an EMPTY id in its metadata.json, so it cannot appear in
 # relationships at all -- it is named in the README and in tested_with instead.
@@ -46,7 +45,7 @@ def meta(name, mid, short, deps, tests, tags):
     return {
         'name': name,
         'id': mid,
-        'version': '1.13.11-2',
+        'version': '1.13.11-3',
         'supported_game_version': GAME,
         'short_description': short,
         'picture': 'thumbnail.png',
@@ -71,20 +70,21 @@ FILES = {
         'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
         'with The Great Revision. Load after all four.',
         ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX),
-    '_HC+GoB+MoH/hc+tr+kai done': meta(
-        'ComPatch HC + GoB + MoH + Tech & Res + Kuromi AI',
-        'asm.compatch.hcgobmoh.trkai',
+    '_HC+GoB+MoH/hc+kai done': meta(
+        'ComPatch HC + GoB + MoH + Kuromi AI',
+        'asm.compatch.hcgobmoh.kai',
         'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
-        'with Tech & Res and Kuromi\'s AI. Load after all five.',
-        ['cmf', 'gob', 'moh', 'tr', 'kai'], ['cmf', 'gob', 'moh', 'tr', 'kai'], FIX),
+        'with Kuromi\'s AI. Load after all five. Also re-issues The Great Revision\'s '
+        'injections into ai_strategy_default, so The Great Revision is a dependency too.',
+        ['cmf', 'gob', 'moh', 'kai', 'tgr'], ['cmf', 'gob', 'moh', 'kai', 'tgr'], FIX),
     '__addon/addon1 hc+gob+moh': meta(
         'Addon 1: HC + GoB + MoH x MegaComPatch',
         'asm.addon1.hcgobmoh',
         'Compatibility addon that puts Hail, Columbia! + Gates of the Bosphorus + Mandate of '
         'Heaven on top of the MegaComPatch set. Merge of my three ComPatches for this block. '
         'Load last, after all of them.',
-        ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'tr', 'kai'],
-        ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'tr', 'kai'],
+        ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'kai'],
+        ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'kai'],
         ['Fixes', 'Utilities', 'Expansion', 'Historical', 'Gameplay', '1.13']),
 }
 

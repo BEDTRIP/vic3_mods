@@ -1,4 +1,6 @@
-﻿[h1]Compatibility patch for using these big mods together:[/h1]
+﻿[b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
+
+[h1]Compatibility patch for using these big mods together:[/h1]
 [list]
 [*][b]The Great Revision (TGR)[/b]
 [*][b]Private Sector Construction (PSC)[/b]

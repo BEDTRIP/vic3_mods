@@ -238,3 +238,57 @@
   - экономику и потребление более реалистичными и “острыми”, чтобы выбор отраслей и торговых товаров действительно имел вес;  
   - технологии — драйвером политических и социальных изменений, а не просто числовыми бонусами.
 
+---
+
+## Дополнение 2026-08-25 (сверка по свежей распаковке `vic3_mods_out/VC`)
+
+**`metadata.json`: `id`, `version` и `supported_game_version` — пустые.** Сослаться на VC в `relationships` нельзя, как и на `hailcolumbia`; только назвать в README и `tested_with`. Ориентир свежести — только дата распаковки папки.
+
+**Размер:** 627 файлов. Мод везёт свой `dlc/dlc_vc/` и `dlc_metadata/`, то есть регистрируется как псевдо-DLC во фронтенде лаунчера.
+
+**Префиксы внутри мода не один, а несколько:** `joi_` (основной), `zw_pioeeb_` (здания и ресурсные триггеры), `uboy_` (GUI фильтра целей войны), `popsc_` (дефайны). Это следы вобранных чужих модов — при грепе «чей это ключ» проверять все четыре.
+
+### Перекрытия ванильных путей — 55 файлов
+
+Полный список получается сравнением с `.vanillaVIC3`. Существенное:
+
+* **все 16 сухопутных `map_data/state_regions/*.txt`** — переписаны `arable_land`, объёмы ресурсов, часть ресурсов переведена в `resource = { undiscovered_amount / discovered_amount }`, добавлены новые `state_trait`. Это полная замена экономической географии кампании. `99_seas.txt` мод не везёт, морские штаты остаются ванильными (675 штатов у VC против 783 у ванили — разница ровно морская);
+* **четыре `common/parties/*.txt`** (conservative, liberal, radical, religious);
+* **13 `common/history/countries/*.txt`**: aus, bic, chi, fra, gbr, jap, nep, net, pru, rus, spa, tur, usa;
+* **девять ванильных журналов** + `common/journal_entry_groups/00_journal_entries.txt`;
+* `common/decisions/manifest_destiny.txt` — **11 байт, глушилка**; `common/journal_entries/00_canada_australia.txt` — тоже 11 байт. Гасят и ваниль, и любой мод, который грузился раньше по этому пути;
+* `common/diplomatic_actions/37_subjects_decrease_autonomy.txt`, `common/script_values/cultural_community_values.txt`, `common/ship_name_definitions/99_*`, `common/treaty_articles/31_ship_transfer.txt`, `events/russia_events.txt`, `events/victoria_events.txt`, `gui/add_wargoal_panel.gui`, `gui/sway_country_panel.gui`.
+
+Проверка «забытая копия ванили» (греп собственного префикса по файлу, перекрывающему ванильный путь) даёт ноль совпадений на всех 55 — но здесь это не улика: автор переписывает эти файлы намеренно, о чём говорит и разница в объёме. **Отдельно проверить надо другое: не отстала ли редакция от ванили 1.13**, особенно у 16 файлов карты. Не проверено.
+
+### Полными телами через `REPLACE_OR_CREATE:`
+
+* **все 90 `wealth_*`** в `common/buy_packages/joi_buy_packages.txt` (98 записей всего) — любые чужие `INJECT:` в пакеты покупок пропадают;
+* **15 `popneed_*`**;
+* **все восемь `ig_*`** (`joi_armed_forces` … `joi_trade_unions`), тела 683–1092 строки.
+
+### Аккуратные места
+
+Здания и производственные методы, наоборот, сделаны по-хорошему: `common/buildings/zw_pioeeb_*.txt` — 43 записи, из них 42 `TRY_INJECT:` и одна `REPLACE:building_opium_plantation`; `common/production_methods/joi_methods.txt` — 12 `INJECT:` и одна новая запись. Групп трогает две: `REPLACE_OR_CREATE:bg_mining` и `INJECT:pmg_banana_exploitation`.
+
+### Товары
+
+**Своих товаров VC не добавляет вообще — папки `common/goods` в моде нет.** Потолок 128 он не трогает ни на единицу.
+
+**Престижных товаров — 24**, и это проблема. Потолок — три на базовый товар, слотами становятся первые три объявления. Ваниль сама забивает девять базовых товаров под завязку, поэтому у VC без слота остаётся большая часть: три винтовки на `small_arms` (ваниль уже дала три) мертвы все три, плюс `rr_engines`, `japanese_express`, `abus_guns`, `skoda_automobiles`, `english_afternoon_tea` — восемь мёртвых при текущей позиции VC в цепочке. Цифра зависит от позиции: если поставить VC позже, он отберёт слоты у Hail Columbia и Mandate of Heaven, и мёртвыми станут их товары.
+
+### Пересечения с набором (прогон `pair_matrix.py`, 25.08.2026)
+
+```
+VC × TGR         172 ключа / 14 путей     VC × E&F+hotfix  145 / 0
+VC × Grey's      129 / 0                  VC × Morgenrote  101 / 1
+VC × HC+GoB+MoH   39 / 8                  VC × KAI           9 / 0
+VC × LLWA          6 / 0                  VC × PSC           4 / 0
+VC × PBE           1 / 0
+```
+
+Итого 606 общих не-аддитивных ключей — больше, чем у любого другого блока набора. Разбор по парам и задачи — в `План проекта.md`, раздел «аддон-VC».
+
+### Существующие компачи VC устарели
+
+`stuff/ef+vc done`, `stuff/tgr+vc`, `stuff/_tr/tr+kai+vc`, `stuff/pbe+vc noneed`, `stuff/psc+vc noneed` — январь 2026, `version 1.12.2`, `supported_game_version 1.12.*`; `tested_with` у ef+vc числит VC 1.12.2 и E&F v4.1.1 от 2025-12-22. Отчёты внутри (особенно `conflicts_tgr_vs_vc_report_reviewed.md` и `conflicts_tr_kai_cmf_vs_vc_master.md`) по-прежнему полезны как разбор, файлы — нет, пока не передиффены. `stuff/_tr/tr+kai+vc` устарел окончательно: T&R убран из набора 25.08.2026.

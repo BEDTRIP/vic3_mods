@@ -1,7 +1,7 @@
 {
   "name": "ComPatch HC + GoB + MoH + The Great Revision",
   "id": "asm.compatch.hcgobmoh.tgr",
-  "version": "1.13.11-2",
+  "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven with The Great Revision. Load after all four.",
   "picture": "thumbnail.png",

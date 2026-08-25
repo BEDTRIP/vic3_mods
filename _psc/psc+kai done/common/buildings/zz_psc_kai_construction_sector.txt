@@ -1,0 +1,86 @@
+# ComPatch: Private Sector Construction + Kuromi's AI -- building_construction_sector
+# Load order (see README): CMF -> PSC -> KAI -> this patch.
+#
+# This is the only key the two mods share.
+#
+# PSC REPLACE:s building_construction_sector and writes its own ai_value, which is
+# KAI's own iron rule -- the block is credited "Credit: KuromiAK for this
+# construction sector weighting" in PSC's file -- plus PSC's base of 2500 and its
+# encouragement for a country's first sector.
+#
+# Kuromi's AI then INJECT:s ai_value into the same entry and loads later. Sub-blocks
+# merge into the record, but inside one sub-block the engine reads script-value
+# statements in order, and KAI's block opens with `value = 1000`, which resets
+# everything accumulated before it. So with both mods installed PSC's base drops
+# 2500 -> 1000 and its first-sector encouragement (+1000 and gdp/3000) is gone.
+# Nothing is logged: the building works, the AI simply stops preferring to get its
+# first construction sector up, which is most of what PSC exists to make it do.
+#
+# Below is PSC's whole entry re-issued after Kuromi's AI, verbatim.
+#
+# Why the whole body and not just `REPLACE:... = { ai_value = { ... } }`: the
+# project's own records disagree about whether REPLACE: patches by the sub-blocks a
+# mod names or swaps the entry outright (see the header of
+# _tr/ef+tr out fixed/common/production_methods/zzzz_ef_tr_fix_gold_minting.txt
+# against section 3 of the working notes). A full body is correct under either
+# reading, and this entry is 30 lines -- cheap enough not to bet on the answer.
+#
+# KAI's own version of the iron rule additionally gates on
+# `state_population >= 250000`. PSC dropped that gate on purpose when it adopted the
+# rule, and PSC is the mod that owns this building, so PSC's version stands.
+#
+# !! MAINTENANCE !! this is a verbatim copy of PSC's entry. Re-diff on every PSC
+# update. Verified against PSC 1.3.7 and Kuromi's AI 7.5 on 2026-08-25.
+#
+# NOT NEEDED WITH THE MEGACOMPATCH. The megapack ships
+# zz_pb_ef_construction_sector.txt, a full replacement of this building that also
+# carries PSC's ai_value, and it loads after Kuromi's AI. This file only matters for
+# PSC + KAI without the megapack.
+
+REPLACE:building_construction_sector = {
+	building_group = bg_construction
+	icon = "gfx/interface/icons/building_icons/construction_camp.dds"
+	city_type = city
+	levels_per_mesh = 5
+	
+	ai_nationalization_desire = 0.25
+
+	unlocking_technologies = {
+		urbanization
+	}
+	production_method_groups = {
+		pmg_base_building_construction_sector
+	}
+	
+	# Credit: KuromiAK for this construction sector weighting
+	# Construction sector should generally be preferred over other equal-priority spending items
+	ai_value = {
+		value = 2500
+		
+		# KAI: Prefer states with iron
+		if = {
+			limit = {
+				has_potential_resource = building_iron_mine
+			}
+			add = 500
+		}
+		#encourage first sector
+		if = {
+			limit = {
+				NOT = {
+					has_building = building_construction_sector
+				}
+			}
+			add = 1000
+			add = {
+				value = gdp
+				divide = 3000
+			}
+		}
+		
+	}
+	required_construction = construction_cost_very_low
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"
+}

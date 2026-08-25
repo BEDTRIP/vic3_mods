@@ -1,4 +1,14 @@
 #!/usr/bin/env python3
+# 25.08.2026: Tech & Res left the main mod set, but the T&R compatches are still
+# maintained as a set of their own and now live under _tr/.  This generator moved
+# with them: the old _ef/ef+tr+kai * folders are now _tr/ef+tr *, and the "kai" in
+# the old name never corresponded to anything inside -- KAI shares no key, no
+# localization key, no event id and no file path with E&F (_ef/ef+kai noneed).
+#
+# !! the `out` folder is missing !!  COMPATCH below points at the fresh unpack of
+# the foreign compatch, and it is not on disk.  --check reads it, prints
+# `missing: ...` and exits 0, which reads like "nothing drifted" -- it is not.
+# Unpack the current Workshop version into _tr/ef+tr out before trusting a run.
 """
 Regenerate the pinned copies that the "E&F + Tech & Res ComPatch Fix" has to carry.
 
@@ -66,9 +76,9 @@ DEFAULT_ROOT = Path(__file__).resolve().parent.parent          # vic3_mods/
 DEFAULT_OUT_ROOT = DEFAULT_ROOT.parent / "vic3_mods_out"       # vic3_mods_out/
 
 TR = "TechRes+Kuromi/t&r"
-COMPATCH = "_ef/ef+tr+kai out"
+COMPATCH = "_tr/ef+tr out"
 MORG = "_ef/ef+morg done"
-FIX = "_ef/ef+tr+kai fixed"
+FIX = "_tr/ef+tr out fixed"
 
 # --- 1. buildings taken from T&R -------------------------------------------
 

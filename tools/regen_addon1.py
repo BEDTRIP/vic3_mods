@@ -5,7 +5,7 @@ Builds three pair compatches under _HC+GoB+MoH/ :
 
     hc+morg done      HC+GoB+MoH  x  Morgenroete
     hc+tgr done       HC+GoB+MoH  x  The Great Revision
-    hc+tr+kai done    HC+GoB+MoH  x  Tech&Res + Kuromi AI
+    hc+kai done       HC+GoB+MoH  x  Kuromi's AI
 
 Load order these are written for (see the addon README):
 
@@ -56,7 +56,6 @@ class P(object):
     def __init__(self, root):
         self.van  = os.path.join(root, '.vanillaVIC3')
         self.tgr  = os.path.join(root, 'TheGreatRevision')
-        self.tr   = os.path.join(root, 'TechRes+Kuromi', 't&r')
         self.kai  = os.path.join(root, 'TechRes+Kuromi', 'kai')
         self.morg = os.path.join(root, 'Morgenrote')
         self.hc   = os.path.join(root, 'for addon', 'hailcolumbia')
@@ -641,194 +640,21 @@ def _history_ottoman(p):
 
 
 # =============================================================================
-#  compatch 3:  HC+GoB+MoH  x  Tech & Res + Kuromi AI
+#  compatch 3:  HC+GoB+MoH  x  Kuromi's AI
 # =============================================================================
-SLAVERY_LAWS = ['law_slave_trade', 'law_debt_slavery', 'law_legacy_slavery', 'law_colonial_slavery']
-
-
-def build_trkai(p):
+#  Tech & Res left the set on 25.08.2026.  Three files this section used to build
+#  -- the four slavery laws, the Greener Grass decree and the warlord China
+#  journal entry -- were merges of a T&R body with an HC or MoH one and have no
+#  meaning without it; they are in
+#  _HC+GoB+MoH/hc+kai done/_to_delete/tr_removed_2026-08-25/ together with T&R's
+#  re-issued ai_strategy_default injection.  What is left is the pair that never
+#  depended on T&R: Kuromi's AI against Mandate of Heaven.
+def build_kai(p):
     files = {}
-    files['common/laws/zz_hctr_slavery.txt'] = _slavery(p)
-    files['common/decrees/zz_hctr_greener_grass.txt'] = _greener_grass(p)
-    files['common/journal_entries/zz_hctr_warlord_china.txt'] = _warlord_china(p)
-    strat, tgr_reinject, reinject = _ai_default(p)
+    strat, tgr_reinject = _ai_default(p)
     files['common/ai_strategies/zz_hctr_ai_strategy_default.txt'] = strat
     files['common/ai_strategies/zz_hctr_tgr_default_strategy.txt'] = tgr_reinject
-    files['common/ai_strategies/zzz_hctr_tr_default_strategy.txt'] = reinject
     return files
-
-
-def _slavery(p):
-    van = read(os.path.join(p.van, 'common/laws/02_slavery.txt'))
-    tr  = read(os.path.join(p.tr,  'common/laws/ztr_un_updated_slavery.txt'))
-    hc  = read(os.path.join(p.hc,  'common/laws/usfp_law_slavery_overrides.txt'))
-    out = [banner(
-        'ComPatch HC+GoB+MoH x Tech & Res -- the four slavery laws',
-        '',
-        'Tech & Res REPLACE:s all four out of ztr_un_updated_slavery.txt; Hail, Columbia!',
-        'REPLACE:s the same four out of usfp_law_slavery_overrides.txt and loads later.',
-        'REPLACE swaps the whole entry, so as shipped T&R\'s slavery rework is simply',
-        'not in the game.  Nothing is logged: the laws exist, they are just vanilla',
-        'again with HC\'s additions on top.',
-        '',
-        'The good news, and the reason this file is short: the two authors barely touch',
-        'the same thing.',
-        '',
-        '  T&R  rewrites on_activate (and the modifier on legacy slavery), and adds a',
-        '       can_enact gate tied to its UN human-rights vote plus BPM compatibility.',
-        '  HC   adds a can_enact gate for the American gag rule and Corwin amendment,',
-        '       and one ai_will_do on the slave trade.',
-        '',
-        'can_enact is the only block both write, and a can_enact block is a conjunction:',
-        'the two sets of conditions are about different things and simply AND together.',
-        'Everything else is taken from whichever author changed it.',
-        '',
-        'VARIANTS: needs Tech & Res (ztr_is_un_member, global_var:ztr_un_hr_slavery,',
-        'BPM_is_active_trigger).  Drop this file from a composition without T&R -- HC\'s',
-        'own bodies are correct on their own.',
-        '',
-        '!! MAINTENANCE !! all three bodies are cut out at generation time and the',
-        'generator refuses to run if the two authors start overlapping anywhere but',
-        'can_enact.')]
-    for law in SLAVERY_LAWS:
-        v = entry(van, law)[1]
-        t = entry(tr,  law, prefix='REPLACE:')[1]
-        h = entry(hc,  law, prefix='REPLACE:')[1]
-        body, took = h, []
-        for nm in sub_names(t):
-            vb, tb, hb = sub(v, nm), sub(t, nm), sub(h, nm)
-            if vb is not None and _ws2(tb) == _ws2(vb):
-                continue                       # T&R did not change this one
-            if nm == 'can_enact':
-                continue                       # handled below
-            need(hb is None or _ws2(hb) == _ws2(vb) if vb is not None else hb is None,
-                 '%s/%s: T&R and HC now both rewrite it -- merge it by hand' % (law, nm))
-            body = (replace_sub(body, nm, tb) if hb is not None
-                    else _append_sub(body, nm, tb))
-            took.append(nm)
-        tc, hcc = sub(t, 'can_enact'), sub(h, 'can_enact')
-        if tc is not None:
-            if hcc is None:
-                body = _append_sub(body, 'can_enact', tc)
-                took.append('can_enact (T&R only)')
-            else:
-                merged, n = _merge_statements(
-                    hcc, tc, '# Tech & Res: UN human rights vote, and BPM.')
-                need(n, '%s/can_enact: T&R adds nothing HC does not already say' % law)
-                body = replace_sub(body, 'can_enact', merged)
-                took.append('can_enact (HC + %d from T&R)' % n)
-        need(took, '%s: nothing merged -- T&R no longer changes this law' % law)
-        note('%s: HC body + T&R %s' % (law, ', '.join(took)))
-        out.append('REPLACE:%s = {%s}\n' % (law, body))
-    return '\n'.join(out)
-
-
-def _statements(block_body):
-    """Split the inside of a `{ ... }` into its depth-0 statements, comments
-    attached to whatever follows them."""
-    out, cur, d = [], [], 0
-    for line in block_body.split('\n'):
-        code = line.split('#')[0]
-        if not cur and not line.strip():
-            continue
-        cur.append(line)
-        d += code.count('{') - code.count('}')
-        if d == 0 and line.strip() and not line.strip().startswith('#'):
-            out.append('\n'.join(cur))
-            cur = []
-    if cur and '\n'.join(cur).strip():
-        out.append('\n'.join(cur))
-    return out
-
-
-def _merge_statements(base_block, add_block, comment):
-    """Append the statements of add_block to base_block, skipping any that base
-    already says verbatim.  Both arguments include their braces."""
-    have = [_ws2(x) for x in _statements(_open_block(base_block)[1:])]
-    extra = [x for x in _statements(_open_block(add_block)[1:]) if _ws2(x) not in have]
-    if not extra:
-        return base_block, 0
-    return (_open_block(base_block).rstrip() + '\n\t\t' + comment + '\n'
-            + '\n'.join(extra).rstrip() + '\n\t}'), len(extra)
-
-
-def _ws2(t):
-    return re.sub(r'\s+', ' ', re.sub(r'#[^\n]*', '', t or '')).strip()
-
-
-def _append_sub(body, name, block):
-    return _open_block('{' + body + '}')[1:].rstrip() + '\n\t%s = %s\n' % (name, block)
-
-
-def _greener_grass(p):
-    hc = read(os.path.join(p.hc, 'common/decrees/usfp_decrees_overwrite.txt'))
-    tr = read(os.path.join(p.tr, 'common/decrees/ztr_decree.txt'))
-    h = entry(hc, 'decree_greener_grass_campaign', prefix='REPLACE:')[1]
-    t = entry(tr, 'decree_greener_grass_campaign', prefix='INJECT:')[1]
-    add = sub_names(t)
-    need(add == ['country_trigger'], 'T&R now injects %s into the greener grass decree' % add)
-    need(sub(h, 'country_trigger') is None,
-         'HC now sets country_trigger itself on the greener grass decree')
-    body = _append_sub(h, 'country_trigger', sub(t, 'country_trigger'))
-    note('decree_greener_grass_campaign: HC body + T&R country_trigger')
-    return banner(
-        'ComPatch HC+GoB+MoH x Tech & Res -- the Greener Grass decree',
-        '',
-        'T&R INJECT:s a country_trigger onto this decree -- it stops being available',
-        'once modern_urban_planning is researched.  Hail, Columbia! REPLACE:s the whole',
-        'decree (to stop it stacking with the Homestead Act) and does not carry that',
-        'trigger, so with HC later in the order the decree stays available forever.',
-        'Silent.',
-        '',
-        'Merged below: HC\'s body with T&R\'s country_trigger appended.',
-        '',
-        'VARIANTS: needs Tech & Res.  Note that Grey\'s soft_pop also REPLACE:s this',
-        'decree and loads after this addon -- when that block joins the set, this file',
-        'stops being the last word and the same merge has to move into addon 3.') \
-        + 'REPLACE:decree_greener_grass_campaign = {' + body + '}\n'
-
-
-def _warlord_china(p):
-    van = read(os.path.join(p.van, 'common/journal_entries/00_warlord_china.txt'))
-    tr  = read(os.path.join(p.tr,  'common/journal_entries/ztr_vanilla_je.txt'))
-    moh = read(os.path.join(p.moh, 'common/journal_entries/moh_warlord_china.txt'))
-    v = entry(van, 'je_warlord_china')[1]
-    t = entry(tr,  'je_warlord_china', prefix='REPLACE:')[1]
-    m = entry(moh, 'je_warlord_china', prefix='REPLACE:')[1]
-
-    # T&R's two changes: the journal entry can also finish by outliving 1940, and
-    # completing it after 1940 fires a different event.
-    tcomp = sub(t, 'complete')
-    need(re.search(r'year\s*>\s*1940', tcomp), 'T&R no longer adds the 1940 escape to je_warlord_china')
-    need(_ws2(sub(m, 'on_complete')) == _ws2(sub(v, 'on_complete')),
-         'MoH now rewrites on_complete too -- merge it by hand')
-    body = replace_sub(m, 'on_complete', sub(t, 'on_complete'))
-
-    mcomp = _open_block(sub(m, 'complete'))[1:].strip('\n')
-    body = replace_sub(body, 'complete',
-                       '{\n\t\tOR = {\n\t\t\tAND = {\n'
-                       + re.sub(r'(?m)^', '\t\t', mcomp) + '\n\t\t\t}\n'
-                       + '\t\t\t# Tech & Res: after 1940 the warlord era ends either way.\n'
-                       + '\t\t\tyear > 1940\n\t\t}\n\t}')
-    note('je_warlord_china: MoH body + T&R 1940 escape in complete and the branching on_complete')
-    return banner(
-        'ComPatch HC+GoB+MoH x Tech & Res -- je_warlord_china',
-        '',
-        'Both mods REPLACE: this journal entry and Mandate of Heaven is later, so T&R\'s',
-        'version is gone.  T&R adds exactly two things:',
-        '',
-        '  * complete also succeeds on year > 1940, so the entry cannot hang forever;',
-        '  * on_complete branches -- warlord_china_events.200 up to 1940, and',
-        '    the_future_of_china.201 after it.',
-        '',
-        'MoH rewrites complete around its own Chinese content (Wuxu reform, autocracy,',
-        'Guofan, self-strengthening, treaty ports) and leaves on_complete at vanilla.',
-        '',
-        'Merged below: MoH\'s body, with its complete conditions wrapped in an AND and',
-        'T&R\'s 1940 escape put beside them, and T&R\'s on_complete taken as is.',
-        '',
-        'VARIANTS: needs Tech & Res (the_future_of_china.201 is T&R\'s event).') \
-        + 'REPLACE:je_warlord_china = {' + body + '}\n'
 
 
 def canon_indent(text):
@@ -860,15 +686,14 @@ def _ai_default(p):
 
     Chain as loaded: vanilla -> TGR (three INJECTs) -> KAI (a bare body at the
     vanilla path 00_default_strategy.txt, which already erases TGR's three) ->
-    T&R (a 1360-line INJECT) -> Mandate of Heaven (REPLACE:, 9075 lines built on
-    vanilla).  MoH is last and REPLACE swaps the entry, so both KAI's rework and
-    T&R's injection go.  This is the file that decides how every AI country
-    behaves, and losing it is invisible: no error, the AI just plays vanilla.
+    Mandate of Heaven (REPLACE:, 9075 lines built on vanilla).  MoH is last and
+    REPLACE swaps the entry, so KAI's rework goes with it.  This is the file that
+    decides how every AI country behaves, and losing it is invisible: no error,
+    the AI just plays vanilla.
     """
     van = read(os.path.join(p.van, 'common/ai_strategies/00_default_strategy.txt'))
     kai = read(os.path.join(p.kai, 'common/ai_strategies/00_default_strategy.txt'))
     moh = read(os.path.join(p.moh, 'common/ai_strategies/moh_default_strategy.txt'))
-    trf = read(os.path.join(p.tr,  'common/ai_strategies/ztr_default_strategy.txt'))
 
     v = entry(van, 'ai_strategy_default')[1]
     k = entry(kai, 'ai_strategy_default')[1]
@@ -899,10 +724,10 @@ def _ai_default(p):
          '(%d conflicts, all whitespace or agreement)' % stats['conflicts'])
 
     strat = banner(
-        'ComPatch HC+GoB+MoH x Tech & Res + Kuromi AI -- ai_strategy_default',
+        'ComPatch HC+GoB+MoH x Kuromi AI -- ai_strategy_default',
         '',
         'This entry is the base every AI country loads before its own strategy, and',
-        'four mods in this set write it:',
+        'three mods in this set write it:',
         '',
         '  TGR   three INJECT: files (diplomatic_play_support, institution_scores,',
         '        wanted_construction_output, combat_unit_group_weights,',
@@ -912,21 +737,21 @@ def _ai_default(p):
         '        before this addon is in the picture.  The megapack puts those back;',
         '        this file drops them again along with everything else, so they are',
         '        re-issued here too, in zz_hctr_tgr_default_strategy.txt;',
-        '  T&R   a 1360-line INJECT: (institution_scores, aggression,',
-        '        building_group_weights, subsidies, goods_stances);',
         '  MoH   REPLACE:, 9075 lines, built on vanilla.',
         '',
-        'MoH loads last, so KAI and T&R both disappear under it.  An AI mod being',
+        'MoH loads last, so KAI disappears under it.  An AI mod being',
         'switched off by a flavour mod is not something either author could see: there',
         'is no error, the AI simply plays vanilla again.',
         '',
         'Below is a three-way merge of KAI and MoH against vanilla as the common base,',
-        'so each keeps the passages it actually changed.  The two injections that were',
-        'written against this entry are restored in their own files, which sort after',
-        'this one inside the mod and therefore land on the merged body rather than',
-        'under it: TGR\'s in zz_hctr_tgr_default_strategy.txt, T&R\'s in',
-        'zzz_hctr_tr_default_strategy.txt -- in that order, the order their authors',
-        'load in.',
+        'so each keeps the passages it actually changed.  The one injection still',
+        'written against this entry is restored in its own file, which sorts after',
+        'this one inside the mod and therefore lands on the merged body rather than',
+        'under it: TGR\'s, in zz_hctr_tgr_default_strategy.txt.',
+        '',
+        'Tech & Res used to be a fourth author here and its 1360-line injection was',
+        're-issued in a file of its own.  T&R left the set on 25.08.2026 and that',
+        'file went with it.',
         '',
         '!! MAINTENANCE !! this file is generated, never edited.  The merge is redone',
         'from the three sources on every run and the generator stops if KAI and MoH',
@@ -935,7 +760,7 @@ def _ai_default(p):
         'two arriving at the same text.') \
         + 'REPLACE:ai_strategy_default = {' + body + '}\n'
 
-    tgr_src = tgrds.read_sources(tgr_dir=p.tgr, van_dir=p.van, tr_dir=p.tr)
+    tgr_src = tgrds.read_sources(tgr_dir=p.tgr, van_dir=p.van)
     tgr_notes = []
     tgr_block = tgrds.build_body(body, tgr_src, tgr_notes)
     for n in tgr_notes:
@@ -949,13 +774,13 @@ def _ai_default(p):
         'megapack puts them back.  Then Mandate of Heaven REPLACE:s the entry and',
         'zz_hctr_ai_strategy_default.txt above re-issues the merged body, and both of',
         'those drop the megapack\'s copy again.  So it is re-issued here, on top of the',
-        'merged body, in a file that sorts after it and before T&R\'s.',
+        'merged body, in a file that sorts after it.',
         '',
         'This is not a verbatim copy of TGR\'s three files: two of the five sub-blocks',
         'they touch are also written by KAI, and only one of those is merged.  What is',
         'restored, what is merged and what is deliberately left to KAI is spelled out',
         'in tools/tgr_default_strategy.py and in conflicts_tgr_vs_kai_report.md next to',
-        'the TGR + T&R + KAI compatch.  The same block, built against KAI\'s own body',
+        'the TGR + T&R + KAI compatch (marked outdate 25.08.2026).  The same block, built against KAI\'s own body',
         'instead of this merged one, is what the megapack ships.',
         '',
         '!! MAINTENANCE !! generated, never edited.  The bodies are cut out of TGR and',
@@ -966,25 +791,7 @@ def _ai_default(p):
         'zz_hctr_ai_strategy_default.txt, so it goes wherever that file goes.') \
         + tgr_block
 
-    tr_entry = entry(trf, 'ai_strategy_default', prefix='INJECT:')[0]
-    need(len(tr_entry.split('\n')) > 1000, 'T&R default strategy injection shrank unexpectedly')
-    note('ai_strategy_default: T&R INJECT: re-issued after MoH (%d lines)'
-         % len(tr_entry.split('\n')))
-    reinject = banner(
-        'ComPatch HC+GoB+MoH x Tech & Res -- T&R\'s default AI strategy, re-issued',
-        '',
-        'Mandate of Heaven REPLACE:s ai_strategy_default, which drops Tech & Res\'s',
-        'INJECT: along with everything else.  This file is that injection again,',
-        'copied verbatim from T&R common/ai_strategies/ztr_default_strategy.txt, under a',
-        'name that sorts after zz_hctr_ai_strategy_default.txt so it lands on the merged',
-        'body rather than under it.',
-        '',
-        'Copied, not rewritten, on purpose: it is 1360 lines of T&R\'s balance and the',
-        'only sane way to keep it current is to take it from the mod each time this',
-        'generator runs.  Do not edit here.',
-        '',
-        'VARIANTS: needs Tech & Res.') + tr_entry + '\n'
-    return strat, tgr_reinject, reinject
+    return strat, tgr_reinject
 
 
 # =============================================================================
@@ -993,7 +800,7 @@ def _ai_default(p):
 COMPATCHES = [
     ('hc+morg done',   build_morg),
     ('hc+tgr done',    build_tgr),
-    ('hc+tr+kai done', build_trkai),
+    ('hc+kai done',     build_kai),
 ]
 PAIR_DIR = '_HC+GoB+MoH'
 
@@ -1008,7 +815,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     p = P(args.root)
-    for probe in (p.van, p.tgr, p.tr, p.kai, p.morg, p.hc, p.gob, p.moh):
+    for probe in (p.van, p.tgr, p.kai, p.morg, p.hc, p.gob, p.moh):
         if not os.path.isdir(probe):
             raise SystemExit('missing source mod: ' + probe)
 

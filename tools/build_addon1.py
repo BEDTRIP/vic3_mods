@@ -18,7 +18,7 @@ from vic3lib import read, brace_balance
 
 PAIRS = ['_HC+GoB+MoH/hc+morg done',
          '_HC+GoB+MoH/hc+tgr done',
-         '_HC+GoB+MoH/hc+tr+kai done']
+         '_HC+GoB+MoH/hc+kai done']
 ADDON = '__addon/addon1 hc+gob+moh'
 
 # Files that belong to the addon and to no compatch.  Each one needs a header
@@ -42,10 +42,10 @@ DECLARED_DUPS = {
         'container key, additive across files -- one per country file, same as vanilla',
     ('common/ai_strategies', 'ai_strategy_default'):
         'deliberate, and in this order: zz_hctr_ai_strategy_default ships the merged '
-        'REPLACE: body, zz_hctr_tgr_default_strategy re-issues The Great Revision\'s '
-        'injection on top of it, zzz_hctr_tr_default_strategy re-issues Tech & Res\'s '
-        'after that -- the order their authors load in, and the order the file names '
-        'sort in (`_` 0x5F before `z` 0x7A)',
+        'REPLACE: body and zz_hctr_tgr_default_strategy re-issues The Great Revision\'s '
+        'injection on top of it -- the order their authors load in, and the order the '
+        'file names sort in (`_` 0x5F before `z` 0x7A).  Tech & Res used to add a third '
+        'file here; it left the set on 25.08.2026',
 }
 
 
@@ -169,7 +169,7 @@ def main(argv=None):
 
     goods = [r for r in files if r.startswith('common/goods/')]
     print('  goods files in the addon: %d (nothing added, so the 128 ceiling is unchanged '
-          'at 111)' % len(goods))
+          'at 74)' % len(goods))
 
     print('\n%s' % ('ALL CHECKS PASS' if not bad else '%d PROBLEM(S)' % bad))
     return 1 if bad else 0

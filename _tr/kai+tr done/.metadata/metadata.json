@@ -1,0 +1,59 @@
+{
+  "name": "ComPatch Kuromi's AI + Tech & Res",
+  "id": "asm.compatch.kai.tr",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Adds Tech & Res's seven resource goods to Kuromi's AI resource-expansion export stances. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+      "display_name": "Community Mod Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "tech.res",
+      "display_name": "Tech & Res",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+        "display_name": "Community Mod Framework",
+        "version": "1.63.0",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "tech.res",
+        "display_name": "Tech & Res",
+        "version": "1.6",
+        "date": "2026-08-25"
+      }
+    ]
+  }
+}

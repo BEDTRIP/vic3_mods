@@ -13,15 +13,18 @@ addon 1), and it is deliberately not a verbatim re-issue.  Sub-block by
 sub-block:
 
     institution_scores          KAI leaves it at vanilla.  TGR adds twelve
-                                institutions of its own -- pure loss, restored.
-                                TGR also raises vanilla's police / health /
-                                home_affairs from 10 to 500, and those three are
-                                NOT restored here: Tech & Res re-states all seven
-                                vanilla institutions at 10 in an injection that
-                                loads after this file, so in the authors' own
-                                order TGR's 500s are already gone.  Restoring
-                                them would decide the TGR x T&R pair, not this
-                                one.
+                                institutions of its own and raises vanilla's
+                                police / health_system / home_affairs from 10 to
+                                500.  All fifteen statements are restored, i.e.
+                                TGR's block is re-issued whole.
+                                Until 25.08.2026 the three vanilla ones were NOT
+                                restored: Tech & Res re-stated all seven vanilla
+                                institutions at 10 in an injection that loaded
+                                after this file, so in the authors' own order
+                                TGR's 500s were already gone and putting them
+                                back would have decided the TGR x T&R pair rather
+                                than this one.  T&R has left the set and nothing
+                                downstream touches these three any more.
 
     combat_unit_group_weights   KAI leaves it at vanilla.  TGR's restated entries
                                 are byte-identical to vanilla except for three
@@ -132,7 +135,7 @@ def _append_inside(block, extra):
             + extra.strip('\n') + '\n' + block[line_start:])
 
 
-def read_sources(tgr_dir, van_dir, tr_dir):
+def read_sources(tgr_dir, van_dir):
     """Everything this module reads out of the foreign mods, in one place."""
     src = {}
     for name, rel in TGR_FILES.items():
@@ -140,8 +143,6 @@ def read_sources(tgr_dir, van_dir, tr_dir):
                           'ai_strategy_default', prefix='INJECT:')[1]
     src['vanilla'] = entry(read(os.path.join(van_dir, 'common/ai_strategies/00_default_strategy.txt')),
                            'ai_strategy_default')[1]
-    src['t&r'] = entry(read(os.path.join(tr_dir, 'common/ai_strategies/ztr_default_strategy.txt')),
-                       'ai_strategy_default', prefix='INJECT:')[1]
     return src
 
 
@@ -170,7 +171,6 @@ def build_body(base_body, src, notes=None):
     van_inst = sub(van, 'institution_scores')
     tgr_inst = sub(src['politics'], 'institution_scores')
     base_inst = sub(base_body, 'institution_scores')
-    tr_inst = sub(src['t&r'], 'institution_scores')
     _need(_ws(base_inst) == _ws(van_inst),
           'the winning body no longer leaves institution_scores at vanilla -- '
           'somebody else now edits it and this merge has to be re-thought')
@@ -181,15 +181,13 @@ def build_body(base_body, src, notes=None):
     _need(sorted(shared) == ['institution_health_system', 'institution_home_affairs',
                              'institution_police'],
           'TGR now re-states a different set of vanilla institutions: %s' % sorted(shared))
-    for n in shared:
-        _need(sub(_inner(tr_inst), n) is not None,
-              'Tech & Res no longer re-states %s, so TGR\'s value for it is no longer '
-              'overwritten downstream and the omission here is now a real loss' % n)
     _need(len(new_inst) == 12, 'TGR now adds %d institutions, not 12' % len(new_inst))
-    say('institution_scores: TGR\'s %d institutions restored (its 500s for police / '
-        'health / home affairs left to T&R, which re-states them at 10 later)'
-        % len(new_inst))
-    inst_body = '\n'.join(_statement(_inner(tgr_inst), n) for n in new_inst)
+    say('institution_scores: all %d of TGR\'s statements restored -- its 12 own '
+        'institutions plus 10 -> 500 on police / health_system / home_affairs, which '
+        'used to be left to Tech & Res (it re-stated them at 10 in a later injection). '
+        'T&R left the set on 25.08.2026, so nothing downstream contests them now'
+        % len(tgr_names))
+    inst_body = '\n'.join(_statement(_inner(tgr_inst), n) for n in tgr_names)
 
     # ---- combat_unit_group_weights: TGR's three naval groups
     van_cug = sub(van, 'combat_unit_group_weights')

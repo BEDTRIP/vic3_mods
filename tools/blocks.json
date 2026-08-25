@@ -1,16 +1,17 @@
 {
-  "_comment": "Состав набора для pair_matrix.py. Пути device-side ($HOME/mnt/... на монтировании, C:\\Users\\Andrey\\Projects\\... на машине). Кэш индексов переживает сессии — удалить, если чужой мод обновился.",
+  "_comment": "Состав набора для pair_matrix.py. Пути device-side ($HOME/mnt/... на монтировании, C:\\Users\\Andrey\\Projects\\... на машине). Кэш индексов переживает сессии — удалить, если чужой мод обновился. ВНИМАНИЕ: имя файла кэша = basename + md5(абсолютный путь)[:12]. Переписал пути в этом файле — весь кэш инвалидируется и все моды переиндексируются заново.",
   "cache": "../../_tmp_analysis/_idx",
   "order": [
-    "Grey's",
-    "LLWA",
-    "HC+GoB+MoH",
+    "TGR",
+    "PSC",
+    "KAI",
     "E&F+hotfix",
     "Morgenrote",
     "PBE",
-    "PSC",
-    "TGR",
-    "T&R+KAI"
+    "VC",
+    "HC+GoB+MoH",
+    "LLWA",
+    "Grey's"
   ],
   "blocks": {
     "Grey's": [
@@ -47,19 +48,24 @@
     "TGR": [
       "../../vic3_mods_out/TheGreatRevision"
     ],
-    "T&R+KAI": [
-      "../../vic3_mods_out/TechRes+Kuromi/t&r",
-      "../../vic3_mods_out/TechRes+Kuromi/kai"
-    ],
     "_frameworks_не_блоки": [
       "../../vic3_mods_out/_cmf",
       "../../vic3_mods_out/_etf"
     ],
     "_vanilla": [
       "../../vic3_mods_out/.vanillaVIC3"
+    ],
+    "KAI": [
+      "../../vic3_mods_out/TechRes+Kuromi/kai"
+    ],
+    "VC": [
+      "../../vic3_mods_out/VC"
+    ],
+    "_убрано_из_набора_25.08.2026": [
+      "../../vic3_mods_out/TechRes+Kuromi/t&r"
     ]
   },
-  "_load_order_comment": "Истинный порядок загрузки для vfs_order.py. Отличается от 'order' (тот — порядок колонок в матрице). Взят из активного плейсета launcher-v2.sqlite + целевой схемы аддонов: пачка -> мегапак -> HC+GoB+MoH -> аддон1 -> LLWA -> аддон2 -> Grey's -> аддон3.",
+  "_load_order_comment": "Истинный порядок загрузки для vfs_order.py. Отличается от 'order' (тот — порядок колонок в матрице). Целевая схема 25.08.2026: пачка -> мегапак no-t&r -> VC -> аддон-VC -> HC+GoB+MoH -> аддон-HC -> LLWA -> аддон-LLWA -> Grey's -> аддон-Grey's. VC стоит ДО HC+GoB+MoH намеренно: он перекрывает 55 ванильных путей голыми телами, и при позиции после HC съедает уже сделанные мерджи аддона-HC.",
   "load_order": [
     "../../vic3_mods_out/.vanillaVIC3",
     "../../vic3_mods_out/_cmf",
@@ -70,9 +76,9 @@
     "../../vic3_mods_out/E&F",
     "../_ef/ef hotfix 1.13",
     "../../vic3_mods_out/Morgenrote",
-    "../../vic3_mods_out/TechRes+Kuromi/t&r",
     "../../vic3_mods_out/PowerBlocksExpanded",
-    "../__megapacks/megapack",
+    "../__megapacks/megapack no t&r",
+    "../../vic3_mods_out/VC",
     "../../vic3_mods_out/for addon/hailcolumbia",
     "../../vic3_mods_out/for addon/gatesofbosphorus",
     "../../vic3_mods_out/for addon/mandateofheaven",
