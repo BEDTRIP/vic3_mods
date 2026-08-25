@@ -1,0 +1,78 @@
+{
+  "name": "ComPatch HC + GoB + MoH + The Great Revision",
+  "id": "asm.compatch.hcgobmoh.tgr",
+  "version": "1.13.11-2",
+  "supported_game_version": "1.13.*",
+  "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven with The Great Revision. Load after all four.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+      "display_name": "Community Mod Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3384997867",
+      "display_name": "[1.13] Gates of the Bosphorus",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "top.sleepingbed.moh",
+      "display_name": "Mandate of Heaven",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+        "display_name": "Community Mod Framework",
+        "version": "1.63.0",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "3384997867",
+        "display_name": "[1.13] Gates of the Bosphorus",
+        "version": "4.0.8",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "top.sleepingbed.moh",
+        "display_name": "Mandate of Heaven",
+        "version": "1.4.6.1",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0 (1.13.10, 12.08.2026)",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "",
+        "display_name": "Hail, Columbia! - United States Flavor Pack",
+        "version": "8.6-Roosevelt",
+        "date": "2026-08-25"
+      }
+    ]
+  }
+}

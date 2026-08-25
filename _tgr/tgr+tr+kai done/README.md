@@ -22,7 +22,8 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [*][b]Production methods[/b] — ports and railways keep Tech & Res's reworked inputs plus TGR's [i]state_market_access_price_impact[/i].
 [*][b]Goods[/b] — aeroplanes, automobiles and clothes keep Tech & Res prices but TGR's traded quantity / convoy cost, so they don't fall out of TGR's trade overhaul.
 [*][b]Technologies[/b] — Malaria Prevention keeps TGR's Environment institution bonus alongside the Tech & Res version.
-[*][b]AI strategies[/b] — Resource Expansion gets the Tech & Res resource goods back into Kuromi's export stances.
+[*][b]AI strategies — the default strategy[/b] — [i]ai_strategy_default[/i] is the entry every AI country loads before its own. The Great Revision writes it with three INJECT: files; Kuromi's AI then ships its own body at the vanilla path with no prefix at all, and a bare body eats every earlier injection. TGR's twelve institutions, its three naval unit weights, its conscription ratio and its diplomatic-play scenarios all stop working the moment KAI is installed, with nothing in the log. Restored, and the diplomatic-play scenarios of both authors merged into one list. The construction-output formula stays Kuromi's -- both authors rewrote it whole and KAI loads later.
+[*][b]AI strategies — Resource Expansion[/b] gets the Tech & Res resource goods back into Kuromi's export stances.
 [/list]
 
 [h2]Removed in this update[/h2]

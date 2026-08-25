@@ -37,7 +37,7 @@ Also works with [url=https://steamcommunity.com/workshop/filedetails/?id=3110785
 [h2]What this patch does[/h2]
 It is the merge of my standalone ComPatches for this set, which you can also check independently:
 [list]
-    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637726287]TGR + Kuromi AI + Tech & Res[/url] -- automotive industry and synthetics plant, Extraction Economy, the three colonial laws, ports and railways, goods trade values, AI export stances.
+    [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637726287]TGR + Kuromi AI + Tech & Res[/url] -- automotive industry and synthetics plant, Extraction Economy, the three colonial laws, ports and railways, goods trade values, AI export stances, and the AI's default strategy: TGR writes it with three INJECT: files and Kuromi's AI ships a bare body over the top, which had been dropping all three.
     [*][b]Morgenroete + Tech & Res[/b] -- airports produce air travel again, Curtiss aviation content follows the new aircraft industry, prestige flights, publishing industry, Morgenroete's technology mechanics, Gaudi's advanced tank options.
     [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637673379]PBE + TGR[/url] -- merged [i]force_regime_change[/i] diplomatic action.
 [/list]

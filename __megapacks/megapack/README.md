@@ -61,6 +61,7 @@ Four files exist only here, because they fix things that appear only when severa
 [list]
 [*]This mod is a merge patch. If you use additional mods that also replace the same files, you may need another (more specific) merge patch.
 [*]It replaces [b]gui/budget_panel.gui[/b] with a three-way merge of vanilla + TGR + E&F. Other UI mods that replace the same file need their own merge.
+[*]The AI's default strategy is a merge: The Great Revision's injections into [i]ai_strategy_default[/i] are restored on top of Kuromi's AI body, which had been silently dropping them. Kuromi's construction-output formula is kept.
 [*]The construction sector is PSC's, not TGR's -- PSC loads after TGR and wins on its own, with or without this patch. Nothing here changes that.
 [*]Also you can check more lightweight [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638941732]no-E&F/no-PSC[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]no-T&R[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3643003863]no-TGR[/url] megacompatches.
 [/list]

@@ -1,0 +1,227 @@
+### ComPatch HC+GoB+MoH x Tech & Res -- je_warlord_china
+###
+### Both mods REPLACE: this journal entry and Mandate of Heaven is later, so T&R's
+### version is gone.  T&R adds exactly two things:
+###
+###   * complete also succeeds on year > 1940, so the entry cannot hang forever;
+###   * on_complete branches -- warlord_china_events.200 up to 1940, and
+###     the_future_of_china.201 after it.
+###
+### MoH rewrites complete around its own Chinese content (Wuxu reform, autocracy,
+### Guofan, self-strengthening, treaty ports) and leaves on_complete at vanilla.
+###
+### Merged below: MoH's body, with its complete conditions wrapped in an AND and
+### T&R's 1940 escape put beside them, and T&R's on_complete taken as is.
+###
+### VARIANTS: needs Tech & Res (the_future_of_china.201 is T&R's event).
+
+REPLACE:je_warlord_china = {
+	icon = "gfx/interface/icons/event_icons/fragile_unity.dds"
+	group = je_group_historical_content
+    is_shown_in_lobby = {
+        c:CHI ?= THIS
+    }
+	immediate = {
+		random_law = {
+			limit = {
+				type = law_type:law_monarchy
+			}
+			save_scope_as = monarchy_scope
+		}
+		s:STATE_FORMOSA = {
+			save_scope_as = taiwan_scope
+		}
+	}
+	modifiers_while_active = {
+		modifier_mandate_of_heaven
+	}
+	complete = {
+		OR = {
+			AND = {
+				custom_tooltip = {
+					text = china_recognized_tt
+					has_variable = china_warlord_explosion_recognized
+				}
+				OR = {
+					custom_tooltip = {
+						text = china_abolished_monarchy_tt
+						has_variable = china_warlord_abolished_monarchy
+					}
+					custom_tooltip = {
+						text = china_wuxu_tt
+						has_variable = wuxu_reform_complete_var
+					}
+					custom_tooltip = {
+						text = china_autocracy_tt
+						has_variable = je_autocracy_complete
+					}
+				}
+				OR = {
+					custom_tooltip = {
+						text = china_guofan_tt
+						has_variable = je_guofan_complete
+					}
+					custom_tooltip = {
+						text = china_self_strengthening_success_tt
+						has_variable = self_strengthening_success
+					}
+				}
+				OR = {
+					custom_tooltip = {
+						text = china_treaty_ports_tt
+						# OR = {
+						# 	NOT = {
+						# 		any_scope_state = {
+						# 			any_neighbouring_state = {
+						# 				is_treaty_port = yes
+						# 			}
+						# 		}
+						# 	}
+						# }
+						any_state = {
+							percent = 0					# or percent = 0? they tooltip differently
+							filter = {
+								state_region = {
+									is_homeland = cu:han
+								}
+							}
+							NOT = {
+								owner = ROOT
+							}
+						}
+					}
+					custom_tooltip = {
+						text = won_boxer_tt
+						has_variable = won_boxer_rebellion
+					}
+				}
+			
+			}
+			# Tech & Res: after 1940 the warlord era ends either way.
+			year > 1940
+		}
+	}
+	fail = {
+		custom_tooltip = {
+			text = je_china_failure_tt
+			var:china_warlord_explosion <= 0
+		}
+	}
+	on_fail = {
+		trigger_event = {
+			id = warlord_china_events.400
+		}
+	}
+	on_complete = {
+		if = {
+			limit = {
+				year <= 1940
+			}
+			trigger_event = {
+				id = warlord_china_events.200
+			}
+		}
+		else = {
+			trigger_event = {
+				id = the_future_of_china.201
+			}
+		}
+	}
+	current_value = {
+		value = var:china_warlord_explosion
+	}
+	goal_add_value = {
+		add = 5
+	}
+	progressbar = yes
+	on_weekly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						has_variable = china_warlord_explosion_subject
+					}
+					is_subject = yes
+				}
+				chi_remove_1_fragile_unity = yes
+				set_variable = china_warlord_explosion_subject
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = china_warlord_explosion_loans
+					}
+					taking_loans = yes
+				}
+				chi_remove_1_fragile_unity = yes
+				set_variable = china_warlord_explosion_loans
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = china_warlord_explosion_recognized
+					}
+					country_rank != rank_value:unrecognized_power
+					country_rank != rank_value:unrecognized_major_power
+					country_rank != rank_value:unrecognized_regional_power
+				}
+				set_variable = china_warlord_explosion_recognized
+				chi_add_1_fragile_unity = yes
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = china_abolished_monarchy
+					}
+					NOT = {
+						has_law = law_type:law_monarchy
+						has_law = law_type:law_zhou_ritual_system
+					}
+				}
+				set_variable = china_abolished_monarchy
+				chi_remove_1_fragile_unity = yes
+				if = {
+					limit = {
+						NOT = {
+							has_variable = china_han_empire
+						}
+					}
+					trigger_event = {
+						id = boxer_rebellion_events.4
+						days = 0
+						popup = yes
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = china_warlord_explosion_taiwan
+					}
+					NOT = {
+						has_state_in_state_region = STATE_FORMOSA
+					}
+				}
+				chi_remove_1_fragile_unity = yes
+				set_variable = china_warlord_explosion_taiwan
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_variable = china_warlord_explosion_restore_monarchy
+					}
+					NOT = {
+						has_law = law_type:law_monarchy
+					}
+					currently_enacting_law = {
+						type = law_type:law_monarchy
+					}
+				}
+				chi_remove_1_fragile_unity = yes
+				set_variable = china_warlord_explosion_restore_monarchy
+			}
+		}
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+}

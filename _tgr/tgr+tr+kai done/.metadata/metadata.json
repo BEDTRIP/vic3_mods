@@ -1,7 +1,7 @@
 {
   "name": "ComPatch The Great Revision + Tech & Res",
   "id": "3637726287",
-  "version": "1.13.0",
+  "version": "1.13.1",
   "supported_game_version": "1.13.10",
   "short_description": "Compatibility patch for The Great Revision + Kuromi AI + Tech & Res (common/ merges). Load after all three.",
   "picture": "thumbnail.png",

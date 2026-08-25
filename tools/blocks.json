@@ -1,29 +1,91 @@
 {
   "_comment": "Состав набора для pair_matrix.py. Пути device-side ($HOME/mnt/... на монтировании, C:\\Users\\Andrey\\Projects\\... на машине). Кэш индексов переживает сессии — удалить, если чужой мод обновился.",
   "cache": "../../_tmp_analysis/_idx",
-  "order": ["Grey's", "LLWA", "HC+GoB+MoH", "E&F+hotfix", "Morgenrote", "PBE", "PSC", "TGR", "T&R+KAI"],
+  "order": [
+    "Grey's",
+    "LLWA",
+    "HC+GoB+MoH",
+    "E&F+hotfix",
+    "Morgenrote",
+    "PBE",
+    "PSC",
+    "TGR",
+    "T&R+KAI"
+  ],
   "blocks": {
     "Grey's": [
       "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_econ",
-      "../../vic3_mods_out/grey_add_alot_of_things/grey_usu",
+      "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_pop",
+      "../../vic3_mods_out/grey_add_alot_of_things/grey_deeper_cinosphere",
+      "../../vic3_mods_out/grey_add_alot_of_things/grey_diplo",
       "../../vic3_mods_out/grey_add_alot_of_things/grey_food",
       "../../vic3_mods_out/grey_add_alot_of_things/grey_food_2_ranch",
-      "../../vic3_mods_out/grey_add_alot_of_things/grey_diplo",
-      "../../vic3_mods_out/grey_add_alot_of_things/grey_subject"
+      "../../vic3_mods_out/grey_add_alot_of_things/grey_subject",
+      "../../vic3_mods_out/grey_add_alot_of_things/grey_usu"
     ],
-    "LLWA": ["../../vic3_mods_out/llwa"],
+    "LLWA": [
+      "../../vic3_mods_out/llwa"
+    ],
     "HC+GoB+MoH": [
       "../../vic3_mods_out/for addon/hailcolumbia",
       "../../vic3_mods_out/for addon/gatesofbosphorus",
       "../../vic3_mods_out/for addon/mandateofheaven"
     ],
-    "E&F+hotfix": ["../../vic3_mods_out/E&F", "../_ef/ef hotfix 1.13"],
-    "Morgenrote": ["../../vic3_mods_out/Morgenrote"],
-    "PBE": ["../../vic3_mods_out/PowerBlocksExpanded"],
-    "PSC": ["../../vic3_mods_out/PSC"],
-    "TGR": ["../../vic3_mods_out/TheGreatRevision"],
-    "T&R+KAI": ["../../vic3_mods_out/TechRes+Kuromi/t&r", "../../vic3_mods_out/TechRes+Kuromi/kai"],
-    "_frameworks_не_блоки": ["../../vic3_mods_out/_cmf", "../../vic3_mods_out/_etf"],
-    "_vanilla": ["../../vic3_mods_out/.vanillaVIC3"]
-  }
+    "E&F+hotfix": [
+      "../../vic3_mods_out/E&F",
+      "../_ef/ef hotfix 1.13"
+    ],
+    "Morgenrote": [
+      "../../vic3_mods_out/Morgenrote"
+    ],
+    "PBE": [
+      "../../vic3_mods_out/PowerBlocksExpanded"
+    ],
+    "PSC": [
+      "../../vic3_mods_out/PSC"
+    ],
+    "TGR": [
+      "../../vic3_mods_out/TheGreatRevision"
+    ],
+    "T&R+KAI": [
+      "../../vic3_mods_out/TechRes+Kuromi/t&r",
+      "../../vic3_mods_out/TechRes+Kuromi/kai"
+    ],
+    "_frameworks_не_блоки": [
+      "../../vic3_mods_out/_cmf",
+      "../../vic3_mods_out/_etf"
+    ],
+    "_vanilla": [
+      "../../vic3_mods_out/.vanillaVIC3"
+    ]
+  },
+  "_load_order_comment": "Истинный порядок загрузки для vfs_order.py. Отличается от 'order' (тот — порядок колонок в матрице). Взят из активного плейсета launcher-v2.sqlite + целевой схемы аддонов: пачка -> мегапак -> HC+GoB+MoH -> аддон1 -> LLWA -> аддон2 -> Grey's -> аддон3.",
+  "load_order": [
+    "../../vic3_mods_out/.vanillaVIC3",
+    "../../vic3_mods_out/_cmf",
+    "../../vic3_mods_out/_etf",
+    "../../vic3_mods_out/TheGreatRevision",
+    "../../vic3_mods_out/PSC",
+    "../../vic3_mods_out/TechRes+Kuromi/kai",
+    "../../vic3_mods_out/E&F",
+    "../_ef/ef hotfix 1.13",
+    "../../vic3_mods_out/Morgenrote",
+    "../../vic3_mods_out/TechRes+Kuromi/t&r",
+    "../../vic3_mods_out/PowerBlocksExpanded",
+    "../__megapacks/megapack",
+    "../../vic3_mods_out/for addon/hailcolumbia",
+    "../../vic3_mods_out/for addon/gatesofbosphorus",
+    "../../vic3_mods_out/for addon/mandateofheaven",
+    "../../vic3_mods_out/llwa",
+    "../../vic3_mods_out/grey_add_alot_of_things/llwa_morgen compatch",
+    "../../vic3_mods_out/grey_add_alot_of_things/usu_llwa comatch",
+    "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_econ",
+    "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_pop",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_usu",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_deeper_cinosphere",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_food",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_food_2_ranch",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_diplo",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_subject"
+  ]
 }

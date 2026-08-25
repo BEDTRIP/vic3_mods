@@ -1,0 +1,137 @@
+### ComPatch HC+GoB+MoH x Morgenroete -- two shared characters
+###
+### Morgenroete and Hail, Columbia! both define Walter Chrysler and Mark Twain,
+### under the same template keys, for different jobs:
+###
+###   Chrysler  MR: role = character_role_tesla_engineer, engineer traits, an
+###                 on_created that registers him with MR's engineer system
+###             HC: executive_usage for company_basic_motors, 1915-1940
+###   Twain     MR: role = character_role_manzoni_writer, writer traits + genre,
+###                 on_created registering him with MR's writer system
+###             HC: is_agitator + agitator_usage, Missouri, 1865-1910
+###
+### HC loads later and both its bodies are bare, so each replaces the whole entry
+### and Morgenroete's two characters quietly stop existing as far as its own
+### mechanics are concerned -- the templates are still there, they just no longer
+### carry the role or run the on_created that hooks them up.  No log line.
+###
+### Merged below: HC's body is the base (it is the last full body and the more
+### specific one -- these are American characters in an American flavour mod),
+### plus Morgenroete's role, its two mechanic-bearing traits and its on_created.
+### MR's purely descriptive traits (ambitious, erudite/reckless duplicates) are
+### not carried over: HC already gives each character a full trait list and the
+### union would run to seven traits.
+###
+### !! MAINTENANCE !! both bodies are cut out of the mods at generation time.
+### Re-run after either mod updates.  If a future game version rejects `role`
+### next to executive_usage / agitator_usage this is the file to look at -- the
+### combination exists in neither vanilla nor either mod.
+
+
+ecchi_usa_chrysler_character_template = {
+    first_name = Walter
+    last_name = ecchi_Chrysler
+    culture = cu:yankee
+    female = no
+    religion = protestant
+    ideology = ideology_market_liberal
+    interest_group = ig_industrialists
+	dna = ecchi_dna_walter_chrysler
+    role = character_role_tesla_engineer
+    historical = yes
+    birth_date = 1875.4.2
+    home_region = STATE_KANSAS
+    traits = { arrogant persistent expensive_tastes experienced_entrepreneur engineer tesla_mechanical_engineer }
+    executive_usage = {
+        country_trigger = {
+            exists = c:USA
+            this = c:USA
+        }
+        company_trigger = {
+            is_company_type = company_type:company_basic_motors
+        }
+        earliest_usage_date = 1915.1.1
+        latest_usage_date = 1940.8.18
+        #guaranteed to spawn if possible
+    }
+	# Morgenroete: registers him with the Tesla engineer system.
+	on_created = {
+		set_variable = mr_no_headgear_var
+		mr_make_character_engineer_effect = yes
+		set_global_variable = mr_chrysler_global_var
+	}
+}
+
+usa_mark_twain_character_template = { #Mark Twain
+    first_name = Samuel
+    dna = mr_usa_clemens_samuel_mark_twain
+    role = character_role_manzoni_writer
+    last_name = Clemens
+    historical = yes
+    culture = cu:dixie
+    female = no
+    religion = rel:protestant
+    ideology = ideology_jingoist_leader
+    interest_group = ig_intelligentsia
+    birth_date = 1835.11.30
+    home_region = STATE_MISSOURI
+	is_agitator = yes
+    traits = { literary erudite reckless manzoni_writer_fiction manzoni_genre_adventure }   
+    agitator_usage = { #USFP: changed to Agitator instead of IG Leader
+        country_trigger = {
+			has_dlc_feature = voice_of_the_people_content
+            country_has_primary_culture = cu:dixie
+            any_scope_state = {
+                state_region = s:STATE_MISSOURI
+            }
+        }
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            is_interest_group_type = ig_intelligentsia
+        }   
+        earliest_usage_date = 1865.11.18
+        latest_usage_date = 1910.1.1
+        chance = 50
+    }   
+    on_created = {
+		# Morgenroete: registers him with the Manzoni writer system.
+		set_variable = mr_no_headgear_var
+		mr_make_character_writer_effect = yes
+		set_global_variable = mr_twain_created_global_var
+
+        if = {
+            limit = {
+                owner = {
+                    NOT = {
+                        has_law_or_variant = law_type:law_slavery_banned
+                    }
+                }
+            }
+            set_ideology = ideology:ideology_abolitionist
+        }
+        else_if = {
+            limit = {
+                owner = {
+                    has_technology_researched = feminism
+                    NOT = {
+                        has_law_or_variant = law_type:law_womens_suffrage
+                    }
+                }
+            }
+            set_ideology = ideology:ideology_feminist
+        }
+		 else_if = {
+            limit = {
+                owner = {
+                    any_country = {
+                        is_subject_of = prev
+                    }
+                }
+            }
+            set_ideology = ideology:ideology_pacifist
+        }
+        else = {
+            set_ideology = ideology:ideology_jingoist_leader
+        }
+    }
+}

@@ -1,0 +1,154 @@
+### ComPatch HC+GoB+MoH x The Great Revision -- ideology_jacksonian_democrat
+###
+### TGR INJECT:s two law stances into this ideology -- lawgroup_election_system and
+### lawgroup_legislative_process, five laws each.  Hail, Columbia! then rewrites
+### the whole ideology with REPLACE_OR_CREATE: and names neither, so both stances
+### are dropped: REPLACE swaps the entry, it does not patch the sub-blocks a mod
+### happens to list.  A Jacksonian leader ends up with no opinion at all on
+### election systems or legislative process, which reads as "neutral" everywhere
+### and is logged nowhere.
+###
+### Merged below: HC's body, unchanged, with TGR's two stance blocks appended.
+### They do not overlap -- HC names governance_principles, distribution_of_power,
+### bureaucracy, colonization and land_reform.
+###
+### VARIANTS: needs TGR.  Drop this file from a composition without it -- the two
+### appended blocks are TGR's balance, not vanilla's.
+
+REPLACE_OR_CREATE:ideology_jacksonian_democrat = { #replacing basegame
+    icon = "gfx/interface/icons/ideology_icons/ideology_leader/jackson_democrat.dds"
+
+    character_ideology = yes
+
+    lawgroup_governance_principles = {
+        law_monarchy = strongly_disapprove
+        law_social_monarchy = strongly_disapprove
+        law_theocracy = strongly_disapprove
+        law_council_republic = strongly_disapprove
+        law_parliamentary_republic = neutral
+        law_corporate_state = disapprove
+        law_presidential_republic = approve
+    }
+
+    lawgroup_distribution_of_power = {
+        law_universal_suffrage = strongly_approve
+        law_census_voting = approve
+        law_wealth_voting = neutral
+        law_landed_voting = disapprove
+        law_anarchy = strongly_disapprove
+        law_oligarchy = strongly_disapprove
+        law_autocracy = strongly_disapprove
+        law_single_party_state = disapprove
+        law_technocracy = strongly_disapprove
+    }
+
+    lawgroup_bureaucracy = {
+        law_elected_bureaucrats = approve
+        law_appointed_bureaucrats = neutral
+        law_hereditary_bureaucrats = disapprove
+    }
+
+    #Citizenship and Slavery is a divided issue so neutral across
+
+    lawgroup_colonization = {
+        law_no_colonial_affairs = strongly_disapprove
+        law_colonial_resettlement = strongly_disapprove
+        law_colonial_exploitation = strongly_disapprove
+        law_frontier_colonization = strongly_approve
+    }
+
+    lawgroup_land_reform = {
+        law_serfdom = strongly_disapprove
+        law_collectivized_agriculture = disapprove
+        law_tenant_farmers = disapprove
+        law_commercialized_agriculture = neutral
+        law_peasant_proprietorship = strongly_approve
+    }
+
+    country_trigger = {
+        usfp_country_is_american = yes
+        has_variable = whigs_party
+    }
+
+    interest_group_leader_trigger = {
+        ideology_jacksonian_democrat_valid_trigger = yes
+    }
+
+    non_interest_group_leader_trigger = {
+        NAND = {
+            has_role_of_type = agitator
+            owner = {
+                has_law_or_variant = law_type:law_racial_segregation
+                has_law_or_variant = law_type:law_legacy_slavery
+                has_law_or_variant = law_type:law_elected_bureaucrats
+                has_law_or_variant = law_type:law_universal_suffrage
+                has_law_or_variant = law_type:law_presidential_republic
+            }
+        }
+        interest_group = {
+            ideology_jacksonian_democrat_valid_trigger = yes
+        }
+    }
+
+    interest_group_leader_weight = {
+        add = {
+            value = 300
+            desc = "base_value"
+        }
+        if = {
+            limit = {
+                OR = {
+                    has_variable = communist_ig_var
+                    has_variable = chose_vanguardism
+                    has_variable = chose_anarchism
+                    has_variable = chose_communism
+                    has_variable = chose_ethno_nationalism
+                    has_variable = chose_conservatism
+                    has_variable = chose_fascism
+                }
+            }
+            multiply = {
+                value = 0.1
+                desc = "CHOSE_A_DIFFERENT_PATH"
+            }
+        }
+    }
+
+    non_interest_group_leader_weight = {
+        value = 100
+        if = {
+            limit = {
+                interest_group ?= {
+                    OR = {
+                        has_variable = communist_ig_var
+                        has_variable = chose_vanguardism
+                        has_variable = chose_anarchism
+                        has_variable = chose_communism
+                        has_variable = chose_ethno_nationalism
+                        has_variable = chose_conservatism
+                        has_variable = chose_fascism
+                    }
+                }
+            }
+            multiply = 0.1
+        }
+    }
+
+	# The Great Revision
+	lawgroup_election_system = {
+		law_no_election = disapprove
+		law_proportional_system = strongly_approve
+		law_majoritarian_system = approve
+		law_mixed_system = neutral
+		law_ranked_system = approve
+	}
+
+	# The Great Revision
+	lawgroup_legislative_process = {
+		law_advisory_parliament_only = disapprove
+		law_restricted_parliamentary_authority = disapprove
+		law_chamber_of_deputies = neutral
+		law_unicameral_parliamentary_system = approve
+		law_bicameral_parliamentary_system = strongly_approve
+	}
+}

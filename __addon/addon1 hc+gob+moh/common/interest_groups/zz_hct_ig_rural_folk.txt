@@ -1,0 +1,625 @@
+### ComPatch HC+GoB+MoH x The Great Revision -- ig_rural_folk
+###
+### Three mods write this entry and each of the last two erases part of the one
+### before it:
+###
+###   TGR   REPLACE_OR_CREATE: from TGR_POLITICS_rural_folk.txt.  Its real change
+###         is three numbers in pop_weight: POP_FARMERS 200 -> 250, POP_PEASANTS
+###         200 -> 150, LEADER_POPULARITY 0.0025 -> 0.030.
+###   HC    a bare body at the vanilla path 00_rural_folk.txt -- so all of TGR is
+###         gone.  HC's own changes: usfp_country_is_american in on_enable and an
+###         aristocrat rule in pop_potential that exempts American cultures.
+###   MoH   INJECT: from moh_rural_folk.txt, 316 lines.
+###
+### The MoH file needs saying out loud: of its fifteen sub-blocks, exactly two are
+### its own -- ideology_moh_kmt in character_ideologies, and the on_enable block
+### that renames the IG to Nongmin for Chinese cultures.  The other thirteen are a
+### copy of a PRE-1.13 vanilla body: has_law where 1.13 has has_law_or_variant,
+### `scope:interest_group = {` where 1.13 has `?= {`, an EMPTY
+### on_character_ig_membership where vanilla has the Zanzibar religion rule, a
+### priority_cultures missing vanilla's ZAN rule, and commander_leader_chance,
+### which 1.13 renamed to commander_leader_weight.  Whatever the engine does with
+### a sub-block INJECT:ed on top of one that already exists, that copy can only
+### take things away.  Same class as the stale ai_strategies file in LLWA.
+###
+### Merged below: HC's body (current vanilla plus HC's two edits), TGR's three
+### numbers merged into pop_weight three-way against vanilla, and MoH's two real
+### additions appended.  Nothing from MoH's stale copy is carried.
+###
+### VARIANTS: safe in every composition -- ideology_moh_kmt and the Nongmin rename
+### come from Mandate of Heaven, which is part of this addon's own block; the TGR
+### contribution is numbers only.
+### Both interest groups below are re-issued as one complete REPLACE: body.
+### That is deliberate and it is the expensive option: REPLACE: swaps the whole
+### entry, so a partial body would drop everything it does not name.  Proved in
+### game 21.08.2026 -- REPLACE:building_bank = { ownership_type = self } made the
+### central bank disappear, and 285 production methods restated with only
+### building_modifiers lost their unlocking_laws.
+
+REPLACE:ig_rural_folk = {
+	color = hsv{ 0.32 0.45 0.47 }
+	texture = "gfx/interface/icons/ig_icons/rural_folk.dds"
+	layer = "revolution_dynamic_rural_folk"
+	index = 6
+
+	ideologies = {
+		ideology_agrarian
+		ideology_particularist
+		ideology_isolationist
+	}
+
+	character_ideologies = {
+		ideology_moderate
+		ideology_pacifist
+		# Mandate of Heaven
+		ideology_moh_kmt
+	}
+
+	enable = {
+		always = yes
+	}
+
+	# Deprecated; use on_enable effect to assign traits instead
+	traits = {
+		ig_trait_farmers_markets
+		ig_trait_honest_work
+		ig_trait_old_ways
+	}
+
+	on_enable = {
+		ig:ig_rural_folk ?= {
+			if = {
+				limit = {
+					has_dlc_feature = rp1_content
+					owner = { c:BRZ ?= this }
+				}
+				set_ig_trait = ig_trait:ig_trait_old_ways
+				set_ig_trait = ig_trait:ig_trait_plantation_work
+				set_ig_trait = ig_trait:ig_trait_nucleos_coloniais
+			}
+			else_if = {
+				limit = {
+					owner = { c:RUS ?= this }
+				}
+				set_ig_trait = ig_trait:ig_trait_old_ways
+				set_ig_trait = ig_trait:ig_trait_honest_work
+				set_ig_trait = ig_trait:ig_trait_obshchina
+			}
+			else_if = {
+				limit = {
+					owner = { c:EGY ?= this }
+				}
+				set_interest_group_name = ig_fellahin
+				set_ig_trait = ig_trait:ig_trait_old_ways
+				set_ig_trait = ig_trait:ig_trait_fellahin
+				set_ig_trait = ig_trait:ig_trait_farmers_markets
+			}
+			else_if = {
+				limit = {
+					owner = { 
+						OR = {
+							c:BIC ?= this
+							any_primary_culture = {
+								has_discrimination_trait_group = heritage_group_south_asian
+								NOT = {
+									has_discrimination_trait = tradition_himalayan
+								}
+							}
+						}
+					}
+				}
+				set_interest_group_name = ig_ryots
+				set_ig_trait = ig_trait:ig_trait_of_the_sovereign_alone
+				set_ig_trait = ig_trait:ig_trait_imandari
+				set_ig_trait = ig_trait:ig_trait_bazaar_bargains
+			}
+			else_if = {
+				limit = {
+					owner = { c:PAN ?= this }
+				}
+				set_interest_group_name = ig_jats
+				set_ig_trait = ig_trait:ig_trait_old_ways
+				set_ig_trait = ig_trait:ig_trait_honest_work
+				set_ig_trait = ig_trait:ig_trait_khalsa_panth
+			}
+			# Landvolk
+			else_if = {
+				limit = {
+					has_dlc_feature = ip3_content
+					owner = {
+						any_primary_culture = {
+							has_discrimination_trait = language_germanophone
+						}
+					}
+				}
+				set_interest_group_name = ig_landvolk
+				set_ig_trait = ig_trait:ig_trait_born_particularists
+				set_ig_trait = ig_trait:ig_trait_honest_work
+				set_ig_trait = ig_trait:ig_trait_farmers_markets
+			}
+			else = {
+				set_ig_trait = ig_trait:ig_trait_old_ways
+				set_ig_trait = ig_trait:ig_trait_honest_work
+				set_ig_trait = ig_trait:ig_trait_farmers_markets
+			}
+		}
+	
+		# Jeffersonian Ideology
+		if = {
+			limit = {
+				usfp_country_is_american = yes
+			}
+			ig:ig_rural_folk ?= {
+				remove_ideology = ideology_agrarian
+				add_ideology = ideology_agrarian_jeffersonian
+				set_interest_group_name = ig_yeoman_farmers
+			}
+		}
+
+		# Heimin
+		if = {
+			limit = {
+				country_has_primary_culture = cu:japanese
+			}
+			ig:ig_rural_folk ?= {
+				set_interest_group_name = ig_peasants
+			}
+		}
+		# Maka'āinana
+		if = {
+			limit = {
+				country_has_primary_culture = cu:hawaiian
+			}
+			ig:ig_rural_folk ?= {
+				set_interest_group_name = ig_maka_ainana
+			}
+		}
+		# Sikh Empire
+		if = {
+			limit = {
+				c:PAN ?= this
+			}
+			ig:ig_rural_folk ?= {
+				set_interest_group_name = ig_jats
+			}
+		}
+		# India
+		else_if = {
+			limit = {
+				OR = {
+					c:BIC ?= this
+					any_primary_culture = {
+						has_discrimination_trait_group = heritage_group_south_asian
+						NOT = {
+							has_discrimination_trait = tradition_himalayan
+						}
+					}
+				}
+			}
+			ig:ig_rural_folk ?= {
+				set_interest_group_name = ig_ryots
+			}
+		}
+		# Nepal
+		else_if = {
+			limit = {
+				any_primary_culture = {
+					has_discrimination_trait_group = heritage_group_south_asian
+					has_discrimination_trait = tradition_himalayan
+				}
+			}
+			ig:ig_rural_folk ?= {
+				set_interest_group_name = ig_kisanharu
+			}
+		}
+
+		# Mandate of Heaven: Nongmin.
+		ig:ig_rural_folk = {
+			# Nongmin
+			if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:han
+						country_has_primary_culture = cu:yue
+						country_has_primary_culture = cu:min
+						country_has_primary_culture = cu:hakka
+						country_has_primary_culture = cu:manchu
+					}
+				}
+				set_interest_group_name = ig_farmers
+			}
+		}
+	
+	}
+	on_disable = {}
+	priority_cultures = { #Country scope
+		rule = {
+			trigger = {
+				c:BIC ?= this
+				any_primary_culture = { 
+					cu:british = this
+				}
+			}
+			cultures = {
+				assamese avadhi baluchi bengali bihari gujarati kannada malayalam marathi oriya panjabi pathan rajput sindi tamil telegu hindustani bundeli pahari gondi bageli chhattisgarhi deccani
+			}
+		}
+		rule = {
+			trigger = {
+				c:ZAN ?= this
+				any_primary_culture = {
+					cu:bedouin = this
+				}
+			}
+			cultures = {
+				swahili lacustrine_bantu oromo
+			}
+		}
+	}
+	on_character_ig_membership = {
+		if = {
+			limit = {
+				OR = {
+					culture = cu:oromo
+					culture = cu:lacustrine_bantu
+				}
+				owner = {
+					c:ZAN ?= this
+					any_primary_culture = {
+						cu:bedouin = this
+					}
+				}
+			}
+			random_list = {
+				2 = { change_character_religion = rel:sunni }
+				1 = { change_character_religion = rel:animist }
+			}
+		}
+	}
+
+	pop_potential = {
+		NOR = {
+			AND = {
+				is_pop_type = aristocrats
+				NOR = {
+					culture = cu:yankee #USFP
+                    culture = cu:usfp_american
+                    culture = cu:usfp_american_indian
+				}
+			}
+			is_pop_type = capitalists
+		}
+		OR = {
+			pop_employment_building_group = bg_agriculture
+			pop_employment_building_group = bg_ranching
+			pop_employment_building_group = bg_plantations
+			pop_employment_building_group = bg_logging
+			pop_employment_building_group = bg_fishing
+			pop_employment_building_group = bg_whaling
+			pop_employment_building_group = bg_manor_houses
+		}
+	}
+
+	pop_weight = {
+		value = 0
+
+		add = {
+			desc = "RURAL_POP"
+			if = {
+				limit = {
+					OR = {
+						pop_employment_building_group = bg_agriculture
+						pop_employment_building_group = bg_ranching
+						pop_employment_building_group = bg_plantations
+						pop_employment_building_group = bg_logging
+						pop_employment_building_group = bg_fishing
+						pop_employment_building_group = bg_whaling
+						pop_employment_building_group = bg_manor_houses
+					}
+				}
+				if = {
+					limit = {
+						is_pop_type = clergymen
+					}
+					value = 25
+				}
+				else = {
+					value = 100
+				}
+			}
+		}
+		
+		##### TGR CHANGES #####
+		
+		add = {
+			desc = "POP_FARMERS"
+			if = {
+				limit = {
+					is_pop_type = farmers
+				}
+				value = 250		#150
+			}
+		}
+		
+		add = {
+			desc = "POP_PEASANTS"
+			if = {
+				limit = {
+					is_pop_type = peasants
+				}
+				value = 150		#200
+			}
+		}
+		
+		#######################
+
+		add = {
+			desc = "POP_CLERGYMEN"
+			if = {
+				limit = {
+					is_pop_type = clergymen
+				}
+				value = 75
+			}
+		}
+
+		if = {
+			limit = {
+				c:BIC ?= owner
+				culture = {
+					has_discrimination_trait_group = heritage_group_european
+				}
+			}
+			multiply = {
+				desc = "POP_INDIA_COLONIAL_RULE"
+				value = 0.1
+			}
+		}
+
+		##### TGR CHANGES #####
+		multiply = {
+			desc = "LEADER_POPULARITY"
+			scope:interest_group = {
+				leader ?= {
+					value = popularity
+					multiply = 0.030
+					add = 1
+					max = 1.25
+					min = 0.75
+				}
+			}
+		}
+		#######################
+		
+		if = {
+			limit = {
+				scope:interest_group ?= {
+					is_in_government = yes
+				}
+			}
+			multiply = {
+				desc = "IN_GOVERNMENT_ATTRACTION"
+				value = 1
+				add = scope:interest_group.modifier:interest_group_in_government_attraction_mult
+				min = 0
+			}
+		}
+		
+		if = {
+			limit = {
+				scope:interest_group ?= {
+					is_in_government = yes
+				}
+			}
+			multiply = { # Multiplied by 1.25x max
+				desc = "POP_LOYALISTS"
+				value = pop_loyalist_fraction
+				divide = 4
+				add = 1
+			}
+		}
+		if = {
+			limit = {
+				scope:interest_group ?= {
+					is_in_government = no
+				}
+			}
+			multiply = { # Multiplied by 1.25x max
+				desc = "POP_RADICALS"
+				value = pop_radical_fraction
+				divide = 4
+				add = 1
+			}
+		}
+	}
+
+	monarch_weight = {
+		value = 0.25 # this is just inherently unlikely
+		# Monarch is not likely to adopt a marginal IG
+		if = {
+			limit = {
+				ig_counts_as_marginal = yes
+			}
+			multiply = {
+				value = 0.1
+			}
+		}
+		# Monarch is more likely to adopt a Powerful IG
+		if = {
+			limit = {
+				is_powerful = yes
+			}
+			multiply = {
+				value = 2
+			}
+		}
+		# More likely with Homesteading
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_peasant_proprietorship
+				}
+			}
+			multiply = {
+				value = 2
+			}
+		}
+		# Impossible with Serfdom
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_serfdom
+				}
+			}
+			multiply = {
+				value = 0
+			}
+		}
+	}
+
+	agitator_weight = {
+		# Agitators more likely to come from populist IG's rather than elitist
+		value = 1.0
+		# Agitators will never be part of a marginalized IG
+		if = {
+			limit = {
+				owner.ig:ig_rural_folk ?= {
+					ig_counts_as_marginal = yes
+				}
+			}
+			multiply = {
+				value = 0
+			}
+		}
+	}
+
+	commander_weight = {
+		value = 1.0
+	}
+
+	magnate_weight = {
+		value = 0.25
+	}
+
+	executive_weight = {
+		value = 0.1
+		
+		# The company owning BIC should not get non-industrialist executives
+		if = {
+			limit = {
+				exists = scope:company
+				exists = c:BIC
+				c:BIC ?= {
+					exists = owning_company
+					owning_company = scope:company
+				}
+			}
+			multiply = {
+				value = 0
+			}
+		}
+	}
+
+	noble_chance = {
+		value = 0.2
+	}
+
+	female_commander_chance = {
+		value = 0.0
+	}
+
+	female_executive_chance = {
+		value = 0.0
+	}
+
+	female_monarch_chance = {
+		value = 0.025
+	}
+
+	female_politician_chance = {
+		value = 0.0
+
+
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_womens_suffrage
+				}
+				law_stance = {
+					law = law_type:law_womens_suffrage
+					value >= approve
+				}
+			}
+			add = {
+				value = 0.025
+			}
+		}
+	}
+
+	female_agitator_chance = {
+		value = 0.025
+		
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_women_own_property
+				}
+
+			}
+			add = {
+				value = 0.025
+			}
+		}	
+		
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_women_in_the_workplace
+				}
+
+			}
+			add = {
+				value = 0.025
+			}
+		}
+
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_womens_suffrage
+				}
+
+			}
+			add = {
+				value = 0.025
+			}
+		}		
+	}
+
+	# Multiplier applied to the weight for an appropriate commander will be selected from the character pool to lead the IG
+	# root = interest group
+	commander_leader_weight = {
+		value = 0.75
+	}
+
+	# Multiplier applied to the weight for an appropriate magnate will be selected from the character pool to lead the IG
+	# root = interest group
+	magnate_leader_weight = {
+		value = 0.25
+		if = {
+			limit = {
+				c:JAP ?= owner
+				NOT = {
+					has_variable = japan_restoration_complete
+				}
+			}
+			add = 5
+		}
+	}
+
+	# Multiplier applied to the weight for an appropriate executive will be selected from the character pool to lead the IG
+	# root = interest group
+	executive_leader_weight = {
+		value = 0.1
+	}
+}

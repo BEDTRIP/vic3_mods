@@ -1,7 +1,7 @@
 {
   "name": "MegaComPatch TGR + PSC + E&F + MR + T&R + PBE",
   "id": "3638078714",
-  "version": "1.13.11-2",
+  "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility patch for The Great Revision (TGR) + Private Sector Construction (PSC) + Economic and Financial (E&F) + Morgenröte + Tech & Res + Kuromi's AI + Power Blocs Expanded. Merge of my eight ComPatches for this set. Requires the E&F Hotfix. Load after all of them.",
   "picture": "thumbnail.png",
