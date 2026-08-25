@@ -94,26 +94,46 @@ Worth sending to the authors.
 * **Goods** — the addon adds none. The set stays at 111 of the 128 ceiling.
 * **Event ids** — no collisions in any of the three pairs.
 
-## Megapack variants
+## Running it without one of the mods
 
-One file in the addon belongs to one pair, so a variant is a file list.
+Every file here belongs to exactly one pair, so trimming the addon is a matter of deleting files — there is no separate download. Delete what the table says from the addon's `common/` folder and nothing else changes.
 
-| file | needs |
+The three mods of the block itself — **Hail, Columbia!**, **Gates of the Bosphorus** and **Mandate of Heaven** — are not optional. Several files carry one of those mods' own bodies with the other side's changes merged into it, so without them the addon would be installing content from a mod you do not have.
+
+| you don't have | delete from `common/` | what you lose |
+| --- | --- | --- |
+| **Morgenröte** | `achievement_groups.txt`<br>`character_templates/zz_hcm_characters.txt`<br>`decisions/zz_hcm_olympic_games.txt`<br>`static_modifiers/zz_hcm_gaudi_modifier.txt` | nothing. All four exist only to put Morgenröte's content back |
+| **The Great Revision** | `ideologies/zz_hct_jacksonian_democrat.txt`<br>`history/countries/chi - china.txt`<br>`history/countries/tur - ottoman empire.txt`<br>`ai_strategies/zz_hctr_tgr_default_strategy.txt` | nothing |
+| **Tech & Res** | `laws/zz_hctr_slavery.txt`<br>`decrees/zz_hctr_greener_grass.txt`<br>`journal_entries/zz_hctr_warlord_china.txt`<br>`ai_strategies/zzz_hctr_tr_default_strategy.txt` | nothing |
+| **Kuromi's AI** | `ai_strategies/zz_hctr_ai_strategy_default.txt`<br>`ai_strategies/zz_hctr_tgr_default_strategy.txt` | the one case where something goes. The second file is built on the body in the first, so it has to go with it, and The Great Revision's injections into `ai_strategy_default` then stay dropped under Mandate of Heaven. Everything else in the addon is unaffected |
+
+Two files are never on the list: `interest_groups/zz_hct_ig_landowners.txt` and `zz_hct_ig_rural_folk.txt`. Both are Hail, Columbia!'s own bodies with four of The Great Revision's numbers merged in — and, for rural folk, Mandate of Heaven's two real additions — so they are right with or without TGR.
+
+The megapack variants follow from the same table: for **no TGR** delete the four Great Revision files; for **no T&R** delete the four Tech & Res files *and* the two Kuromi's AI ones, since that variant drops the whole Tech & Res + Kuromi block; for **no E&F + PSC** change nothing — this addon shares no key and no path with either of those.
+
+If you installed the addon from the Workshop, the launcher puts deleted files back on the next update. Copying the mod folder into your own `Documents/Paradox Interactive/Victoria 3/mod/` and enabling that copy instead makes the trim stick.
+
+## Which file belongs to which pair
+
+For anyone rebuilding this or checking coverage — the same information the table above is derived from.
+
+| file | pair it comes from |
 | --- | --- |
-| `common/interest_groups/zz_hct_ig_landowners.txt` | anything (numbers only) |
-| `common/interest_groups/zz_hct_ig_rural_folk.txt` | anything (numbers only, plus MoH's own additions) |
-| `common/ideologies/zz_hct_jacksonian_democrat.txt` | TGR |
-| `common/history/countries/chi - china.txt` | TGR |
-| `common/history/countries/tur - ottoman empire.txt` | TGR |
-| `common/laws/zz_hctr_slavery.txt` | Tech & Res |
-| `common/decrees/zz_hctr_greener_grass.txt` | Tech & Res |
-| `common/journal_entries/zz_hctr_warlord_china.txt` | Tech & Res |
-| `common/ai_strategies/zz_hctr_ai_strategy_default.txt` | Kuromi's AI |
-| `common/ai_strategies/zz_hctr_tgr_default_strategy.txt` | TGR |
-| `common/ai_strategies/zzz_hctr_tr_default_strategy.txt` | Tech & Res |
-| everything under `hc+morg done` | Morgenröte |
-
-For the `no tgr` megapack, drop the four TGR-only files. For `no t&r`, drop the four Tech & Res ones — and note that `zz_hctr_tgr_default_strategy.txt` sits on the merged body in `zz_hctr_ai_strategy_default.txt`, so it goes wherever that file goes. For `no e&f+psc`, change nothing.
+| `common/achievement_groups.txt` | MoH × Morgenröte |
+| `common/character_templates/zz_hcm_characters.txt` | HC × Morgenröte |
+| `common/decisions/zz_hcm_olympic_games.txt` | GoB × Morgenröte |
+| `common/static_modifiers/zz_hcm_gaudi_modifier.txt` | GoB × Morgenröte |
+| `common/interest_groups/zz_hct_ig_landowners.txt` | HC × TGR (numbers only) |
+| `common/interest_groups/zz_hct_ig_rural_folk.txt` | HC × TGR (numbers only, plus MoH's own additions) |
+| `common/ideologies/zz_hct_jacksonian_democrat.txt` | HC × TGR |
+| `common/history/countries/chi - china.txt` | MoH × TGR |
+| `common/history/countries/tur - ottoman empire.txt` | GoB × TGR |
+| `common/laws/zz_hctr_slavery.txt` | HC × Tech & Res |
+| `common/decrees/zz_hctr_greener_grass.txt` | HC × Tech & Res |
+| `common/journal_entries/zz_hctr_warlord_china.txt` | MoH × Tech & Res |
+| `common/ai_strategies/zz_hctr_ai_strategy_default.txt` | MoH × Kuromi's AI |
+| `common/ai_strategies/zz_hctr_tgr_default_strategy.txt` | MoH+KAI × TGR |
+| `common/ai_strategies/zzz_hctr_tr_default_strategy.txt` | MoH × Tech & Res |
 
 ## Rebuilding
 
@@ -153,8 +173,19 @@ Compatibility layer that puts the [b]Hail, Columbia! / Gates of the Bosphorus / 
 [*][b]Chrysler and Twain[/b] keep both mods' jobs; [b]Jacksonian Democrats[/b] keep TGR's law stances; two TGR starting companies get founded again; [b]je_warlord_china[/b] and the [b]Greener Grass decree[/b] keep Tech & Res's changes.
 [/list]
 
+[h2]Running it without one of the mods[/h2]
+Every file belongs to exactly one pair, so trimming the addon means deleting files - there is no second download. Hail, Columbia!, Gates of the Bosphorus and Mandate of Heaven themselves are required.
+[list]
+[*][b]No Morgenröte:[/b] delete [i]achievement_groups.txt[/i], [i]character_templates/zz_hcm_characters.txt[/i], [i]decisions/zz_hcm_olympic_games.txt[/i], [i]static_modifiers/zz_hcm_gaudi_modifier.txt[/i].
+[*][b]No The Great Revision:[/b] delete [i]ideologies/zz_hct_jacksonian_democrat.txt[/i], [i]history/countries/chi - china.txt[/i], [i]history/countries/tur - ottoman empire.txt[/i], [i]ai_strategies/zz_hctr_tgr_default_strategy.txt[/i].
+[*][b]No Tech & Res:[/b] delete [i]laws/zz_hctr_slavery.txt[/i], [i]decrees/zz_hctr_greener_grass.txt[/i], [i]journal_entries/zz_hctr_warlord_china.txt[/i], [i]ai_strategies/zzz_hctr_tr_default_strategy.txt[/i].
+[*][b]No Kuromi's AI:[/b] delete [i]ai_strategies/zz_hctr_ai_strategy_default.txt[/i] and [i]zz_hctr_tgr_default_strategy.txt[/i] with it - the second is built on the body in the first.
+[/list]
+All paths are inside the addon's [i]common/[/i]. The Workshop restores deleted files on the next update; copy the mod folder into your own [i]mod/[/i] folder if you want the trim to stick.
+
 [h2]Compatibility[/h2]
 [list]
 [*]Works as is with the [b]no E&F + PSC[/b] megapack variant - those pairs share nothing with this block.
+[*]With the [b]no T&R[/b] variant, delete the Tech & Res files and the Kuromi's AI ones - that variant drops the whole Tech & Res + Kuromi block.
 [*]Adds no goods. The set stays at 111 of the 128 ceiling.
 [/list]
