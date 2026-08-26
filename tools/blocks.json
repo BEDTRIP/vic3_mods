@@ -63,9 +63,19 @@
     ],
     "_убрано_из_набора_25.08.2026": [
       "../../vic3_mods_out/TechRes+Kuromi/t&r"
+    ],
+    "_сборки_не_блоки": [
+      "../__megapacks/megapack no t&r",
+      "../__addon/addon vc",
+      "../__addon/addon hc+gob+moh",
+      "../__addon/addon llwa"
+    ],
+    "_чужие_компачи_не_блоки": [
+      "../_llwa/llwa+morg out",
+      "../_greys/usu_llwa out outdate"
     ]
   },
-  "_load_order_comment": "Истинный порядок загрузки для vfs_order.py. Отличается от 'order' (тот — порядок колонок в матрице). Целевая схема 25.08.2026: пачка -> мегапак no-t&r -> VC -> аддон-VC -> HC+GoB+MoH -> аддон-HC -> LLWA -> аддон-LLWA -> Grey's -> аддон-Grey's. VC стоит ДО HC+GoB+MoH намеренно: он перекрывает 55 ванильных путей голыми телами, и при позиции после HC съедает уже сделанные мерджи аддона-HC.",
+  "_load_order_comment": "Истинный порядок загрузки для vfs_order.py и content_holes.py. Отличается от 'order' (тот -- порядок колонок в матрице). Целевая схема 26.08.2026: пачка -> мегапак no-t&r -> VC -> аддон-VC -> HC+GoB+MoH -> аддон-HC -> LLWA -> чужие компачи LLWA -> аддон-LLWA -> Grey's -> аддон-Grey's. VC стоит ДО HC+GoB+MoH намеренно: он перекрывает 55 ванильных путей голыми телами, и при позиции после HC съедает уже сделанные мерджи аддона-HC. ИСПРАВЛЕНО 26.08.2026: два пути вели в grey_add_alot_of_things/{llwa_morgen compatch,usu_llwa comatch}, которых там нет -- компачи лежат в _llwa/llwa+morg out и _greys/usu_llwa out outdate, и прогоны по цепочке молча считались без них. Добавлены мегапак и три собранных аддона: без них цепочка не отражает того, что реально грузится.",
   "load_order": [
     "../../vic3_mods_out/.vanillaVIC3",
     "../../vic3_mods_out/_cmf",
@@ -79,13 +89,15 @@
     "../../vic3_mods_out/PowerBlocksExpanded",
     "../__megapacks/megapack no t&r",
     "../../vic3_mods_out/VC",
-    "../_vc/tgr+vc done",
+    "../__addon/addon vc",
     "../../vic3_mods_out/for addon/hailcolumbia",
     "../../vic3_mods_out/for addon/gatesofbosphorus",
     "../../vic3_mods_out/for addon/mandateofheaven",
+    "../__addon/addon hc+gob+moh",
     "../../vic3_mods_out/llwa",
-    "../../vic3_mods_out/grey_add_alot_of_things/llwa_morgen compatch",
-    "../../vic3_mods_out/grey_add_alot_of_things/usu_llwa comatch",
+    "../_llwa/llwa+morg out",
+    "../_greys/usu_llwa out outdate",
+    "../__addon/addon llwa",
     "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_econ",
     "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_pop",
     "../../vic3_mods_out/grey_add_alot_of_things/grey_usu",
@@ -94,5 +106,36 @@
     "../../vic3_mods_out/grey_add_alot_of_things/grey_food_2_ranch",
     "../../vic3_mods_out/grey_add_alot_of_things/grey_diplo",
     "../../vic3_mods_out/grey_add_alot_of_things/grey_subject"
-  ]
+  ],
+  "labels": {
+    "../../vic3_mods_out/.vanillaVIC3": "ваниль",
+    "../../vic3_mods_out/_cmf": "CMF",
+    "../../vic3_mods_out/_etf": "ETF",
+    "../../vic3_mods_out/TheGreatRevision": "TGR",
+    "../../vic3_mods_out/PSC": "PSC",
+    "../../vic3_mods_out/TechRes+Kuromi/kai": "KAI",
+    "../../vic3_mods_out/E&F": "E&F",
+    "../_ef/ef hotfix 1.13": "E&F hotfix",
+    "../../vic3_mods_out/Morgenrote": "Morgenrote",
+    "../../vic3_mods_out/PowerBlocksExpanded": "PBE",
+    "../__megapacks/megapack no t&r": "МЕГАПАК",
+    "../../vic3_mods_out/VC": "VC",
+    "../__addon/addon vc": "АДДОН-VC",
+    "../../vic3_mods_out/for addon/hailcolumbia": "HC",
+    "../../vic3_mods_out/for addon/gatesofbosphorus": "GoB",
+    "../../vic3_mods_out/for addon/mandateofheaven": "MoH",
+    "../__addon/addon hc+gob+moh": "АДДОН-HC",
+    "../../vic3_mods_out/llwa": "LLWA",
+    "../_llwa/llwa+morg out": "llwa+morg out",
+    "../_greys/usu_llwa out outdate": "usu_llwa out",
+    "../__addon/addon llwa": "АДДОН-LLWA",
+    "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_econ": "soft_econ",
+    "../../vic3_mods_out/grey_add_alot_of_things/_grey_soft_pop": "soft_pop",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_usu": "USU",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_deeper_cinosphere": "cinosphere",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_food": "food",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_food_2_ranch": "ranch",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_diplo": "diplo",
+    "../../vic3_mods_out/grey_add_alot_of_things/grey_subject": "subject"
+  }
 }
