@@ -1,0 +1,86 @@
+# ComPatch: E&F + Victorian Century
+
+**Game 1.13 (exe 1.13.11). E&F (Economic and Financial Mod) V4, current; Victorian Century as currently unpacked (both mods declare no version string).**
+
+Victorian Century loads after E&F and, in four places, fully replaces or freshly creates a record E&F had already injected into. Nothing errors, nothing is logged — the injected lines are simply gone from the loaded game. This patch re-applies exactly those four things, on top of VC.
+
+## Load order
+
+1. E&F (+ Expanded Topbar Framework, which E&F itself requires)
+2. E&F Hotfix
+3. …the rest of your set…
+4. Victorian Century (+ Victorian Century [RU])
+5. **this ComPatch**
+
+**This patch must load after Victorian Century.** VC is the mod doing the overwriting; the patch only re-adds what VC's overwrite ate.
+
+## What was being lost
+
+Machine matrix: 145 shared keys, 0 shared file paths (`tools/pair_matrix.py`). Of those, 141 turn out to be non-conflicts once you read the actual bodies — both sides only inject into disjoint sub-blocks, or the "shared" define group shares no member key. Four are real:
+
+| record | what E&F contributed | why VC's overwrite ate it |
+| --- | --- | --- |
+| **`common/buy_packages/wealth_1`…`wealth_99`** (99 records) | `popneed_currency` and, from wealth_15 up, `popneed_financial_products` — E&F's whole currency-demand mechanic reaches every wealth tier through this | VC's `REPLACE_OR_CREATE:wealth_N` defines the tier from scratch and never mentions either need |
+| **`common/buildings/building_opium_plantation`** | `pmg_market_liquidity` + `pmg_private_ownership_agricultural_stock` in `production_method_groups` — the same two groups E&F gives every other plantation | VC is the only building where it does a bare `REPLACE:` instead of `TRY_INJECT:`; the other 41 shared building keys are untouched by this patch because VC only injects `can_build_private` there and E&F only injects `production_method_groups` — different sub-blocks, nothing to fix |
+| **`common/company_types/company_standard_oil`** | `mining_stock_usa` + `prestige_good_usa_oil` in `possible_prestige_goods` | VC's `REPLACE_OR_CREATE:company_standard_oil` is its own American Standard Oil rework and only lists VC's own prestige good |
+| **`common/static_modifiers/base_values`** | an icon and `country_minting_add = -500` | VC's `REPLACE_OR_CREATE:base_values` is a ~100-line block that never mentions E&F's icon field, and already sets its own `country_minting_add = 1000` for an unrelated reason |
+
+## How the merge is made
+
+`tools/regen_vc_ef.py`. Unlike the TGR × VC pair, none of these four need a three-way body reconstruction: VC's replace/create records already exist by the time this patch loads, so every fix here is a plain `INJECT:` that appends E&F's own lines into a block or list VC already created. The generator reads those lines live out of E&F's current files (never a hand-copied table), so a future E&F update that changes these numbers is picked up automatically on the next run — `--check` reports drift without writing.
+
+**`base_values` is the one line that's a judgement call, not a mechanical re-apply.** VC's body already has `country_minting_add = 1000`; E&F's re-applied line adds a second `country_minting_add = -500` to the same block. `_add` fields stack in Victoria 3 rather than the later one overwriting the earlier (see `Правила работы...`, section 6 — the "multiply = 2.0 after multiply = 2" warning is exactly this shape), so the net effect is +500, which is what both mods running together would have produced anyway if VC's directive weren't a full replace. Recorded here rather than silently resolved: if this reads wrong in game, the intended fix is to drop the re-applied line, not to re-derive a new number.
+
+**Prestige-good slot for `company_standard_oil`'s two re-applied goods is a separate, open question (VC.7 in the project plan).** Victoria 3 caps prestige goods at three live slots per base good, counted by declaration order across the whole load chain; this patch only restores the *definition*, it doesn't audit whether `mining_stock_usa` / `prestige_good_usa_oil` get a live slot once the full set is loaded.
+
+## What is NOT in this patch, and why
+
+* **41 of the 42 shared `common/buildings` keys.** VC's `TRY_INJECT:` only ever touches `can_build_private`; E&F's `INJECT:` only ever touches `production_method_groups`. Disjoint sub-blocks, nothing to merge. Verified programmatically across every shared building key, not sampled.
+* **`common/defines` (`NEconomy`)** — both declare the group, but the specific member keys never overlap: VC sets resource-discovery / debt-slavery / slave-trade / minting / pop-profession keys, E&F sets `PRICE_RANGE`, `GOODS_SHORTAGE_PENALTY_MAX`, `GOLD_RESERVE_RETURNS_FACTOR`. E&F's own `NATIONALIZATION_PER_LEVEL_COST` / `PRIVATIZATION_PER_LEVEL_COST` lines, which would collide with VC's, are commented out in E&F's own file. Same shape as the TGR × VC pair's defines finding.
+* **`common/technology/technologies` (`mutual_funds`)** — E&F fully `REPLACE:`s the tech with its own three `modifier` fields; VC's `INJECT:` adds a fourth, disjoint field (`country_free_charters_add`) into the same `modifier` block. Two `modifier` sub-blocks accumulate rather than collide, same as the buildings case above.
+* **`common/history/global` (`GLOBAL`) and `common/on_actions` (`on_monthly_pulse_country`)** — additive containers, not real conflicts. `pair_matrix.py` filters both; the raw `scan_conflicts.py` count of 147 (E&F) + 2 (hotfix) drops to 145 once both occurrences of each are excluded.
+* **E&F Hotfix's own two shared keys** are the same `GLOBAL` / `on_monthly_pulse_country` pair — nothing to patch there either.
+* **Localization, event ids** — zero collisions.
+* **`common/goods`** — VC has no such folder; the 128-goods ceiling is untouched by this pair.
+
+## Notes
+
+* **Maintenance.** Every file is generated by `tools/regen_vc_ef.py`, which reads the four records straight out of E&F's current files. Re-run it after either mod updates and read what it prints; `--check` reports drift (`SAME`/`DRIFT` per file) without writing anything.
+* E&F declares no `version` or `supported_game_version`; Victorian Century declares neither `version` nor a workshop `id`, so it cannot be named in `relationships` — only in the description and in `tested_with`.
+* This is a **compatibility patch**, not a rebalance, with the one declared exception above (`base_values`, which stacks two authors' numbers rather than picking one).
+* Full analysis: `conflicts_ef_vs_vc_report.md` (VC × E&F) and `conflicts_ef_hotfix_vs_vc_report.md` (VC × E&F Hotfix) in this folder.
+
+## For Steam
+
+[h1]ComPatch: E&F + Victorian Century[/h1]
+[b]Game 1.13 (exe 1.13.11) — E&F (Economic and Financial Mod) V4, Victorian Century (both declare no version).[/b]
+
+Victorian Century loads after E&F and fully replaces four records E&F had injected into. Nothing errors and nothing is logged — the injected lines just aren't in the loaded game. This patch re-adds all four, on top of VC.
+
+[h2]Load order[/h2]
+[list]
+[*]E&F (+ Expanded Topbar Framework)
+[*]E&F Hotfix
+[*]…the rest of your set…
+[*]Victorian Century
+[*][b]this ComPatch[/b]
+[/list]
+[b]It must load after Victorian Century.[/b]
+
+[h2]What comes back[/h2]
+[list]
+[*][b]All 99 buy packages[/b] — E&F's currency and financial-products needs, re-applied to every wealth tier.
+[*][b]Opium plantation[/b] — E&F's market-liquidity and private-ownership production methods, the one building VC fully replaces instead of injecting into.
+[*][b]Standard Oil company[/b] — E&F's two prestige goods.
+[*][b]base_values[/b] — E&F's minting adjustment, stacked on top of VC's own (both are additive fields, so both apply).
+[/list]
+
+[h2]What it does not touch[/h2]
+41 of the 42 shared building keys, the shared define group, and the shared technology are already compatible — the two mods inject into different sub-blocks, or the "shared" define keys never actually overlap. Nothing to fix there.
+
+[h2]Notes[/h2]
+[list]
+[*]Generated by [i]tools/regen_vc_ef.py[/i], which reads all four records live from E&F's own files rather than a hand-copied table.
+[*]Compatibility patch, not a rebalance, with one declared exception (base_values stacks two authors' numbers).
+[/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

@@ -1,0 +1,59 @@
+{
+  "name": "ComPatch E&F + Victorian Century",
+  "id": "3641394699",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Victorian Century loads last and its REPLACE_OR_CREATE wealth/company/building/base_values records silently wipe four things E&F injected into them. This puts E&F's currency needs, prestige goods, production methods and minting modifier back. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+      "display_name": "Expanded Topbar Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+        "display_name": "Expanded Topbar Framework",
+        "version": "current",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

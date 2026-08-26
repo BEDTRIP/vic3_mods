@@ -1,0 +1,85 @@
+# ComPatch: Morgenroete + Victorian Century
+
+**Game 1.13 (exe 1.13.11). Morgenroete - Dawn of Flavor 2.8.3e Mitsopoulos (requires Community Mod Framework); Victorian Century as currently unpacked (declares no version string).**
+
+Victorian Century loads after Morgenroete and, on three record groups, fully replaces or freshly creates records Morgenroete had already injected into. Nothing errors, nothing is logged — the injected lines are simply gone from the loaded game. This patch re-applies exactly those, on top of VC.
+
+## Load order
+
+1. Community Mod Framework
+2. Morgenroete - Dawn of Flavor
+3. …the rest of your set…
+4. Victorian Century (+ Victorian Century [RU])
+5. **this ComPatch**
+
+**This patch must load after Victorian Century.** VC is the mod doing the overwriting; the patch only re-adds what VC's overwrite ate.
+
+## What was being lost
+
+Machine matrix: 101 shared keys, 1 shared file path (`tools/pair_matrix.py`). Of those, 6 keys and the shared path turn out to be non-conflicts once you read the actual bodies. 95 are real, all in three files:
+
+| record | what Morgenroete contributed | why VC's overwrite ate it |
+| --- | --- | --- |
+| **`common/buy_packages/wealth_10`…`wealth_99`** (90 records) | `popneed_entertainment` — Morgenroete's own entertainment-demand mechanic (manzoni_prints, elgar_music, fine_art, air_travel, services) | VC's `REPLACE_OR_CREATE:wealth_N` defines the tier from scratch and never mentions the need |
+| **`common/pop_needs/popneed_free_movement`, `_leisure`, `_luxury_items`** | one to three extra `entry` lines each (`air_travel` in the first two, `fine_art` + `elgar_instruments` + `rubber` in the third) | VC's `REPLACE_OR_CREATE` on all three defines the entry list from scratch and never mentions any of Morgenroete's goods |
+| **`common/character_templates/gbr_charles_dickens_character_template`** | `role`, two writer traits, an `on_created` effect | VC's `REPLACE_OR_CREATE` is its own generated-by-event body with a different trait list and no `role` / `on_created` |
+| **`common/character_templates/swe_karl_johan_bernadotte_template`** | one extra trait (`mr_ruler_trait_karl_xiv`) | VC's `REPLACE_OR_CREATE` has its own six-trait list, missing this one |
+
+## How the merge is made
+
+`tools/regen_vc_morg.py`, same shape as `tools/regen_vc_ef.py`. VC's replace/create records already exist by the time this patch loads, so every fix is a plain `INJECT:`/`TRY_INJECT:` that appends Morgenroete's own lines into a block or list VC already created. The generator reads those lines live out of Morgenroete's current files (never a hand-copied table); a future Morgenroete update is picked up automatically on the next run — `--check` reports drift without writing.
+
+**The 90 `wealth_*` values happen to match the old T&R × VC compatch byte-for-byte.** Not because one was copied into the other — this generator reads Morgenroete's own `mr_buy_packages.txt` directly — but because T&R and Morgenroete both took `popneed_entertainment`'s tier curve from the same third-party source (see `Правила работы...`, section 279).
+
+## What is NOT in this patch, and why
+
+* **`common/mobilization_options` — `mobilization_option_aerial_recon`, `mobilization_option_balloon_recon`.** Morgenroete's `TRY_INJECT:` only touches `group`; VC's `INJECT:` only touches `upkeep_modifier`. Disjoint fields, both apply, nothing to merge.
+* **`common/mobilization_options` — `mobilization_option_chemical_weapons`, left OPEN.** Morgenroete's `TRY_REPLACE:` sets `upkeep_modifier.goods_input_fertilizer_add = 2`; VC's `INJECT:` sets the same field to `0.5` inside its own `upkeep_modifier`. Whether repeated `_add` keys inside one record's own sub-block sum (confirmed for country-wide `static_modifiers` pools, e.g. `base_values` in the E&F × VC patch) or the later declaration wins is not established for this shape. No file is written here — guessing wrong either loses Morgenroete's fertilizer cost or triples it. Cheap in-game check: look at the actual fertilizer upkeep of the chemical-weapons mobilization option with just Morgenroete + VC active.
+* **`common/technology/technologies` — `civilizing_mission`, `organized_sports`.** Both mods only `INJECT:`/`TRY_INJECT:`, never replace. `civilizing_mission`: Morgenroete touches `modifier`, VC touches `on_researched` — disjoint. `organized_sports`: both touch `modifier` but disjoint field names (`country_prestige_mult` vs `country_authority_mult`/`country_influence_mult`/`building_group_bg_service_employee_mult`) — modifier blocks accumulate, same shape as `mutual_funds` in the E&F × VC patch.
+* **`common/dna_data/ecchi_ger_hitler.txt`** (the pair's one shared path) **+ `ecchi_dna_adolf_hitler`.** Both files are the same portrait, gene-for-gene, just reformatted — both mods clearly drew the DNA data from the same third-party source. Only two numeric differences: VC has one extra gene (`coats`) Morgenroete lacks, and `gene_stubble` differs by a cosmetic value (0/0 vs 127/127). VC wins the path outright on load order; nothing of Morgenroete's own is lost because there is no Morgenroete-only content here.
+* **Localization, event ids** — zero collisions.
+* **`common/goods`** — VC has no such folder; the 128-goods ceiling is untouched by this pair.
+
+Full analysis, including why each of these reads as "not a conflict": `conflicts_vc_vs_morgenrote_report.md` in this folder.
+
+## Notes
+
+* **Maintenance.** Every file is generated by `tools/regen_vc_morg.py`, which reads all records straight out of Morgenroete's current files. Re-run it after either mod updates and read what it prints; `--check` reports drift (`SAME`/`DRIFT` per file) without writing anything.
+* Morgenroete declares version `2.8.3e Mitsopoulos` and requires Community Mod Framework; Victorian Century declares neither `version` nor a workshop `id`, so it cannot be named in `relationships` — only in the description and in `tested_with`.
+* This is a **compatibility patch**, not a rebalance — no judgement calls were needed here (unlike `base_values` in the E&F × VC patch); every re-applied field is simply absent from VC's replacement body.
+* One item is deliberately left unpatched pending an in-game check: `mobilization_option_chemical_weapons` (see above).
+
+## For Steam
+
+[h1]ComPatch: Morgenroete + Victorian Century[/h1]
+[b]Game 1.13 (exe 1.13.11) — Morgenroete - Dawn of Flavor 2.8.3e Mitsopoulos, Victorian Century (declares no version).[/b]
+
+Victorian Century loads after Morgenroete and fully replaces three record groups Morgenroete had injected into. Nothing errors and nothing is logged — the injected lines just aren't in the loaded game. This patch re-adds all of them, on top of VC.
+
+[h2]Load order[/h2]
+[list]
+[*]Community Mod Framework
+[*]Morgenroete - Dawn of Flavor
+[*]…the rest of your set…
+[*]Victorian Century
+[*][b]this ComPatch[/b]
+[/list]
+[b]It must load after Victorian Century.[/b]
+
+[h2]What comes back[/h2]
+[list]
+[*][b]All 90 touched buy packages[/b] (wealth_10…wealth_99) — Morgenroete's entertainment-demand need, re-applied.
+[*][b]Three pop needs[/b] — free movement, leisure and luxury-items entries for Morgenroete's own goods.
+[*][b]Charles Dickens[/b] — his writer role, traits and on-created effect.
+[*][b]Karl Johan Bernadotte[/b] — his extra ruler trait.
+[/list]
+
+[h2]What it does not touch[/h2]
+Two shared technologies and two of three shared mobilization options are already compatible — the mods inject into different sub-blocks or fields. One mobilization option (chemical weapons) is left open pending an in-game check — see the README on GitHub. The shared Hitler DNA file is the same data from both mods, just reformatted; VC's copy wins and nothing is lost.
+
+[h2]Notes[/h2]
+[list]
+[*]Generated by [i]tools/regen_vc_morg.py[/i], which reads every record live from Morgenroete's own files rather than a hand-copied table.
+[*]Pure compatibility patch — no rebalancing judgement calls needed.
+[/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
