@@ -148,8 +148,9 @@ Compatibility layer that puts [b]Victorian Century[/b] on top of the [url=https:
 [*]the whole MegaComPatch set, in its own order
 [*]MegaComPatch
 [*]Victorian Century
+[*]Victorian Century Localisation (if u need)
 [*][b]this addon (last)[/b]
-[*]Hail, Columbia! and its own addon, if you use them
+[*]other mods
 [/list]
 
 [h2]What it fixes[/h2]

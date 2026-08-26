@@ -190,6 +190,8 @@
   },
   "active": "ef9d9e95e55d7924",
   "lastOpenFiles": [
+    "psAB6.tmp",
+    "ps556F.tmp",
     "__addon/addon vc/thumbnail.png",
     "__addon/addon vc/conflicts_addon_vc_internal.md",
     "__addon/addon vc/common/buy_packages/zzzz_addon_vc_buy_packages.txt.tmp",
@@ -208,7 +210,6 @@
     "__addon/addon vc/common/pop_needs/zz_vc_morg_pop_needs.txt",
     "__addon/addon vc/common/character_templates/zz_vc_morg_character_templates.txt",
     "__addon/addon vc/common/character_templates",
-    "__addon/addon vc/common/static_modifiers/zz_vc_ef_static_modifiers.txt",
     "_vc/prestige_goods VC.7/report.md",
     "_vc/pbe+vc noneed/README.md",
     "_vc/kai+vc done/conflicts_kai+vc_vs_megapack_report.md",
@@ -234,7 +235,6 @@
     "_vc/tgr+vc/thumbnail.png",
     "_vc/kai+vc outdate/thumbnail.png",
     "_vc/kai+vc outdate/8.png",
-    "_vc/ef+vc outdate/thumbnail.png",
-    "_vc/ef+vc outdate notready/thumbnail.png"
+    "_vc/ef+vc outdate/thumbnail.png"
   ]
 }

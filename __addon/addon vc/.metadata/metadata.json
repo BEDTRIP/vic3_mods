@@ -1,7 +1,7 @@
 {
   "name": "Addon: Victorian Century x MegaComPatch",
   "id": "asm.addon.vc",
-  "version": "1.13.11-1",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility addon that puts Victorian Century on top of the MegaComPatch set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenroete, Power Blocs Expanded). Merge of my four ComPatches for this block -- The Great Revision, E&F, Morgenroete and Kuromi's AI -- plus one internal merge file the assembly itself needs (see README). Private Sector Construction and Power Blocs Expanded need no patch against Victorian Century, confirmed VC.5/VC.6. Load last, after all of them, and before Hail, Columbia! if you use it.",
   "picture": "thumbnail.png",

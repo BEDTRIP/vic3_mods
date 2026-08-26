@@ -1,7 +1,7 @@
 {
   "name": "ComPatch E&F + Victorian Century",
   "id": "3641394699",
-  "version": "1.13.11-1",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Victorian Century loads last and its REPLACE_OR_CREATE wealth/company/building/base_values records silently wipe four things E&F injected into them. This puts E&F's currency needs, prestige goods, production methods and minting modifier back. Load after both.",
   "picture": "thumbnail.png",
