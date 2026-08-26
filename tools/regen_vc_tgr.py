@@ -665,6 +665,47 @@ def _read_grid():
     return vc_side, group_of, order, tgr_side, rgroup_of, rlaws
 
 
+def _laws_with_parent(root: str) -> dict[str, str]:
+    """Variant laws of one mod: `law_x = { parent = law_y }` -> parent name."""
+    out: dict[str, str] = {}
+    directory = os.path.join(root, "common/laws")
+    if not os.path.isdir(directory):
+        return out
+    for name in sorted(os.listdir(directory)):
+        if not name.endswith(".txt"):
+            continue
+        text = "\n".join(read_lines(os.path.join(directory, name)))
+        for m in re.finditer(r"^(?:[A-Z_]+:)?(law_[a-z_0-9]+)\s*=\s*\{", text, re.M):
+            after = text[m.end():]
+            nxt = re.search(r"^(?:[A-Z_]+:)?law_[a-z_0-9]+\s*=\s*\{", after, re.M)
+            body = after[:nxt.start()] if nxt else after
+            parent = re.search(r"^\s*parent\s*=\s*(law_[a-z_0-9]+)", body, re.M)
+            if parent:
+                out[m.group(1)] = parent.group(1)
+    return out
+
+
+_VARIANTS: dict[str, str] = {}
+
+
+def variant_laws() -> dict[str, str]:
+    """Every law in the set that is a VARIANT of another law (`parent = ...`).
+
+    Ideologies must not take a stance on one. Found 27.08.2026 (VC.1k): with
+    stances on VC's ten variant laws in place, the laws screen showed EVERY
+    interest group as 99.9% neutral across the whole law group -- consumption,
+    land, per-capita, proportional and graduated taxation all at once, in every
+    country. Gagging the file restored them; the game logs nothing either way.
+
+    It matches how the feature is meant to work -- a variant is a skin of its
+    parent and inherits the parent's stance -- and it matches what the authors
+    do: vanilla has 14 variant laws, TGR four, VC ten, and across all three
+    NOT ONE ideology carries a stance on any of them."""
+    if not _VARIANTS:
+        for root in (VAN, TGR, VC):
+            _VARIANTS.update(_laws_with_parent(root))
+    return _VARIANTS
+
 def _record_prefix(path: str, key: str) -> str:
     """The database prefix a file uses for one record: "", "INJECT:", "REPLACE:"..."""
     pat = re.compile(r"^﻿?([A-Z_]+:)?" + re.escape(key) + r"\s*=\s*\{")
@@ -779,62 +820,61 @@ def _stance_block(ideology, row, group_of, order):
 
 
 def build_ideology_stances(report):
-    """Two files, one per direction, because the two are independently droppable.
+    """One file, not two: only the VC-ideologies-on-TGR-laws direction is real.
 
     INJECT: and not REPLACE_OR_CREATE: -- the point is to ADD stances to ideologies
-    whose bodies belong to someone else. But an injected lawgroup block REPLACES the
+    whose bodies belong to someone else. An injected lawgroup block REPLACES the
     same-named block instead of merging into it, so `_stance_block` re-issues that
-    one block whole wherever it is already taken (73 of them, all in the VC-laws
-    direction). Copying stays bounded to those blocks: the 13 TGR groups are free on
-    VC's ideologies, and no full ideology body is ever re-declared."""
+    one block whole wherever it is already taken, and no full ideology body is ever
+    re-declared.
+
+    The other direction is gone. All ten laws VC adds are VARIANTS of vanilla laws
+    (`parent = ...`), and a variant takes no stance of its own -- see variant_laws().
+    The 480 stances the workbook holds for them did not just do nothing: they made
+    every interest group read as 99.9% neutral across the whole law group. Sheet
+    «Обратно» is kept as the record of that dead end, not as a source."""
     vc_side, group_of, order, tgr_side, rgroup_of, rlaws = _read_grid()
 
     bad = [(i, l, v) for i, row in list(vc_side.items()) + list(tgr_side.items())
            for l, v in row.items() if v not in STANCES]
     assert not bad, "недопустимые значения позиций: %s" % bad[:5]
 
+    variants = variant_laws()
+    dropped: dict[str, int] = {}
+    for side in (vc_side, tgr_side):
+        for ide, row in list(side.items()):
+            for law in [l for l in row if l in variants]:
+                dropped[law] = dropped.get(law, 0) + 1
+                del row[law]
+            if not row:
+                del side[ide]
+    if dropped:
+        print("  позиции по законам-вариантам выброшены (стансы наследуются от parent): "
+              + ", ".join(f"{l}×{n}" for l, n in sorted(dropped.items())))
+
     blocks, n = [], 0
     for ide in vc_side:
         b, cnt = _stance_block(ide, vc_side[ide], group_of, order)
         blocks.append(b)
         n += cnt
+    assert n, "первая сторона осталась без позиций — проверь таблицу"
     write("common/ideologies/zz_vc_tgr_stances_on_tgr_laws.txt",
           "\n\n".join(blocks),
           "%d Victorian Century ideologies, %d stances on The Great Revision's laws" % (len(vc_side), n),
           "TGR adds 13 law groups and 60 laws; not one of VC's 56 new ideologies had an\n"
           "#   opinion on any of them, so every interest group led by VC flavour was neutral\n"
-          "#   on TGR's entire political layer. Hand-authored, see the workbook beside this file.",
+          "#   on TGR's entire political layer. Hand-authored, see the workbook beside this file.\n"
+          "#   None of TGR's four variant laws (canton_system, colonial_administration,\n"
+          "#   neo_absolutism, organic_regulation) is in here -- variants take no stance.",
           bom=True)
 
-    blocks, n2 = [], 0
-    rorder = [l for l in rlaws]
-    for ide in tgr_side:
-        b, cnt = _stance_block(ide, tgr_side[ide], rgroup_of, rorder)
-        blocks.append(b)
-        n2 += cnt
-    write("common/ideologies/zz_vc_tgr_stances_on_vc_laws.txt",
-          "\n\n".join(blocks),
-          "%d The Great Revision ideologies, %d stances on Victorian Century's laws" % (len(tgr_side), n2),
-          "the other direction: VC adds 10 laws into vanilla law groups and no TGR\n"
-          "#   ideology had an opinion on any of them. 73 блока из восьми групп\n#   переизданы целиком -- иначе инжект сносит чужие позиции, см. VC.1k.",
-          bom=True)
-
-    # ideology_jacksonian_democrat -- Hail Columbia REPLACE_OR_CREATEs it and loads
-    # later, so this injection does not survive a set that includes HC. The stance
-    # has to be folded into the addon's zz_hct_jacksonian_democrat.txt instead.
-    # Asserting rather than commenting: if HC ever stops doing that, this fires and
-    # the note gets deleted instead of quietly outliving its reason.
-    hc = os.path.join(res("../../vic3_mods_out/for addon/hailcolumbia"),
-                      "common/ideologies")
-    clash = "ideology_jacksonian_democrat" in tgr_side and any(
-        "ideology_jacksonian_democrat" in open(os.path.join(hc, f), encoding="utf-8-sig",
-                                               errors="ignore").read()
-        for f in os.listdir(hc) if f.endswith(".txt"))
-    if clash:
-        report.append(("common/ideologies/ideology_jacksonian_democrat", -1, -1,
-                       ["наши позиции по законам VC"],
-                       ["Hail Columbia REPLACE_OR_CREATE поверх, грузится позже — "
-                        "переносить в аддон-HC, zz_hct_jacksonian_democrat.txt"], "b"))
+    n2 = sum(len(r) for r in tgr_side.values())
+    if n2:
+        raise AssertionError(
+            "лист «Обратно» снова даёт позиции по законам VC (%d) — если среди них "
+            "появился НЕ вариант, направление надо восстанавливать осознанно, см. VC.1k" % n2)
+    print("  zz_vc_tgr_stances_on_vc_laws.txt не пишется: все 10 законов VC — варианты, "
+          "позиции по ним ломают всю группу (VC.1k)")
 
 
 def main() -> int:

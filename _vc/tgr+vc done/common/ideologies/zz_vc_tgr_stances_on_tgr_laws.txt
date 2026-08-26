@@ -6,6 +6,8 @@
 # Why this file exists: TGR adds 13 law groups and 60 laws; not one of VC's 56 new ideologies had an
 #   opinion on any of them, so every interest group led by VC flavour was neutral
 #   on TGR's entire political layer. Hand-authored, see the workbook beside this file.
+#   None of TGR's four variant laws (canton_system, colonial_administration,
+#   neo_absolutism, organic_regulation) is in here -- variants take no stance.
 #
 # !! MAINTENANCE !! Bodies are a three-way merge with vanilla 1.13.11 as the
 # common ancestor. After either mod updates, re-run the generator and read the
