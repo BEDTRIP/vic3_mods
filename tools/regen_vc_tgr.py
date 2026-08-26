@@ -57,7 +57,7 @@ HEADER = """# TGR x VC compatch -- {what}
 # over a line they used to leave alone.
 """
 
-DATE = "2026-08-25"
+DATE = "2026-08-26"
 CHECK_ONLY = False
 
 
@@ -665,16 +665,113 @@ def _read_grid():
     return vc_side, group_of, order, tgr_side, rgroup_of, rlaws
 
 
+def _record_prefix(path: str, key: str) -> str:
+    """The database prefix a file uses for one record: "", "INJECT:", "REPLACE:"..."""
+    pat = re.compile(r"^﻿?([A-Z_]+:)?" + re.escape(key) + r"\s*=\s*\{")
+    for raw in read_lines(path):
+        m = pat.match(raw.split("#", 1)[0])
+        if m:
+            return m.group(1) or ""
+    return ""
+
+
+def _group_blocks(body: list[str] | None) -> dict[str, list[tuple[str, str]]]:
+    """`lawgroup_x = { law_y = stance ... }` sub-blocks of one ideology, in order."""
+    out: dict[str, list[tuple[str, str]]] = {}
+    cur, depth = None, 0
+    for raw in body or []:
+        code = raw.split("#", 1)[0]
+        line = code.strip()
+        if depth == 1:
+            m = re.match(r"(lawgroup_[a-z_0-9]+)\s*=\s*\{", line)
+            if m:
+                cur = m.group(1)
+                out.setdefault(cur, [])
+                for lm in re.finditer(r"(law_[a-z_0-9]+)\s*=\s*([a-z_]+)", line[m.end():]):
+                    out[cur].append((lm.group(1), lm.group(2)))
+        elif depth >= 2 and cur:
+            m = re.match(r"(law_[a-z_0-9]+)\s*=\s*([a-z_]+)", line)
+            if m:
+                out[cur].append((m.group(1), m.group(2)))
+        depth += code.count("{") - code.count("}")
+        if depth <= 1:
+            cur = None
+    return out
+
+
+_GROUP_CACHE: dict[str, dict[str, tuple[list[tuple[str, str]], str]]] = {}
+
+
+def _effective_groups(ideology: str) -> dict[str, tuple[list[tuple[str, str]], str]]:
+    """What lawgroup blocks the ideology already carries when our addon loads.
+
+    Walked in load order vanilla -> TGR -> VC. A body without a prefix (or with
+    REPLACE:/REPLACE_OR_CREATE:/TRY_REPLACE:) drops everything declared earlier;
+    INJECT: keeps what it does not name and replaces what it does. That last
+    clause is the whole reason this function exists -- see _stance_block."""
+    if ideology in _GROUP_CACHE:
+        return _GROUP_CACHE[ideology]
+    state: dict[str, tuple[list[tuple[str, str]], str]] = {}
+    for root, label in ((VAN, "vanilla"), (TGR, "TGR"), (VC, "VC")):
+        path = find_file(root, "common/ideologies", ideology)
+        if not path:
+            continue
+        groups = {g: (v, label) for g, v in _group_blocks(record(path, ideology)).items()}
+        if _record_prefix(path, ideology) in ("INJECT:", "TRY_INJECT:"):
+            state.update(groups)
+        else:
+            state = groups
+    _GROUP_CACHE[ideology] = state
+    return state
+
+
+def _plural_pos(n: int) -> str:
+    if n % 10 == 1 and n % 100 != 11:
+        return "позиция"
+    if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14):
+        return "позиции"
+    return "позиций"
+
+
+MERGED_BLOCKS: list[tuple[str, str, str, int]] = []
+
+
 def _stance_block(ideology, row, group_of, order):
+    """One INJECT: record with our stances, one sub-block per law group.
+
+    A lawgroup block is a NAMED entry, so an injected `lawgroup_taxation = { ... }`
+    REPLACES the ideology's existing block of that name instead of adding a line to
+    it (правило 50). Found the hard way 26.08.2026: the one-line form silently wiped
+    73 blocks and with them the interest-group stances on the laws screen -- VC.1k.
+    So where the group is already taken, the block is re-issued WHOLE: the earlier
+    author's positions first, ours appended, ours winning on the same law. Where the
+    group is free (all 13 TGR groups against VC's ideologies) nothing is copied."""
     by_group = {}
     for law in order:
         if law in row:
             by_group.setdefault(group_of[law], []).append((law, row[law]))
+    have = _effective_groups(ideology)
     out = ["INJECT:%s = {" % ideology]
     for grp, items in by_group.items():
-        out.append("\t%s = {" % grp)
-        width = max(len(law) for law, _ in items)
-        for law, st in items:
+        existing = have.get(grp)
+        if existing:
+            pairs, label = existing
+            merged = list(pairs)
+            at = {law: i for i, (law, _) in enumerate(merged)}
+            for law, st in items:
+                if law in at:
+                    merged[at[law]] = (law, st)
+                else:
+                    merged.append((law, st))
+            MERGED_BLOCKS.append((ideology, grp, label, len(pairs)))
+            out.append("\t%s = {\t# тело блока целиком: %d %s %s + наши; "
+                       "инжект именованного блока заменяет его, а не дополняет"
+                       % (grp, len(pairs), _plural_pos(len(pairs)), label))
+        else:
+            merged = items
+            out.append("\t%s = {" % grp)
+        width = max(len(law) for law, _ in merged)
+        for law, st in merged:
             out.append("\t\t%-*s = %s" % (width, law, st))
         out.append("\t}")
     out.append("}")
@@ -684,13 +781,12 @@ def _stance_block(ideology, row, group_of, order):
 def build_ideology_stances(report):
     """Two files, one per direction, because the two are independently droppable.
 
-    INJECT: and not REPLACE_OR_CREATE: -- the point is to ADD a lawgroup block to
-    an ideology that never named it. Named entries inside an injected sub-block
-    override same-named ones and new ones are appended, so injecting
-    `lawgroup_taxation = { law_askeri_tax = approve }` into a TGR ideology that
-    already declares lawgroup_taxation adds that one line and disturbs nothing.
-    A full body here would mean re-declaring 900 lines of someone else's opinions
-    and re-diffing them on every update."""
+    INJECT: and not REPLACE_OR_CREATE: -- the point is to ADD stances to ideologies
+    whose bodies belong to someone else. But an injected lawgroup block REPLACES the
+    same-named block instead of merging into it, so `_stance_block` re-issues that
+    one block whole wherever it is already taken (73 of them, all in the VC-laws
+    direction). Copying stays bounded to those blocks: the 13 TGR groups are free on
+    VC's ideologies, and no full ideology body is ever re-declared."""
     vc_side, group_of, order, tgr_side, rgroup_of, rlaws = _read_grid()
 
     bad = [(i, l, v) for i, row in list(vc_side.items()) + list(tgr_side.items())
@@ -707,7 +803,8 @@ def build_ideology_stances(report):
           "%d Victorian Century ideologies, %d stances on The Great Revision's laws" % (len(vc_side), n),
           "TGR adds 13 law groups and 60 laws; not one of VC's 56 new ideologies had an\n"
           "#   opinion on any of them, so every interest group led by VC flavour was neutral\n"
-          "#   on TGR's entire political layer. Hand-authored, see the workbook beside this file.")
+          "#   on TGR's entire political layer. Hand-authored, see the workbook beside this file.",
+          bom=True)
 
     blocks, n2 = [], 0
     rorder = [l for l in rlaws]
@@ -719,7 +816,8 @@ def build_ideology_stances(report):
           "\n\n".join(blocks),
           "%d The Great Revision ideologies, %d stances on Victorian Century's laws" % (len(tgr_side), n2),
           "the other direction: VC adds 10 laws into vanilla law groups and no TGR\n"
-          "#   ideology had an opinion on any of them.")
+          "#   ideology had an opinion on any of them. 73 блока из восьми групп\n#   переизданы целиком -- иначе инжект сносит чужие позиции, см. VC.1k.",
+          bom=True)
 
     # ideology_jacksonian_democrat -- Hail Columbia REPLACE_OR_CREATEs it and loads
     # later, so this injection does not survive a set that includes HC. The stance

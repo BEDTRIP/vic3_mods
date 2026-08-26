@@ -1,0 +1,174 @@
+﻿l_russian:
+    # Здания
+    LLWA_building_roadway:  "Автодорога"
+    LLWA_building_waterway: "Судоходный канал"
+    LLWA_building_riverway: "Естественный водный путь"
+    LLWA_building_airway:   "Аэродром"
+
+    llwa_building_freight_depot: "Судоходные линии"
+    llwa_building_exchange:      "Финансовые биржи"
+
+    LLWA_building_logistics_hub: "Логистический центр"
+
+    LLWA_bg_logihub: "$LLWA_building_logistics_hub$"
+
+    # Группы методов производства
+    LLWA_pmg_road_base:     "$pm_base$"
+    LLWA_pmg_rail_base:     "$pm_base$"
+    LLWA_pmg_water_base:    "$pm_base$"
+    LLWA_pmg_air_base:      "$pm_base$"
+    LLWA_pmg_shipping_base: "$pm_base$"
+    LLWA_pmg_exchange_base: "$pm_base$"
+    LLWA_pmg_logihub_base:  "$pm_base$"
+
+    LLWA_pmg_road_traffic:  "Пассажирские автобусы"
+    LLWA_pmg_rail_traffic:  "$pmg_passenger_trains$"
+    LLWA_pmg_water_traffic: "Пассажирские суда"
+    LLWA_pmg_air_traffic:   "Профиль авиалиний"
+
+    LLWA_pmg_mapi_comms: "Распространение информации"
+
+    LLWA_pmg_private_expansion: "Частное расширение"
+
+    # Методы производства — Дороги
+    LLWA_pm_hand_carts:      "Ручные тележки"
+    LLWA_pm_horse_wagons:    "Повозки"
+    LLWA_pm_steam_trucks:    "Паровые грузовики"
+    LLWA_pm_electric_trucks: "Электрические грузовики"
+    LLWA_pm_petrol_trucks:   "Бензиновые грузовики"
+
+    LLWA_pm_no_buses:       "$pm_no_passenger_trains$"
+    LLWA_pm_rickshaws:      "Рикши"
+    LLWA_pm_stagecoaches:   "Дилижансы"
+    LLWA_pm_steam_buses:    "Паровые автобусы"
+    LLWA_pm_electric_buses: "Электрические автобусы"
+    LLWA_pm_motor_buses:    "Моторные автобусы"
+
+    # Методы производства — Корабли
+    LLWA_pm_sailing_barges:  "Парусные баржи"
+    LLWA_pm_sail_steamboats: "Парусно-паровые суда" # Как в: https://commons.wikimedia.org/wiki/Category:Sail-steamers
+    LLWA_pm_steamboats:      "Пароходы"
+    LLWA_pm_motor_vessels:   "Моторные суда"
+
+    LLWA_pm_no_ferries:    "$pm_no_passenger_trains$"
+    LLWA_pm_riverboats:    "Речные суда"
+    LLWA_pm_packet_ships:  "Пакетботы"
+    LLWA_pm_steam_ferries: "Паровые паромы"
+    LLWA_pm_motor_ferries: "Дизельные паромы"
+
+    # Методы производства — Авиалинии
+    LLWA_pm_airships:  "$pmg_airship_mooring_post$"
+    LLWA_pm_airplanes: "$pmg_aeroplanes$"
+
+    LLWA_pm_no_air_travel: "$pm_no_passenger_trains$"
+    LLWA_pm_air_mail:      "Авиапочта"
+    LLWA_pm_air_travel:    "Пассажирские перелёты"
+
+    # Методы производства — Судоходные линии и биржи
+    LLWA_pm_spot_shipping:     "Спотовые перевозки" # То есть «разовый и краткосрочный контракт на перевозку»
+    LLWA_pm_transport_lines:   "Транспортные линии"
+    LLWA_pm_logistics_company: "Логистические корпорации"
+
+    LLWA_pm_commidities_listings: "Товарные листинги"
+    LLWA_pm_securities_trading:   "Торговля ценными бумагами"
+    LLWA_pm_clearing_houses:      "Клиринговые палаты"
+
+    LLWA_pm_no_comms:      "Без распространения информации"
+    LLWA_pm_econ_journals: "Экономические журналы"
+    LLWA_pm_telegraphs:    "Телеграфные линии"
+    LLWA_pm_telephones:    "Телефонные линии"
+
+    # Методы производства — Логистические центры
+    LLWA_pm_logihub_base: "$LLWA_building_logistics_hub$"
+
+    # Методы производства — Частное расширение
+    LLWA_pm_yes_private_expansion: "Частное расширение разрешено"
+    LLWA_pm_no_private_expansion:  "Только государственное расширение"
+
+    # Товары
+    llwa_market_conn: "Рыночная связность"
+    llwa_logi_conn:   "Локальная связность"
+
+    # Подсказки
+    LLWA_tt_has_river:        "Имеет особенность области «Река»"
+    LLWA_tt_has_no_river:     "#b Не#! имеет особенность области «Река»"
+    LLWA_tt_has_no_mountains: "#b Не#! имеет особенность области «Горы»"
+
+    LLWA_st_can_have_canal: "$TRIGGER_AND$" # Особенность (баг) движка игры
+
+    # Компании
+    LLWA_company_turnpike:  "Трест наземных перевозок"
+    LLWA_company_ship_line: "Международная судоходная компания"
+    LLWA_company_railroad:  "Центральная железнодорожная корпорация"
+    LLWA_company_airline:   "Трансокеанские авиалинии" # Отсылка к FSAC
+
+    LLWA_company_turnpike_dynamic_name_tag_singular:  "Наземные перевозки"
+    LLWA_company_turnpike_dynamic_name_tag_plural:    "Наземные перевозки"
+    LLWA_company_ship_line_dynamic_name_tag_singular: "Судоходная линия"
+    LLWA_company_ship_line_dynamic_name_tag_plural:   "Судоходные линии"
+    LLWA_company_railroad_dynamic_name_tag_singular:  "Центральная железная дорога"
+    LLWA_company_railroad_dynamic_name_tag_plural:    "Центральная железная дорога"
+    LLWA_company_airline_dynamic_name_tag_singular:   "Авиалиния"
+    LLWA_company_airline_dynamic_name_tag_plural:     "Авиалинии" # Для разнообразия
+
+    # Модификаторы
+    LLWA_md_mapi_building_lvl: "LLWA: Здания MAPI включены"
+    LLWA_md_mapi_mapi_lvl:     "LLWA: Ребаланс MAPI включён"
+    LLWA_md_logihub_in_mult:   "$LLWA_building_logistics_hub$: потребление"
+    LLWA_md_logihub_out_mult:  "$LLWA_building_logistics_hub$: производство"
+    LLWA_declared_bankruptcy:  "$declared_bankruptcy$"
+
+    # Типы модификаторов
+    goods_input_luxury_furniture_add:      "к потреблению @luxury_furniture! роскошной мебели за уровень"
+    goods_input_luxury_furniture_add_desc: "Количество @luxury_furniture! роскошной мебели, потребляемых сооружениями."
+
+    goods_input_services_add:      "к потреблению @services! $services$ за уровень"
+    goods_input_services_add_desc: "Количество @services! $services$, потребляемых сооружениями."
+
+    goods_output_llwa_market_conn_add:      "к производству @llwa_market_conn! $llwa_market_conn$ за уровень"
+    goods_output_llwa_market_conn_add_desc: "Количество @llwa_market_conn! $llwa_market_conn$, потребляемых сооружениями."
+
+    goods_output_llwa_logi_conn_add:      "к производству @llwa_logi_conn! $llwa_logi_conn$ за уровень"
+    goods_output_llwa_logi_conn_add_desc: "Количество @llwa_logi_conn! $llwa_logi_conn$, потребляемых сооружениями."
+
+    goods_input_transportation_mult:      "потребление @transportation! $transportation$"
+    goods_input_transportation_mult_desc: "Количество @transportation! $transportation$, потребляемых сооружениями."
+
+    goods_output_llwa_logi_conn_mult:      "производство @llwa_logi_conn! $llwa_logi_conn$"
+    goods_output_llwa_logi_conn_mult_desc: "$goods_output_llwa_logi_conn_add_desc$"
+
+    state_llwa_building_freight_depot_max_level_add:      "$llwa_building_freight_depot$"
+    state_llwa_building_freight_depot_max_level_add_desc: "$llwa_building_freight_depot$"
+
+    state_llwa_building_exchange_max_level_add:      "$llwa_building_exchange$"
+    state_llwa_building_exchange_max_level_add_desc: "$llwa_building_exchange$"
+
+    llwa_building_freight_depot_throughput_add: "[Concept('concept_throughput', 'Товарооборот')] $llwa_building_freight_depot$"
+    llwa_building_freight_depot_throughput_add_desc: "Бонус или штраф к потреблению и производству $llwa_building_freight_depot$."
+
+    llwa_building_exchange_throughput_add: "[Concept('concept_throughput', 'Товарооборот')] $llwa_building_exchange$"
+    llwa_building_exchange_throughput_add_desc: "Бонус или штраф к потреблению и производству $llwa_building_exchange$."
+
+    # Игровые правила
+    rule_LLWA_gr_mapi_mode:  "#yellow LLWA#! | Функции ребаланса MAPI"
+    rule_LLWA_gr_infra_mode: "#yellow LLWA#! | @transportation![Nbsp]$transportation$ для инфраструктуры"
+
+    setting_LLWA_grs_mapi_no:      "#n Отключено#!"
+    setting_LLWA_grs_mapi_no_desc: "#yellow $state_market_access_price_impact$#! #n не будет#! изменяться модом LLWA. Используйте эту настройку, если у вас установлен другой мод для MAPI или если вы предпочитаете ванильную реализацию."
+
+    setting_LLWA_grs_mapi_yes:      "#p Включено#!"
+    setting_LLWA_grs_mapi_yes_desc: "#yellow $state_market_access_price_impact$#! #p будет#! изменяться модом LLWA. У всех будет одинаковый базовый показатель MAPI, равный [GetPlayer.MakeScope.ScriptValue('LLWA_BASE_MAPI')|v0%], и повышать его можно будет исключительно за счёт строительства #yellow $llwa_building_freight_depot$#! и #yellow $llwa_building_exchange$#!."
+
+    setting_LLWA_grs_bldgs_only:      "#bold;blue Только здания#!"
+    setting_LLWA_grs_bldgs_only_desc: "#yellow $state_market_access_price_impact$#! #n не будет#! изменяться модом LLWA, однако #yellow $llwa_building_freight_depot$#! и #yellow $llwa_building_exchange$#! #p всё равно будут#! доступны для строительства. #n Не рекомендуется использовать эту настройку, если у вас не установлен мод, переделывающий MAPI.#!"
+
+    setting_LLWA_grs_infra_mode_yes:      "$setting_LLWA_grs_mapi_yes$"
+    setting_LLWA_grs_infra_mode_yes_desc: "В каждой [concept_state] #p будет#! создано специальное #yellow $LLWA_building_logistics_hub$#! [concept_building], создающее [concept_buy_orders] на #yellow @transportation![Nbsp]$transportation$#! в зависимости от местного [concept_infrastructure_usage], что обеспечивает столь необходимый дополнительный [concept_revenue]."
+
+    setting_LLWA_grs_infra_mode_no:      "$setting_LLWA_grs_mapi_no$"
+    setting_LLWA_grs_infra_mode_no_desc: "#yellow $LLWA_building_logistics_hub$#! [concept_building] #n не будет#! создано. [concept_buy_orders] на #yellow @transportation![Nbsp]$transportation$#! не будут связаны с [concept_infrastructure_usage]."
+
+    # Неиспользуемые строки — оставлены пустыми, чтобы не было ошибок
+    LLWA_md_dist_from_water: ""
+    state_llwa_mt_dist_from_water_add:      ""
+    state_llwa_mt_dist_from_water_add_desc: ""
