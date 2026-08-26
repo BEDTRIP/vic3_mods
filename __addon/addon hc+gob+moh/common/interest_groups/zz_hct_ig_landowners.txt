@@ -1,10 +1,18 @@
-### ComPatch HC+GoB+MoH x The Great Revision -- ig_landowners
+### === CARRIES A VICTORIAN CENTURY LAYER === this file also ships as
+### "zz_hct_ig_landowners.txt.off" next to it -- the same content built WITHOUT
+### Victorian Century's additions. To play without VC: delete THIS file
+### and remove the ".off" suffix from that one. Full list: "Playing
+### without Victorian Century" in the addon README.
+
+### ComPatch HC+GoB+MoH x The Great Revision + Victorian Century -- ig_landowners
 ###
 ### TGR reworks this interest group from TGR_POLITICS_landowners.txt with
-### REPLACE_OR_CREATE:.  Hail, Columbia! ships common/interest_groups/00_landowners.txt
-### -- the vanilla path, a bare body -- and loads later, so TGR's version is gone
+### REPLACE_OR_CREATE:.  Victorian Century reworks it wholesale from
+### joi_landowners.txt, also REPLACE_OR_CREATE:.  Hail, Columbia! ships
+### common/interest_groups/00_landowners.txt -- the vanilla path, a bare body --
+### and loads last of the three, so both TGR's and VC's versions are gone
 ### entirely.  Silent; the interest group still exists, it just has vanilla's
-### numbers back.
+### content back.
 ###
 ### What TGR actually changes here is one line: in pop_weight, the LEADER_POPULARITY
 ### multiplier goes from 0.0025 to 0.030, i.e. a popular leader pulls twelve times
@@ -13,16 +21,36 @@
 ### What HC changes: usfp_country_is_american in on_enable, and a pop_weight rule
 ### that zeroes Southern planters outside slave states during the Civil War.
 ###
-### Merged below: HC's body with TGR's multiplier merged into pop_weight
-### (three-way against vanilla, so a future edit by either author conflicts
-### loudly instead of being dropped).
+### What VC changes, in three sub-blocks: on_enable gets nation-specific noble
+### trait sets for Russia, Japan, Prussia, Austria, China, Turkey and Spain (in
+### place of vanilla's shared noble_privileges/family_ties pair), a German-nobles
+### ideology switch, and reworked Prussian/Turkish/British blocks; pop_potential
+### widens from {aristocrats, clergymen, officers, farmers} to also allow
+### capitalists, bureaucrats and peasants; pop_weight adds weight rules for
+### Prussian capitalists/farmers/peasants "joining the Junkers", a European
+### (non-French) freeman bonus, and a Chinese-officer bonus.
 ###
-### TGR's `scope:interest_group ?= {` -> `= {` change is NOT carried: vanilla and
-### HC both use the safe-scope form, TGR's looks incidental, and the strict form
-### is the one that can go wrong.
+### Merged below: HC's body with TGR's multiplier folded into pop_weight, then
+### VC's rework of on_enable/pop_potential/pop_weight folded in on top, each
+### sub-block three-way against vanilla, so a future edit by any of the three
+### authors conflicts loudly instead of being dropped.  VC does not touch the
+### American-culture branch in on_enable, so HC's usfp_country_is_american swap
+### survives untouched; VC does not touch pop_potential's vanilla types, so its
+### three new ones are a pure addition; VC does not touch farmers/peasants/
+### aristocrats/clergymen/officers in pop_weight, so TGR's multiplier and HC's
+### Southern-planters rule both survive untouched next to VC's new rules.
+###
+### Neither TGR's nor VC's `scope:interest_group ?= {` -> `= {` downgrade is
+### carried (both make the identical change, independently, in the same
+### LEADER_POPULARITY block): vanilla and HC use the safe-scope form, and the
+### strict form is the one that can go wrong.  Restored to `?=` throughout --
+### this also retroactively fixes the one occurrence TGR's own change had already
+### let through undetected before VC was ever in this build (the banner used to
+### claim TGR's downgrade "is NOT carried", but LEADER_POPULARITY specifically
+### was; caught while adding this VC layer, fixed here).
 ###
 ### VARIANTS: safe in every megapack composition -- the merged body names no TGR
-### entity, only a number.
+### or VC entity, only numbers and vanilla trait/ideology keys.
 ### Both interest groups below are re-issued as one complete REPLACE: body.
 ### That is deliberate and it is the expensive option: REPLACE: swaps the whole
 ### entry, so a partial body would drop everything it does not name.  Proved in
@@ -60,13 +88,83 @@ REPLACE:ig_landowners = {
 
 	on_enable = {
 		ig:ig_landowners ?= {
-			if = {
+			if = {#俄国贵族
 				limit = {
-					owner = { c:RUS ?= this}
+					owner = { country_has_primary_culture = cu:russian }
 				}
-				set_ig_trait = ig_trait:ig_trait_profitable_estates
-				set_ig_trait = ig_trait:ig_trait_the_velvet_book
+				set_ig_trait = ig_trait:ig_trait_owner_of_land
+				set_ig_trait = ig_trait:ig_trait_adm_expert
 				set_ig_trait = ig_trait:ig_trait_bad_boyars
+			}
+			else_if = {#日本贵族
+				limit = {
+					owner = { c:JAP ?= this }
+				}
+				set_ig_trait = ig_trait:ig_trait_kobugattai
+				set_ig_trait = ig_trait:ig_trait_fudai_support
+				set_ig_trait = ig_trait:ig_trait_outspoken_tozama
+			}
+			else_if = {#普鲁士贵族
+				limit = {
+					OR = {
+						owner = { c:PRU ?= this }
+						AND = {
+							owner = { c:NGF ?= this}
+							c:NGF ?= { was_formed_from = PRU }
+						}
+						AND = {
+							owner = { c:GER ?= this }
+							c:GER ?= { was_formed_from = PRU }
+						}
+					}
+				}
+				set_ig_trait = ig_trait:ig_trait_reactionary_enthusiasm
+				set_ig_trait = ig_trait:ig_trait_junkerdom
+				set_ig_trait = ig_trait:ig_trait_offizierskorps
+			}
+			else_if = {#奥地利贵族
+				limit = {
+					OR = {
+						owner = { c:AUS ?= this }
+						AND = {
+							owner = { c:GER ?= this }
+							c:GER ?= { was_formed_from = AUS }
+						}
+					}
+				}
+				set_ig_trait = ig_trait:ig_trait_holy_blood
+				set_ig_trait = ig_trait:ig_trait_statutory_privilege
+				set_ig_trait = ig_trait:ig_trait_wiener_walzer
+			}
+			else_if = {#中国贵族
+				limit = {
+					owner = {
+						country_has_primary_culture = cu:han 
+					}
+				}
+				set_ig_trait = ig_trait:ig_trait_benevolence_and_righteousness
+				set_ig_trait = ig_trait:ig_trait_wise_ruler
+				set_ig_trait = ig_trait:ig_trait_local_emperor
+			}
+			else_if = {#土鸡贵族
+				limit = {
+					owner = {
+						country_has_primary_culture = cu:turkish 
+					}
+				}
+				set_ig_trait = ig_trait:ig_trait_arm_of_sultan
+				set_ig_trait = ig_trait:ig_trait_local_pashas
+				set_ig_trait = ig_trait:ig_trait_corruption_and_privilege
+			}
+			else_if = {#西班牙贵族
+				limit = {
+					owner = {
+						c:SPA ?= THIS 
+					}
+				}
+				set_ig_trait = ig_trait:ig_trait_conde_de_wool
+				set_ig_trait = ig_trait:ig_trait_real_decreto
+				set_ig_trait = ig_trait:ig_trait_latifundistas
 			}
 			else_if = {
 				limit = {
@@ -145,24 +243,49 @@ REPLACE:ig_landowners = {
 				set_interest_group_name = ig_squattocracy
 			}
 		}
-		# Local Governors
-		else_if = {
+		if = {#德意志贵族
+            limit = {
+                OR = { 
+                    country_has_primary_culture = cu:south_german 
+                    country_has_primary_culture = cu:north_german 
+                }
+            }
+            ig:ig_landowners = {
+            remove_ideology = ideology_hierarchic  
+            add_ideology = ideology_german_nobles
+            }    
+        }
+		if = {#普鲁士容克军官团
+            limit = {
+                c:PRU ?= this
+            }
+            ig:ig_landowners = {
+            	set_interest_group_name = ig_junkers
+                remove_ideology = ideology_paternalistic
+                add_ideology = ideology_junker_militarism
+            }
+        }
+        if = {#土鸡贵族
+            limit = {
+                c:TUR ?= this
+            }
+        ig:ig_landowners = {
+           		add_ideology = ideology_pious
+           		set_interest_group_name = ig_local_governors
+            }    
+        }
+		else_if = {#英国贵族
 			limit = {
-				c:TUR ?= this
+				c:GBR ?= this
 			}
 			ig:ig_landowners ?= {
-				set_interest_group_name = ig_local_governors
-			}
-		}
-		# Junkers
-		else_if = {
-			limit = {
-				c:PRU ?= this
-			}
-			ig:ig_landowners ?= {
-				set_interest_group_name = ig_junkers
+				set_interest_group_name = ig_landed_gentry
 				remove_ideology = ideology_paternalistic
-				add_ideology = ideology_junker_paternalistic
+				remove_ideology = ideology_patriarchal
+				remove_ideology = ideology_hierarchic
+				add_ideology = ideology_british_hierarchic
+				add_ideology = ideology_tory_patriarchal
+				add_ideology = ideology_british_tory_conservatism_old
 			}
 		}
 		# Gentry Assembly
@@ -193,17 +316,6 @@ REPLACE:ig_landowners = {
 			ig:ig_landowners ?= {
 				set_interest_group_name = ig_alii
 				add_ideology = ideology_loyalist
-			}
-		}
-		# Landed Gentry
-		else_if = {
-			limit = {
-				c:GBR ?= this
-			}
-			ig:ig_landowners ?= {
-				set_interest_group_name = ig_landed_gentry
-				remove_ideology = ideology_paternalistic
-				add_ideology = ideology_magnatial
 			}
 		}
 		# Polish Landowners
@@ -375,8 +487,6 @@ REPLACE:ig_landowners = {
 			}
 			ig:ig_landowners ?= {
 				set_interest_group_name = ig_daimyo
-				set_ig_trait = ig_trait:ig_trait_fudai_support
-				set_ig_trait = ig_trait:ig_trait_outspoken_tozama
 				remove_ideology = ideology_hierarchic
 				add_ideology = ideology_japan_hierarchic
 				remove_ideology = ideology_paternalistic
@@ -454,11 +564,121 @@ REPLACE:ig_landowners = {
 			is_pop_type = clergymen
 			is_pop_type = officers
 			is_pop_type = farmers
+			is_pop_type = capitalists
+			is_pop_type = bureaucrats
+			is_pop_type = peasants
 		}
 	}
 
 	pop_weight = {
 		value = 0
+
+		add = {#普鲁士资本家会加入容克
+			desc = "POP_PRUSSIAN_NOBLES_CAP"
+			if = {
+				limit = {
+					is_pop_type = capitalists
+					owner = {
+						OR = {
+						has_variable = this_is_formed_by_prussia
+						owner = { c:PRU ?= this}
+						AND = {
+							owner = { c:NGF ?= this}
+							c:NGF ?= { was_formed_from = PRU }
+							}
+						AND = {
+							owner = { c:GER ?= this }
+							c:GER ?= { was_formed_from = PRU }
+							}
+						}
+					}
+				}
+				value = 50
+			}
+		}
+
+		add = {#普鲁士农民会加入容克
+			desc = "POP_PRUSSIAN_NOBLES_FAR"
+			if = {
+				limit = {
+					is_pop_type = farmers
+					owner = {
+						OR = {
+						has_variable = this_is_formed_by_prussia
+						owner = { c:PRU ?= this}
+						AND = {
+							owner = { c:NGF ?= this}
+							c:NGF ?= { was_formed_from = PRU }
+							}
+						AND = {
+							owner = { c:GER ?= this }
+							c:GER ?= { was_formed_from = PRU }
+							}
+						}
+					}
+				}
+				value = 100
+			}
+		}
+
+		add = {#普鲁士自给农会加入容克
+			desc = "POP_PRUSSIAN_INDU_SHO"
+			if = {
+				limit = {
+					is_pop_type = peasants
+					owner = {
+						OR = {
+						has_variable = this_is_formed_by_prussia
+						owner = { c:PRU ?= this}
+						AND = {
+							owner = { c:NGF ?= this}
+							c:NGF ?= { was_formed_from = PRU }
+							}
+						AND = {
+							owner = { c:GER ?= this }
+							c:GER ?= { was_formed_from = PRU }
+							}
+						}
+					}
+				}
+				value = 100
+			}
+		}
+
+		add = {#欧洲农民/自给农喜欢加入贵族(法国除外)
+			desc = "POP_EUROPEAN_FREEMAN"
+			if = {
+				limit = {
+					owner = {
+						NOT = { has_variable = this_is_formed_by_prussia }
+						NOT = {
+							country_has_primary_culture = cu:french
+						}
+					}
+					OR = {
+						is_pop_type = peasants
+						is_pop_type = farmers
+					}
+					culture = {
+						has_discrimination_trait_group = heritage_group_european
+					}
+				}
+				value = 10
+			}
+		}
+
+		add = {#中国军官喜欢加入地主
+			desc = "POP_CHINESE_OFFICER"
+			if = {
+				limit = {
+					owner = {
+						country_has_primary_culture = cu:han
+					}
+					is_pop_type = officers
+				}
+				value = 50
+			}
+		}
 
 		add = {
 			desc = "POP_ARISTOCRATS"
@@ -532,7 +752,7 @@ REPLACE:ig_landowners = {
 		##### TGR CHANGES #####
 		multiply = {
 			desc = "LEADER_POPULARITY"
-			scope:interest_group = {
+			scope:interest_group ?= {
 				leader ?= {
 					value = popularity
 					multiply = 0.030

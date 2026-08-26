@@ -1,3 +1,8 @@
+### === VC-ONLY FILE === delete "zz_hcvc_flag_definitions_chi.txt" to play without
+### Victorian Century. No other compatch in this addon needs it --
+### deleting it changes nothing else. Full list: "Playing without
+### Victorian Century" in the addon README.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- common/flag_definitions CHI
 ###
 ### MoH REPLACE:s the whole CHI flag list (19 entries), VC REPLACE_OR_CREATE:s

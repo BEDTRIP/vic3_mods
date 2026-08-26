@@ -1,3 +1,8 @@
+### === VC-ONLY FILE === delete "usa - usa.txt" to play without
+### Victorian Century. No other compatch in this addon needs it --
+### deleting it changes nothing else. Full list: "Playing without
+### Victorian Century" in the addon README.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- the USA at 1836
 ###
 ### Hail, Columbia! and Victorian Century both ship

@@ -1,19 +1,17 @@
-### ComPatch HC+GoB+MoH x The Great Revision -- the Ottomans at 1836
+### === INACTIVE -- NO-VC VARIANT (.off) === this is "tur - ottoman empire.txt"
+### built WITHOUT Victorian Century's additions. Victoria 3 ignores any
+### file whose name does not end in a recognized extension, so this file
+### does nothing while named *.off. To use it: delete "tur - ottoman empire.txt"
+### next to it, then remove the ".off" suffix from this file's name.
+### Full list: "Playing without Victorian Century" in the addon README.
+
+### ComPatch HC+GoB+MoH x The Great Revision -- the Ottomans at 1836 (no Victorian Century)
 ###
-### Same shape as the China file: TGR and Gates of the Bosphorus both ship
-### common/history/countries/tur - ottoman empire.txt, GoB is later and takes the
-### whole file, and TGR's addition -- the Imperial Arsenal company -- disappears
-### with it.  Silent.
+### Gates of the Bosphorus's file with TGR's add_company block appended -- exactly
+### what "tur - ottoman empire.txt" contains when Victorian Century is not part of
+### this build. See that file's own banner for the VC write-up.
 ###
-### Merged below: GoB's file with TGR's add_company block appended.
-###
-### VARIANTS: needs TGR for the company; without it, drop just that append.
-### Victorian Century reworks this same file too -- if VC is part of the
-### composition, load the standalone HC+GoB+MoH x TGR x VC compatch
-### (_HC+GoB+MoH/hc+vc done) after this addon; it REPLACEs this same path,
-### layering VC's law_madrasa activation and two amendments (verified-safe
-### additions, not a competing rework -- see that compatch's README) on top of
-### the exact body below.
+### Inactive while named *.off -- see the tag above for how to enable it.
 
 COUNTRIES = {
 	c:TUR ?= {

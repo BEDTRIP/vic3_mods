@@ -1,15 +1,23 @@
+### === VC-ONLY FILE === delete "usa - usa.txt" to play without
+### Victorian Century. This whole compatch is the VC layer -- deleting
+### this file changes nothing else. To drop VC entirely, delete this
+### whole compatch folder (_HC+GoB+MoH/hc+vc done) and nothing else --
+### addon1 and the other pair compatches never reference it.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- the USA at 1836
 ###
 ### Hail, Columbia! and Victorian Century both ship
 ### common/history/countries/usa - usa.txt at the vanilla path -- this is HC's
 ### flagship file, the one the whole "United States Flavor Pack" is built around,
-### and HC loads later so it wins the path outright.  Checked line by line
-### 26.08.2026.
+### and HC loads later so it wins the path outright. TGR never touches this path,
+### so unlike the other four items in this compatch, this one is NOT a second
+### REPLACE: over addon1's output -- it just ships HC's file with VC's amendments
+### spliced in directly. Checked line by line 26.08.2026.
 ###
-### Fifteen law groups are explicitly activated by one or both files.  Ten agree
+### Fifteen law groups are explicitly activated by one or both files. Ten agree
 ### (education_system, slavery, citizenship, colonization, labor_rights,
 ### army_model, policing, rights_of_women, land_reform, and distribution_of_power
-### left to start_enactment/vanilla default by both).  Five are genuine
+### left to start_enactment/vanilla default by both). Five are genuine
 ### competitions, and every one of HC's three own custom laws is in this list:
 ###
 ###   * trade_policy: HC's own law_usfp_american_system vs VC's law_protectionism.
@@ -22,7 +30,7 @@
 ###
 ### HC's picks win all five, same principle as everywhere else in this addon: a
 ### flavor pack's own signature content is what stays, and three of these five
-### are laws HC wrote for itself.  Also kept as HC-only, untouched by VC: the
+### are laws HC wrote for itself. Also kept as HC-only, untouched by VC: the
 ### `start_enactment = law_type:law_universal_suffrage` (HC deliberately starts
 ### the USA mid-transition, "states are in the middle of piecemeal removing tax
 ### obligations"), and HC's entire USFP journal-entry/ideology/interest-group
@@ -30,11 +38,11 @@
 ###
 ### What VC adds beyond the law list is a clean Bill-of-Rights amendment chain --
 ### fourteen `active_law:lawgroup_X ?= { add_amendment = {...} }` blocks, one to
-### ten amendments plus the Declaration of Independence and common law.  Two are
+### ten amendments plus the Declaration of Independence and common law. Two are
 ### byte-identical to blocks HC's file already has
 ### (amendment_american_second_amendment on governance_principles,
 ### amendment_tradition_of_free_elections on distribution_of_power) -- both mods
-### clearly draw from the same shared amendment set.  The other twelve are new,
+### clearly draw from the same shared amendment set. The other twelve are new,
 ### and every one is safe to add regardless of which side won the law list above:
 ### an amendment attaches to whatever law is active in its group, not to a
 ### specific one, and (per the checks in _check_usa_laws_vs_vc) every targeted
@@ -49,19 +57,19 @@
 ### parallel USA political/flavor chain -- its own "real manifest destiny"
 ### tracking variables and an active je_texas_usa (HC's own manifest_destiny.txt
 ### already deliberately suppresses the vanilla decision in favor of its own
-### 1100-line journal chain -- see hc+tgr done/README.md; a second, VC-driven
-### Manifest Destiny system would double up), plus VC's own missouri_compromise
-### modifier (HC already has usfp_missouri_compromise_decaying), us_second_bank,
+### 1100-line journal chain; a second, VC-driven Manifest Destiny system would
+### double up), plus VC's own missouri_compromise modifier (HC already has
+### usfp_missouri_compromise_decaying), us_second_bank,
 ### failed_assassination_on_aj_president, and six of VC's own journal entries
 ### (before_us_civil_war, supreme_court, united_states_congress,
-### westward_movement, je_seminole_wars, joi_flavor_usa.1).  Same class of
+### westward_movement, je_seminole_wars, joi_flavor_usa.1). Same class of
 ### decision as China's and the Ottomans' parallel chains.
 ###
 ### add_company = company_type:company_william_cramp is byte-identical in both
 ### files (same date, same state) -- nothing to merge.
 ###
-### VARIANTS: needs VC for the twelve spliced-in amendment types.  Without VC,
-### ship HC's file unchanged -- drop this one.
+### VARIANTS: this whole compatch is the VC layer -- without VC, do not install
+### this file, ship HC's own usa - usa.txt unchanged.
 
 COUNTRIES = {
 	c:USA ?= {

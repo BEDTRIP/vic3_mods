@@ -1,3 +1,8 @@
+### === VC-ONLY FILE === delete "zz_hcvc_character_templates.txt" to play without
+### Victorian Century. No other compatch in this addon needs it --
+### deleting it changes nothing else. Full list: "Playing without
+### Victorian Century" in the addon README.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- 15 character_templates
 ###
 ### HC and VC both rewrite these 15 keys independently (10 are vanilla

@@ -1,3 +1,9 @@
+### === VC-ONLY FILE === delete "ecchi_usa_polk.txt" to play without
+### Victorian Century. This whole compatch is the VC layer -- deleting
+### this file changes nothing else. To drop VC entirely, delete this
+### whole compatch folder (_HC+GoB+MoH/hc+vc done) and nothing else --
+### addon1 and the other pair compatches never reference it.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- ecchi_usa_polk.txt
 ###
 ### HC and VC ship the same 122-line DNA body at the same path (common

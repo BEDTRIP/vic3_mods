@@ -1,31 +1,20 @@
-### ComPatch HC+GoB+MoH x The Great Revision -- ig_landowners
+### === INACTIVE -- NO-VC VARIANT (.off) === this is "zz_hct_ig_landowners.txt"
+### built WITHOUT Victorian Century's additions. Victoria 3 ignores any
+### file whose name does not end in a recognized extension, so this file
+### does nothing while named *.off. To use it: delete "zz_hct_ig_landowners.txt"
+### next to it, then remove the ".off" suffix from this file's name.
+### Full list: "Playing without Victorian Century" in the addon README.
+
+### ComPatch HC+GoB+MoH x The Great Revision -- ig_landowners (no Victorian Century)
 ###
-### TGR reworks this interest group from TGR_POLITICS_landowners.txt with
-### REPLACE_OR_CREATE:.  Hail, Columbia! ships
-### common/interest_groups/00_landowners.txt -- the vanilla path, a bare body --
-### and loads last of the two, so TGR's version is gone entirely.  Silent; the
-### interest group still exists, it just has vanilla's content back.
+### The HC+TGR merge of ig_landowners, without Victorian Century's rework layered
+### on top -- exactly what zz_hct_ig_landowners.txt contained before VC was added
+### to this build. See that file's own banner for the full HC/TGR/VC write-up;
+### this is its "HC's body with TGR's multiplier folded into pop_weight" step,
+### scope-safety fix included (a real bug independent of VC -- TGR's own source
+### already carries it).
 ###
-### What TGR actually changes here is one line: in pop_weight, the LEADER_POPULARITY
-### multiplier goes from 0.0025 to 0.030, i.e. a popular leader pulls twelve times
-### as hard.  Everything else in TGR's 772-line body is vanilla.
-###
-### What HC changes: usfp_country_is_american in on_enable, and a pop_weight rule
-### that zeroes Southern planters outside slave states during the Civil War.
-###
-### Merged below: HC's body with TGR's multiplier folded into pop_weight.
-###
-### TGR's own `scope:interest_group ?= {` -> `= {` downgrade in the
-### LEADER_POPULARITY block is not carried: vanilla and HC use the safe-scope
-### form, and the strict form is the one that can go wrong.  Restored to `?=`.
-###
-### VARIANTS: safe in every megapack composition -- the merged body names no TGR
-### entity, only numbers and vanilla trait/ideology keys.  Victorian Century
-### reworks this same interest group too -- if VC is part of the composition,
-### load the standalone HC+GoB+MoH x TGR x VC compatch
-### (_HC+GoB+MoH/hc+vc done) after this addon; it REPLACEs this same path,
-### layering VC's on_enable/pop_potential/pop_weight rework on top of the exact
-### body below.
+### Inactive while named *.off -- see the tag above for how to enable it.
 ### Both interest groups below are re-issued as one complete REPLACE: body.
 ### That is deliberate and it is the expensive option: REPLACE: swaps the whole
 ### entry, so a partial body would drop everything it does not name.  Proved in

@@ -1,9 +1,9 @@
 {
-  "name": "ComPatch HC + GoB + MoH + Victorian Century",
+  "name": "ComPatch HC + GoB + MoH + The Great Revision + Victorian Century",
   "id": "asm.compatch.hcgobmoh.vc",
   "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
-  "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven with Victorian Century. Load after all four. Five more shared items -- ig_landowners, ig_rural_folk, chi - china.txt, tur - ottoman empire.txt, usa - usa.txt -- are carried by the hc+tgr compatch instead (same REPLACE path), so The Great Revision and that compatch are dependencies too.",
+  "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven (via Addon 1) with Victorian Century, against The Great Revision numbers Addon 1 already carries. Load after Addon 1: HC + GoB + MoH x MegaComPatch, and after Victorian Century -- designed to be used together with the separate Addon: Victorian Century x MegaComPatch too, if you run that. Split out from Addon 1 on 26.08.2026 so Victorian Century can be skipped without losing the rest of the HC+GoB+MoH block, or added back on top without rebuilding it.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
@@ -38,6 +38,13 @@
       "display_name": "The Great Revision",
       "resource_type": "mod",
       "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "asm.addon1.hcgobmoh",
+      "display_name": "Addon 1: HC + GoB + MoH x MegaComPatch",
+      "resource_type": "mod",
+      "version": "*"
     }
   ],
   "game_custom_data": {
@@ -47,37 +54,43 @@
         "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
         "display_name": "Community Mod Framework",
         "version": "1.63.0",
-        "date": "2026-08-25"
+        "date": "2026-08-26"
       },
       {
         "id": "3384997867",
         "display_name": "[1.13] Gates of the Bosphorus",
         "version": "4.0.8",
-        "date": "2026-08-25"
+        "date": "2026-08-26"
       },
       {
         "id": "top.sleepingbed.moh",
         "display_name": "Mandate of Heaven",
         "version": "1.4.6.1",
-        "date": "2026-08-25"
+        "date": "2026-08-26"
       },
       {
         "id": "3215078236",
         "display_name": "The Great Revision",
         "version": "2.0 (1.13.10, 12.08.2026)",
-        "date": "2026-08-25"
+        "date": "2026-08-26"
+      },
+      {
+        "id": "asm.addon1.hcgobmoh",
+        "display_name": "Addon 1: HC + GoB + MoH x MegaComPatch",
+        "version": "1.13.11-3",
+        "date": "2026-08-26"
       },
       {
         "id": "",
         "display_name": "Hail, Columbia! - United States Flavor Pack",
         "version": "8.6-Roosevelt",
-        "date": "2026-08-25"
+        "date": "2026-08-26"
       },
       {
         "id": "",
         "display_name": "Victorian Century",
         "version": "unpacked 2026-08-25, mod declares no version",
-        "date": "2026-08-25"
+        "date": "2026-08-26"
       }
     ]
   }

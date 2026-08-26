@@ -1,3 +1,9 @@
+### === VC-ONLY FILE === delete "zz_hcvc_character_templates.txt" to play without
+### Victorian Century. This whole compatch is the VC layer -- deleting
+### this file changes nothing else. To drop VC entirely, delete this
+### whole compatch folder (_HC+GoB+MoH/hc+vc done) and nothing else --
+### addon1 and the other pair compatches never reference it.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- 15 character_templates
 ###
 ### HC and VC both rewrite these 15 keys independently (10 are vanilla

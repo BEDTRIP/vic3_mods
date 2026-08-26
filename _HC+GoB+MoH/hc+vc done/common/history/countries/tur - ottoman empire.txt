@@ -1,37 +1,38 @@
-### === CARRIES A VICTORIAN CENTURY LAYER === this file also ships as
-### "tur - ottoman empire.txt.off" next to it -- the same content built WITHOUT
-### Victorian Century's additions. To play without VC: delete THIS file
-### and remove the ".off" suffix from that one. Full list: "Playing
-### without Victorian Century" in the addon README.
+### === VC-ONLY FILE === delete "tur - ottoman empire.txt" to play without
+### Victorian Century. This whole compatch is the VC layer -- deleting
+### this file changes nothing else. To drop VC entirely, delete this
+### whole compatch folder (_HC+GoB+MoH/hc+vc done) and nothing else --
+### addon1 and the other pair compatches never reference it.
 
 ### ComPatch HC+GoB+MoH x The Great Revision x Victorian Century -- the Ottomans at 1836
 ###
-### Same shape as the China file: TGR and Gates of the Bosphorus both ship
-### common/history/countries/tur - ottoman empire.txt, GoB is later and takes the
-### whole file, and TGR's addition -- the Imperial Arsenal company -- disappears
-### with it.  Silent.
+### REPLACE:s the same path addon1's hc+tgr compatch already owns (_HC+GoB+MoH/hc+tgr done/common/history/countries/tur - ottoman empire.txt) -- this compatch must load after addon1, and after Victorian Century.
 ###
-### Victorian Century ships this same path too.  Unlike its China file, most of
+### Gates of the Bosphorus and TGR's add_company block (the Imperial Arsenal
+### company) are merged the same way as addon1's own hc+tgr compatch -- see that
+### compatch's README for the GoB/TGR write-up.
+###
+### Victorian Century ships this same path too. Unlike its China file, most of
 ### what VC does here is much closer to vanilla than GoB's own rework -- VC keeps
 ### vanilla's law_autocracy and law_slave_trade where GoB swaps in
 ### law_imperial_divan/law_scribal_bureaucrats and law_debt_slavery, and adds no
-### migration_controls law.  Checked line by line 26.08.2026:
+### migration_controls law. Checked line by line 26.08.2026:
 ###
 ###   * VC adds exactly one law GoB does not have: law_madrasa, in
-###     lawgroup_education_system.  Its own requires_law_or gate is
+###     lawgroup_education_system. Its own requires_law_or gate is
 ###     law_state_religion OR law_millet_system OR law_people_of_the_book --
 ###     law_millet_system is active in every version of this file, so the
-###     prerequisite holds.  GoB itself already amends lawgroup_education_system
+###     prerequisite holds. GoB itself already amends lawgroup_education_system
 ###     (amendment_gbbf_elifba) but never explicitly activates a law there, so
 ###     without VC that amendment attaches to whatever the engine's silent
-###     default is.  Added: gives GoB's own amendment something explicit and
+###     default is. Added: gives GoB's own amendment something explicit and
 ###     thematically fitting to attach to instead.
 ###   * VC adds two amendments of its own, to lawgroup_taxation
 ###     (amendment_salt_monopoly) and lawgroup_governance_principles
-###     (amendment_kanunname_law).  GoB's four amendments are in different
+###     (amendment_kanunname_law). GoB's four amendments are in different
 ###     groups (army_model, education_system, land_reform, slavery) -- no
-###     overlap.  Both target laws already active in GoB's own list
-###     (law_land_based_taxation, law_monarchy).  Added.
+###     overlap. Both target laws already active in GoB's own list
+###     (law_land_based_taxation, law_monarchy). Added.
 ###   * The rest of VC's file -- three extra starting techs, its own
 ###     Sublime-Porte/Peter-the-Great-of-Turkey journal chain (seven entries),
 ###     great_ottomanism_var, an extra modifier -- is VC's own parallel Ottoman
@@ -43,10 +44,8 @@
 ### Merged below: GoB's file with VC's law_madrasa activation and two amendments
 ### spliced in, then TGR's add_company block appended.
 ###
-### VARIANTS: needs TGR for the company; without it, drop just that append. VC's
-### own file is superseded either way. To play without VC, delete this file and
-### remove the ".off" suffix from "tur - ottoman empire.txt.off" next to it --
-### that variant is GoB+TGR with none of VC's three additions below.
+### VARIANTS: this whole compatch is the VC layer -- without VC, do not install
+### this file, addon1's own hc+tgr output already stands alone.
 
 COUNTRIES = {
 	c:TUR ?= {

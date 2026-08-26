@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Writes .metadata/metadata.json for the three addon-1 pair compatches and for
-the addon itself.  Kept as one script so the dependency ids and the tested_with
-block cannot drift apart between four files.
+"""Writes .metadata/metadata.json for the three addon-1 pair compatches, for the
+addon itself, and for the standalone hc+vc compatch that REPLACEs some of
+addon1's own output.  Kept as one script so the dependency ids and the
+tested_with block cannot drift apart between five files.
 
 metadata.json must be written WITHOUT a BOM: the launcher parses it as strict
 JSON and dies on \xEF\xBB\xBF before the '{'.
 """
 import json, os, sys
 
-DATE = '2026-08-25'
+DATE = '2026-08-26'
 GAME = '1.13.*'
 
 MODS = {
@@ -20,6 +21,11 @@ MODS = {
     'tgr':  ('3215078236', 'The Great Revision', "2.0 (1.13.10, 12.08.2026)"),
     'kai':  ('kai.kuromi', "Kuromi's AI", '7.5'),
     'mega': ('3640735868', 'MegaComPatch TGR + PSC + KAI + E&F + MR + PBE', '1.13.11-2'),
+    # This project's own addon1 -- a real dependency for hc+vc done, which
+    # REPLACEs paths addon1 already ships. Referenced the same way cmf/etf are:
+    # by the id its own metadata.json declares, not a Steam Workshop number
+    # (addon1 is not published as its own Workshop item).
+    'addon1': ('asm.addon1.hcgobmoh', 'Addon 1: HC + GoB + MoH x MegaComPatch', '1.13.11-3'),
 }
 # Hail, Columbia! and Victorian Century both ship an EMPTY id in their
 # metadata.json, so neither can appear in relationships at all -- each is named
@@ -72,12 +78,8 @@ FILES = {
         'ComPatch HC + GoB + MoH + The Great Revision',
         'asm.compatch.hcgobmoh.tgr',
         'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
-        'with The Great Revision. Load after all four. ideology_jacksonian_democrat also carries '
-        'Victorian Century\'s law stances (built from the tgr+vc compatch), and this pair also '
-        'carries Victorian Century\'s rework of ig_landowners/ig_rural_folk plus VC additions to '
-        'chi - china.txt, tur - ottoman empire.txt and usa - usa.txt, so Victorian Century is a '
-        'dependency too -- load it, and the tgr+vc compatch, before this one.',
-        ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX, vc=True),
+        'with The Great Revision. Load after all four.',
+        ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX),
     '_HC+GoB+MoH/hc+kai done': meta(
         'ComPatch HC + GoB + MoH + Kuromi AI',
         'asm.compatch.hcgobmoh.kai',
@@ -85,26 +87,40 @@ FILES = {
         'with Kuromi\'s AI. Load after all five. Also re-issues The Great Revision\'s '
         'injections into ai_strategy_default, so The Great Revision is a dependency too.',
         ['cmf', 'gob', 'moh', 'kai', 'tgr'], ['cmf', 'gob', 'moh', 'kai', 'tgr'], FIX),
-    '_HC+GoB+MoH/hc+vc done': meta(
-        'ComPatch HC + GoB + MoH + Victorian Century',
-        'asm.compatch.hcgobmoh.vc',
-        'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
-        'with Victorian Century. Load after all four. Five more shared items -- ig_landowners, '
-        'ig_rural_folk, chi - china.txt, tur - ottoman empire.txt, usa - usa.txt -- are carried '
-        'by the hc+tgr compatch instead (same REPLACE path), so The Great Revision and that '
-        'compatch are dependencies too.',
-        ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX, vc=True),
     '__addon/addon1 hc+gob+moh': meta(
         'Addon 1: HC + GoB + MoH x MegaComPatch',
         'asm.addon1.hcgobmoh',
         'Compatibility addon that puts Hail, Columbia! + Gates of the Bosphorus + Mandate of '
-        'Heaven on top of the MegaComPatch set. Merge of my four ComPatches for this block. '
-        'Also carries Victorian Century\'s law stances for ideology_jacksonian_democrat and its '
-        'own character/DNA/flag/opium/law content, so Victorian Century is a dependency too. '
-        'Load last, after all of them.',
+        'Heaven on top of the MegaComPatch set. Merge of my three ComPatches for this block. '
+        'Carries no Victorian Century content -- if you also run Victorian Century, get the '
+        'separate ComPatch HC + GoB + MoH + The Great Revision + Victorian Century and load it '
+        'after this addon. Load this addon last, after all of cmf/etf/mega/gob/moh/morg/tgr/kai.',
         ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'kai'],
         ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'kai'],
-        ['Fixes', 'Utilities', 'Expansion', 'Historical', 'Gameplay', '1.13'], vc=True),
+        ['Fixes', 'Utilities', 'Expansion', 'Historical', 'Gameplay', '1.13']),
+    # Standalone -- NOT one of addon1's three merged-in pair compatches. Split
+    # out 26.08.2026 at the user's request: running Victorian Century together
+    # with the whole HC+GoB+MoH block was too heavy performance-wise even on a
+    # near-top-end PC, so VC's content for this block now ships as its own
+    # optional compatch instead of being baked into addon1's build. REPLACEs
+    # four paths addon1 already ships (ig_landowners, ig_rural_folk,
+    # ideology_jacksonian_democrat, tur - ottoman empire.txt) plus ships
+    # usa - usa.txt and five VC-only files (character templates, Polk's DNA,
+    # dynamic country names, flag definitions, opium buttons) -- see that
+    # compatch's own README for the full list. Depends on addon1 itself (not
+    # just its raw ingredients) because four of its files REPLACE addon1's own
+    # merged output, not the vanilla path.
+    '_HC+GoB+MoH/hc+vc done': meta(
+        'ComPatch HC + GoB + MoH + The Great Revision + Victorian Century',
+        'asm.compatch.hcgobmoh.vc',
+        'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
+        '(via Addon 1) with Victorian Century, against The Great Revision numbers Addon 1 '
+        'already carries. Load after Addon 1: HC + GoB + MoH x MegaComPatch, and after '
+        'Victorian Century -- designed to be used together with the separate Addon: Victorian '
+        'Century x MegaComPatch too, if you run that. Split out from Addon 1 on 26.08.2026 so '
+        'Victorian Century can be skipped without losing the rest of the HC+GoB+MoH block, or '
+        'added back on top without rebuilding it.',
+        ['cmf', 'gob', 'moh', 'tgr', 'addon1'], ['cmf', 'gob', 'moh', 'tgr', 'addon1'], FIX, vc=True),
 }
 
 

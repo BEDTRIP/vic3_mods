@@ -1,3 +1,9 @@
+### === VC-ONLY FILE === delete "zz_hcvc_opium_buttons.txt" to play without
+### Victorian Century. This whole compatch is the VC layer -- deleting
+### this file changes nothing else. To drop VC entirely, delete this
+### whole compatch folder (_HC+GoB+MoH/hc+vc done) and nothing else --
+### addon1 and the other pair compatches never reference it.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- ban_opium_button / unban_opium_button
 ###
 ### Both mods REPLACE: the same two vanilla buttons; MoH loads later and wins

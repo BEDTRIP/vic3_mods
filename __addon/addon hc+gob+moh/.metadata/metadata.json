@@ -1,9 +1,9 @@
 {
-  "name": "Addon 1: HC + GoB + MoH x MegaComPatch",
+  "name": "Addon: HC + GoB + MoH x MegaComPatch",
   "id": "asm.addon1.hcgobmoh",
-  "version": "1.13.11-3",
+  "version": "1.13.11.3",
   "supported_game_version": "1.13.*",
-  "short_description": "Compatibility addon that puts Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven on top of the MegaComPatch set. Merge of my three ComPatches for this block. Load last, after all of them.",
+  "short_description": "Compatibility addon that puts Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven on top of the MegaComPatch set. Merge of my four ComPatches for this block. Also carries Victorian Century's law stances for ideology_jacksonian_democrat and its own character/DNA/flag/opium/law content, so Victorian Century is a dependency too. Load last, after all of them.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
@@ -126,6 +126,12 @@
         "id": "",
         "display_name": "Hail, Columbia! - United States Flavor Pack",
         "version": "8.6-Roosevelt",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "unpacked 2026-08-25, mod declares no version",
         "date": "2026-08-25"
       }
     ]

@@ -1,3 +1,8 @@
+### === VC-ONLY FILE === delete "ecchi_usa_polk.txt" to play without
+### Victorian Century. No other compatch in this addon needs it --
+### deleting it changes nothing else. Full list: "Playing without
+### Victorian Century" in the addon README.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- ecchi_usa_polk.txt
 ###
 ### HC and VC ship the same 122-line DNA body at the same path (common

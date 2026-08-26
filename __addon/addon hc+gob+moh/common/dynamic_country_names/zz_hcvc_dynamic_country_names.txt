@@ -1,3 +1,8 @@
+### === VC-ONLY FILE === delete "zz_hcvc_dynamic_country_names.txt" to play without
+### Victorian Century. No other compatch in this addon needs it --
+### deleting it changes nothing else. Full list: "Playing without
+### Victorian Century" in the addon README.
+
 ### ComPatch HC+GoB+MoH x Victorian Century -- dynamic_country_names
 ###
 ### AHU, MCH, XIN, CHI: MoH REPLACE:s the whole entry (owns the path), VC

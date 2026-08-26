@@ -171,3 +171,4 @@ Three of the four ComPatches restore different fields of the same 99 buy-package
 [*]Adds no goods. The set stays at 74 of the 128 ceiling.
 [*]Does not yet cover Victorian Century against Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven — that's a separate layer, still to be built.
 [/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

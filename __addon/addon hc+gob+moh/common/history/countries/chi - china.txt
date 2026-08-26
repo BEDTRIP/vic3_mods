@@ -1,4 +1,4 @@
-### ComPatch HC+GoB+MoH x The Great Revision -- China at 1836
+### ComPatch HC+GoB+MoH x The Great Revision x Victorian Century -- China at 1836
 ###
 ### Both TGR and Mandate of Heaven ship common/history/countries/chi - china.txt.
 ### Same relative path, so the later mod wins the file outright and nothing else
@@ -7,11 +7,42 @@
 ### TGR's single addition to the same country, the Ong Lung Sheng tea company,
 ### goes with the file.  A company that never gets founded produces no error.
 ###
+### Victorian Century ships this same path too -- REPLACE by path overlap, same as
+### TGR and MoH.  Checked line by line 26.08.2026 and deliberately left out, not
+### merged:
+###
+###   * VC keeps law_serfdom in lawgroup_land_reform; MoH switches to
+###     law_tenant_farmers and then applies its own amendment
+###     (amendment_chinese_traditional_land_system) to whatever law is active in
+###     that group -- written for MoH's choice, not vanilla's or VC's.
+###   * VC activates its own bureaucracy law law_imperial_examination (singular,
+###     VC's joi_bureaucracy.txt); MoH activates a differently-spelled
+###     law_imperial_examinations (plural, MoH's own, moh_flavoured_laws.txt).
+###     Same idea, two unrelated law_type keys with no relation to each other --
+###     MoH's own je_keju journal chain is written for its own law, kept.
+###   * VC adds law_classical_learning, in its own lawgroup_education_system (a
+###     group that does not exist without VC).  Its requires_law_or gate is
+###     law_serfdom OR law_imperial_examination -- neither is true once MoH's
+###     land_reform and bureaucracy picks above are kept, so activating it here
+###     would start China with a law whose own stated prerequisite is false.
+###     Left out.
+###   * The rest of VC's file -- eight of its own journal entries
+###     (imperial_examination_system, grand_council, isolationist_policies and
+###     five more), four law amendments in groups MoH does not touch, and its own
+###     set_variable/add_modifier calls -- is VC's own parallel China
+###     political-system chain, same class as MoH's (je_warlord_china, je_8_flags,
+###     je_daoguang_reform_main, je_keju, the ig_intelligentsia/ig_armed_forces
+###     rework, company_ewo_hong).  Running both chains on the same country is not
+###     something either author designed for -- same call already made for
+###     CHI_minguo/CHI_republic in flag_definitions (see hc+vc wip).
+###
 ### Merged below: MoH's file with TGR's add_company block appended inside the
-### country effect.  MoH's history is untouched.
+### country effect.  MoH's history, and its verdict against VC above, is otherwise
+### untouched.
 ###
 ### VARIANTS: needs TGR (the company type is TGR's).  In a composition without
-### TGR, ship Mandate of Heaven's file unchanged -- that is, drop this one.
+### TGR, ship Mandate of Heaven's file unchanged -- that is, drop this one.  VC's
+### own file is superseded either way, with or without TGR present.
 
 COUNTRIES = {
 	c:CHI ?= {

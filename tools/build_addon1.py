@@ -18,8 +18,7 @@ from vic3lib import read, brace_balance
 
 PAIRS = ['_HC+GoB+MoH/hc+morg done',
          '_HC+GoB+MoH/hc+tgr done',
-         '_HC+GoB+MoH/hc+kai done',
-         '_HC+GoB+MoH/hc+vc done']
+         '_HC+GoB+MoH/hc+kai done']
 ADDON = '__addon/addon1 hc+gob+moh'
 
 # Files that belong to the addon and to no compatch.  Each one needs a header
@@ -30,9 +29,8 @@ ADDON_ONLY = []
 SKIP = {'.metadata', 'thumbnail.png'}
 # Markdown is documentation, not mod content: the pair reports live next to
 # their compatches and conflicts_addon1_internal.md belongs to the assembly.
-# .xlsx is the same idea -- hc_vc_character_traits.xlsx is a hand-filled decision
-# spreadsheet regen_addon1.py reads from, not something the game reads. Neither
-# takes part in coverage.
+# .xlsx is the same idea -- a hand-filled decision spreadsheet a generator reads
+# from, not something the game reads. Neither takes part in coverage.
 SKIP_SUFFIX = ('.md', '.xlsx')
 
 # Repeated top-level keys the internal check would otherwise flag.  Each one needs
