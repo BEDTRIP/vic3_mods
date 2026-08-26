@@ -7,6 +7,56 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
 
 ## common/*: duplicate top-level keys
 
+### common/company_types — 10 duplicates
+- `company_altos_hornos_de_vizcaya`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_dmc`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_hbc`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_lkab`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_mantero_seta`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_mantero_seta_two_sicilies`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_ong_lung_sheng_tea_company_heaven_kingdom`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_russian_american_company`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_sherkate_eslamiya`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+- `company_united_fruit`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - TGR: `common/company_types/TGR_TRADE_companies.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - addon-llwa: `common/history/global/zz_llwa_ef_stocks_init.txt`
+  - TGR: `common/history/global/TGR_LOANS_global.txt`
+  - TGR: `common/history/global/TGR_POLITICS_global.txt`
+  - TGR: `common/history/global/TGR_TAX_PANEL_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_global.txt`
+  - TGR: `common/history/global/TGR_TRADE_obsessions.txt`
+
+### common/on_actions — 1 duplicates
+- `on_yearly_pulse_country`
+  - addon-llwa: `common/on_actions/zz_llwa_ef_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ADJUSTMENTS_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_GER_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_ITA_UNIFICATION_code_on_actions.txt`
+  - TGR: `common/on_actions/TGR_POLITICS_gain_ideology.txt`
+  - TGR: `common/on_actions/TGR_TRADE_code_on_actions.txt`
+
 ### common/production_methods — 10 duplicates
 - `pm_diesel_trains`
   - addon-llwa: `common/production_methods/zz_llwa_tgr_rails.txt`

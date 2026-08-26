@@ -21,6 +21,76 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - addon-llwa: `common/ai_strategies/zzzz_llwa_kai_vc_reforms.txt`
   - VC: `common/ai_strategies/joi_political_strategies.txt`
 
+### common/company_types — 21 duplicates
+- `company_a_markwald_and_company`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_admiralty_rijkswerf`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_caribbean_petroleum`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_david_sassoon`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_franco_belge`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_great_indian_railway`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_kaiping_mining`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_mantetsu`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_massey_harris`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_orient_express`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_panama_company`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_prussian_state_railways`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_russian_american_company`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_siemens_and_halske`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_societe_francaise_charbonnages_du_tonkin`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_standard_oil`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_stt`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_suez_company`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_united_fruit`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_uragadockcompany`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+- `company_yasuda`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - VC: `common/company_types/joi_companies.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - addon-llwa: `common/history/global/zz_llwa_ef_stocks_init.txt`
+  - VC: `common/history/global/joi_global.txt`
+
 ### common/production_methods — 3 duplicates
 - `pm_no_passenger_trains`
   - addon-llwa: `common/production_methods/zz_llwa_vc_rails.txt`

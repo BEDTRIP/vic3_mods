@@ -1,9 +1,9 @@
 {
-  "name": "Addon: LLWA x MegaComPatch",
-  "id": "asm.addon.llwa",
-  "version": "1.13.11.3",
+  "name": "ComPatch LLWA + historical companies",
+  "id": "asm.compatch.llwa.companies",
+  "version": "1.13.11-1",
   "supported_game_version": "1.13.*",
-  "short_description": "LLWA loads last and silently wipes contributions from TGR, Kuromi's AI, and Victorian Century on 19 records (identical vanilla file path + bare rail-method REPLACE:s). E&F's stock/liquidity system predates LLWA and never registered its six new buildings, and ~200 historical companies across the set have never heard of them either. This addon restores and extends all of it. Load after LLWA, at the very end of the chain.",
+  "short_description": "142 historical and financial companies across vanilla, The Great Revision, E&F, Victorian Century, Hail Columbia!, and Mandate of Heaven predate LLWA and know nothing about its transport buildings or its communications building. Adds LLWA's buildings to each as extension buildings -- INJECT only, no company's own design touched. Load after all of them and after LLWA.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
@@ -27,15 +27,15 @@
     },
     {
       "rel_type": "dependency",
-      "id": "kai.kuromi",
-      "display_name": "Kuromi's AI",
+      "id": "",
+      "display_name": "Victorian Century",
       "resource_type": "mod",
       "version": "*"
     },
     {
       "rel_type": "dependency",
-      "id": "",
-      "display_name": "Victorian Century",
+      "id": "top.sleepingbed.moh",
+      "display_name": "Mandate of Heaven",
       "resource_type": "mod",
       "version": "*"
     },
@@ -63,15 +63,21 @@
         "date": "2026-08-26"
       },
       {
-        "id": "kai.kuromi",
-        "display_name": "Kuromi's AI",
-        "version": "7.5",
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "top.sleepingbed.moh",
+        "display_name": "Mandate of Heaven",
+        "version": "1.4.6.1",
         "date": "2026-08-26"
       },
       {
         "id": "",
-        "display_name": "Victorian Century",
-        "version": "mod declares no version",
+        "display_name": "Hail, Columbia! - United States Flavor Pack",
+        "version": "8.6-Roosevelt",
         "date": "2026-08-26"
       },
       {

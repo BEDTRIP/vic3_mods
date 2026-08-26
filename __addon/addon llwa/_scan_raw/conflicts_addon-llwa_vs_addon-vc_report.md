@@ -21,6 +21,17 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - addon-llwa: `common/ai_strategies/zzzz_llwa_kai_vc_reforms.txt`
   - addon-vc: `common/ai_strategies/zz_vc_kai_ai_strategies.txt`
 
+### common/company_types — 3 duplicates
+- `company_russian_american_company`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - addon-vc: `common/company_types/zz_vc_tgr_company_types.txt`
+- `company_standard_oil`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - addon-vc: `common/company_types/zz_vc_ef_company_types.txt`
+- `company_united_fruit`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - addon-vc: `common/company_types/zz_vc_tgr_company_types.txt`
+
 ## localization: duplicate localization keys
 - Total duplicate localization keys: **0**
 

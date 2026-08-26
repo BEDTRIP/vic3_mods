@@ -1,0 +1,329 @@
+# addon-llwa vs E&F — conflict report (key-level heuristic)
+
+- addon-llwa root: `/sessions/rcw-01s7yfvp5sxa9mvgzb8skzmm/mnt/Projects/vic3_mods/__addon/addon llwa`
+- E&F root: `/sessions/rcw-01s7yfvp5sxa9mvgzb8skzmm/mnt/Projects/vic3_mods_out/E&F`
+
+This report finds **identifier-level duplicates** (same key/id defined by both mods), even when file paths do not overlap. It is a heuristic and may include a few false positives.
+
+## common/*: duplicate top-level keys
+
+### common/buildings — 1 duplicates
+- `building_railway`
+  - addon-llwa: `common/buildings/zz_llwa_morg_ef_buildings.txt`
+  - E&F: `common/buildings/ef_11_private_infrastructure.txt`
+
+### common/company_types — 98 duplicates
+- `company_BancaCommercialeItaliana`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancaDItalia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCentralDeCostaRica`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCentralDeGuatemala`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCentralDeHonduras`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCentralDeVenezuela`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCentralDelUruguay`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCommercialDoBrasil`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoCommercialPortugues`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoDeBilbao`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoDeChile`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoDeMexico`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoDePortugal`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoDeValparaiso`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoDoBrasil`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoEspanolDeLaHabana`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoEstado`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoHipotecarioNacional`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoHispanoColonial`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoMercantil`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoMercantilMexicano`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoNacionArgentina`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoNacionalDeBolivia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoNacionalDePanama`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoNacionalDelParaguay`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoProvincia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BancoRepublicaColombia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankAmericanExpress`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankAngloPersian`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankBOCOM`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankCreditLyonnais`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankDesjardins`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankGoldmanSachs`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankHSBC`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankIBC`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankJPMorgan`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankMelliIran`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankOfBombay`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankOfIndiaCompany`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankOfJapan`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankOfMontreal`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankSBoBSA`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankTejaratPersia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankWellsFargo`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Bank_Ultramarino`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Bankenverein`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankofEngland`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BankofSpain`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BanqueDeBruxelles`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BanqueDeFrance`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BanqueDeParisEtDesPaysBas`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BanqueEgyptienne`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BanqueImperialeOttomane`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BanqueNationaleDeBelgique`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BasicBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_BayerischeHypothekenUndWechselBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_CanadianImperialBankOfCommerce`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_CassaDiRisparmioDiTorino`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_ChaseBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_ChohungBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_ChristianiaBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_ColonialBankOfAustralia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_DaQingBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_DeNederlandscheBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_DeutscheBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_HandelsBanken`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_ImperialBankofIndia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_ImperialBankofPersia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_LandmandsBanken`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_LloydsBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Mitsubishiexchangehousebank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_NationalBankOfAustralia`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_NationalWestminsterBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_OesterreichischeCreditAnstalt`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_OesterreichischeNationalbank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_OttomanBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_PreussischeSeehandlung`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Reichsbank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Rothschild_Bank_aus`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Rothschild_Bank_fra`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Rothschild_Bank_gbr`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Rothschild_Bank_ger`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_Rothschild_Bank_ita`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_RotterdamscheBankvereeniging`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_RoyalBankOfScotland`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_RoyalBankofCanada`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_SocieteGenerale`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_SocieteGeneraledeBelgique`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_SouthAustralianBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_StateBankRussianEmpire`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_SumitomoBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_TurkishZiraatBankasi`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_WienerBankverein`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_amsterdamschebank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_bancodelondresmexico`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_bankofgreec`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_barclaysBank`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+- `company_standard_oil`
+  - addon-llwa: `common/company_types/zz_llwa_companies_extensions.txt`
+  - E&F: `common/company_types/00_ef_companies.txt`
+
+### common/history/global — 1 duplicates
+- `GLOBAL`
+  - addon-llwa: `common/history/global/zz_llwa_ef_stocks_init.txt`
+  - E&F: `common/history/global/00_ef_economic_global_variable.txt`
+  - E&F: `common/history/global/00_ef_financial_global_variable.txt`
+  - E&F: `common/history/global/00_ef_stockpile_global_variable.txt`
+  - E&F: `common/history/global/01_ef_state_global_variable.txt`
+  - E&F: `common/history/global/99_ef_history_global_variable.txt`
+
+### common/on_actions — 1 duplicates
+- `on_yearly_pulse_country`
+  - addon-llwa: `common/on_actions/zz_llwa_ef_on_actions.txt`
+  - E&F: `common/on_actions/00_ef_on_action.txt`
+
+## localization: duplicate localization keys
+- Total duplicate localization keys: **0**
+
+## events: duplicate event ids (`id = ...` anywhere in events/*.txt)
+- Total duplicate event ids: **0**

@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
-"""Builds addon-LLWA out of its three pair compatches, and checks the result.
+"""Builds addon-LLWA out of its pair compatches, and checks the result.
 
 Rule the hard way round (section 8 of the working notes): the assembly is built
 FROM the compatches, never by editing the previous assembly.
 
-Three pairs make up this addon (LLWA.1-3 in the plan): TGR, VC, Kuromi's AI.
-Unlike addon-VC's buy_packages, none of the three compatches here write the
-same relative path as another -- `llwa+tgr done` writes
-common/production_methods/zz_llwa_tgr_rails.txt, `llwa+vc done` writes
-common/production_methods/zz_llwa_vc_rails.txt (different filename, same
-folder, no collision), `llwa+kai done` writes three files under
-common/ai_strategies/. So this build needs no addon-only merge file -- a
-straight copy-and-verify is enough.
+Seven pairs make up this addon. The original three (LLWA.1-3 in the plan --
+TGR, VC, Kuromi's AI) restore content LLWA's own overrides silently drop.
+The other four were found re-checking the finished addon (user question:
+"I don't see Morgenroete files", then "LLWA + E&F noneed is questionable"):
+`llwa+morg+ef done` restores E&F's contribution to two buildings the
+author's own LLWA+Morgenroete compatch bare-redefines without knowing E&F
+exists; `llwa+ef done` wires LLWA's own six new buildings into E&F's
+stock/liquidity economy, which never heard of them (pair_matrix.py can't
+catch a mod's brand new content going unmentioned -- only shared keys);
+`llwa+companies done` gives those buildings to 45 historical companies
+across vanilla/TGR/VC/HC/MoH, same blind spot.
+
+None of the seven compatches write the same relative path as another --
+checked below at build time, not just asserted here. So this build needs no
+addon-only merge file -- a straight copy-and-verify is enough.
 
 Usage:
     python3 build_addon_llwa.py --repo <path to vic3_mods> [--check]
@@ -23,7 +30,10 @@ from vic3lib import read, brace_balance
 
 PAIRS = ['_llwa/llwa+tgr done',
          '_llwa/llwa+vc done',
-         '_llwa/llwa+kai done']
+         '_llwa/llwa+kai done',
+         '_llwa/llwa+morg+ef done',
+         '_llwa/llwa+ef done',
+         '_llwa/llwa+companies done']
 ADDON = '__addon/addon llwa'
 
 SKIP = {'.metadata', 'thumbnail.png'}
@@ -163,7 +173,7 @@ def main(argv=None):
     bad += len(real)
 
     goods = [r for r in files if r.startswith('common/goods/')]
-    print('  goods files in the addon: %d (none of the three compatches add any -- '
+    print('  goods files in the addon: %d (none of the seven compatches add any -- '
           '128 ceiling unchanged)' % len(goods))
 
     print('\n%s' % ('ALL CHECKS PASS' if not bad else '%d PROBLEM(S)' % bad))

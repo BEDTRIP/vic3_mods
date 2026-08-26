@@ -44,6 +44,29 @@ This report finds **identifier-level duplicates** (same key/id defined by both m
   - addon-llwa: `common/ai_strategies/zzzz_llwa_kai_vc_reforms.txt`
   - LLWA: `common/ai_strategies/03_political_strategies.txt`
 
+### common/buildings — 7 duplicates
+- `LLWA_building_airway`
+  - addon-llwa: `common/buildings/zz_llwa_ef_buildings_inject.txt`
+  - LLWA: `common/buildings/LLWA_buildings.txt`
+- `LLWA_building_riverway`
+  - addon-llwa: `common/buildings/zz_llwa_ef_buildings_inject.txt`
+  - LLWA: `common/buildings/LLWA_buildings.txt`
+- `LLWA_building_roadway`
+  - addon-llwa: `common/buildings/zz_llwa_ef_buildings_inject.txt`
+  - LLWA: `common/buildings/LLWA_buildings.txt`
+- `LLWA_building_waterway`
+  - addon-llwa: `common/buildings/zz_llwa_ef_buildings_inject.txt`
+  - LLWA: `common/buildings/LLWA_buildings.txt`
+- `building_railway`
+  - addon-llwa: `common/buildings/zz_llwa_morg_ef_buildings.txt`
+  - LLWA: `common/buildings/LLWA_vanilla_buildings.txt`
+- `llwa_building_exchange`
+  - addon-llwa: `common/buildings/zz_llwa_ef_buildings_inject.txt`
+  - LLWA: `common/buildings/LLWA_buildings.txt`
+- `llwa_building_freight_depot`
+  - addon-llwa: `common/buildings/zz_llwa_ef_buildings_inject.txt`
+  - LLWA: `common/buildings/LLWA_buildings.txt`
+
 ### common/production_methods — 10 duplicates
 - `pm_diesel_trains`
   - addon-llwa: `common/production_methods/zz_llwa_tgr_rails.txt`
