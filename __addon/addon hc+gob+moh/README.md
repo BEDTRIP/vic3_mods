@@ -48,7 +48,7 @@ Also run [b]Victorian Century[/b]? Get the separate [i]ComPatch HC + GoB + MoH +
 [*][b]Tech & Res is no longer supported.[/b] It left this set on 25.08.2026 and the four files that merged it were removed; use the T&R-free MegaComPatch build.
 [*]Adds no goods. The set stays at 74 of the 128 ceiling.
 [/list]
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+if you need some separate compatch you can check [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 
 ---
 

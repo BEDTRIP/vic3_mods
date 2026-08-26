@@ -73,7 +73,7 @@ The pairs that need nothing are checked too, and stay unpatched on purpose: Morg
     [*][b]Balance note[/b] carried over from the Morgenroete + Tech & Res patch: with air travel restored, the airport stops being the biggest transportation source in the game, exactly as in Morgenroete alone. If late-game transportation runs short, that is why.
 [/list]
 
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+if you need some separate compatch you can check [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 
 ---
 

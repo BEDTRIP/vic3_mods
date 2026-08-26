@@ -81,7 +81,7 @@ Four files exist only here, because they fix things that appear only when severa
 [*]The construction sector is PSC's, not TGR's -- PSC loads after TGR and wins on its own, with or without this patch. Nothing here changes that.
 [*]Also you can check more lightweight [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638941732]no-E&F/no-PSC[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]no-T&R[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3643003863]no-TGR[/url] megacompatches.
 [/list]
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+if you need some separate compatch you can check [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 
 ---
 

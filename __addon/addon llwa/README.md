@@ -21,11 +21,11 @@ LLWA loads last and silently drops 19 records' worth of earlier mods' contributi
 [list]
 [*]the whole MegaComPatch set, in its own order
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url]
-[*][https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon: Victorian Century[/url] or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790462515]Addon: HC + GoB + MoH[/url] (optional)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon: Victorian Century[/url] or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790462515]Addon: HC + GoB + MoH[/url] (optional)
 [*]LLWA
 [*][b]this addon[/b]
 [/list]
-
+if you need some separate compatch you can check [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "name": "Addon: LLWA x MegaComPatch",
-  "id": "asm.addon.llwa",
+  "id": "3790590434",
   "version": "1.13.11.3",
   "supported_game_version": "1.13.*",
   "short_description": "LLWA loads last and silently wipes contributions from TGR, Kuromi's AI, and Victorian Century on 19 records (identical vanilla file path + bare rail-method REPLACE:s). E&F's stock/liquidity system predates LLWA and never registered its six new buildings, and ~200 historical companies across the set have never heard of them either. This addon restores and extends all of it. Load after LLWA, at the very end of the chain.",
