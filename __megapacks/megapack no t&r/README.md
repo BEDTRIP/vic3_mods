@@ -1,4 +1,18 @@
-﻿This is no-T&R version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this compatch[/url]
+# Compatibility patch for using these big mods together:
+
+<!-- meta
+сборка: мегапак без T&R — рабочий
+статус: собран
+версии: —
+позиция: —
+файлов: 97
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
+This is no-T&R version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this compatch[/url]
 [h1]Compatibility patch for using these big mods together:[/h1]
 [list]
 [*][b]The Great Revision (TGR)[/b]
@@ -43,3 +57,9 @@ This is a merge of [url=https://steamcommunity.com/workshop/filedetails/?id=3585
 [*]This mod is a merge patch. If you use additional mods that also replace the same files, you may need another (more specific) merge patch.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

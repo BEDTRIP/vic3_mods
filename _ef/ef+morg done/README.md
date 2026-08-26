@@ -1,3 +1,17 @@
+# E&F + Morgenröte ComPatch [1.13]
+
+<!-- meta
+пара: E&F × Morgenröte
+статус: done
+версии: —
+позиция: —
+файлов: 18
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]E&F + Morgenröte ComPatch [1.13][/h1]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3146386373]based on Lord R compatch[/url]
@@ -59,3 +73,9 @@ Victoria 3 caps the goods database at 128 entries and crashes on entering a camp
 [*]It does [b]not[/b] guarantee compatibility with other mods that also heavily edit the same [b]common/[/b] areas.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

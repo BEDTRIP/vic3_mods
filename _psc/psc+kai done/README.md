@@ -1,3 +1,17 @@
+# ComPatch: Private Sector Construction + Kuromi's AI
+
+<!-- meta
+пара: PSC × KAI
+статус: done
+версии: Game 1.13 (exe 1.13.11) — PSC 1.3.7, Kuromi's AI 7.5.
+позиция: —
+файлов: 2
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 [h1]ComPatch: Private Sector Construction + Kuromi's AI[/h1]
 [b]Game 1.13 (exe 1.13.11) — PSC 1.3.7, Kuromi's AI 7.5.[/b]
 
@@ -33,3 +47,9 @@ The [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaC
 [*]This is a [b]compatibility patch[/b], not a rebalance.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

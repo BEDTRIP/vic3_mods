@@ -1,3 +1,17 @@
+# ComPatch: The Great Revision + Kuromi's AI
+
+<!-- meta
+пара: TGR × KAI
+статус: done
+версии: Game 1.13 (exe 1.13.11) — TGR 2.0, Kuromi's AI 7.5.
+позиция: —
+файлов: 2
+генератор: tools/regen_tgr_kai_ai_default.py
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]this MegaComPatch[/url]
 [h1]ComPatch: The Great Revision + Kuromi's AI[/h1]
 [b]Game 1.13 (exe 1.13.11) — TGR 2.0, Kuromi's AI 7.5.[/b]
@@ -42,3 +56,9 @@ Of the 37 keys the two mods share, this is the only one that needs a file. The r
 [*]This is a [b]compatibility patch[/b], not a rebalance: it only restores what would otherwise be lost silently.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

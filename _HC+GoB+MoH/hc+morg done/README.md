@@ -1,3 +1,17 @@
+# Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven  +  Morgenröte ComPatch
+
+<!-- meta
+пара: HC+GoB+MoH × Morgenröte
+статус: done
+версии: —
+позиция: —
+файлов: 5
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=]Addon 1 for the MegaComPatch[/url]
 [h1]Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven  +  Morgenröte ComPatch[/h1]
 
@@ -49,3 +63,9 @@ Built 24.08.2026 against [b]Morgenröte 2.8.3e[/b], [b]Hail, Columbia! 8.6-Roose
 [*][b]pmg_luxury_building_glassworks.[/b] Morgenröte, Tech & Res and Mandate of Heaven all [i]INJECT:[/i] into it with different production methods. Injections into a list add up.
 [*][b]community_framework_is_active.[/b] Every CMF-aware mod declares the fallback; CMF itself overrides it. Normal, not a conflict.
 [/list]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

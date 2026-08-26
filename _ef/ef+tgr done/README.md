@@ -1,4 +1,18 @@
-﻿This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
+# Economic and Financial (E&F) + The Great Revision (TGR) ComPatch
+
+<!-- meta
+пара: E&F × TGR
+статус: done
+версии: —
+позиция: —
+файлов: 18
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
+This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]Economic and Financial (E&F) + The Great Revision (TGR) ComPatch[/h1]
 
 Compatibility patch for using [b]Economic and Financial (E&F)[/b] together with [b]The Great Revision (TGR)[/b].
@@ -67,3 +81,9 @@ Rebuilt 21.08.2026 against [b]TGR 2.0 (1.13.10, 12.08.2026)[/b] and [b]E&F 04.07
 [*][b]Goods ceiling.[/b] Victoria 3 1.13 crashes on entering the game above 128 goods, with nothing in the log. TGR adds no goods; E&F alone brings the build to 126 of 128, and the E&F Hotfix trims that to 118. Count before adding a third mod with new goods.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

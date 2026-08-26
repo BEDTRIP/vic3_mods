@@ -1,3 +1,15 @@
+# ComPatch Tech & Res + Power Blocks Expanded
+
+<!-- meta
+пара: PBE × T&R
+статус: noneed
+версии: —
+позиция: —
+файлов: 2
+генератор: —
+зависит от: —
+-->
+
 [h1]ComPatch Tech & Res + Power Blocks Expanded[/h1]
 [i]Split 25.08.2026: the Kuromi's AI half of this folder moved to _pbe/pbe+kai noneed. It was noneed too.[/i]
 [h2]Load order[/h2]

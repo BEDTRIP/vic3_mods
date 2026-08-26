@@ -1,4 +1,39 @@
-﻿# Morgenröte + Tech & Res — compatch
+# Morgenröte + Tech & Res — compatch
+
+<!-- meta
+пара: Morgenröte × T&R
+статус: out fixed
+версии: —
+позиция: —
+файлов: 13
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
+[h2]Morgenröte + Tech & Res — Compatch[/h2]
+
+[b]Load order: Morgenröte → Tech & Res → this patch.[/b] All three required.
+Kuromi's AI needs no patch.
+
+Tech & Res already ships a large Morgenröte compatibility layer. This patch only
+covers what that layer cannot do on its own:
+
+[list]
+    [*][b]Airports produce air travel again.[/b] Tech & Res re-points every airport route to generic transportation because it cannot depend on Morgenröte's [i]air travel[/i] good. With both mods on, that silently killed Morgenröte's pop needs, prestige flights and airline journal entries. Restored following the Tech & Res author's own instructions.
+    [*][b]Curtiss aviation content works with the new aircraft industry.[/b] Tech & Res moved aeroplane production out of the automotive industry; three events, one decision and one score still looked for it there.
+    [*][b]Prestige flights are obtainable.[/b] The six Curtiss airline companies can produce the prestige good again.
+    [*][b]Publishing industry keeps both mods' methods[/b] — Morgenröte's publisher, newspaper and cylinder press tiers alongside the Tech & Res broadcast and digital lines.
+    [*][b]Morgenröte's technology mechanics stay alive[/b] — Elgar/Klimt traditions, smallpox and yellow fever mitigation, and the modern-art gate that keeps the three art branches exclusive.
+    [*][b]Gaudi's advanced tank options accept Tech & Res armour[/b], instead of greying out once you upgrade past vanilla tanks.
+[/list]
+
+[b]Balance note:[/b] in Tech & Res alone the airport is the game's biggest transportation source. Once air travel is restored it stops being that, exactly as in Morgenröte. If late-game transportation runs short, that is why.
+
+[b]Not included on purpose:[/b] this patch does not rebalance either mod. Where the two authors simply disagree on numbers, Tech & Res wins.
+
+---
 
 **Load order: Morgenröte → Tech & Res → this patch.** All three are required.
 
@@ -143,26 +178,3 @@ unit types added.
   not reorder them.
 
 ---
-
-## For Steam
-
-[h2]Morgenröte + Tech & Res — Compatch[/h2]
-
-[b]Load order: Morgenröte → Tech & Res → this patch.[/b] All three required.
-Kuromi's AI needs no patch.
-
-Tech & Res already ships a large Morgenröte compatibility layer. This patch only
-covers what that layer cannot do on its own:
-
-[list]
-    [*][b]Airports produce air travel again.[/b] Tech & Res re-points every airport route to generic transportation because it cannot depend on Morgenröte's [i]air travel[/i] good. With both mods on, that silently killed Morgenröte's pop needs, prestige flights and airline journal entries. Restored following the Tech & Res author's own instructions.
-    [*][b]Curtiss aviation content works with the new aircraft industry.[/b] Tech & Res moved aeroplane production out of the automotive industry; three events, one decision and one score still looked for it there.
-    [*][b]Prestige flights are obtainable.[/b] The six Curtiss airline companies can produce the prestige good again.
-    [*][b]Publishing industry keeps both mods' methods[/b] — Morgenröte's publisher, newspaper and cylinder press tiers alongside the Tech & Res broadcast and digital lines.
-    [*][b]Morgenröte's technology mechanics stay alive[/b] — Elgar/Klimt traditions, smallpox and yellow fever mitigation, and the modern-art gate that keeps the three art branches exclusive.
-    [*][b]Gaudi's advanced tank options accept Tech & Res armour[/b], instead of greying out once you upgrade past vanilla tanks.
-[/list]
-
-[b]Balance note:[/b] in Tech & Res alone the airport is the game's biggest transportation source. Once air travel is restored it stops being that, exactly as in Morgenröte. If late-game transportation runs short, that is why.
-
-[b]Not included on purpose:[/b] this patch does not rebalance either mod. Where the two authors simply disagree on numbers, Tech & Res wins.

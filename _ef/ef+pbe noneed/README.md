@@ -1,3 +1,17 @@
+# Economic and Financial Mod (E&F) + Power Blocks Expanded (PBE) ComPatch
+
+<!-- meta
+пара: E&F × PBE
+статус: noneed
+версии: —
+позиция: —
+файлов: 2
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 [h1]Economic and Financial Mod (E&F) + Power Blocks Expanded (PBE) ComPatch[/h1]
 [h2]Load order[/h2]
 [list]
@@ -23,3 +37,9 @@
 [/list]
 [/list]
 [/list]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

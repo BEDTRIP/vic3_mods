@@ -1,4 +1,16 @@
-﻿### Morgenrote + PSC — компач НЕ НУЖЕН (`noneed`)
+# morg+psc noneed
+
+<!-- meta
+пара: Morgenröte × PSC
+статус: noneed
+версии: Проверено: **21.08.2026**, игра 1.13.10
+позиция: —
+файлов: 0
+генератор: —
+зависит от: —
+-->
+
+### Morgenrote + PSC — компач НЕ НУЖЕН (`noneed`)
 
 - `Morgenrote` 2.8.3e «Mitsopoulos» (`supported_game_version` 1.13.*, зависимость — CMF 1.*)
 - `Private Sector Construction` 1.3.7

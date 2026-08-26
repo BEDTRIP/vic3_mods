@@ -1,5 +1,57 @@
 # Addon 1 — Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven × MegaComPatch
 
+<!-- meta
+сборка: аддон HC+GoB+MoH
+статус: собран
+версии: —
+позиция: —
+файлов: 12
+генератор: tools/regen_addon1.py
+зависит от: —
+-->
+
+## Для мастерской
+
+[h1]Addon: Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven × MegaComPatch[/h1]
+
+Compatibility layer that puts the [b]Hail, Columbia! / Gates of the Bosphorus / Mandate of Heaven[/b] block on top of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url] set. Merge of my three ComPatches for this block.
+
+Also run [b]Victorian Century[/b]? Get the separate [i]ComPatch HC + GoB + MoH + The Great Revision + Victorian Century[/i] too and load it after this addon -- this addon itself carries no VC content, on purpose (see "Compatibility" below).
+
+[h2]Load order[/h2]
+[list]
+[*]the whole MegaComPatch set, in its own order
+[*]MegaComPatch
+[*]Hail, Columbia!
+[*]Gates of the Bosphorus
+[*]Mandate of Heaven
+[*][b]this addon (last)[/b]
+[/list]
+[i]Mandate of Heaven must load after Hail, Columbia!, with or without this addon.[/i]
+
+[h2]What it fixes[/h2]
+[list]
+[*][b]The Great Revision's AI injections come back.[/b] Kuromi's AI ships its default strategy as a bare body at the vanilla path, which eats TGR's three injections whole; the megapack puts them back and Mandate of Heaven then eats that fix too. TGR's institutions, naval unit weights, conscription ratio and unification-war scenarios are re-issued here.
+[*][b]Kuromi's AI comes back.[/b] Mandate of Heaven replaces [i]ai_strategy_default[/i] with a body built on vanilla, which drops Kuromi's 42 changes. No error - the AI just plays vanilla again. Three-way merged here.
+[*][b]The Great Revision's landowners/rural folk come back.[/b] Hail, Columbia! ships both interest groups at the vanilla paths and wins them outright over TGR.
+[*][b]Two of TGR's starting companies get founded again[/b], in the Chinese and Ottoman history files.
+[*][b]Gaudí's level 4 capital expansion[/b] gets its modifiers back - Gates of the Bosphorus's compatibility stub was blanking them.
+[*][b]The achievements screen[/b] gets Morgenröte's twelve groups back.
+[*][b]One Olympics instead of two[/b], Morgenröte's.
+[*][b]Chrysler and Twain[/b] keep both mods' jobs; [b]Jacksonian Democrats[/b] keep TGR's law stances.
+[/list]
+
+[h2]Compatibility[/h2]
+[list]
+[*]Works as is with the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638941732][b]no E&F + PSC[/b] megapack[/url] variant - those pairs share nothing with this block.
+[*][b]Carries no Victorian Century content.[/b] VC and this whole block together turned out too heavy to run at once, even on a near-top-end PC, so VC's content for this block ships as its own separate compatch instead -- install it too if you want VC, skip it entirely if you don't. No file surgery needed either way.
+[*][b]Tech & Res is no longer supported.[/b] It left this set on 25.08.2026 and the four files that merged it were removed; use the T&R-free MegaComPatch build.
+[*]Adds no goods. The set stays at 74 of the 128 ceiling.
+[/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
 Built 24.08.2026 for game 1.13 (exe 1.13.11). Rebuilt 25.08.2026 without Tech & Res. Briefly extended 26.08.2026 with the HC+GoB+MoH × Victorian Century pair, then split that pair back out the same day into its own standalone compatch once VC plus this whole block together turned out too heavy to run at once, even on a near-top-end PC — see "Victorian Century" below.
 
 This is the first of the addon layers that sit on top of the MegaComPatch. The megapack covers its own blocks; each new block added above it needs one layer that closes that block against everything below. This is the layer for **Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven**.
@@ -147,43 +199,3 @@ python3 tools/build_addon1.py --repo <vic3_mods>
 `regen_addon1.py` supports `--check` to report drift without writing; so does `build_addon1.py`. Either one stops rather than guessing whenever a foreign mod moves a line one of these merges depends on — which is the only warning available, since none of these conflicts produce a single line in `error.log`.
 
 The standalone Victorian Century compatch (`_HC+GoB+MoH/hc+vc done`) rebuilds separately with `tools/regen_hc_vc.py` — see its own README.
-
-## For Steam
-
-[h1]Addon: Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven × MegaComPatch[/h1]
-
-Compatibility layer that puts the [b]Hail, Columbia! / Gates of the Bosphorus / Mandate of Heaven[/b] block on top of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url] set. Merge of my three ComPatches for this block.
-
-Also run [b]Victorian Century[/b]? Get the separate [i]ComPatch HC + GoB + MoH + The Great Revision + Victorian Century[/i] too and load it after this addon -- this addon itself carries no VC content, on purpose (see "Compatibility" below).
-
-[h2]Load order[/h2]
-[list]
-[*]the whole MegaComPatch set, in its own order
-[*]MegaComPatch
-[*]Hail, Columbia!
-[*]Gates of the Bosphorus
-[*]Mandate of Heaven
-[*][b]this addon (last)[/b]
-[/list]
-[i]Mandate of Heaven must load after Hail, Columbia!, with or without this addon.[/i]
-
-[h2]What it fixes[/h2]
-[list]
-[*][b]The Great Revision's AI injections come back.[/b] Kuromi's AI ships its default strategy as a bare body at the vanilla path, which eats TGR's three injections whole; the megapack puts them back and Mandate of Heaven then eats that fix too. TGR's institutions, naval unit weights, conscription ratio and unification-war scenarios are re-issued here.
-[*][b]Kuromi's AI comes back.[/b] Mandate of Heaven replaces [i]ai_strategy_default[/i] with a body built on vanilla, which drops Kuromi's 42 changes. No error - the AI just plays vanilla again. Three-way merged here.
-[*][b]The Great Revision's landowners/rural folk come back.[/b] Hail, Columbia! ships both interest groups at the vanilla paths and wins them outright over TGR.
-[*][b]Two of TGR's starting companies get founded again[/b], in the Chinese and Ottoman history files.
-[*][b]Gaudí's level 4 capital expansion[/b] gets its modifiers back - Gates of the Bosphorus's compatibility stub was blanking them.
-[*][b]The achievements screen[/b] gets Morgenröte's twelve groups back.
-[*][b]One Olympics instead of two[/b], Morgenröte's.
-[*][b]Chrysler and Twain[/b] keep both mods' jobs; [b]Jacksonian Democrats[/b] keep TGR's law stances.
-[/list]
-
-[h2]Compatibility[/h2]
-[list]
-[*]Works as is with the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638941732][b]no E&F + PSC[/b] megapack[/url] variant - those pairs share nothing with this block.
-[*][b]Carries no Victorian Century content.[/b] VC and this whole block together turned out too heavy to run at once, even on a near-top-end PC, so VC's content for this block ships as its own separate compatch instead -- install it too if you want VC, skip it entirely if you don't. No file surgery needed either way.
-[*][b]Tech & Res is no longer supported.[/b] It left this set on 25.08.2026 and the four files that merged it were removed; use the T&R-free MegaComPatch build.
-[*]Adds no goods. The set stays at 74 of the 128 ceiling.
-[/list]
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

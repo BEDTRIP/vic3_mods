@@ -1,4 +1,18 @@
-﻿[b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
+# Compatibility patch for using these big mods together:
+
+<!-- meta
+сборка: мегапак полный
+статус: собран
+версии: Updated for game 1.13 -- TGR 2.0, PSC 1.3.7, E&F 4.1.7 + Hotfix 4.1.7.4, Morgenröte 2.8.3e, Tech & Res 1.6', KAI 7.5, PBE 1.13.
+позиция: —
+файлов: 176
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
+[b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
 
 [h1]Compatibility patch for using these big mods together:[/h1]
 [list]
@@ -68,3 +82,9 @@ Four files exist only here, because they fix things that appear only when severa
 [*]Also you can check more lightweight [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638941732]no-E&F/no-PSC[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]no-T&R[/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3643003863]no-TGR[/url] megacompatches.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

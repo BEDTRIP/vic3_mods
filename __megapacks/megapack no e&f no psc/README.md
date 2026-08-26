@@ -1,4 +1,18 @@
-﻿[b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
+# Compatibility patch for using these big mods together:
+
+<!-- meta
+сборка: мегапак без E&F и PSC
+статус: собран
+версии: Updated for game 1.13 -- TGR 2.0, Kuromi's AI 7.5, Morgenroete 2.8.3e, Tech & Res 1.6, PBE 1.13.
+позиция: —
+файлов: 39
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
+[b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
 
 This is the no-E&F, no-PSC version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url].
 [h1]Compatibility patch for using these big mods together:[/h1]
@@ -60,3 +74,9 @@ The pairs that need nothing are checked too, and stay unpatched on purpose: Morg
 [/list]
 
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

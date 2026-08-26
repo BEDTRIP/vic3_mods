@@ -1,5 +1,114 @@
 # E&F Hotfix
 
+<!-- meta
+мод: свой хотфикс E&F 1.13
+статус: done
+версии: —
+позиция: —
+файлов: 76
+генератор: tools/regen_ef_currency_merge.py
+зависит от: —
+-->
+
+## Для мастерской
+
+Paste as is into the workshop page.
+
+```
+[h1]E&F Hotfix [1.13][/h1]
+Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13[/b].
+Load [b]after E&F[/b]. Works with or without any of the compatches.
+
+[h2]Load order[/h2]
+[list]
+[*]Community Mod Framework (CMF)
+[*]Expanded Topbar Framework (or Dense UI)
+[*]Economic and Financial (E&F)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
+[*][b]E&F Hotfix (this mod)[/b]
+[/list]
+
+[h2]E&F can finally share a build with other big mods[/h2]
+Victoria 3 crashes on entering a game above [b]128[/b] goods, silently, with nothing in the log. Vanilla ships 53 and E&F adds 73 — [b]126[/b], two slots left. Any mod bringing three or more goods breaks the game, which is why E&F and Tech & Res could never run together.
+
+57 of E&F's 73 goods are currencies, one per monetary system law. This mod merges them into one, taking E&F from 73 goods to [b]8[/b]:
+[list]
+[*]E&F alone: 126 → [b]61[/b]
+[*]+ Morgenröte: crash → 66
+[*]+ PSC: crash → 70
+[*]+ Tech & Res: crash → [b]96[/b]
+[/list]
+
+[b]Nothing about the monetary system is removed.[/b] All 95 currency laws stay, every country keeps its own law, its own mint, its own exchange rate and money supply. Only the good on the belt is shared, and it is called Local Currency.
+
+[h2]Your currency is a prestige good now[/h2]
+A base good gets three prestige slots — measured, not guessed — so the currencies come back as three, one per monetary standard:
+[list]
+[*][b]Representative Currency[/b] — gold, silver, bimetallic standard
+[*][b]Pegged Currency[/b] — gold exchange, external exchange standard
+[*][b]Fiat Currency[/b] — fiat standard
+[/list]
+Each with its own name and icon, a prestige bonus, and the engine's +20% throughput for buildings that consume it. Change your monetary standard law and the central bank starts minting the matching one.
+
+To produce a prestige good a company has to own the building, so [b]the central bank is now owned by a bank company[/b] — the country's own historical one where E&F ships it (Bank of England, Banque de France, the State Bank), a generated "Central Bank" company otherwise. It is granted free of a company slot, it cannot be deleted, and it holds the monopoly on banks so no rival buys it out.
+
+The treasury still funds the central bank, so the company collects no dividends from it and the building panel still calls it a government building. That is deliberate: the company holds the bank to mint the currency, not to profit from it.
+
+[h2]What else it fixes[/h2]
+[list]
+[*][b]The crash when the world map appears[/b]
+[list]
+[*]Six vanilla GUI files E&F still ships in their 1.12 form are restored, keeping the [i]@money![/i] → currency symbol substitution
+[*][i]map_markers.gui[/i] was missing [i]enemy_naval_mission_marker[/i] — the engine looks that widget up by name and crashes when it is gone
+[/list]
+
+[*][b]~70,000 script errors per session[/b]
+[list]
+[*]31 of 32 E&F alerts read variables that are never initialised — the national stockpile they belong to ships inside a .zip the game does not read
+[*]Every alert now checks [i]has_variable[/i] first. Two bond alerts also ran in market scope while reading country variables, and markets have no variables in Vic3
+[/list]
+
+[*][b]History bugs[/b]
+[list]
+[*]Spain got no starting silver mine: E&F points at [i]STATE_ANDALUSIA[/i], which 1.13 split into Lower and Upper
+[*]Greece got gold and silver mines in Saxony and Brandenburg — a copy-paste of the Prussian block, running in a NULL state
+[*]Württemberg got no currency at all: its law is spelled [i]gulde[/i] without the n
+[*]Thirteen countries held a named currency law whose good does not exist — worse than having no currency. Moved to [i]law_no_market_liquidity[/i]
+[/list]
+
+[*][b]Currency laws were unavailable to everyone[/b]
+[list]
+[*]All 95 required a technology named [i]currency_standars[/i] — the real one has a d. One letter, 95 times, and the whole law group could never be enacted by hand
+[*]Fixed, with a restriction: a law is available only to the tags E&F itself assigns it to, and only once you actually have a central bank
+[/list]
+
+[*][b]Local currency flooding every market[/b]
+[list]
+[*]E&F handed countries without a monetary system a flat 2500 local currency [b]per state[/b], regardless of size. ~600 of 724 countries qualify, and their cheap currency crowded real national currencies out of [i]popneed_currency[/i]
+[*]Now computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve — and local currency is part of the merge, so there is no cheaper currency to switch to any more
+[/list]
+
+[*][b]Three script guards[/b]
+[list]
+[*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
+[*]The same division by zero in the currency, which he left unguarded, and which was Britain and China printing a million currency at random
+[*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist
+[/list]
+
+[*][b]E&F's dev panel showing up in the budget screen[/b] — the round [b]1[/b] button under the budget tabs. Tied to [i]-debug_mode[/i], so anyone playing with the console open sees it. Hidden
+[/list]
+
+[h2]Not fixed[/h2]
+[list]
+[*][i]budget_panel.gui[/i] and [i]construction_panel.gui[/i] are equally out of date but hold real E&F reworks — they need a manual merge, not a vanilla swap. Expect trouble at bankruptcy and in the ship construction queue
+[/list]
+
+[i]Overrides five E&F data files and seven .gui files, so it has to be rebuilt after every E&F update and every game patch.[/i]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+```
+
+---
+
 Fixes for **Economic and Financial**, repository version **04.07.2026**, on Victoria 3 **1.13**.
 Load it **after E&F**. It does not depend on any compatch and works without them.
 
@@ -773,100 +882,3 @@ grep -c 'currency_standars' "E&F/common/laws/01_ef_currency_type.txt"
 ```
 
 ---
-
-## For Steam
-
-Paste as is into the workshop page.
-
-```
-[h1]E&F Hotfix [1.13][/h1]
-Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13[/b].
-Load [b]after E&F[/b]. Works with or without any of the compatches.
-
-[h2]Load order[/h2]
-[list]
-[*]Community Mod Framework (CMF)
-[*]Expanded Topbar Framework (or Dense UI)
-[*]Economic and Financial (E&F)
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
-[*][b]E&F Hotfix (this mod)[/b]
-[/list]
-
-[h2]E&F can finally share a build with other big mods[/h2]
-Victoria 3 crashes on entering a game above [b]128[/b] goods, silently, with nothing in the log. Vanilla ships 53 and E&F adds 73 — [b]126[/b], two slots left. Any mod bringing three or more goods breaks the game, which is why E&F and Tech & Res could never run together.
-
-57 of E&F's 73 goods are currencies, one per monetary system law. This mod merges them into one, taking E&F from 73 goods to [b]8[/b]:
-[list]
-[*]E&F alone: 126 → [b]61[/b]
-[*]+ Morgenröte: crash → 66
-[*]+ PSC: crash → 70
-[*]+ Tech & Res: crash → [b]96[/b]
-[/list]
-
-[b]Nothing about the monetary system is removed.[/b] All 95 currency laws stay, every country keeps its own law, its own mint, its own exchange rate and money supply. Only the good on the belt is shared, and it is called Local Currency.
-
-[h2]Your currency is a prestige good now[/h2]
-A base good gets three prestige slots — measured, not guessed — so the currencies come back as three, one per monetary standard:
-[list]
-[*][b]Representative Currency[/b] — gold, silver, bimetallic standard
-[*][b]Pegged Currency[/b] — gold exchange, external exchange standard
-[*][b]Fiat Currency[/b] — fiat standard
-[/list]
-Each with its own name and icon, a prestige bonus, and the engine's +20% throughput for buildings that consume it. Change your monetary standard law and the central bank starts minting the matching one.
-
-To produce a prestige good a company has to own the building, so [b]the central bank is now owned by a bank company[/b] — the country's own historical one where E&F ships it (Bank of England, Banque de France, the State Bank), a generated "Central Bank" company otherwise. It is granted free of a company slot, it cannot be deleted, and it holds the monopoly on banks so no rival buys it out.
-
-The treasury still funds the central bank, so the company collects no dividends from it and the building panel still calls it a government building. That is deliberate: the company holds the bank to mint the currency, not to profit from it.
-
-[h2]What else it fixes[/h2]
-[list]
-[*][b]The crash when the world map appears[/b]
-[list]
-[*]Six vanilla GUI files E&F still ships in their 1.12 form are restored, keeping the [i]@money![/i] → currency symbol substitution
-[*][i]map_markers.gui[/i] was missing [i]enemy_naval_mission_marker[/i] — the engine looks that widget up by name and crashes when it is gone
-[/list]
-
-[*][b]~70,000 script errors per session[/b]
-[list]
-[*]31 of 32 E&F alerts read variables that are never initialised — the national stockpile they belong to ships inside a .zip the game does not read
-[*]Every alert now checks [i]has_variable[/i] first. Two bond alerts also ran in market scope while reading country variables, and markets have no variables in Vic3
-[/list]
-
-[*][b]History bugs[/b]
-[list]
-[*]Spain got no starting silver mine: E&F points at [i]STATE_ANDALUSIA[/i], which 1.13 split into Lower and Upper
-[*]Greece got gold and silver mines in Saxony and Brandenburg — a copy-paste of the Prussian block, running in a NULL state
-[*]Württemberg got no currency at all: its law is spelled [i]gulde[/i] without the n
-[*]Thirteen countries held a named currency law whose good does not exist — worse than having no currency. Moved to [i]law_no_market_liquidity[/i]
-[/list]
-
-[*][b]Currency laws were unavailable to everyone[/b]
-[list]
-[*]All 95 required a technology named [i]currency_standars[/i] — the real one has a d. One letter, 95 times, and the whole law group could never be enacted by hand
-[*]Fixed, with a restriction: a law is available only to the tags E&F itself assigns it to, and only once you actually have a central bank
-[/list]
-
-[*][b]Local currency flooding every market[/b]
-[list]
-[*]E&F handed countries without a monetary system a flat 2500 local currency [b]per state[/b], regardless of size. ~600 of 724 countries qualify, and their cheap currency crowded real national currencies out of [i]popneed_currency[/i]
-[*]Now computed from population and standard of living, using E&F's own [i]buy_packages[/i] table as the curve — and local currency is part of the merge, so there is no cheaper currency to switch to any more
-[/list]
-
-[*][b]Three script guards[/b]
-[list]
-[*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
-[*]The same division by zero in the currency, which he left unguarded, and which was Britain and China printing a million currency at random
-[*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist
-[/list]
-
-[*][b]E&F's dev panel showing up in the budget screen[/b] — the round [b]1[/b] button under the budget tabs. Tied to [i]-debug_mode[/i], so anyone playing with the console open sees it. Hidden
-[/list]
-
-[h2]Not fixed[/h2]
-[list]
-[*][i]budget_panel.gui[/i] and [i]construction_panel.gui[/i] are equally out of date but hold real E&F reworks — they need a manual merge, not a vanilla swap. Expect trouble at bankruptcy and in the ship construction queue
-[/list]
-
-[i]Overrides five E&F data files and seven .gui files, so it has to be rebuilt after every E&F update and every game patch.[/i]
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
-```

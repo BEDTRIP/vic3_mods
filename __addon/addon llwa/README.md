@@ -1,5 +1,31 @@
 # Addon: LLWA x MegaComPatch
 
+<!-- meta
+сборка: аддон LLWA
+статус: собран
+версии: —
+позиция: —
+файлов: 12
+генератор: tools/build_addon_llwa.py
+зависит от: —
+-->
+
+## Для мастерской
+
+[h1]Addon: LLWA x MegaComPatch[/h1]
+[b]Game 1.13 (exe 1.13.11) — Locomotion (LLWA) 2.6.3, The Great Revision 2.0, Kuromi's AI 7.5, Victorian Century (declares no version), Economic and Financial Mod (E&F) - V4.[/b]
+
+LLWA loads last and silently drops 19 records' worth of earlier mods' contributions — a stale pre-1.13 vanilla file at an exact game path, and bare rail-method overwrites. E&F's stock/liquidity system also predates LLWA and never registered its six new buildings, and ~200 historical companies across the set have never heard of them either. This addon restores all of it, without touching LLWA's own balance or design choices.
+
+[h2]Load order[/h2]
+[list]
+[*]…rest of your set, including The Great Revision, Kuromi's AI, Victorian Century, and E&F…
+[*]LLWA
+[*][b]this addon[/b]
+[/list]
+
+---
+
 **Game 1.13 (exe 1.13.11). Locomotion: Land, Water, & Air (LLWA) 2.6.3; The Great Revision 2.0; Kuromi's AI 7.5; Victorian Century (declares no version); Economic and Financial Mod (E&F) - V4; vanilla; Hail, Columbia!; Mandate of Heaven; LLWA + Morgenröte Compatch 1.0.8.**
 
 LLWA loads last in the target chain — after the megapack, Victorian Century, addon-VC, HC+GoB+MoH, and addon-HC. Two separate mechanisms in LLWA silently drop earlier mods' contributions on 19 records, plus a hand-written per-building whitelist in E&F that predates LLWA entirely and never mentions LLWA's new content, plus a gap in the author's own LLWA+Morgenröte compatch, plus ~200 historical companies across the set that have never heard of LLWA's buildings:
@@ -87,17 +113,3 @@ Victorian Century, Kuromi's AI, TGR, and E&F are all treated as permanent blocks
 ## Rebuilding
 
 `python3 tools/build_addon_llwa.py --repo <path to vic3_mods>` (add `--check` to verify without writing). Rebuilds from the seven pair compatches — run each pair's own `regen_llwa_*.py` first if LLWA, TGR, KAI, VC, E&F, or any of the five company-source mods updated.
-
-## For Steam
-
-[h1]Addon: LLWA x MegaComPatch[/h1]
-[b]Game 1.13 (exe 1.13.11) — Locomotion (LLWA) 2.6.3, The Great Revision 2.0, Kuromi's AI 7.5, Victorian Century (declares no version), Economic and Financial Mod (E&F) - V4.[/b]
-
-LLWA loads last and silently drops 19 records' worth of earlier mods' contributions — a stale pre-1.13 vanilla file at an exact game path, and bare rail-method overwrites. E&F's stock/liquidity system also predates LLWA and never registered its six new buildings, and ~200 historical companies across the set have never heard of them either. This addon restores all of it, without touching LLWA's own balance or design choices.
-
-[h2]Load order[/h2]
-[list]
-[*]…rest of your set, including The Great Revision, Kuromi's AI, Victorian Century, and E&F…
-[*]LLWA
-[*][b]this addon[/b]
-[/list]

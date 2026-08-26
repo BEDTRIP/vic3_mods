@@ -1,5 +1,15 @@
 # Morgenröte + The Great Revision — no compatch
 
+<!-- meta
+пара: Morgenröte × TGR
+статус: noneed
+версии: —
+позиция: —
+файлов: 1
+генератор: —
+зависит от: —
+-->
+
 Status: **not needed**. Nothing is shipped from this folder; there is no Steam item.
 
 Last verified **2026-08-21** against MR `2.8.3e Mitsopoulos` and TGR `2.0` (game 1.13.10).

@@ -1,5 +1,15 @@
 # Morgenröte + Power Blocs Expanded — NO COMPATCH NEEDED
 
+<!-- meta
+пара: Morgenröte × PBE
+статус: noneed
+версии: —
+позиция: —
+файлов: 1
+генератор: —
+зависит от: —
+-->
+
 **Status:** `noneed` — verified 2026-08-21 against
 Morgenröte `2.8.3e Mitsopoulos` (game 1.13.*) and
 Power Blocs Expanded `[1.13]` (Steam id 3623185901).

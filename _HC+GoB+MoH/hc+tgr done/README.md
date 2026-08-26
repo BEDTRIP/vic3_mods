@@ -1,3 +1,17 @@
+# Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven  +  The Great Revision ComPatch
+
+<!-- meta
+пара: HC+GoB+MoH × TGR
+статус: done
+версии: —
+позиция: —
+файлов: 10
+генератор: tools/regen_addon1.py
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=]Addon 1 for the MegaComPatch[/url]
 [h1]Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven  +  The Great Revision ComPatch[/h1]
 
@@ -54,3 +68,9 @@ Four of the files above -- [i]zz_hct_ig_landowners.txt[/i], [i]zz_hct_ig_rural_f
 [*][b]law_ethnostate, law_freedom_of_conscience, law_protectionism, law_canton_system, law_theocracy.[/b] In every case the last mod to touch the law injects, and into a sub-block nobody else names.
 [*][b]NAI.[/b] Defines merge per key. HC sets [i]NUM_GROWING_COLONIES_MAX[/i]; TGR and Kuromi's AI set neither that nor anything overlapping it.
 [/list]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

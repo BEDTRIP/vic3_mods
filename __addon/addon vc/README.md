@@ -1,5 +1,53 @@
 # Addon: Victorian Century x MegaComPatch
 
+<!-- meta
+сборка: аддон VC
+статус: собран
+версии: —
+позиция: —
+файлов: 27
+генератор: tools/regen_addon_vc.py
+зависит от: —
+-->
+
+## Для мастерской
+
+[h1]Addon: Victorian Century x MegaComPatch[/h1]
+
+Compatibility layer that puts [b]Victorian Century[/b] on top of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url] set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenröte, Power Blocs Expanded). Merge of my four ComPatches for this block.
+
+[h2]Load order[/h2]
+[list]
+[*]the whole MegaComPatch set, in its own order
+[*]MegaComPatch
+[*]Victorian Century
+[*]Victorian Century Localisation (if u need)
+[*][b]this addon (last)[/b]
+[*]other mods
+[/list]
+
+[h2]What it fixes[/h2]
+[list]
+[*][b]The Great Revision comes back on top of VC[/b] almost everywhere it was silently overwritten — interest groups, buy packages, companies, German unification, pop needs, base values, country histories, parties, government types — as a genuine three-way merge, VC's numbers and TGR's numbers both surviving. Plus 1725 hand-placed ideology stances neither mod's files could derive on their own.
+[*][b]E&F's currency demand, opium plantation, Standard Oil and minting bonus come back[/b] on top of VC's overwrites.
+[*][b]Morgenröte's entertainment demand, three pop needs and two characters (Dickens, Bernadotte) come back.[/b]
+[*][b]Kuromi's AI's political-strategy tuning comes back[/b] where it's safe to restore without guessing at an unverified journal-entry dependency.
+[*][b]Private Sector Construction and Power Blocs Expanded need no patch at all[/b] — both pairs confirmed clean.
+[/list]
+
+[h2]One thing worth knowing[/h2]
+Three of the four ComPatches restore different fields of the same 99 buy-package records. Loaded as three separate files, load order would make one of them silently wipe the other two's fixes right back out — so this addon merges all three into one file instead. Technical writeup in the README on GitHub.
+
+[h2]Compatibility[/h2]
+[list]
+[*]Works whether or not you run Private Sector Construction or Power Blocs Expanded — no shared content with either.
+[*]Adds no goods. The set stays at 74 of the 128 ceiling.
+[*]Does not yet cover Victorian Century against Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven — that's a separate layer, still to be built.
+[/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
 Built 26.08.2026 for game 1.13 (exe 1.13.11).
 
 This is the layer that puts **Victorian Century** on top of the MegaComPatch set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenroete, Power Blocs Expanded). The megapack covers its own six blocks; VC is the next block added above it, and this addon closes VC against everything below.
@@ -136,39 +184,3 @@ python3 tools/build_addon_vc.py --repo <vic3_mods>
 ```
 
 This regenerates `zzzz_addon_vc_buy_packages.txt` from the three source compatches and then copies everything else — `tools/regen_addon_vc.py` doesn't need a separate invocation, though `python3 tools/regen_addon_vc.py --repo <vic3_mods> --check` on its own reports drift without writing anything, same as the four `regen_vc_*.py` generators for the pair compatches themselves. Re-run those first if their own source mod updated, then run `build_addon_vc.py`.
-
-## For Steam
-
-[h1]Addon: Victorian Century x MegaComPatch[/h1]
-
-Compatibility layer that puts [b]Victorian Century[/b] on top of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url] set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenröte, Power Blocs Expanded). Merge of my four ComPatches for this block.
-
-[h2]Load order[/h2]
-[list]
-[*]the whole MegaComPatch set, in its own order
-[*]MegaComPatch
-[*]Victorian Century
-[*]Victorian Century Localisation (if u need)
-[*][b]this addon (last)[/b]
-[*]other mods
-[/list]
-
-[h2]What it fixes[/h2]
-[list]
-[*][b]The Great Revision comes back on top of VC[/b] almost everywhere it was silently overwritten — interest groups, buy packages, companies, German unification, pop needs, base values, country histories, parties, government types — as a genuine three-way merge, VC's numbers and TGR's numbers both surviving. Plus 1725 hand-placed ideology stances neither mod's files could derive on their own.
-[*][b]E&F's currency demand, opium plantation, Standard Oil and minting bonus come back[/b] on top of VC's overwrites.
-[*][b]Morgenröte's entertainment demand, three pop needs and two characters (Dickens, Bernadotte) come back.[/b]
-[*][b]Kuromi's AI's political-strategy tuning comes back[/b] where it's safe to restore without guessing at an unverified journal-entry dependency.
-[*][b]Private Sector Construction and Power Blocs Expanded need no patch at all[/b] — both pairs confirmed clean.
-[/list]
-
-[h2]One thing worth knowing[/h2]
-Three of the four ComPatches restore different fields of the same 99 buy-package records. Loaded as three separate files, load order would make one of them silently wipe the other two's fixes right back out — so this addon merges all three into one file instead. Technical writeup in the README on GitHub.
-
-[h2]Compatibility[/h2]
-[list]
-[*]Works whether or not you run Private Sector Construction or Power Blocs Expanded — no shared content with either.
-[*]Adds no goods. The set stays at 74 of the 128 ceiling.
-[*]Does not yet cover Victorian Century against Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven — that's a separate layer, still to be built.
-[/list]
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

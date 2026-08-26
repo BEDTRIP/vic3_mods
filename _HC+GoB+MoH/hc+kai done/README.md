@@ -1,3 +1,17 @@
+# Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven  +  Kuromi's AI ComPatch
+
+<!-- meta
+пара: HC+GoB+MoH × KAI
+статус: done
+версии: —
+позиция: —
+файлов: 7
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=]Addon 1 for the MegaComPatch[/url]
 [h1]Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven  +  Kuromi's AI ComPatch[/h1]
 
@@ -44,3 +58,9 @@ Built 24.08.2026, rebuilt 25.08.2026 without Tech & Res, against [b]Kuromi's AI 
 [*]Until 25.08.2026 this patch also covered [b]Tech & Res[/b]: the four slavery laws, [i]je_warlord_china[/i], the Greener Grass decree and T&R's own 1360-line injection into [i]ai_strategy_default[/i]. Tech & Res left the set and those four files went to [i]_to_delete/tr_removed_2026-08-25/[/i]. Each of them carried a T&R body merged into an HC or MoH one, so without Tech & Res installed they would put content from a missing mod into the game.
 [*]With T&R gone, TGR's 10 -> 500 on police / health system / home affairs is now restored as well. It used to be left out on purpose: Tech & Res re-stated all seven vanilla institutions at 10 in an injection that loaded later, so restoring TGR's values here would have decided the TGR x T&R pair rather than this one.
 [/list]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

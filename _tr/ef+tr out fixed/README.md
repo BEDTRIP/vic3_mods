@@ -1,3 +1,15 @@
+# Tech & Res + E&F ComPatch (fixed) [1.13]
+
+<!-- meta
+пара: E&F × T&R
+статус: out fixed
+версии: —
+позиция: —
+файлов: 22
+генератор: tools/regen_ef_tr_copies.py
+зависит от: —
+-->
+
 [h1]Tech & Res + E&F ComPatch (fixed) [1.13][/h1]
 A standalone replacement for the [b]Tech & Res + E&F ComPatch[/b] (version 1.6) on Victoria 3 [b]1.13[/b], checked against E&F 04.07.2026 and Tech & Res 13.05.2026. It carries everything the compatch does and repairs what it gets wrong.
 

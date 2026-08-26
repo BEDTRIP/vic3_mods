@@ -1,5 +1,59 @@
 # ComPatch: The Great Revision + Victorian Century
 
+<!-- meta
+пара: TGR × VC
+статус: done
+версии: Game 1.13 (exe 1.13.11) — The Great Revision 2.0, Victorian Century (unpacked 2026-08-25).
+позиция: —
+файлов: 22
+генератор: tools/regen_vc_tgr.py
+зависит от: —
+-->
+
+## Для мастерской
+
+[h1]ComPatch: The Great Revision + Victorian Century[/h1]
+part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon[/url] for the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url]
+
+[b]Game 1.13 (exe 1.13.11) — The Great Revision 2.0, Victorian Century (unpacked 2026-08-25).[/b]
+
+Victorian Century loads after The Great Revision and re-declares a great deal of what TGR had already rewritten — 172 shared keys and 14 shared files. Nothing errors and nothing is logged; TGR just quietly stops doing about half of what you installed it for. This patch puts TGR's work back on top of VC's.
+
+[h2]Load order[/h2]
+[list]
+[*]The Great Revision
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637467628]my TGR RU Localization (if u need)[/url]
+[*]…the rest of your set…
+[*]Victorian Century
+[*][b]this ComPatch[/b]
+[/list]
+[b]It must load after Victorian Century.[/b]
+
+[h2]What comes back[/h2]
+[list]
+[*][b]The eight interest groups[/b] — TGR's membership multiplier, base weights, and his law-based bonuses.
+[*][b]All 99 buy packages[/b] — TGR's consumption rebalance, applied on top of VC's numbers so both survive.
+[*][b]Twelve companies[/b] — including [i]ai_weight = 9999[/i], which is what makes the AI actually found them.
+[*][b]German unification[/b] — TGR's buttons, his Bismarck event and the annexation of 21 German states, none of which was being called at all.
+[*][b]Eight pop needs[/b] — TGR's supply-share system, with VC's weights kept.
+[*][b]base_values, eight country histories, four parties, two government types, formable GER, the Canada and Australia decisions.[/b]
+[/list]
+
+[h2]Ideology stances[/h2]
+TGR adds 13 law groups; VC adds 56 ideologies. None of them had an opinion on any of TGR's laws, and no TGR ideology had an opinion on VC's ten — so an interest group led by VC flavour was neutral on TGR's whole political layer. [b]1725 stances placed by hand[/b], in both directions. This is the one part of the patch that is content rather than a merge; the workbook it was authored in ships with the mod.
+
+[h2]What it does not touch[/h2]
+Buildings, technologies, production methods and defines are already compatible — the two mods inject into different sub-blocks there, or share no inner keys at all. Manifest Destiny is left dead on purpose: Hail, Columbia! replaces it further down the chain anyway.
+
+[h2]Notes[/h2]
+[list]
+[*]Every record is a three-way merge against vanilla 1.13.11, generated from both mods rather than hand-copied.
+[*]This is a [b]compatibility patch[/b], not a rebalance — except the ideology stances, which are authored, because neither mod contains anything to derive them from.
+[/list]
+[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
 **Game 1.13 (exe 1.13.11). The Great Revision 2.0, Victorian Century as unpacked 2026-08-25 (the mod declares no version).**
 
 Victorian Century loads after The Great Revision and re-declares a great deal of what TGR had already rewritten. Nothing errors, nothing is logged, and TGR quietly stops doing about half of what it was installed for. This patch puts TGR's work back on top of VC's, record by record.
@@ -79,45 +133,3 @@ Both use `INJECT:`, not a full body: the point is to add a law group an ideology
 * **`chi - china.txt` and `tur - ottoman empire.txt` are shadowed** if you also run my Hail Columbia + Gates of the Bosphorus + Mandate of Heaven addon, which owns those paths. That is intended; the files here are for sets without it.
 * Victorian Century declares an empty `id`, so it cannot be named in `relationships` — only in the description and in `tested_with`.
 * This is a **compatibility patch**, not a rebalance — with one declared exception: the ideology stances above are authored, because neither mod contains anything to derive them from. Every other number in it comes from one of the two mods.
-
-## For Steam
-
-[h1]ComPatch: The Great Revision + Victorian Century[/h1]
-part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon[/url] for the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url]
-
-[b]Game 1.13 (exe 1.13.11) — The Great Revision 2.0, Victorian Century (unpacked 2026-08-25).[/b]
-
-Victorian Century loads after The Great Revision and re-declares a great deal of what TGR had already rewritten — 172 shared keys and 14 shared files. Nothing errors and nothing is logged; TGR just quietly stops doing about half of what you installed it for. This patch puts TGR's work back on top of VC's.
-
-[h2]Load order[/h2]
-[list]
-[*]The Great Revision
-[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637467628]my TGR RU Localization (if u need)[/url]
-[*]…the rest of your set…
-[*]Victorian Century
-[*][b]this ComPatch[/b]
-[/list]
-[b]It must load after Victorian Century.[/b]
-
-[h2]What comes back[/h2]
-[list]
-[*][b]The eight interest groups[/b] — TGR's membership multiplier, base weights, and his law-based bonuses.
-[*][b]All 99 buy packages[/b] — TGR's consumption rebalance, applied on top of VC's numbers so both survive.
-[*][b]Twelve companies[/b] — including [i]ai_weight = 9999[/i], which is what makes the AI actually found them.
-[*][b]German unification[/b] — TGR's buttons, his Bismarck event and the annexation of 21 German states, none of which was being called at all.
-[*][b]Eight pop needs[/b] — TGR's supply-share system, with VC's weights kept.
-[*][b]base_values, eight country histories, four parties, two government types, formable GER, the Canada and Australia decisions.[/b]
-[/list]
-
-[h2]Ideology stances[/h2]
-TGR adds 13 law groups; VC adds 56 ideologies. None of them had an opinion on any of TGR's laws, and no TGR ideology had an opinion on VC's ten — so an interest group led by VC flavour was neutral on TGR's whole political layer. [b]1725 stances placed by hand[/b], in both directions. This is the one part of the patch that is content rather than a merge; the workbook it was authored in ships with the mod.
-
-[h2]What it does not touch[/h2]
-Buildings, technologies, production methods and defines are already compatible — the two mods inject into different sub-blocks there, or share no inner keys at all. Manifest Destiny is left dead on purpose: Hail, Columbia! replaces it further down the chain anyway.
-
-[h2]Notes[/h2]
-[list]
-[*]Every record is a three-way merge against vanilla 1.13.11, generated from both mods rather than hand-copied.
-[*]This is a [b]compatibility patch[/b], not a rebalance — except the ideology stances, which are authored, because neither mod contains anything to derive them from.
-[/list]
-[url=https://github.com/BEDTRIP/vic3_mods]my github[/url]

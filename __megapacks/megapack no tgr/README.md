@@ -1,3 +1,17 @@
+# Compatibility patch for using these big mods together:
+
+<!-- meta
+сборка: мегапак без TGR
+статус: собран
+версии: —
+позиция: —
+файлов: 156
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 [b]NOTE (25.08.2026): this build is no longer maintained.[/b] Tech & Res has been dropped from the set these patches are built for, so every file in here that merges Tech & Res with another mod is unsupported. Use [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch TGR + PSC + E&F + MR + PBE[/url] instead.
 
 This is no-TGR version of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this compatch[/url]
@@ -43,3 +57,9 @@ This is a merge of [url=https://steamcommunity.com/workshop/filedetails/?id=3585
 [list]
 [*]This mod is a merge patch. If you use additional mods that also replace the same files, you may need another (more specific) merge patch.
 [/list]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

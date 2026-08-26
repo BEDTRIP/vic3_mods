@@ -1,3 +1,17 @@
+# ComPatch: The Great Revision + Tech & Res
+
+<!-- meta
+пара: TGR × T&R
+статус: done
+версии: Updated for game 1.13.10 — TGR 2.0, Tech & Res 1.6.
+позиция: —
+файлов: 6
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 [h1]ComPatch: The Great Revision + Tech & Res[/h1]
 [b]Updated for game 1.13.10 — TGR 2.0, Tech & Res 1.6.[/b]
 
@@ -40,3 +54,9 @@
 [*]Where both authors set a different number for the same thing (pop needs, women's/children's rights, army-size AI values, AI money-spending defines), the patch leaves it alone: last mod loaded wins, and picking a side would be a rebalance.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

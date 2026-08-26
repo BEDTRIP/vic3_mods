@@ -1,3 +1,17 @@
+# PSC + Tech & Res ComPatch
+
+<!-- meta
+пара: PSC × T&R
+статус: out fixed
+версии: —
+позиция: —
+файлов: 40
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 [h1]PSC + Tech & Res ComPatch[/h1]
 Private Sector Construction rebuilds construction from the ground up: construction sectors stop handing out abstract construction points and instead produce a local construction good, which a per-state regulator converts into points, billed to the treasury and the investment pool. Tech & Res rebalances the same vanilla construction methods and adds a fifth tier, [i]Prefab Concrete Buildings[/i], which grants 15 construction points directly.
 
@@ -54,3 +68,9 @@ Nothing to patch. KAI's only overlap with PSC is an injection into [i]building_c
 [*]It will conflict with other mods that redefine [i]common/production_methods[/i] for the construction sector, PSC's construction script values or PSC's conversion effects.
 [*]The construction goods prices carried by this patch (iron 95, steel 95, arc welded 92, concrete 86) are the original author's tuning and were left untouched. They are the first thing to revisit if construction feels mispriced.
 [/list]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

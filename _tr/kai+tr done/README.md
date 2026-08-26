@@ -1,3 +1,17 @@
+# ComPatch: Kuromi's AI + Tech & Res
+
+<!-- meta
+пара: KAI × T&R
+статус: done
+версии: —
+позиция: —
+файлов: 2
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 [h1]ComPatch: Kuromi's AI + Tech & Res[/h1]
 [b]Kuromi's AI 7.5, Tech & Res 1.6.[/b]
 
@@ -30,3 +44,9 @@ The patch re-issues Kuromi's strategy with those seven appended, using the same 
 [*][b]Maintenance:[/b] the whole file rests on Kuromi's [i]kai_has_high_supply[/i] trigger. If KAI renames it, the strategy loads and silently does nothing.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

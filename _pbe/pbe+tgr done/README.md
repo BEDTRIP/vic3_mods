@@ -1,3 +1,17 @@
+# Power Blocs Expanded (PBE) + The Great Revision (TGR) ComPatch
+
+<!-- meta
+пара: PBE × TGR
+статус: done
+версии: Updated for 1.13.10
+позиция: —
+файлов: 3
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]Power Blocs Expanded (PBE) + The Great Revision (TGR) ComPatch[/h1]
 [h2]Load order[/h2]
@@ -33,3 +47,9 @@ This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638
 [/list]
 [b]Updated for 1.13.10[/b] - PBE renamed its internal prefix, which broke the previous version of this patch: its infamy branch referenced identifiers that no longer exist.
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._

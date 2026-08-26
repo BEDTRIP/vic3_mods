@@ -1,3 +1,17 @@
+# PSC + E&F ComPatch
+
+<!-- meta
+пара: E&F × PSC
+статус: done
+версии: —
+позиция: —
+файлов: 60
+генератор: —
+зависит от: —
+-->
+
+## Для мастерской
+
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]
 [h1]PSC + E&F ComPatch[/h1]
 E&F's "private construction sector" breaks the economy once you are rich enough: it is in a building group with [i]is_government_funded = no[/i], so nothing it consumes ever reaches your budget, yet it still hands the country construction points. Its top method gives [b]double[/b] the construction of the vanilla sector for [b]a quarter[/b] of the input goods, and sells stock on top. Delete your government construction sectors and you build for free.
@@ -60,3 +74,9 @@ Victoria 3 caps the goods database at 128 entries and crashes on entering a camp
 [*][b]Known gap:[/b] E&F and PSC both redefine the vanilla [i]construction_panel[/i] and the state building list, in different files. One of them loses. This compatch does not merge them yet.
 [/list]
 [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+
+---
+
+## Подробности
+
+_Пока только описание для мастерской: подробного разбора для этого компача не писали._
