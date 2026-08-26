@@ -1,13 +1,16 @@
 {
-  "name": "ComPatch HC + GoB + MoH + The Great Revision",
-  "id": "asm.compatch.hcgobmoh.tgr",
+  "name": "Addon 1: HC + GoB + MoH x MegaComPatch",
+  "id": "asm.addon1.hcgobmoh",
   "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
-  "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven with The Great Revision. Load after all four. ideology_jacksonian_democrat also carries Victorian Century's law stances (built from the tgr+vc compatch), and this pair also carries Victorian Century's rework of ig_landowners/ig_rural_folk plus VC additions to chi - china.txt, tur - ottoman empire.txt and usa - usa.txt, so Victorian Century is a dependency too -- load it, and the tgr+vc compatch, before this one.",
+  "short_description": "Compatibility addon that puts Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven on top of the MegaComPatch set. Merge of my four ComPatches for this block. Also carries Victorian Century's law stances for ideology_jacksonian_democrat and its own character/DNA/flag/opium/law content, so Victorian Century is a dependency too. Load last, after all of them.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
     "Utilities",
+    "Expansion",
+    "Historical",
+    "Gameplay",
     "1.13"
   ],
   "relationships": [
@@ -15,6 +18,20 @@
       "rel_type": "dependency",
       "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
       "display_name": "Community Mod Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+      "display_name": "Expanded Topbar Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3640735868",
+      "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
       "resource_type": "mod",
       "version": "*"
     },
@@ -34,8 +51,22 @@
     },
     {
       "rel_type": "dependency",
+      "id": "2889925770",
+      "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
       "id": "3215078236",
       "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
       "resource_type": "mod",
       "version": "*"
     }
@@ -47,6 +78,18 @@
         "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
         "display_name": "Community Mod Framework",
         "version": "1.63.0",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+        "display_name": "Expanded Topbar Framework",
+        "version": "1.19.0",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "3640735868",
+        "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+        "version": "1.13.11-2",
         "date": "2026-08-25"
       },
       {
@@ -62,9 +105,21 @@
         "date": "2026-08-25"
       },
       {
+        "id": "2889925770",
+        "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+        "version": "2.8.3e Mitsopoulos",
+        "date": "2026-08-25"
+      },
+      {
         "id": "3215078236",
         "display_name": "The Great Revision",
         "version": "2.0 (1.13.10, 12.08.2026)",
+        "date": "2026-08-25"
+      },
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
         "date": "2026-08-25"
       },
       {

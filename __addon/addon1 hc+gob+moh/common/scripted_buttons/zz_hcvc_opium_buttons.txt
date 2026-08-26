@@ -1,0 +1,137 @@
+### ComPatch HC+GoB+MoH x Victorian Century -- ban_opium_button / unban_opium_button
+###
+### Both mods REPLACE: the same two vanilla buttons; MoH loads later and wins
+### outright. MoH's body is the richer one -- China-specific Opium War
+### victory-condition branching in `possible`, an extra trigger_event in
+### `effect` -- so it stays the base. Three things of VC's are folded in:
+###   * visible/possible gate on VC's own journal entry (common_opium_war) too,
+###     alongside MoH's (je_opium_obsession / je_opium_communism) -- OR, so this
+###     only widens when the button can appear, never narrows it;
+###   * VC's has_law_or_variant (the correct 1.13 form) replaces MoH's stale
+###     has_law on the free-trade check -- same fix already documented for
+###     moh_rural_folk.txt in HC.2;
+###   * VC's allow_ban_opium_timer escape kept alongside MoH's
+###     lost_opium_wars check in ban_opium_button's tooltip gate.
+###
+### effect and ai_chance are MoH's, unchanged -- VC's are a strict subset
+### (unban_opium_button) or missing the China-specific branch entirely
+### (ban_opium_button).
+
+REPLACE:ban_opium_button = {
+	name = "ban_opium"
+	desc = "ban_opium_desc"
+	visible = {
+		OR = {
+			has_journal_entry = je_opium_obsession
+			has_journal_entry = je_opium_communism
+			has_journal_entry = common_opium_war
+		}
+		exists = market
+		market.owner = root
+		NOT = {
+			is_banning_goods = g:opium
+		}
+	}
+	possible = {
+		OR = {
+			has_journal_entry = je_opium_obsession
+			has_journal_entry = je_opium_communism
+			has_journal_entry = common_opium_war
+		}
+		NOT = {
+			has_law_or_variant = law_type:law_free_trade
+		}
+		custom_tooltip = {
+			text = not_lost_opium_wars_tt
+			OR = {
+				NOT = { has_variable = lost_opium_wars }
+				has_variable = allow_ban_opium_timer
+			}
+		}
+		exists = market
+		OR = {
+			AND = {
+				c:CHI ?= this
+				OR = {
+					custom_tooltip = {
+						text = yen_chin_pai_victory_tt
+						has_variable = opium_yen_chin_pai_victory
+					}
+					has_law = law_type:law_council_republic
+				}
+			}
+			AND = {
+				NOT = {
+					c:CHI ?= this
+				}
+				NOT = {
+					custom_tooltip = {
+						text = yen_chin_pai_victory_tt
+						has_variable = opium_yen_chin_pai_victory
+					}
+				}
+			}
+		}
+	}
+	effect = {
+		add_banned_goods = g:opium
+		if = {
+			limit = {
+				NOT = {
+					has_law = law_type:law_council_republic
+				}
+			}
+			trigger_event = {
+				id = moh_historical.9
+				popup = yes
+			}
+		}
+		add_modifier = {
+			name = opium_ban_authority
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				OR = {
+					has_strategy = ai_strategy_conservative_agenda
+					has_strategy = ai_strategy_reactionary_agenda
+					has_strategy = ai_strategy_maintain_mandate_of_heaven
+				}
+			}
+			add = 10
+		}
+	}
+}
+
+REPLACE:unban_opium_button = {
+	name = "remove_opium_ban"
+	desc = "remove_opium_ban_desc"
+	visible = {
+		OR = {
+			has_journal_entry = je_opium_obsession
+			has_journal_entry = je_opium_communism
+			has_journal_entry = common_opium_war
+		}
+		is_banning_goods = g:opium
+		exists = market
+		market.owner = root
+	}
+	possible = {
+		always = yes
+	}
+	effect = {
+		remove_banned_goods = g:opium
+		remove_modifier = opium_ban_authority
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				has_strategy = ai_strategy_progressive_agenda
+			}
+			add = 10
+		}
+	}
+}

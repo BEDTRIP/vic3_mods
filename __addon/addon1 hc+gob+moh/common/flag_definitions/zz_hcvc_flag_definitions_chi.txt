@@ -1,0 +1,232 @@
+### ComPatch HC+GoB+MoH x Victorian Century -- common/flag_definitions CHI
+###
+### MoH REPLACE:s the whole CHI flag list (19 entries), VC REPLACE_OR_CREATE:s
+### its own (8 entries) -- MoH wins the path outright. Seven of VC's eight
+### share a `coa` id with one of MoH's: five are functionally identical or a
+### strict subset (CHI, CHI_absolute_monarchy, CHI_communist, CHI_han_empire,
+### CHI_theocracy -- kept MoH's, no content lost). Two genuinely differ
+### (CHI_minguo, CHI_republic) -- both sides wrote real content, this is a
+### decision, not a merge:
+###   * CHI_minguo -- MoH: priority 5, trigger coa_def_republic_flag_trigger (MoH's own shared republic trigger). VC: priority 3000, trigger coa_def_chi_minguo_trigger (VC's own, tied to VC's parallel Chinese civil-war system). Kept MoH's: MoH's history/journal chain is what actually runs China's politics in this composition (see chi - china.txt), VC's trigger is written for VC's own chain and is not established to fire under MoH's.
+###   * CHI_republic -- MoH: subject_canton CHI_anguo, priority 5, excludes on MoH's own china_shatters variable. VC: subject_canton CHI_republic, priority 20, excludes on VC's own northern_expedition_name_var / chinese_revolution_republic_name_var. Same reasoning as CHI_minguo: kept MoH's, VC's exclusion variables belong to VC's own parallel chain.
+###
+### Below: MoH's 19 entries plus VC's one truly new one, CHI_dictatorship.
+
+REPLACE_OR_CREATE:CHI = {
+
+    # China
+    flag_definition = {
+        coa = CHI_han_empire
+        subject_canton = CHI_han_empire
+        coa_with_overlord_canton = CHI_han_empire
+        priority = 5
+        trigger = {
+            scope:actor = {
+                NOT = {
+                    country_has_primary_culture = cu:manchu
+                }
+                has_law = law_type:law_monarchy
+            }
+        }
+    }
+    flag_definition = {
+        coa = CHI
+        subject_canton = CHI
+        coa_with_overlord_canton = CHI_subject
+        allow_overlord_canton = yes
+        priority = 1
+    }
+    flag_definition = {
+        coa = CHI_absolute_monarchy
+        subject_canton = CHI_absolute_monarchy
+        coa_with_overlord_canton = CHI_subject
+        allow_overlord_canton = yes
+        priority = 20
+        trigger = {
+            coa_def_absolute_monarchy_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_republic
+        subject_canton = CHI_anguo
+        allow_overlord_canton = yes
+        priority = 5
+        trigger = {
+            coa_def_republic_flag_trigger = yes
+            NOT = {
+                has_global_variable = china_shatters
+            }
+        }
+    }
+    flag_definition = {
+        coa = CHI_shibaxing
+        subject_canton = CHI_shibaxing
+        priority = 25
+        trigger = {
+            OR = {
+                coa_def_republic_flag_trigger = yes
+                coa_def_military_junta_flag_trigger = yes
+            }
+            coa_def_secessionist_or_revolutionary_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_theocracy
+        # subject_canton = CHI_theocracy
+        subject_canton = CHI_absolute_monarchy
+        priority = 20
+        trigger = {
+            coa_def_theocracy_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_communist
+        subject_canton = sub_CHI_communist
+        priority = 1500
+        trigger = {
+            coa_def_communist_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_minguo
+        subject_canton = CHI_kmt
+        priority = 5
+        trigger = {
+            coa_def_republic_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_liansheng
+        subject_canton = CHI_liansheng_jing
+        priority = 20
+        trigger = {
+            exists = scope:actor
+            scope:actor ?= {
+                has_law = law_type:law_provincial_autonomy
+            }
+        }
+    }
+    flag_definition = {
+        coa = CHI_zhongsu
+        subject_canton = CHI_zhongsu
+        priority = 6
+        trigger = {
+            coa_def_communist_flag_trigger = yes
+            coa_def_secessionist_or_revolutionary_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_fujian
+        subject_canton = CHI_fujian
+        priority = 5
+        trigger = {
+            coa_def_republic_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_shibaxing
+        subject_canton = CHI_shibaxing
+        priority = 5
+        trigger = {
+            coa_def_republic_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_guojun
+        subject_canton = CHI_guojun
+        priority = 5
+        trigger = {
+            coa_def_republic_flag_trigger = yes
+        }
+    }
+    # flag_definition = {
+    #     coa = CHI_anguo
+    #     subject_canton = CHI_anguo
+    #     priority = 5
+    #     trigger = {
+    #         coa_def_republic_flag_trigger = yes
+    #     }
+    # }
+    flag_definition = {
+        coa = CHI_ming
+        subject_canton = CHI_ming
+        coa_with_overlord_canton = CHI_ming_subject
+        priority = 200
+        trigger = {
+            exists = scope:actor
+            scope:actor ?= {
+                has_variable = china_ming
+            }
+            coa_def_monarchy_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_shun
+        subject_canton = CHI_shun
+        coa_with_overlord_canton = CHI_shun_subject
+        priority = 200
+        trigger = {
+            exists = scope:actor
+            scope:actor ?= {
+                has_variable = china_shun
+            }
+            coa_def_monarchy_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_han
+        subject_canton = CHI_han
+        coa_with_overlord_canton = CHI_han_subject
+        priority = 200
+        trigger = {
+            exists = scope:actor
+            scope:actor ?= {
+                has_variable = china_han
+            }
+            coa_def_monarchy_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_later_jin
+        subject_canton = CHI_later_jin
+        coa_with_overlord_canton = CHI_later_jin_subject
+        priority = 210
+        trigger = {
+            exists = scope:actor
+            scope:actor ?= {
+                has_variable = china_later_jin
+                country_has_primary_culture = cu:manchu
+            }
+            coa_def_monarchy_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_kmt
+        subject_canton = CHI_kmt
+        priority = 5
+        trigger = {
+            coa_def_fascist_flag_trigger = yes
+        }
+    }
+    flag_definition = {
+        coa = CHI_facist_subject_JAP
+        subject_canton = CHI_kmt
+        priority = 5
+        trigger = {
+            exists = scope:actor
+            exists = c:JAP
+            scope:actor ?= {
+                is_subject_of = c:JAP
+            }
+            coa_def_fascist_flag_trigger = yes
+        }
+    }
+	flag_definition = {
+		coa = CHI_dictatorship
+		subject_canton = CHI_dictatorship
+		priority = 1000
+		trigger = {
+			coa_def_dictatorship_flag_trigger = yes
+		}
+	}
+}

@@ -1,0 +1,515 @@
+### ComPatch HC+GoB+MoH x Victorian Century -- 15 character_templates
+###
+### HC and VC both rewrite these 15 keys independently (10 are vanilla
+### commander/executive templates, 5 are HC's own with no vanilla ancestor).
+### Traits chosen per-character in hc_vc_character_traits.xlsx (sheet
+### "Трейты") -- see that file's "заметка" column for the reasoning behind
+### each pick. Everything except traits is HC's body, unchanged: commander_usage
+### / executive_usage / interest_group_leader_usage weights and on_created hooks
+### are HC's balance, not decided by this grid.
+###
+### chi_daoguang_template is NOT here on purpose -- MoH only INJECT:s on_created
+### into it, VC's REPLACE_OR_CREATE: body (traits only) survives untouched.
+### Confirmed noneed in conflicts_hcgobmoh_vs_vc_report.md.
+###
+### !! MAINTENANCE !! Re-run this generator after hc_vc_character_traits.xlsx
+### changes, or after HC/VC update these templates -- do not hand-edit the
+### traits lists here.
+
+REPLACE_OR_CREATE:USA_william_cramp = { # William Cramp, William Cramp and Sons
+	first_name = William
+    last_name = Cramp
+    historical = yes
+    birth_date = 1807.1.1 # Approximate, was born in 1807
+    dna = dna_william_cramp
+    culture = cu:yankee
+    company = company:company_william_cramp
+    interest_group = ig_industrialists
+    ideology = ideology_moderate
+    home_region = STATE_PENNSYLVANIA
+    traits = {
+		ambitious
+		tactful
+		basic_entrepreneur
+	}
+    executive_usage = {
+		country_trigger = {
+			has_dlc_feature = mp1_content
+		}
+		company_trigger = {
+			is_company_type = company_type:company_william_cramp
+		}
+	    earliest_usage_date = 1836.1.1
+	    latest_usage_date = 1878.1.1
+        #guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:USA_winfield_scott = {
+	first_name = Winfield
+	last_name = Scott
+	historical = yes
+	culture = cu:dixie
+	birth_date = 1786.6.13
+	dna = dna_winfield_scott
+	is_general = yes
+	ig_leader = yes
+	interest_group = ig_armed_forces
+	ideology = ideology_abolitionist #USFP
+	hq = region_atlantic_coast
+	traits = {
+		traditionalist_commander
+		basic_diplomat
+		meticulous
+		expert_offensive_planner
+	}
+    home_region = STATE_VIRGINIA
+}
+
+REPLACE_OR_CREATE:usa_admiral_dewey = {
+	first_name = George
+	last_name = Dewey
+	historical = yes
+	culture = cu:yankee
+    home_region = STATE_VERMONT
+	female = no
+	religion = rel:protestant
+	ideology = ideology_moderate
+	commander_rank = default
+	interest_group = ig_armed_forces
+	birth_date = 1837.12.26
+	dna = dna_george_dewey
+	traits = {
+		experienced_naval_commander
+		inspirational_orator
+		convoy_raider_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			c:USA ?= THIS
+		}
+		role = admiral
+		earliest_usage_date = 1861.1.1
+		latest_usage_date = 1903.1.1
+        #guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_admiral_perry = {
+	first_name = Matthew
+	last_name = Perry
+	historical = yes
+	culture = cu:yankee
+	female = no
+	religion = rel:protestant
+	ideology = ideology_reformer
+	commander_rank = default
+	interest_group = ig_armed_forces
+	birth_date = 1794.4.10
+	dna = dna_matthew_perry
+    home_region = STATE_RHODE_ISLAND
+	traits = {
+		expert_naval_commander
+		dockyard_master
+		innovative
+		explorer
+	}
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			c:USA ?= THIS
+		}
+		role = admiral
+		earliest_usage_date = 1836.1.1
+		latest_usage_date = 1855.1.1
+        #guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_grant = {
+	first_name = Ulysses
+	last_name = Grant
+	historical = yes
+	culture = cu:dixie
+	female = no
+	religion = rel:protestant
+	ideology = ideology_usfp_abolitionist_radical #USFP
+	commander_rank = default
+	interest_group = ig_armed_forces #USFP
+	birth_date = 1822.1.21
+    home_region = STATE_ILLINOIS
+	dna = dna_ulysses_s_grant
+	traits = {
+		experienced_offensive_planner
+		persistent
+		alcoholic
+		direct
+	}
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			c:USA ?= THIS
+		}
+		role = general
+		earliest_usage_date = 1846.1.1
+		latest_usage_date = 1874.1.1
+        #guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_jackson = {
+	first_name = Thomas
+	last_name = Jackson
+	historical = yes
+	culture = cu:dixie
+	female = no
+	religion = rel:protestant
+	ideology = ideology_traditionalist
+	commander_rank = default
+	interest_group = ig_armed_forces
+	birth_date = 1824.1.21
+	dna = dna_stonewall_jackson
+    home_region = STATE_VIRGINIA
+	traits = {
+		experienced_offensive_planner
+		pillager
+		charismatic
+		tactful
+	}
+	commander_usage = {
+		country_trigger = {
+			OR ={
+				AND = {
+					exists = c:USA
+					c:USA ?= THIS
+					NOT = { exists = c:CSA }
+				}
+				AND = {
+					exists = c:CSA
+					c:CSA ?= THIS
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1846.1.1
+		latest_usage_date = 1870.1.1
+        #guaranteed to spawn if possible
+	}
+    on_created = {
+        set_variable = {
+            name = historical_csa
+        }
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_jesup = {
+	first_name = Thomas
+	last_name = Jesup
+	historical = yes
+	culture = cu:dixie
+	female = no
+	commander_rank = default
+	interest_group = ig_armed_forces
+	birth_date = 1788.12.16
+    home_region = STATE_VIRGINIA
+	dna = dna_thomas_jesup
+	traits = {
+		meticulous
+		cruel
+		experienced_offensive_planner
+		resupply_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			c:USA ?= THIS
+		}
+		role = general
+		earliest_usage_date = 1836.1.1
+		latest_usage_date = 1860.1.1
+        #guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_longstreet = {
+	first_name = James
+	last_name = Longstreet
+	historical = yes
+	culture = cu:dixie
+	female = no
+	religion = rel:protestant
+	ideology = ideology_radical
+	commander_rank = default
+	interest_group = ig_armed_forces
+	birth_date = 1821.1.8
+    home_region = STATE_GEORGIA
+	dna = dna_james_longstreet
+	traits = {
+		experienced_defensive_strategist
+		pillager
+		charismatic
+		resupply_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			OR ={
+				AND = {
+					exists = c:USA
+					c:USA ?= THIS
+					NOT = { exists = c:CSA }
+				}
+				AND = {
+					exists = c:CSA
+					c:CSA ?= THIS
+				}
+			}
+		}
+		role = general
+		earliest_usage_date = 1846.1.1
+		latest_usage_date = 1874.1.1
+        #guaranteed to spawn if possible
+	}
+    on_created = {
+        set_variable = {
+            name = historical_csa
+        }
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_sherman = {
+	first_name = William_Tecumseh
+	last_name = Sherman
+	historical = yes
+	culture = cu:yankee
+	female = no
+	religion = rel:protestant
+	ideology = ideology_moderate
+	commander_rank = default
+    home_region = STATE_OHIO
+	interest_group = ig_petty_bourgeoisie
+	birth_date = 1820.2.8
+	dna = dna_sherman
+	traits = {
+		expert_offensive_planner
+		resupply_commander
+		pillager
+		direct
+	}
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			c:USA ?= THIS
+		}
+		role = general
+		earliest_usage_date = 1860.1.1
+		latest_usage_date = 1870.1.1
+        #guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_lincoln_character_template = {
+    first_name = Abraham
+    last_name = Lincoln
+    historical = yes
+    culture = cu:yankee
+    female = no
+    religion = rel:protestant
+    ideology = ideology_abolitionist
+    interest_group = ig_petty_bourgeoisie
+    birth_date = 1809.2.12
+    dna = dna_abraham_lincoln
+    home_region = STATE_ILLINOIS
+    traits = {
+		expert_political_operator
+		experienced_diplomat
+		inspirational_orator
+		persistent
+	}   
+    interest_group_leader_usage = {
+        country_trigger = {
+            exists = c:USA
+             c:USA ?= THIS
+            NOR = {
+				has_global_variable = ruler_selector_abraham_lincoln
+                has_global_variable = lincoln_spawned #USFP
+            }
+        }
+        interest_group_trigger = {
+            ig_counts_as_marginal = no
+            is_interest_group_type = ig_petty_bourgeoisie
+            NOR = {
+                has_variable = communist_ig_var
+                has_variable = chose_vanguardism
+                has_variable = chose_fascism
+                has_variable = chose_conservatism
+                has_variable = chose_ethno_nationalism
+            }
+        }   
+        earliest_usage_date = 1852.1.1
+        latest_usage_date = 1890.1.1
+        #guaranteed to spawn if possible
+    }
+    on_created = {
+        set_career_length = {
+            years = 20 #if not assassinated, anyway
+        }
+        if = {
+            limit = {
+                owner = {
+					has_journal_entry = je_acw_reconstruction
+                }
+            }
+            set_ideology = ideology:ideology_usfp_abolitionist_radical
+        } 
+		else_if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_slavery_banned
+				}
+			}
+			set_ideology = ideology:ideology_reformer
+		}
+		else = {
+            set_ideology = ideology:ideology_abolitionist
+        }
+    }
+}
+
+REPLACE_OR_CREATE:usa_admiral_porter = {
+	traits = {
+		experienced_naval_commander
+	}
+
+	dna = dna_david_porter
+	first_name = David
+	last_name = Dixon_Porter
+	historical = yes
+	interest_group = ig_armed_forces
+	ideology = ideology_abolitionist
+	culture = cu:yankee
+	female = no
+	birth_date = 1813.6.8
+    home_region = STATE_PENNSYLVANIA
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			this = c:USA
+		}
+		role = admiral
+		earliest_usage_date = 1843.1.1
+		latest_usage_date = 1880.1.1	
+		#guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_admiral_sampson = {
+	traits = {
+		experienced_naval_commander
+		meticulous
+	}
+
+	dna = dna_william_sampson
+	first_name = William
+	last_name = Thomas_Sampson
+	historical = yes
+	interest_group = ig_armed_forces
+	ideology = ideology_moderate
+	culture = cu:yankee
+	female = no
+	birth_date = 1840.2.9
+    home_region = STATE_NEW_YORK
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			this = c:USA
+		}
+		role = admiral
+		earliest_usage_date = 1870.1.1
+		latest_usage_date = 1900.1.1	
+		#guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_admiral_sigsbee = {
+	traits = {
+		experienced_naval_commander
+	}
+
+	dna = dna_charles_sigsbee
+	first_name = Charles
+	last_name = Dwight_Sigsbee
+	historical = yes
+	culture = cu:yankee
+	interest_group = ig_armed_forces
+	ideology = ideology_jingoist_leader
+	female = no
+	birth_date = 1845.1.16
+    home_region = STATE_NEW_YORK
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			this = c:USA
+		}
+		role = admiral
+		earliest_usage_date = 1875.1.1
+		latest_usage_date = 1900.1.1	
+		#guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_bell = {
+	dna = dna_james_bell
+	first_name = James
+	last_name = Franklin_Bell
+	historical = yes
+	interest_group = ig_rural_folk
+	ideology = ideology_jingoist_leader
+	culture = cu:dixie
+	female = no
+	traits = {
+		bigoted
+		war_criminal
+		basic_colonial_administrator
+	}
+	birth_date = 1856.1.9
+    home_region = STATE_KENTUCKY
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			this = c:USA
+		}
+		role = general
+		earliest_usage_date = 1886.1.1
+		latest_usage_date = 1910.1.1	
+		#guaranteed to spawn if possible
+	}
+}
+
+REPLACE_OR_CREATE:usa_general_miles = {
+	dna = dna_nelson_miles
+	first_name = Nelson
+	last_name = Appleton_Miles
+	historical = yes
+	culture = cu:yankee
+	ideology = ideology_moderate
+	female = no
+	birth_date = 1839.8.8
+    home_region = STATE_MASSACHUSETTS
+	traits = {
+		ambitious
+		experienced_offensive_planner
+		brave
+		popular_commander
+	}
+	commander_usage = {
+		country_trigger = {
+			exists = c:USA
+			this = c:USA
+		}
+		role = general
+		earliest_usage_date = 1869.1.1
+		latest_usage_date = 1900.1.1	
+		#guaranteed to spawn if possible
+	}
+}

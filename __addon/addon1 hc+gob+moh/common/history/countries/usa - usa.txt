@@ -1,0 +1,378 @@
+### ComPatch HC+GoB+MoH x Victorian Century -- the USA at 1836
+###
+### Hail, Columbia! and Victorian Century both ship
+### common/history/countries/usa - usa.txt at the vanilla path -- this is HC's
+### flagship file, the one the whole "United States Flavor Pack" is built around,
+### and HC loads later so it wins the path outright.  Checked line by line
+### 26.08.2026.
+###
+### Fifteen law groups are explicitly activated by one or both files.  Ten agree
+### (education_system, slavery, citizenship, colonization, labor_rights,
+### army_model, policing, rights_of_women, land_reform, and distribution_of_power
+### left to start_enactment/vanilla default by both).  Five are genuine
+### competitions, and every one of HC's three own custom laws is in this list:
+###
+###   * trade_policy: HC's own law_usfp_american_system vs VC's law_protectionism.
+###   * economic_system: HC's law_agrarianism vs VC's law_interventionism.
+###   * free_speech: HC's law_right_of_assembly vs VC's law_protected_speech.
+###   * taxation: HC's own law_usfp_devolved_taxation vs VC's
+###     law_per_capita_based_taxation.
+###   * church_and_state: HC's own law_usfp_nominal_separation vs VC's
+###     law_total_separation.
+###
+### HC's picks win all five, same principle as everywhere else in this addon: a
+### flavor pack's own signature content is what stays, and three of these five
+### are laws HC wrote for itself.  Also kept as HC-only, untouched by VC: the
+### `start_enactment = law_type:law_universal_suffrage` (HC deliberately starts
+### the USA mid-transition, "states are in the middle of piecemeal removing tax
+### obligations"), and HC's entire USFP journal-entry/ideology/interest-group
+### chain.
+###
+### What VC adds beyond the law list is a clean Bill-of-Rights amendment chain --
+### fourteen `active_law:lawgroup_X ?= { add_amendment = {...} }` blocks, one to
+### ten amendments plus the Declaration of Independence and common law.  Two are
+### byte-identical to blocks HC's file already has
+### (amendment_american_second_amendment on governance_principles,
+### amendment_tradition_of_free_elections on distribution_of_power) -- both mods
+### clearly draw from the same shared amendment set.  The other twelve are new,
+### and every one is safe to add regardless of which side won the law list above:
+### an amendment attaches to whatever law is active in its group, not to a
+### specific one, and (per the checks in _check_usa_laws_vs_vc) every targeted
+### group already has an active law under HC's own choices, or -- for
+### governance_principles/bureaucracy/internal_security, which no activate_law in
+### either file ever explicitly sets -- the same implicit-default mechanic HC's
+### own file already relies on for its pre-existing governance_principles and
+### bureaucracy amendments.
+###
+### NOT merged: VC's competing law picks (see above); VC's own tariff setting
+### (g:fabric, tied to VC's trade-law assumptions, not HC's); and VC's entire
+### parallel USA political/flavor chain -- its own "real manifest destiny"
+### tracking variables and an active je_texas_usa (HC's own manifest_destiny.txt
+### already deliberately suppresses the vanilla decision in favor of its own
+### 1100-line journal chain -- see hc+tgr done/README.md; a second, VC-driven
+### Manifest Destiny system would double up), plus VC's own missouri_compromise
+### modifier (HC already has usfp_missouri_compromise_decaying), us_second_bank,
+### failed_assassination_on_aj_president, and six of VC's own journal entries
+### (before_us_civil_war, supreme_court, united_states_congress,
+### westward_movement, je_seminole_wars, joi_flavor_usa.1).  Same class of
+### decision as China's and the Ottomans' parallel chains.
+###
+### add_company = company_type:company_william_cramp is byte-identical in both
+### files (same date, same state) -- nothing to merge.
+###
+### VARIANTS: needs VC for the twelve spliced-in amendment types.  Without VC,
+### ship HC's file unchanged -- drop this one.
+
+COUNTRIES = {
+	c:USA ?= {
+		set_next_election_date = 1836.12.7
+
+		set_tax_level = low
+		set_military_wage_level = low
+		set_government_wage_level = low
+		
+		add_taxed_goods = g:furniture
+		add_taxed_goods = g:luxury_furniture #representing property taxes
+
+		effect_starting_technology_tier_1_tech = yes
+		
+		set_market_capital = STATE_NEW_YORK
+				
+		set_variable = monroe_doctrine
+		
+		effect_starting_politics_liberal = yes
+		activate_law = law_type:law_public_schools
+		activate_law = law_type:law_legacy_slavery
+		activate_law = law_type:law_racial_segregation
+		activate_law = law_type:law_usfp_american_system
+		activate_law = law_type:law_agrarianism #Jackson has just abolished the Bank and rejected government investment in infrastructure
+		activate_law = law_type:law_frontier_colonization
+		activate_law = law_type:law_right_of_assembly #constitution says Protected Speech, but really the government will intervene when it feels like it
+		activate_law = law_type:law_no_workers_rights
+		activate_law = law_type:law_usfp_devolved_taxation #no federal income taxes, only tariffs and excises, states are funded mostly through property taxes
+		activate_law = law_type:law_national_militia
+		activate_law = law_type:law_local_police
+		activate_law = law_type:law_no_womens_rights # Women couldn't hold property until ~1839
+		start_enactment = law_type:law_universal_suffrage #states are in the middle of piecemeal removing tax obligations at the start date
+		activate_law = law_type:law_usfp_nominal_separation #de jure total separation, but de facto anti-catholicism, oppression of animists
+        activate_law = law_type:law_homesteading
+	
+		active_law:lawgroup_governance_principles ?= { # Presidential Republic
+			add_amendment = {
+				type = amendment_american_second_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+
+		# Victorian Century -- see the banner above
+active_law:lawgroup_army_model ?= { #第三修正案
+			add_amendment = {
+				type = amendment_american_third_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+active_law:lawgroup_economic_system ?= { #第四修正案
+			add_amendment = {
+				type = amendment_american_forth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+active_law:lawgroup_free_speech ?= { #第五修正案
+			add_amendment = {
+				type = amendment_american_fifth_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+active_law:lawgroup_policing ?= { #第六修正案
+			add_amendment = {
+				type = amendment_american_sixth_amendment
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+active_law:lawgroup_economic_system ?= { #第七修正案
+			add_amendment = {
+				type = amendment_american_seventh_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+active_law:lawgroup_governance_principles ?= { #第八修正案
+			add_amendment = {
+				type = amendment_american_eighth_amendment
+				sponsor = PREV.ig:ig_petty_bourgeoisie
+			}
+		}
+active_law:lawgroup_bureaucracy ?= { #第九修正案
+			add_amendment = {
+				type = amendment_american_ninth_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+active_law:lawgroup_internal_security ?= { #第十修正案
+			add_amendment = {
+				type = amendment_american_tenth_amendment
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+active_law:lawgroup_governance_principles ?= { #独立宣言
+			add_amendment = {
+				type = amendment_usa_declaration_of_independence
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+active_law:lawgroup_church_and_state ?= { #第一修正案
+			add_amendment = {
+				type = amendment_american_first_amendment
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+active_law:lawgroup_economic_system ?= { # 普通法
+			add_amendment = {
+				type = amendment_common_law
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+active_law:lawgroup_slavery ?= { # Legacy Slavery
+			add_amendment = {
+				type = amendment_american_fugitive_slaves_act
+				sponsor = PREV.ig:ig_landowners
+			}
+		}
+
+        # active_law:lawgroup_colonization ?= {
+        #     add_amendment = {
+        #         type = amendment_usfp_indian_removal_act
+        #         sponsor = PREV.ig:ig_rural_folk
+        #     }
+        # }
+
+		add_modifier = usa_capital_intact
+		set_institution_investment_level = {
+			institution = institution_colonial_affairs
+			level = 2
+		}
+		
+		set_institution_investment_level = {
+			institution = institution_schools
+			level = 2
+		}
+
+		set_institution_investment_level = {
+			institution = institution_police
+			level = 2
+		}
+
+		ig:ig_rural_folk ?= { # Andrew Jackson, Jacksonian Democracy & Populism
+			add_ruling_interest_group = yes
+		}
+
+		# add_journal_entry = { type = je_texas_usa }
+		# add_journal_entry = { type = je_acw_countdown }
+
+		
+		add_company = company_type:company_william_cramp
+		company:company_william_cramp = {
+			set_company_establishment_date = 1830.1.1
+			set_company_state_region = s:STATE_PENNSYLVANIA
+		}
+		####USFP####
+
+		add_enactment_modifier = {
+			name = successful_law_slide
+			multiplier = 3
+		}
+
+		add_journal_entry = {type = je_acw_countdown}
+		add_journal_entry = {type = je_usfp_a_house_divided_missouri_compromise}
+		# add_journal_entry = {type = je_usfp_a_house_divided_voting_rights}
+		add_journal_entry = {type = je_usfp_underground_railroad }
+		add_journal_entry = {type = je_usfp_afro_american_colonization}
+		add_journal_entry = {type = je_indian_removal}
+		add_journal_entry = {type = je_usfp_american_constitution}
+
+
+		add_modifier = {
+			name = usfp_missouri_compromise_decaying
+			years = 25
+			is_decaying = yes
+		}
+		add_modifier = {
+			name = usfp_albany_regency
+			months = 50
+		}
+
+		add_radicals = {
+			value = 0.01
+			religion = rel:protestant
+		}
+		add_radicals = {
+			value = 0.05
+			pop_type = slaves
+		}
+		
+		add_modifier = {
+			name = usfp_second_great_awakening
+			is_decaying = yes
+			years = 5
+		}
+		je:je_usfp_american_constitution = {
+			add_modifier = {
+				name = usfp_second_party_system_modifier
+			}
+		}
+		add_modifier = {
+			name = usfp_victory_over_nullification_crisis_modifier
+			is_decaying = yes
+			years = 2	
+		}
+		set_variable = { name = gov_petition_fired months = 150 }
+		set_variable = whigs_party
+		ig:ig_armed_forces = { 
+			add_ideology = ideology_republican
+		}
+		ig:ig_devout = {
+			remove_ideology = ideology_moralist
+			add_ideology = ideology_usfp_evangelical_moralist
+			set_ig_trait = ig_trait:usfp_ig_trait_postmillennialism
+			set_ig_trait = ig_trait:usfp_ig_trait_revivalism
+		}
+		ig:ig_landowners = {
+			add_ideology = ideology_reactionary_supremacist
+			add_ideology = ideology_anti_tariff
+			set_ig_trait = ig_trait:usfp_ig_trait_king_cotton
+			set_ig_trait = ig_trait:ig_trait_profitable_estates
+			set_ig_trait = ig_trait:usfp_ig_trait_peculiar_institution
+		}
+		ig:ig_industrialists = {
+			add_ideology = ideology_pro_tariff
+			set_ig_trait = ig_trait:ig_trait_patrician_philanthropy
+		}
+		ig:ig_intelligentsia = {
+			add_ideology = ideology_american_school
+			add_ideology = ideology_empire_of_liberty
+			remove_ideology = ideology_anti_clerical
+			add_ideology = ideology_usfp_accomodationist
+			set_ig_trait = ig_trait:usfp_ig_trait_american_exceptionalism
+			set_ig_trait = ig_trait:usfp_ig_trait_democratic_experiment
+		}
+		ig:ig_petty_bourgeoisie = {
+			remove_ideology = ideology_reactionary
+			remove_ideology = ideology_republican_reactionary
+			add_ideology = ideology_reactionary_segregationist
+			add_ideology = ideology_republican
+			add_ideology = ideology_american_school
+		}
+		ig:ig_rural_folk = {
+			remove_ideology = ideology_particularist
+			add_ideology = ideology_usfp_localist
+			set_ig_trait = ig_trait:usfp_ig_trait_go_west
+			set_ig_trait = ig_trait:usfp_ig_trait_republican_virtue
+		}
+		# create_diplomatic_pact = {
+		# 	country = c:LIB
+		# 	type = grant_own_market
+		# }
+		create_diplomatic_pact = {
+			country = c:SEQ
+			type = decrease_payments
+		}
+		create_diplomatic_pact = {
+			country = c:SEQ
+			type = exempt_from_service
+		}
+		create_diplomatic_pact = {
+			country = c:SEQ
+			type = grant_own_market
+		}
+
+		create_diplomatic_pact = {
+			country = c:TEX
+			type = increase_relations
+		}
+
+		create_diplomatic_pact = {
+			country = c:CSW
+			type = protectorate
+		}
+		create_diplomatic_pact = {
+			country = c:CHE
+			type = protectorate
+		}
+		create_political_lobby = {
+			type = lobby_anti_country
+			target = c:HAI
+			add_interest_group = ig:ig_landowners
+		}
+
+
+		# set_variable = usfp_achievements_possible
+		set_variable = {
+			name = usfp_dead_presidents_var
+			value = 0
+		}
+		trigger_event = usfp_usa.23
+
+		set_variable = free_elections_var
+		active_law:lawgroup_distribution_of_power ?= { # Census Voting - whilst individual parties carried out electoral fraud, the American central government did not typically have any role in rigging elections
+			add_amendment = {
+				type = amendment_tradition_of_free_elections
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+		active_law:lawgroup_bureaucracy ?= {
+			add_amendment = {
+				type = amendment_usfp_spoils_system
+				sponsor = PREV.ig:ig_rural_folk
+			}
+		}
+		set_variable = {
+			name = usfp_spoils_system_abolish_var
+			value = 0
+		}
+		active_law:lawgroup_free_speech ?= {
+			add_amendment = {
+				type = amendment_usfp_bill_of_rights
+				sponsor = PREV.ig:ig_intelligentsia
+			}
+		}
+	}
+}

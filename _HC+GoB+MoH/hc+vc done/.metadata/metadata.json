@@ -1,9 +1,9 @@
 {
-  "name": "ComPatch HC + GoB + MoH + The Great Revision",
-  "id": "asm.compatch.hcgobmoh.tgr",
+  "name": "ComPatch HC + GoB + MoH + Victorian Century",
+  "id": "asm.compatch.hcgobmoh.vc",
   "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
-  "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven with The Great Revision. Load after all four. ideology_jacksonian_democrat also carries Victorian Century's law stances (built from the tgr+vc compatch), and this pair also carries Victorian Century's rework of ig_landowners/ig_rural_folk plus VC additions to chi - china.txt, tur - ottoman empire.txt and usa - usa.txt, so Victorian Century is a dependency too -- load it, and the tgr+vc compatch, before this one.",
+  "short_description": "Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven with Victorian Century. Load after all four. Five more shared items -- ig_landowners, ig_rural_folk, chi - china.txt, tur - ottoman empire.txt, usa - usa.txt -- are carried by the hc+tgr compatch instead (same REPLACE path), so The Great Revision and that compatch are dependencies too.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",

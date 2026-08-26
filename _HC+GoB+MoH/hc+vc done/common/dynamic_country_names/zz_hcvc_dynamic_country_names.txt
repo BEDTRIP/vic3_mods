@@ -1,0 +1,375 @@
+### ComPatch HC+GoB+MoH x Victorian Century -- dynamic_country_names
+###
+### AHU, MCH, XIN, CHI: MoH REPLACE:s the whole entry (owns the path), VC
+### REPLACE_OR_CREATE:s (or, for CHI, TRY_INJECT:s) its own -- either way MoH
+### wins outright and VC's alternate names for these four tags vanish.
+###
+### dynamic_country_name is a plain repeated list, not a keyed record: the two
+### sides' entries never share an id (AHU/MCH/XIN) or, on CHI, share three ids
+### (dyn_c_great_qing, dyn_c_empire_of_china, dyn_c_peoples_republic_of_china)
+### with different triggers -- which is not a conflict, it's how this file
+### already works: MoH's own MCH list carries dyn_c_dongbei_army twice with two
+### different triggers. Below: MoH's list, VC's list appended after it.
+
+REPLACE_OR_CREATE:AHU = {
+
+	dynamic_country_name = {
+		name = dyn_c_ahu_nian
+		adjective = dyn_c_ahu_nian_adj
+		use_overlord_prefix = yes
+		is_main_tag_only = yes
+		priority = 0
+		trigger = {
+			scope:actor ?= {
+				has_variable = nian_rebellion
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_anhui_clique
+		adjective = AHU_ADJ
+
+		is_main_tag_only = yes
+		priority = 1
+
+		trigger = {
+			has_global_variable = china_shatters
+			scope:actor ?= {
+				has_government_type = gov_warlord_state
+			}
+		}
+	}
+#直系
+	dynamic_country_name = {
+		name = dyn_c_ahu_northern_expedition
+		adjective = dyn_c_ahu_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:AHU
+			c:AHU = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:MCH = {
+
+	# MANCHU
+	dynamic_country_name = {
+		name = dyn_c_dongbei_army
+		adjective = dyn_c_dongbei_army_adj
+		is_main_tag_only = yes
+		priority = 100
+		trigger = {
+			exists = c:CHI
+			scope:actor ?= {
+				is_subject_of = c:CHI
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_fengtian_clique
+		adjective = dyn_c_fengtian_adj
+		is_main_tag_only = yes
+		priority = 1
+		trigger = {
+			has_global_variable = china_shatters
+			scope:actor ?= {
+				has_government_type = gov_warlord_state
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_dongbei_army
+		adjective = dyn_c_dongbei_army_adj
+		is_main_tag_only = yes
+		priority = 100
+		trigger = {
+			# exists = c:CHI
+			scope:actor ?= {
+				OR = {
+					is_subject_type = subject_type_puppet
+					is_subject_type = subject_type_vassal
+				}
+			}
+		}
+	}
+#满洲
+	dynamic_country_name = {
+		name = dyn_c_qing_dynasty
+		adjective = dyn_c_qing_dynasty_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:MCH
+			c:MCH = {
+				has_law = law_type:law_monarchy
+			}
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_rus_china
+		adjective = dyn_c_rus_china_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:MCH
+			c:MCH = {
+				is_subject = yes
+				has_modifier = russian_china_officer
+			}
+		}
+	}
+
+	dynamic_country_name = {
+		name = dyn_c_mch_northern_expedition
+		adjective = dyn_c_mch_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 100000
+		
+		trigger = {
+			exists = c:MCH
+			c:MCH = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:XIN = {
+
+	dynamic_country_name = {
+		name = dyn_c_xinjiang_clique
+		adjective = dyn_c_xinjiang_adj
+		is_main_tag_only = yes
+		priority = 1
+		trigger = {
+			has_global_variable = china_shatters
+			scope:actor ?= {
+				has_government_type = gov_warlord_state
+			}
+		}
+	}
+#新疆
+	dynamic_country_name = {
+		name = dyn_c_xin_northern_expedition
+		adjective = dyn_c_xin_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			exists = c:XIN
+			c:XIN = {
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:CHI = {
+
+	# China
+	dynamic_country_name = {
+		name = dyn_c_great_qing
+		adjective = dyn_c_great_qing_adj
+		is_main_tag_only = yes
+		priority = 0
+		trigger = {
+			OR = {
+				coa_def_monarchy_flag_trigger = yes
+				coa_def_theocracy_flag_trigger = yes
+			}
+			scope:actor ?= {
+				country_has_primary_culture = cu:manchu
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_great_han
+		adjective = dyn_c_great_han_adj
+		is_main_tag_only = yes
+		priority = 1
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			scope:actor ?= {
+				has_variable = china_han
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_great_ming
+		adjective = dyn_c_great_ming_adj
+		is_main_tag_only = yes
+		priority = 1
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			scope:actor ?= {
+				has_variable = china_ming
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_great_shun
+		adjective = dyn_c_great_shun_adj
+		is_main_tag_only = yes
+		priority = 1
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			scope:actor ?= {
+				has_variable = china_shun
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_later_jin
+		adjective = dyn_c_later_jin_adj
+		is_main_tag_only = yes
+		priority = 1
+		trigger = {
+			exists = scope:actor
+			scope:actor ?= { 
+				has_variable = china_later_jin
+				country_has_primary_culture = cu:manchu
+			}
+			coa_def_monarchy_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_empire_of_china
+		adjective = dyn_c_empire_of_china_adj
+		is_main_tag_only = yes
+		priority = 0
+		trigger = {
+			scope:actor ?= {
+				NOT = {
+					country_has_primary_culture = cu:manchu
+				}
+				has_law = law_type:law_monarchy
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_peoples_republic_of_china
+		adjective = CHI_ADJ
+		is_main_tag_only = yes
+		priority = 0
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_roc
+		adjective = dyn_c_roc_adj
+		is_main_tag_only = yes
+		priority = 0
+		trigger = {
+			coa_def_republic_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_soviet_china
+		adjective = dyn_c_soviet_china_adj
+		is_revolutionary = yes
+		priority = 0
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_upc
+		adjective = dyn_c_roc_adj
+		is_main_tag_only = yes
+		priority = 20
+		trigger = {
+            exists = scope:actor
+            scope:actor ?= {
+                has_law = law_type:law_provincial_autonomy
+            }
+		}
+	}
+# China
+	dynamic_country_name = {
+		name = dyn_c_great_qing
+		adjective = dyn_c_great_qing_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			coa_def_monarchy_flag_trigger = yes
+			scope:actor ?= {
+				country_has_primary_culture = cu:manchu
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_empire_of_china
+		adjective = dyn_c_empire_of_china_adj
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			scope:actor ?= {
+				NOT = { country_has_primary_culture = cu:manchu }
+				has_law = law_type:law_monarchy
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_peoples_republic_of_china
+		adjective = CHI_ADJ
+		
+		is_main_tag_only = yes
+		priority = 0
+		
+		trigger = {
+			coa_def_communist_flag_trigger = yes
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_northern_expedition
+		adjective = dyn_c_northern_expedition_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			c:CHI = {
+				OR = {
+					has_law = law_type:law_presidential_republic
+					has_law = law_type:law_parliamentary_republic
+				}
+				has_variable = northern_expedition_name_var
+			}
+		}
+	}
+	dynamic_country_name = {
+		name = dyn_c_chinese_revolution_republic
+		adjective = dyn_c_chinese_revolution_republic_adj
+
+		is_main_tag_only = yes
+		priority = 10000
+		
+		trigger = {
+			c:CHI = {
+				OR = {
+					has_law = law_type:law_presidential_republic
+					has_law = law_type:law_parliamentary_republic
+				}
+				has_variable = chinese_revolution_republic_name_var
+			}
+		}
+	}
+}

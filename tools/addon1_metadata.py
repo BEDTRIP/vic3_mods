@@ -21,9 +21,11 @@ MODS = {
     'kai':  ('kai.kuromi', "Kuromi's AI", '7.5'),
     'mega': ('3640735868', 'MegaComPatch TGR + PSC + KAI + E&F + MR + PBE', '1.13.11-2'),
 }
-# Hail, Columbia! ships an EMPTY id in its metadata.json, so it cannot appear in
-# relationships at all -- it is named in the README and in tested_with instead.
+# Hail, Columbia! and Victorian Century both ship an EMPTY id in their
+# metadata.json, so neither can appear in relationships at all -- each is named
+# in the README and in tested_with instead.
 HC_NAME, HC_VER = 'Hail, Columbia! - United States Flavor Pack', '8.6-Roosevelt'
+VC_NAME, VC_VER = 'Victorian Century', 'unpacked 2026-08-25, mod declares no version'
 
 
 def dep(k, ver='*'):
@@ -32,16 +34,18 @@ def dep(k, ver='*'):
             'resource_type': 'mod', 'version': ver}
 
 
-def tested(keys):
+def tested(keys, vc=False):
     out = []
     for k in keys:
         i, n, v = MODS[k]
         out.append({'id': i, 'display_name': n, 'version': v, 'date': DATE})
     out.append({'id': '', 'display_name': HC_NAME, 'version': HC_VER, 'date': DATE})
+    if vc:
+        out.append({'id': '', 'display_name': VC_NAME, 'version': VC_VER, 'date': DATE})
     return out
 
 
-def meta(name, mid, short, deps, tests, tags):
+def meta(name, mid, short, deps, tests, tags, vc=False):
     return {
         'name': name,
         'id': mid,
@@ -51,7 +55,7 @@ def meta(name, mid, short, deps, tests, tags):
         'picture': 'thumbnail.png',
         'tags': tags,
         'relationships': [dep(k) for k in deps],
-        'game_custom_data': {'multiplayer_synchronized': True, 'tested_with': tested(tests)},
+        'game_custom_data': {'multiplayer_synchronized': True, 'tested_with': tested(tests, vc=vc)},
     }
 
 
@@ -68,8 +72,12 @@ FILES = {
         'ComPatch HC + GoB + MoH + The Great Revision',
         'asm.compatch.hcgobmoh.tgr',
         'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
-        'with The Great Revision. Load after all four.',
-        ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX),
+        'with The Great Revision. Load after all four. ideology_jacksonian_democrat also carries '
+        'Victorian Century\'s law stances (built from the tgr+vc compatch), and this pair also '
+        'carries Victorian Century\'s rework of ig_landowners/ig_rural_folk plus VC additions to '
+        'chi - china.txt, tur - ottoman empire.txt and usa - usa.txt, so Victorian Century is a '
+        'dependency too -- load it, and the tgr+vc compatch, before this one.',
+        ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX, vc=True),
     '_HC+GoB+MoH/hc+kai done': meta(
         'ComPatch HC + GoB + MoH + Kuromi AI',
         'asm.compatch.hcgobmoh.kai',
@@ -77,15 +85,26 @@ FILES = {
         'with Kuromi\'s AI. Load after all five. Also re-issues The Great Revision\'s '
         'injections into ai_strategy_default, so The Great Revision is a dependency too.',
         ['cmf', 'gob', 'moh', 'kai', 'tgr'], ['cmf', 'gob', 'moh', 'kai', 'tgr'], FIX),
+    '_HC+GoB+MoH/hc+vc done': meta(
+        'ComPatch HC + GoB + MoH + Victorian Century',
+        'asm.compatch.hcgobmoh.vc',
+        'Compatibility patch for Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven '
+        'with Victorian Century. Load after all four. Five more shared items -- ig_landowners, '
+        'ig_rural_folk, chi - china.txt, tur - ottoman empire.txt, usa - usa.txt -- are carried '
+        'by the hc+tgr compatch instead (same REPLACE path), so The Great Revision and that '
+        'compatch are dependencies too.',
+        ['cmf', 'gob', 'moh', 'tgr'], ['cmf', 'gob', 'moh', 'tgr'], FIX, vc=True),
     '__addon/addon1 hc+gob+moh': meta(
         'Addon 1: HC + GoB + MoH x MegaComPatch',
         'asm.addon1.hcgobmoh',
         'Compatibility addon that puts Hail, Columbia! + Gates of the Bosphorus + Mandate of '
-        'Heaven on top of the MegaComPatch set. Merge of my three ComPatches for this block. '
+        'Heaven on top of the MegaComPatch set. Merge of my four ComPatches for this block. '
+        'Also carries Victorian Century\'s law stances for ideology_jacksonian_democrat and its '
+        'own character/DNA/flag/opium/law content, so Victorian Century is a dependency too. '
         'Load last, after all of them.',
         ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'kai'],
         ['cmf', 'etf', 'mega', 'gob', 'moh', 'morg', 'tgr', 'kai'],
-        ['Fixes', 'Utilities', 'Expansion', 'Historical', 'Gameplay', '1.13']),
+        ['Fixes', 'Utilities', 'Expansion', 'Historical', 'Gameplay', '1.13'], vc=True),
 }
 
 

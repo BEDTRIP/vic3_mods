@@ -61,6 +61,7 @@ class P(object):
         self.hc   = os.path.join(root, 'for addon', 'hailcolumbia')
         self.gob  = os.path.join(root, 'for addon', 'gatesofbosphorus')
         self.moh  = os.path.join(root, 'for addon', 'mandateofheaven')
+        self.vc   = os.path.join(root, 'VC')
 
 
 # =============================================================================
@@ -380,12 +381,15 @@ def build_tgr(p):
     hc_lo  = read(os.path.join(p.hc,  'common/interest_groups/00_landowners.txt'))
     hc_rf  = read(os.path.join(p.hc,  'common/interest_groups/00_rural_folk.txt'))
     moh_rf = read(os.path.join(p.moh, 'common/interest_groups/moh_rural_folk.txt'))
+    vc_lo  = read(os.path.join(p.vc,  'common/interest_groups/joi_landowners.txt'))
+    vc_rf  = read(os.path.join(p.vc,  'common/interest_groups/joi_rural_folk.txt'))
 
-    files['common/interest_groups/zz_hct_ig_landowners.txt'] = _ig_landowners(van_lo, tgr_lo, hc_lo)
-    files['common/interest_groups/zz_hct_ig_rural_folk.txt'] = _ig_rural_folk(van_rf, tgr_rf, hc_rf, moh_rf)
+    files['common/interest_groups/zz_hct_ig_landowners.txt'] = _ig_landowners(van_lo, tgr_lo, hc_lo, vc_lo)
+    files['common/interest_groups/zz_hct_ig_rural_folk.txt'] = _ig_rural_folk(van_rf, tgr_rf, hc_rf, moh_rf, vc_rf)
     files['common/ideologies/zz_hct_jacksonian_democrat.txt'] = _jacksonian(p)
     files['common/history/countries/chi - china.txt'] = _history_china(p)
     files['common/history/countries/tur - ottoman empire.txt'] = _history_ottoman(p)
+    files['common/history/countries/usa - usa.txt'] = _history_usa(p)
     return files
 
 
@@ -399,10 +403,11 @@ IG_HEAD = (
 )
 
 
-def _ig_landowners(van, tgr, hc):
+def _ig_landowners(van, tgr, hc, vc):
     v = entry(van, 'ig_landowners')[1]
     t = entry(tgr, 'ig_landowners', prefix='REPLACE_OR_CREATE:')[1]
     h = entry(hc,  'ig_landowners')[1]
+    vc_body = entry(vc, 'ig_landowners', prefix='REPLACE_OR_CREATE:')[1]
     vw, tw, hw = sub(v, 'pop_weight'), sub(t, 'pop_weight'), sub(h, 'pop_weight')
     need('0.030' in tw, 'TGR no longer raises the LEADER_POPULARITY multiplier in ig_landowners')
     need('0.0025' in hw, 'HC ig_landowners no longer carries the vanilla LEADER_POPULARITY multiplier')
@@ -410,15 +415,33 @@ def _ig_landowners(van, tgr, hc):
     need('0.030' in merged and 'USFP' in merged,
          'ig_landowners/pop_weight merge lost either TGR\'s multiplier or HC\'s planters rule')
     body = replace_sub(h, 'pop_weight', merged)
-    note('ig_landowners: HC body + TGR LEADER_POPULARITY 0.0025 -> 0.030')
+
+    body = _merge_vc_into_ig(v, body, vc_body, ('on_enable', 'pop_potential', 'pop_weight'),
+                              'ig_landowners')
+    oe, pp, pw = sub(body, 'on_enable'), sub(body, 'pop_potential'), sub(body, 'pop_weight')
+    need('ig_trait_owner_of_land' in oe, 'VC no longer reworks ig_landowners on_enable (Russian nobles trait missing)')
+    need('usfp_country_is_american' in oe and 'cu:yankee' not in oe,
+         'ig_landowners on_enable: HC\'s usfp_country_is_american swap was lost merging in VC')
+    need('is_pop_type = capitalists' in pp and 'is_pop_type = bureaucrats' in pp and 'is_pop_type = peasants' in pp,
+         'VC no longer widens ig_landowners pop_potential to capitalists/bureaucrats/peasants')
+    need('POP_PRUSSIAN_NOBLES_CAP' in pw, 'VC no longer adds its Prussian-nobles pop_weight rules to ig_landowners')
+    need('0.030' in pw and 'No more Southern Planters' in pw,
+         'ig_landowners pop_weight lost TGR\'s multiplier or HC\'s Southern-planters rule merging in VC')
+    body = replace_sub(body, 'pop_weight', _safe_scope(pw, 'ig_landowners/pop_weight'))
+
+    note('ig_landowners: HC+TGR body + VC\'s on_enable/pop_potential/pop_weight rework merged in '
+         '(three-way against vanilla per sub-block); scope:interest_group restored to the safe ?= form '
+         'throughout, including one occurrence TGR itself had already silently downgraded')
     return banner(
-        'ComPatch HC+GoB+MoH x The Great Revision -- ig_landowners',
+        'ComPatch HC+GoB+MoH x The Great Revision + Victorian Century -- ig_landowners',
         '',
         'TGR reworks this interest group from TGR_POLITICS_landowners.txt with',
-        'REPLACE_OR_CREATE:.  Hail, Columbia! ships common/interest_groups/00_landowners.txt',
-        '-- the vanilla path, a bare body -- and loads later, so TGR\'s version is gone',
+        'REPLACE_OR_CREATE:.  Victorian Century reworks it wholesale from',
+        'joi_landowners.txt, also REPLACE_OR_CREATE:.  Hail, Columbia! ships',
+        'common/interest_groups/00_landowners.txt -- the vanilla path, a bare body --',
+        'and loads last of the three, so both TGR\'s and VC\'s versions are gone',
         'entirely.  Silent; the interest group still exists, it just has vanilla\'s',
-        'numbers back.',
+        'content back.',
         '',
         'What TGR actually changes here is one line: in pop_weight, the LEADER_POPULARITY',
         'multiplier goes from 0.0025 to 0.030, i.e. a popular leader pulls twelve times',
@@ -427,16 +450,36 @@ def _ig_landowners(van, tgr, hc):
         'What HC changes: usfp_country_is_american in on_enable, and a pop_weight rule',
         'that zeroes Southern planters outside slave states during the Civil War.',
         '',
-        'Merged below: HC\'s body with TGR\'s multiplier merged into pop_weight',
-        '(three-way against vanilla, so a future edit by either author conflicts',
-        'loudly instead of being dropped).',
+        'What VC changes, in three sub-blocks: on_enable gets nation-specific noble',
+        'trait sets for Russia, Japan, Prussia, Austria, China, Turkey and Spain (in',
+        'place of vanilla\'s shared noble_privileges/family_ties pair), a German-nobles',
+        'ideology switch, and reworked Prussian/Turkish/British blocks; pop_potential',
+        'widens from {aristocrats, clergymen, officers, farmers} to also allow',
+        'capitalists, bureaucrats and peasants; pop_weight adds weight rules for',
+        'Prussian capitalists/farmers/peasants "joining the Junkers", a European',
+        '(non-French) freeman bonus, and a Chinese-officer bonus.',
         '',
-        'TGR\'s `scope:interest_group ?= {` -> `= {` change is NOT carried: vanilla and',
-        'HC both use the safe-scope form, TGR\'s looks incidental, and the strict form',
-        'is the one that can go wrong.',
+        'Merged below: HC\'s body with TGR\'s multiplier folded into pop_weight, then',
+        'VC\'s rework of on_enable/pop_potential/pop_weight folded in on top, each',
+        'sub-block three-way against vanilla, so a future edit by any of the three',
+        'authors conflicts loudly instead of being dropped.  VC does not touch the',
+        'American-culture branch in on_enable, so HC\'s usfp_country_is_american swap',
+        'survives untouched; VC does not touch pop_potential\'s vanilla types, so its',
+        'three new ones are a pure addition; VC does not touch farmers/peasants/',
+        'aristocrats/clergymen/officers in pop_weight, so TGR\'s multiplier and HC\'s',
+        'Southern-planters rule both survive untouched next to VC\'s new rules.',
+        '',
+        'Neither TGR\'s nor VC\'s `scope:interest_group ?= {` -> `= {` downgrade is',
+        'carried (both make the identical change, independently, in the same',
+        'LEADER_POPULARITY block): vanilla and HC use the safe-scope form, and the',
+        'strict form is the one that can go wrong.  Restored to `?=` throughout --',
+        'this also retroactively fixes the one occurrence TGR\'s own change had already',
+        'let through undetected before VC was ever in this build (the banner used to',
+        'claim TGR\'s downgrade "is NOT carried", but LEADER_POPULARITY specifically',
+        'was; caught while adding this VC layer, fixed here).',
         '',
         'VARIANTS: safe in every megapack composition -- the merged body names no TGR',
-        'entity, only a number.',
+        'or VC entity, only numbers and vanilla trait/ideology keys.',
         *IG_HEAD) + 'REPLACE:ig_landowners = {' + body + '}\n'
 
 
@@ -456,11 +499,38 @@ def _ig_resolve(ours, base, theirs, n):
     return None
 
 
-def _ig_rural_folk(van, tgr, hc, moh):
+def _merge_vc_into_ig(van_body, body, vc_body, names, label):
+    """Layer Victorian Century's REPLACE_OR_CREATE: rework of an interest group
+    on top of an already-built (HC [+ TGR] [+ MoH]) body, one named sub-block at
+    a time, three-way against vanilla -- so a real overlap stops the build
+    instead of one side's edit silently winning."""
+    for nm in names:
+        merged = merge3(sub(van_body, nm), sub(body, nm), sub(vc_body, nm),
+                        '%s/%s x VC' % (label, nm), resolve=_ig_resolve)
+        body = replace_sub(body, nm, merged)
+    return body
+
+
+def _safe_scope(text, label):
+    """Restore `scope:interest_group ?= {` wherever a source silently dropped
+    the `?`.  Asserts the total count is unchanged (4, in both ig_landowners and
+    ig_rural_folk's pop_weight) so a real structural change is caught rather than
+    papered over."""
+    fixed = text.replace('scope:interest_group = {', 'scope:interest_group ?= {')
+    n = fixed.count('scope:interest_group ?= {')
+    need(n == 4 and 'scope:interest_group = {' not in fixed,
+         '%s: expected exactly 4 scope:interest_group references after the safety '
+         'fix, found %d (plus %d still unsafe) -- re-read the merged pop_weight'
+         % (label, n, fixed.count('scope:interest_group = {')))
+    return fixed
+
+
+def _ig_rural_folk(van, tgr, hc, moh, vc):
     v = entry(van, 'ig_rural_folk')[1]
     t = entry(tgr, 'ig_rural_folk', prefix='REPLACE_OR_CREATE:')[1]
     h = entry(hc,  'ig_rural_folk')[1]
     m = entry(moh, 'ig_rural_folk', prefix='INJECT:')[1]
+    vc_body = entry(vc, 'ig_rural_folk', prefix='REPLACE_OR_CREATE:')[1]
 
     tw = sub(t, 'pop_weight')
     need('value = 250' in tw and 'value = 150' in tw,
@@ -500,21 +570,42 @@ def _ig_rural_folk(van, tgr, hc, moh):
                        _open_block(sub(body, 'on_enable')).rstrip()
                        + '\n\n\t\t# Mandate of Heaven: Nongmin.\n' + inner + '\n\t}')
 
+    body = _merge_vc_into_ig(v, body, vc_body, ('on_enable', 'pop_potential', 'pop_weight'),
+                              'ig_rural_folk')
+    oe, pp, pw = sub(body, 'on_enable'), sub(body, 'pop_potential'), sub(body, 'pop_weight')
+    need('ideology_agrarian_russian' in oe and 'ideology_british_tory_conservatism_old' in oe
+         and 'ideology_indian_farmer_sovereignist' in oe,
+         'VC no longer adds its three ideology-switch blocks to ig_rural_folk on_enable')
+    need('usfp_country_is_american' in oe, 'HC\'s Jeffersonian block was lost merging VC into ig_rural_folk on_enable')
+    need('Nongmin' in oe, 'MoH\'s Nongmin rename was lost merging VC into ig_rural_folk on_enable')
+    need('exists = c:CHI' in pp, 'VC no longer adds its China-officer clause to ig_rural_folk pop_potential')
+    need('cu:usfp_american_indian' in pp, 'HC\'s American-culture exemption was lost merging VC into ig_rural_folk pop_potential')
+    need(pw.count('POP_CHINESE_OFFICER') == 2, 'VC no longer adds its two Chinese-officer pop_weight rules to ig_rural_folk')
+    need('value = 250' in pw and 'value = 150' in pw, 'ig_rural_folk pop_weight lost TGR\'s farmer/peasant numbers merging in VC')
+    body = replace_sub(body, 'pop_weight', _safe_scope(pw, 'ig_rural_folk/pop_weight'))
+
     note('ig_rural_folk: HC body + TGR farmers/peasants/leader numbers + MoH kmt ideology and Nongmin rename '
-         '(dropped as stale pre-1.13 copies: %s)' % ', '.join(n for n, _ in dropped))
+         '(dropped as stale pre-1.13 copies: %s) + VC\'s on_enable/pop_potential/pop_weight rework merged in '
+         'on top; scope:interest_group restored to the safe ?= form throughout, including one occurrence TGR '
+         'itself had already silently downgraded' % ', '.join(n for n, _ in dropped))
     return banner(
-        'ComPatch HC+GoB+MoH x The Great Revision -- ig_rural_folk',
+        'ComPatch HC+GoB+MoH x The Great Revision + Victorian Century -- ig_rural_folk',
         '',
-        'Three mods write this entry and each of the last two erases part of the one',
-        'before it:',
+        'Four mods write this entry:',
         '',
         '  TGR   REPLACE_OR_CREATE: from TGR_POLITICS_rural_folk.txt.  Its real change',
         '        is three numbers in pop_weight: POP_FARMERS 200 -> 250, POP_PEASANTS',
         '        200 -> 150, LEADER_POPULARITY 0.0025 -> 0.030.',
         '  HC    a bare body at the vanilla path 00_rural_folk.txt -- so all of TGR is',
         '        gone.  HC\'s own changes: usfp_country_is_american in on_enable and an',
-        '        aristocrat rule in pop_potential that exempts American cultures.',
+        '        aristocrat/American-culture rule in pop_potential.',
         '  MoH   INJECT: from moh_rural_folk.txt, 316 lines.',
+        '  VC    REPLACE_OR_CREATE: from joi_rural_folk.txt.  Adds three ideology-switch',
+        '        blocks to on_enable (Russia, Britain, the British East India Company),',
+        '        a China-officers/soldiers clause to pop_potential, and two Chinese-',
+        '        officer pop_weight bonuses (desc "POP_CHINESE_OFFICER" twice -- VC\'s',
+        '        own naming, not a bug introduced here).  All last-loaded and outright',
+        '        overwrite everything before them.',
         '',
         'The MoH file needs saying out loud: of its fifteen sub-blocks, exactly two are',
         'its own -- ideology_moh_kmt in character_ideologies, and the on_enable block',
@@ -528,12 +619,21 @@ def _ig_rural_folk(van, tgr, hc, moh):
         'take things away.  Same class as the stale ai_strategies file in LLWA.',
         '',
         'Merged below: HC\'s body (current vanilla plus HC\'s two edits), TGR\'s three',
-        'numbers merged into pop_weight three-way against vanilla, and MoH\'s two real',
-        'additions appended.  Nothing from MoH\'s stale copy is carried.',
+        'numbers merged into pop_weight three-way against vanilla, MoH\'s two real',
+        'additions appended, and VC\'s rework of on_enable/pop_potential/pop_weight',
+        'folded in on top of all of that -- each sub-block three-way against vanilla,',
+        'so a future edit by any author conflicts loudly instead of being dropped.',
+        'Nothing from MoH\'s stale copy is carried.',
+        '',
+        'Neither TGR\'s nor VC\'s `scope:interest_group ?= {` -> `= {` downgrade is',
+        'carried, for the same reason as in ig_landowners -- restored to `?=`',
+        'throughout, retroactively fixing the one occurrence TGR\'s own change had',
+        'already let through before VC entered this build.',
         '',
         'VARIANTS: safe in every composition -- ideology_moh_kmt and the Nongmin rename',
         'come from Mandate of Heaven, which is part of this addon\'s own block; the TGR',
-        'contribution is numbers only.',
+        'contribution is numbers only; VC\'s ideology-switch blocks and pop_weight',
+        'bonuses name only vanilla ideology/country keys.',
         *IG_HEAD) + 'REPLACE:ig_rural_folk = {' + body + '}\n'
 
 
@@ -550,41 +650,88 @@ def _ids(t):
 def _jacksonian(p):
     hc  = read(os.path.join(p.hc,  'common/ideologies/usfp_ideology_overrides.txt'))
     tgr = read(os.path.join(p.tgr, 'common/ideologies/TGR_POLITICS_character_ideologies.txt'))
+    vc  = read(os.path.join(p.out, '_vc/tgr+vc done/common/ideologies/zz_vc_tgr_stances_on_vc_laws.txt'))
     h = entry(hc,  'ideology_jacksonian_democrat', prefix='REPLACE_OR_CREATE:')[1]
     t = entry(tgr, 'ideology_jacksonian_democrat', prefix='INJECT:')[1]
-    add = [nm for nm in sub_names(t)]
-    need(add == ['lawgroup_election_system', 'lawgroup_legislative_process'],
-         'TGR now injects %s into ideology_jacksonian_democrat' % add)
-    for nm in add:
+    v = entry(vc,  'ideology_jacksonian_democrat', prefix='INJECT:')[1]
+
+    tgr_add = [nm for nm in sub_names(t)]
+    need(tgr_add == ['lawgroup_election_system', 'lawgroup_legislative_process'],
+         'TGR now injects %s into ideology_jacksonian_democrat' % tgr_add)
+    for nm in tgr_add:
         need(sub(h, nm) is None, 'HC now defines %s itself -- decide which stance wins' % nm)
-    tail = '\n'.join('\n\t# The Great Revision\n\t%s = %s' % (nm, sub(t, nm)) for nm in add)
-    body = _open_block('{' + h + '}')[1:].rstrip() + '\n' + tail + '\n}'
-    note('ideology_jacksonian_democrat: HC body + TGR lawgroup_election_system / lawgroup_legislative_process')
+
+    vc_groups = sub_names(v)
+    need(vc_groups == ['lawgroup_taxation', 'lawgroup_education_system', 'lawgroup_economic_system',
+                        'lawgroup_bureaucracy', 'lawgroup_trade_policy', 'lawgroup_citizenship',
+                        'lawgroup_policing', 'lawgroup_distribution_of_power'],
+         'VC x TGR now injects %s into ideology_jacksonian_democrat -- update the merge' % vc_groups)
+
+    # Two of VC's eight law groups are ones HC already has an opinion on
+    # (bureaucracy, distribution_of_power) -- VC adds exactly one new law to each,
+    # so that line is folded into HC's existing block instead of creating a
+    # second block with the same key, which would be invalid.  The other six
+    # groups do not exist in HC's body at all and are appended whole, same as
+    # TGR's two.
+    vc_merge = [nm for nm in vc_groups if sub(h, nm) is not None]
+    vc_new   = [nm for nm in vc_groups if sub(h, nm) is None]
+    need(vc_merge == ['lawgroup_bureaucracy', 'lawgroup_distribution_of_power'],
+         'HC now overlaps VC on a different set of law groups (%s) -- update the merge' % vc_merge)
+
+    h_merged = h
+    for nm in vc_merge:
+        extra = sub(v, nm)[1:-1].strip()
+        need('\n' not in extra, '%s now carries more than one new VC law -- update the merge' % nm)
+        new_block = _open_block(sub(h_merged, nm)).rstrip() + '\n        ' + extra + '\n    }'
+        h_merged = replace_sub(h_merged, nm, new_block)
+
+    tgr_lines = ['\n\t# The Great Revision\n\t%s = %s' % (nm, sub(t, nm)) for nm in tgr_add]
+    vc_lines  = ['\n\t# Victorian Century\n\t%s = %s' % (nm, sub(v, nm)) for nm in vc_new]
+    tail = '\n'.join(tgr_lines + vc_lines)
+    body = _open_block('{' + h_merged + '}')[1:].rstrip() + '\n' + tail + '\n}'
+    note('ideology_jacksonian_democrat: HC body + VC laws folded into bureaucracy/distribution_of_power '
+         '+ TGR two law-group stances + VC six law-group stances appended')
     return banner(
-        'ComPatch HC+GoB+MoH x The Great Revision -- ideology_jacksonian_democrat',
+        'ComPatch HC+GoB+MoH x The Great Revision x Victorian Century -- ideology_jacksonian_democrat',
         '',
         'TGR INJECT:s two law stances into this ideology -- lawgroup_election_system and',
-        'lawgroup_legislative_process, five laws each.  Hail, Columbia! then rewrites',
-        'the whole ideology with REPLACE_OR_CREATE: and names neither, so both stances',
-        'are dropped: REPLACE swaps the entry, it does not patch the sub-blocks a mod',
-        'happens to list.  A Jacksonian leader ends up with no opinion at all on',
-        'election systems or legislative process, which reads as "neutral" everywhere',
-        'and is logged nowhere.',
+        'lawgroup_legislative_process, five laws each.  VC INJECT:s eight more: one new',
+        'law apiece in lawgroup_bureaucracy and lawgroup_distribution_of_power (both of',
+        'which HC already has an opinion on), plus six whole new groups for its own new',
+        'laws (taxation, education_system, economic_system, trade_policy, citizenship,',
+        'policing).  Hail, Columbia! then rewrites the whole ideology with',
+        'REPLACE_OR_CREATE: and names none of this, so all ten stances are dropped:',
+        'REPLACE swaps the entry, it does not patch the sub-blocks a mod happens to',
+        'list.  A Jacksonian leader ends up with no opinion at all on any of these laws,',
+        'which reads as "neutral" everywhere and is logged nowhere.',
         '',
-        'Merged below: HC\'s body, unchanged, with TGR\'s two stance blocks appended.',
-        'They do not overlap -- HC names governance_principles, distribution_of_power,',
-        'bureaucracy, colonization and land_reform.',
+        'Merged below: HC\'s body, with VC\'s two new laws folded into the',
+        'lawgroup_bureaucracy and lawgroup_distribution_of_power blocks it already had,',
+        'then TGR\'s two stance blocks and VC\'s six new stance blocks appended.  None of',
+        'these overlap each other -- HC names governance_principles,',
+        'distribution_of_power, bureaucracy, colonization and land_reform; TGR and VC',
+        'both fall outside that list except for the two folded-in laws.',
         '',
-        'VARIANTS: needs TGR.  Drop this file from a composition without it -- the two',
-        'appended blocks are TGR\'s balance, not vanilla\'s.') \
+        'Source for VC\'s stances: _vc/tgr+vc done/common/ideologies/',
+        'zz_vc_tgr_stances_on_vc_laws.txt, itself generated by regen_vc_tgr.py against',
+        'vc_tgr_ideology_grid.xlsx (sheet "Обратно", row ideology_jacksonian_democrat).',
+        '',
+        'VARIANTS: needs TGR and VC, with the tgr+vc done compatch already built -- this',
+        'reads that compatch\'s output, not the two mods directly.  Drop this file from',
+        'a composition without both -- the appended blocks are their balance, not',
+        'vanilla\'s.') \
         + 'REPLACE_OR_CREATE:ideology_jacksonian_democrat = {' + body[:-1] + '}\n'
 
 
-def _history_merge(p, relpath, winner_dir, winner_name, tgr_anchor, hdr_lines):
+def _history_merge(p, relpath, winner_dir, winner_name, tgr_anchor, hdr_lines, pre=None):
     """Country history file that a mod of this addon overrides at the vanilla path,
-    dropping TGR's addition to the same country."""
+    dropping TGR's addition to the same country.  `pre`, if given, transforms the
+    winning body (e.g. splicing in a third mod's content) before TGR's company is
+    appended."""
     tgr = read(os.path.join(p.tgr, relpath))
     win = read(os.path.join(winner_dir, relpath))
+    if pre is not None:
+        win = pre(win)
     m = re.search(r'(?ms)^(\t*)add_company = company_type:%s\b.*?\n\1\}\n' % re.escape(tgr_anchor), tgr)
     need(m is not None, 'TGR no longer adds %s in %s' % (tgr_anchor, relpath))
     block = m.group(0).rstrip('\n')
@@ -603,11 +750,42 @@ def _history_merge(p, relpath, winner_dir, winner_name, tgr_anchor, hdr_lines):
     return banner(*hdr_lines) + out
 
 
+def _check_china_activate_law_vs_vc(p):
+    """China's activate_law list is the one place where MoH's and VC's rewrites
+    of this file look, on a skim, like they might need reconciling.  They do
+    not: every VC choice is either identical to MoH's, a competing pick for a
+    law group MoH's own chain already has a load-bearing reason to own, or an
+    addition whose own prerequisite MoH's choices leave unmet.  Asserted here so
+    a future update to either file re-opens this decision instead of letting it
+    silently drift out from under the write-up in the banner below."""
+    moh = read(os.path.join(p.moh, 'common/history/countries/chi - china.txt'))
+    vc  = read(os.path.join(p.vc,  'common/history/countries/chi - china.txt'))
+    vc_laws = re.findall(r'activate_law = law_type:(\S+)', vc)
+    need(vc_laws == ['law_monarchy', 'law_autocracy', 'law_serfdom', 'law_land_based_taxation',
+                      'law_imperial_examination', 'law_subjecthood', 'law_traditionalism',
+                      'law_censorship', 'law_closed_borders', 'law_canton_system',
+                      'law_freedom_of_conscience', 'law_classical_learning'],
+         'VC china.txt activate_law list is now %s -- re-check the china.txt VC-vs-MoH write-up' % vc_laws)
+    moh_laws = re.findall(r'activate_law = law_type:(\S+)', moh)
+    need(moh_laws == ['law_monarchy', 'law_autocracy', 'law_tenant_farmers', 'law_land_based_taxation',
+                       'law_imperial_examinations', 'law_subjecthood', 'law_traditionalism',
+                       'law_censorship', 'law_closed_borders', 'law_freedom_of_conscience',
+                       'law_canton_system', 'law_night_watchmen'],
+         'MoH china.txt activate_law list is now %s -- re-check the china.txt VC-vs-MoH write-up' % moh_laws)
+    need('active_law:lawgroup_land_reform' in moh and 'amendment_chinese_traditional_land_system' in moh,
+         'MoH china.txt no longer amends lawgroup_land_reform -- re-check why law_tenant_farmers is kept')
+    vc_edu = read(os.path.join(p.vc, 'common/laws/joi_education_system.txt'))
+    need('law_classical_learning' in vc_edu and 'requires_law_or' in vc_edu
+         and 'law_serfdom' in vc_edu and 'law_imperial_examination' in vc_edu,
+         'VC\'s law_classical_learning prerequisite changed -- re-check the china.txt VC-vs-MoH write-up')
+
+
 def _history_china(p):
+    _check_china_activate_law_vs_vc(p)
     return _history_merge(
         p, 'common/history/countries/chi - china.txt', p.moh, 'Mandate of Heaven',
         'company_ong_lung_sheng_tea_company',
-        ('ComPatch HC+GoB+MoH x The Great Revision -- China at 1836',
+        ('ComPatch HC+GoB+MoH x The Great Revision x Victorian Century -- China at 1836',
          '',
          'Both TGR and Mandate of Heaven ship common/history/countries/chi - china.txt.',
          'Same relative path, so the later mod wins the file outright and nothing else',
@@ -616,27 +794,305 @@ def _history_china(p):
          'TGR\'s single addition to the same country, the Ong Lung Sheng tea company,',
          'goes with the file.  A company that never gets founded produces no error.',
          '',
+         'Victorian Century ships this same path too -- REPLACE by path overlap, same as',
+         'TGR and MoH.  Checked line by line 26.08.2026 and deliberately left out, not',
+         'merged:',
+         '',
+         '  * VC keeps law_serfdom in lawgroup_land_reform; MoH switches to',
+         '    law_tenant_farmers and then applies its own amendment',
+         '    (amendment_chinese_traditional_land_system) to whatever law is active in',
+         '    that group -- written for MoH\'s choice, not vanilla\'s or VC\'s.',
+         '  * VC activates its own bureaucracy law law_imperial_examination (singular,',
+         '    VC\'s joi_bureaucracy.txt); MoH activates a differently-spelled',
+         '    law_imperial_examinations (plural, MoH\'s own, moh_flavoured_laws.txt).',
+         '    Same idea, two unrelated law_type keys with no relation to each other --',
+         '    MoH\'s own je_keju journal chain is written for its own law, kept.',
+         '  * VC adds law_classical_learning, in its own lawgroup_education_system (a',
+         '    group that does not exist without VC).  Its requires_law_or gate is',
+         '    law_serfdom OR law_imperial_examination -- neither is true once MoH\'s',
+         '    land_reform and bureaucracy picks above are kept, so activating it here',
+         '    would start China with a law whose own stated prerequisite is false.',
+         '    Left out.',
+         '  * The rest of VC\'s file -- eight of its own journal entries',
+         '    (imperial_examination_system, grand_council, isolationist_policies and',
+         '    five more), four law amendments in groups MoH does not touch, and its own',
+         '    set_variable/add_modifier calls -- is VC\'s own parallel China',
+         '    political-system chain, same class as MoH\'s (je_warlord_china, je_8_flags,',
+         '    je_daoguang_reform_main, je_keju, the ig_intelligentsia/ig_armed_forces',
+         '    rework, company_ewo_hong).  Running both chains on the same country is not',
+         '    something either author designed for -- same call already made for',
+         '    CHI_minguo/CHI_republic in flag_definitions (see hc+vc wip).',
+         '',
          'Merged below: MoH\'s file with TGR\'s add_company block appended inside the',
-         'country effect.  MoH\'s history is untouched.',
+         'country effect.  MoH\'s history, and its verdict against VC above, is otherwise',
+         'untouched.',
          '',
          'VARIANTS: needs TGR (the company type is TGR\'s).  In a composition without',
-         'TGR, ship Mandate of Heaven\'s file unchanged -- that is, drop this one.'))
+         'TGR, ship Mandate of Heaven\'s file unchanged -- that is, drop this one.  VC\'s',
+         'own file is superseded either way, with or without TGR present.'))
+
+
+def _check_ottoman_laws_vs_vc(p):
+    """Unlike China, most of what VC does to the Ottomans' file turns out to be
+    a clean, verified-safe addition rather than a competing rework -- see the
+    banner in _history_ottoman for the reasoning.  Asserted here so a future
+    update to either file re-opens the decision instead of drifting under it."""
+    gob = read(os.path.join(p.gob, 'common/history/countries/tur - ottoman empire.txt'))
+    vc  = read(os.path.join(p.vc,  'common/history/countries/tur - ottoman empire.txt'))
+    vc_laws = re.findall(r'activate_law = law_type:(\S+)', vc)
+    need(vc_laws == ['law_monarchy', 'law_autocracy', 'law_millet_system', 'law_subjecthood',
+                      'law_traditionalism', 'law_censorship', 'law_land_based_taxation',
+                      'law_slave_trade', 'law_madrasa'],
+         'VC tur - ottoman empire.txt activate_law list is now %s -- re-check the ottoman VC-vs-GoB write-up' % vc_laws)
+    need('active_law:lawgroup_taxation' in vc and 'amendment_salt_monopoly' in vc,
+         'VC ottoman file no longer amends lawgroup_taxation with amendment_salt_monopoly')
+    need('active_law:lawgroup_governance_principles' in vc and 'amendment_kanunname_law' in vc,
+         'VC ottoman file no longer amends lawgroup_governance_principles with amendment_kanunname_law')
+    gob_laws = re.findall(r'activate_law = law_type:(\S+)', gob)
+    need(gob_laws == ['law_monarchy', 'law_imperial_divan', 'law_scribal_bureaucrats', 'law_millet_system',
+                       'law_subjecthood', 'law_traditionalism', 'law_censorship', 'law_land_based_taxation',
+                       'law_debt_slavery', 'law_migration_controls'],
+         'GoB ottoman file activate_law list is now %s -- re-check the ottoman VC-vs-GoB write-up' % gob_laws)
+    need('active_law:lawgroup_education_system' in gob and 'amendment_gbbf_elifba' in gob,
+         'GoB ottoman file no longer amends lawgroup_education_system -- re-check why VC\'s law_madrasa is added')
+    madrasa = read(os.path.join(p.vc, 'common/laws/joi_education_system.txt'))
+    need('law_madrasa' in madrasa and 'requires_law_or' in madrasa and 'law_millet_system' in madrasa,
+         'VC\'s law_madrasa prerequisite changed -- re-check the ottoman VC-vs-GoB write-up')
+
+
+def _splice_vc_into_ottoman(win):
+    """Add VC's law_madrasa activation and its two amendments into GoB's own
+    body, verified safe (see _check_ottoman_laws_vs_vc and the banner in
+    _history_ottoman): law_madrasa's own prerequisite (law_millet_system) is
+    already active in GoB's list, and both amendments target law groups GoB
+    never touches, whose active law (law_monarchy, law_land_based_taxation) is
+    already active in every version of this file."""
+    anchor1 = '\t\tactivate_law = law_type:law_migration_controls\n'
+    need(win.count(anchor1) == 1,
+         'ottoman: GoB\'s law_migration_controls line moved or duplicated -- fix the VC splice anchor')
+    win = win.replace(anchor1, anchor1 + '\t\tactivate_law = law_type:law_madrasa   # Victorian Century\n', 1)
+
+    anchor2 = '\t\t# The Sick Man of Europe\n'
+    need(win.count(anchor2) == 1, 'ottoman: GoB\'s "# The Sick Man of Europe" comment moved -- fix the VC splice anchor')
+    vc_block = (
+        '\t\t# Victorian Century\n'
+        '\t\tactive_law:lawgroup_taxation ?= {\n'
+        '\t\t\tadd_amendment = {\n'
+        '\t\t\t\ttype = amendment_salt_monopoly\n'
+        '\t\t\t\tsponsor = prev.ig:ig_landowners\n'
+        '\t\t\t}\n'
+        '\t\t}\n'
+        '\t\tactive_law:lawgroup_governance_principles ?= {\n'
+        '\t\t\tadd_amendment = {\n'
+        '\t\t\t\ttype = amendment_kanunname_law\n'
+        '\t\t\t\tsponsor = prev.ig:ig_landowners\n'
+        '\t\t\t}\n'
+        '\t\t}\n\n'
+    )
+    return win.replace(anchor2, vc_block + anchor2, 1)
 
 
 def _history_ottoman(p):
+    _check_ottoman_laws_vs_vc(p)
     return _history_merge(
         p, 'common/history/countries/tur - ottoman empire.txt', p.gob, 'Gates of the Bosphorus',
         'company_imperial_arsenal',
-        ('ComPatch HC+GoB+MoH x The Great Revision -- the Ottomans at 1836',
+        ('ComPatch HC+GoB+MoH x The Great Revision x Victorian Century -- the Ottomans at 1836',
          '',
          'Same shape as the China file: TGR and Gates of the Bosphorus both ship',
          'common/history/countries/tur - ottoman empire.txt, GoB is later and takes the',
          'whole file, and TGR\'s addition -- the Imperial Arsenal company -- disappears',
          'with it.  Silent.',
          '',
-         'Merged below: GoB\'s file with TGR\'s add_company block appended.',
+         'Victorian Century ships this same path too.  Unlike its China file, most of',
+         'what VC does here is much closer to vanilla than GoB\'s own rework -- VC keeps',
+         'vanilla\'s law_autocracy and law_slave_trade where GoB swaps in',
+         'law_imperial_divan/law_scribal_bureaucrats and law_debt_slavery, and adds no',
+         'migration_controls law.  Checked line by line 26.08.2026:',
          '',
-         'VARIANTS: needs TGR.  Without it, ship GoB\'s file unchanged.'))
+         '  * VC adds exactly one law GoB does not have: law_madrasa, in',
+         '    lawgroup_education_system.  Its own requires_law_or gate is',
+         '    law_state_religion OR law_millet_system OR law_people_of_the_book --',
+         '    law_millet_system is active in every version of this file, so the',
+         '    prerequisite holds.  GoB itself already amends lawgroup_education_system',
+         '    (amendment_gbbf_elifba) but never explicitly activates a law there, so',
+         '    without VC that amendment attaches to whatever the engine\'s silent',
+         '    default is.  Added: gives GoB\'s own amendment something explicit and',
+         '    thematically fitting to attach to instead.',
+         '  * VC adds two amendments of its own, to lawgroup_taxation',
+         '    (amendment_salt_monopoly) and lawgroup_governance_principles',
+         '    (amendment_kanunname_law).  GoB\'s four amendments are in different',
+         '    groups (army_model, education_system, land_reform, slavery) -- no',
+         '    overlap.  Both target laws already active in GoB\'s own list',
+         '    (law_land_based_taxation, law_monarchy).  Added.',
+         '  * The rest of VC\'s file -- three extra starting techs, its own',
+         '    Sublime-Porte/Peter-the-Great-of-Turkey journal chain (seven entries),',
+         '    great_ottomanism_var, an extra modifier -- is VC\'s own parallel Ottoman',
+         '    political-flavor system, same class as GoB\'s Sick-Man/Tanzimat chain.',
+         '    Left out for the same reason as China\'s parallel chain: running two',
+         '    independent political systems on the same country is not something',
+         '    either author designed for.',
+         '',
+         'Merged below: GoB\'s file with VC\'s law_madrasa activation and two amendments',
+         'spliced in, then TGR\'s add_company block appended.',
+         '',
+         'VARIANTS: needs TGR for the company; without it, drop just that append. VC\'s',
+         'own file is superseded either way. Dropping VC from the composition should',
+         'also drop the two spliced-in lines below (marked "# Victorian Century") --',
+         'law_madrasa is a VC law and the two amendment types are VC\'s own.'),
+        pre=_splice_vc_into_ottoman)
+
+
+def _extract_lawgroup_amendments(text):
+    """Every `active_law:lawgroup_X ?= { add_amendment = { type = ...
+    sponsor = ... } }` block in a country history file, as (group, amendment
+    type, exact original text) triples, in file order."""
+    pattern = re.compile(
+        r'active_law:lawgroup_(\w+) \?= \{[^\n]*\n'
+        r'\t\t\tadd_amendment = \{\n\t\t\t\ttype = (\S+)\n\t\t\t\tsponsor = \S+\n\t\t\t\}\n\t\t\}')
+    return [(m.group(1), m.group(2), m.group(0)) for m in pattern.finditer(text)]
+
+
+def _check_usa_laws_vs_vc(p):
+    """usa - usa.txt is Hail Columbia's flagship file.  Five law groups
+    (trade_policy, economic_system, free_speech, taxation, church_and_state) are
+    genuine competitions between HC's own custom historical laws and VC's more
+    vanilla-adjacent picks -- HC's choices win, same principle as everywhere
+    else in this addon.  What VC adds beyond that is a clean, additive
+    Bill-of-Rights amendment chain: fourteen active_law:lawgroup_X blocks, of
+    which two are byte-identical to ones HC's file already has and twelve are
+    new.  Asserted here so a future update to either file re-opens the
+    decision instead of drifting under the write-up in the banner below."""
+    hc = read(os.path.join(p.hc, 'common/history/countries/usa - usa.txt'))
+    vc = read(os.path.join(p.vc, 'common/history/countries/usa - usa.txt'))
+
+    hc_laws = re.findall(r'activate_law = law_type:(\S+)', hc)
+    need(hc_laws == ['law_public_schools', 'law_legacy_slavery', 'law_racial_segregation',
+                      'law_usfp_american_system', 'law_agrarianism', 'law_frontier_colonization',
+                      'law_right_of_assembly', 'law_no_workers_rights', 'law_usfp_devolved_taxation',
+                      'law_national_militia', 'law_local_police', 'law_no_womens_rights',
+                      'law_usfp_nominal_separation', 'law_homesteading'],
+         'HC usa.txt activate_law list is now %s -- re-check the usa.txt VC-vs-HC write-up' % hc_laws)
+    need('start_enactment = law_type:law_universal_suffrage' in hc,
+         'HC no longer start_enactments law_universal_suffrage in usa.txt -- re-check the usa.txt VC-vs-HC write-up')
+
+    vc_laws = re.findall(r'activate_law = law_type:(\S+)', vc)
+    need(vc_laws == ['law_public_schools', 'law_legacy_slavery', 'law_racial_segregation',
+                      'law_homesteading', 'law_protectionism', 'law_interventionism',
+                      'law_frontier_colonization', 'law_protected_speech', 'law_no_workers_rights',
+                      'law_per_capita_based_taxation', 'law_national_militia', 'law_local_police',
+                      'law_no_womens_rights', 'law_total_separation'],
+         'VC usa.txt activate_law list is now %s -- re-check the usa.txt VC-vs-HC write-up' % vc_laws)
+
+    amendments = _extract_lawgroup_amendments(vc)
+    need(len(amendments) == 14,
+         'VC usa.txt now has %d lawgroup amendments (expected 14) -- re-check the usa.txt VC-vs-HC write-up'
+         % len(amendments))
+    dup_types = {'amendment_american_second_amendment', 'amendment_tradition_of_free_elections'}
+    dups = [(g, t) for g, t, _ in amendments if t in dup_types]
+    need(dups == [('governance_principles', 'amendment_american_second_amendment')]
+         or ('distribution_of_power', 'amendment_tradition_of_free_elections') in dups,
+         'VC usa.txt amendment duplicates changed -- re-check the usa.txt VC-vs-HC write-up')
+    for t in dup_types:
+        need(t in hc, 'HC usa.txt no longer has VC\'s supposedly-duplicate %s -- re-check the usa.txt VC-vs-HC write-up' % t)
+    new_amendments = [(g, t, blk) for g, t, blk in amendments if t not in dup_types]
+    need(len(new_amendments) == 12,
+         '%d new (non-duplicate) VC amendments found, expected 12 -- re-check the usa.txt VC-vs-HC write-up'
+         % len(new_amendments))
+    need(sorted(t for _, t, _ in new_amendments) == sorted([
+        'amendment_american_third_amendment', 'amendment_american_forth_amendment',
+        'amendment_american_fifth_amendment', 'amendment_american_sixth_amendment',
+        'amendment_american_seventh_amendment', 'amendment_american_eighth_amendment',
+        'amendment_american_ninth_amendment', 'amendment_american_tenth_amendment',
+        'amendment_usa_declaration_of_independence', 'amendment_american_first_amendment',
+        'amendment_common_law', 'amendment_american_fugitive_slaves_act']),
+         'VC usa.txt\'s twelve new amendment types changed -- re-check the usa.txt VC-vs-HC write-up')
+    return new_amendments
+
+
+def _splice_vc_amendments_into_usa(hc, new_amendments):
+    anchor = ('active_law:lawgroup_governance_principles ?= { # Presidential Republic\n'
+              '\t\t\tadd_amendment = {\n'
+              '\t\t\t\ttype = amendment_american_second_amendment\n'
+              '\t\t\t\tsponsor = PREV.ig:ig_rural_folk\n'
+              '\t\t\t}\n'
+              '\t\t}\n')
+    need(hc.count(anchor) == 1, 'usa.txt: HC\'s Presidential Republic amendment block moved -- fix the VC splice anchor')
+    block = '\n\t\t# Victorian Century -- see the banner above\n' + '\n'.join(blk for _, _, blk in new_amendments) + '\n'
+    return hc.replace(anchor, anchor + block, 1)
+
+
+def _history_usa(p):
+    new_amendments = _check_usa_laws_vs_vc(p)
+    hc = read(os.path.join(p.hc, 'common/history/countries/usa - usa.txt'))
+    out = _splice_vc_amendments_into_usa(hc, new_amendments)
+    note('usa - usa.txt: HC body (its own law choices kept for the five groups VC competes on) '
+         '+ 12 of VC\'s 14 lawgroup amendments spliced in (2 were already byte-identical in HC\'s file)')
+    return banner(
+        'ComPatch HC+GoB+MoH x Victorian Century -- the USA at 1836',
+        '',
+        'Hail, Columbia! and Victorian Century both ship',
+        'common/history/countries/usa - usa.txt at the vanilla path -- this is HC\'s',
+        'flagship file, the one the whole "United States Flavor Pack" is built around,',
+        'and HC loads later so it wins the path outright.  Checked line by line',
+        '26.08.2026.',
+        '',
+        'Fifteen law groups are explicitly activated by one or both files.  Ten agree',
+        '(education_system, slavery, citizenship, colonization, labor_rights,',
+        'army_model, policing, rights_of_women, land_reform, and distribution_of_power',
+        'left to start_enactment/vanilla default by both).  Five are genuine',
+        'competitions, and every one of HC\'s three own custom laws is in this list:',
+        '',
+        '  * trade_policy: HC\'s own law_usfp_american_system vs VC\'s law_protectionism.',
+        '  * economic_system: HC\'s law_agrarianism vs VC\'s law_interventionism.',
+        '  * free_speech: HC\'s law_right_of_assembly vs VC\'s law_protected_speech.',
+        '  * taxation: HC\'s own law_usfp_devolved_taxation vs VC\'s',
+        '    law_per_capita_based_taxation.',
+        '  * church_and_state: HC\'s own law_usfp_nominal_separation vs VC\'s',
+        '    law_total_separation.',
+        '',
+        'HC\'s picks win all five, same principle as everywhere else in this addon: a',
+        'flavor pack\'s own signature content is what stays, and three of these five',
+        'are laws HC wrote for itself.  Also kept as HC-only, untouched by VC: the',
+        '`start_enactment = law_type:law_universal_suffrage` (HC deliberately starts',
+        'the USA mid-transition, "states are in the middle of piecemeal removing tax',
+        'obligations"), and HC\'s entire USFP journal-entry/ideology/interest-group',
+        'chain.',
+        '',
+        'What VC adds beyond the law list is a clean Bill-of-Rights amendment chain --',
+        'fourteen `active_law:lawgroup_X ?= { add_amendment = {...} }` blocks, one to',
+        'ten amendments plus the Declaration of Independence and common law.  Two are',
+        'byte-identical to blocks HC\'s file already has',
+        '(amendment_american_second_amendment on governance_principles,',
+        'amendment_tradition_of_free_elections on distribution_of_power) -- both mods',
+        'clearly draw from the same shared amendment set.  The other twelve are new,',
+        'and every one is safe to add regardless of which side won the law list above:',
+        'an amendment attaches to whatever law is active in its group, not to a',
+        'specific one, and (per the checks in _check_usa_laws_vs_vc) every targeted',
+        'group already has an active law under HC\'s own choices, or -- for',
+        'governance_principles/bureaucracy/internal_security, which no activate_law in',
+        'either file ever explicitly sets -- the same implicit-default mechanic HC\'s',
+        'own file already relies on for its pre-existing governance_principles and',
+        'bureaucracy amendments.',
+        '',
+        'NOT merged: VC\'s competing law picks (see above); VC\'s own tariff setting',
+        '(g:fabric, tied to VC\'s trade-law assumptions, not HC\'s); and VC\'s entire',
+        'parallel USA political/flavor chain -- its own "real manifest destiny"',
+        'tracking variables and an active je_texas_usa (HC\'s own manifest_destiny.txt',
+        'already deliberately suppresses the vanilla decision in favor of its own',
+        '1100-line journal chain -- see hc+tgr done/README.md; a second, VC-driven',
+        'Manifest Destiny system would double up), plus VC\'s own missouri_compromise',
+        'modifier (HC already has usfp_missouri_compromise_decaying), us_second_bank,',
+        'failed_assassination_on_aj_president, and six of VC\'s own journal entries',
+        '(before_us_civil_war, supreme_court, united_states_congress,',
+        'westward_movement, je_seminole_wars, joi_flavor_usa.1).  Same class of',
+        'decision as China\'s and the Ottomans\' parallel chains.',
+        '',
+        'add_company = company_type:company_william_cramp is byte-identical in both',
+        'files (same date, same state) -- nothing to merge.',
+        '',
+        'VARIANTS: needs VC for the twelve spliced-in amendment types.  Without VC,',
+        'ship HC\'s file unchanged -- drop this one.') + out
 
 
 # =============================================================================
@@ -815,7 +1271,8 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     p = P(args.root)
-    for probe in (p.van, p.tgr, p.kai, p.morg, p.hc, p.gob, p.moh):
+    p.out = args.out
+    for probe in (p.van, p.tgr, p.kai, p.morg, p.hc, p.gob, p.moh, p.vc):
         if not os.path.isdir(probe):
             raise SystemExit('missing source mod: ' + probe)
 
