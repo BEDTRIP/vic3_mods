@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Правила работы с модами Victoria 3.md",
+                "file": "План проекта.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Правила работы с модами Victoria 3"
+              "title": "План проекта"
             }
           }
         ]
@@ -190,22 +190,25 @@
   },
   "active": "ef9d9e95e55d7924",
   "lastOpenFiles": [
+    "_llwa/llwa+companies done/common/company_types/zz_llwa_companies_extensions.txt.tmp",
+    "tools/_to_delete/старый_кэш/addon hc+gob+moh.57370dcf39b6.holes.v2.json",
+    "tools/_to_delete/старый_кэш",
+    "__addon/addon hc+gob+moh/common/scripted_effects/zz_hc_ef_private_ownership_effects.txt",
+    "__addon/addon hc+gob+moh/common/scripted_effects",
+    "__addon/addon hc+gob+moh/common/on_actions/zz_hc_ef_on_actions.txt",
+    "__addon/addon hc+gob+moh/common/on_actions",
+    "__addon/addon hc+gob+moh/common/history/global/zz_hc_ef_stocks_init.txt",
+    "__addon/addon hc+gob+moh/common/history/global",
+    "__addon/addon hc+gob+moh/common/buildings/zz_hc_ef_buildings_inject.txt",
+    "__addon/addon hc+gob+moh/common/buildings",
+    "_HC+GoB+MoH/hc+ef done/README.md",
+    "Правила работы с модами Victoria 3.md",
     "архив/удаление T&R.md",
     "архив/мегапак no-t&r.md",
     "архив/аддон-VC.md",
     "архив/аддон-LLWA.md",
     "архив/аддон-HC.md",
     "архив/README.md",
-    "архив",
-    "deprecated/_mmrpa/mmrpa+tr+kai done/gfx/interface/icons/dlc_icons/dlc_mmrpa.dds",
-    "deprecated/_bpm/bpm+tgr pack done/bpm+tgr done/common/history/countries/fra - france.txt",
-    "deprecated/_bpm/bpm+tgr pack done/bpm+tgr done/common/history/countries/chi - china.txt",
-    "deprecated/_bpm/bpm+tgr pack done/bpm+tgr done/common/history/countries/brz - brazil.txt",
-    "deprecated/_bpm/bpm+tgr pack done/anti_tgr_politics_german_uni/common/technology/technologies/TGR_POLITICS_society.txt",
-    "deprecated/_bpm/bpm+tgr pack done/anti_tgr_politics_german_uni/common/history/global/TGR_POLITICS_global.txt",
-    "deprecated/_bpm/bpm+tgr pack done/anti_tgr_politics_german_uni/common/history/diplomacy/TGR_GER_UNIFICATION_truces.txt",
-    "deprecated/_bpm/bpm+laws+/gfx/interface/icons/law_icons/proletariat_dictatorship.dds",
-    "deprecated/_bpm/bpm+laws+/gfx/interface/icons/law_icons/no_legislature.dds",
     "deprecated/_bpm/bpm+tgr pack done/bpm+tgr done/thumbnail.png",
     "deprecated/_bpm/bpm+tgr pack done/bpm+tgr done/README.md",
     "deprecated/_bpm/bpm+tgr pack done/bpm+tgr done/conflicts_tgr_vs_bpm_ALL_dedup.md",
@@ -227,9 +230,6 @@
     "deprecated/_bpm/bpm+vc/conflicts_vc_vs_bpm_report.md",
     "deprecated/_bpm/bpm+vc/conflicts_vc_vs_bpm_event_definitions.md",
     "deprecated/_bpm/bpm+vc/1.png",
-    "deprecated/_bpm/bpm+tr+kai/README.md",
-    "deprecated/_bpm/bpm+tr+kai/conflicts_tr_vs_kai.md",
-    "deprecated/_bpm/bpm+tr+kai/conflicts_tr_vs_cmf.md",
     "deprecated/_bpm/bpm+tr+kai/7.png",
     "deprecated/_bpm/bpm+psc noneed/3.png",
     "deprecated/_bpm/bpm+pbe noneed/6.png",

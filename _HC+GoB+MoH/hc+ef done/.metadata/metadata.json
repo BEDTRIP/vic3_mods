@@ -1,0 +1,52 @@
+{
+  "name": "ComPatch HC + GoB + E&F",
+  "id": "asm.compatch.hcgob.ef",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "E&F's stock and liquidity registration is a hand-written per-building whitelist. It predates Hail, Columbia! and Gates of the Bosphorus and never mentions the three privately-ownable buildings they add (fur trapper, hippo ranch, esparto plantation), so those three sit outside E&F's economy: no liquidity, no stock, no private ownership switching, and nothing in the error log. This wires all three into E&F's agricultural-stock mechanics, the same way E&F + Morgenroete already does for Morgenroete's 62 custom buildings. Load after all three mods.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3384997867",
+      "display_name": "[1.13] Gates of the Bosphorus",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "Hail, Columbia! - United States Flavor Pack",
+        "version": "8.6-Roosevelt",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3384997867",
+        "display_name": "[1.13] Gates of the Bosphorus",
+        "version": "4.0.8",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

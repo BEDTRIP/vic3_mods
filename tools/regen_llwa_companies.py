@@ -42,7 +42,17 @@ snake_case historical-company keys above -- checked, zero overlap).
 
 extension_building_types is confirmed present (declared, possibly empty) on
 every single company record checked across all six source mods -- this is
-INJECT: adding list items to an existing field, not creating a new one.
+TRY_INJECT: adding list items to an existing field, not creating a new one.
+
+TRY_ and not bare INJECT: since 2026-08-26 the HC block is an ALTERNATIVE to
+Victorian Century rather than a layer on top of it, so neither mod is
+guaranteed present. Of the 142 targets here, six exist only if VC is loaded
+(company_a_markwald_and_company, company_admiralty_rijkswerf,
+company_david_sassoon, company_massey_harris, company_siemens_and_halske,
+company_uragadockcompany) and two only if HC is (company_lanfang_kongsi,
+company_usfp_union_pacific). A bare INJECT: on a key nothing defines is a load
+error; TRY_INJECT: is skipped silently, which is exactly what a branch that
+does not run that mod needs.
 
 A company defined by more than one source mod in this list (e.g.
 company_orient_express: vanilla AND VC) is emitted ONCE -- this addon loads
@@ -286,7 +296,7 @@ def build():
     for key in sorted(additions):
         items = "\n".join(f"\t\t{it}" for it in additions[key])
         out_records.append(
-            f"INJECT:{key} = {{\n\textension_building_types = {{\n{items}\n\t}}\n}}"
+            f"TRY_INJECT:{key} = {{\n\textension_building_types = {{\n{items}\n\t}}\n}}"
         )
     write("common/company_types/zz_llwa_companies_extensions.txt",
           "\n\n".join(out_records),
@@ -296,7 +306,7 @@ def build():
           "MoH predates LLWA and knows nothing about its roads/canals/rivers -- same "
           "for E&F's diversified banks and llwa_building_exchange. "
           "extension_building_types is additive and declared (even if empty) on "
-          "every company record checked, so this is a pure INJECT: -- nothing "
+          "every company record checked, so this is a pure TRY_INJECT: -- nothing "
           "overwritten, no company's own design touched. Grey's/USU's ~70 railway "
           "companies are deliberately not here -- see the generator's module docstring.")
     roadway = sum(1 for v in additions.values() if 'LLWA_building_roadway' in v)
@@ -327,14 +337,14 @@ def self_check() -> int:
         # generators: here EVERY record is INJECT:, so "duplicate" means the
         # same company key appears twice in this file, which would be a
         # generator bug, not a cross-mod layering pattern)
-        keys = re.findall(r"(?m)^INJECT:([A-Za-z0-9_]+)\s*=\s*\{", text)
+        keys = re.findall(r"(?m)^TRY_INJECT:([A-Za-z0-9_]+)\s*=\s*\{", text)
         for k in keys:
             where = ("common/company_types", k)
             if where in seen:
-                print(f"  FAIL duplicate INJECT target {k} in {rel}")
+                print(f"  FAIL duplicate TRY_INJECT target {k} in {rel}")
                 bad += 1
             seen[where] = rel
-    print(f"  self-check: {len(WRITTEN)} files, {len(seen)} INJECT targets, "
+    print(f"  self-check: {len(WRITTEN)} files, {len(seen)} TRY_INJECT targets, "
           f"{bad} problem(s)")
     return bad
 

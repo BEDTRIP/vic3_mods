@@ -18,8 +18,15 @@ from vic3lib import read, brace_balance
 
 PAIRS = ['_HC+GoB+MoH/hc+morg done',
          '_HC+GoB+MoH/hc+tgr done',
-         '_HC+GoB+MoH/hc+kai done']
-ADDON = '__addon/addon1 hc+gob+moh'
+         '_HC+GoB+MoH/hc+kai done',
+         # HC.12, added 2026-08-26: the three privately-ownable buildings HC and
+         # GoB add were outside E&F's stock/liquidity whitelist. The pair used to
+         # be `noneed` -- see the compatch README for why that was wrong.
+         '_HC+GoB+MoH/hc+ef done']
+# `hc+vc done` is deliberately NOT here: since 2026-08-26 the HC block is an
+# ALTERNATIVE to Victorian Century, not a layer on top of it. Its VC layer is a
+# separate compatch loaded after this addon, and only by players running both.
+ADDON = '__addon/addon hc+gob+moh'
 
 # Files that belong to the addon and to no compatch.  Each one needs a header
 # whose first line says so, and a reason (section 8).  Empty for now: the three

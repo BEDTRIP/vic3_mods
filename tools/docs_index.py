@@ -24,7 +24,7 @@ import re
 
 FIELDS = ["пара", "статус", "версии", "позиция", "файлов", "генератор", "зависит от"]
 META_RE = re.compile(r"<!--\s*meta\s*(.*?)-->", re.S)
-SKIP_DIRS = {"tools", "__translations", "сводки по модам", "_архив", "stuff", ".git"}
+SKIP_DIRS = {"tools", "__translations", "сводки по модам", "архив", "deprecated", ".git"}
 
 
 def read_meta(path: str) -> dict | None:

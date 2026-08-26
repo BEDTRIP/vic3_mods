@@ -3,866 +3,680 @@
 # next run overwrites this file. Change the generator instead.
 #
 # Load order: vanilla/TGR/VC/HC/MoH/E&F company_types -> ... -> LLWA -> THIS.
-# Why this file exists: Every historical railway/port company across vanilla, TGR, VC, HC, and MoH predates LLWA and knows nothing about its roads/canals/rivers -- same for E&F's diversified banks and llwa_building_exchange. extension_building_types is additive and declared (even if empty) on every company record checked, so this is a pure INJECT: -- nothing overwritten, no company's own design touched. Grey's/USU's ~70 railway companies are deliberately not here -- see the generator's module docstring.
+# Why this file exists: Every historical railway/port company across vanilla, TGR, VC, HC, and MoH predates LLWA and knows nothing about its roads/canals/rivers -- same for E&F's diversified banks and llwa_building_exchange. extension_building_types is additive and declared (even if empty) on every company record checked, so this is a pure TRY_INJECT: -- nothing overwritten, no company's own design touched. Grey's/USU's ~70 railway companies are deliberately not here -- see the generator's module docstring.
 
-INJECT:company_BancaCommercialeItaliana = {
+TRY_INJECT:company_BancaCommercialeItaliana = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancaDItalia = {
+TRY_INJECT:company_BancaDItalia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCentralDeCostaRica = {
+TRY_INJECT:company_BancoCentralDeCostaRica = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCentralDeGuatemala = {
+TRY_INJECT:company_BancoCentralDeGuatemala = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCentralDeHonduras = {
+TRY_INJECT:company_BancoCentralDeHonduras = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCentralDeVenezuela = {
+TRY_INJECT:company_BancoCentralDeVenezuela = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCentralDelUruguay = {
+TRY_INJECT:company_BancoCentralDelUruguay = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCommercialDoBrasil = {
+TRY_INJECT:company_BancoCommercialDoBrasil = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoCommercialPortugues = {
+TRY_INJECT:company_BancoCommercialPortugues = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoDeBilbao = {
+TRY_INJECT:company_BancoDeBilbao = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoDeChile = {
+TRY_INJECT:company_BancoDeChile = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoDeMexico = {
+TRY_INJECT:company_BancoDeMexico = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoDePortugal = {
+TRY_INJECT:company_BancoDePortugal = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoDeValparaiso = {
+TRY_INJECT:company_BancoDeValparaiso = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoDoBrasil = {
+TRY_INJECT:company_BancoDoBrasil = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoEspanolDeLaHabana = {
+TRY_INJECT:company_BancoEspanolDeLaHabana = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoEstado = {
+TRY_INJECT:company_BancoEstado = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoHipotecarioNacional = {
+TRY_INJECT:company_BancoHipotecarioNacional = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoHispanoColonial = {
+TRY_INJECT:company_BancoHispanoColonial = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoMercantil = {
+TRY_INJECT:company_BancoMercantil = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoMercantilMexicano = {
+TRY_INJECT:company_BancoMercantilMexicano = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoNacionArgentina = {
+TRY_INJECT:company_BancoNacionArgentina = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoNacionalDeBolivia = {
+TRY_INJECT:company_BancoNacionalDeBolivia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoNacionalDePanama = {
+TRY_INJECT:company_BancoNacionalDePanama = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoNacionalDelParaguay = {
+TRY_INJECT:company_BancoNacionalDelParaguay = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoProvincia = {
+TRY_INJECT:company_BancoProvincia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BancoRepublicaColombia = {
+TRY_INJECT:company_BancoRepublicaColombia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankAmericanExpress = {
+TRY_INJECT:company_BankAmericanExpress = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankAngloPersian = {
+TRY_INJECT:company_BankAngloPersian = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankBOCOM = {
+TRY_INJECT:company_BankBOCOM = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankCreditLyonnais = {
+TRY_INJECT:company_BankCreditLyonnais = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankDesjardins = {
+TRY_INJECT:company_BankDesjardins = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankGoldmanSachs = {
+TRY_INJECT:company_BankGoldmanSachs = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankHSBC = {
+TRY_INJECT:company_BankHSBC = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankIBC = {
+TRY_INJECT:company_BankIBC = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankJPMorgan = {
+TRY_INJECT:company_BankJPMorgan = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankMelliIran = {
+TRY_INJECT:company_BankMelliIran = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankOfBombay = {
+TRY_INJECT:company_BankOfBombay = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankOfIndiaCompany = {
+TRY_INJECT:company_BankOfIndiaCompany = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankOfJapan = {
+TRY_INJECT:company_BankOfJapan = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankOfMontreal = {
+TRY_INJECT:company_BankOfMontreal = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankSBoBSA = {
+TRY_INJECT:company_BankSBoBSA = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankTejaratPersia = {
+TRY_INJECT:company_BankTejaratPersia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankWellsFargo = {
+TRY_INJECT:company_BankWellsFargo = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Bank_Ultramarino = {
+TRY_INJECT:company_Bank_Ultramarino = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Bankenverein = {
+TRY_INJECT:company_Bankenverein = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankofEngland = {
+TRY_INJECT:company_BankofEngland = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BankofSpain = {
+TRY_INJECT:company_BankofSpain = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BanqueDeBruxelles = {
+TRY_INJECT:company_BanqueDeBruxelles = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BanqueDeFrance = {
+TRY_INJECT:company_BanqueDeFrance = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BanqueDeParisEtDesPaysBas = {
+TRY_INJECT:company_BanqueDeParisEtDesPaysBas = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BanqueEgyptienne = {
+TRY_INJECT:company_BanqueEgyptienne = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BanqueImperialeOttomane = {
+TRY_INJECT:company_BanqueImperialeOttomane = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BanqueNationaleDeBelgique = {
+TRY_INJECT:company_BanqueNationaleDeBelgique = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BasicBank = {
+TRY_INJECT:company_BasicBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_BayerischeHypothekenUndWechselBank = {
+TRY_INJECT:company_BayerischeHypothekenUndWechselBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_CanadianImperialBankOfCommerce = {
+TRY_INJECT:company_CanadianImperialBankOfCommerce = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_CassaDiRisparmioDiTorino = {
+TRY_INJECT:company_CassaDiRisparmioDiTorino = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ChaseBank = {
+TRY_INJECT:company_ChaseBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ChohungBank = {
+TRY_INJECT:company_ChohungBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ChristianiaBank = {
+TRY_INJECT:company_ChristianiaBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ColonialBankOfAustralia = {
+TRY_INJECT:company_ColonialBankOfAustralia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_DaQingBank = {
+TRY_INJECT:company_DaQingBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_DeNederlandscheBank = {
+TRY_INJECT:company_DeNederlandscheBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_DeutscheBank = {
+TRY_INJECT:company_DeutscheBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_HandelsBanken = {
+TRY_INJECT:company_HandelsBanken = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ImperialBankofIndia = {
+TRY_INJECT:company_ImperialBankofIndia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ImperialBankofPersia = {
+TRY_INJECT:company_ImperialBankofPersia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_LandmandsBanken = {
+TRY_INJECT:company_LandmandsBanken = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_LloydsBank = {
+TRY_INJECT:company_LloydsBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Mitsubishiexchangehousebank = {
+TRY_INJECT:company_Mitsubishiexchangehousebank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_NationalBankOfAustralia = {
+TRY_INJECT:company_NationalBankOfAustralia = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_NationalWestminsterBank = {
+TRY_INJECT:company_NationalWestminsterBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_OesterreichischeCreditAnstalt = {
+TRY_INJECT:company_OesterreichischeCreditAnstalt = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_OesterreichischeNationalbank = {
+TRY_INJECT:company_OesterreichischeNationalbank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_OttomanBank = {
+TRY_INJECT:company_OttomanBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_PreussischeSeehandlung = {
+TRY_INJECT:company_PreussischeSeehandlung = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Reichsbank = {
+TRY_INJECT:company_Reichsbank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Rothschild_Bank_aus = {
+TRY_INJECT:company_Rothschild_Bank_aus = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Rothschild_Bank_fra = {
+TRY_INJECT:company_Rothschild_Bank_fra = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Rothschild_Bank_gbr = {
+TRY_INJECT:company_Rothschild_Bank_gbr = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Rothschild_Bank_ger = {
+TRY_INJECT:company_Rothschild_Bank_ger = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_Rothschild_Bank_ita = {
+TRY_INJECT:company_Rothschild_Bank_ita = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_RotterdamscheBankvereeniging = {
+TRY_INJECT:company_RotterdamscheBankvereeniging = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_RoyalBankOfScotland = {
+TRY_INJECT:company_RoyalBankOfScotland = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_RoyalBankofCanada = {
+TRY_INJECT:company_RoyalBankofCanada = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_SocieteGenerale = {
+TRY_INJECT:company_SocieteGenerale = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_SocieteGeneraledeBelgique = {
+TRY_INJECT:company_SocieteGeneraledeBelgique = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_SouthAustralianBank = {
+TRY_INJECT:company_SouthAustralianBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_StateBankRussianEmpire = {
+TRY_INJECT:company_StateBankRussianEmpire = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_SumitomoBank = {
+TRY_INJECT:company_SumitomoBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_TurkishZiraatBankasi = {
+TRY_INJECT:company_TurkishZiraatBankasi = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_WienerBankverein = {
+TRY_INJECT:company_WienerBankverein = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_a_markwald_and_company = {
+TRY_INJECT:company_a_markwald_and_company = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_waterway
 	}
 }
 
-INJECT:company_admiralty_rijkswerf = {
+TRY_INJECT:company_admiralty_rijkswerf = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_waterway
 	}
 }
 
-INJECT:company_altos_hornos_de_vizcaya = {
+TRY_INJECT:company_altos_hornos_de_vizcaya = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_amsterdamschebank = {
+TRY_INJECT:company_amsterdamschebank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_ap_moller = {
+TRY_INJECT:company_ap_moller = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_waterway
 	}
 }
 
-INJECT:company_bancodelondresmexico = {
+TRY_INJECT:company_bancodelondresmexico = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_bankofgreec = {
+TRY_INJECT:company_bankofgreec = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_barclaysBank = {
+TRY_INJECT:company_barclaysBank = {
 	extension_building_types = {
 		llwa_building_exchange
 	}
 }
 
-INJECT:company_caribbean_petroleum = {
+TRY_INJECT:company_caribbean_petroleum = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_waterway
 	}
 }
 
-INJECT:company_cfr = {
+TRY_INJECT:company_cfr = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_cordoba_railway = {
+TRY_INJECT:company_cordoba_railway = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_csfa = {
+TRY_INJECT:company_csfa = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_david_sassoon = {
+TRY_INJECT:company_david_sassoon = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_waterway
 	}
 }
 
-INJECT:company_dmc = {
+TRY_INJECT:company_dmc = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_egyptian_rail = {
+TRY_INJECT:company_egyptian_rail = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_franco_belge = {
+TRY_INJECT:company_franco_belge = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_great_indian_railway = {
+TRY_INJECT:company_great_indian_railway = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_gwr = {
+TRY_INJECT:company_gwr = {
 	extension_building_types = {
 		LLWA_building_roadway
 	}
 }
 
-INJECT:company_hbc = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_roadway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_imperial_ethiopian_railways = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_iranian_state_railway = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_john_holt = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_kaiping_mining = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_lanfang_kongsi = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_lkab = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_mantero_seta = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_mantero_seta_two_sicilies = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_mantetsu = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_massey_harris = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_ong_lung_sheng_tea_company_heaven_kingdom = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_orient_express = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_panama_company = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_prussian_state_railways = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_russian_american_company = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_sao_paulo_railway = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_sherkate_eslamiya = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_siemens_and_halske = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_societe_francaise_charbonnages_du_tonkin = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_standard_oil = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_stt = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_sudamericana_de_vapores = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_suez_company = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_tashkent_railroad = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_united_fruit = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_uragadockcompany = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_usfp_union_pacific = {
-	extension_building_types = {
-		LLWA_building_roadway
-	}
-}
-
-INJECT:company_white_star_line = {
-	extension_building_types = {
-		LLWA_building_riverway
-		LLWA_building_waterway
-	}
-}
-
-INJECT:company_yasuda = {
+TRY_INJECT:company_hbc = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_roadway
@@ -870,7 +684,193 @@ INJECT:company_yasuda = {
 	}
 }
 
-INJECT:company_ynchausti_y_compania = {
+TRY_INJECT:company_imperial_ethiopian_railways = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_iranian_state_railway = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_john_holt = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_kaiping_mining = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_lanfang_kongsi = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_lkab = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_mantero_seta = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_mantero_seta_two_sicilies = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_mantetsu = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_massey_harris = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_ong_lung_sheng_tea_company_heaven_kingdom = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_orient_express = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_panama_company = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_prussian_state_railways = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_russian_american_company = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_sao_paulo_railway = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_sherkate_eslamiya = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_siemens_and_halske = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_societe_francaise_charbonnages_du_tonkin = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_standard_oil = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_stt = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_sudamericana_de_vapores = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_suez_company = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_tashkent_railroad = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_united_fruit = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_uragadockcompany = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_usfp_union_pacific = {
+	extension_building_types = {
+		LLWA_building_roadway
+	}
+}
+
+TRY_INJECT:company_white_star_line = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_yasuda = {
+	extension_building_types = {
+		LLWA_building_riverway
+		LLWA_building_roadway
+		LLWA_building_waterway
+	}
+}
+
+TRY_INJECT:company_ynchausti_y_compania = {
 	extension_building_types = {
 		LLWA_building_riverway
 		LLWA_building_waterway
