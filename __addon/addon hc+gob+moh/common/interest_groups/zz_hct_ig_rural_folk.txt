@@ -1,12 +1,6 @@
-### === CARRIES A VICTORIAN CENTURY LAYER === this file also ships as
-### "zz_hct_ig_rural_folk.txt.off" next to it -- the same content built WITHOUT
-### Victorian Century's additions. To play without VC: delete THIS file
-### and remove the ".off" suffix from that one. Full list: "Playing
-### without Victorian Century" in the addon README.
-
-### ComPatch HC+GoB+MoH x The Great Revision + Victorian Century -- ig_rural_folk
+### ComPatch HC+GoB+MoH x The Great Revision -- ig_rural_folk
 ###
-### Four mods write this entry:
+### Three mods write this entry:
 ###
 ###   TGR   REPLACE_OR_CREATE: from TGR_POLITICS_rural_folk.txt.  Its real change
 ###         is three numbers in pop_weight: POP_FARMERS 200 -> 250, POP_PEASANTS
@@ -15,12 +9,6 @@
 ###         gone.  HC's own changes: usfp_country_is_american in on_enable and an
 ###         aristocrat/American-culture rule in pop_potential.
 ###   MoH   INJECT: from moh_rural_folk.txt, 316 lines.
-###   VC    REPLACE_OR_CREATE: from joi_rural_folk.txt.  Adds three ideology-switch
-###         blocks to on_enable (Russia, Britain, the British East India Company),
-###         a China-officers/soldiers clause to pop_potential, and two Chinese-
-###         officer pop_weight bonuses (desc "POP_CHINESE_OFFICER" twice -- VC's
-###         own naming, not a bug introduced here).  All last-loaded and outright
-###         overwrite everything before them.
 ###
 ### The MoH file needs saying out loud: of its fifteen sub-blocks, exactly two are
 ### its own -- ideology_moh_kmt in character_ideologies, and the on_enable block
@@ -34,21 +22,19 @@
 ### take things away.  Same class as the stale ai_strategies file in LLWA.
 ###
 ### Merged below: HC's body (current vanilla plus HC's two edits), TGR's three
-### numbers merged into pop_weight three-way against vanilla, MoH's two real
-### additions appended, and VC's rework of on_enable/pop_potential/pop_weight
-### folded in on top of all of that -- each sub-block three-way against vanilla,
-### so a future edit by any author conflicts loudly instead of being dropped.
-### Nothing from MoH's stale copy is carried.
+### numbers merged into pop_weight three-way against vanilla, and MoH's two real
+### additions appended.  Nothing from MoH's stale copy is carried.
 ###
-### Neither TGR's nor VC's `scope:interest_group ?= {` -> `= {` downgrade is
-### carried, for the same reason as in ig_landowners -- restored to `?=`
-### throughout, retroactively fixing the one occurrence TGR's own change had
-### already let through before VC entered this build.
+### TGR's own `scope:interest_group ?= {` -> `= {` downgrade is not carried,
+### for the same reason as in ig_landowners -- restored to `?=` throughout.
 ###
 ### VARIANTS: safe in every composition -- ideology_moh_kmt and the Nongmin rename
 ### come from Mandate of Heaven, which is part of this addon's own block; the TGR
-### contribution is numbers only; VC's ideology-switch blocks and pop_weight
-### bonuses name only vanilla ideology/country keys.
+### contribution is numbers only.  Victorian Century reworks this same interest
+### group too -- if VC is part of the composition, load the standalone
+### HC+GoB+MoH x TGR x VC compatch (_HC+GoB+MoH/hc+vc done) after this addon;
+### it REPLACEs this same path, layering VC's on_enable/pop_potential/pop_weight
+### rework on top of the exact body below.
 ### Both interest groups below are re-issued as one complete REPLACE: body.
 ### That is deliberate and it is the expensive option: REPLACE: swaps the whole
 ### entry, so a partial body would drop everything it does not name.  Proved in
@@ -96,65 +82,6 @@ REPLACE:ig_rural_folk = {
 				set_ig_trait = ig_trait:ig_trait_old_ways
 				set_ig_trait = ig_trait:ig_trait_plantation_work
 				set_ig_trait = ig_trait:ig_trait_nucleos_coloniais
-			}
-			else_if = {#英国农民
-				limit = {
-					owner = { 
-						OR = {
-							c:GBR ?= this 
-							c:ENG ?= this 
-						}
-					}
-				}
-				set_ig_trait = ig_trait:ig_trait_land_deeds
-				set_ig_trait = ig_trait:ig_trait_farmers_markets
-				set_ig_trait = ig_trait:ig_trait_honest_work
-			}
-			else_if = {#法国农民
-				limit = {
-					owner = { c:FRA ?= this }
-				}
-				set_ig_trait = ig_trait:ig_trait_farmers_allies
-				set_ig_trait = ig_trait:ig_trait_bordeaux_wine
-				set_ig_trait = ig_trait:ig_trait_against_imports
-			}
-			else_if = {#美国农民
-				limit = {
-					owner = { c:USA ?= this }
-				}
-				set_ig_trait = ig_trait:ig_trait_frontier_pioneers
-				set_ig_trait = ig_trait:ig_trait_master_of_farm
-				set_ig_trait = ig_trait:ig_trait_racism
-			}
-			else_if = {#俄国农民
-				limit = {
-					owner = { c:RUS ?= this }
-				}
-				set_ig_trait = ig_trait:ig_trait_gods_chosen_people
-				set_ig_trait = ig_trait:ig_trait_endure_suffering
-				set_ig_trait = ig_trait:ig_trait_obshchina
-			}
-			else_if = {#中国农民
-				limit = {
-					owner = { country_has_primary_culture = cu:han }
-				}
-				set_ig_trait = ig_trait:ig_trait_peaceful_times
-				set_ig_trait = ig_trait:ig_trait_rule_of_etiquette
-				set_ig_trait = ig_trait:ig_trait_catch_a_fire
-			}
-			else_if = {#荷兰/比利时/卢森堡农民
-				limit = {
-					owner = {
-						OR = {
-							c:NET ?= THIS 
-							c:BEL ?= THIS 
-							c:LUX ?= THIS 
-						}
-					}
-				}
-				set_ig_trait = ig_trait:ig_trait_old_ways
-				set_ig_trait = ig_trait:ig_trait_urban_suppliers
-				set_ig_trait = ig_trait:ig_trait_efficient_cultivation
 			}
 			else_if = {
 				limit = {
@@ -222,37 +149,7 @@ REPLACE:ig_rural_folk = {
 				set_ig_trait = ig_trait:ig_trait_farmers_markets
 			}
 		}
-
-		if = {#俄国村社
-            limit = {
-                c:RUS ?= this
-                }
-            ig:ig_rural_folk = {
-                remove_ideology = ideology_agrarian
-                add_ideology = ideology_agrarian_russian
-            }
-        }
-
-        if = {#英式保守
-            limit = {
-                c:GBR ?= this
-            }
-            ig:ig_rural_folk = {
-                remove_ideology = ideology_agrarian
-                add_ideology = ideology_british_tory_conservatism_old
-            }
-        }
-
-        if = {#印度农民主权
-            limit = {
-                c:BIC ?= this
-            }
-            ig:ig_rural_folk = {
-                remove_ideology = ideology_isolationist
-                add_ideology = ideology_indian_farmer_sovereignist
-            }
-        }
-
+	
 		# Jeffersonian Ideology
 		if = {
 			limit = {
@@ -406,50 +303,11 @@ REPLACE:ig_rural_folk = {
 			pop_employment_building_group = bg_fishing
 			pop_employment_building_group = bg_whaling
 			pop_employment_building_group = bg_manor_houses
-			AND = {
-				AND = {
-					exists = c:CHI
-					owner ?= c:CHI
-				}
-				OR = {
-					culture ?= {
-						has_discrimination_trait_group = heritage_group_east_asian
-					}
-					is_pop_type = officers
-					is_pop_type = soldiers
-				}
-			}
 		}
 	}
 
 	pop_weight = {
 		value = 0
-
-		add = {#中国军官 军人可能加入农民
-			desc = "POP_CHINESE_OFFICER"
-			if = {
-				limit = {
-					owner = {
-						country_has_primary_culture = cu:han
-					}
-					is_pop_type = officers
-				}
-				value = 10
-			}
-		}
-
-		add = {#中国军人可能加入农民
-			desc = "POP_CHINESE_OFFICER"
-			if = {
-				limit = {
-					owner = {
-						country_has_primary_culture = cu:han
-					}
-					is_pop_type = soldiers
-				}
-				value = 25
-			}
-		}
 
 		add = {
 			desc = "RURAL_POP"

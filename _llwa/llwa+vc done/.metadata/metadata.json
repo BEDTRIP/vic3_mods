@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch LLWA + Victorian Century",
+  "id": "asm.compatch.llwa.vc",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "LLWA loads last in the target chain and its REPLACE: on three rail production methods is a bare full body, silently dropping VC's job-attractiveness modifier. This puts VC's INJECT back on top of LLWA's own body. Load after both. The ai_strategies half of this pair (great_reforms/meiji_restoration/tanzimat_reforms, three-way with Kuromi's AI) ships in the LLWA+KAI ComPatch instead -- see its README.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.locomotion",
+      "display_name": "Locomotion: Land, Water, & Air",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "xyz.1230james.locomotion",
+        "display_name": "Locomotion: Land, Water, & Air",
+        "version": "2.6.3",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

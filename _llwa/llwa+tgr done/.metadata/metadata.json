@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch LLWA + TGR",
+  "id": "asm.compatch.llwa.tgr",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "LLWA loads last in the target chain and its REPLACE: on seven rail production methods is a bare full body with no `unscaled` sub-block at all, so TGR's state_market_access_price_impact addition is silently dropped. Puts it back on top of LLWA's own (unchanged) numeric rebalance. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision - 1.13.10",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.locomotion",
+      "display_name": "Locomotion: Land, Water, & Air",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision - 1.13.10",
+        "version": "2.0",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "xyz.1230james.locomotion",
+        "display_name": "Locomotion: Land, Water, & Air",
+        "version": "2.6.3",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

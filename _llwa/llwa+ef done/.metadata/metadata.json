@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch LLWA + E&F",
+  "id": "asm.compatch.llwa.ef",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "E&F's stock/liquidity registration is a hand-written per-building whitelist that predates LLWA and mentions none of LLWA's six privately-owned buildings, so LLWA's whole transport network sits outside E&F's economy: no liquidity, no stock, no private ownership. This wires all six into E&F's railroad-stock mechanics, the same way E&F+Morgenroete already does for Morgenroete's 62 custom buildings. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.locomotion",
+      "display_name": "Locomotion: Land, Water, & Air",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "xyz.1230james.locomotion",
+        "display_name": "Locomotion: Land, Water, & Air",
+        "version": "2.6.3",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

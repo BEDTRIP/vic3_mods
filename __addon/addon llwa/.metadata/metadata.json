@@ -1,0 +1,72 @@
+{
+  "name": "Addon: LLWA x MegaComPatch",
+  "id": "asm.addon.llwa",
+  "version": "1.13.11.1",
+  "supported_game_version": "1.13.*",
+  "short_description": "LLWA loads last in the target chain and, by carrying a file at an identical vanilla relative path plus bare REPLACE:s on ten rail production methods, silently wipes contributions from TGR, Kuromi's AI, and Victorian Century on 19 records. This addon restores all of them. Load after LLWA, at the very end of the chain.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.locomotion",
+      "display_name": "Locomotion: Land, Water, & Air",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision - 1.13.10",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "xyz.1230james.locomotion",
+        "display_name": "Locomotion: Land, Water, & Air",
+        "version": "2.6.3",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision - 1.13.10",
+        "version": "2.0",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

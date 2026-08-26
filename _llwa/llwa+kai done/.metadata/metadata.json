@@ -1,0 +1,59 @@
+{
+  "name": "ComPatch LLWA + Kuromi's AI",
+  "id": "asm.compatch.llwa.kai",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "LLWA carries a stale pre-1.13 copy of common/ai_strategies/03_political_strategies.txt at the exact vanilla path -- loading last, it wins the path outright and wipes vanilla plus every INJECT: Kuromi's AI (and, on three shared keys, the closed KAI x VC merge from addon-VC) had already applied. Restores current vanilla at that path and reapplies both. Load after LLWA, KAI, and VC.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.locomotion",
+      "display_name": "Locomotion: Land, Water, & Air",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "xyz.1230james.locomotion",
+        "display_name": "Locomotion: Land, Water, & Air",
+        "version": "2.6.3",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

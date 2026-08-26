@@ -1,0 +1,66 @@
+{
+  "name": "ComPatch LLWA+Morgenroete x E&F",
+  "id": "asm.compatch.llwa.morg.ef",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "The author's own LLWA + Morgenroete compatch bare-redefines building_railway and building_airport without declaring E&F as a dependency, silently dropping E&F's production_method_groups contribution to both. This puts E&F's groups back on top of that compatch's own body. Load after LLWA, Morgenroete, the LLWA+Morgenroete compatch, and E&F.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.locomotion",
+      "display_name": "Locomotion: Land, Water, & Air",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "2889925770",
+      "display_name": "Morgenroete",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "xyz.1230james.LLWA_morgenrote_compatch",
+      "display_name": "LLWA + Morgenroete Compatch",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "xyz.1230james.locomotion",
+        "display_name": "Locomotion: Land, Water, & Air",
+        "version": "2.6.3",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "xyz.1230james.LLWA_morgenrote_compatch",
+        "display_name": "LLWA + Morgenroete Compatch",
+        "version": "1.0.8",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}
