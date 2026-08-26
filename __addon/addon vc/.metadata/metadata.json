@@ -1,0 +1,120 @@
+{
+  "name": "Addon: Victorian Century x MegaComPatch",
+  "id": "asm.addon.vc",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Compatibility addon that puts Victorian Century on top of the MegaComPatch set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenroete, Power Blocs Expanded). Merge of my four ComPatches for this block -- The Great Revision, E&F, Morgenroete and Kuromi's AI -- plus one internal merge file the assembly itself needs (see README). Private Sector Construction and Power Blocs Expanded need no patch against Victorian Century, confirmed VC.5/VC.6. Load last, after all of them, and before Hail, Columbia! if you use it.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "Expansion",
+    "Historical",
+    "Gameplay",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+      "display_name": "Community Mod Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+      "display_name": "Expanded Topbar Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3640735868",
+      "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "2889925770",
+      "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+        "display_name": "Community Mod Framework",
+        "version": "1.63.0",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Expanded-Topbar-Framework",
+        "display_name": "Expanded Topbar Framework",
+        "version": "1.19.0",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3640735868",
+        "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+        "version": "1.13.11-2",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "2889925770",
+        "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+        "version": "2.8.3e Mitsopoulos",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "unpacked 2026-08-25, mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}

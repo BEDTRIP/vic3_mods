@@ -1,0 +1,110 @@
+base_good              count  declarations in load order (winner marked *)
+====================================================================================================
+
+small_arms  (6 declarations)
+   1. [*WIN*] ваниль       prestige_good_colt_revolvers
+   2. [*WIN*] ваниль       prestige_good_saint_etienne_rifles
+   3. [*WIN*] ваниль       prestige_good_generic_small_arms
+   4. [dead ] VC           prestige_good_enfield_rifle
+   5. [dead ] VC           prestige_good_hanyang_gun
+   6. [dead ] VC           prestige_good_mosin_nagant
+
+engines  (5 declarations)
+   1. [*WIN*] ваниль       prestige_good_schichau_engines
+   2. [*WIN*] ваниль       prestige_good_brunn_type_engines
+   3. [*WIN*] ваниль       prestige_good_oerlikon_engines
+   4. [dead ] VC           prestige_good_rr_engines
+   5. [dead ] VC           prestige_good_japanese_express
+
+artillery  (4 declarations)
+   1. [*WIN*] ваниль       prestige_good_krupp_guns
+   2. [*WIN*] ваниль       prestige_good_schneider_guns
+   3. [*WIN*] ваниль       prestige_good_generic_artillery
+   4. [dead ] VC           prestige_good_abus_guns
+
+automobiles  (4 declarations)
+   1. [*WIN*] ваниль       prestige_good_ford_automobiles
+   2. [*WIN*] ваниль       prestige_good_turin_automobiles
+   3. [*WIN*] VC           prestige_good_benz_car
+   4. [dead ] VC           prestige_good_skoda_automobiles
+
+groceries  (4 declarations)
+   1. [*WIN*] ваниль       prestige_good_kikkoman_soy_sauce
+   2. [*WIN*] ваниль       prestige_good_generic_groceries
+   3. [*WIN*] Morgenrote   prestige_good_swiss_chocolate
+   4. [dead ] VC           prestige_good_english_afternoon_tea
+
+fine_art  (4 declarations)
+   1. [*WIN*] ваниль       prestige_good_grand_strategy_games
+   2. [*WIN*] VC           prestige_good_ricordi_opera
+   3. [*WIN*] VC           prestige_good_impressionnisme
+   4. [dead ] HC           prestige_good_usfp_hollywood_movies
+
+liquor  (4 declarations)
+   1. [*WIN*] ваниль       prestige_good_smirnoff_vodka
+   2. [*WIN*] ваниль       prestige_good_bacardi_rum
+   3. [*WIN*] VC           prestige_good_guinness
+   4. [dead ] HC           prestige_good_usfp_coca_cola
+
+grain  (4 declarations)
+   1. [*WIN*] ваниль       prestige_good_pannonian_patent_flour
+   2. [*WIN*] ваниль       prestige_good_generic_grain
+   3. [*WIN*] VC           prestige_good_basmati_rise
+   4. [dead ] MoH          prestige_bicycle_flour
+
+manufacture_stock  (4 declarations)
+   1. [*WIN*] E&F+hotfix   manufacture_stock_construction
+   2. [*WIN*] E&F+hotfix   manufacture_stock_gbr
+   3. [*WIN*] E&F+hotfix   manufacture_stock_gbr_2
+   4. [dead ] E&F+hotfix   manufacture_stock_usa
+
+railroad_stock  (4 declarations)
+   1. [*WIN*] E&F+hotfix   railroad_stock_usa
+   2. [*WIN*] E&F+hotfix   railroad_stock_fra
+   3. [*WIN*] E&F+hotfix   railroad_stock_ger
+   4. [dead ] E&F+hotfix   railroad_stock_rus
+
+
+--- full base_good census (all goods with count != 3, sanity check against vanilla's own 17x1/14x2/9x3) ---
+  agricultural_stock     1
+  air_travel             1
+  ammunition             1
+  artillery              4
+  automobiles            4
+  bond                   1
+  clothes                2
+  coal                   1
+  coffee                 2
+  dye                    1
+  elgar_instruments      2
+  engines                5
+  explosives             1
+  fabric                 2
+  fertilizer             1
+  fine_art               4
+  fish                   2
+  fruit                  1
+  furniture              2
+  gold                   1
+  grain                  4
+  groceries              4
+  hardwood               2
+  ironclads              1
+  liquor                 4
+  luxury_clothes         1
+  luxury_furniture       1
+  manufacture_stock      4
+  manzoni_prints         1
+  merchant_marine        2
+  mining_stock           2
+  opium                  2
+  paper                  2
+  railroad_stock         4
+  silver                 1
+  small_arms             6
+  steamers               1
+  sugar                  1
+  sulfur                 1
+  tea                    2
+  telephones             2
+  wood                   1

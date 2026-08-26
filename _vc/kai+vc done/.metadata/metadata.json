@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch Kuromi's AI + Victorian Century",
+  "id": "asm.compatch.kai.vc",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Victorian Century loads last and its REPLACE_OR_CREATE on three political AI strategies silently wipes what Kuromi's AI injected into them. This puts KAI's revolution-aversion and Meiji-restoration tuning back on top of VC's. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-26"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-26"
+      }
+    ]
+  }
+}
