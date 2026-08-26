@@ -52,6 +52,8 @@ Full analysis, including why each of these reads as "not a conflict": `conflicts
 ## For Steam
 
 [h1]ComPatch: Morgenroete + Victorian Century[/h1]
+part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon[/url] for the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url]
+
 [b]Game 1.13 (exe 1.13.11) — Morgenroete - Dawn of Flavor 2.8.3e Mitsopoulos, Victorian Century (declares no version).[/b]
 
 Victorian Century loads after Morgenroete and fully replaces three record groups Morgenroete had injected into. Nothing errors and nothing is logged — the injected lines just aren't in the loaded game. This patch re-adds all of them, on top of VC.

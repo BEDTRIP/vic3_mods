@@ -83,6 +83,8 @@ Both use `INJECT:`, not a full body: the point is to add a law group an ideology
 ## For Steam
 
 [h1]ComPatch: The Great Revision + Victorian Century[/h1]
+part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon[/url] for the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url]
+
 [b]Game 1.13 (exe 1.13.11) — The Great Revision 2.0, Victorian Century (unpacked 2026-08-25).[/b]
 
 Victorian Century loads after The Great Revision and re-declares a great deal of what TGR had already rewritten — 172 shared keys and 14 shared files. Nothing errors and nothing is logged; TGR just quietly stops doing about half of what you installed it for. This patch puts TGR's work back on top of VC's.
@@ -90,6 +92,7 @@ Victorian Century loads after The Great Revision and re-declares a great deal of
 [h2]Load order[/h2]
 [list]
 [*]The Great Revision
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3637467628]my TGR RU Localization (if u need)[/url]
 [*]…the rest of your set…
 [*]Victorian Century
 [*][b]this ComPatch[/b]

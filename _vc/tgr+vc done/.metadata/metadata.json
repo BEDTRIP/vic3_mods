@@ -1,7 +1,7 @@
 {
   "name": "ComPatch The Great Revision + Victorian Century",
-  "id": "asm.compatch.tgr.vc",
-  "version": "1.13.11-1",
+  "id": "3790297325",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Victorian Century loads last and overwrites The Great Revision's interest groups, parties, companies, pop needs, buy packages, country history and German unification. This puts TGR's work back on top of VC's. Load after both.",
   "picture": "thumbnail.png",

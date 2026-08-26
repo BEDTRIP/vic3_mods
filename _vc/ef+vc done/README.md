@@ -53,14 +53,18 @@ Machine matrix: 145 shared keys, 0 shared file paths (`tools/pair_matrix.py`). O
 ## For Steam
 
 [h1]ComPatch: E&F + Victorian Century[/h1]
+part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon[/url] for the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url]
+
 [b]Game 1.13 (exe 1.13.11) — E&F (Economic and Financial Mod) V4, Victorian Century (both declare no version).[/b]
 
 Victorian Century loads after E&F and fully replaces four records E&F had injected into. Nothing errors and nothing is logged — the injected lines just aren't in the loaded game. This patch re-adds all four, on top of VC.
 
 [h2]Load order[/h2]
 [list]
-[*]E&F (+ Expanded Topbar Framework)
+[*]Expanded Topbar Framework
+[*]E&F
 [*]E&F Hotfix
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*]…the rest of your set…
 [*]Victorian Century
 [*][b]this ComPatch[/b]

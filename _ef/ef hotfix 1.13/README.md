@@ -783,6 +783,15 @@ Paste as is into the workshop page.
 Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13[/b].
 Load [b]after E&F[/b]. Works with or without any of the compatches.
 
+[h2]Load order[/h2]
+[list]
+[*]Community Mod Framework (CMF)
+[*]Expanded Topbar Framework (or Dense UI)
+[*]Economic and Financial (E&F)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
+[*][b]E&F Hotfix (this mod)[/b]
+[/list]
+
 [h2]E&F can finally share a build with other big mods[/h2]
 Victoria 3 crashes on entering a game above [b]128[/b] goods, silently, with nothing in the log. Vanilla ships 53 and E&F adds 73 — [b]126[/b], two slots left. Any mod bringing three or more goods breaks the game, which is why E&F and Tech & Res could never run together.
 
@@ -808,14 +817,6 @@ Each with its own name and icon, a prestige bonus, and the engine's +20% through
 To produce a prestige good a company has to own the building, so [b]the central bank is now owned by a bank company[/b] — the country's own historical one where E&F ships it (Bank of England, Banque de France, the State Bank), a generated "Central Bank" company otherwise. It is granted free of a company slot, it cannot be deleted, and it holds the monopoly on banks so no rival buys it out.
 
 The treasury still funds the central bank, so the company collects no dividends from it and the building panel still calls it a government building. That is deliberate: the company holds the bank to mint the currency, not to profit from it.
-
-[h2]Load order[/h2]
-[list]
-[*]Community Mod Framework (CMF)
-[*]Expanded Topbar Framework (or Dense UI)
-[*]Economic and Financial (E&F)
-[*][b]E&F Hotfix (this mod)[/b]
-[/list]
 
 [h2]What else it fixes[/h2]
 [list]

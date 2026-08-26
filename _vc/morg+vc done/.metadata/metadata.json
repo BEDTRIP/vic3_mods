@@ -1,6 +1,6 @@
 {
   "name": "ComPatch Morgenroete + Victorian Century",
-  "id": "asm.compatch.morg.vc",
+  "id": "3790297516",
   "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Victorian Century loads last and its REPLACE_OR_CREATE wealth/pop-need/character-template records silently wipe what Morgenroete injected into them. This puts Morgenroete's entertainment demand, pop needs and two character templates back. Load after both.",

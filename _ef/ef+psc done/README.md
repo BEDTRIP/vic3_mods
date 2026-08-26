@@ -9,8 +9,8 @@ This compatch fixes that by handing construction over to PSC. PSC turns construc
 [*]Expanded Topbar Framework (or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3333043079]Dence UI[/url])
 [*]Private Sector Construction (PSC)
 [*]Economic & Financial (E&F)
-[*][b]E&F 1.13.10 Hotfix[/b] — [b]required[/b], see below
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
+[*][b]E&F 1.13.10 Hotfix[/b] — [b]required[/b], see below
 [*][b]PSC + E&F ComPatch (this mod)[/b]
 [/list]
 
