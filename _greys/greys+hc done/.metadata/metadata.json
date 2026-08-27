@@ -1,0 +1,91 @@
+{
+  "name": "ComPatch Grey's + HC+GoB+MoH",
+  "id": "asm.compatch.greys.hc",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Grey's is a full-body REPLACE on eleven vanilla records Hail Columbia / Gates of the Bosphorus / Mandate of Heaven also touch, and shares one file path with Gates of the Bosphorus outright. Most seriously, _grey_soft_pop's defensive fallback for is_usfp_active silently switches Hail Columbia off entirely. This patch restores every dropped layer. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3384997867",
+      "display_name": "[1.13] Gates of the Bosphorus",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "top.sleepingbed.moh",
+      "display_name": "Mandate of Heaven",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3336914177",
+      "display_name": "Grey's Soft Pop Adjustments",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3108195724",
+      "display_name": "Grey's Deeper Cinosphere",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "Hail, Columbia! - United States Flavor Pack",
+        "version": "8.6-Roosevelt",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3384997867",
+        "display_name": "[1.13] Gates of the Bosphorus",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "top.sleepingbed.moh",
+        "display_name": "Mandate of Heaven",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3336914177",
+        "display_name": "Grey's Soft Pop Adjustments",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3108195724",
+        "display_name": "Grey's Deeper Cinosphere",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

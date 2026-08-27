@@ -219,11 +219,19 @@ TGR очень сильно “подкручивает” кампанию че
   остались только иконки. Старые компачи с `REPLACE_OR_CREATE:` на эти ключи их не
   отключают, а **создают** — два фантомных действия без локализации.
 - **`state_building_trade_center_max_level_add = 10` — становой хребет trade rework.**
-  Раздаётся шестью технологиями в `TGR_TRADE_society.txt`: `currency_standards`,
-  `stock_exchange`, `corporate_charters`, `mutual_funds`, `joint_stock_companies`,
-  `investment_banks` (плюс `tech_bureaucracy` и `international_trade` через
-  `state_building_trade_center_max_level_add` в тех же INJECT). Любой мод, который
-  переопределяет блок `modifier` этих техно, срезает потолок ТЦ по 10 уровней за штуку.
+  Раздаётся **десятью** технологиями, все в `TGR_TRADE_society.txt`: `INJECT:` в
+  `tech_bureaucracy`, `international_trade`, `currency_standards`, `stock_exchange`,
+  `corporate_charters`, `mutual_funds` и `REPLACE_OR_CREATE:` для
+  `joint_stock_companies`, `investment_banks`, `corporate_management`, `macroeconomics`.
+  Любой мод, который переопределяет блок `modifier` этих техно, срезает потолок ТЦ
+  по 10 уровней за штуку.
+  *(Уточнено 26.08.2026 при разборе GR.7: раньше здесь было написано «шестью» и не были
+  названы `corporate_management` и `macroeconomics`. Пересчитано грепом по файлу.)*
+- **Потолок ТЦ держится на `has_max_level = yes`, который TGR ставит зданию сам**
+  (`TGR_TRADE_private_infrastructure_trade_center.txt`; в ванили этого поля у
+  `building_trade_center` нет). Мод, переопределяющий здание полным телом и не
+  называющий `has_max_level`, обнуляет смысл всех десяти технологий разом — так делает
+  `grey_usu`, см. GR.7d. Проверять при каждой новой паре с TGR.
 - **Технологии TGR разложены по двум файлам с разной стратегией.**
   `TGR_LOANS_society.txt` — `REPLACE_OR_CREATE` для `banking`, `central_banking`,
   `mutual_funds`, `international_exchange_standards`, `modern_financial_instruments`.

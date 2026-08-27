@@ -1,0 +1,33 @@
+{
+  "name": "grey_usu Double-Colon Fix",
+  "id": "asm.fix.greys_usu.double_colon",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Grey's Urban Synergy Unleashed writes three of its company records with a typo'd TRY_INJECT:: (two colons) prefix, which the engine does not recognise -- the records silently never load. This re-declares the same three bodies with the prefix fixed. Internal to grey_usu; load anywhere after it.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

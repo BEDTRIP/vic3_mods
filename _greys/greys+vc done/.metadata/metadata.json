@@ -1,0 +1,78 @@
+{
+  "name": "ComPatch Grey's + Victorian Century",
+  "id": "asm.compatch.greys.vc",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Victorian Century and Grey's mods rewrite the same records with full bodies. Grey's loads later, so with both installed VC's 60 state traits, six of its companies, its construction and subsistence methods, its private-construction gates and its own port traits all quietly stop doing anything. This puts VC's contribution back on top of Grey's bodies: Grey's wins wherever it made a real decision, VC's numbers survive where Grey's only re-stated vanilla. Since 2026-08-27 (GR.16), the six-company file also restores addon-LLWA's extension_building_types on the same six records (grey_usu drops that too, same bug) -- carries a `.off` twin for players who use addon-LLWA without VC. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3336914177",
+      "display_name": "Grey's Soft Pop Adjustments",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3394847149",
+      "display_name": "Grey's Ranch Production Rework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3330261506",
+      "display_name": "Grey's Food Industries Rework",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3336914177",
+        "display_name": "Grey's Soft Pop Adjustments",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3394847149",
+        "display_name": "Grey's Ranch Production Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3330261506",
+        "display_name": "Grey's Food Industries Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

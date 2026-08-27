@@ -1,0 +1,59 @@
+{
+  "name": "ComPatch Grey's + TGR",
+  "id": "asm.compatch.greys.tgr",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "WORK IN PROGRESS (GR.7, part 1 of several): restores TGR's trade-advantage/construction fields and loan-rank design on seven country ranks, TGR's acceptance-mult counterweight on four citizenship laws, and four defines TGR deliberately changed that Grey's silently reverts to vanilla. Does not yet cover the 21-record ownership production methods, bg_consumer_goods/bg_trade, the class A/B production-method restores, or the trade-center has_max_level question (pending an in-game check). Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision - 1.13.10",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3336914177",
+      "display_name": "Grey's Soft Pop Adjustments",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3345217364",
+      "display_name": "Grey's Soft Econ Adjustments",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision - 1.13.10",
+        "version": "2.0",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3336914177",
+        "display_name": "Grey's Soft Pop Adjustments",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3345217364",
+        "display_name": "Grey's Soft Econ Adjustments",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

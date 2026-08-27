@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch Grey's + addon-LLWA",
+  "id": "asm.compatch.greys.llwa",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "GR.16: restores addon-LLWA's extension_building_types (LLWA_building_roadway) on eight railway companies that grey_usu's TRY_REPLACE: silently drops, and building_modifiers.unscaled.building_job_attractiveness_mult = 2 on three rail production methods grey_usu re-issues without it. The six railway companies that also collide with Victorian Century are handled inside _greys/greys+vc done instead, not here. Does not cover building_railway/building_airport (shared with GR.9/GR.17) or the seven rail production methods where grey_usu's own numbers are a deliberate design, not a loss. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3790590434",
+      "display_name": "Addon: LLWA x MegaComPatch",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3790590434",
+        "display_name": "Addon: LLWA x MegaComPatch",
+        "version": "1.13.11.3",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "name": "ComPatch Grey's + E&F",
+  "id": "asm.compatch.greys.ef",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "The Grey's pack re-declares six buildings E&F had wired into its economy, and rewrites all fourteen company-headquarter production methods. Full bodies win over E&F's earlier INJECT:, so five of those buildings silently drop out of E&F's liquidity/stock system and E&F's cut to HQ employment disappears. This puts both back. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3786286962",
+      "display_name": "E&F Hotfix",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3330261506",
+      "display_name": "Grey's Food Industries Rework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3394847149",
+      "display_name": "Grey's Ranch Production Rework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3786286962",
+        "display_name": "E&F Hotfix",
+        "version": "4.1.7.4",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3330261506",
+        "display_name": "Grey's Food Industries Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3394847149",
+        "display_name": "Grey's Ranch Production Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

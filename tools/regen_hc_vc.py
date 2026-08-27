@@ -73,11 +73,7 @@ ROOT = res("../../vic3_mods_out")
 ROOT_OUT = res("..")
 _p = ra1.P(ROOT)
 
-# The VC x TGR compatch's own output -- Jacksonian Democrat needs VC's law
-# stances already reconciled against TGR's ideology set, which only that
-# compatch's generator (regen_vc_tgr.py) computes.
-VC_TGR_STANCES = os.path.join(ROOT_OUT, "_vc", "tgr+vc done", "common", "ideologies",
-                               "zz_vc_tgr_stances_on_vc_laws.txt")
+# (VC_TGR_STANCES убран вместе с секцией 8 -- см. VC.1l ниже.)
 
 DATE = "2026-08-26"
 NOTES: list[str] = []
@@ -567,80 +563,24 @@ def build_ig_rural_folk():
 
 
 # =============================================================================
-#  8. ideology_jacksonian_democrat  (needs the tgr+vc compatch's own output)
+#  8. ideology_jacksonian_democrat -- УБРАНО 27.08.2026 (VC.1l)
 # =============================================================================
-def build_jacksonian():
-    vc = read(VC_TGR_STANCES)
-    tgr_body = ra1._jacksonian_tgr_body(_p)
-    # _jacksonian_tgr_body returns the REPLACE_OR_CREATE: body (with HC's block
-    # plus TGR's two appended stances) as a bare `{...}`-free string ending in
-    # a trailing "}\n"-less block -- re-open it the same way _jacksonian(p) does.
-    h_merged = ra1._open_block("{" + tgr_body + "}")[1:-1]
-
-    v = entry(vc, "ideology_jacksonian_democrat", prefix="INJECT:")[1]
-    vc_groups = sub_names(v)
-    need(vc_groups == ["lawgroup_taxation", "lawgroup_education_system", "lawgroup_economic_system",
-                        "lawgroup_bureaucracy", "lawgroup_trade_policy", "lawgroup_citizenship",
-                        "lawgroup_policing", "lawgroup_distribution_of_power"],
-         "VC x TGR now injects %s into ideology_jacksonian_democrat -- update the merge" % vc_groups)
-
-    # Two of VC's eight law groups are ones HC (via addon1's base) already has an
-    # opinion on (bureaucracy, distribution_of_power) -- VC adds exactly one new
-    # law to each, so that line is folded into the existing block instead of
-    # creating a second block with the same key, which would be invalid. The
-    # other six groups do not exist in the base body and are appended whole,
-    # same as TGR's two in addon1.
-    vc_merge = [nm for nm in vc_groups if sub(h_merged, nm) is not None]
-    vc_new = [nm for nm in vc_groups if sub(h_merged, nm) is None]
-    need(vc_merge == ["lawgroup_bureaucracy", "lawgroup_distribution_of_power"],
-         "addon1's jacksonian base now overlaps VC on a different set of law groups (%s) "
-         "-- update the merge" % vc_merge)
-
-    for nm in vc_merge:
-        extra = sub(v, nm)[1:-1].strip()
-        need("\n" not in extra, "%s now carries more than one new VC law -- update the merge" % nm)
-        new_block = ra1._open_block(sub(h_merged, nm)).rstrip() + "\n        " + extra + "\n    }"
-        h_merged = replace_sub(h_merged, nm, new_block)
-
-    vc_lines = ["\n\t# Victorian Century\n\t%s = %s" % (nm, sub(v, nm)) for nm in vc_new]
-    tail = "\n".join(vc_lines)
-    body = ra1._open_block("{" + h_merged + "}")[1:].rstrip() + "\n" + tail + "\n}"
-    note("ideology_jacksonian_democrat: addon1's HC+TGR base (regen_addon1._jacksonian_tgr_body) "
-         "+ VC laws folded into bureaucracy/distribution_of_power + VC's six new law-group "
-         "stances appended")
-    return vc_tag_delete_only("zz_hcvc_jacksonian_democrat.txt") + banner(
-        "ComPatch HC+GoB+MoH x The Great Revision x Victorian Century -- ideology_jacksonian_democrat",
-        "",
-        "REPLACE_OR_CREATE:s the same entry addon1's hc+tgr compatch already owns "
-        "(_HC+GoB+MoH/hc+tgr done/common/ideologies/zz_hct_jacksonian_democrat.txt) -- "
-        "this compatch must load after addon1, and after Victorian Century.",
-        "",
-        "TGR's two law stances (lawgroup_election_system, lawgroup_legislative_process)",
-        "are already appended to HC's body by regen_addon1.py -- this file imports that",
-        "exact base (regen_addon1._jacksonian_tgr_body) rather than recomputing it.",
-        "",
-        "Victorian Century INJECT:s eight more law-group stances into this ideology:",
-        "one new law apiece in lawgroup_bureaucracy and lawgroup_distribution_of_power",
-        "(both of which the base already has an opinion on), plus six whole new groups",
-        "for its own new laws (taxation, education_system, economic_system,",
-        "trade_policy, citizenship, policing).",
-        "",
-        "Merged below: the base body, with VC's two new laws folded into the",
-        "lawgroup_bureaucracy and lawgroup_distribution_of_power blocks it already had,",
-        "then VC's six new stance blocks appended. None of these overlap TGR's two --",
-        "the base names governance_principles, distribution_of_power, bureaucracy,",
-        "colonization, land_reform, election_system and legislative_process; VC falls",
-        "outside that list except for the two folded-in laws.",
-        "",
-        "Source for VC's stances: _vc/tgr+vc done/common/ideologies/",
-        "zz_vc_tgr_stances_on_vc_laws.txt, itself generated by regen_vc_tgr.py against",
-        "vc_tgr_ideology_grid.xlsx (sheet \"Обратно\", row ideology_jacksonian_democrat)",
-        "-- needs that compatch already built, same as addon1 needs it.",
-        "",
-        "VARIANTS: this whole compatch is the VC layer -- without VC, do not install",
-        "this file, addon1's own hc+tgr output already stands alone.") + \
-        "REPLACE_OR_CREATE:ideology_jacksonian_democrat = {" + body[:-1] + "}\n"
-
+# Секция строила zz_hcvc_jacksonian_democrat.txt: база HC+TGR из
+# regen_addon1._jacksonian_tgr_body плюс восемь блоков позиций по законам VC,
+# которые брались из _vc/tgr+vc done/.../zz_vc_tgr_stances_on_vc_laws.txt.
+#
+# Того файла больше нет, и это не потеря источника, а тот же вывод (VC.1k): все
+# десять законов, которые VC добавляет в ванильные группы, -- ВАРИАНТЫ
+# (`parent = ...`). Вариант наследует позиции родителя и своего мнения не
+# принимает, а объявленная позиция по нему обнуляет позиции ВСЕЙ группы у ВСЕХ
+# интересов групп -- молча, без строки в логе. Правило записано в
+# «Правила работы с модами Victoria 3.md», раздел 2 «Скрипт».
+#
+# Без этих восьми блоков файлу нечего было нести: тело HC+TGR уже принадлежит
+# _HC+GoB+MoH/hc+tgr done/common/ideologies/zz_hct_jacksonian_democrat.txt,
+# который грузится позже VC и стоит последним по этой записи. VC саму идеологию
+# не определяет -- только ссылается на неё в журнальной цепочке США и в партиях.
+# Поэтому файл удалён целиком, а не переиздан пустым.
 
 # =============================================================================
 #  9. tur - ottoman empire.txt  (REPLACE:s addon1's own hc+tgr output)
@@ -975,7 +915,6 @@ FILES = {
     "common/scripted_buttons/zz_hcvc_opium_buttons.txt": build_opium_buttons,
     "common/interest_groups/zz_hcvc_ig_landowners.txt": build_ig_landowners,
     "common/interest_groups/zz_hcvc_ig_rural_folk.txt": build_ig_rural_folk,
-    "common/ideologies/zz_hcvc_jacksonian_democrat.txt": build_jacksonian,
     "common/history/countries/tur - ottoman empire.txt": build_ottoman,
     "common/history/countries/usa - usa.txt": build_usa,
 }

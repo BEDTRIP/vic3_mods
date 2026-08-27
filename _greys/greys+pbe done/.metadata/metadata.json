@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch Grey's + PBE",
+  "id": "asm.compatch.greys.pbe",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "grey_subject's TRY_REPLACE: on force_become_subject loads after Power Blocs Expanded and names every sub-block PBE does, so it wins outright: PBE's game-rule-gated relaxations and its infamy incident silently disappear, leaving only grey_subject's own border check. This restores PBE's body and keeps grey_subject's border check too. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3623185901",
+      "display_name": "[1.13] Power Blocs Expanded",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3276243851",
+      "display_name": "Grey's Subject Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3623185901",
+        "display_name": "[1.13] Power Blocs Expanded",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3276243851",
+        "display_name": "Grey's Subject Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}
