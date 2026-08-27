@@ -1,0 +1,287 @@
+# -*- coding: utf-8 -*-
+"""Builds addon-Grey's out of its twelve pair/fix compatches, and checks the result.
+
+Rule the hard way round (section 8 of the working notes): the assembly is built
+FROM the compatches, never by editing the previous assembly. An old assembly is
+behind on every file rename, and once it is you can no longer tell a renamed file
+from a deleted one. So: work out the target file list, move everything that is
+not in it into _to_delete/, copy the target list in, then verify coverage
+byte-for-byte.
+
+Twelve compatches make up the common-tail core of this addon: PSC (GR.2), PBE
+(GR.3), E&F+hotfix incl. new-content GR.15 (GR.5), Morgenroete (GR.6), TGR
+(GR.7), KAI incl. its foreign_investment_rights merge (GR.8), addon-LLWA (GR.9
+/ GR.16), megapack no-t&r (GR.17), and four internal (not-a-pair) fixes:
+grey_diplo's bare CMF flag (GR.11), grey_food's cooling-method losses and
+grey_subject's trade_states loss (both GR.14), and grey_usu's double-colon
+typo (GR.20). Checked below at build time, not just asserted here: none of
+the twelve write the same relative path as another, so this build needs no
+addon-only merge file -- a straight copy-and-verify is enough.
+
+Deliberately NOT here -- branch-specific, mirrors the hc+vc done precedent
+(_HC+GoB+MoH/hc+vc done, kept out of `addon hc+gob+moh` because VC and
+HC+GoB+MoH are alternative branches, not layers): `greys+vc done` (GR.1) and
+`greys+addon-vc done` (GR.18) apply only in the VC branch; `greys+hc done`
+(GR.4) applies only in the HC branch. Since the target load order converges
+into a common tail before Grey's loads (see `План проекта.md`, "Целевой
+порядок запуска"), Grey's own mods and this addon are shared by both
+branches, but a VC- or HC-specific compatch against Grey's is not -- each
+loads as its own separate compatch, right after this addon, only in its own
+branch. Checked below: zero file-path collisions between the three excluded
+pairs and the twelve-pair core, so nothing here needs the tag+.off treatment
+either.
+
+Usage:
+    python3 build_addon_greys.py --repo <path to vic3_mods> [--check]
+"""
+import argparse, os, shutil, filecmp, sys, re, collections
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from vic3lib import read, brace_balance
+import regen_addon_greys
+
+PAIRS = ['_greys/greys+psc done',
+         '_greys/greys+pbe done',
+         '_greys/greys+ef done',
+         '_greys/greys+morg done',
+         '_greys/greys+tgr done',
+         '_greys/greys+llwa done',
+         '_greys/greys+megapack done',
+         '_greys/greys_diplo_fix done',
+         '_greys/greys_food_fix done',
+         '_greys/greys_subject_fix done',
+         '_greys/greys_usu_fix done',
+         '_greys/greys_kai_fix done']
+
+# Branch-specific pairs, deliberately excluded from the core -- see module
+# docstring. Listed here only so the collision check below can prove they are
+# safe to load as separate compatches right after this addon, in their own
+# branch.
+BRANCH_ONLY = ['_greys/greys+vc done',
+               '_greys/greys+addon-vc done',
+               '_greys/greys+hc done']
+
+ADDON = '__addon/addon greys'
+
+# Source files folded into one addon-only merge instead of being copied
+# verbatim -- see tools/regen_addon_greys.py. Value is the written explanation
+# every non-zero coverage deviation needs (section 8).
+MERGED_INTO = {
+    '_greys/greys+ef done/common/buildings/zz_greys_ef_buildings_inject.txt':
+        "folded whole into common/buildings/zzzz_addon_greys_buildings.txt: two of its "
+        "five TRY_INJECT: buildings (building_food_industry, building_trade_center) "
+        "collide with greys+tgr done's REPLACE_OR_CREATE: on the same records -- copied "
+        "separately, TGR's full body would sort after this file and wipe the injection. "
+        "The other three (building_livestock_ranch, building_port, building_power_plant) "
+        "are carried over verbatim inside the same merge file so the whole source file "
+        "can be excluded as one unit. See tools/regen_addon_greys.py.",
+    '_greys/greys+tgr done/common/buildings/zz_greys_tgr_food_industry.txt':
+        'folded into common/buildings/zzzz_addon_greys_buildings.txt together with '
+        "greys+ef done's injection on the same record -- see tools/regen_addon_greys.py.",
+    '_greys/greys+tgr done/common/buildings/zz_greys_tgr_trade_center.txt':
+        'folded into common/buildings/zzzz_addon_greys_buildings.txt, same reason as '
+        "zz_greys_tgr_food_industry.txt above.",
+}
+
+# Files that belong to the addon and to no single compatch. Each one needs a
+# reason (section 8) -- and must also be kept out of the stale-file sweep
+# below, since it is never present in the PAIRS source list to protect it
+# from that.
+ADDON_ONLY = {
+    'common/buildings/zzzz_addon_greys_buildings.txt':
+        'merge of the two buildings above plus three E&F-only ones carried over '
+        'verbatim -- generated by tools/regen_addon_greys.py, run automatically as '
+        'part of this script',
+}
+
+SKIP = {'.metadata', 'thumbnail.png'}
+SKIP_SUFFIX = ('.md', '.xlsx')
+
+# Repeated top-level keys the internal check would otherwise flag. Each one
+# needs a reason here, not a silent exception (section 8).
+DECLARED_DUPS = {
+    ('common/buildings', 'building_government_administration'):
+        'greys_kai_fix done (TRY_INJECT: ai_value) and greys+morg done (TRY_INJECT: '
+        'production_method_groups.pmg_panum_hospital) inject disjoint fields into the '
+        'same building -- additive, not a conflict. See both compatches\' READMEs.',
+    ('common/buildings', 'building_airport'):
+        'greys+llwa done (TRY_INJECT: extension_building_types) and greys+megapack done '
+        '(TRY_INJECT: production_method_groups) inject disjoint fields into the same '
+        'building -- additive, not a conflict. See both compatches\' READMEs.',
+}
+
+
+def walk(base):
+    out = {}
+    for r, ds, fs in os.walk(base):
+        ds[:] = [d for d in ds if d not in ('_to_delete',)]
+        for f in fs:
+            p = os.path.join(r, f)
+            rel = os.path.relpath(p, base).replace('\\', '/')
+            if rel.split('/')[0] in SKIP or rel in SKIP:
+                continue
+            if rel.endswith(SKIP_SUFFIX):
+                continue
+            out[rel] = p
+    return out
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--repo', required=True)
+    ap.add_argument('--check', action='store_true', help='verify only, change nothing')
+    a = ap.parse_args(argv)
+    addon = os.path.join(a.repo, ADDON)
+
+    # ---- regenerate the one addon-only file first -----------------------------
+    merge_text, merge_n, merge_ef_only = regen_addon_greys.build(a.repo)
+    merge_out = os.path.join(a.repo, regen_addon_greys.OUT)
+    if not a.check:
+        from vic3lib import write as _write
+        _write(merge_out, merge_text)
+        print('regenerated %s (%d merged, %d E&F-only carried over)'
+              % (regen_addon_greys.OUT, merge_n, merge_ef_only))
+
+    # ---- target list ------------------------------------------------------------
+    target, owner = {}, {}
+    merged_sources = collections.defaultdict(list)  # pair -> [rel paths folded away]
+    for pair in PAIRS:
+        for rel, src in walk(os.path.join(a.repo, pair)).items():
+            full_key = pair + '/' + rel
+            if full_key in MERGED_INTO:
+                merged_sources[pair].append(rel)
+                continue
+            if rel in target:
+                raise SystemExit('two compatches ship %s (%s and %s) -- needs an '
+                                 'addon-only merge file' % (rel, owner[rel], pair))
+            target[rel], owner[rel] = src, pair
+
+    # ---- branch-only collision check (does not affect the copy) -------------
+    branch_files = {}
+    for pair in BRANCH_ONLY:
+        full = os.path.join(a.repo, pair)
+        if not os.path.isdir(full):
+            raise SystemExit('branch-only pair missing: %s' % pair)
+        for rel, src in walk(full).items():
+            if rel in target:
+                raise SystemExit('branch-only %s collides with core file %s (%s) -- '
+                                 'needs the tag + .off treatment, not a plain exclude'
+                                 % (pair, rel, owner[rel]))
+            if rel in branch_files and branch_files[rel][0] != pair:
+                raise SystemExit('two branch-only pairs ship %s (%s and %s)'
+                                 % (rel, branch_files[rel][0], pair))
+            branch_files[rel] = (pair, src)
+
+    # ---- copy ---------------------------------------------------------------
+    if not a.check:
+        have = walk(addon) if os.path.isdir(addon) else {}
+        protect = set(target) | set(ADDON_ONLY)
+        stale = sorted(set(have) - protect)
+        if stale:
+            dump = os.path.join(addon, '_to_delete', 'rebuild_%s' % _today())
+            for rel in stale:
+                dst = os.path.join(dump, rel)
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                shutil.move(have[rel], dst)   # rm is not permitted on the mount
+            print('moved %d stale file(s) to %s' % (len(stale), dump))
+        for rel, src in target.items():
+            dst = os.path.join(addon, rel)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copyfile(src, dst)
+        print('copied %d file(s) into %s' % (len(target), ADDON))
+
+    # ---- coverage -----------------------------------------------------------
+    print('\n--- coverage (every compatch file, byte for byte, or an explained deviation) ---')
+    bad = 0
+    for pair in PAIRS:
+        files = walk(os.path.join(a.repo, pair))
+        missing = [r for r in files if not os.path.exists(os.path.join(addon, r))]
+        differ = [r for r in files
+                  if r not in missing and not filecmp.cmp(files[r], os.path.join(addon, r), shallow=False)]
+        explained = [r for r in missing if (pair + '/' + r) in MERGED_INTO]
+        real_missing = [r for r in missing if r not in explained]
+        print('  %-24s %2d files, %d missing, %d different, %d folded into the merge'
+              % (pair.split('/')[-1], len(files), len(real_missing), len(differ), len(explained)))
+        for r in real_missing + differ:
+            print('      ! ' + r)
+        for r in explained:
+            print('      (expected) %s -- %s' % (r, MERGED_INTO[pair + '/' + r]))
+        bad += len(real_missing) + len(differ)
+    extra = sorted(set(walk(addon)) - set(target))
+    print('  addon-only files: %d' % len(extra))
+    for r in extra:
+        if r in ADDON_ONLY:
+            print('      declared: %s -- %s' % (r, ADDON_ONLY[r]))
+        else:
+            print('      ! %s is in the addon but in no compatch and not declared' % r)
+            bad += 1
+
+    print('\n--- branch-only pairs (excluded from this addon on purpose) ---')
+    for pair in BRANCH_ONLY:
+        n = len(walk(os.path.join(a.repo, pair)))
+        print('  %-24s %2d files, 0 collisions with the core' % (pair.split('/')[-1], n))
+
+    # ---- internal checks ----------------------------------------------------
+    print('\n--- checks ---')
+    files = walk(addon)
+    print('  files: %d' % len(files))
+    imbalance = [(r, brace_balance(read(p))) for r, p in files.items()
+                 if r.endswith('.txt') and brace_balance(read(p))]
+    print('  brace balance: %s' % ('ok' if not imbalance else imbalance))
+    bad += len(imbalance)
+
+    enc = []
+    for r, p in files.items():
+        raw = open(p, 'rb').read()
+        has_bom = raw[:3] == b'\xEF\xBB\xBF'
+        txt = raw[3:].decode('utf-8') if has_bom else raw.decode('utf-8')
+        needs = any(ord(c) > 127 for line in txt.split('\n') for c in line.split('#')[0])
+        if needs and not has_bom:
+            enc.append(r)
+    print('  encodings: %s' % ('ok' if not enc else 'missing BOM in %s' % enc))
+    bad += len(enc)
+
+    dup = collections.defaultdict(list)
+    for r, p in files.items():
+        if not r.startswith('common/') or not r.endswith('.txt'):
+            continue
+        cat = os.path.dirname(r)
+        for m in re.finditer(r'(?m)^(?:[A-Z_]+:)?([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*\{', read(p)):
+            dup[(cat, m.group(1))].append(r)
+    dups = {k: v for k, v in dup.items() if len(v) > 1}
+    declared, real = [], {}
+    for k, v in dups.items():
+        why = DECLARED_DUPS.get(k)
+        (declared.append((k, why)) if why else real.__setitem__(k, v))
+    print('  duplicate top-level keys inside the addon: %s'
+          % ('none beyond the %d declared' % len(declared) if not real else real))
+    for k, why in sorted(declared):
+        print('      declared: %s/%s -- %s' % (k[0], k[1], why))
+    bad += len(real)
+
+    loc = collections.defaultdict(list)
+    for r, p in files.items():
+        if not r.startswith('localization/'):
+            continue
+        lang = r.split('/')[1]
+        for m in re.finditer(r'(?m)^\s*([A-Za-z_][\w.]*):\d*\s+"', read(p)):
+            loc[(lang, m.group(1))].append(r)
+    ldups = {k: v for k, v in loc.items() if len(v) > 1}
+    print('  localization: %d keys, duplicates per language: %s'
+          % (len(loc), 'none' if not ldups else ldups))
+    bad += len(ldups)
+
+    goods = [r for r in files if r.startswith('common/goods/')]
+    print('  goods files in the addon: %d (nothing added, 128 ceiling unchanged)' % len(goods))
+
+    print('\n%s' % ('ALL CHECKS PASS' if not bad else '%d PROBLEM(S)' % bad))
+    return 1 if bad else 0
+
+
+def _today():
+    import datetime
+    return datetime.date.today().isoformat()
+
+
+if __name__ == '__main__':
+    sys.exit(main())

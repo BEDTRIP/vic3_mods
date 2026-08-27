@@ -13,7 +13,7 @@
   "relationships": [
     {
       "rel_type": "dependency",
-      "id": "3227982912",
+      "id": "kai.kuromi",
       "display_name": "Kuromi's AI",
       "resource_type": "mod",
       "version": "*"
@@ -37,7 +37,7 @@
     "multiplayer_synchronized": true,
     "tested_with": [
       {
-        "id": "3227982912",
+        "id": "kai.kuromi",
         "display_name": "Kuromi's AI",
         "version": "7.5",
         "date": "2026-08-27"

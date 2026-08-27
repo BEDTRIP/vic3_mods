@@ -1,0 +1,244 @@
+{
+  "name": "Addon: Grey's x MegaComPatch",
+  "id": "asm.addon.greys",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Compatibility addon that puts the Grey's pack (Soft Econ, Soft Pop, Urban Synergy Unleashed, Deeper Sinosphere, Food Industries Rework, Ranch Production Rework, Diplomatic Interaction Suite, Subject Interaction Suite) on top of the MegaComPatch set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenroete, Power Blocs Expanded) and addon-LLWA. Merge of eight ComPatches for this block -- PSC, PBE, E&F+Hotfix, Morgenroete, TGR, KAI, addon-LLWA, megapack no-t&r -- plus four internal fixes for bugs within the Grey's pack itself (a CMF registry flag, two cross-file field losses, a typo'd prefix), plus one internal merge file the assembly itself needs (two buildings E&F and TGR both touch, see README). Does NOT carry Victorian Century or Hail, Columbia!+GoB+MoH content: those two branches are alternatives to each other upstream of this addon, so their Grey's compatches (ComPatch Grey's + VC, ComPatch Grey's + addon-VC, ComPatch Grey's + HC+GoB+MoH) each ship separately -- load the one matching your branch right after this addon. Load this addon last, after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "Expansion",
+    "Historical",
+    "Gameplay",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3345217364",
+      "display_name": "Grey's Soft Econ Adjustments",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3336914177",
+      "display_name": "Grey's Soft Pop Adjustments",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3108195724",
+      "display_name": "Grey's Deeper Sinosphere",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3330261506",
+      "display_name": "Grey's Food Industries Rework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3394847149",
+      "display_name": "Grey's Ranch Production Rework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3646757534",
+      "display_name": "Grey's Diplomatic Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3276243851",
+      "display_name": "Grey's Subject Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3420714166",
+      "display_name": "[1.13] Private Sector Construction",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3143591632",
+      "display_name": "Economic and Financial Mod (E&F) - V4",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3786286962",
+      "display_name": "E&F Hotfix",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3623185901",
+      "display_name": "[1.13] Power Blocs Expanded",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3215078236",
+      "display_name": "The Great Revision",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "2889925770",
+      "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3790590434",
+      "display_name": "Addon: LLWA x MegaComPatch",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3640735868",
+      "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "kai.kuromi",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3345217364",
+        "display_name": "Grey's Soft Econ Adjustments",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3336914177",
+        "display_name": "Grey's Soft Pop Adjustments",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3108195724",
+        "display_name": "Grey's Deeper Sinosphere",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3330261506",
+        "display_name": "Grey's Food Industries Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3394847149",
+        "display_name": "Grey's Ranch Production Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3646757534",
+        "display_name": "Grey's Diplomatic Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3276243851",
+        "display_name": "Grey's Subject Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3420714166",
+        "display_name": "[1.13] Private Sector Construction",
+        "version": "1.3.7",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3143591632",
+        "display_name": "Economic and Financial Mod (E&F) - V4",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3786286962",
+        "display_name": "E&F Hotfix",
+        "version": "4.1.7.4",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3623185901",
+        "display_name": "[1.13] Power Blocs Expanded",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3215078236",
+        "display_name": "The Great Revision",
+        "version": "2.0",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "2889925770",
+        "display_name": "[1.13] Morgenroete - Dawn of Flavor",
+        "version": "2.8.3e Mitsopoulos",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3790590434",
+        "display_name": "Addon: LLWA x MegaComPatch",
+        "version": "1.13.11.3",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3640735868",
+        "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+        "version": "1.13.11.2",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "kai.kuromi",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}
