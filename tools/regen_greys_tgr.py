@@ -34,12 +34,24 @@ coordination or an in-game check, per the report's section 10 draft list:
     deliberate change and it is lost because the later mod's define replaces
     the whole key. Restore TGR's values.
 
+  * GR.7e -- the remaining 7 ownership production methods (14 of the
+    original 21 are already closed via _greys/greys+ef done, GR.5). 5 are a
+    clean loss (state_modifiers absent in grey_usu); 2
+    (pm_manor_house_privately_owned, pm_manor_house_principle_divine_economics_2)
+    turned out to already carry their own state_modifiers -- a dispute the
+    report's first pass missed, decision 27.08.2026: restore only TGR's two
+    fields with no Grey's equivalent, leave Grey's own tax-capacity choice.
+
+  * GR.7f -- building_food_industry's building_group (restored to
+    bg_consumer_goods) and bg_trade's cash_reserves_max (TGR field, commented
+    out in Grey's). Found while writing this: grey_food also swaps the
+    vanilla/TGR pmg_automation_building_food_industry production_method_group
+    for its own pmg_preservation -- Grey's own content, not a TGR loss, left
+    untouched and flagged separately in the plan.
+
 NOT covered here (see the plan / report for why):
   * GR.7d (building_trade_center has_max_level) -- blocked on an in-game
     screenshot check (report section 11), not written yet.
-  * GR.7e (21 ownership production methods) -- 14 of 21 already closed via
-    _greys/greys+ef done (GR.5); the remaining 7 need their own pass.
-  * GR.7f (bg_consumer_goods / bg_trade) -- next pass.
   * Class A/B production-method restores (report section 6) -- next pass.
   * foreign_investment_rights, trade_states, monopoly_charter file dup,
     building_construction_sector, 14 pm_company_headquarter_* -- all cross-task
@@ -295,6 +307,397 @@ def build_defines():
 
 
 # ---------------------------------------------------------------------------
+# GR.7e -- seven remaining ownership production methods
+# ---------------------------------------------------------------------------
+
+# Records where grey_usu's REPLACE_OR_CREATE body carries no state_modifiers at
+# all -- a clean loss of TGR's level_scaled block, all three fields restored.
+OWNERSHIP_CLEAN_LOSS = [
+    "pm_financial_district_privately_owned",
+    "pm_financial_district_publicly_traded",
+    "pm_financial_district_principle_divine_economics_2",
+    "pm_manor_house_bureaucrat_ownership",
+    "pm_manor_house_clergy_ownership",
+]
+# Records where grey_usu already carries its own state_modifiers (workforce_scaled,
+# state_tax_capacity_add = -1) -- a genuine dispute, not a loss. The report's first
+# pass over GR.7e (analysis_gr7_tgr_report.md section 2.2) said state_modifiers was
+# missing on all 21 records; these two are the exception, found while writing this
+# generator. Decision 27.08.2026: same call the report already made on pm_trade_center
+# (section 2.2) -- a record with its own populated sub-block is a dispute, leave
+# Grey's choice alone and restore only the fields with no Grey's equivalent at all.
+OWNERSHIP_DISPUTED = [
+    "pm_manor_house_privately_owned",
+    "pm_manor_house_principle_divine_economics_2",
+]
+
+
+def build_ownership_pms():
+    tgr_text = V.read(os.path.join(
+        TGR, "common/production_methods/TGR_TRADE_private_infrastructure_investors.txt"))
+    grey_text = V.read(os.path.join(
+        GREYS, "grey_usu/common/production_methods/yMoG_USU_owners_tax_pms.txt"))
+
+    records = []
+    for name in OWNERSHIP_CLEAN_LOSS + OWNERSHIP_DISPUTED:
+        _, tgr_body = V.entry(tgr_text, name, "REPLACE_OR_CREATE:")
+        tgr_sm = V.sub(tgr_body, "state_modifiers")
+        assert tgr_sm is not None, f"{name}: TGR no longer carries state_modifiers -- re-check GR.7e"
+        tgr_level = V.sub(tgr_sm[1:-1], "level_scaled")
+        assert tgr_level is not None, f"{name}: TGR's state_modifiers has no level_scaled -- re-check GR.7e"
+        weekly = re.search(r'state_weekly_trades_add\s*=\s*[\d.]+', tgr_level)
+        capacity = re.search(r'state_trade_capacity_add\s*=\s*[\d.]+', tgr_level)
+        tax = re.search(r'state_tax_capacity_add\s*=\s*[\d.]+', tgr_level)
+        assert weekly and capacity and tax, f"{name}: TGR's level_scaled is missing a field -- re-check GR.7e"
+
+        _, grey_body = V.entry(grey_text, name, "REPLACE_OR_CREATE:")
+
+        if name in OWNERSHIP_CLEAN_LOSS:
+            assert V.sub(grey_body, "state_modifiers") is None, (
+                f"{name}: grey_usu now carries its own state_modifiers -- this record moved from "
+                f"'clean loss' to 'disputed', re-check GR.7e before writing")
+            new_block = (
+                "\n\tstate_modifiers = {\n\t\tlevel_scaled = {\n"
+                f"\t\t\t{weekly.group(0)}  # TGR, restored\n"
+                f"\t\t\t{capacity.group(0)}  # TGR, restored\n"
+                f"\t\t\t{tax.group(0)}  # TGR, restored\n"
+                "\t\t}\n\t}\n"
+            )
+            new_body = grey_body.rstrip("\n") + new_block
+        else:
+            grey_sm = V.sub(grey_body, "state_modifiers")
+            assert grey_sm is not None, f"{name}: grey_usu lost its own state_modifiers -- re-check GR.7e"
+            grey_sm_inner = grey_sm[1:-1]
+            assert V.sub(grey_sm_inner, "level_scaled") is None, (
+                f"{name}: grey_usu's state_modifiers now has its own level_scaled -- re-check GR.7e "
+                f"before adding TGR's on top")
+            workforce = V.sub(grey_sm_inner, "workforce_scaled")
+            assert workforce is not None and "state_tax_capacity_add" in workforce, (
+                f"{name}: grey_usu's state_modifiers no longer matches the expected workforce_scaled "
+                f"tax-capacity dispute shape -- re-check GR.7e (decision 27.08.2026 assumed this exact shape)")
+            new_level = (
+                "\n\t\tlevel_scaled = {\n"
+                f"\t\t\t{weekly.group(0)}  # TGR, restored\n"
+                f"\t\t\t{capacity.group(0)}  # TGR, restored\n"
+                "\t\t}\n"
+            )
+            new_sm_inner = grey_sm_inner.rstrip() + new_level + "\t"
+            new_body = V.replace_sub(grey_body, "state_modifiers", "{" + new_sm_inner + "}")
+
+        records.append(f"REPLACE_OR_CREATE:{name} = {{{new_body}}}")
+
+    write(
+        "common/production_methods/zz_greys_tgr_ownership.txt",
+        "\n\n".join(records),
+        "restore TGR's trade-capacity state_modifiers on the 7 ownership PMs not already covered by GR.5",
+        "REQUIRES BOTH TGR AND the whole Grey's pack. TGR_TRADE_private_infrastructure_investors.txt "
+        "gives every ownership production method a state_modifiers.level_scaled block "
+        "(state_weekly_trades_add=0.5, state_trade_capacity_add=1, state_tax_capacity_add=0.25). "
+        "grey_usu/yMoG_USU_owners_tax_pms.txt REPLACE_OR_CREATEs 21 of these records; 14 "
+        "pm_company_headquarter_* are already restored by _greys/greys+ef done (GR.5, shared file, "
+        "needs both TGR and E&F -- not duplicated here). These are the remaining 7. "
+        "pm_financial_district_privately_owned/publicly_traded/principle_divine_economics_2 and "
+        "pm_manor_house_bureaucrat_ownership/clergy_ownership carry no state_modifiers at all in "
+        "grey_usu -- a clean loss, all three TGR fields restored. pm_manor_house_privately_owned and "
+        "pm_manor_house_principle_divine_economics_2 are a different case the report's first pass over "
+        "GR.7e missed: grey_usu already gives them their own state_modifiers (workforce_scaled, "
+        "state_tax_capacity_add=-1) -- a genuine design choice, not silence. Decision 27.08.2026: leave "
+        "Grey's tax-capacity choice alone, restore only TGR's two fields that have no Grey's equivalent "
+        "in any sub-block (state_weekly_trades_add, state_trade_capacity_add), added as a sibling "
+        "level_scaled block next to Grey's workforce_scaled -- the same call the report already made on "
+        "pm_trade_center (report section 2.2): a record with its own populated sub-block is a dispute, "
+        "not a loss, and only genuinely absent fields get restored. !! MAINTENANCE !! if grey_usu ever "
+        "adds its own level_scaled to the two disputed records, or drops state_modifiers from the five "
+        "clean-loss records, the asserts fail loudly -- re-check which class each record is in before "
+        "re-running."
+    )
+
+
+# ---------------------------------------------------------------------------
+# GR.7f -- building_food_industry building_group, bg_trade cash_reserves_max
+# ---------------------------------------------------------------------------
+
+def build_food_and_trade_groups():
+    tgr_food = V.read(os.path.join(TGR, "common/buildings/TGR_POLITICS_industry.txt"))
+    grey_food = V.read(os.path.join(GREYS, "grey_food/common/buildings/mog_food_industry.txt"))
+    _, tgr_food_body = V.entry(tgr_food, "building_food_industry", "REPLACE_OR_CREATE:")
+    m = re.search(r'building_group\s*=\s*(\S+)', tgr_food_body)
+    assert m and m.group(1) == "bg_consumer_goods", (
+        f"TGR's building_food_industry building_group changed to {m and m.group(1)} -- re-check GR.7f")
+
+    _, grey_food_body = V.entry(grey_food, "building_food_industry", "REPLACE_OR_CREATE:")
+    gm = re.search(r'building_group\s*=\s*(\S+)', grey_food_body)
+    assert gm and gm.group(1) == "bg_light_industry", (
+        f"grey_food's building_food_industry building_group changed to {gm and gm.group(1)} -- re-check GR.7f")
+    new_food_body = grey_food_body[:gm.start(1)] + "bg_consumer_goods" + grey_food_body[gm.end(1):]
+
+    write(
+        "common/buildings/zz_greys_tgr_food_industry.txt",
+        f"REPLACE_OR_CREATE:building_food_industry = {{{new_food_body}}}",
+        "restore TGR's building_group on building_food_industry",
+        "TGR moves food industry into its own bg_consumer_goods group (parent_group=bg_manufacturing, "
+        "lens=light_industry, cash_reserves_max=25000) -- TGR's industrial decree and economic-stimulus "
+        "laws are keyed to this group. grey_food/mog_food_industry.txt REPLACE_OR_CREATEs the whole "
+        "building and keeps vanilla's bg_light_industry, so food industry falls out of both TGR mechanics. "
+        "Restored here: building_group only. levels_per_mesh (TGR 5, Grey's 50, matching vanilla) and "
+        "production_method_groups are left as Grey's -- decision 27.08.2026: grey_food also swaps out "
+        "the vanilla/TGR pmg_automation_building_food_industry for its own pmg_preservation (a whole "
+        "canning/preservation content addition, common/production_method_groups/mog_food_pmg.txt), which "
+        "is Grey's own deliberate content, not a TGR loss, and out of scope for this restore -- flagged "
+        "in the plan as its own open item, not blocking GR.7f. !! MAINTENANCE !! if grey_food ever "
+        "changes building_group away from bg_light_industry, or TGR's away from bg_consumer_goods, the "
+        "asserts fail loudly."
+    )
+
+    tgr_trade = V.read(os.path.join(TGR, "common/building_groups/TGR_TRADE_building_groups.txt"))
+    grey_trade = V.read(os.path.join(GREYS, "grey_usu/common/building_groups/yMoG_USU_building_groups.txt"))
+    _, tgr_trade_body = V.entry(tgr_trade, "bg_trade", "REPLACE_OR_CREATE:")
+    tm = re.search(r'cash_reserves_max\s*=\s*(\d+)', tgr_trade_body)
+    assert tm, "TGR's bg_trade no longer has cash_reserves_max -- re-check GR.7f"
+
+    _, grey_trade_body = V.entry(grey_trade, "bg_trade", "REPLACE_OR_CREATE:")
+    assert re.search(r'(?m)^\s*cash_reserves_max\s*=', grey_trade_body) is None, (
+        "grey_usu's bg_trade now has an active cash_reserves_max -- re-check GR.7f")
+    anchor = re.search(r'has_trade_revenue\s*=\s*yes', grey_trade_body)
+    assert anchor, "grey_usu's bg_trade lost has_trade_revenue -- re-check GR.7f"
+    insert_at = grey_trade_body.index('\n', anchor.end()) + 1
+    new_trade_body = (
+        grey_trade_body[:insert_at]
+        + f"\n\tcash_reserves_max = {tm.group(1)}  # TGR, restored\n"
+        + grey_trade_body[insert_at:]
+    )
+
+    write(
+        "common/building_groups/zz_greys_tgr_bg_trade.txt",
+        f"REPLACE_OR_CREATE:bg_trade = {{{new_trade_body}}}",
+        "restore TGR's cash_reserves_max on bg_trade",
+        "TGR's bg_trade carries cash_reserves_max=500000, a field vanilla doesn't have at all. "
+        "grey_usu/yMoG_USU_building_groups.txt REPLACE_OR_CREATEs bg_trade with the field commented "
+        "out (an old value of 5000, not TGR's 500000 -- not the same number, just dead text). "
+        "infrastructure_usage_per_level (TGR 0.5, Grey's 0.15) and urbanization (Grey's 2, commented "
+        "'down from 10') are deliberate Grey's changes, left untouched. !! MAINTENANCE !! if grey_usu "
+        "ever re-enables its own cash_reserves_max, the assert fails loudly -- that turns this from a "
+        "restore into a balance dispute."
+    )
+
+
+# ---------------------------------------------------------------------------
+# GR.7d -- building_trade_center has_max_level
+# ---------------------------------------------------------------------------
+
+def build_trade_center_cap():
+    tgr_text = V.read(os.path.join(
+        TGR, "common/buildings/TGR_TRADE_private_infrastructure_trade_center.txt"))
+    grey_text = V.read(os.path.join(
+        GREYS, "grey_usu/common/buildings/yMoG_USU_trade_center.txt"))
+
+    _, tgr_body = V.entry(tgr_text, "building_trade_center", "REPLACE_OR_CREATE:")
+    assert re.search(r'(?m)^\s*has_max_level\s*=\s*yes', tgr_body), (
+        "TGR's building_trade_center no longer has has_max_level = yes -- re-check GR.7d")
+
+    _, grey_body = V.entry(grey_text, "building_trade_center", "REPLACE_OR_CREATE:")
+    assert re.search(r'(?m)^\s*has_max_level\s*=', grey_body) is None, (
+        "grey_usu's building_trade_center now has its own has_max_level -- re-check GR.7d before writing")
+    anchor = re.search(r'levels_per_mesh\s*=\s*\d+', grey_body)
+    assert anchor, "grey_usu's building_trade_center lost levels_per_mesh -- re-check GR.7d"
+    insert_at = grey_body.index('\n', anchor.end()) + 1
+    new_body = (
+        grey_body[:insert_at]
+        + "\n\thas_max_level = yes  # TGR, restored\n"
+        + grey_body[insert_at:]
+    )
+
+    write(
+        "common/buildings/zz_greys_tgr_trade_center.txt",
+        f"REPLACE_OR_CREATE:building_trade_center = {{{new_body}}}",
+        "restore TGR's has_max_level cap on building_trade_center",
+        "Decision 27.08.2026 (report section 2.1, in-game check via screenshot): the Grey's-branch trade "
+        "center panel shows no max-level row -- grey_usu's REPLACE_OR_CREATE of the building drops "
+        "has_max_level entirely rather than inheriting a vanilla default (vanilla trade centers have no "
+        "cap at all; has_max_level is a TGR-only addition), so the building is unlimited from turn one and "
+        "TGR's ten trade techs (tech_bureaucracy, international_trade, currency_standards, stock_exchange, "
+        "corporate_charters, mutual_funds, joint_stock_companies, investment_banks, corporate_management, "
+        "macroeconomics -- each state_building_trade_center_max_level_add=10, TGR_TRADE_society.txt) are "
+        "restoring nothing. None of those ten techs are REPLACE_OR_CREATEd by Grey's (only stock_exchange "
+        "gets an unrelated TRY_INJECT), so the +10 grants are intact and just need the cap switched back "
+        "on -- has_max_level=yes is the only field restored here, same production_method_groups/ai_value/"
+        "everything else stays Grey's (already merged with E&F's own group there, GR.5). Player-facing "
+        "effect: before researching any of the ten techs, the building's max level is 0, i.e. it cannot be "
+        "built at all until the first one is researched -- this is the same has_max_level=0-until-tech "
+        "pattern vanilla itself uses on building_construction_sector. !! MAINTENANCE !! if grey_usu ever "
+        "adds its own has_max_level, or TGR drops it, the asserts fail loudly."
+    )
+
+
+# ---------------------------------------------------------------------------
+# Class A/B production-method restores -- the three pieces that survived
+# checking against the actual current source (report section 6 catalogued
+# more than this; see the plan and report for what got excluded and why).
+# ---------------------------------------------------------------------------
+
+def _set_field(body: str, path: list[str], field: str, new_value: str) -> str:
+    """Replace `field = <value>` inside the sub-block at `path` (a list of nested
+    sub-block names), leaving everything else in `body` byte-for-byte alone."""
+    name = path[0]
+    block = V.sub(body, name)
+    assert block is not None, f"sub-block {name} not found while setting {field}"
+    inner = block[1:-1]
+    if len(path) == 1:
+        m = re.search(r'(?m)^[ \t]*' + re.escape(field) + r'\s*=\s*(-?[\d.]+)', inner)
+        assert m, f"{field} not found in {name}"
+        new_inner = inner[:m.start(1)] + new_value + inner[m.end(1):]
+    else:
+        new_inner = _set_field(inner, path[1:], field, new_value)
+    return V.replace_sub(body, name, "{" + new_inner + "}")
+
+
+def build_class_ab_restores():
+    records = []
+
+    # -- Government administration: TGR doubles country_bureaucracy_add on all
+    # four tiers, grey_usu's REPLACE_OR_CREATE just restates the pre-TGR number.
+    # Nothing else on these records is touched (Grey's own state_tax_capacity_add
+    # retuning, ai_value, is_default, comments all stay as-is).
+    tgr_gov = V.read(os.path.join(
+        TGR, "common/production_methods/TGR_POLITICS_government_administration.txt"))
+    grey_gov = V.read(os.path.join(
+        GREYS, "grey_usu/common/production_methods/yMoG_USU_govadmin_base_pms.txt"))
+    GOV_ADMIN_EXPECTED = {
+        "pm_simple_organization": ("10", "50"),
+        "pm_horizontal_drawer_cabinets": ("50", "100"),
+        "pm_vertical_filing_cabinets": ("65", "150"),
+        "pm_switch_boards": ("100", "200"),
+    }
+    for name, (grey_expected, tgr_expected) in GOV_ADMIN_EXPECTED.items():
+        _, tgr_body = V.entry(tgr_gov, name, "REPLACE_OR_CREATE:")
+        tm = re.search(r'country_bureaucracy_add\s*=\s*(\d+)', V.sub(tgr_body, "country_modifiers"))
+        assert tm and tm.group(1) == tgr_expected, (
+            f"{name}: TGR's country_bureaucracy_add is {tm and tm.group(1)}, expected {tgr_expected} -- re-check")
+
+        _, grey_body = V.entry(grey_gov, name, "REPLACE_OR_CREATE:")
+        gm = re.search(r'country_bureaucracy_add\s*=\s*(\d+)', V.sub(grey_body, "country_modifiers"))
+        assert gm and gm.group(1) == grey_expected, (
+            f"{name}: grey_usu's country_bureaucracy_add is {gm and gm.group(1)}, expected {grey_expected} -- re-check")
+
+        new_body = _set_field(grey_body, ["country_modifiers", "workforce_scaled"],
+                               "country_bureaucracy_add", tgr_expected)
+        records.append(f"REPLACE_OR_CREATE:{name} = {{{new_body}}}")
+
+    # -- pm_rail_transport_mine / pm_steam_rail_transport: TGR's automation file
+    # makes both more efficient than vanilla (less transport input, more labor
+    # saved) and both keep vanilla's state_pollution_generation_add=10. grey_usu
+    # reverts the numeric fields to vanilla AND drops the pollution modifier
+    # entirely (not a TGR-vs-Grey dispute -- vanilla and TGR agree on it, Grey's
+    # rewrite just doesn't carry it). Note the two records are NOT symmetric:
+    # steam's goods_input_transportation_add already matches TGR (4), only mine's
+    # needs that one field restored.
+    tgr_auto = V.read(os.path.join(TGR, "common/production_methods/TGR_TRADE_automation.txt"))
+    grey_mine = V.read(os.path.join(
+        GREYS, "grey_usu/common/production_methods/yMoG_USU_trains_mines.txt"))
+    grey_steam = V.read(os.path.join(
+        GREYS, "grey_usu/common/production_methods/yMoG_USU_trains_plantations.txt"))
+
+    _, tgr_mine_body = V.entry(tgr_auto, "pm_rail_transport_mine", "REPLACE_OR_CREATE:")
+    _, tgr_steam_body = V.entry(tgr_auto, "pm_steam_rail_transport", "REPLACE_OR_CREATE:")
+
+    def _num(body, path, field):
+        block = body
+        for name in path:
+            sub = V.sub(block, name)
+            assert sub is not None, f"{name} missing"
+            block = sub[1:-1]
+        m = re.search(re.escape(field) + r'\s*=\s*(-?\d+)', block)
+        assert m, f"{field} missing in {'.'.join(path)}"
+        return m.group(1)
+
+    assert _num(tgr_mine_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add") == "2"
+    assert _num(tgr_mine_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add") == "-1500"
+    assert _num(tgr_mine_body, ["state_modifiers", "workforce_scaled"], "state_pollution_generation_add") == "10"
+    assert _num(tgr_steam_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add") == "4"
+    assert _num(tgr_steam_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add") == "-3000"
+    assert _num(tgr_steam_body, ["state_modifiers", "workforce_scaled"], "state_pollution_generation_add") == "10"
+
+    _, grey_mine_body = V.entry(grey_mine, "pm_rail_transport_mine", "TRY_REPLACE:")
+    assert _num(grey_mine_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add") == "5"
+    assert _num(grey_mine_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add") == "-1000"
+    assert V.sub(grey_mine_body, "state_modifiers") is None, "pm_rail_transport_mine: grey_usu now has state_modifiers -- re-check"
+    new_mine = _set_field(grey_mine_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add", "2")
+    new_mine = _set_field(new_mine, ["building_modifiers", "level_scaled"], "building_employment_laborers_add", "-1500")
+    new_mine = (new_mine.rstrip("\n")
+                + "\n\tstate_modifiers = {\n\t\tworkforce_scaled = {\n"
+                  "\t\t\tstate_pollution_generation_add = 10  # TGR/vanilla, restored\n\t\t}\n\t}\n")
+    records.append(f"REPLACE_OR_CREATE:pm_rail_transport_mine = {{{new_mine}}}")
+
+    _, grey_steam_body = V.entry(grey_steam, "pm_steam_rail_transport", "TRY_REPLACE:")
+    assert _num(grey_steam_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add") == "4", (
+        "pm_steam_rail_transport: grey_usu's goods_input_transportation_add drifted off TGR's value -- re-check, "
+        "this field was assumed to already match and not need restoring")
+    assert _num(grey_steam_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add") == "-1000"
+    assert V.sub(grey_steam_body, "state_modifiers") is None, "pm_steam_rail_transport: grey_usu now has state_modifiers -- re-check"
+    new_steam = _set_field(grey_steam_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add", "-3000")
+    new_steam = (new_steam.rstrip("\n")
+                 + "\n\tstate_modifiers = {\n\t\tworkforce_scaled = {\n"
+                   "\t\t\tstate_pollution_generation_add = 10  # TGR/vanilla, restored\n\t\t}\n\t}\n")
+    records.append(f"REPLACE_OR_CREATE:pm_steam_rail_transport = {{{new_steam}}}")
+
+    # -- pm_refrigerated_rail_cars_building_fishing_wharf: TGR makes the PM more
+    # efficient than vanilla on the same three input/labor fields class B covers
+    # elsewhere; vanilla's state_pollution_generation_add=15 (which TGR keeps
+    # unchanged) is separately swapped out by Grey's own
+    # building_food_industry_throughput_add=0.02 in the same state_modifiers slot
+    # -- that's Grey's own choice in a populated sub-block, left untouched (same
+    # call as the manor house / pm_trade_center precedent in this pair).
+    grey_frc = V.read(os.path.join(
+        GREYS, "grey_usu/common/production_methods/xMoG_USU_trains_misc_resource.txt"))
+    _, tgr_frc_body = V.entry(tgr_auto, "pm_refrigerated_rail_cars_building_fishing_wharf", "REPLACE_OR_CREATE:")
+    assert _num(tgr_frc_body, ["building_modifiers", "workforce_scaled"], "goods_input_electricity_add") == "1"
+    assert _num(tgr_frc_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add") == "1"
+    assert _num(tgr_frc_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add") == "-2500"
+
+    _, grey_frc_body = V.entry(grey_frc, "pm_refrigerated_rail_cars_building_fishing_wharf", "TRY_REPLACE:")
+    assert _num(grey_frc_body, ["building_modifiers", "workforce_scaled"], "goods_input_electricity_add") == "5"
+    assert _num(grey_frc_body, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add") == "5"
+    assert _num(grey_frc_body, ["building_modifiers", "level_scaled"], "building_employment_laborers_add") == "-2000"
+    grey_sm = V.sub(grey_frc_body, "state_modifiers")
+    assert grey_sm is not None and "building_food_industry_throughput_add" in grey_sm, (
+        "pm_refrigerated_rail_cars_building_fishing_wharf: grey_usu's own state_modifiers substitution "
+        "changed shape -- re-check before leaving it untouched")
+
+    new_frc = _set_field(grey_frc_body, ["building_modifiers", "workforce_scaled"], "goods_input_electricity_add", "1")
+    new_frc = _set_field(new_frc, ["building_modifiers", "workforce_scaled"], "goods_input_transportation_add", "1")
+    new_frc = _set_field(new_frc, ["building_modifiers", "level_scaled"], "building_employment_laborers_add", "-2500")
+    records.append(f"REPLACE_OR_CREATE:pm_refrigerated_rail_cars_building_fishing_wharf = {{{new_frc}}}")
+
+    write(
+        "common/production_methods/zz_greys_tgr_class_b.txt",
+        "\n\n".join(records),
+        "restore the class A/B production-method fields that survived checking against the current source",
+        "report section 6 catalogued 91 lines/38 records of class A (TGR-only field, Grey doesn't carry) and "
+        "28 lines/9 records of safe class B (Grey reverted to vanilla, TGR's edit erased); 63 of the class A "
+        "lines were the 21 ownership records, already closed via GR.5 (_greys/greys+ef done) and GR.7e (this "
+        "compatch). Checking the rest against the live source while writing this generator found most of what "
+        "remained was NOT a simple restore after all -- see the plan for the full list of exclusions "
+        "(pm_steel_passenger_carriages/pm_wooden_passenger_carriages and "
+        "pm_trade_center_trade_quantity_normal/high/very_high turned out to be entangled in grey_usu's own "
+        "logistics/train-path redesign, not a TGR loss; pm_anchorage's goods_input_clippers/"
+        "goods_output_merchant_marine duplicates the already-closed port employment ladder from report "
+        "section 13). What's actually restored here: four government-administration PMs get TGR's doubled "
+        "country_bureaucracy_add back (pm_simple_organization, pm_horizontal_drawer_cabinets, "
+        "pm_vertical_filing_cabinets, pm_switch_boards -- Grey's own state_tax_capacity_add retuning on the "
+        "same records is untouched); pm_rail_transport_mine and pm_steam_rail_transport get TGR's automation "
+        "efficiency numbers back (less transport input, more labor saved) plus vanilla's "
+        "state_pollution_generation_add=10, which grey_usu drops outright (not a TGR change, just missing -- "
+        "note the two records are asymmetric, steam's transport-input field already matched TGR and wasn't "
+        "touched); pm_refrigerated_rail_cars_building_fishing_wharf gets the same automation-efficiency "
+        "numbers restored, but its state_modifiers is left alone -- grey_usu swaps vanilla's pollution field "
+        "for its own building_food_industry_throughput_add there, a deliberate choice in a populated "
+        "sub-block, not a loss. !! MAINTENANCE !! every restored number is asserted against both TGR's and "
+        "Grey's current files; if either side's values drift the generator fails loudly rather than writing "
+        "a stale restore."
+    )
+
+
+# ---------------------------------------------------------------------------
 
 def self_check() -> int:
     bad = 0
@@ -342,6 +745,10 @@ def main() -> int:
         ("country ranks (GR.7a)", build_country_ranks),
         ("citizenship laws (GR.7b)", build_citizenship_laws),
         ("defines (GR.7c)", build_defines),
+        ("trade center cap (GR.7d)", build_trade_center_cap),
+        ("ownership production methods (GR.7e)", build_ownership_pms),
+        ("food industry / bg_trade (GR.7f)", build_food_and_trade_groups),
+        ("class A/B production methods", build_class_ab_restores),
     )
     for name, fn in steps:
         print(f"[{name}]")

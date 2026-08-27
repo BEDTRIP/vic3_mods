@@ -1,9 +1,9 @@
 {
   "name": "ComPatch Grey's + TGR",
   "id": "asm.compatch.greys.tgr",
-  "version": "1.13.11-1",
+  "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
-  "short_description": "WORK IN PROGRESS (GR.7, part 1 of several): restores TGR's trade-advantage/construction fields and loan-rank design on seven country ranks, TGR's acceptance-mult counterweight on four citizenship laws, and four defines TGR deliberately changed that Grey's silently reverts to vanilla. Does not yet cover the 21-record ownership production methods, bg_consumer_goods/bg_trade, the class A/B production-method restores, or the trade-center has_max_level question (pending an in-game check). Load after the whole Grey's pack.",
+  "short_description": "WORK IN PROGRESS (GR.7, part 3 of several): country ranks, four citizenship laws, four defines, building_trade_center's level cap (has_max_level), the 7 remaining ownership production methods (state_modifiers trade fields), and building_food_industry/bg_trade. Does not yet cover the class A/B production-method restores. Load after the whole Grey's pack.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",

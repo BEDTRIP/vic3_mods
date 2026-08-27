@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch Grey's + addon-LLWA",
+  "id": "asm.compatch.greys.llwa",
+  "version": "1.13.11-2",
+  "supported_game_version": "1.13.*",
+  "short_description": "GR.9/GR.16: full fix. Restores addon-LLWA's extension_building_types (LLWA_building_roadway) on eight railway companies and building_modifiers.unscaled.building_job_attractiveness_mult = 2 on three rail production methods that grey_usu's TRY_REPLACE:/REPLACE_OR_CREATE: silently drop. Also restores building_railway/building_usu_railway_line (grey_usu's 2026-08-27 split of the old single building_railway into a station and the real line) and building_airport, both silently stripped of addon-LLWA's and E&F's production_method_groups by grey_usu's full-body rewrites. The six railway companies that also collide with Victorian Century are handled inside _greys/greys+vc done instead, not here; the seven rail production methods where grey_usu's own numbers are a deliberate design, not a loss, are not touched. Supersedes the outdated third-party USU+LLWA Compatch (id 3387021675) entirely -- see _greys/usu_llwa out outdate noneed/README.md. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3790590434",
+      "display_name": "Addon: LLWA x MegaComPatch",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3790590434",
+        "display_name": "Addon: LLWA x MegaComPatch",
+        "version": "1.13.11.3",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

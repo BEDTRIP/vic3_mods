@@ -62,6 +62,18 @@
 20 → 100, `_grey_soft_econ` возвращает ванильные 20 (раздел 5). То есть управление
 размером ТЦ у TGR отменяется с двух сторон сразу.
 
+**Закрыто 27.08.2026 скриншотом.** Строки максимального уровня в панели ТЦ на ветке с Grey's
+нет — первый сценарий, потолок снят, десять техов TGR раздают прибавку в никуда. Ни одна из
+десяти технологий не переопределена Grey's целиком (только `stock_exchange` получает мелкий
+`TRY_INJECT`, поля не трогающий) — прибавки `+10` живы, дело было ровно в отсутствующем
+`has_max_level` на здании. Отдельно проверено, не зажмёт ли это торговлю при экономике USU:
+самая ранняя из десяти, `international_trade` (era_1), в двух шагах от самой первой
+соц-технологии игры (`urbanization` → `tech_bureaucracy` → `international_trade`) — первые
+годы партии, не поздний гейт, и саму постройку здания технология не ограничивает, только
+уровень. Файл — `common/buildings/zz_greys_tgr_trade_center.txt`, восстановлено только
+`has_max_level = yes`; `ai_value`, `levels_per_mesh`, `production_method_groups` — тело Grey's,
+не тронуто.
+
 ### 2.2 Двадцать одна запись владения теряет торговую ёмкость
 
 `TGR_TRADE_private_infrastructure_investors.txt` навешивает на все методы владения
@@ -96,6 +108,15 @@ Grey's (`_grey_soft_econ` и `grey_usu` дают тут одинаковые т�
 **Те же 14 записей HQ стоят в GR.5** (там их теряет E&F). Это ровно тот случай, под который
 в `Правила — сборка.md` заведено исключение «файл, зависящий сразу от двух пар»: одну и ту
 же запись нельзя чинить двумя файлами. Шапка обязана начинаться с «нужны оба мода».
+
+**Исправлено 27.08.2026, при написании генератора для оставшихся семи.** Формулировка «`state_modifiers`
+нет вообще» верна для пяти из семи (`pm_financial_district_*` ×3, `pm_manor_house_bureaucrat_ownership`,
+`pm_manor_house_clergy_ownership`), но не для `pm_manor_house_privately_owned` и
+`pm_manor_house_principle_divine_economics_2` — у них `grey_usu` уже несёт свой `state_modifiers`
+(`workforce_scaled = { state_tax_capacity_add = -1 }`), тот же случай, что и `pm_trade_center` чуть выше,
+а не чистая потеря. Решение №16 в плане: долить только `state_weekly_trades_add` и
+`state_trade_capacity_add` (которых у Grey's нет вообще ни в одном под-блоке) отдельным `level_scaled`
+рядом с существующим `workforce_scaled`; `state_tax_capacity_add` Grey's не трогать.
 
 ### 2.3 У TGR два файла `country_ranks`, и план знал только про один
 
@@ -138,6 +159,13 @@ TGR переводит пищепром в `bg_consumer_goods` — **собст�
 `grey_food/common/buildings/mog_food_industry.txt` возвращает `bg_light_industry` — и
 пищепром выпадает из обеих механик. Ровно тот случай, про который в правилах написано
 «похожие имена `building_group` у двух модов — это РАЗНЫЕ группы».
+
+**Дополнено 27.08.2026, при написании генератора.** Тела расходятся не только `building_group` и
+`levels_per_mesh` — `grey_food` также меняет список `production_method_groups`: убирает ванильную/
+TGR-овскую `pmg_automation_building_food_industry` и ставит свою `pmg_preservation` (собственная
+консервационная механика Grey's, `common/production_method_groups/mog_food_pmg.txt`). Это не потеря
+вклада TGR — вклад TGR тут совпадает с ванилью, обе стороны просто заменяют один и тот же слот. Решено
+не трогать при восстановлении `building_group`, заметка ушла в план как отдельный незаведённый пункт.
 
 ---
 
