@@ -1,0 +1,33 @@
+{
+  "name": "grey_diplo Grey_DIS_is_active Fix",
+  "id": "asm.fix.greys_diplo.dis_flag",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Grey's Diplomatic Interaction Suite declares its own CMF registry flag (Grey_DIS_is_active) bare instead of REPLACE_OR_CREATE:, so CMF's own 'always = no' default silently wins and the flag never reads yes for other mods that check it. This overrides it correctly. Internal to grey_diplo; load anywhere after it.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3646757534",
+      "display_name": "Grey's Diplomatic Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3646757534",
+        "display_name": "Grey's Diplomatic Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "grey_food Cooling Methods Fix",
+  "id": "asm.fix.greys.food_cooling",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "grey_food redeclares two cooling production methods (pm_refrigerated_storage_building_fishing_wharf, pm_unrefrigerated) that grey_usu also declares, dropping a transport-cost field grey_usu added on each, silently. Restores both fields, read live out of grey_usu's own file. Internal to the Grey's pack; load after grey_food.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3330261506",
+      "display_name": "Grey's Food Industries Rework",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3330261506",
+        "display_name": "Grey's Food Industries Rework",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

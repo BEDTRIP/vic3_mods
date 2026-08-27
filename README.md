@@ -68,7 +68,9 @@ _tmp_analysis/             кэш индексов и черновики про�
   компаний масштаб занятости берём у E&F, структуру у USU. Оба компача заодно закрывают записи
   из GR.1, GR.7e, GR.8 и GR.17 — одну запись нельзя `REPLACE:`-ить двумя компачами, см. план.
   GUI-мердж E&F × MPM вынесен из GR.5 в отдельную **GR.21**.
-* **В работе:** аддон-Grey's, `План проекта.md`. Разбор нового контента —
+* **Аддон-Grey's закрыт 27.08.2026:** все десять пар и оба внутренних бага (GR.1-20)
+  разобраны — последними GR.13, GR.11, GR.14, GR.19 и GR.8. Осталась только GR.21
+  (GUI-мердж E&F × MPM), она не Grey's. Разбор нового контента —
   `_greys/analysis_greys_new_content_report.md`.
 * **Закрыто 27.08.2026 (GR.3 и GR.20):** Grey's × PBE — `force_become_subject`, компач
   `_greys/greys+pbe done` (1 файл, генератор `tools/regen_greys_pbe.py`): PBE грузится
@@ -109,6 +111,66 @@ _tmp_analysis/             кэш индексов и черновики про�
   (TGR/USU) целиком по подсистемам — оставлено Grey's, файлов нет. `foreign_investment_rights`
   и `trade_states` ушли в GR.8/GR.14, `building_construction_sector` уже закрыт в GR.2.
 * **Закрыто 27.08.2026 (GR.9 и GR.16):** Grey's × LLWA / аддон-LLWA — компач `_greys/greys+llwa done` (4 файла, генератор `tools/regen_greys_llwa.py`): 8 из 14 компаний (остальные 6 — в `_greys/greys+vc done`) и 3 из 10 ж/д производственных методов (семь остальных — спор дизайна USU, не потеря), плюс `building_railway`/`building_airport`. По ходу обнаружилось, что grey_usu (обновление того же дня) разбил `building_railway` на два здания — вокзал и новое `building_usu_railway_line`; решением пользователя линия забрала себе всю частную экономику (LLWA + обе группы E&F), закрыв заодно кусок **GR.15**. Заодно закрыт (`noneed`) устаревший чужой компач `usu_llwa out outdate` — все его 11 ключей либо почин**е**ны здесь, либо чужими авторами выше по цепочке с тех пор, как он писался, либо другими нашими парами, которых при его написании не существовало.
+* **Закрыто 27.08.2026 (GR.15):** оставшиеся четыре здания USU вне ликвидности E&F —
+  `building_river_port`, `ppp_building_power_grid`, `usu_building_hydro_power_plant`,
+  `usu_building_public_green`, все на `manufacture_stock` (пятое, `building_usu_railway_line`,
+  закрыто раньше вместе с GR.9/GR.16). Компач `_greys/greys+ef done` (+4 файла, версия
+  1.13.11-2), генератор `tools/regen_greys_ef.py`, самопроверка `0 problem(s)`.
+* **Закрыто 27.08.2026 (GR.17):** мегапак `no t&r` × Grey's — `building_airport` и
+  `building_dubois_national_park`, оба теряют `pmg_market_liquidity` (airport ещё и
+  `pmg_private_ownership_manufacture_stock`) при `TRY_REPLACE:` от `grey_usu`. Компач
+  `_greys/greys+megapack done` (1 файл), генератор `tools/regen_greys_megapack.py`.
+  Пять из семи ключей, которые живьём даёт `content_holes.py`, уже закрывались GR.2
+  (`building_construction_sector` + четыре `pm_*_buildings`); три пункта про компании
+  из старого разбора не подтвердились. `building_airport` взаимоисключим с
+  `_greys/greys+llwa done` — не ставить оба сразу.
+* **Закрыто 27.08.2026 (GR.18):** аддон-VC × Grey's — `popneed_leisure` теряет `air_travel`
+  слоя Morgenröte при `REPLACE:` от `grey_usu` (автор сам оставил запись закомментированной
+  с пометкой «Gets added with Morgenrote», но собственный `TRY_INJECT:` восстанавливает только
+  `elgar_music`). Компач `_greys/greys+addon-vc done` (1 файл), генератор
+  `tools/regen_greys_addonvc.py`. Три соседних `popneed_*` (`free_movement`, `heating`,
+  `luxury_food`) и четыре компании подтверждены живьём не-потерей — USU либо сам
+  восстанавливает то же самое, либо это спор двух дизайнов (решение №12), либо инжект
+  аддитивен.
+* **Закрыто 27.08.2026 (GR.14):** пересечения внутри пачки Grey's — `pair_matrix.py` и
+  `content_holes.py` их не видят в принципе (вся пачка — один блок). Сверено вручную побайтово
+  по порядку пачки: две реальные потери из семи. `usu`×`food` — два метода охлаждения теряют
+  поле транспортных расходов (`pm_refrigerated_storage_building_fishing_wharf`,
+  `pm_unrefrigerated`), фикс `_greys/greys_food_fix done`. `diplo`×`subject` — запись
+  `trade_states` побеждается старой копией grey_subject без авторских правок ИИ grey_diplo и
+  с опечаткой `has_port_country` вместо `has_port`, фикс `_greys/greys_subject_fix done`.
+  Остальные пять пунктов — синхронизация автора или спор дизайна, файлов не требуют.
+* **Закрыто 27.08.2026 (GR.11):** `grey_diplo` объявляет свой флаг реестра CMF
+  (`Grey_DIS_is_active`) голым ключом — для `scripted_triggers` это не переопределяет,
+  флаг остаётся `no` из реестра CMF (тот тоже объявляет его голым). Сейчас в наборе на
+  флаг никто не смотрит, видимой поломки нет — но ровно для этого реестр и существует.
+  Фикс `_greys/greys_diplo_fix done` (1 файл, три строки), генератор
+  `tools/regen_greys_diplo_fix.py`.
+* **Перепроверено и закрыто 27.08.2026 (GR.13):** `_grey_soft_pop` переиздаёт двенадцать
+  чужих `com_law_*` триггеров реестра CMF через `REPLACE_OR_CREATE:` (шесть `_trigger` +
+  шесть `_alternative_trigger`), с шапкой, рассчитанной на порядок «сразу после файла CMF»,
+  а не на реальный мод-порядок — риск был в том, что что-то между ними могло намеренно
+  переопределить те же триггеры и тихо лишиться этого переопределения. Проверено грепом по
+  всему текущему набору: ни один мод, кроме CMF и самого `_grey_soft_pop`, эти шесть ключей
+  не трогает, и тела побайтово совпадают с реестром CMF — переиздание безопасное и без
+  содержательного эффекта. Перепроверять при каждом расширении набора.
+* **Закрыто 27.08.2026 (GR.8):** × KAI, все пять ключей. `building_construction_sector`
+  уже был закрыт в GR.2. `NAI` — не потеря, `defines` сливаются по полю, поля KAI не пересекаются
+  по имени с soft_econ/usu. `ai_strategy_territorial_expansion` — уже смержено автором вручную
+  (комментарий «Cannot INJECT weights in the correct sequence», числа те же, что у KAI).
+  `building_government_administration` теряет `ai_value` KAI целиком (не спор, у grey_usu поля
+  просто нет). Пятый, `foreign_investment_rights` — тело grey_diplo осознанно переспорило блок
+  `ai` KAI почти везде, но без комментария откатило отдельный багфикс KAI в
+  `wargoal_score_multiplier` (subject-исключение при инвестиционных правах); по решению М —
+  смержено: переспор grey_diplo остаётся, багфикс возвращён. Оба ключа — компач
+  `_greys/greys_kai_fix done` (2 файла), генератор `tools/regen_greys_kai_fix.py`.
+* **Закрыто 27.08.2026 (GR.19):** `grey_usu` объявляет голым ключом чужой закон
+  `law_forced_labour` (заглушка без `group`, нужна ради пяти ссылок `unlocking_laws` в
+  собственных production methods). М проверил экран рабства в игре — закона не видно, как и
+  ожидалось; по логу актуального запуска — ни одного упоминания закона и ни одной ошибки
+  во всём наборе логов. Заглушка рабочая как есть, фикс не нужен, файла не будет.
+  У аддона-Grey's остаётся только GR.21 (не Grey's, GUI-мердж E&F × MPM) — весь блок Grey's
+  закрыт.
 * Товары: 74 из 128, запас 54.
 
 ## Два инструмента, и оба нужны

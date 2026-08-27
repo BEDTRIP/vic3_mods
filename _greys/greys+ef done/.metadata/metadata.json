@@ -1,9 +1,9 @@
 {
   "name": "ComPatch Grey's + E&F",
   "id": "asm.compatch.greys.ef",
-  "version": "1.13.11-1",
+  "version": "1.13.11-2",
   "supported_game_version": "1.13.*",
-  "short_description": "The Grey's pack re-declares six buildings E&F had wired into its economy, and rewrites all fourteen company-headquarter production methods. Full bodies win over E&F's earlier INJECT:, so five of those buildings silently drop out of E&F's liquidity/stock system and E&F's cut to HQ employment disappears. This puts both back. Load after the whole Grey's pack.",
+  "short_description": "The Grey's pack re-declares six buildings E&F had wired into its economy, rewrites all fourteen company-headquarter production methods, and adds four brand-new privately-owned buildings E&F has never heard of. Full bodies win over E&F's earlier INJECT:, so five existing buildings silently drop out of E&F's liquidity/stock system, E&F's cut to HQ employment disappears, and the four new buildings never enter E&F's economy at all. This puts it all back. Load after the whole Grey's pack.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",

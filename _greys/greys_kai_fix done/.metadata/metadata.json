@@ -1,0 +1,59 @@
+{
+  "name": "ComPatch Grey's + KAI",
+  "id": "asm.compatch.greys.kai",
+  "version": "1.13.11-2",
+  "supported_game_version": "1.13.*",
+  "short_description": "grey_usu redeclares building_government_administration whole, dropping KAI's ai_value block (AI construction priority for bureaucracy-backlogged states) silently. grey_diplo's own rebalance of foreign_investment_rights silently reverts KAI's wargoal_score_multiplier bugfix (wrong scope reference, missing subject exemption) -- this grafts just that sub-block back, keeping grey_diplo's deliberate rework everywhere else. The pair's other three keys (building_construction_sector, NAI, ai_strategy_territorial_expansion) are already closed elsewhere or confirmed non-issues, see README. Load after both.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3227982912",
+      "display_name": "Kuromi's AI",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3646757534",
+      "display_name": "Grey's Diplomatic Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3227982912",
+        "display_name": "Kuromi's AI",
+        "version": "7.5",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3646757534",
+        "display_name": "Grey's Diplomatic Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

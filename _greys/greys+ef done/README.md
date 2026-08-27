@@ -5,7 +5,7 @@
 статус: done
 версии: Game 1.13 (exe 1.13.11) — E&F V4 + Hotfix 4.1.7.4, Grey's pack (версии моды не объявляют), TGR 2.0.
 позиция: после всей пачки Grey's
-файлов: 2
+файлов: 6
 генератор: tools/regen_greys_ef.py
 зависит от: TGR (в тело 14 методов ШК перенесён его блок state_modifiers)
 -->
@@ -15,7 +15,7 @@
 [h1]ComPatch: Grey's + E&F[/h1]
 [b]Game 1.13 (exe 1.13.11) — Economic and Financial Mod (E&F) V4 + Hotfix, Grey's pack.[/b]
 
-E&F wires a building into its economy by `INJECT:`ing two production method groups into it. Five buildings that the Grey's pack re-declares with full bodies — food industry, livestock ranch, port, power plant, trade center — therefore drop out of E&F's economy entirely: no liquidity, no stock, no private-ownership switching, and nothing in the log. The same pack rewrites all fourteen company-headquarter methods and undoes E&F's cut to headquarter employment. This patch puts both back.
+E&F wires a building into its economy by `INJECT:`ing two production method groups into it. Five buildings that the Grey's pack re-declares with full bodies — food industry, livestock ranch, port, power plant, trade center — therefore drop out of E&F's economy entirely: no liquidity, no stock, no private-ownership switching, and nothing in the log. The same pack rewrites all fourteen company-headquarter methods and undoes E&F's cut to headquarter employment. Grey's USU module also adds four brand-new privately-owned buildings — river port, power grid, hydro power plant, public green — that E&F's whitelist has never heard of at all. This patch puts all three back.
 
 [h2]Load order[/h2]
 [list]
@@ -73,10 +73,31 @@ Two defines overlap, and `_grey_soft_econ` loads later, so it wins both:
 
 Defines merge per key, both are single numbers, and no third mod touches either. Nothing is silently lost — the later number simply applies. Left to развилка №3.
 
+## 5. Four brand-new USU buildings — GR.15
+
+The Grey's USU module adds five buildings E&F has never heard of at all, none of them vanilla, none on anyone else's list — checked across the whole set, no mod but USU itself names any of them: `building_river_port`, `ppp_building_power_grid`, `usu_building_hydro_power_plant`, `usu_building_public_green`, and `building_usu_railway_line`. All five are `ownership_type = self`, so all five are candidates for E&F's stock mechanics — E&F's whitelist simply predates them, the same class of gap `_llwa/llwa+ef done` closed for LLWA's six buildings and `_ef/ef+morg done` closed for Morgenröte's.
+
+`building_usu_railway_line` is **not** here — it is the record USU split `building_railway` into (GR.9/GR.16/GR.17), and it already got `railroad_stock` inside `_greys/greys+llwa done`, folded in there because the LLWA merge on that same record had to happen in one place.
+
+The other four get `manufacture_stock`, all four:
+
+| здание | почему manufacture_stock |
+| --- | --- |
+| `building_river_port` | прямой аналог `building_port` (уже manufacture_stock) |
+| `ppp_building_power_grid` | прямой аналог `building_power_plant` |
+| `usu_building_hydro_power_plant` | тот же класс, что `building_power_plant` — второй способ производить электричество |
+| `usu_building_public_green` | не очевидно по имени, но тело здания — реальная фабрика услуг: `usu_pmg_public_space_management` / `usu_pmg_public_parklands` дают `goods_output_services_add` / `goods_output_transportation_add` и занятость (laborers, clerks, shopkeepers, bureaucrats), то есть обычное производственное здание. Тот же довод E&F уже применяет к Opera / инструментальным мастерским / изданию Manzoni у Morgenröte — тоже manufacture_stock. Отдельного типа акций для «гражданских удобств» у E&F нет, и среди его собственных 49 зданий ни одного чисто аменити-здания тоже нет.
+
+`common/buildings/zz_greys_ef_new_buildings_inject.txt` adds `pmg_market_liquidity` + `pmg_private_ownership_manufacture_stock` to all four. Because none of the four is on E&F's own switch (`common/scripted_effects/01_financial_scripted_effects.txt` → `private_ownership_production_stocks`), this compatch also needs its own copy of that machinery — same four-file shape as `ef+morg done` / `llwa+ef done`:
+
+* `common/scripted_effects/zz_greys_ef_new_buildings_stocks.txt` — `greys_ef_new_buildings_production_stocks`, the yearly per-state switch;
+* `common/on_actions/zz_greys_ef_new_buildings_on_actions.txt` — hooks it into `on_yearly_pulse_country`, additive;
+* `common/history/global/zz_greys_ef_new_buildings_init.txt` — runs it once at game start so the buildings are not stuck on "No Stock" for the first year.
+
 ## Отдельно: ложная тревога плана
 
 План говорил, что `grey_food` заодно роняет `pmg_automation_building_food_industry`. Проверено: не роняет. Группа автоматизации у ванили состоит из `pm_manual_dough_processing` + `pm_automated_bakery`, и `grey_food` перенёс `pm_automated_bakery` внутрь собственной `pmg_base_building_food_industry`. Автоматизация на месте, просто в другой группе; выпадает только `pm_manual_dough_processing` — «ручной» вариант, то есть балансное решение автора, а не потеря. Ничего не восстанавливаем.
 
 ## Maintenance
 
-`tools/regen_greys_ef.py`; `--check` reports drift without writing. The generator reads the group names from E&F, the fourteen keys from E&F's own file, and asserts on every run that E&F still names only `building_modifiers`, that USU still names no `state_modifiers`, that TGR still carries them, and that each of the five buildings is still missing exactly the groups E&F injects — so a fix on the Grey's side turns into a failed run with a message, not a silently pointless file. Re-run after any E&F, hotfix, TGR or Grey's update.
+`tools/regen_greys_ef.py`; `--check` reports drift without writing. The generator reads the group names from E&F, the fourteen keys from E&F's own file, and asserts on every run that E&F still names only `building_modifiers`, that USU still names no `state_modifiers`, that TGR still carries them, and that each of the five buildings is still missing exactly the groups E&F injects — so a fix on the Grey's side turns into a failed run with a message, not a silently pointless file. For the four GR.15 buildings it additionally asserts E&F still defines the manufacture_stock group and PMs, that none of the four is already on E&F's own switch (guards against double-switching if a future E&F version adds native support), that each still carries `ownership_type = self`, and that none already lists E&F's groups. Re-run after any E&F, hotfix, TGR or Grey's update.

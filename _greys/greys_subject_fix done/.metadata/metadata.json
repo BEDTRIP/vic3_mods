@@ -1,0 +1,46 @@
+{
+  "name": "grey_subject trade_states Fix",
+  "id": "asm.fix.greys.subject_trade_states",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "grey_subject redeclares the same vanilla trade_states diplomatic action as grey_diplo, with an older/different body -- loading last, it silently wipes every one of grey_diplo's deliberate AI and adjacency tweaks and reintroduces a has_port_country typo grey_diplo had already fixed. Restores grey_diplo's body verbatim, read live. Internal to the Grey's pack; load after grey_subject.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3646757534",
+      "display_name": "Grey's Diplomatic Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3276243851",
+      "display_name": "Grey's Subject Interaction Suite",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3646757534",
+        "display_name": "Grey's Diplomatic Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3276243851",
+        "display_name": "Grey's Subject Interaction Suite",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

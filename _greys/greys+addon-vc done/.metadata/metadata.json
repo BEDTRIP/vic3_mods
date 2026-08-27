@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch Grey's + addon-VC",
+  "id": "asm.compatch.greys.addonvc",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "grey_usu's own redesign of popneed_leisure carries an air_travel entry commented out, with a note that Morgenroete's own contribution should still apply -- it doesn't, because grey_usu's REPLACE: wipes it, and the author's own follow-up fix only restores a different good. This ComPatch restores it, read live out of addon-VC's own Morgenroete-compat file. The other three pop_needs addon-VC carries (heating, luxury_food, free_movement) and four companies are confirmed non-issues, see README. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3790297983",
+      "display_name": "Addon: Victorian Century x MegaComPatch",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3790297983",
+        "display_name": "Addon: Victorian Century x MegaComPatch",
+        "version": "1.13.11.1",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}

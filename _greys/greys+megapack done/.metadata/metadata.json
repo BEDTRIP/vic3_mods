@@ -1,0 +1,46 @@
+{
+  "name": "ComPatch Grey's + megapack no t&r",
+  "id": "asm.compatch.greys.megapack",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "grey_usu re-declares two buildings the `no t&r` megapack already wired into E&F's economy (E&F x Morgenroete's own ComPatch) -- building_airport and building_dubois_national_park -- with full bodies that drop that wiring silently. This puts it back. NOT for players using addon-LLWA on building_airport -- use ComPatch Grey's + addon-LLWA instead, it is the more complete fix for that record. Load after the whole Grey's pack.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3640735868",
+      "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "3371689443",
+      "display_name": "Grey's Urban Synergy Unleashed",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "3640735868",
+        "display_name": "MegaComPatch TGR + PSC + KAI + E&F + MR + PBE",
+        "version": "1.13.11.2",
+        "date": "2026-08-27"
+      },
+      {
+        "id": "3371689443",
+        "display_name": "Grey's Urban Synergy Unleashed",
+        "version": "mod declares no version",
+        "date": "2026-08-27"
+      }
+    ]
+  }
+}
