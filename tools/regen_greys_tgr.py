@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-regen_greys_tgr.py -- builds the Grey's x TGR compatch in `_greys/greys+tgr`.
+regen_greys_tgr.py -- builds the Grey's x TGR compatch in `_greys/greys+tgr done`.
 
 Pair GR.7 -- 97 shared keys, full analysis in `_greys/analysis_gr7_tgr_report.md`.
 This generator covers the pieces resolved and NOT blocked on cross-task
@@ -79,7 +79,7 @@ GREYS = res("../../vic3_mods_out/grey_add_alot_of_things")
 SOFT_POP = os.path.join(GREYS, "_grey_soft_pop")
 SOFT_ECON = os.path.join(GREYS, "_grey_soft_econ")
 TGR = res("../../vic3_mods_out/TheGreatRevision")
-OUT = res("../_greys/greys+tgr")
+OUT = res("../_greys/greys+tgr done")
 
 DATE = "2026-08-27"
 CHECK_ONLY = False
