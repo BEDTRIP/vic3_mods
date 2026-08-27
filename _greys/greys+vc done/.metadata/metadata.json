@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "ComPatch Grey's + Victorian Century",
-  "id": "asm.compatch.greys.vc",
-  "version": "1.13.11-1",
+  "id": "3791187670",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Victorian Century and Grey's mods rewrite the same records with full bodies. Grey's loads later, so with both installed VC's 60 state traits, six of its companies, its construction and subsistence methods, its private-construction gates and its own port traits all quietly stop doing anything. This puts VC's contribution back on top of Grey's bodies: Grey's wins wherever it made a real decision, VC's numbers survive where Grey's only re-stated vanilla. Since 2026-08-27 (GR.16), the six-company file also restores addon-LLWA's extension_building_types on the same six records (grey_usu drops that too, same bug) -- carries a `.off` twin for players who use addon-LLWA without VC. Load after both.",
   "picture": "thumbnail.png",

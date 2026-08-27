@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "ComPatch Grey's + HC+GoB+MoH",
-  "id": "asm.compatch.greys.hc",
-  "version": "1.13.11-1",
+  "id": "3791187490",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Grey's is a full-body REPLACE on eleven vanilla records Hail Columbia / Gates of the Bosphorus / Mandate of Heaven also touch, and shares one file path with Gates of the Bosphorus outright. Most seriously, _grey_soft_pop's defensive fallback for is_usfp_active silently switches Hail Columbia off entirely. This patch restores every dropped layer. Load after the whole Grey's pack.",
   "picture": "thumbnail.png",

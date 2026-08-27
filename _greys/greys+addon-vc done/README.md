@@ -19,8 +19,9 @@ grey_usu's own redesign of `popneed_leisure` carries an `air_travel` entry comme
 
 [h2]Load order[/h2]
 [list]
-[*]…Addon: VC x MegaComPatch…
+[*]…[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon: VC x MegaComPatch[/url]…
 [*]Grey's pack (soft_econ, soft_pop, USU, food, ranch, …)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791186618]Addon: Grey's x MegaComPatch[/url]
 [*][b]this ComPatch[/b]
 [/list]
 

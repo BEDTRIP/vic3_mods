@@ -20,8 +20,9 @@ The Grey's pack REPLACEs eleven vanilla records that Hail Columbia, Gates of the
 [h2]Load order[/h2]
 [list]
 [*]…Hail Columbia → Gates of the Bosphorus → Mandate of Heaven…
-[*]…addon-HC…
+[*]…[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790462515]Addon: HC + GoB + MoH x MegaComPatch[/url]…
 [*]Grey's pack (soft_econ, soft_pop, USU, cinosphere, food, ranch, …)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791186618]Addon: Grey's x MegaComPatch[/url]
 [*][b]this ComPatch[/b]
 [/list]
 

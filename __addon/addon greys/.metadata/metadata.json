@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "Addon: Grey's x MegaComPatch",
-  "id": "asm.addon.greys",
-  "version": "1.13.11-1",
+  "id": "3791186618",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "Compatibility addon that puts the Grey's pack (Soft Econ, Soft Pop, Urban Synergy Unleashed, Deeper Sinosphere, Food Industries Rework, Ranch Production Rework, Diplomatic Interaction Suite, Subject Interaction Suite) on top of the MegaComPatch set (The Great Revision, Private Sector Construction, Kuromi's AI, E&F, Morgenroete, Power Blocs Expanded) and addon-LLWA. Merge of eight ComPatches for this block -- PSC, PBE, E&F+Hotfix, Morgenroete, TGR, KAI, addon-LLWA, megapack no-t&r -- plus four internal fixes for bugs within the Grey's pack itself (a CMF registry flag, two cross-file field losses, a typo'd prefix), plus one internal merge file the assembly itself needs (two buildings E&F and TGR both touch, see README). Does NOT carry Victorian Century or Hail, Columbia!+GoB+MoH content: those two branches are alternatives to each other upstream of this addon, so their Grey's compatches (ComPatch Grey's + VC, ComPatch Grey's + addon-VC, ComPatch Grey's + HC+GoB+MoH) each ship separately -- load the one matching your branch right after this addon. Load this addon last, after the whole Grey's pack.",
   "picture": "thumbnail.png",

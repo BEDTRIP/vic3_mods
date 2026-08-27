@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "ComPatch Grey's + addon-VC",
-  "id": "asm.compatch.greys.addonvc",
-  "version": "1.13.11-1",
+  "id": "3791187149",
+  "version": "1.13.11.1",
   "supported_game_version": "1.13.*",
   "short_description": "grey_usu's own redesign of popneed_leisure carries an air_travel entry commented out, with a note that Morgenroete's own contribution should still apply -- it doesn't, because grey_usu's REPLACE: wipes it, and the author's own follow-up fix only restores a different good. This ComPatch restores it, read live out of addon-VC's own Morgenroete-compat file. The other three pop_needs addon-VC carries (heating, luxury_food, free_movement) and four companies are confirmed non-issues, see README. Load after the whole Grey's pack.",
   "picture": "thumbnail.png",

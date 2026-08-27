@@ -64,7 +64,7 @@ def tested(keys):
 
 DATA = {
     'name': "Addon: Grey's x MegaComPatch",
-    'id': 'asm.addon.greys',
+    'id': '3791186618',
     'version': '1.13.11-1',
     'supported_game_version': GAME,
     'short_description': (

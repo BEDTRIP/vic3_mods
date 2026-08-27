@@ -28,12 +28,13 @@ What stops working with both mods installed and no compatch:
 [*][b]VC's own 17 port traits[/b] — Grey's Soft Pop rewrites the cultural-community script and its harbour bonus still lists only the six vanilla harbours, so none of VC's ports count.
 [/list]
 
-This compatch puts VC's contribution back on top of Grey's bodies, field by field. The rule is the same everywhere: [b]Grey's wins wherever it made a real decision, VC's value survives where Grey's body only re-stated vanilla[/b]. Grey's redesigns (the river-port system, the pop-need rework, the demography defines) are left alone on purpose — they are the newer design and they are internally consistent.
+This compatch puts VC's contribution back on top of Grey's bodies, field by field. The rule is the same everywhere: [b]Grey's wins wherever it made a real decision, VC's value survives where Grey's body only re-stated vanilla[/b]. Grey's redesigns (the river-port system, the pop-need rework, the demography defines) are left alone on purpose — they are the newer design and they are internally consistent. Load this ComPatch right after [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791186618]Addon: Grey's x MegaComPatch[/url].
 
 [h2]Load order[/h2]
 [list]
 [*]Victorian Century
 [*]… the whole Grey's pack (Soft Econ, Soft Pop, USU, Deeper Cinosphere, Food, Ranch, Diplo, Subject)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791186618]Addon: Grey's x MegaComPatch[/url]
 [*][b]this ComPatch[/b]
 [/list]
 

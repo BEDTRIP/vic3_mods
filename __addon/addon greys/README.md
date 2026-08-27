@@ -14,17 +14,17 @@
 
 [h1]Addon: Grey's pack × MegaComPatch[/h1]
 
-Compatibility layer that puts the [b]Grey's pack[/b] (Soft Econ, Soft Pop, Urban Synergy Unleashed, Deeper Sinosphere, Food Industries Rework, Ranch Production Rework, Diplomatic Interaction Suite, Subject Interaction Suite) on top of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url] set and addon-LLWA. Merge of eight ComPatches for this block -- PSC, PBE, E&F+Hotfix, Morgenröte, The Great Revision, Kuromi's AI, addon-LLWA, megapack no-t&r -- plus four fixes for bugs inside the Grey's pack itself.
+Compatibility layer that puts the [b]Grey's pack[/b] (Soft Econ, Soft Pop, Urban Synergy Unleashed, Deeper Sinosphere, Food Industries Rework, Ranch Production Rework, Diplomatic Interaction Suite, Subject Interaction Suite) on top of the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3640735868]MegaComPatch[/url] set and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790590434]addon-LLWA[/url]. Merge of eight ComPatches for this block -- PSC, PBE, E&F+Hotfix, Morgenröte, The Great Revision, Kuromi's AI, addon-LLWA, megapack no-t&r -- plus four fixes for bugs inside the Grey's pack itself.
 
-Also run [b]Victorian Century[/b] or [b]Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven[/b]? Those two branches are alternatives to each other upstream of this addon (see their own addons). Grab the matching separate compatch -- [i]ComPatch Grey's + VC[/i] (plus [i]ComPatch Grey's + addon-VC[/i] if you also run that addon) for the VC branch, or [i]ComPatch Grey's + HC+GoB+MoH[/i] for the HC branch -- and load it right after this addon. This addon itself carries no VC or HC content, on purpose.
+Also run [b]Victorian Century[/b] or [b]Hail, Columbia! + Gates of the Bosphorus + Mandate of Heaven[/b]? Those two branches are alternatives to each other upstream of this addon (see their own addons: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790297983]Addon: Victorian Century x MegaComPatch[/url] / [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790462515]Addon: HC + GoB + MoH x MegaComPatch[/url]). Grab the matching separate compatch -- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791187670]ComPatch Grey's + VC[/url] (plus [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791187149]ComPatch Grey's + addon-VC[/url] if you also run that addon) for the VC branch, or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791187490]ComPatch Grey's + HC+GoB+MoH[/url] for the HC branch -- and load it right after this addon. This addon itself carries no VC or HC content, on purpose.
 
 [h2]Load order[/h2]
 [list]
 [*]the whole MegaComPatch set, in its own order
-[*]addon-LLWA (LLWA + its own compatches)
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3790590434]addon-LLWA[/url] (LLWA + its own compatches)
 [*]the Grey's pack (soft_econ, soft_pop, usu, cinosphere, food, ranch, diplo, subject)
 [*][b]this addon[/b]
-[*]then, only in your branch: ComPatch Grey's + VC / + addon-VC, or ComPatch Grey's + HC+GoB+MoH
+[*]then, only in your branch: [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791187670]ComPatch Grey's + VC[/url] / [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791187149]+ addon-VC[/url], or [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3791187490]ComPatch Grey's + HC+GoB+MoH[/url]
 [/list]
 
 [h2]What it fixes[/h2]
@@ -45,7 +45,7 @@ Also run [b]Victorian Century[/b] or [b]Hail, Columbia! + Gates of the Bosphorus
 [*]Carries no Victorian Century or Hail, Columbia!+GoB+MoH content -- see above.
 [*]Adds no goods. The set stays at 74 of the 128 ceiling.
 [/list]
-if you need some separate compatch you can check [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
+if you need any separate compatch grey's with any mod in pack you can check [url=https://github.com/BEDTRIP/vic3_mods]my github[/url]
 
 ---
 
