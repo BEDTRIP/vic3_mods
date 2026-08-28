@@ -1,0 +1,127 @@
+# !! HOTFIX !!
+# Чинит joi_flavor_chi.29: create_pop без явного pop_type создавал мигрантов
+# без базовой страты — движок разрешал им уровень жизни от чего-то, кроме
+# 'laborers' (наблюдалось: SoL 100 у созданных попов, ломает экономику
+# принимающего штата). Добавлено явное pop_type = laborers в оба create_pop.
+#
+# Это ПОЛНОЕ тело события — событие переопределяется голым ключом без
+# префикса, порядок решает не имя файла, а позиция МОДА в плейсете.
+# Хотфикс должен грузиться ПОСЛЕ мода с оригинальным joi_flavor_chi.29.
+
+joi_flavor_chi.29 = {#с Китаем的劳工合同
+	type = country_event
+	title = joi_flavor_chi.29.t
+	desc = joi_flavor_chi.29.d
+	flavor = joi_flavor_chi.29.f
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	dlc = dlc_vc
+
+	event_image = {
+		video = "asia_poor_people_moving"
+	}
+
+	duration = 3
+
+	trigger = {
+	}
+
+	immediate = {
+		c:CHI = {
+			save_scope_as = chinese_labor_country
+		}
+		random_scope_state = {
+			limit = {
+				state_is_eligible_as_mass_migration_target = yes
+				free_arable_land > 50
+				is_incorporated = yes
+				NOR = { 
+					has_modifier = british_raj_populaion_growth_modifier 
+					has_modifier = african_population_growth_modifier 
+				}
+			}
+			save_scope_as = chinese_labor_target_state
+		}
+	}
+
+	option = {
+		
+		name = joi_flavor_chi.29.a
+		default_option = yes
+
+		ai_chance = {
+			base = 10
+			modifier = {
+				trigger = {
+					c:BRZ ?= this
+				}
+				add = -100
+			}
+		}
+
+		custom_tooltip = {
+		text = accept_labor_agreement_tt
+		set_variable = { name = accept_labor_agreement months = 1 }
+		}
+		scope:chinese_labor_target_state = {
+			hidden_effect = {
+				create_pop = {
+					culture = han
+					pop_type = laborers # HOTFIX: было без pop_type, попы наследовали не тот уровень жизни
+					size = 250000
+				}
+			}
+			create_mass_migration = {
+				origin = scope:chinese_labor_country
+				culture = cu:han
+			} 
+			add_acceptance = {
+				target = cu:han
+				value = 25
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						c:BRZ ?= THIS 
+						c:UNL ?= THIS 
+						c:NET ?= THIS 
+					}
+				}
+				scope:chinese_labor_target_state = {
+					create_pop = {
+						culture = han
+						pop_type = laborers # HOTFIX: аналогично второму create_pop
+						size = 1000000
+					}
+				}
+			}
+		}
+		add_modifier = { name = accept_labor_agreement_modifier years = 5 }
+		c:CHI = {
+			add_modifier = { name = benifits_labor_agreement_modifier years = 5 }
+		}
+	}
+
+	option = {
+
+		name = joi_flavor_chi.29.b
+
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					in_default = yes
+				}
+				add = 100
+			}
+		}
+
+		custom_tooltip = {
+		text = refuse_labor_agreement_tt
+		set_variable = { name = refuse_labor_agreement months = 1 }
+		}
+	}
+}
