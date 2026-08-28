@@ -2322,7 +2322,7 @@ increase_opium_month_release:0 "Увеличить срок высвобожде
 reduce_opium_month_release:0 "Уменьшить срок высвобождения"
 
 
-  you_must_have_the_technology_stockpiling_goods:0 "Вам необходима технология «Складирование товаров»"
+  you_must_have_the_technology_stockpiling_goods:0 "Необходима технология «Складирование товаров»"
 
   stockpile_panel_overview_section:0 "Товары, находящиеся в запасе"
 

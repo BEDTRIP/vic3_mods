@@ -1,7 +1,7 @@
 ﻿l_russian:
  state_building_construction_sector_max_level_add:1 "Лимит $state_construction_mult$ у $building_construction_sector$"
  state_building_construction_sector_max_level_add_desc:1 "Бонус или штраф к лимиту $state_construction_mult$ для зданий $building_construction_sector$."
- country_private_construction_allocation_add: "Корректировка фактического использования частных строительных ассигнований"
+ country_private_construction_allocation_add: "Корректировка использования частных строительных ассигнований"
  country_private_construction_allocation_add_desc: "Изменяет очередь строительства, распределяя очки пропорционально суммам расходов"
  construction_throughput_mult: "Множитель спроса на строительство в штате"
  state_construction_efficiency_increase: "Повышение эффективности строительства в штате от строительного сектора"

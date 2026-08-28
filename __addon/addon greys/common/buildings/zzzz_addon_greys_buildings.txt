@@ -27,7 +27,7 @@
 # either group; a failed assert means one of the two pairs changed shape and
 # the merge needs a fresh look, not a silent re-run.
 
-# building_food_industry -- TGR (building_group restore), plus E&F's production_method_groups folded in
+# building_food_industry -- TGR (building_group restore) -- TEST: E&F groups NOT re-added, diagnosing a reported in-game double
 REPLACE_OR_CREATE:building_food_industry = {
 	building_group = bg_consumer_goods
 	icon = "gfx/interface/icons/building_icons/food_industry.dds"
@@ -45,8 +45,6 @@ REPLACE_OR_CREATE:building_food_industry = {
 		pmg_canning
 		pmg_preservation
 		pmg_distillery
-		pmg_market_liquidity	# E&F
-		pmg_private_ownership_manufacture_stock	# E&F
 	}
 
 	required_construction = construction_cost_high
@@ -55,7 +53,7 @@ REPLACE_OR_CREATE:building_food_industry = {
 	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_light_industry.dds"
 }
 
-# building_trade_center -- TGR (has_max_level restore), plus E&F's production_method_groups folded in
+# building_trade_center -- TGR (has_max_level restore) -- TEST: E&F groups NOT re-added, diagnosing a reported in-game double
 REPLACE_OR_CREATE:building_trade_center = {
 	building_group = bg_trade
 	city_type = city
@@ -73,8 +71,6 @@ REPLACE_OR_CREATE:building_trade_center = {
 		pmg_base_building_trade_center
 		pmg_trade_center_port_status
 		pmg_trade_quantity_trade_center
-		pmg_market_liquidity	# E&F
-		pmg_private_ownership_manufacture_stock	# E&F
 	}
 
 	can_build_government = {
@@ -148,28 +144,4 @@ REPLACE_OR_CREATE:building_trade_center = {
 	}
 	
 	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds"
-}
-
-# building_livestock_ranch -- E&F only, no other compatch touches this record, carried over verbatim
-TRY_INJECT:building_livestock_ranch = {
-	production_method_groups = {
-		pmg_market_liquidity
-		pmg_private_ownership_agricultural_stock
-	}
-}
-
-# building_port -- E&F only, no other compatch touches this record, carried over verbatim
-TRY_INJECT:building_port = {
-	production_method_groups = {
-		pmg_market_liquidity
-		pmg_private_ownership_manufacture_stock
-	}
-}
-
-# building_power_plant -- E&F only, no other compatch touches this record, carried over verbatim
-TRY_INJECT:building_power_plant = {
-	production_method_groups = {
-		pmg_market_liquidity
-		pmg_private_ownership_manufacture_stock
-	}
 }

@@ -64,6 +64,20 @@ MERGED_BUILDINGS = [
 # file can still be excluded from the plain per-compatch copy as one unit.
 EF_ONLY_BUILDINGS = ['building_livestock_ranch', 'building_port', 'building_power_plant']
 
+# TEMP DIAGNOSTIC TEST (chat 2026-08-28): in-game, both buildings showed E&F's
+# private-ownership group applying TWICE (double upkeep, double stock output),
+# even off a verified-clean local build with no duplicate mods in the playset.
+# Hypothesis: raw E&F is ALSO separately, directly enabled in the playset (not
+# just folded into megapack/the compatches) -- its own native INJECT: on these
+# five buildings may survive Grey's later REPLACE_OR_CREATE: untouched if Vic3
+# unions list-type sub-fields like production_method_groups across mods instead
+# of clearing them, in which case OUR restoration here is a second, redundant
+# copy of the same group. TEST_SKIP_EF_GROUPS=True builds addon-Grey's WITHOUT
+# re-adding E&F's groups at all, to see whether the building still shows them
+# once (hypothesis confirmed -- remove this restoration for good) or not at all
+# (hypothesis wrong -- REPLACE_OR_CREATE: really does clear them, revert this).
+TEST_SKIP_EF_GROUPS = True
+
 
 def pmg_list(body):
     """Bare group names inside a production_method_groups sub-block, in order."""
@@ -113,16 +127,21 @@ def build(repo):
         overlap = set(ef_groups) & set(tgr_groups)
         assert not overlap, '%s: E&F group already present in TGR body: %s' % (key, overlap)
 
-        merged = insert_groups(tgr_decl, ef_groups)
+        if TEST_SKIP_EF_GROUPS:
+            merged = tgr_decl
+            note = label + ' -- TEST: E&F groups NOT re-added, diagnosing a reported in-game double'
+        else:
+            merged = insert_groups(tgr_decl, ef_groups)
+            note = label + ', plus E&F\'s production_method_groups folded in'
         assert V.brace_balance(merged) == 0, '%s: merge produced unbalanced braces' % key
-        chunks.append('# %s -- %s, plus E&F\'s production_method_groups folded in\n%s'
-                       % (key, label, merged))
+        chunks.append('# %s -- %s\n%s' % (key, note, merged))
 
-    for key in EF_ONLY_BUILDINGS:
-        ef_decl, ef_body = V.entry(ef_text, key, 'TRY_INJECT:')
-        assert V.brace_balance(ef_decl) == 0, '%s: source declaration has unbalanced braces' % key
-        chunks.append('# %s -- E&F only, no other compatch touches this record, carried over verbatim\n%s'
-                       % (key, ef_decl))
+    if not TEST_SKIP_EF_GROUPS:
+        for key in EF_ONLY_BUILDINGS:
+            ef_decl, ef_body = V.entry(ef_text, key, 'TRY_INJECT:')
+            assert V.brace_balance(ef_decl) == 0, '%s: source declaration has unbalanced braces' % key
+            chunks.append('# %s -- E&F only, no other compatch touches this record, carried over verbatim\n%s'
+                           % (key, ef_decl))
 
     header = (
         "# addon-Grey's only -- this file is in NEITHER of the two compatches it merges.\n"
