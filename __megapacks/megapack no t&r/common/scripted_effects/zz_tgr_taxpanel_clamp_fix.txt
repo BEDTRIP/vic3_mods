@@ -1,0 +1,253 @@
+﻿### ComPatch: The Great Revision -- tax panel clamp fix
+###
+### Что чинит. TGR переписывает бюджетную панель: пять независимых налогов
+### (земельный, подушный, потребительский, подоходный, на дивиденды) живут
+### переменными tgr_*_tax, а на страну вешаются одноимённые модификаторы с
+### multiplier = значение переменной. Потолок каждого налога задаёт текущий
+### налоговый закон (script value calculate_max_*_tax_level).
+###
+### В tgr_set_max_taxation_effect автор написал потолок так:
+###
+###     change_variable = { name = tgr_land_tax  min = calculate_max_land_tax_level }
+###
+### то есть НИЖНЮЮ границу вместо верхней -- и то же самое во всех пяти
+### налогах. Плюс на кнопках "-" в common/scripted_guis/TGR_TAX_PANEL_*_sguis.txt
+### стоит зеркальная опечатка `max = 0` там, где имелось в виду `min = 0`.
+###
+### Фактически ни один из этих клампов не срабатывает вообще: change_variable
+### без операции (add/subtract/multiply/divide) игнорирует min/max, ваниль для
+### ограничения везде пользуется clamp_variable. Проверено по автосейвам партии
+### 1836-1840: земельный налог шёл 1.5 -> 1.75 -> 2.0 ровно шагами кнопки
+### +0.25, ни разу не подтянувшись к потолку 3 и ни разу не обнулившись.
+###
+### Что из этого следует в игре -- две вещи, обе молча:
+###   1. Потолок по закону не применяется НИКОГДА. Кнопками +0.5 / +1.0 его
+###      можно перешагнуть: единственная блокировка -- is_valid на точное
+###      равенство (NOT = { var:x = calculate_max_*_level }), а шагом 0.5 или
+###      1.0 в это равенство можно не попасть и крутить дальше без предела.
+###   2. Смена налогового закона на тот, где потолок ниже (например с
+###      земельного налогообложения, где земельный максимум 3, на прогрессивное,
+###      где он 0), НЕ опускает уже выставленную ставку -- модификатор
+###      продолжает висеть со старым множителем.
+###
+### Ставка тут не косметическая. Ванильные максимумы этих же модификаторов
+### (game/common/laws/01_taxation.txt, уровень "очень высокие налоги"):
+### tax_land_add = 1.00, tax_consumption_add = 0.35. Потолки TGR -- 3 и 0.75,
+### то есть втрое и вдвое выше всего, что игра выдаёт сама. Страна, доехавшая
+### до земельного 3 + потребительского 0.75, кладёт крестьянство: подушные
+### 44 % + потребительские 145 % от дохода низшего класса, SoL валится,
+### появляются нищие.
+###
+### Как чинится. Тело tgr_set_max_taxation_effect переиздано целиком через
+### REPLACE_OR_CREATE: (простой повтор ключа для scripted_effects НЕ
+### переопределяет -- нужен префикс). Пять нерабочих change_variable заменены
+### на явные if + set_variable, которые обрезают переменную сверху потолком
+### закона и снизу нулём. Всё остальное тело -- дословно TGR.
+###
+### Эффект зовётся из TGR_TAX_PANEL_on_tax_law_change.txt на on_law_activated
+### (любой закон, не только налоговый) и на on_half_yearly_pulse_country, и
+### только для игрока -- у ИИ своя ветка tgr_set_taxation_effect, её не трогаем.
+### Значит после этого фикса перебор гасится при следующем принятом законе или
+### на ближайшем полугодовом пульсе, что наступит раньше. Сами кнопки панели
+### по-прежнему не ограничивают шаг -- лечить их значит переиздать тридцать
+### scripted_gui (пять налогов x шесть кнопок) ради того же результата с
+### задержкой до полугода; сочтено несоразмерным. Если решим лечить и их --
+### это отдельный файл, не этот.
+###
+### !! MAINTENANCE !! Тело выведено из
+### TheGreatRevision/common/scripted_effects/TGR_TAX_PANEL_scripted_effects.txt
+### (TGR 2.0, 12.08.2026), функция tgr_set_max_taxation_effect, строки 176-272.
+### Изменены ровно первые пять блоков; блоки применения модификаторов
+### скопированы дословно. После обновления TGR сверить тело заново: если автор
+### поправил min -> max сам, файл удалить целиком, а не оставлять копию.
+### Проверять и то, не появился ли шестой налог.
+
+REPLACE_OR_CREATE:tgr_set_max_taxation_effect = {
+    # --- потолок закона сверху и ноль снизу (было: change_variable { min = ... }) ---
+    if = {
+        limit = {
+            has_variable = tgr_land_tax
+            var:tgr_land_tax > calculate_max_land_tax_level
+        }
+        set_variable = {
+            name = tgr_land_tax
+            value = calculate_max_land_tax_level
+        }
+    }
+    if = {
+        limit = {
+            has_variable = tgr_land_tax
+            var:tgr_land_tax < 0
+        }
+        set_variable = {
+            name = tgr_land_tax
+            value = 0
+        }
+    }
+
+    if = {
+        limit = {
+            has_variable = tgr_per_capita_tax
+            var:tgr_per_capita_tax > calculate_max_per_capita_tax_level
+        }
+        set_variable = {
+            name = tgr_per_capita_tax
+            value = calculate_max_per_capita_tax_level
+        }
+    }
+    if = {
+        limit = {
+            has_variable = tgr_per_capita_tax
+            var:tgr_per_capita_tax < 0
+        }
+        set_variable = {
+            name = tgr_per_capita_tax
+            value = 0
+        }
+    }
+
+    if = {
+        limit = {
+            has_variable = tgr_consumption_tax
+            var:tgr_consumption_tax > calculate_max_consumption_tax_level
+        }
+        set_variable = {
+            name = tgr_consumption_tax
+            value = calculate_max_consumption_tax_level
+        }
+    }
+    if = {
+        limit = {
+            has_variable = tgr_consumption_tax
+            var:tgr_consumption_tax < 0
+        }
+        set_variable = {
+            name = tgr_consumption_tax
+            value = 0
+        }
+    }
+
+    if = {
+        limit = {
+            has_variable = tgr_income_tax
+            var:tgr_income_tax > calculate_max_income_tax_level
+        }
+        set_variable = {
+            name = tgr_income_tax
+            value = calculate_max_income_tax_level
+        }
+    }
+    if = {
+        limit = {
+            has_variable = tgr_income_tax
+            var:tgr_income_tax < 0
+        }
+        set_variable = {
+            name = tgr_income_tax
+            value = 0
+        }
+    }
+
+    if = {
+        limit = {
+            has_variable = tgr_dividends_tax
+            var:tgr_dividends_tax > calculate_max_dividends_tax_level
+        }
+        set_variable = {
+            name = tgr_dividends_tax
+            value = calculate_max_dividends_tax_level
+        }
+    }
+    if = {
+        limit = {
+            has_variable = tgr_dividends_tax
+            var:tgr_dividends_tax < 0
+        }
+        set_variable = {
+            name = tgr_dividends_tax
+            value = 0
+        }
+    }
+
+    # --- дальше дословно TGR: снять и повесить модификаторы заново ---
+    set_local_variable = {
+        name = tgr_land_tax_temp
+        value = var:tgr_land_tax
+    }
+
+    if = {
+        limit = {
+            has_modifier = tgr_land_tax
+        }
+        remove_modifier = tgr_land_tax
+    }
+    add_modifier = {
+        name = tgr_land_tax
+        multiplier = local_var:tgr_land_tax_temp
+    }
+
+    set_local_variable = {
+        name = tgr_per_capita_tax_temp
+        value = var:tgr_per_capita_tax
+    }
+
+    if = {
+        limit = {
+            has_modifier = tgr_per_capita_tax
+        }
+        remove_modifier = tgr_per_capita_tax
+    }
+    add_modifier = {
+        name = tgr_per_capita_tax
+        multiplier = local_var:tgr_per_capita_tax_temp
+    }
+
+    set_local_variable = {
+        name = tgr_consumption_tax_temp
+        value = var:tgr_consumption_tax
+    }
+
+    if = {
+        limit = {
+            has_modifier = tgr_consumption_tax
+        }
+        remove_modifier = tgr_consumption_tax
+    }
+    add_modifier = {
+        name = tgr_consumption_tax
+        multiplier = local_var:tgr_consumption_tax_temp
+    }
+
+    set_local_variable = {
+        name = tgr_income_tax_temp
+        value = var:tgr_income_tax
+    }
+
+    if = {
+        limit = {
+            has_modifier = tgr_income_tax
+        }
+        remove_modifier = tgr_income_tax
+    }
+    add_modifier = {
+        name = tgr_income_tax
+        multiplier = local_var:tgr_income_tax_temp
+    }
+
+    set_local_variable = {
+        name = tgr_dividends_tax_temp
+        value = var:tgr_dividends_tax
+    }
+
+    if = {
+        limit = {
+            has_modifier = tgr_dividends_tax
+        }
+        remove_modifier = tgr_dividends_tax
+    }
+    add_modifier = {
+        name = tgr_dividends_tax
+        multiplier = local_var:tgr_dividends_tax_temp
+    }
+
+}
