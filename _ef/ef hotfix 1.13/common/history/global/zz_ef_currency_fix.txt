@@ -53,27 +53,5 @@ GLOBAL = {
 			activate_law = law_type:law_no_market_liquidity
 		}
 
-
-		########################################################################
-		# 4. Initial local_currency grant.
-		#    E&F's flat 2500 is disabled at the source, so without this block a
-		#    country would sit with no currency at all for the whole first
-		#    month: the game spreads on_monthly_pulse_country across the days
-		#    of the month.
-		#
-		#    The condition may well not fire: E&F applies no_money_production
-		#    from its own pulse, and it may not be there yet when history runs.
-		#    In that case nothing happens here and the pulse does the work.
-		########################################################################
-		if = {
-			limit = {
-				zz_ef_local_currency_needs_throttle = yes
-				zz_ef_local_currency_per_state > 0
-			}
-			add_modifier = {
-				name = zz_ef_local_currency_fix
-				multiplier = zz_ef_local_currency_per_state
-			}
-		}
 	}
 }

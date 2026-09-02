@@ -1,5 +1,4 @@
-﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
-### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+﻿### E&F Compat -- hand-maintained (was generated; generator retired 02.09.2026, see EF.6).
 ###
 ### Source: the 98 bank companies E&F itself lists in private_bank_type,
 ### ordered by CENTRAL_BANK_COMPANY -- see historical_central_banks in the
@@ -14,7 +13,7 @@
 ###
 ###   the three regime currencies -- E&F's own prestige goods are left in place;
 ###   they sit on other base goods (manufacture_stock and friends) and never
-###   compete with the three currencies, which all share spe_uni_c.
+###   compete with the three currencies, which all share liquidity_currency.
 ###
 ### INJECT:, which can only add, and that is now enough. For one round this file
 ### was 98 REPLACE: blocks carrying E&F's full definitions, in order to strip

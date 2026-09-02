@@ -1,5 +1,4 @@
-﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
-### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+﻿### E&F Compat -- hand-maintained (was generated; generator retired 02.09.2026, see EF.6).
 ###
 ### Source: E&F's own common/buildings/ef_15_bank.txt, one field changed:
 ###   ownership_type = no_ownership  ->  ownership_type = self

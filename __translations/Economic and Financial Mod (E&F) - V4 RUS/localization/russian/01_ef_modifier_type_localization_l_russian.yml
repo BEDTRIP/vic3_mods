@@ -781,6 +781,11 @@
   goods_input_spe_peseta_c_mult:0 "Множитель потребления песеты"
   goods_output_spe_peseta_c_mult:0 "Множитель производства песеты"
 
+  goods_output_liquidity_currency_add:0 "Производство базовых денег"
+  goods_input_liquidity_currency_add:0 "Потребление базовых денег"
+  goods_output_liquidity_currency_add_desc:0 "Множитель производства базовых денег"
+  goods_input_liquidity_currency_add_desc:0 "Множитель потребления базовых денег"
+
   goods_output_spe_ruble_c_add:0 "Производство рубля"
   goods_input_spe_ruble_c_add:0 "Потребление рубля"
   goods_input_spe_ruble_c_mult:0 "Множитель потребления рубля"

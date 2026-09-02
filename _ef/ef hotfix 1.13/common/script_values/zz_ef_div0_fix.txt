@@ -214,8 +214,8 @@ REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
 #
 # WHAT THE NUMBER IS, because two wrong fixes came out of misreading it.
 # base_demande_currency_fix is scope:central_bank_scope.modifier:
-# goods_output_spe_uni_c_add -- the flat part of the bank's output, which is the
-# production method's `goods_output_spe_uni_c_add = 1` workforce-scaled. On a level
+# goods_output_liquidity_currency_add -- the flat part of the bank's output, which is the
+# production method's `goods_output_liquidity_currency_add = 1` workforce-scaled. On a level
 # 20 bank that is about 27. The value computed here is fed straight into
 # `add_modifier = { name = currency_demande multiplier = ... }`, and currency_demande
 # is a MULT. So to take a bank from 27 units to Britain's 100K, the number has to be

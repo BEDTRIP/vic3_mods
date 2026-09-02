@@ -1,5 +1,6 @@
-﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
-### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+﻿### E&F Compat -- hand-maintained (was generated; generator retired 02.09.2026, see EF.6).
+### base_good retargeted from spe_uni_c to liquidity_currency after author's own
+### currency merge (E&F update 02.09.2026), see EF.1/EF.4.
 ###
 ### Three prestige variants of the shared currency good, one per monetary
 ### regime. Every central bank company carries all three; the good's own
@@ -33,7 +34,7 @@ zz_ef_cm_representative_currency = {
 			has_law = law_type:law_bimetallism_standard
 		}
 	}
-	base_good = spe_uni_c
+	base_good = liquidity_currency
 	prestige_bonus = 0.1
 	texture = "gfx/interface/icons/goods_icons/currencies/zz_ef_cm_representative_currency.dds"
 }
@@ -45,7 +46,7 @@ zz_ef_cm_pegged_currency = {
 			has_law = law_type:law_external_exchange_standard
 		}
 	}
-	base_good = spe_uni_c
+	base_good = liquidity_currency
 	prestige_bonus = 0.1
 	texture = "gfx/interface/icons/goods_icons/currencies/zz_ef_cm_pegged_currency.dds"
 }
@@ -54,7 +55,7 @@ zz_ef_cm_fiat_currency = {
 	possible = {
 		has_law = law_type:law_fiat_standard
 	}
-	base_good = spe_uni_c
+	base_good = liquidity_currency
 	prestige_bonus = 0.1
 	texture = "gfx/interface/icons/goods_icons/currencies/spe_uni.dds"
 }

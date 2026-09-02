@@ -53,12 +53,11 @@
   EF_silver_gui_stack: "#v [GetPlayer.MakeScope.ScriptValue('EF_silver_gui_stack')] #!стек по #v 500M #!@silver!"
   EF_silver_gui_room: "Серебро хранится в #v [GetPlayer.MakeScope.ScriptValue('EF_silver_gui_room')] #! хранилищах"
 
-
-
-
-
-
-
+  national_currency: "Национальная валюта"
+  currency_name_p: "Валюта"
+  currency_symbol_p: "Символ"
+  currency_good_p: "Товар-валюта"
+  currency_ISO_p: "Код валюты"
 
 
 
@@ -737,6 +736,8 @@ alert_fso_alert_name:0 "Доступно действие в Управлени�
   gold_exchange_standard_name:0 "Золотой обменный стандарт"
 
   politic_monetary_systeme:0 "@politic_monetary_systeme! Денежная система"
+
+  liquidity_currency_texticon:0 "@liquidity_currency!"
 
   #icon
   fiat_standard_01_monetary_systeme_icon:0 "[Localize('fiat_standard_texticon')]"

@@ -1,5 +1,4 @@
-﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
-### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+﻿### E&F Compat -- hand-maintained (was generated; generator retired 02.09.2026, see EF.6).
 ###
 ### Source: E&F's own common/scripted_triggers/00_ef_custom_trigger.txt.
 ### The trigger lists every currency good by key, and the ones we remove would be
@@ -12,6 +11,6 @@
 
 REPLACE_OR_CREATE:market_goods_is_currency = {
 	OR = {
-		goods = g:spe_uni_c
+		goods = g:liquidity_currency
 	}
 }

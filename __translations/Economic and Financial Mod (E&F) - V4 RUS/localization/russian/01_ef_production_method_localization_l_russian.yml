@@ -209,12 +209,22 @@
   pm_currency_thaler_saxon_thaler_currency:0 "Саксонский талер"
 
   ################################
+  ## Private ownership PM :
+  ################################
+
+  pmg_private_ownership_manufacture_stock:0 "Частная собственность"
+  pmg_private_ownership_agricultural_stock:0 "Частная собственность"
+  pmg_private_ownership_mining_stock:0 "Частная собственность"
+  pmg_private_ownership_railway_stock:0 "Частная собственность"
+
+  ################################
   ## Industry market liquidity PM :
   ################################
 
   pmg_market_liquidity:0 "Рыночная ликвидность"
 
   pm_no_market_liquidity:0 "Нет рыночной ликвидности"
+  pm_market_liquidity_currency:0 "Рыночная ликвидность"
 
 
   # Dinar
@@ -397,6 +407,7 @@
   pm_reserve_currency_bank_money_currency:0 "Резервная валюта"
 
   pm_no_currency_type:0 "Нет выпускаемой валюты"
+  pm_currency_liquidity_currency:0 "Выпуск национальной валюты"
 
   pm_revaluation_25:0 "Ревальвация 25%"
   pm_revaluation_50:0 "Ревальвация 50%"

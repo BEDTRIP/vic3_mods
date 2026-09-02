@@ -1,5 +1,4 @@
-﻿### E&F Currency Merge -- GENERATED FILE, DO NOT EDIT
-### Rebuild with tools/regen_ef_currency_merge.py after any E&F or hotfix update.
+﻿### E&F Compat -- hand-maintained (was generated; generator retired 02.09.2026, see EF.6).
 ###
 ### on_actions are additive across mods -- E&F, T&R and the Morgenroete
 ### compatch all append to on_monthly_pulse_country and so does this.
