@@ -5,7 +5,7 @@
 статус: собран
 версии: —
 позиция: —
-файлов: 27
+файлов: 26 (25 по четырём парам + 1 отключение собственного бага VC, joi_flavor_chi29)
 генератор: tools/regen_addon_vc.py
 зависит от: —
 -->
@@ -60,6 +60,7 @@ It is a merge of four pair compatches kept separately in the repository, plus on
 | `_vc/ef+vc done` | VC x E&F (+ Hotfix) | 4 files |
 | `_vc/morg+vc done` | VC x Morgenroete | 3 files |
 | `_vc/kai+vc done` | VC x Kuromi's AI | 1 file |
+| `_vc/vc joi_flavor_chi29 done` | VC (собственный баг, не пара) | 1 file |
 | `_vc/psc+vc noneed` | VC x Private Sector Construction | **no file — confirmed `noneed` (VC.5)** |
 | `_vc/pbe+vc noneed` | VC x Power Blocs Expanded | **no file — confirmed `noneed` (VC.6)** |
 
@@ -123,6 +124,33 @@ Copied into one mod as three separate files, they sort `zz_vc_ef_buy_packages.tx
 Section 8 of the working rules calls this "two compatches `REPLACE:` the same record, each for its own line" and prescribes one file, loaded last, carrying the merged body. `tools/regen_addon_vc.py` generates exactly that: `common/buy_packages/zzzz_addon_vc_buy_packages.txt`, TGR's body with E&F's and Morgenroete's fields appended into the same `goods` sub-block. All three restorations survive together, regardless of file name order. It is generated fresh every time `tools/build_addon_vc.py` runs — there is no separate command to remember, and no way for it to go stale relative to the three pair compatches it reads from.
 
 No field-name collisions exist between the three sources for any of the 99 records (verified programmatically, not sampled), so the merge is a plain concatenation into each record's `goods` block, not a judgement call.
+
+## joi_flavor_chi.29 disabled -- Victorian Century's own event, not a compatibility issue
+
+`events/zzz_joi_flavor_chi_29_fix.txt` isn't a merge against another mod -- it's a
+fix for a bug inside Victorian Century itself, the same shape as `tgr taxpanel fix
+done` is for The Great Revision. VC's China flavor event `joi_flavor_chi.29`
+("Labor Contract with China", reachable from a topbar button several colonial
+powers get) creates a migrant pop with Standard of Living 100 in the receiving
+state -- wrecking its economy outright, reliably around year 4 of every game.
+
+Two lighter fixes were tried and both failed in actual play:
+
+* **`trigger = { always = no }`** does nothing -- the event is fired directly by
+  name (`common/scripted_buttons/joi_china_buttons.txt`, `trigger_event = { id =
+  joi_flavor_chi.29 }`, 15 call sites), and a direct call never checks an event's
+  own `trigger` field; that field only gates pool/pulse selection.
+* **An explicit `pop_type = laborers` on both `create_pop` calls** does not fix
+  the SoL 100 symptom either -- confirmed in-game 30.08.2026. Whatever actually
+  sets a freshly created pop's SoL here isn't the missing pop_type; the real
+  mechanism is still unknown.
+
+Since the cause isn't pinned down but the symptom is both 100% reproducible and
+economy-breaking, this disables the event's game effects outright: the popup,
+its flavor text and both options still show exactly as VC wrote them, but
+neither option creates a pop, starts a migration, or grants a modifier anymore.
+Source, full writeup and the maintenance note for if VC ever fixes this itself
+-- `_vc/vc joi_flavor_chi29 done`.
 
 ## Open questions carried over from the pair compatches
 

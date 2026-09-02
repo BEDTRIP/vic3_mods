@@ -1,6 +1,6 @@
 # аддон-HC (HC + GoB + MoH)
 
-Закрыто. Перенесено из `Архив задач.md` 26.08.2026.
+Закрыто. Перенесено из `Архив задач.md` 26.08.2026, дополнено HC.12 (перенесено из плана 30.08.2026). Итог: 15 файлов, `ALL CHECKS PASS`.
 
 
 Собран 24–25.08.2026. После удаления T&R из шести пар остаётся четыре: TGR, Morgenrote, VC и KAI.
@@ -64,6 +64,13 @@
 - [x] **HC.9 Проверка в игре.** `role` рядом с `executive_usage` / `agitator_usage` у Крайслера и Твена — конструкции нет ни в ванили, ни у обоих авторов. Смотреть, не спавнятся ли персонажи дважды и не ругается ли `debug.log` на `PostValidate`. Единственное, что нельзя закрыть с диска.
 - [x] **HC.10 Письма авторам.** GoB — заглушка `gaudi_capital_expansion_level_4_modifier` гасит настоящий модификатор; MoH — `moh_rural_folk.txt` инжектит до-1.13 тело ванили и в `achievement_groups.txt` нет `achievement_exactly_100`; TGR — `TGR_ADJUSTMENTS_oregon.txt` копия старой ванили с `months = normal_modifier_time` (152 года вместо пяти).
 - [x] **HC.11 Публикация.** BBCode готов в README, id мастерской нет.
+- [x] **HC.12 × E&F — три новых приватных здания HC и GoB вне экономики E&F. `noneed` для пары снят. Закрыто 26.08.2026.** Компач — `_HC+GoB+MoH/hc+ef done`, генератор — `tools/regen_hc_ef.py`. **4 файла, самопроверка `0 problem(s)`, `--check` сходится.** Все три получили `pmg_market_liquidity` + `pmg_private_ownership_agricultural_stock`; выбор категории не на глаз — у самого E&F в агрокатегории уже лежат `building_logging_camp`, `building_fishing_wharf`, `building_whaling_station` рядом с плантациями и ранчо. Дыра перепроверена тем же прогоном `content_holes.py --only registry`, который её нашёл: HC и GoB из выдачи ушли.
+  * `building_usfp_fur_trapper` и `usfp_hippo_ranch` (Hail, Columbia!), `gbbf_building_esparto_plantation` (Gates of the Bosphorus) — все `ownership_type = self`, итоговое тело в цепочке без `pmg_market_liquidity` и без единой `pmg_private_ownership_*`.
+  * Проверено грепом: ни E&F, ни хотфикс, ни мегапак, ни сам аддон-HC не упоминают эти имена **ни разу**.
+  * Ни одна компания набора их тоже не знает — но это вкусовщина, а не потеря (ср. LLWA.8).
+  * Прецеденты и форма — `_ef/ef+morg done`, `_llwa/llwa+ef done`, объём тут меньше: три здания.
+  * **`build_addon1.py` заодно починен:** он собирал в `__addon/addon1 hc+gob+moh`, а папка давно называется `addon hc+gob+moh` — то есть скрипт писал мимо. Плюс в `PAIRS` добавлен `hc+ef done` и записано, почему там нет `hc+vc done`.
+  * **Не тронуто:** ни одна компания набора этих трёх зданий не знает — это раздача, а не потеря, решается отдельно, как LLWA.8.
 
 ### Не делать в аддоне-HC
 

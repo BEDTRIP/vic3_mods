@@ -1,0 +1,46 @@
+{
+  "name": "Fix: Victorian Century - Chinese Labor Agreement Event Disabled",
+  "id": "asm.compatch.vc.joiflavorchi29",
+  "version": "1.13.11-1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Victorian Century's China event joi_flavor_chi.29 ('Labor Contract with China', triggered from a topbar button available to several colonial powers) creates migrant pops with Standard of Living 100 -- wrecking the receiving state's economy every playthrough, around year 4. An explicit pop_type on the created pops did not fix it (tested in-game). Disables the event's game effects entirely -- the popup and its two options still show, but neither creates pops, migration, or modifiers anymore. Load after Victorian Century.",
+  "picture": "thumbnail.png",
+  "tags": [
+    "Fixes",
+    "Utilities",
+    "1.13"
+  ],
+  "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+      "display_name": "Community Mod Framework",
+      "resource_type": "mod",
+      "version": "*"
+    },
+    {
+      "rel_type": "dependency",
+      "id": "",
+      "display_name": "Victorian Century",
+      "resource_type": "mod",
+      "version": "*"
+    }
+  ],
+  "game_custom_data": {
+    "multiplayer_synchronized": true,
+    "tested_with": [
+      {
+        "id": "com.github.Victoria-3-Modding-Co-op.Community-Mod-Framework",
+        "display_name": "Community Mod Framework",
+        "version": "1.63.0",
+        "date": "2026-08-30"
+      },
+      {
+        "id": "",
+        "display_name": "Victorian Century",
+        "version": "unpacked 2026-08-25, mod declares no version",
+        "date": "2026-08-30"
+      }
+    ]
+  }
+}

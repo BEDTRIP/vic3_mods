@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Builds addon-VC out of its four pair compatches, and checks the result.
+"""Builds addon-VC out of its pair compatches (plus one solo VC-internal-bug
+fix), and checks the result.
 
 Rule the hard way round (section 8 of the working notes): the assembly is built
 FROM the compatches, never by editing the previous assembly. An old assembly is
@@ -10,7 +11,13 @@ byte-for-byte.
 
 VC.5 (VC x PSC) and VC.6 (VC x PBE) are `noneed` -- confirmed 26.08.2026, no
 compatch file exists for either, so they contribute nothing here. That leaves
-four pairs: TGR, E&F, Morgenroete, Kuromi's AI.
+four real pairs (TGR, E&F, Morgenroete, Kuromi's AI) plus one folder that isn't
+a pair at all: `_vc/vc joi_flavor_chi29 done` disables a VC-internal event bug
+(joi_flavor_chi.29 creates migrant pops with Standard of Living 100, wrecking
+the receiving state's economy) -- same shape as `_tgr/tgr taxpanel fix done`,
+a solo fix for the block's own base mod, not a compatibility issue with
+anything else. See that folder's README for the bug and why it's disabled
+rather than data-fixed.
 
 One wrinkle beyond addon1 (HC + GoB + MoH): three of the four pair compatches
 here restore different fields of the SAME 99 buy_packages records (wealth_1..
@@ -34,7 +41,8 @@ import regen_addon_vc
 PAIRS = ['_vc/tgr+vc done',
          '_vc/ef+vc done',
          '_vc/morg+vc done',
-         '_vc/kai+vc done']
+         '_vc/kai+vc done',
+         '_vc/vc joi_flavor_chi29 done']
 ADDON = '__addon/addon vc'
 
 # Source files folded into one addon-only merge instead of being copied verbatim
