@@ -1,0 +1,23 @@
+﻿### E&F Hotfix — who gets the recomputed local_currency output
+###
+### The same condition is needed in two places (game start and the monthly
+### pulse), so it lives here.
+###
+########################################################################
+### No market throttle needed anymore
+###
+### This used to gate the formula to countries NOT sharing a market with a
+### real currency: local_currency was tradeable, so a cheap flat grant could
+### leak onto a shared market and undercut real national currencies there.
+### That is why an earlier version of this trigger walked
+### market ?= { owner ?= { ... } } to check who else was on the market.
+###
+### E&F's own update (02.09.2026) made local_currency non-tradeable at the
+### source. A non-tradeable good cannot reach any market, shared or not, so
+### the leak this trigger throttled is now impossible by construction — the
+### formula can apply to everyone with no_money_production, unconditionally.
+########################################################################
+
+zz_ef_local_currency_needs_throttle = {
+	has_modifier = no_money_production
+}

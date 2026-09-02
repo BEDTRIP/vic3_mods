@@ -1,0 +1,48 @@
+﻿### E&F Hotfix — local_currency issuance
+###
+### Additive: on_actions stack, nothing is overridden.
+###
+### The modifier goes on the COUNTRY, exactly like E&F's own
+### no_money_production — it hands state_sell_orders_* to every state evenly.
+###
+### Putting it on individual states does not work: the multiplier in
+### add_modifier is evaluated in a scope above the state, so any state_* value
+### comes back as none. Verified in game, the log says
+### "Value of wrong type ... Got value of type 'none'".
+###
+### Recomputed monthly because population and standard of living both move.
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_local_currency_monthly
+	}
+}
+
+zz_ef_local_currency_monthly = {
+	effect = {
+		### Cleanup. The second block is for saves from the version where the
+		### modifier was applied per state.
+		if = {
+			limit = { has_modifier = zz_ef_local_currency_fix }
+			remove_modifier = zz_ef_local_currency_fix
+		}
+		every_scope_state = {
+			if = {
+				limit = { has_modifier = zz_ef_local_currency_fix }
+				remove_modifier = zz_ef_local_currency_fix
+			}
+		}
+
+		### Issue
+		if = {
+			limit = {
+				zz_ef_local_currency_needs_throttle = yes
+				zz_ef_local_currency_per_state > 0
+			}
+			add_modifier = {
+				name = zz_ef_local_currency_fix
+				multiplier = zz_ef_local_currency_per_state
+			}
+		}
+	}
+}

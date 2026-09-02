@@ -1,0 +1,20 @@
+### E&F Hotfix — restore trading on liquidity_currency
+###
+### E&F's 02.09.2026 update made liquidity_currency non-tradeable at the
+### source (see ef_00_goods.txt: tradeable = no, traded_quantity and
+### convoy_cost_multiplier commented out). That is correct for
+### local_currency (the ~600 minor countries with no monetary system —
+### see zz_ef_local_currency_fix.txt for why that one stays non-tradeable),
+### but liquidity_currency is the good actual central banks mint and the
+### three prestige currency variants (zz_ef_cm_prestige_currencies.txt)
+### are built on top of it. A non-tradeable base good makes those prestige
+### goods untradeable too and kills the market/trade-route gameplay the
+### old per-nation currencies (spe_uni_c etc.) used to have.
+###
+### Values match the old spe_uni_c definition (pre-02.09.2026 E&F).
+
+INJECT:liquidity_currency = {
+	tradeable = yes
+	traded_quantity = 5
+	convoy_cost_multiplier = 1
+}
