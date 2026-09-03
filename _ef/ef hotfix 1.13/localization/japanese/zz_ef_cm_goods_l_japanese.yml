@@ -1,0 +1,22 @@
+﻿l_japanese:
+
+ # liquidity_currency itself: the plain/default appearance (icon in
+ # common/goods/zz_ef_cm_liquidity_currency_market.txt), used by minor
+ # countries with no monetary system. Overrides E&F's own "Base Money".
+ # The three prestige variants below and the central bank company/modifier
+ # that mint them are for countries WITH a monetary system.
+
+ liquidity_currency:0 "Local Currency"
+
+ zz_ef_cm_representative_currency:0 "Representative Currency"
+ zz_ef_cm_pegged_currency:0 "Pegged Currency"
+ zz_ef_cm_fiat_currency:0 "Fiat Currency"
+
+ # The modifier that holds the company slot and pays for the patent.
+ zz_ef_cm_central_bank_charter:0 "Central Bank Charter"
+
+ # The central bank company, for countries with no historical bank of
+ # their own. One for all of them: the prestige good is chosen by the
+ # monetary standard law, not by the currency, so ninety-five separate
+ # types selected nothing.
+ zz_ef_cm_central_bank:0 "Central Bank"

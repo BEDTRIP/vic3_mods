@@ -20,7 +20,7 @@
   popneed_currency:0 "Займы"
   popneed_financial_products:0 "Финансовый продукт"
 
-  liquidity_currency:0 "Базовые деньги"
+  liquidity_currency:0 "Локальная валюта"
 
   ################################
   # Currencies

@@ -1,20 +1,34 @@
-### E&F Hotfix — restore trading on liquidity_currency
+### E&F Hotfix — liquidity_currency: trading, icon and name for the plain variant
 ###
 ### E&F's 02.09.2026 update made liquidity_currency non-tradeable at the
 ### source (see ef_00_goods.txt: tradeable = no, traded_quantity and
-### convoy_cost_multiplier commented out). That is correct for
-### local_currency (the ~600 minor countries with no monetary system —
-### see zz_ef_local_currency_fix.txt for why that one stays non-tradeable),
-### but liquidity_currency is the good actual central banks mint and the
-### three prestige currency variants (zz_ef_cm_prestige_currencies.txt)
-### are built on top of it. A non-tradeable base good makes those prestige
-### goods untradeable too and kills the market/trade-route gameplay the
-### old per-nation currencies (spe_uni_c etc.) used to have.
+### convoy_cost_multiplier commented out). liquidity_currency is the good
+### actual central banks mint, and the three prestige currency variants
+### (zz_ef_cm_prestige_currencies.txt) are built on top of it. A non-tradeable
+### base good makes those prestige goods untradeable too and kills the
+### market/trade-route gameplay the old per-nation currencies (spe_uni_c etc.)
+### used to have.
 ###
-### Values match the old spe_uni_c definition (pre-02.09.2026 E&F).
+### tradeable/traded_quantity/convoy_cost_multiplier match the old spe_uni_c
+### definition (pre-02.09.2026 E&F).
+###
+### 02.09.2026, same evening: local_currency and liquidity_currency unified
+### into one good on request. Minor countries (no monetary system) now get
+### plain liquidity_currency too, not a separate good — see
+### zz_ef_local_currency_fix.txt. The texture below is that plain variant's
+### icon: the local_currency coin, not E&F's own spe_uni.dds, so the ordinary
+### grant reads as "local currency" rather than "generic base money" even
+### though it is the same good the central banks' prestige goods sit on. The
+### three prestige variants keep their own textures
+### (zz_ef_cm_prestige_currencies.txt) — unaffected, that field lives on the
+### prestige_good entry, not here.
+###
+### Name: liquidity_currency:0 in localization/*/zz_ef_cm_goods_l_*.yml,
+### "Local Currency" / "Локальная валюта" — overrides E&F's own "Base Money".
 
 INJECT:liquidity_currency = {
 	tradeable = yes
 	traded_quantity = 5
 	convoy_cost_multiplier = 1
+	texture = "gfx/interface/icons/goods_icons/currencies/local_currency.dds"
 }

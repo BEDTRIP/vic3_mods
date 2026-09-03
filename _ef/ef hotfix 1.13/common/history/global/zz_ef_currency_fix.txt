@@ -55,7 +55,7 @@ GLOBAL = {
 
 
 		########################################################################
-		# 4. Initial local_currency grant.
+		# 4. Initial liquidity_currency grant (minor countries).
 		#    E&F's flat 2500 is disabled at the source, so without this block a
 		#    country would sit with no currency at all for the whole first
 		#    month: the game spreads on_monthly_pulse_country across the days
@@ -64,6 +64,10 @@ GLOBAL = {
 		#    The condition may well not fire: E&F applies no_money_production
 		#    from its own pulse, and it may not be there yet when history runs.
 		#    In that case nothing happens here and the pulse does the work.
+		#
+		#    Grants liquidity_currency, not a separate local_currency (unified
+		#    02.09.2026, same evening as the split -- see EF.10 in
+		#    План проекта.md).
 		########################################################################
 		if = {
 			limit = {

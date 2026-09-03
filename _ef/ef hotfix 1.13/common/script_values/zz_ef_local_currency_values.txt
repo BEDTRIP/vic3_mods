@@ -1,7 +1,8 @@
-﻿### E&F Hotfix — how much local_currency a country is given
+﻿### E&F Hotfix — how much liquidity_currency a country is given
 ###
 ### E&F used to hand every country without a monetary system a flat 2500
-### local_currency per state. That issuance is disabled at the source
+### local_currency per state (now liquidity_currency, unified 02.09.2026
+### same evening -- see EF.10). That issuance is disabled at the source
 ### (static_modifiers/zz_ef_no_money_production.txt); instead the country gets
 ### whatever is computed here, from population, average standard of living and
 ### E&F's own pop needs table. Computed for the whole country, then split

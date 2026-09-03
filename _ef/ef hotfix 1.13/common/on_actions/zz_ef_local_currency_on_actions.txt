@@ -1,4 +1,4 @@
-﻿### E&F Hotfix — local_currency issuance
+﻿### E&F Hotfix — liquidity_currency issuance (minor countries)
 ###
 ### Additive: on_actions stack, nothing is overridden.
 ###
