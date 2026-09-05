@@ -5,7 +5,7 @@
 ### Three separate problems, one effect:
 ###
 ### 1. building_consumer_electronics_industry. The compatch's block inside
-###    private_ownership_production_stocks is the only one of its 167 that is
+###    private_ownership_production_stocks is the only one of its 168 that is
 ###    written wrong -- the ">= half" branch reads
 ###
 ###        is_production_method_active = pm_private_ownership_majority_manufacture_stock
@@ -14,6 +14,17 @@
 ###    i.e. "if it is already majority, set it to majority". Every other block
 ###    tests pm_no_private_ownership_manufacture_stock there. The building can
 ###    therefore never leave the "no stock" method.
+###
+###    05.09.2026 -- and once this file DID move it there, that block became a
+###    hang. private_ownership_production_stocks runs from
+###    on_production_method_changed, so every activate_production_method re-enters
+###    it; the 167 correct blocks terminate because one flip clears their
+###    condition, this one sets the very method it tests and never clears.
+###    Reported from the wild as a repeatable stack-overflow CTD. The block is now
+###    corrected at the source, in the pinned copy of the effect itself
+###    (tools/regen_ef_tr_copies.py, fix_po_stocks), so the pair below is a no-op
+###    belt-and-braces -- keep it, it is what covers a regen against a compatch
+###    whose typo the author has meanwhile changed rather than fixed.
 ###
 ### 2. building_computer_assembly_plant. New in T&R 13.05.2026, absent from the
 ###    compatch entirely.

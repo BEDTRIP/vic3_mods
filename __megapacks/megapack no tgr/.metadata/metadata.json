@@ -1,7 +1,7 @@
 {
   "name": "MegaComPatch PSC + E&F + MR + T&R + PBE",
   "id": "3643003863",
-  "version": "1.13.11-2",
+  "version": "1.13.11-3",
   "supported_game_version": "1.13.*",
   "short_description": "No-TGR compatibility patch for Private Sector Construction (PSC) + Economic and Financial (E&F) + Morgenröte + Tech & Res + Kuromi + Power Blocs Expanded (merged common/GUI/on_actions). Load after all.",
   "picture": "thumbnail.png",

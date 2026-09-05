@@ -1,4 +1,4 @@
-﻿### The compatch's own file, with two effects corrected -- see
+﻿### The compatch's own file, with three effects corrected -- see
 ### tools/regen_ef_tr_copies.py. Everything else here is the compatch's.
 ###
 ### The compatch rewrote eleven vanilla building names into their plural
@@ -7,6 +7,13 @@
 ### 1.13. Two of E&F's own typos ride along in the same lists.
 ###
 ### Corrections applied this run:
+###   private_ownership_production_stocks: building_consumer_electronics_industry
+###     (>0.5 branch): trigger pm_private_ownership_majority_manufacture_stock ->
+###     pm_no_private_ownership_manufacture_stock -- the block activated the very PM
+###     its own trigger tested, so on_production_method_changed re-entered the effect
+###     forever (stack overflow CTD)
+###   private_ownership_production_stocks: building_ecommerce_logistics:
+###     has_building = building_ -> has_building = building_ecommerce_logistics
 ###   economic_crisis_consequences: added building_computer_assembly_plant
 ###   economic_crisis_consequences: building_artillery_foundries -> building_artillery_foundry
 ###   economic_crisis_consequences: building_chemical_plants -> building_chemical_plant
@@ -2337,7 +2344,7 @@ REPLACE:private_ownership_production_stocks = {
 				}
 				is_production_method_active = {
 					building_type = building_consumer_electronics_industry
-					production_method = pm_private_ownership_majority_manufacture_stock
+					production_method = pm_no_private_ownership_manufacture_stock
 				}
 			}
 			activate_production_method = {
@@ -2829,7 +2836,7 @@ REPLACE:private_ownership_production_stocks = {
 		#building_ecommerce_logistics
 		if = {
 			limit = {
-				has_building = building_
+				has_building = building_ecommerce_logistics
 				b:building_ecommerce_logistics  = {
 					private_ownership_fraction > 0.5
 				}

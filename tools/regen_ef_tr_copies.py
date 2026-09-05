@@ -97,6 +97,13 @@ TR_BUILDINGS = [
 CP_EFFECTS_FILE = "common/scripted_effects/zef_01_financial_scripted_effects.txt"
 CP_EFFECTS = ["financial_crash_consequences", "economic_crisis_consequences"]
 
+# The third effect in the same file. Not name-mangled like the two above: it is a
+# 168-block copy-paste ladder over every building that carries an ownership stock
+# PM, and the compatch's T&R additions carry two typos in it. Re-derived block by
+# block rather than by a fixed diff, so a new T&R building added upstream is
+# checked too.
+CP_PO_STOCKS = "private_ownership_production_stocks"
+
 # Compatch name -> real name in 1.13.10.
 # The nine plural forms are declared as `aliases` on the vanilla buildings, so
 # they may well resolve; the canonical name is correct either way.
@@ -196,6 +203,88 @@ def add_groups(block: str, groups: list[str]) -> str:
     body = m.group(2).rstrip("\n\t ")
     inserted = body + "\n\n" + "".join(f"\t\t{g} #E&F\n" for g in missing) + "\t"
     return block[: m.start(2)] + inserted + block[m.end(2):]
+
+
+
+# --- 2b. the ownership-stock ladder ----------------------------------------
+
+# Each block of `private_ownership_production_stocks` is one half of a pair:
+#   private_ownership_fraction >  0.5  + currently on the "no private" PM
+#       -> activate the "majority private" PM
+#   private_ownership_fraction <= 0.5  + currently on the "majority private" PM
+#       -> activate the "no private" PM
+# The trigger must therefore always name the PM opposite the one it activates.
+# The effect is called from on_production_method_changed (E&F's
+# ef_on_production_method_changed), so every activate_production_method re-enters
+# it; a block that tests the PM it sets never clears its own condition, and the
+# recursion ends only when the stack does.
+PO_PREFIXES = ("pm_no_private_ownership_", "pm_private_ownership_majority_")
+
+PO_IF = re.compile(r"\t\tif = \{\n(?:\t\t\t.*\n|\n)*?\t\t\}\n")
+PO_OWNER = re.compile(r"^\t+b:(\S+)\s*=", re.M)
+PO_HAS = re.compile(r"(has_building\s*=\s*)(\S+)")
+PO_TRIG = re.compile(
+    r"(is_production_method_active\s*=\s*\{\s*\n\s*building_type\s*=\s*)(\S+)"
+    r"(\s*\n\s*production_method\s*=\s*)(\S+)"
+)
+PO_ACT = re.compile(
+    r"(activate_production_method\s*=\s*\{\s*\n\s*building_type\s*=\s*)(\S+)"
+    r"(\s*\n\s*production_method\s*=\s*)(\S+)"
+)
+
+
+def _po_opposite(pm: str) -> str | None:
+    a, b = PO_PREFIXES
+    if pm.startswith(a):
+        return b + pm[len(a):]
+    if pm.startswith(b):
+        return a + pm[len(b):]
+    return None
+
+
+def fix_po_stocks(block: str) -> tuple[str, list[str]]:
+    """Re-derive every block of the ladder from the `b:` scope it is written for."""
+    notes: list[str] = []
+
+    def one(m: re.Match[str]) -> str:
+        body = m.group(0)
+        owner = PO_OWNER.search(body)
+        trig, act = PO_TRIG.search(body), PO_ACT.search(body)
+        if not (owner and trig and act):
+            return body  # not a ladder block; leave it alone
+        name = owner.group(1)
+
+        # 1. building names that disagree with the b: scope -- the compatch ships
+        #    one truncated `has_building = building_`, which makes the b: lookup
+        #    under it fire in every state that lacks the building.
+        def has(mm: re.Match[str]) -> str:
+            if mm.group(2) == name:
+                return mm.group(0)
+            notes.append(f"{name}: has_building = {mm.group(2)} -> {name}")
+            return mm.group(1) + name
+
+        body = PO_HAS.sub(has, body)
+        for label, mm in (("trigger", trig), ("activate", act)):
+            if mm.group(2) != name:
+                notes.append(f"{name}: {label} building_type = {mm.group(2)} -> {name}")
+                body = body.replace(
+                    mm.group(0), mm.group(1) + name + mm.group(3) + mm.group(4), 1
+                )
+
+        # 2. a trigger naming the PM its own block activates
+        trig = PO_TRIG.search(body) or trig
+        want = _po_opposite(act.group(4))
+        if want and trig.group(4) != want:
+            notes.append(
+                f"{name}: trigger PM {trig.group(4)} -> {want} "
+                f"(the block activates {act.group(4)})"
+            )
+            body = body.replace(
+                trig.group(0), trig.group(1) + trig.group(2) + trig.group(3) + want, 1
+            )
+        return body
+
+    return PO_IF.sub(one, block), notes
 
 
 def fix_names(block: str) -> tuple[str, list[str]]:
@@ -541,15 +630,25 @@ def main() -> int:
         block, n = fix_names(top_block(src, name))
         fixed[name] = block
         notes += [f"{name}: {x}" for x in n]
+    block, n = fix_po_stocks(top_block(src, CP_PO_STOCKS))
+    fixed[CP_PO_STOCKS] = block
+    notes += [f"{CP_PO_STOCKS}: {x}" for x in n]
     text = splice(src, fixed)
     banner = (
-        "### The compatch's own file, with two effects corrected -- see\n"
+        "### The compatch's own file, with three effects corrected -- see\n"
         "### tools/regen_ef_tr_copies.py. Everything else here is the compatch's.\n"
         "###\n"
         "### The compatch rewrote eleven vanilla building names into their plural\n"
         "### `aliases` form. Nine of those aliases are real; building_artillery_foundries\n"
         "### never existed and building_military_shipyard was removed from vanilla in\n"
         "### 1.13. Two of E&F's own typos ride along in the same lists.\n"
+        "###\n"
+        "### private_ownership_production_stocks is a different animal: 168 near-identical\n"
+        "### blocks, each meant to test the PM opposite the one it activates. The\n"
+        "### compatch's T&R additions broke that twice -- a block that activates the PM\n"
+        "### its own trigger tests (infinite re-entry through on_production_method_changed,\n"
+        "### stack overflow CTD) and a truncated `has_building = building_`. Every block is\n"
+        "### re-derived from its b: scope.\n"
         "###\n"
         "### Corrections applied this run:\n" + note_lines(notes) + "\n\n"
     )

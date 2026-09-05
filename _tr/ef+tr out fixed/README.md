@@ -53,10 +53,17 @@ The [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3786286962]E&F H
 [*]Two of E&F's own typos inherited by the compatch are corrected in the same pass: [i]building_financial_centre_TUS[/i] (wrong case) and [i]building_vineyard_plantation[/i] (vanilla calls it [i]building_vineyard[/i]). [i]building_naval_base[/i], gone from vanilla in 1.13, is dropped.
 [/list]
 
-[*][b]Consumer Electronics could never go private[/b]
+[*][b]Consumer Electronics could never go private — and, once it could, crashed the game[/b]
 [list]
-[*]Its block in the compatch's ownership switch is the only one of 167 written wrong — it tests for the method it is about to set, so the building never leaves "No Manufacture Stock". It also never received the stock PM group in the first place.
+[*]Its block in the compatch's ownership switch is the only one of 168 written wrong — it tests for the method it is about to set, so the building never leaves "No Manufacture Stock". It also never received the stock PM group in the first place.
 [*]Group injected, switch rewritten.
+[*][i]Fixed 05.09.2026:[/i] rewriting the switch is what made the compatch's own block reachable, and a block that sets the method it tests never clears its own condition. [i]private_ownership_production_stocks[/i] runs from [i]on_production_method_changed[/i], so it re-enters itself on every method it activates: 167 blocks stop after one flip, that one did not. Reported from the wild as a repeatable stack-overflow CTD. The compatch's block is now corrected in the pinned copy of the effect itself, so the recursion cannot start.
+[/list]
+
+[*][b]E-Commerce Logistics logged an error in every state without one[/b]
+[list]
+[*]The compatch's block for it reads [i]has_building = building_[/i] — the name is simply truncated. The [i]b:building_ecommerce_logistics[/i] lookup below it therefore ran in every state on the map, whether or not the building was there, at roughly four thousand lines of error.log per session.
+[*][i]Fixed 05.09.2026.[/i] The whole 168-block ladder is now re-derived from the [i]b:[/i] scope each block is written for, so a name that disagrees with its own block is corrected rather than carried.
 [/list]
 
 [*][b]Two Tech & Res industries were never wired into E&F[/b]
@@ -101,7 +108,7 @@ As shipped, this mod carries the E&F + T&R basket only, matching its declared de
 |---|---|
 | двенадцать файлов компача | копируются из `_ef/ef+tr+kai out` байт в байт |
 | `common/buildings/zztr_vanilla_buildings.txt` | T&R `ztr_vanilla_modified_buildings.txt` + 2 группы E&F |
-| `common/scripted_effects/zef_01_financial_scripted_effects.txt` | файл компача, два эффекта с исправленными именами зданий |
+| `common/scripted_effects/zef_01_financial_scripted_effects.txt` | файл компача, два эффекта с исправленными именами зданий + лестница `private_ownership_production_stocks`, пересобранная по `b:`-скоупу каждого блока |
 | `common/script_values/zef_00_economic_scripted_value.txt` | файл компача, корзины сведены (+ `ef+morg done` при `--morg`) |
 
 ```

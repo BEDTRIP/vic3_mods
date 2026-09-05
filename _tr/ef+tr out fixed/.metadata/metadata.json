@@ -1,7 +1,7 @@
 {
   "name": "Tech & Res + E&F ComPatch (fixed)",
   "id": "ef.tr.fix",
-  "version": "1.6-fix2",
+  "version": "1.6-fix3",
   "supported_game_version": "1.13.*",
   "short_description": "A standalone replacement for the Tech & Res + E&F ComPatch: everything it does, plus gold-mine minting, the T&R production method groups it reverts, dead building names, the consumer-electronics ownership switch, the inflation baskets, and two T&R industries it never wires into E&F. Run this INSTEAD of the compatch.",
   "picture": "thumbnail.png",

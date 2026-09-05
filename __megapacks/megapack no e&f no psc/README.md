@@ -66,6 +66,14 @@ The pairs that need nothing are checked too, and stay unpatched on purpose: Morg
     [*][b]Malaria Prevention[/b] is the only technology both of my patches touch. Here it carries TGR's Environment institution bonus and Morgenroete's yellow-fever mitigation on top of the Tech & Res version, in one entry instead of two.
 [/list]
 
+[h2]The tax panel[/h2]
+TGR replaces the vanilla budget panel with five independent tax sliders, and it does so by replacing one file: [i]gui/budget_panel.gui[/i]. That file is not additive — whichever mod ships it last wins outright, and every other mod's version of the budget panel silently disappears.
+
+So if your taxation shows the [b]vanilla[/b] five levels (Very Low … Very High) instead of TGR's +/− rows, and none of them can be picked, some mod after TGR in your order is shipping its own [i]gui/budget_panel.gui[/i]. This megapack is not it — it ships no GUI file at all. The usual culprit is [b]Economic and Financial (E&F)[/b], which also replaces that file: E&F is not part of this build's set, and for E&F you need the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]megapack that includes it[/url] (or the standalone [b]E&F + TGR ComPatch[/b]), which carries a three-way merge of vanilla + TGR + E&F. Any UI overhaul that touches the budget panel does the same thing.
+
+[h2]The TGR tax cap[/h2]
+Also inside: TGR's per-tax law cap ([i]calculate_max_*_tax_level[/i]) never actually applied — it is written as [i]change_variable = { min = ... }[/i], a lower bound where an upper one was meant, and [i]change_variable[/i] ignores min/max with no operation given, so nothing clamped at all. Stepping by +0.5 or +1.0 walked straight past the cap, and switching to a law with a lower cap did not bring an existing rate down. Re-issued with explicit clamps; an overshoot is pulled back at the next law you pass or the next half-year pulse.
+
 [h2]Notes[/h2]
 [list]
     [*]This is a [b]compatibility patch[/b], not a rebalance. Where the two authors simply set a different number for the same thing, the patch leaves it alone and the last mod loaded wins.

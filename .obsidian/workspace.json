@@ -190,6 +190,7 @@
   },
   "active": "ef9d9e95e55d7924",
   "lastOpenFiles": [
+    "tools/__pycache__/regen_ef_tr_copies.cpython-310.pyc.132040847481296",
     "_ef/ef hotfix 1.13/localization/turkish/zz_ef_cm_goods_l_turkish.yml",
     "_ef/ef hotfix 1.13/localization/spanish/zz_ef_cm_goods_l_spanish.yml",
     "_ef/ef hotfix 1.13/localization/simp_chinese/zz_ef_cm_goods_l_simp_chinese.yml",
@@ -200,7 +201,6 @@
     "_ef/ef hotfix 1.13/localization/german/zz_ef_cm_goods_l_german.yml",
     "_ef/ef hotfix 1.13/localization/french/zz_ef_cm_goods_l_french.yml",
     "_ef/ef hotfix 1.13/localization/english/zz_ef_cm_goods_l_english.yml",
-    "_ef/ef hotfix 1.13/localization/braz_por/zz_ef_cm_goods_l_braz_por.yml",
     "tools/_to_delete/ef_gen_source_retired_2026-09-02/icons/representative_currency.png",
     "tools/_to_delete/ef_gen_source_retired_2026-09-02/icons/pegged_currency.png",
     "tools/_to_delete/ef_gen_source_retired_2026-09-02/README_draft_part1.md",
