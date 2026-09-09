@@ -1,0 +1,12 @@
+﻿l_german:
+
+ # Section header in the companies panel: the vanilla flat list with its
+ # search bar, filters and sort buttons, tucked under its own collapsible header.
+
+ EF_COMPANIES_SECTION_SEARCH:0 "Suche & Filter"
+
+ # Tooltips of the view toggle over the established companies:
+ # vanilla's big card, or one compact row per company.
+
+ EF_COMPANIES_VIEW_COMPACT:0 "Zur kompakten Liste wechseln"
+ EF_COMPANIES_VIEW_CARDS:0 "Zurück zu vollen Karten"

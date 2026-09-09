@@ -1,0 +1,12 @@
+﻿l_simp_chinese:
+
+ # Section header in the companies panel: the vanilla flat list with its
+ # search bar, filters and sort buttons, tucked under its own collapsible header.
+
+ EF_COMPANIES_SECTION_SEARCH:0 "搜索与筛选"
+
+ # Tooltips of the view toggle over the established companies:
+ # vanilla's big card, or one compact row per company.
+
+ EF_COMPANIES_VIEW_COMPACT:0 "切换为紧凑列表"
+ EF_COMPANIES_VIEW_CARDS:0 "切换回完整卡片"

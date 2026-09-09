@@ -4,10 +4,11 @@
 мод: свой хотфикс E&F 1.13
 статус: done, переписан под E&F 02.09.2026 (EF.1-EF.8), торговля/формула/престиж
   возвращены на liquidity_currency (EF.9), local_currency и liquidity_currency
-  объединены в один товар (EF.10) — тем же вечером, см. План проекта.md
+  объединены в один товар (EF.10) — тем же вечером, см. План проекта.md;
+  09.09.2026 — меню компаний переделано (EF.11), см. «The companies panel»
 версии: —
 позиция: —
-файлов: 39
+файлов: 51
 генератор: — (списан 02.09.2026, tools/_to_delete/regen_ef_currency_merge_retired_2026-09-02.py)
 зависит от: —
 -->
@@ -45,6 +46,14 @@
 измерялась. Попутно обнаружена и исправлена рассинхронизация репо/живой
 копии отдельного мод-перевода `V4 RUS` (EF.7 применилась только к репо).
 Подробности — разделы EF.9-EF.10 в `План проекта.md`.
+
+**EF.11, 09.09.2026:** запрошено переделать меню компаний — с модами их
+набирается 100+ на страну, они шли одним плоским списком без разделения по
+доступности, и открытое меню заметно просаживало FPS. Список неоснованных
+компаний разбит на три сворачиваемые секции по готовым спискам движка
+(доступные / не хватает условий / привязаны к чужой области), карточка
+заменена на компактную строку. Хотфикс снова содержит один файл `gui/` —
+но не реставрацию ванили, а собственную правку. Глава «The companies panel».
 
 ## Для мастерской
 
@@ -129,6 +138,13 @@ The treasury still funds the central bank, so the company collects no dividends 
 [*]E&F's stock and bond demand values divide by [i]building_financial_num[/i], zero for any country without a financial centre — the author's own comment on that line says "division par zero possible"
 [*]The same division by zero in the currency, which he left unguarded, and which was Britain and China printing a million currency at random
 [*][i]sell_currency_privat_bank[/i] dereferences a seller scope that may not exist
+[/list]
+
+[*][b]The company menu with 100+ companies[/b]
+[list]
+[*]Companies you have not founded yet are split into three collapsible sections — [i]Available[/i], [i]Attainable[/i], [i]Potential[/i] — instead of one flat list, with a count on each
+[*]Each entry is a compact row now; the full card is in the tooltip. Collapsed sections build nothing, so the panel no longer costs frames while it is open
+[*]Search, filters and sorting are untouched, in their own section at the bottom
 [/list]
 
 [*][b]E&F's dev panel showing up in the budget screen[/b] — the round [b]1[/b] button under the budget tabs. Tied to [i]-debug_mode[/i], so anyone playing with the console open sees it. Hidden
@@ -522,6 +538,108 @@ These cannot be swapped for vanilla: they are real E&F reworks (−145/+218 and 
 
 ---
 
+## The companies panel
+
+`gui/companies_panel.gui` — the only `.gui` file the hotfix ships now, and unlike the six
+restorations described above it is a change, not a copy of vanilla.
+
+### What was wrong
+
+Vanilla puts every company type the country has not established yet into one flat list of
+`potential_company_item` cards. A card is not cheap: two backgrounds, two data models of
+building icons, a prestige-goods data model, and five text boxes whose localisation calls
+`CompanyType.GetProductivity`, `GetProsperityModifier` and `GetNumBuildingLevels` on every
+update. That is fine for the ~40 types vanilla ships. With E&F and the content mods on top the
+count passes **100**, the panel builds several thousand live widgets, and the frame rate drops
+for as long as it stays open.
+
+The second problem is that the flat list says nothing about whether a company can actually be
+founded. The vanilla visibility filter has three settings — Available / Attainable / Potential —
+but they are a radio button over one list, not a grouping, so the answer is one click away per
+category and never visible at once.
+
+### What it does now
+
+The engine already classifies company types per country and exposes the result as three data
+models, which is what the vanilla filter counter is built from:
+
+| data model | meaning |
+|---|---|
+| `Country.GetAvailableCompanies` | every requirement met — can be established now |
+| `Country.GetAttainableCompanies` | requirements are reachable: buildings, technology, a free slot |
+| `Country.GetPotentialCompanies` | needs a state the country does not hold |
+
+Each gets its own `section_header_button` with a live count and a collapse arrow. **Available**
+is expanded by default, the other two are collapsed, and a collapsed section builds no items at
+all — that is where most of the frame time comes back. The collapse state lives in
+`GetVariableSystem` under `ef_companies_available` / `_attainable` / `_potential`, so it holds
+for the session and resets on load, exactly like vanilla's own `established_companies` toggle.
+
+Rows are the new `ef_company_type_row`: icon, name, one subtitle line, the prestige goods the
+type can mint, and the Establish button. Everything else the card used to show is still
+there in `FancyTooltip_CompanyType`, which vanilla already wrote and which is only built for the
+row under the cursor. The subtitle is the company category, except in the Potential section,
+where it is `COMPANY_TYPE_HEADQUARTER_STATE` — the state you would have to take.
+
+The prestige goods sit in an `overlappingitembox` holding vanilla's own
+`company_type_prestige_good_item`, so each icon keeps `FancyTooltip_Goods` and a company with
+three of them stacks the icons rather than running into the button.
+
+The row is a plain `widget` with everything placed by hand, not a `flowcontainer`. In a flow the
+prestige holder collapses to nothing on a company that has no prestige goods and drags the
+Establish button left with it, so the buttons stop lining up down the list — visible immediately
+once the panel had real data in it. Anchoring the button to the row's right edge fixes the
+column for good, whatever sits to its left.
+
+### The established companies
+
+The section above the split is vanilla's, with one addition: a small round button on the right,
+over the list, that swaps the big `company_item` cards for `ef_established_company_row` — one
+row per company, same right-anchored layout as the rows below it, carrying the name, prosperity,
+the prestige goods it mints (faded while it is not actually producing them), profit, and the
+go-to / pin / disband buttons. `FancyTooltip_Company` covers the rest, as before.
+
+The state is `ef_companies_compact` in `GetVariableSystem`; the cards are still the default, so
+nothing changes for anyone who does not press the button. It earns its place late, when a
+country runs its full complement of companies and the section alone fills the panel before the
+not-yet-established list even starts.
+
+### Search, filters and sorting
+
+These are the one thing that cannot follow the split. The search bar, the filter block and the
+four sort buttons all act on `CompaniesPanel.GetFilteredCompanyTypes`, the panel's own list, and
+there is no way to ask the engine which category a single `CompanyType` belongs to — only for
+the three lists as a whole. So they keep the vanilla flat list, moved under a fourth collapsed
+section, `EF_COMPANIES_SECTION_SEARCH`. Nothing from vanilla is removed; the flat list is simply
+no longer what greets you.
+
+### Localisation
+
+Three of the four section titles reuse vanilla keys — `COMPANY_AVAILABLE_FILTER_TITLE`,
+`COMPANY_ATTAINABLE_FILTER_TITLE`, `COMPANY_POTENTIAL_FILTER_TITLE` — with
+`COMPANY_*_FILTER_NAME` as their tooltips, so the wording matches the filter buttons that are
+still in the panel and no new translation was needed. Only the fourth title is new:
+`EF_COMPANIES_SECTION_SEARCH`, plus `EF_COMPANIES_VIEW_COMPACT` / `EF_COMPANIES_VIEW_CARDS` for
+the view toggle — `localization/*/zz_ef_companies_panel_l_*.yml`, all eleven languages.
+
+### Caveats
+
+- **The free company slot.** The split is the engine's, and by the wording of
+  `COMPANY_ATTAINABLE_FILTER_NAME` ("...or gaining a free company slot") a type with every
+  other requirement met may sit under **Attainable** rather than **Available** when no slot is
+  free. Not verified in game. If it turns out that way, Available emptying out mid-game is the
+  engine's classification, not the panel's.
+- **Load order.** The file overrides vanilla by path, so any mod loading after the hotfix that
+  ships its own `gui/companies_panel.gui` replaces it wholesale. Checked against the current
+  playset — nothing does. E&F's own stray copy under
+  `gui/ef_dev_and_custom_windows/maj/NonEssential/` is a different path, loses the type
+  registration race to `gui/companies_panel.gui`, and is already ignored (it is what the
+  "already registered at 'gui/companies_panel.gui'" lines in `gui.log` are).
+- **After every game patch** this file has to be rebuilt from the new vanilla, same as the
+  restorations were: it is a vanilla file with one block replaced.
+
+---
+
 ## Alerts — 70,000 errors per session
 
 `common/alert_types/00_ef_alert_types.txt` holds 32 alerts, 31 of which read variables that are uninitialised in most games:
@@ -880,7 +998,9 @@ and E&F **keys** by prefix (everything `zz_ef_cm_`). Which means:
 - **after every E&F update** the generator has to be re-run, otherwise the hotfix rolls his
   changes back;
 - **after every game patch** the six restored vanilla `.gui` files have to be re-copied from
-  the new vanilla.
+  the new vanilla — and `gui/companies_panel.gui` rebuilt from it, since it is the new
+  vanilla file with the not-yet-established block replaced (see
+  [The companies panel](#the-companies-panel)).
 
 ```
 python3 tools/regen_ef_currency_merge.py --check    # has anything drifted

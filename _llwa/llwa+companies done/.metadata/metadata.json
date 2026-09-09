@@ -1,9 +1,9 @@
 {
   "name": "ComPatch LLWA + historical companies",
   "id": "asm.compatch.llwa.companies",
-  "version": "1.13.11-1",
+  "version": "1.13.11-2",
   "supported_game_version": "1.13.*",
-  "short_description": "142 historical and financial companies across vanilla, The Great Revision, E&F, Victorian Century, Hail Columbia!, and Mandate of Heaven predate LLWA and know nothing about its transport buildings or its communications building. Adds LLWA's buildings to each as extension buildings -- INJECT only, no company's own design touched. Load after all of them and after LLWA.",
+  "short_description": "142 historical and financial companies across vanilla, The Great Revision, E&F, Victorian Century, Hail Columbia!, and Mandate of Heaven predate LLWA and know nothing about its transport buildings, its freight depot, or its exchange. Adds LLWA's buildings to each as extension buildings -- 45 railway/port companies get the transport ones, 97 of E&F's banks get every LLWA building a company is allowed to own. INJECT only, no company's own design touched. Load after all of them and after LLWA.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",

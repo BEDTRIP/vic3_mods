@@ -15,7 +15,7 @@
 [h1]ComPatch: LLWA + historical companies[/h1]
 [b]Game 1.13 (exe 1.13.11) — Locomotion (LLWA) 2.6.3, vanilla, The Great Revision, Victorian Century, Hail Columbia!, Mandate of Heaven.[/b]
 
-142 historical and financial companies across the base game and five other mods predate LLWA and know nothing about its roads, canals, rivers, air routes, or communications building — 45 railway/port companies get transport extensions, 97 of E&F's own banks get llwa_building_exchange. Pure addition, no company's own design touched.
+142 historical and financial companies across the base game and five other mods predate LLWA and know nothing about its roads, canals, rivers, air routes, freight depots, or exchanges — 45 railway/port companies get transport extensions, 97 of E&F's own banks get every LLWA building a company is allowed to own. Pure addition, no company's own design touched.
 
 [h2]Load order[/h2]
 [list]
@@ -50,13 +50,29 @@ Applied mechanically, not by picking favourites:
 
 * company has `building_railway` in `building_types` → add `LLWA_building_roadway` to `extension_building_types`
 * company has `building_port` in `building_types` → add `LLWA_building_waterway` + `LLWA_building_riverway`
-* E&F company has a `building_financial_centre_*` building (the country-specific variant E&F uses; matched by prefix, not exact key) → add `llwa_building_exchange`
+* E&F company has a `building_financial_centre_*` building (the country-specific variant E&F uses; matched by prefix, not exact key) → add **all six** company-ownable LLWA buildings
 
-**142 companies** qualify: 29 get roadway, 16 get waterway/riverway only, 2 (`company_hbc`, `company_yasuda`) get both rail and port, and **97 of E&F's 103 companies** get `llwa_building_exchange` (added as a follow-up to the original 45 — the user asked directly what was happening with `llwa_building_exchange`, since LLWA.6 wires it into E&F's stock economy but nothing gave it to any company).
+**142 companies** qualify: 29 get roadway, 16 get waterway/riverway only, 2 (`company_hbc`, `company_yasuda`) get both rail and port, and **97 of E&F's 103 companies** get the full set (added as a follow-up to the original 45 — the user asked directly what was happening with `llwa_building_exchange`, since LLWA.6 wires it into E&F's stock economy but nothing gave it to any company).
 
-### E&F's banks and llwa_building_exchange
+### E&F's banks get the whole ownable set
 
-Decided separately from the transport-company rule above, and later — the original pass left E&F's ~100 banks out on purpose as an undecided question. `llwa_building_exchange` isn't a literal stock exchange despite its name: its own production method groups are `LLWA_pmg_exchange_base` + `LLWA_pmg_mapi_comms`, a telegraph/telephone/press building that reduces market access price impact. Decided: give it to E&F's banks anyway — the theme (a diversified financial company investing in the infrastructure that moves markets) fits the same way railways already do for the same companies.
+Decided separately from the transport-company rule above, and later — the original pass left E&F's ~100 banks out on purpose as an undecided question. First answer (2026-08-26): give them `llwa_building_exchange`. Second answer (2026-09-09, user decision): widen that to **every LLWA building a company can own at all** —
+
+| building | given | why |
+| --- | --- | --- |
+| `LLWA_building_roadway` | yes | `ownership_type = self` |
+| `LLWA_building_waterway` | yes | `ownership_type = self` |
+| `LLWA_building_riverway` | yes | `ownership_type = self` |
+| `LLWA_building_airway` | yes | `ownership_type = self` |
+| `llwa_building_freight_depot` | yes | `ownership_type = self` |
+| `llwa_building_exchange` | yes | `ownership_type = self` |
+| `LLWA_building_logistics_hub` | **no** | `ownership_type = no_ownership` — the game will not let any company hold it |
+
+The reasoning: an E&F bank is not a transport company, it is a diversified holding carrying a financial centre, a railway, and five to eight unrelated buildings each. The narrow "a railway company may extend into roads" logic that bounds the RAIL/PORT rules above simply doesn't apply to it — once a bank may own the exchange and the railway, there is no line that keeps it out of the canal, the river, the airfield, or the freight depot. So the cut is made where the engine makes it, at `ownership_type`, not by taste.
+
+`llwa_building_exchange` in particular isn't a literal stock exchange despite its name: its production method groups are `LLWA_pmg_exchange_base` + `LLWA_pmg_mapi_comms`, a telegraph/telephone/press building that reduces market access price impact. It fits the theme all the same — a financial company investing in the infrastructure that moves markets.
+
+The generator verifies all six keys against LLWA's own `common/buildings` on every run (`verify_llwa_buildings()`): still defined, still `ownership_type = self`. A rename or an ownership change in a future LLWA version fails the run loudly instead of emitting a silently dead extension.
 
 97 of E&F's 103 companies qualify (any company with a `building_financial_centre_<country>` building — checked by prefix, since E&F suffixes the key per country, e.g. `building_financial_centre_usa`, not a bare `building_financial_centre`). The six that don't: `company_private_construction`, three basic mining-only companies, `company_PennsylvaniaRailroad` (a plain railway company with no financial building — already covered by the RAIL rule instead, since E&F's copy of it isn't the chain's final definition, see below), and `company_standard_oil` (E&F's own entry for it has an empty `building_types` — a stub; the real definition further down the chain, in VC, is what the RAIL rule actually targets).
 
@@ -66,7 +82,8 @@ A company defined in more than one source mod that DID keep the relevant buildin
 
 ## Deliberately not here
 
-* **`llwa_building_freight_depot`, `LLWA_building_logistics_hub`** — not given to any company. `logistics_hub` is `ownership_type = no_ownership`, can't be company-owned at all. `llwa_building_freight_depot` looks like a deliberate "one per state utility building, not a company holding" choice by LLWA's own author (it's in none of LLWA's own four companies either) — not second-guessed here.
+* **`LLWA_building_logistics_hub`** — not given to anyone, anywhere. `ownership_type = no_ownership`: not a judgement call, the engine forbids it.
+* **`llwa_building_freight_depot` and the airway, for the transport companies in RAIL/PORT** — still not given to them. LLWA's own author puts `freight_depot` on none of his own four companies, which reads as a "one per state utility building, not a company holding" choice, and his `turnpike`/`ship_line` companies get roads and water only. That restraint is kept for everyone historical; it is overridden for E&F's banks alone, deliberately, for the reason in "E&F's banks get the whole ownable set" above.
 * **Grey's/USU's ~70 railway companies** — addon-Grey's own territory (GR.9, `usu_llwa` compatch). Touching them from here would step on that work.
 
 ## How the merge is made
@@ -75,5 +92,5 @@ A company defined in more than one source mod that DID keep the relevant buildin
 
 ## Notes
 
-* **Maintenance.** Everything is generated by `tools/regen_llwa_companies.py`. Re-run after vanilla, TGR, E&F, VC, HC, or MoH update their company lists, or after LLWA renames a building; `--check` reports drift without writing.
+* **Maintenance.** Everything is generated by `tools/regen_llwa_companies.py`. Re-run after vanilla, TGR, E&F, VC, HC, or MoH update their company lists, or after LLWA touches its buildings; `--check` reports drift without writing. Two asserts guard the run: `verify_llwa_buildings()` checks LLWA's side (every key still defined, still `ownership_type = self`), `verify_and_collect()` checks the company side (every target still exists and still carries the building type its rule expects).
 * No localisation needed — `extension_building_types` has no display text of its own; the buildings it lists are already localised by LLWA.

@@ -1,0 +1,12 @@
+﻿l_korean:
+
+ # Section header in the companies panel: the vanilla flat list with its
+ # search bar, filters and sort buttons, tucked under its own collapsible header.
+
+ EF_COMPANIES_SECTION_SEARCH:0 "검색 및 필터"
+
+ # Tooltips of the view toggle over the established companies:
+ # vanilla's big card, or one compact row per company.
+
+ EF_COMPANIES_VIEW_COMPACT:0 "간략 목록으로 전환"
+ EF_COMPANIES_VIEW_CARDS:0 "전체 카드로 되돌리기"

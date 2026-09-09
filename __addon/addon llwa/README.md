@@ -79,15 +79,15 @@ Four files from `_llwa/llwa+ef done`: `common/buildings/zz_llwa_ef_buildings_inj
 
 `common/company_types/zz_llwa_companies_extensions.txt` (from `_llwa/llwa+companies done`). Companies with `building_railway` in `building_types` (29, checked against each one's FINAL definition in the chain — see that pair's README for the 11 that were dropped because a later mod redesigned them away from railways) get `LLWA_building_roadway` added to `extension_building_types`; companies with `building_port` (16, +2 that have both) get `LLWA_building_waterway` + `LLWA_building_riverway`. Pure `INJECT:`, no company's own design touched.
 
-Follow-up, same day (user question: what's happening with `llwa_building_exchange`?) — **97 of E&F's 103 banks** get `llwa_building_exchange` added too. That building isn't a literal stock exchange despite the name (it's LLWA's MAPI-communications building — telegraph/telephone/press, reduces market access price impact), but the theme fits E&F's diversified financial companies the same way railways already do. Matched by `building_financial_centre_*` (E&F suffixes the key per country) rather than an exact key.
+**97 of E&F's 103 banks** get more than that: all six LLWA buildings a company is allowed to own — `LLWA_building_roadway`, `LLWA_building_waterway`, `LLWA_building_riverway`, `LLWA_building_airway`, `llwa_building_freight_depot`, `llwa_building_exchange`. (`LLWA_building_logistics_hub` is the seventh and goes to nobody: `ownership_type = no_ownership`, the engine forbids it.) A bank in E&F is a diversified holding, not a transport company — it already carries a financial centre, a railway, and five to eight unrelated buildings — so the narrow "a railway company may extend into roads" rule that bounds the transport companies above doesn't bound it, and the cut is made where the engine makes it, at `ownership_type`. Matched by `building_financial_centre_*` (E&F suffixes the key per country) rather than an exact key. Started as `llwa_building_exchange` alone (2026-08-26, user question: what's happening with that building?), widened to the full set 2026-09-09.
 
 ## Open items carried over, not closed here
 
 * **`mobilization_option_chemical_weapons` (Morgenröte x VC)** — whether repeated `_add` fields inside one sub-block sum or the second overwrites the first is not established from the files (`_vc/morg+vc done` README, VC.3). Unrelated to LLWA, listed here only because it's part of the same overall chain.
 * **`ai_strategy_meiji_restoration`'s `anti_interest_groups`/`interest_group_government_weight` (KAI x VC)** — left open in `_vc/kai+vc done` (depends on vanilla journal entries whose reachability under VC's own Meiji rework isn't established from the files). This addon reuses that merge as-is, open item included; closing it is addon-VC's decision to make, not this addon's.
 * **Which E&F stock category LLWA's buildings should use** was a design decision (settled here as `railroad_stock` uniformly), not something the files dictate on their own — see `_llwa/llwa+ef done`'s README.
-* **`llwa_building_freight_depot`, `llwa_building_exchange`, `LLWA_building_logistics_hub`** are not given to any company (see `_llwa/llwa+companies done`'s README for why) — not a bug, LLWA's own author doesn't give them to its own four companies either.
-* **Grey's/USU's ~70 railway companies** don't get LLWA buildings — addon-Grey's own territory (GR.9). (E&F's banks DO get `llwa_building_exchange` now — see `_llwa/llwa+companies done`'s README for that follow-up.)
+* **`LLWA_building_logistics_hub`** is given to no company anywhere — `ownership_type = no_ownership`, the engine forbids it. `llwa_building_freight_depot` and `LLWA_building_airway` are still withheld from the historical transport companies (LLWA's own author gives neither to his own four), but E&F's banks now get both — see `_llwa/llwa+companies done`'s README for that split.
+* **Grey's/USU's ~70 railway companies** don't get LLWA buildings — addon-Grey's own territory (GR.9). (E&F's banks DO get the full ownable set now — see `_llwa/llwa+companies done`'s README for that follow-up.)
 
 ## Checks run against the assembly
 
@@ -104,7 +104,7 @@ Follow-up, same day (user question: what's happening with `llwa_building_exchang
 | addon-VC | 6 | yes, intentional — the three reform strategies this addon deliberately reissues on top of addon-VC's own merge, plus 3 companies (`company_russian_american_company`, `company_standard_oil`, `company_united_fruit`) addon-VC also touches — additive `INJECT:`, no real conflict |
 | addon-HC | 0 | — |
 | megapack (no t&r) | 101 | yes — `building_airport`, 98 companies (97 E&F banks + `company_standard_oil`), and the additive `GLOBAL`/`on_yearly_pulse_country` pattern, all vs the megapack's own E&F+Morgenröte compatch and its bundled copy of E&F's company list |
-| E&F | 101 | yes — `building_railway` (the morg+ef restore), 98 companies (97 banks getting `llwa_building_exchange` + `company_standard_oil`), additive `GLOBAL`/`on_yearly_pulse_country` |
+| E&F | 101 | yes — `building_railway` (the morg+ef restore), 98 companies (97 banks getting the full ownable LLWA set + `company_standard_oil`), additive `GLOBAL`/`on_yearly_pulse_country` |
 | llwa+morg out | 3 | yes — `building_railway`/`building_airport` (the restore) + `LLWA_building_airway` (harmless no-op when that compatch is active, see `llwa+ef done`'s README) |
 
 Every number matches what the individual pair compatches' own machine matrices and live checks predicted — nothing unaccounted for.
