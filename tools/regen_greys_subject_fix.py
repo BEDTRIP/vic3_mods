@@ -29,14 +29,14 @@ grey_diplo's deliberate "# Modded" additions and carries one broken field:
     when only the first state qualifies for a split-state exchange (plus the
     split-state bonus itself bumped from 25 to 30, self-documented with a
     trailing `# 25` comment). All absent from grey_subject.
-  * `has_port` vs `has_port_country` -- both `first_state_trigger` and
-    `second_state_trigger` call `has_port` at country scope in grey_diplo;
-    grey_subject's copy calls `has_port_country` instead. This spelling
-    appears nowhere else in the entire Grey's pack -- not in grey_subject's
-    own other files (`z43_subjects_demand_states.txt` uses `has_port`), not
-    in grey_diplo's other files (`z13_goods_transfer.txt`,
-    `zzzz06_transfer_state.txt`, both also `has_port`). Treated as a typo in
-    grey_subject's file, not a deliberate rename.
+  * `has_port` vs `has_port_country` -- grey_diplo calls `has_port` at country
+    scope, grey_subject `has_port_country`. **grey_subject is right**: in 1.13
+    `has_port_country` / `has_port_state` are vanilla scripted triggers
+    (00_scripted_triggers.txt:1063) and `has_port` does not exist -- debug.log
+    24.09.2026: "Unknown trigger type: has_port" in this very file, lines 113/127,
+    i.e. the port alternative of both state triggers was dropped at load. (Until
+    24.09.2026 this generator believed the opposite and copied the bug.) The body
+    is grey_diplo's, with `has_port = yes` rewritten to `has_port_country = yes`.
 
 Checked the reverse direction too: grey_subject's body adds nothing of its own
 that grey_diplo's version lacks (the only other differences are whitespace and
@@ -67,7 +67,7 @@ DIPLO_FILE = os.path.join(GREYS, "grey_diplo/common/diplomatic_actions/zzzz04_tr
 SUBJECT_FILE = os.path.join(GREYS, "grey_subject/common/diplomatic_actions/04_trade_statez.txt")
 OUT = res("../_greys/greys_subject_fix done")
 
-DATE = "2026-08-27"
+DATE = "2026-09-24"
 CHECK_ONLY = False
 WRITTEN: dict[str, bytes] = {}
 
@@ -113,12 +113,10 @@ def build_trade_states():
     assert "any_subject_or_below" not in subject_body, (
         f"{key}: grey_subject now carries any_subject_or_below too -- the author may "
         f"have caught up with grey_diplo, re-check whether this fix is still needed")
-    assert "has_port_country" in subject_body, (
-        f"{key}: grey_subject no longer uses has_port_country -- the typo may be fixed "
-        f"upstream, re-check whether this fix is still needed")
-    assert "has_port_country" not in diplo_body, (
-        f"{key}: grey_diplo now uses has_port_country too -- re-check which spelling is "
-        f"actually correct before trusting this fix's assumption")
+    assert "has_port = yes" in diplo_body, (
+        f"{key}: grey_diplo no longer uses the invalid has_port -- drop the rewrite below")
+    # has_port does not exist in 1.13; has_port_country is the vanilla scripted trigger
+    diplo_body = diplo_body.replace("has_port = yes", "has_port_country = yes")
     assert "# Modded" in diplo_body, (
         f"{key}: grey_diplo's Modded markers are gone -- re-check GR.14, this fix may be stale")
 
@@ -130,11 +128,12 @@ def build_trade_states():
           "one of grey_diplo's \"# Modded\" additions (an extra adjacency path through subjects "
           "on second_state_trigger; three AI acceptance-score tweaks: a defunct-port penalty, a "
           "homeland bonus, and an else_if branch for one-sided split-state exchanges; a bumped "
-          "split-state AI value 25->30) and carries a has_port_country typo where grey_diplo (and "
-          "every other file in the pack, including grey_subject's own) uses has_port. grey_subject "
+          "split-state AI value 25->30). grey_subject "
           "loads last in the block and wins the whole record, wiping all of it silently -- nothing "
           "in error.log. grey_subject adds nothing of its own to this record (checked both "
-          "directions), so the fix is grey_diplo's body verbatim, read live rather than hand-copied.")
+          "directions), so the fix is grey_diplo's body, read live rather than hand-copied, with its invalid "
+          "has_port rewritten to the vanilla scripted trigger has_port_country (2026-09-24: "
+          "debug.log 'Unknown trigger type: has_port' dropped the port alternative at load).")
 
 
 def self_check() -> int:

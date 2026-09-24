@@ -20,7 +20,7 @@ zz_ef_cm_grant_bank_company = {
 
 	if = {
 		limit = { NOT = { zz_ef_cm_has_bank_company = yes } }
-		debug_log = "ZZCM grant: [This.GetName] gets the generated central bank company"
+		debug_log = "ZZCM grant: a country gets the generated central bank company"
 		add_company = company_type:zz_ef_cm_central_bank
 	}
 }
@@ -1026,7 +1026,7 @@ zz_ef_cm_bank_company_upkeep = {
 zz_ef_cm_retire_stand_in_bank = {
 	if = {
 		limit = { has_company = company_type:zz_ef_cm_central_bank }
-		debug_log = "ZZCM retire: [This.GetName] drops the generated stand-in"
+		debug_log = "ZZCM retire: a country drops the generated stand-in"
 		remove_company = company_type:zz_ef_cm_central_bank
 	}
 }
