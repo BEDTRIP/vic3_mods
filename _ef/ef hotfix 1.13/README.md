@@ -1123,13 +1123,22 @@ Each file carries the full reasoning in its header; this is the map.
 |---|---|---|
 | EF.14 | `common/production_methods/zz_ef_currency_liquidity_pm.txt` + `pm_currency_liquidity_currency` in the 9 non-English, non-Russian `zz_ef_cm_goods_l_*.yml` | The currency method gets the local-currency coin instead of the generic "currency type" picture; E&F ships its name in English only. The Russian name is in the V4 RUS translation (repo and local copy); the workshop copy of V4 RUS predates it and needs a re-upload. |
 | EF.15 | `common/script_values/zz_ef_cb_bond_issuance_values.txt`, `common/static_modifiers/zz_ef_cb_bond_issuance.txt`, `common/scripted_effects/zz_ef_cb_bond_issuance.txt`, one call in 7g | Central bank bond output × (debt % of GDP / 50), clamped 0…3×, via `goods_output_bond_mult` on the bank building. The six minting methods are not touched. Knob: `zz_ef_cb_bond_reference_debt_pct`. |
-| EF.16 | `zz_ef_cm_central_bank` in all 11 `zz_ef_cm_goods_l_*.yml` | "Центральный банк [RU_CL_RP]" / "[Adjective] Central Bank". Whether a company name has a COUNTRY context is not visible from the files — **check in game before uploading**, revert to the plain name if it renders broken. |
+| EF.16 | — | **Reverted the same day.** A company name has no COUNTRY context: `debug.log` "Data error in loc string 'zz_ef_cm_central_bank'". Back to the plain "Central Bank". |
 | EF.17 (1) | `common/building_groups/zz_ef_financial_centre_group.txt` | `bg_financial_centre` urbanization 5 → 0. |
 | EF.17 (2) | `common/static_modifiers/zz_ef_financial_centre_cap.txt` | Exchange ceiling: `_max_level_add` 1 → 0.1 in `financial_center_place` and `_spe`, i.e. one level per 10M of GDP instead of 1M. Covers the generic and all 41 national exchanges with one number. |
-| EF.17 (4) | 7e in `zz_ef_div0_fix.txt` | `target_supply_mutual_fund_for_modifier` ceiling 25000 → 500 (exchange output ×251 → ×6). |
+| EF.17 (4) | 7e in `zz_ef_div0_fix.txt` | **Reverted the same day.** Capping the output multiplier (25000 → 500) while the five input multipliers kept their own ceilings bankrupted every exchange — London in 1840 bought 269K a week of stock and sold 19K of funds. |
+| EF.17 (4b) | `common/script_values/zz_ef_exchange_margin.txt` | Instead: the exchange's margin. E&F sizes output to 1.5 × the cost of the inputs; now 1.25. Output and cost move together, value added per worker roughly halves. |
 | EF.23 | `common/scripted_effects/zz_ef_capitalization_decay.txt` | Capitalization counters decay 2 % a month, so capitalization follows today's market instead of the integral since 1836. |
 
 Measure on a save after these (GDP, exchange levels and productivity, capital urbanization) before EF.17 (3, 5) and before EF.18 in the megapack is judged.
+
+### Found by the 1836–1840 observer run with the local hotfix (2026-09-24)
+
+- **Minor-country currency printed nothing since EF.10.** `zz_ef_local_currency_fix` gives `state_sell_orders_liquidity_currency_add`, a modifier type nobody declared (vanilla declares these per good, E&F only the `local_currency` one). Declared in `common/modifier_type_definitions/zz_ef_liquidity_currency_sell_orders.txt`, name in all 11 languages.
+- **Dead market-weight loop removed** from `zz_ef_cm_bank_company_upkeep`. It summed `zz_ef_cm_issuer_weight`, which was deleted on 02.09.2026 together with everything that read the sum; the add failed at load ("Badly read script value"), and the loop walked `every_country` for every country every month (138 invalid-market errors).
+- `log =` → `debug_log =` in the same file (`Unknown effect log`).
+- **`zz_ef_new_country_immediate_init.txt` is additive now.** It put `effect = { }` straight into six vanilla on_actions; an on_action holds one effect and ours, loading last, replaced vanilla's, Morgenröte's, Grey's and ETF's. Each vanilla on_action now only lists our own on_action. BOM added to it and to its events file.
+- 7a–7e: `has_variable` before the `base_*_fix > 0` checks (a country E&F never initialized logged `none`, 19 × 6).
 
 ## Left undone
 

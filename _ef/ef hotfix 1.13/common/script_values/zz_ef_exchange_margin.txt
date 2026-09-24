@@ -1,0 +1,29 @@
+#############################################
+# EF.17 (4b) (2026-09-24) -- exchange margin 1.5 -> 1.25
+#
+# How E&F sizes an exchange (00_financial_scripted_value.txt:3595-3610, 4.1.7):
+#   total_cost_fcc                    what the exchange pays a week for its
+#                                     five inputs (four stocks and bonds)
+#   collateral_quantity_mutual_fund = total_cost_fcc / 250
+#   target_supply_mutual_fund       = that x 1.5        <-- this file
+#   -> target_supply_mutual_fund_for_modifier (7e) turns it into the output
+#      multiplier, so the exchange always sells 1.5 x what it buys.
+#
+# The whole 50% is value added, and value added per worker is what makes an
+# exchange the best investment in the country (~2800 per worker seen in
+# Petersburg) and what lands in GDP (the EF.17 loop). 1.25 halves that margin;
+# the exchange still pays for itself and still follows demand.
+#
+# Why here and not on the 7e ceiling: capping the output multiplier alone was
+# tried the same day and bankrupted every exchange (see 7e). This value moves
+# output and cost together.
+#
+# !! TUNING !! the 1.25. 1.0 = no value added at all (an exchange that only
+# pays wages out of nothing -- do not go below ~1.1).
+# !! MAINTENANCE !! key-level REPLACE_OR_CREATE of a 3-line E&F value.
+#############################################
+
+REPLACE_OR_CREATE:target_supply_mutual_fund = {
+	value = collateral_quantity_mutual_fund
+	multiply = 1.25	### EF.17 (4b): E&F has 1.5
+}

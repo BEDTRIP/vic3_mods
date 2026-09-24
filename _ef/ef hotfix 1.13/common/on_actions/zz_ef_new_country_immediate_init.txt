@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # New-country variable init, run immediately instead of waiting a month
 #
 # E&F's own new_country_var_ef (common/scripted_effects/10_new_country_var.txt)
@@ -34,9 +34,22 @@
 # zz_ef_new_country_immediate_init_events.txt) instead: firing a hidden event on
 # scope:target gives that event its own execution context with ROOT genuinely
 # equal to the new country.
+#
+# ADDITIVE, 2026-09-24. This file used to put an `effect = { }` straight into
+# the six vanilla on_actions. An on_action holds ONE effect; the most recent
+# definition wins (debug.log: "There is more than one 'effect' defined using
+# most recent: common/on_actions/zz_ef_new_country_immediate_init.txt:78").
+# Loading last, ours silently replaced the effects vanilla
+# (00_code_on_actions.txt), Morgenroete, Grey's Soft Pop / USU / Subject Suite
+# and ETF put there for released and formed countries. Now each vanilla
+# on_action only lists our own on_action, which carries the effect.
 #############################################
 
 on_country_formed = {
+	on_actions = { zz_ef_newcountry_on_country_formed }
+}
+
+zz_ef_newcountry_on_country_formed = {
 	effect = {
 		if = {
 			limit = {
@@ -48,6 +61,10 @@ on_country_formed = {
 }
 
 on_become_independent = {
+	on_actions = { zz_ef_newcountry_on_become_independent }
+}
+
+zz_ef_newcountry_on_become_independent = {
 	effect = {
 		if = {
 			limit = {
@@ -59,6 +76,10 @@ on_become_independent = {
 }
 
 on_country_released_as_independent = {
+	on_actions = { zz_ef_newcountry_on_country_released_as_independent }
+}
+
+zz_ef_newcountry_on_country_released_as_independent = {
 	effect = {
 		scope:target = {
 			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
@@ -67,6 +88,10 @@ on_country_released_as_independent = {
 }
 
 on_country_released_as_own_subject = {
+	on_actions = { zz_ef_newcountry_on_country_released_as_own_subject }
+}
+
+zz_ef_newcountry_on_country_released_as_own_subject = {
 	effect = {
 		scope:target = {
 			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
@@ -75,6 +100,10 @@ on_country_released_as_own_subject = {
 }
 
 on_country_released_as_company_subject = {
+	on_actions = { zz_ef_newcountry_on_country_released_as_company_subject }
+}
+
+zz_ef_newcountry_on_country_released_as_company_subject = {
 	effect = {
 		scope:target = {
 			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
@@ -83,6 +112,10 @@ on_country_released_as_company_subject = {
 }
 
 on_country_released_as_overlord_subject = {
+	on_actions = { zz_ef_newcountry_on_country_released_as_overlord_subject }
+}
+
+zz_ef_newcountry_on_country_released_as_overlord_subject = {
 	effect = {
 		scope:target = {
 			trigger_event = { id = zz_ef_newcountry.1 days = 0 }

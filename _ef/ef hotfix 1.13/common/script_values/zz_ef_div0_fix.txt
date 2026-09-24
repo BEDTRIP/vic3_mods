@@ -60,7 +60,7 @@ REPLACE_OR_CREATE:target_demand_bond_ajusted = {
 REPLACE_OR_CREATE:target_demand_bond_for_modifier = {
 	value = 0
 	if = {
-		limit = { base_demande_bond_fix > 0 }
+		limit = { has_variable = base_demande_bond_fix base_demande_bond_fix > 0 }
 		value = target_demand_bond_ajusted
 		subtract = base_demande_bond_fix
 		divide = base_demande_bond_fix
@@ -93,7 +93,7 @@ REPLACE_OR_CREATE:target_demand_manufacture_stock_ajusted = {
 REPLACE_OR_CREATE:target_demand_manufacture_stock_for_modifier = {
 	value = 0
 	if = {
-		limit = { base_demande_manufacture_stock_fix > 0 }
+		limit = { has_variable = base_demande_manufacture_stock_fix base_demande_manufacture_stock_fix > 0 }
 		value = target_demand_manufacture_stock_ajusted
 		subtract = base_demande_manufacture_stock_fix
 		divide = base_demande_manufacture_stock_fix
@@ -126,7 +126,7 @@ REPLACE_OR_CREATE:target_demand_agricultural_stock_ajusted = {
 REPLACE_OR_CREATE:target_demand_agricultural_stock_for_modifier = {
 	value = 0
 	if = {
-		limit = { base_demande_agricultural_stock_fix > 0 }
+		limit = { has_variable = base_demande_agricultural_stock_fix base_demande_agricultural_stock_fix > 0 }
 		value = target_demand_agricultural_stock_ajusted
 		subtract = base_demande_agricultural_stock_fix
 		divide = base_demande_agricultural_stock_fix
@@ -159,7 +159,7 @@ REPLACE_OR_CREATE:target_demand_mining_stock_ajusted = {
 REPLACE_OR_CREATE:target_demand_mining_stock_for_modifier = {
 	value = 0
 	if = {
-		limit = { base_demande_mining_stock_fix > 0 }
+		limit = { has_variable = base_demande_mining_stock_fix base_demande_mining_stock_fix > 0 }
 		value = target_demand_mining_stock_ajusted
 		subtract = base_demande_mining_stock_fix
 		divide = base_demande_mining_stock_fix
@@ -192,7 +192,7 @@ REPLACE_OR_CREATE:target_demand_railroad_stock_ajusted = {
 REPLACE_OR_CREATE:target_demand_railroad_stock_for_modifier = {
 	value = 0
 	if = {
-		limit = { base_demande_railroad_stock_fix > 0 }
+		limit = { has_variable = base_demande_railroad_stock_fix base_demande_railroad_stock_fix > 0 }
 		value = target_demand_railroad_stock_ajusted
 		subtract = base_demande_railroad_stock_fix
 		divide = base_demande_railroad_stock_fix
@@ -323,7 +323,7 @@ REPLACE_OR_CREATE:target_demand_currency_for_modifier = {
 REPLACE_OR_CREATE:target_supply_mutual_fund_for_modifier = {
 	value = 0
 	if = {
-		limit = { base_supply_mutual_fund_fix > 0 }
+		limit = { has_variable = base_demande_bond_fix base_supply_mutual_fund_fix > 0 }
 		value = target_supply_mutual_fund
 		subtract = base_supply_mutual_fund_fix
 		divide = base_supply_mutual_fund_fix
@@ -338,16 +338,15 @@ REPLACE_OR_CREATE:target_supply_mutual_fund_for_modifier = {
 		}
 		multiply = 0.1
 	}
-	max = 500	### EF.17 (4): was 25000 (x251), see below
+	max = 25000
 }
-# EF.17 (4) (2026-09-24): ceiling 25000 -> 500, i.e. output x251 -> x6.
-# The ceiling was headroom against a bad tick, never a balance number, and it
-# never bound: base exchange output is 1 mutual fund (250) per level, ~130 a
-# year per worker; the ~2800 per worker seen in Petersburg means the
-# multiplier sat around x20, all of it real demand-following. At x6 the
-# exchange still answers demand, but stops being the best investment in the
-# country. !! TUNING !! -- measure on a save (EF.17 in the plan) before
-# moving it.
+# EF.17 (4) was tried on 2026-09-24 and reverted the same day: ceiling
+# 25000 -> 500. It bankrupted every exchange. This value sizes the OUTPUT to
+# 1.5 x the cost of the inputs (target_supply_mutual_fund), while the five
+# input multipliers follow stock demand on their own ceilings. Capping only the
+# output side left London buying 269K a week of stock and selling 19K of funds
+# (1840 observer run). The exchange's margin is balanced in
+# zz_ef_exchange_margin.txt instead, which moves both sides together.
 
 #############################################
 # 7f. building_financial_num once more, this time on the exchange's max level
