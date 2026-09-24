@@ -1,0 +1,226 @@
+﻿#############################################
+# EF.13 -- central_bank_debt_buyer_list_N_clear compared a number with a country
+#
+# Key-level REPLACE_OR_CREATE of E&F's ten effects in
+# common/scripted_effects/08_list_effect.txt:1558-1737. No E&F file is
+# overwritten.
+#
+# THE ERROR, 2026-09-24 run (1867-1868 save, no -debug_mode):
+#   Left side and right side during comparison were of different types
+#   (left was 'value', right was 'country')
+#     Script location: common/scripted_effects/08_list_effect.txt:1599
+#     <- ai_bond_maturity_N (01_financial_scripted_effects.txt)
+#     <- bond_maturity_on_action (00_on_action_main.txt:1231)
+#     <- financial_center_ef_on_yearly_pulse_country (00_ef_on_action.txt:197)
+# 4838 of them in twelve minutes of play, each written with its call stack to
+# both game.log and error.log -- the logs rotated five times in ten minutes.
+#
+# WHY: each effect walks every_country and tests
+#   var:ai_seller_country_general_N = root
+#   var:seller_country_general_N = root
+# Both variables are seeded to the NUMBER 0 for every country
+# (history/global/00_ef_financial_global_variable.txt, 10_new_country_var.txt)
+# and reset to 0 at bond maturity (01_financial_scripted_effects.txt, e.g.
+# :24160). Only a country holding an AI bond has ai_seller_country_general_N
+# set to a country. Every other country fails the comparison with the error
+# above, and the failed comparison counts as false.
+#
+# THE FIX, AI HALF -- same answer, no type clash. Every place that sets
+# ai_seller_country_general_N to a country (01_financial_scripted_effects.txt
+# ai_buy_bond_N, e.g. :1674-1689 and :1811-1820) also adds the same seller to
+# a variable LIST of the same name in the same (buyer) scope, and the one
+# place that resets the variable to 0 (ai_bond_maturity_N, e.g. :24160) clears
+# that list in the same effect (:24178). A buy is gated on the slot being
+# free (ai_selle_bond_maturity_yers_time_N = 0), so the list holds exactly the
+# seller the variable holds while the bond is live, and nothing otherwise.
+# Checked for all ten slots: 3 writes of the variable, 2 list adds, 1 reset +
+# 1 clear each. The one moment they differ is inside ai_bond_maturity_N itself,
+# between the reset and the clear, and only on ROOT -- whose seller can never
+# be root (ai_buy_bond_N gates on `scope:seller = { not = { this = root } }`),
+# so both forms answer false there too.
+# is_target_in_variable_list is vanilla 1.13
+# (00_victoria_ip3_scripted_effects.txt:124 uses it unguarded).
+#
+# THE PLAYER HALF IS LEFT OUT, ON PURPOSE. seller_country_general_N is never
+# set to a country anywhere in E&F: the player purchase
+# (scripted_guis/00_financial_scripted_guis.txt, e.g. :966) only adds to the
+# LIST of that name. So `var:seller_country_general_N = root` has never been
+# true in E&F -- it only ever errored. Replacing it with the list test would
+# switch on a branch that has never run, which changes the economy rather
+# than silencing a log. Dropping the line keeps E&F's behaviour exactly.
+# Whether the author meant it to run is an open question (plan, EF.13).
+#
+# !! MAINTENANCE !! After an E&F update, diff 08_list_effect.txt:1558-1737.
+# If the bodies change, or E&F starts setting seller_country_general_N to a
+# country, this file needs a fresh look.
+#############################################
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_1_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_1
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_1 = root
+			### var:seller_country_general_1 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_1 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_1
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_2_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_2
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_2 = root
+			### var:seller_country_general_2 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_2 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_2
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_3_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_3
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_3 = root
+			### var:seller_country_general_3 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_3 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_3
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_4_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_4
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_4 = root
+			### var:seller_country_general_4 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_4 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_4
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_5_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_5
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_5 = root
+			### var:seller_country_general_5 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_5 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_5
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_6_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_6
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_6 = root
+			### var:seller_country_general_6 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_6 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_6
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_7_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_7
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_7 = root
+			### var:seller_country_general_7 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_7 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_7
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_8_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_8
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_8 = root
+			### var:seller_country_general_8 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_8 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_8
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_9_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_9
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_9 = root
+			### var:seller_country_general_9 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_9 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_9
+				target = prev
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:central_bank_debt_buyer_list_10_clear = {
+	clear_variable_list = central_bank_debt_buyer_list_10
+	every_country = {
+		limit = {
+			### EF.13: was `or = { var:ai_seller_country_general_10 = root
+			### var:seller_country_general_10 = root }` -- see the header.
+			is_target_in_variable_list = { name = ai_seller_country_general_10 target = root }
+		}
+		root = {
+			add_to_variable_list = {
+				name = central_bank_debt_buyer_list_10
+				target = prev
+			}
+		}
+	}
+}

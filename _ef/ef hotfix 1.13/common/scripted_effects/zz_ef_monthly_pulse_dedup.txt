@@ -1,0 +1,196 @@
+﻿#############################################
+# 7g. update_modifiers_bc_fc_ns -- the same heavy effect, three times a month
+#
+# Key-level REPLACE_OR_CREATE. No E&F file is overwritten, but this one carries
+# a full copy of a 91-line effect (00_on_action_main.txt:18423-18513 in 4.1.7),
+# so it has to be re-diffed after every E&F update. The only edits are marked
+# `###` below; everything else is E&F's, line for line, comments and all.
+#
+# WHAT E&F DOES
+# update_modifiers_bc_fc_ns runs on every country's monthly pulse
+# (00_ef_on_action.txt:96 -> 00_on_action_main.txt:21) and has three branches:
+#
+#   :18431  owns building_bank              -> central_bank_modifier,      transfert
+#   :18483  owns any of the ~40 centres     -> financial_center_modifier,  transfert
+#   :18493  national_stockpile + a bank     -> national_stockpile_modifier, transfert
+#
+# where `transfert` is stockpiling_capital_state_transfert -- an effect that
+# takes no arguments, runs ~2500 lines of change_variable across the country's
+# states, and whose FIRST line (01_economic_scripted_effects.txt:130847) is
+# `financial_center_modifier = yes`.
+#
+# So a country with a bank, a centre and the tech runs the transfert three
+# times a month and financial_center_modifier four. And
+# financial_center_modifier is itself five every_scope_state passes with a
+# 40-way has_building OR inside each, plus financial_center_production_methods.
+# For Britain that is on the order of 10^5 building checks a month for one
+# effect, repeated across every bank-owning country in the world.
+#
+# WHAT THIS DOES
+# The three branches keep their own gates and their own modifier effects. Each
+# sets a flag instead of calling the transfert, and the transfert is called
+# once, after all three. Transfert runs 3 -> 1, financial_center_modifier 4 -> 2.
+#
+# WHY THAT IS THE SAME THING
+# The transfert takes no arguments, so three calls differ only in what the
+# preceding modifier effects left behind. It also handles both halves itself:
+# the central-bank transfer keys off `central_bank_historic_place` (set by
+# central_bank_modifier) and the financial-centre half off
+# `financial_center_site_var` (set by financial_center_modifier). Running it
+# once at the end means both halves see all three modifier effects applied
+# rather than one or two -- in E&F the first call reads last month's
+# financial_center_site_var, because this month's is not written until branch
+# two. Later is fresher, not different.
+#
+# WHY A FLAG AND NOT A RE-CHECK
+# `or` over the three gates would work -- the third is a subset of the first,
+# so `bank OR any-centre` covers all three -- but it means a second copy of the
+# 40-name building list in this file, and a silent hole the day E&F adds a
+# forty-first centre. The flag follows whether a branch actually ran, so it
+# cannot drift. It is one integer per country, rewritten to 0 at the top of
+# every pulse.
+#
+# 7i (2026-09-23): THE SECOND BRANCH NO LONGER CALLS financial_center_modifier
+# It was fully redundant: the transfert opens with `financial_center_modifier =
+# yes` (01_economic_scripted_effects.txt:130847) and, with the flag above, the
+# transfert always runs whenever that branch fires. Count 2 -> 1 a month.
+# This one matters more than it looks: financial_center_modifier strips and
+# re-adds financial_center_place / _spe / _historic_place on EVERY state of the
+# country, so each call dirties the modifiers of the whole country.
+# The only visible change is order: it now runs after
+# national_stockpile_modifier instead of before. Checked the bodies
+# (09_introduction_building_lvl.txt:22136 and :22735, plus
+# financial_center_production_methods at 01_financial_scripted_effects.txt:25228):
+# national_stockpile_modifier touches only national_stockpile_* modifiers and
+# country_already_national_stockpile; financial_center_modifier reads none of
+# those, and the reverse holds too.
+#
+# 7i: STATES CREATED AFTER THE SEED
+# The one-shot seed (zz_ef_stockpile_state_var_seed.txt, 7h) cannot reach a
+# state that did not exist yet, and Vic3 does create state objects mid-game:
+# a state region split by conquest or cession gets a new state for the new
+# owner. The 23.09 run (1867 save) still logged ten blocks of
+#   Failed to fetch variable for 'stockpiling_bond_var_state_1' due to not being set
+# from the transfert's closing gate (01_economic_scripted_effects.txt:133303),
+# three errors per variable. So the transfert call below is now preceded by
+# the guarded per-state seed over this country's own states, which is exactly
+# the set that gate walks. Seven has_variable checks per state, only for
+# countries that run the transfert at all; next to ~2500 lines of transfert
+# that is noise.
+#
+# EF.15 (2026-09-24): the central-bank branch also calls
+# zz_ef_cb_bond_issuance_update (zz_ef_cb_bond_issuance.txt) -- our own
+# addition, not E&F's. It walks only the states that hold building_bank.
+#
+# MEASURED AGAINST: a 1858 save doing five in-game days in 68 s at speed 4 on
+# 2026-09-12. Note --debugmode was on for that run; measure without it first.
+#############################################
+
+REPLACE_OR_CREATE:update_modifiers_bc_fc_ns = {
+	set_variable = { name = zz_ef_bcfcns_ran value = 0 }
+
+	#si il n'a pas le batiment il ne délanche pas
+	if = {
+		limit = {
+			any_scope_state = {
+				has_building = building_bank
+			}
+		}
+		central_bank_modifier = yes
+		### EF.15: bond output of the central bank follows debt/GDP.
+		### zz_ef_cb_bond_issuance.txt
+		zz_ef_cb_bond_issuance_update = yes
+		set_variable = { name = zz_ef_bcfcns_ran value = 1 }
+	}
+	if = {
+		limit = {
+			any_scope_state = {
+				or = {
+					has_building = building_financial_centre
+					has_building = building_financial_centre_arg
+					has_building = building_financial_centre_aus
+					has_building = building_financial_centre_bav
+					has_building = building_financial_centre_bel
+					has_building = building_financial_centre_bic
+					has_building = building_financial_centre_brz
+					has_building = building_financial_centre_chi
+					has_building = building_financial_centre_chl
+					has_building = building_financial_centre_den
+					has_building = building_financial_centre_dei
+					has_building = building_financial_centre_egy
+					has_building = building_financial_centre_fra
+					has_building = building_financial_centre_frm
+					has_building = building_financial_centre_gbr
+					has_building = building_financial_centre_gbr_2
+					has_building = building_financial_centre_gre
+					has_building = building_financial_centre_hkh
+					has_building = building_financial_centre_han
+					has_building = building_financial_centre_ita
+					has_building = building_financial_centre_jap
+					has_building = building_financial_centre_mex
+					has_building = building_financial_centre_net
+					has_building = building_financial_centre_nsw
+					has_building = building_financial_centre_ont
+					has_building = building_financial_centre_peu
+					has_building = building_financial_centre_por
+					has_building = building_financial_centre_pru
+					has_building = building_financial_centre_que
+					has_building = building_financial_centre_rus
+					has_building = building_financial_centre_saf
+					has_building = building_financial_centre_sar
+					has_building = building_financial_centre_sic
+					has_building = building_financial_centre_spa
+					has_building = building_financial_centre_swe
+					has_building = building_financial_centre_swi
+					has_building = building_financial_centre_tus
+					has_building = building_financial_centre_tur
+					has_building = building_financial_centre_uru
+					has_building = building_financial_centre_usa
+					has_building = building_financial_centre_usa_2
+					has_building = building_financial_centre_sax
+				}
+			}
+		}
+		### 7i: `financial_center_modifier = yes` removed here -- the transfert
+		### below opens with it. See the header.
+
+		set_variable = { name = zz_ef_bcfcns_ran value = 1 }
+	}
+	if = {
+		limit = {
+			has_technology_researched = national_stockpile
+			any_scope_state = {
+				has_building = building_bank
+			}
+		}
+		national_stockpile_modifier = yes
+
+		set_variable = { name = zz_ef_bcfcns_ran value = 1 }
+	}
+
+	### The three branches above each ended with `stockpiling_capital_state_transfert = yes`
+	### in E&F. One call here does the work of all three -- see the header.
+	if = {
+		limit = { var:zz_ef_bcfcns_ran = 1 }
+		### 7i: seed states created since the one-shot seed ran. See the header.
+		every_scope_state = {
+			zz_ef_seed_stockpile_vars_on_state = yes
+		}
+		stockpiling_capital_state_transfert = yes
+	}
+
+	#si il n'a pas ou si il a. il déclanche
+	#remove_state_building_modifier = yes
+	remove_country_building_modifier = yes
+	destroy_building_not_allowed = yes
+
+	if  = {  #réinitialis la loi si un pays si lib
+		limit = {
+			law_currency_enacted = yes
+			not  = {
+				country_already_central_bank = yes
+			}
+		}
+		remove_law_currency = yes
+	}
+}

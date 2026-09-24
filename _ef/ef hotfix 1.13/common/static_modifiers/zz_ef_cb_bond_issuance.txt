@@ -1,0 +1,16 @@
+﻿#############################################
+# EF.15 (2026-09-24) -- see common/script_values/zz_ef_cb_bond_issuance_values.txt
+#
+# Applied to the building_bank building itself, with multiplier = percentage
+# points (0..100 for _low, 0..200 for _high). One point = 1% of bond output.
+#############################################
+
+zz_ef_cb_bond_issuance_low = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_negative.dds
+	goods_output_bond_mult = -0.01
+}
+
+zz_ef_cb_bond_issuance_high = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_positive.dds
+	goods_output_bond_mult = 0.01
+}

@@ -1,0 +1,91 @@
+#############################################
+# New-country variable init, run immediately instead of waiting a month
+#
+# E&F's own new_country_var_ef (common/scripted_effects/10_new_country_var.txt)
+# backfills ~34000 lines of country/state variables -- base_rate_percentage among
+# them -- for any country missing them. But its only caller is
+# ef_on_monthly_pulse_recurence (00_on_action_main.txt:63/106), gated behind
+# `not = { has_variable = coal_release_quantity } }`, which is E&F's own
+# "already initialized" flag, set at the end of new_country_var_ef itself.
+#
+# That means a country goes uninitialized from the moment it appears on the map
+# until its first monthly pulse -- up to ~30 days. Any E&F/ComPatch script that
+# reads one of those variables on such a country during that window gets `none`
+# back (see zz_pb_ef_construction_sector.txt's ZZ FIX comment for the specific
+# case this was diagnosed from: 4700+ "Value of wrong type" errors in a single
+# session, scaling with how many young countries exist -- i.e. worse the longer
+# a campaign runs and the more nations form/release/gain independence).
+#
+# Fix: call new_country_var_ef the moment the country exists instead of waiting
+# for the pulse. It is idempotent (same has_variable guard E&F uses), so calling
+# it here and then again on the monthly pulse is harmless -- the second call is
+# always a no-op.
+#
+# on_country_formed / on_become_independent fire with ROOT already the new
+# country, so new_country_var_ef (which reads ROOT internally via
+# `every_state = { limit = { owner = ROOT } }`) can be called directly.
+#
+# The four on_country_released_as_* actions fire with ROOT = the overlord and
+# scope:target = the new country. new_country_var_ef can't simply be called
+# inside `scope:target = { }` -- ROOT does not follow a scope change, it stays
+# the overlord, which would misfile the state-variable half of the backfill onto
+# the OVERLORD's own (already-initialized) states instead of the new country's.
+# Those four route through zz_ef_newcountry.1 (common/events/
+# zz_ef_new_country_immediate_init_events.txt) instead: firing a hidden event on
+# scope:target gives that event its own execution context with ROOT genuinely
+# equal to the new country.
+#############################################
+
+on_country_formed = {
+	effect = {
+		if = {
+			limit = {
+				not = { has_variable = coal_release_quantity }
+			}
+			new_country_var_ef = yes
+		}
+	}
+}
+
+on_become_independent = {
+	effect = {
+		if = {
+			limit = {
+				not = { has_variable = coal_release_quantity }
+			}
+			new_country_var_ef = yes
+		}
+	}
+}
+
+on_country_released_as_independent = {
+	effect = {
+		scope:target = {
+			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
+		}
+	}
+}
+
+on_country_released_as_own_subject = {
+	effect = {
+		scope:target = {
+			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
+		}
+	}
+}
+
+on_country_released_as_company_subject = {
+	effect = {
+		scope:target = {
+			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
+		}
+	}
+}
+
+on_country_released_as_overlord_subject = {
+	effect = {
+		scope:target = {
+			trigger_event = { id = zz_ef_newcountry.1 days = 0 }
+		}
+	}
+}

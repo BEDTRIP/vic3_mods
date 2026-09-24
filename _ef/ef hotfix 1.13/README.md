@@ -8,7 +8,7 @@
   09.09.2026 — меню компаний переделано (EF.11), см. «The companies panel»
 версии: —
 позиция: —
-файлов: 51
+файлов: 97
 генератор: — (списан 02.09.2026, tools/_to_delete/regen_ef_currency_merge_retired_2026-09-02.py)
 зависит от: —
 -->
@@ -884,6 +884,31 @@ The author knows about the first one — the comment on that very line in `00_fi
 
 The fix clamps the first divisor with `divide = { value = building_financial_num min = 1 }` and wraps the second in a `> 0` check so the block is skipped rather than divided. Note `min` on a `divide = { }` block clamps the **divisor**, not the result — with one or more centres the arithmetic is bit-identical to E&F's. Ten values patched: bond, manufacture, agricultural, mining and railroad stock, `_ajusted` and `_for_modifier` each.
 
+#### The sixth `_for_modifier` — the exchange bubble
+
+The financial-centre block computes six `_for_modifier` values. Five of them are demand, and each ends with the author's own `max = 25000`. The sixth has neither that ceiling nor a zero guard — and it is the one that drives **output**:
+
+| line | value | divisor | `max` |
+|---|---|---|---|
+| 3688 | `target_demand_bond_for_modifier` | `base_demande_bond_fix` | 25000 |
+| 3739 | `target_demand_manufacture_stock_for_modifier` | `base_demande_manufacture_stock_fix` | 25000 |
+| 3788 | `target_demand_agricultural_stock_for_modifier` | `base_demande_agricultural_stock_fix` | 25000 |
+| 3837 | `target_demand_mining_stock_for_modifier` | `base_demande_mining_stock_fix` | 25000 |
+| 3886 | `target_demand_railroad_stock_for_modifier` | `base_demande_railroad_stock_fix` | 25000 |
+| **3611** | **`target_supply_mutual_fund_for_modifier`** | **`base_supply_mutual_fund_fix`** | **—** |
+
+The five feed `goods_input_<good>_mult` on the exchange. The sixth feeds `mutual_fund_supply`, which is `goods_output_mutual_funds_mult = 0.01` (`00_ef_dynamic_modifier_building.txt:233`), applied at `09_introduction_building_lvl.txt:22459`. A building's output value *is* its GDP contribution, so this number lands in the state's GDP with nothing in between.
+
+Its divisor is `var:base_demande_bond_fix`, written by `financial_center_modifier_fixed_var` from `scope:financial_center_scope.modifier:goods_input_bond_add` — the workforce-scaled bond intake of `pm_bond_exchange`. Zero on any tick with no workforce to scale: **the tick after the exchange changes hands**, the same window as the central bank in [The divisor, and two wrong fixes](#the-divisor-and-two-wrong-fixes).
+
+Observed in a 1858 campaign: Britain took Egypt's capital state and with it a third exchange (`building_financial_centre_egy`, alongside `_gbr` and `_gbr_2`). That state's GDP then ran past 60 billion — an order of magnitude above the whole world's. Division by zero here is the only path in this subsystem that multiplies an exchange's output without bound.
+
+Patched to the same shape as its five siblings: skip the block instead of dividing at zero, then the author's own 25000. **On the ceiling** — 25000 means `goods_output_mutual_funds_mult = +250`, output ×251, the same headroom he allows on the five inputs. This is not the currency case where a cap strangled the mechanic: there the number *is* the mechanic, here it is a percentage deviation from the exchange's own bond intake. Still, if exchanges visibly shrink after this, delete the `max` line and keep the guard — the guard alone is what stops the blow-up.
+
+Twelve values patched in total, and one more for insurance: `max_building_financial_center_by_number_in_market` (line 203) divides `var:gdp_view_fc` by `building_financial_num` unguarded. It is the multiplier of `financial_center_place_spe`, i.e. `state_building_financial_centre_<tag>_max_level_add` — how tall the exchange in that state may be built. In ordinary play the divisor cannot be 0 where it is read, since the branch only runs in states that hold such a building; the windows where it might are the same ones above. `min = 1` costs nothing and closes them.
+
+Noted, not fixed: `gdp_view_fc` is a country variable and `building_financial_num` counts via `any_scope_state`, yet both are read from inside `every_scope_state`. If the engine evaluated `add_modifier` multipliers in state scope, that would be an unset variable and a wrong-scope trigger every month per centre. Neither error appears in `error.log`, so the multiplier resolves against the country. Worth re-checking if that ever changes.
+
 ### `common/scripted_effects/zz_ef_currency_scope_guard_fix.txt` — dereferencing a scope that may not exist
 
 `sell_currency_privat_bank` builds a seller/buyer pair out of an ordered list and then does, unconditionally:
@@ -896,13 +921,51 @@ If the list came back empty there is no `scope:seller`. The same holds for `scop
 
 Verified still unguarded in E&F 04.07.2026 on 2026-08-19.
 
-### `common/history/global/zz_ef_init_stockpiling_state_vars.txt` — ⚠ probably redundant, verify and delete
+### The seven state variables — history was never enough
 
-Additive `GLOBAL` block that fills in seven state variables (`stockpiling_{bond,manufacture_stock,agricultural_stock,mining_stock,railroad_stock}_var_state_1`, `financial_center_site_var`, `looted_state`) if they are missing. It was written against E&F v4.1.1 to stop startup spam of `Failed to fetch variable ... due to not being set` and `Invalid left side during comparison 'var'`.
+Two files, and the second is the one that actually works.
 
-Re-checked against E&F 04.07.2026 and it now looks unnecessary: `common/history/global/01_ef_state_global_variable.txt:1362-1389` already sets all seven inside `GLOBAL = { every_state = { ... } }`, which covers unowned states too, and a sweep of `common/` found no `stockpiling_*` variable that is read via `var:` but never set (552 read, 2303 set, 0 orphans).
+`common/history/global/zz_ef_init_stockpiling_state_vars.txt` is an additive `GLOBAL` block that fills in seven state variables (`stockpiling_{bond,manufacture_stock,agricultural_stock,mining_stock,railroad_stock}_var_state_1`, `financial_center_site_var`, `looted_state`) if they are missing. Written against E&F v4.1.1 to stop startup spam of `Failed to fetch variable ... due to not being set` and `Invalid left side during comparison 'var'`.
 
-It is kept for now only because the original log that showed the spam could not be re-read during this pass. **Start a game with this file disabled, grep `error.log` for those two lines, and if it is clean, delete the file.** Every write is guarded by `NOT = { has_variable = ... }`, so leaving it in cannot do harm in the meantime — it just runs a loop over every state at game start for nothing.
+It was once marked ⚠ *probably redundant*, on the grounds that `01_ef_state_global_variable.txt:1362-1389` now sets all seven itself. **That was the wrong worry.** Both inits live in `common/history/`, which runs when a *campaign starts* and never again. A save begun before either init existed carries states that have never had the variables, and no history block can reach them.
+
+Measured in a 1858 save on 2026-09-12 — 68 seconds of runtime at speed 4, `1858.1.1 → 1858.1.6`:
+
+| count | error |
+|---|---|
+| 300 | `Failed to fetch variable for 'stockpiling_*_var_state_1' due to not being set` |
+| 303 | `Event target link 'var' returned an unset scope` |
+| 303 | `Invalid left side during comparison 'var'` |
+
+906 of the ~1000 script errors that session threw while actually running, from one gate — `01_economic_scripted_effects.txt` (~133298 in the 4.1.7 numbering), inside `stockpiling_capital_state_transfert`:
+
+```
+if = {
+    limit = {
+        any_scope_state = {
+            var:financial_center_site_var = 0
+            or = {
+                var:stockpiling_bond_var_state_1 > 0
+                ... four more ...
+            }
+        }
+    }
+    stockpiling_capital_state_transfert_financial_center_place = yes
+}
+```
+
+`any_scope_state` walks every state the country owns, so a country with a bank pays three errors per missing variable per state — and `update_modifiers_bc_fc_ns` calls that effect three times a month (see [Performance](#performance)).
+
+`common/on_actions/zz_ef_stockpile_state_var_init.txt` (new) hangs the same seven writes off `on_game_started_after_lobby`, which fires on every session, loaded saves included — E&F hangs `com_topbar_setup_ef` off it for exactly that reason. One guarded pass over `every_state` at load and the gate has real zeroes to read. Scope note: that on_action has none, so it is `every_state` (the top-level global list, same as E&F's top-level `every_country` at `00_ef_on_action.txt:349`) and **not** `every_scope_state`, which needs a country or region and would silently do nothing.
+
+The history file stays. It is guarded the same way, so on a new campaign it runs first and the on_action finds nothing to do.
+
+**Follow-up, 20:03 run — it did not clear them.** The reads fell from ~151 error blocks per in-game day to ~24, but most of that drop is [7g](#update_modifiers_bc_fc_ns-does-the-same-heavy-work-three-times-a-month) collapsing three transfert calls into one. Something about the seed is not reaching the states the gate walks. Two candidates, and `common/scripted_effects/zz_ef_stockpile_state_var_seed.txt` covers both rather than guessing between them:
+
+1. `on_game_started_after_lobby` may not fire on a *loaded* save the way it does on a new campaign. A second hook on `on_monthly_pulse_country`, gated on a global variable, runs the seed once ever — one pass on the first country pulse after install, then never again. States neither appear nor vanish in Vic3, so once the variables exist they stay in the save.
+2. `every_state` may not reach every state the gate walks. The gate is `any_scope_state` on a **country**, so the set that matters is exactly "states someone owns" — the seed now makes a second pass as `every_country` → `every_scope_state`, guarded the same way, writing nothing when the first pass was enough.
+
+If the next run is clean, both are cheap enough to leave in. If it is not, the seed is not the problem and those reads are coming from somewhere other than the states a country owns.
 
 ### `common/history/buildings/00_a_ef_history_var_init.txt` — the `country_already_financial_center` spam
 
@@ -972,8 +1035,108 @@ Comment the block out if you want the dev panel back.
 
 ---
 
+## Performance
+
+Same 1858 save, 2026-09-12. Three things account for most of it, in order of how cheap they are to act on.
+
+**Measure unpaused seconds, not wall clock.** The first figure taken here — "five in-game days in 68 seconds" — was wrong: 59 of those 68 seconds were a pause. Summing only the unpause→pause intervals in `dedicated_server.log` against the `Processing Tick` dates is the honest number, and it moves the baseline by an order of magnitude.
+
+| run | dates | in-game days | unpaused | s/day | to title | to idler |
+|---|---|---|---|---|---|---|
+| 19:43, before 7e–7g | `1858.1.1 → 1858.1.6` | 6 | 9 s | **1.50** | 105 s | 137 s |
+| 20:03, after 7e–7g | `1858.1.1 → 1858.2.1` | 32 | 44 s | **1.38** | 40 s | 66 s |
+
+So the monthly-pulse work is *not* what the tick time is made of — 7g cut the transfert from three calls to one (visible in `error.log`: three call sites at 300 error blocks each became one at 750) and the clock barely moved. The load times halving is almost certainly OS file cache on a second launch twenty minutes later, not anything in this mod. Both runs had `--debugmode` on.
+
+### `--debugmode` is on, and it is the expensive one
+
+`LaunchArguments` in the crash meta reads `--debugmode --gdprcompliant ...`, and the current session confirms it: `debug.log` carries `PostValidate of effect '...' returned false` and `Variable '...' is set but is never used`, neither of which is written outside debug mode.
+
+Debug mode runs a validation sweep over every scripted effect at load. That sweep is what produced **7338 errors in the single second 19:42:59** and 2821 more at 19:42:40 — roughly 3 MB of `error.log` before the campaign even started, out of ~4120 error blocks for the whole session:
+
+| count | error | what it means |
+|---|---|---|
+| 275 | `create_building [ Invalid production method: pm_unrefrigerated ]` | vanilla/TGR history builds with a PM that Grey's Food Industries Rework removed |
+| 197 | `trigger_event [ Event not found! EventID: 00_ef_economic_event.N ]` | E&F calls its own events that do not exist (matching `.dds` icons missing too) |
+| 166 | `create_building [ company: Not found in database class CCompanyTypeDatabase ]` | E&F's `establish_bank_and_ef_compagnie` naming companies that are not in the database |
+| 95 | `activate_production_method [ Invalid production method 'pm_no_gold_consuption' ]` | referenced by `01_economic_scripted_effects.txt:139022+`, defined nowhere in E&F's `production_methods/` |
+| 32 | `create_building [ Invalid production method: pm_manual_dough_processing ]` | same class as `pm_unrefrigerated` |
+
+These are real incompatibilities and worth fixing on their own, but none of them is *caused* by debug mode — debug mode is what makes the game stop and write a callstack for each one. **This is now the only untried lever: run one session without `--debugmode` and compare s/day against the table above.** Keep it for hotfix work, drop it for play.
+
+### `update_modifiers_bc_fc_ns` does the same heavy work three times a month
+
+`00_on_action_main.txt:18423` runs on every country's monthly pulse and calls `stockpiling_capital_state_transfert` three times — once per branch:
+
+| line | gate | calls |
+|---|---|---|
+| 18431 | owns `building_bank` | `central_bank_modifier`, then the transfert |
+| 18483 | owns any of the ~40 financial centres | `financial_center_modifier`, then the transfert |
+| 18493 | `national_stockpile` researched **and** owns a bank | `national_stockpile_modifier`, then the transfert |
+
+`stockpiling_capital_state_transfert` takes no arguments and its first line (`01_economic_scripted_effects.txt:130847`) is `financial_center_modifier = yes`. So a country with a bank, a centre and the tech runs the transfert three times and `financial_center_modifier` **four** times a month — and `financial_center_modifier` is itself five `every_scope_state` passes with a 40-way `has_building` OR in each, plus `financial_center_production_methods`. For Britain that is on the order of 10⁵ building checks per month for one effect, repeated across every bank-owning country.
+
+Nothing between the three calls changes what the transfert reads except the three `*_modifier` effects that precede them, and the transfert handles the central-bank and financial-centre cases in one body.
+
+Patched in `common/scripted_effects/zz_ef_monthly_pulse_dedup.txt`: the three branches keep their own gates and their own modifier effects, each sets a flag instead of calling the transfert, and the transfert is called **once** after all three. **Transfert 3 → 1, `financial_center_modifier` 4 → 2.**
+
+Why that is the same thing: the transfert takes no arguments, so three calls differ only in what the preceding modifier effects left behind, and it keys off `central_bank_historic_place` (written by `central_bank_modifier`) and `financial_center_site_var` (written by `financial_center_modifier`) itself. Calling it once at the end means both halves see all three modifier effects applied rather than one or two — in E&F the first call reads *last month's* `financial_center_site_var`, because this month's is not written until branch two. Later is fresher, not different.
+
+Why a flag and not a re-check of the gates: `bank OR any-centre` would cover all three (the third gate is a subset of the first), but it means a second copy of the 40-name building list in the file and a silent hole the day E&F adds a forty-first centre. The flag follows whether a branch actually ran, so it cannot drift. One integer per country, rewritten to 0 at the top of every pulse.
+
+⚠ **This is a key-level `REPLACE_OR_CREATE:` that carries a full copy of a 91-line E&F effect** (`00_on_action_main.txt:18423-18513` in 4.1.7). No E&F file is overwritten, but it has to be re-diffed after every E&F update — the four edited lines are marked `###` in the file, everything else is his, comments and all.
+
+**7i, 2026-09-23 — two more edits to the same copy:**
+
+- The redundant `financial_center_modifier = yes` in the second branch is gone: **`financial_center_modifier` 2 → 1 a month.** It is the expensive one of the three, since it strips and re-adds `financial_center_place` / `_spe` / `_historic_place` on every state of the country. The only effect is order (it now runs after `national_stockpile_modifier`), and the bodies were checked: `national_stockpile_modifier` (`09_introduction_building_lvl.txt:22735`) touches only `national_stockpile_*` modifiers and `country_already_national_stockpile`; `financial_center_modifier` (`:22136`) and `financial_center_production_methods` (`01_financial_scripted_effects.txt:25228`) read none of those, and the reverse holds too. Not measured in play yet.
+- Before the one transfert call, the guarded per-state seed (`zz_ef_seed_stockpile_vars_on_state`, 7h) now runs over the country's own states. The one-shot seed missed states created after it ran (a state region split by conquest or cession gets a new state object), and the 23.09 run (1867 save) still logged ten blocks of `stockpiling_*_var_state_1 ... not being set` from the transfert's closing gate (`01_economic_scripted_effects.txt:133303`).
+
+Measured on the 23.09 run, 1867 save, **still with `-debug_mode`** (Steam launch options): about 1–1.5 s per in-game day at speed 4, with occasional 6-second quarter-day ticks.
+
+### The save is 460 MB
+
+Vanilla saves at this date are tens of megabytes. E&F's per-state and per-country variable sets are what the rest is, and every one of them is walked on the pulses above. Not fixable from a hotfix — noted so it is not mistaken for something that is.
+
+## Iron and lead mines carry the stock group twice (EF.12, 2026-09-23)
+
+E&F's own `common/buildings/ef_03_mines.txt` lists `pmg_private_ownership_mining_stock` **twice** in its `INJECT:` on `building_iron_mine` and on `building_lead_mine` (lines 15/17 and 24/26 of the 92-line file; coal, sulfur and the two gold buildings list it once). An `INJECT:` appends list items, so every iron and lead mine in the world ends up with the group twice. Found by resolving the final building bodies over the whole playset, not seen in a log — nothing about it is ever logged. What a doubled group does in play was seen on 2026-08-28 on other buildings: double upkeep and double stock output (see `tools/regen_addon_greys.py`).
+
+Fixed by overriding the file by **path**: `common/buildings/ef_03_mines.txt` here is E&F's file byte for byte (BOM and CRLF kept, no header of ours) minus those two lines, so after an E&F update the check is one diff:
+
+```bash
+diff <(tr -d '\r' < "E&F/common/buildings/ef_03_mines.txt") \
+     <(tr -d '\r' < "E&F Hotfix/common/buildings/ef_03_mines.txt")
+# expected: exactly the two `pmg_private_ownership_mining_stock` deletions
+```
+
+If E&F fixes it himself, delete the copy. If he adds anything else to that file, re-copy and delete the two lines again — the override hides whatever he adds.
+
+## Bond buyer lists compared a number with a country (EF.13, 2026-09-24)
+
+`common/scripted_effects/zz_ef_bond_buyer_list_type_fix.txt` re-issues E&F's ten `central_bank_debt_buyer_list_N_clear` (`08_list_effect.txt:1558-1737`). Each walked `every_country` testing `var:ai_seller_country_general_N = root`, but that variable is the number 0 on every country without a live AI bond, so each call wrote ~180 `Left side and right side during comparison were of different types (left was 'value', right was 'country')` errors with call stacks to both `game.log` and `error.log` — 4838 in twelve minutes on the 1867 save. The test is now `is_target_in_variable_list` on the same-named list that E&F writes and clears together with the variable; the reasoning that the two are equivalent for all ten slots is in the file header. The player half (`var:seller_country_general_N = root`) is dropped: E&F never sets that variable to a country, so the test was never true and only ever errored. Whether the author meant the player branch to run is an open question, not something to switch on silently.
+
+## Balance pass, 2026-09-24 (EF.14–EF.17, EF.23) — not yet tested in game
+
+Each file carries the full reasoning in its header; this is the map.
+
+| Task | File | What |
+|---|---|---|
+| EF.14 | `common/production_methods/zz_ef_currency_liquidity_pm.txt` + `pm_currency_liquidity_currency` in the 9 non-English, non-Russian `zz_ef_cm_goods_l_*.yml` | The currency method gets the local-currency coin instead of the generic "currency type" picture; E&F ships its name in English only. The Russian name is in the V4 RUS translation (repo and local copy); the workshop copy of V4 RUS predates it and needs a re-upload. |
+| EF.15 | `common/script_values/zz_ef_cb_bond_issuance_values.txt`, `common/static_modifiers/zz_ef_cb_bond_issuance.txt`, `common/scripted_effects/zz_ef_cb_bond_issuance.txt`, one call in 7g | Central bank bond output × (debt % of GDP / 50), clamped 0…3×, via `goods_output_bond_mult` on the bank building. The six minting methods are not touched. Knob: `zz_ef_cb_bond_reference_debt_pct`. |
+| EF.16 | `zz_ef_cm_central_bank` in all 11 `zz_ef_cm_goods_l_*.yml` | "Центральный банк [RU_CL_RP]" / "[Adjective] Central Bank". Whether a company name has a COUNTRY context is not visible from the files — **check in game before uploading**, revert to the plain name if it renders broken. |
+| EF.17 (1) | `common/building_groups/zz_ef_financial_centre_group.txt` | `bg_financial_centre` urbanization 5 → 0. |
+| EF.17 (2) | `common/static_modifiers/zz_ef_financial_centre_cap.txt` | Exchange ceiling: `_max_level_add` 1 → 0.1 in `financial_center_place` and `_spe`, i.e. one level per 10M of GDP instead of 1M. Covers the generic and all 41 national exchanges with one number. |
+| EF.17 (4) | 7e in `zz_ef_div0_fix.txt` | `target_supply_mutual_fund_for_modifier` ceiling 25000 → 500 (exchange output ×251 → ×6). |
+| EF.23 | `common/scripted_effects/zz_ef_capitalization_decay.txt` | Capitalization counters decay 2 % a month, so capitalization follows today's market instead of the integral since 1836. |
+
+Measure on a save after these (GDP, exchange levels and productivity, capital urbanization) before EF.17 (3, 5) and before EF.18 in the megapack is judged.
+
 ## Left undone
 
+- `pm_fiat_standard_bank_money_currency` (E&F, `15_ef_bank.txt`) has its `country_modifiers`
+  nested inside `building_modifiers`, so fiat standard mints nothing (`country_minting_add = 250`
+  never applies). Silent — nothing in error.log. Not fixed: it changes balance, and it is the
+  author's to decide.
 - The Tunisian and Yugoslav dinars are left in: tags `c:TUN` and `c:YUG` stand behind them.
 - `bank_je_central_1` cannot complete (see the currency laws section). A bug report for the
   E&F author, not something to patch here.
@@ -992,7 +1155,8 @@ All of this is worth sending to the E&F author — it is far cheaper to fix on h
 ## Maintenance
 
 The mod overrides E&F files by **path** (`ef_00_goods.txt`, `00_ef_building.txt`,
-`00_ef_alert_types.txt`, `01_ef_currency_type.txt`, `00_ef_pop_needs.txt`, seven `.gui` files)
+`00_ef_alert_types.txt`, `01_ef_currency_type.txt`, `00_ef_pop_needs.txt`, `ef_03_mines.txt`,
+seven `.gui` files)
 and E&F **keys** by prefix (everything `zz_ef_cm_`). Which means:
 
 - **after every E&F update** the generator has to be re-run, otherwise the hotfix rolls his
@@ -1023,6 +1187,14 @@ cd vic3_mods_out
 
 # is the div/0 still there? (the author's own comment marks it)
 grep -n -A3 'target_demand_bond_ajusted' "E&F/common/script_values/00_financial_scripted_value.txt"
+
+# is the supply twin still the only _for_modifier without a max?
+grep -n -A8 'target_supply_mutual_fund_for_modifier' "E&F/common/script_values/00_financial_scripted_value.txt"
+
+# re-diff the copied effect -- 7g carries a full copy of this one
+sed -n '/^update_modifiers_bc_fc_ns = {/,/^}/p' "E&F/common/scripted_effects/00_on_action_main.txt" \
+  | diff - <(sed -n '/^REPLACE_OR_CREATE:update_modifiers_bc_fc_ns/,/^}/p' \
+      "E&F Hotfix/common/scripted_effects/zz_ef_monthly_pulse_dedup.txt" | sed 's/^REPLACE_OR_CREATE://')
 
 # is the seller scope still dereferenced unguarded?
 grep -n -A2 'scope:seller.owner' "E&F/common/scripted_effects/01_economic_scripted_effects.txt"

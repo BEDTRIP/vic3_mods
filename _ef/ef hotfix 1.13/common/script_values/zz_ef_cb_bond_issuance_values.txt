@@ -1,0 +1,57 @@
+﻿#############################################
+# EF.15 (2026-09-24) -- central bank bond output follows national debt / GDP
+#
+# E&F: every monetary standard in pmg_minting_type (production_methods/
+# 15_ef_bank.txt) carries goods_output_bond_add = 10 per workforce, whatever
+# the country owes. A country with no debt printed as many bonds as one at
+# 100% of GDP.
+#
+# Now the building gets goods_output_bond_mult from the debt ratio:
+#   output = E&F's output x (debt% / reference%)
+# clamped to 0 .. 3x. At the reference ratio the output is exactly E&F's.
+# The PMs are not touched: output still scales with the bank's size and
+# paper input, only the multiplier moves.
+#
+# debt% is E&F's own national_debt_compared_gdp
+# (00_economic_scripted_value.txt:7206) = (country_credit +
+# var:credit_at_central_bank) / gdp, times 100.
+#
+# All values are COUNTRY scope. The building reads the result through
+# owner.var: (see zz_ef_cb_bond_issuance.txt), not through these values --
+# national_debt uses `credit`/`scaled_debt`, which do not exist in building
+# scope.
+#
+# !! TUNING !! zz_ef_cb_bond_reference_debt_pct is the one knob. 50 = a
+# country at 50% debt/GDP issues what E&F issued before. E&F's AI borrows
+# up to national_debt_allowed_relative_gdp (0.1 .. 1.0 by credit note), so
+# most AI central banks will sit between 0.2x and 2x.
+#############################################
+
+zz_ef_cb_bond_reference_debt_pct = 50
+
+zz_ef_cb_bond_debt_pct = {
+	value = national_debt_compared_gdp
+	multiply = 100
+}
+
+# Percentage points of goods_output_bond_mult: -100 (no bonds) .. +200 (3x).
+zz_ef_cb_bond_output_shift = {
+	value = zz_ef_cb_bond_debt_pct
+	multiply = 100
+	divide = zz_ef_cb_bond_reference_debt_pct
+	subtract = 100
+	min = -100
+	max = 200
+}
+
+# Split into two non-negative multipliers: one modifier for each direction,
+# so no modifier is ever applied with a negative multiplier.
+zz_ef_cb_bond_output_low = {
+	value = zz_ef_cb_bond_output_shift
+	multiply = -1
+	min = 0
+}
+zz_ef_cb_bond_output_high = {
+	value = zz_ef_cb_bond_output_shift
+	min = 0
+}

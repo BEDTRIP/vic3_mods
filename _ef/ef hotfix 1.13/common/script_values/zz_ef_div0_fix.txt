@@ -250,3 +250,143 @@ REPLACE_OR_CREATE:target_demand_currency_for_modifier = {
 	divide = { value = base_demande_currency_fix min = 1 }
 	multiply = 100
 }
+
+#############################################
+# 7e. The supply twin -- the sixth _for_modifier, the one with no ceiling
+#
+# The financial-centre block computes six of these values. Five are demand, and
+# every one of them ends with the author's own `max = 25000`
+# (00_financial_scripted_value.txt):
+#
+#   3688  target_demand_bond_for_modifier                 max = 25000
+#   3739  target_demand_manufacture_stock_for_modifier    max = 25000
+#   3788  target_demand_agricultural_stock_for_modifier   max = 25000
+#   3837  target_demand_mining_stock_for_modifier         max = 25000
+#   3886  target_demand_railroad_stock_for_modifier       max = 25000
+#   3611  target_supply_mutual_fund_for_modifier          -- nothing
+#
+# The sixth is the one that matters most. The five demand values drive
+# `goods_input_<good>_mult` on the exchange; this one drives its OUTPUT:
+#
+#   09_introduction_building_lvl.txt:22459
+#       remove_modifier = mutual_fund_supply
+#       add_modifier = { name = mutual_fund_supply
+#                        multiplier = target_supply_mutual_fund_for_modifier }
+#   00_ef_dynamic_modifier_building.txt:233
+#       mutual_fund_supply = { goods_output_mutual_funds_mult = 0.01 }
+#
+# A building's output value IS its GDP contribution, so whatever this number
+# becomes lands in the state's GDP directly, with nothing between.
+#
+#   target_supply_mutual_fund_for_modifier = {
+#       value    = target_supply_mutual_fund
+#       subtract = base_supply_mutual_fund_fix
+#       divide   = base_supply_mutual_fund_fix   # <-- can be 0
+#       multiply = 100
+#   }
+#
+# base_supply_mutual_fund_fix reads var:base_demande_bond_fix -- not
+# var:base_supply_mutual_fund_fix. Both are written by
+# financial_center_modifier_fixed_var (09_introduction_building_lvl.txt:22954)
+# from the same source, so the mismatched name is harmless. That source is
+# scope:financial_center_scope.modifier:goods_input_bond_add -- the
+# workforce-scaled bond input from pm_bond_exchange. It is 0 on any tick where
+# there is no workforce to scale: the tick after the exchange changes hands,
+# the same window as the central bank in 7d.
+#
+# OBSERVED. Britain took Egypt's capital state and with it a third exchange
+# (building_financial_centre_egy, alongside _gbr and _gbr_2). That state's GDP
+# then ran past 60 billion, an order of magnitude above the whole world's.
+# Division by zero here is the only path in this subsystem that can multiply an
+# exchange's output without bound.
+#
+# Fix: the same shape as the five demand values above -- skip the block instead
+# of dividing at zero, then the author's own ceiling.
+#
+# ON THE CEILING, because 7d is a warning about exactly this mistake. 25000
+# here means goods_output_mutual_funds_mult = +250, output x251, the same
+# headroom the author allows on the five inputs. This is not the currency case,
+# where a cap strangled a multiplier that is meant to run into the hundreds of
+# thousands -- there the number IS the mechanic. Here it is a percentage
+# deviation from the exchange's own bond intake, and 250x of that is already
+# far past anything the mechanic needs. Still: if exchanges visibly shrink
+# after this, delete the `max` line and keep the guard. The guard alone is what
+# stops the blow-up; the ceiling is only there so a single bad tick cannot be
+# what it was.
+#
+# The `multiply = 0.1` for subjects and foreign markets is E&F's and keeps its
+# place in the order -- after the percentage, before the ceiling. Flattened out
+# of the guarded block on purpose: when the guard skips, the running value is
+# 0 and multiplying it changes nothing.
+#############################################
+
+REPLACE_OR_CREATE:target_supply_mutual_fund_for_modifier = {
+	value = 0
+	if = {
+		limit = { base_supply_mutual_fund_fix > 0 }
+		value = target_supply_mutual_fund
+		subtract = base_supply_mutual_fund_fix
+		divide = base_supply_mutual_fund_fix
+		multiply = 100
+	}
+	if = {
+		limit = {
+			or = {
+				is_subject = yes
+				not = { market.owner = root }
+			}
+		}
+		multiply = 0.1
+	}
+	max = 500	### EF.17 (4): was 25000 (x251), see below
+}
+# EF.17 (4) (2026-09-24): ceiling 25000 -> 500, i.e. output x251 -> x6.
+# The ceiling was headroom against a bad tick, never a balance number, and it
+# never bound: base exchange output is 1 mutual fund (250) per level, ~130 a
+# year per worker; the ~2800 per worker seen in Petersburg means the
+# multiplier sat around x20, all of it real demand-following. At x6 the
+# exchange still answers demand, but stops being the best investment in the
+# country. !! TUNING !! -- measure on a save (EF.17 in the plan) before
+# moving it.
+
+#############################################
+# 7f. building_financial_num once more, this time on the exchange's max level
+#
+# Insurance, not a diagnosed bug -- included because it is the same divisor as
+# 7a, one `min = 1` away from safe, and it sits on the other lever that can
+# make an exchange grow.
+#
+#   00_financial_scripted_value.txt:203
+#   max_building_financial_center_by_number_in_market = {
+#       value  = var:gdp_view_fc
+#       divide = building_financial_num     # <-- the 7a divisor, unguarded here
+#   }
+#
+# It is the multiplier of financial_center_place_spe
+# (09_introduction_building_lvl.txt:22255), and that modifier is
+# state_building_financial_centre_<tag>_max_level_add = 1 for all ~40 tags
+# (00_ef_dynamic_modifier_state.txt:19). So the value decides how tall the
+# exchange in that state may be built -- the intent being to split gdp_view_fc
+# among however many centres the market holds.
+#
+# In ordinary play the divisor cannot be 0 where it is read: the branch only
+# runs in states that hold one of those buildings, so the owner counts at least
+# one. The windows where it might are the same ones 7e is about -- a state
+# changing hands, a building not yet registered on its new owner. Clamping
+# costs nothing: with a count of one or more the arithmetic is bit-identical.
+#
+# NOT fixed, only noted: gdp_view_fc is a country variable (set by
+# 00_ef_economic_global_variable.txt:784 under GLOBAL -> every_country, and
+# pre-seeded by our own 00_a_ef_history_var_init.txt), and both this value and
+# building_financial_num are read from inside `every_scope_state`. If the
+# engine evaluated add_modifier multipliers in state scope, `var:gdp_view_fc`
+# would come back unset and `any_scope_state` inside building_financial_num
+# would be a wrong-scope trigger, every month for every centre. Neither error
+# appears in error.log, so the multiplier is evaluated against the country and
+# there is nothing to fix. Worth re-checking if that ever changes.
+#############################################
+
+REPLACE_OR_CREATE:max_building_financial_center_by_number_in_market = {
+	value = var:gdp_view_fc
+	divide = { value = building_financial_num min = 1 }
+}

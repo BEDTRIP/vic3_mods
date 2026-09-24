@@ -1,0 +1,45 @@
+﻿#############################################
+# EF.18 (2026-09-24) -- construction brake, the numbers.
+# The why: common/on_actions/zz_pb_ef_psc_overbuilt_off.txt.
+#
+# COUNTRY scope. Same ceiling as E&F's journal (building_urban_center_lvl_by_base_rate,
+# 00_financial_scripted_value.txt:113: urban centre levels x base_rate_to_pcs_factor,
+# clamped to [1, urban centre levels], rounded), but summed per STATE through
+# b: -- E&F's version walks every building of the country, and this runs
+# monthly for every country.
+#############################################
+
+zz_pb_ef_css_levels = {
+	value = 0
+	every_scope_state = {
+		limit = { has_building = building_construction_sector }
+		add = b:building_construction_sector.level
+	}
+}
+
+zz_pb_ef_urban_center_levels = {
+	value = 0
+	every_scope_state = {
+		limit = { has_building = building_urban_center }
+		add = b:building_urban_center.level
+	}
+}
+
+zz_pb_ef_css_ceiling = {
+	value = zz_pb_ef_urban_center_levels
+	multiply = base_rate_to_pcs_factor
+	min = 1
+	round = yes
+}
+
+# Overbuild in percent of the ceiling, 0 .. 50. One point = -1% throughput on
+# every construction sector of the country.
+# !! TUNING !! the 50 (the deepest the brake goes).
+zz_pb_ef_overbuilt_brake_pct = {
+	value = zz_pb_ef_css_levels
+	subtract = zz_pb_ef_css_ceiling
+	multiply = 100
+	divide = zz_pb_ef_css_ceiling
+	min = 0
+	max = 50
+}

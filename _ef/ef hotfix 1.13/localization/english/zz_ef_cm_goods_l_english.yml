@@ -19,4 +19,12 @@
  # their own. One for all of them: the prestige good is chosen by the
  # monetary standard law, not by the currency, so ninety-five separate
  # types selected nothing.
- zz_ef_cm_central_bank:0 "Central Bank"
+ # EF.16 (2026-09-24): the country in the name, the way vanilla's
+ # dynamic_company_name_country_1 does it. Whether a company name has a
+ # COUNTRY context is not visible from the files -- check in game; if not,
+ # revert to "Central Bank".
+ zz_ef_cm_central_bank:0 "[COUNTRY.GetAdjectiveNoFormatting] Central Bank"
+
+ # EF.15: central bank bond output follows debt as % of GDP (modifier on the bank).
+ zz_ef_cb_bond_issuance_low:0 "Bond Issuance: Debt Below Reference"
+ zz_ef_cb_bond_issuance_high:0 "Bond Issuance: Debt Above Reference"

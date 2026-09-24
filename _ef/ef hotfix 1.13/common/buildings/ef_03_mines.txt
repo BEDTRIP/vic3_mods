@@ -1,0 +1,91 @@
+﻿### EF-MOD — Ajout des PM financiers dans les mines
+### --------------------------------------------------------
+
+### COAL MINE
+INJECT:building_coal_mine = {
+    production_method_groups = {
+        pmg_private_ownership_mining_stock
+        pmg_market_liquidity
+    }
+}
+
+### IRON MINE
+INJECT:building_iron_mine = {
+    production_method_groups = {
+        pmg_private_ownership_mining_stock
+        pmg_market_liquidity
+    }
+}
+
+### LEAD MINE
+INJECT:building_lead_mine = {
+    production_method_groups = {
+        pmg_private_ownership_mining_stock
+        pmg_market_liquidity
+    }
+}
+
+### SULFUR MINE
+INJECT:building_sulfur_mine = {
+    production_method_groups = {
+        pmg_market_liquidity
+        pmg_private_ownership_mining_stock
+    }
+}
+
+### GOLD MINE
+INJECT:building_gold_mine = {
+    production_method_groups = {
+        pmg_private_ownership_mining_stock
+        pmg_market_liquidity 
+    }
+}
+
+### GOLD FIELDS
+INJECT:building_gold_field = {
+    production_method_groups = {
+        pmg_private_ownership_mining_stock
+        pmg_market_liquidity 
+    }
+}
+
+
+building_silver_mine = {
+	building_group = bg_silver_mining
+	icon = "gfx/interface/icons/building_icons/silver_mine.dds"
+	city_type = mine
+	levels_per_mesh = 5
+	required_construction = construction_cost_medium
+	terrain_manipulator = mining
+	has_max_level = yes
+
+    possible = {
+        has_modifier = silver_mine_max_level
+    }
+
+    potential = {
+        has_modifier = silver_mine_max_level
+    }
+
+	unlocking_technologies = {
+		prospecting
+	}
+	
+	ai_value = 5000 # silver mines are very nice for minting revenue
+	ai_nationalization_desire = 10 # AI should be keen on nationalizing these
+
+	production_method_groups = {
+		pmg_mining_equipment_building_silver_mine
+		pmg_explosives_building_silver_mine
+		pmg_steam_automation_building_silver_mine
+		pmg_train_automation_building_silver_mine
+		############################################################################################################################################################
+        pmg_private_ownership_mining_stock
+		pmg_market_liquidity 
+		############################################################################################################################################################
+	}
+	ownership_type = self
+	downsizeable = no
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_mining.dds"
+}

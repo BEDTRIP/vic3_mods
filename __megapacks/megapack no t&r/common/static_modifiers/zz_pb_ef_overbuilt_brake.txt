@@ -1,0 +1,15 @@
+﻿#############################################
+# EF.18 (2026-09-24) -- construction brake. Applied to every
+# building_construction_sector of an overbuilt country with multiplier =
+# zz_pb_ef_overbuilt_brake_pct (0..50). See
+# common/on_actions/zz_pb_ef_psc_overbuilt_off.txt.
+#
+# E&F's own overbuilt_economy_modifier has building_throughput_add commented
+# out (00_ef_dynamic_modifier_building.txt:269) -- it only ever raised
+# manufacture stock output, it never braked anything.
+#############################################
+
+zz_pb_ef_overbuilt_brake = {
+	icon = gfx/interface/icons/timed_modifier_icons/overbuilt_economy_modifier.dds
+	building_throughput_add = -0.01
+}

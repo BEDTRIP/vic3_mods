@@ -42,6 +42,36 @@
 # them -- no need to touch financial_center_je_2 at all.
 #############################################
 
+#############################################
+# EF.18 (2026-09-24) -- a construction brake that actually brakes
+#
+# "PSC already charges for over-building" above turned out not to hold in
+# play: 3473 construction sector levels against a ceiling of 3656 on a 1867
+# save, no brake anywhere. And E&F's own brake was never one:
+# overbuilt_economy_modifier has building_throughput_add commented out and
+# only raises manufacture stock output; E&F also hangs it on
+# building_ef_private_construction, which does not exist under PSC.
+# Turning the counter back on would therefore brake nothing -- and bring
+# back speculative_share_13 (the whole-building drain) and lock 9..12.
+#
+# So the counter stays at zero (above) and the brake is ours:
+#   overbuild % = (construction sector levels - ceiling) / ceiling x 100,
+#                 0 .. 50
+#   every building_construction_sector of the country gets
+#   zz_pb_ef_overbuilt_brake (building_throughput_add = -0.01) x that.
+# The ceiling is E&F's (urban centre levels x base_rate_to_pcs_factor), so
+# the central bank rate still steers it. No drain, no removed levels: an
+# overbuilt country builds slower, it does not lose sectors.
+# Proportional to the overbuild, not a counter that grows each month: it
+# switches on and off with the cause.
+#
+# Only worth having with EF.17 in the E&F Hotfix: the ceiling counts urban
+# centres, and exchanges used to add 5 urbanization per level.
+#
+# Cost: two per-state sums a month per country (script_values file); the
+# per-building pass runs only for countries overbuilt this month or last.
+#############################################
+
 on_monthly_pulse_country = {
 	on_actions = {
 		zz_pb_ef_psc_overbuilt_off
@@ -66,6 +96,44 @@ zz_pb_ef_psc_overbuilt_off = {
 					}
 					remove_modifier = overbuilt_economy_modifier
 				}
+			}
+		}
+
+		### EF.18 -- our own brake, see the second header below.
+		if = {
+			limit = { has_variable = base_rate_percentage }
+			set_variable = { name = zz_pb_ef_brake_pct value = zz_pb_ef_overbuilt_brake_pct }
+		}
+		else = {
+			set_variable = { name = zz_pb_ef_brake_pct value = 0 }
+		}
+		if = {
+			limit = {
+				OR = {
+					var:zz_pb_ef_brake_pct > 0
+					has_variable = zz_pb_ef_brake_applied
+				}
+			}
+			every_scope_state = {
+				limit = { has_building = building_construction_sector }
+				every_scope_building = {
+					limit = { is_building_type = building_construction_sector }
+					remove_modifier = zz_pb_ef_overbuilt_brake
+					if = {
+						limit = { owner.var:zz_pb_ef_brake_pct > 0 }
+						add_modifier = {
+							name = zz_pb_ef_overbuilt_brake
+							multiplier = owner.var:zz_pb_ef_brake_pct
+						}
+					}
+				}
+			}
+			if = {
+				limit = { var:zz_pb_ef_brake_pct > 0 }
+				set_variable = zz_pb_ef_brake_applied
+			}
+			else = {
+				remove_variable = zz_pb_ef_brake_applied
 			}
 		}
 	}

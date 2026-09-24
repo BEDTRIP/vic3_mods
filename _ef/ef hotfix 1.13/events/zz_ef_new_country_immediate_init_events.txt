@@ -1,0 +1,20 @@
+namespace = zz_ef_newcountry
+
+# Fired on scope:target from the on_country_released_as_* on_actions in
+# common/on_actions/zz_ef_new_country_immediate_init.txt. Gives new_country_var_ef
+# a fresh execution context so ROOT inside it is genuinely the released country,
+# not the overlord that fired the on_action. See that file's header comment.
+zz_ef_newcountry.1 = {
+	type = country_event
+	hidden = yes
+	orphan = yes
+
+	immediate = {
+		if = {
+			limit = {
+				not = { has_variable = coal_release_quantity }
+			}
+			new_country_var_ef = yes
+		}
+	}
+}

@@ -1,0 +1,82 @@
+#############################################
+# EF.17 (2) (2026-09-24) -- exchange ceiling: one level per 10M of GDP, not per 1M
+#
+# The ceiling of every exchange is one of these two state modifiers, added
+# monthly by financial_center_modifier (09_introduction_building_lvl.txt:22136)
+# with multiplier = var:gdp_view_fc (GDP / 1M, a 1000-step ladder up to 5000):
+#   financial_center_place      -- the generic building_financial_centre,
+#                                  multiplier var:gdp_view_fc directly
+#   financial_center_place_spe  -- the 41 national exchanges, multiplier
+#                                  max_building_financial_center_by_number_in_market
+#                                  (our 7f, zz_ef_div0_fix.txt) = gdp_view_fc / count
+# And exchange output is itself GDP, so the ceiling fed itself (EF.17 in the
+# plan; the 6B-GDP Russia with a 2500-level exchange).
+#
+# Scaling the per-unit step here covers both paths with one number and does not
+# touch E&F's 1000-branch ladder. `_max_level_add` 1 -> 0.1 = ceiling / 10.
+# Everything else is E&F's, line for line -- including
+# state_market_access_price_impact = 0.1, which is multiplied by the same
+# gdp_view_fc (x thousands) and left alone here on purpose.
+#
+# ON AN EXISTING SAVE exchanges above the new ceiling keep their levels
+# (downsizeable = no); they just stop growing.
+#
+# !! TUNING !! 0.1 is the knob. Both bodies are E&F 4.1.7 copied verbatim
+# with every `_max_level_add = 1` replaced -- re-diff after an E&F update.
+#############################################
+
+REPLACE:financial_center_place = {
+	icon = gfx/interface/icons/timed_modifier_icons/financial_center_place.dds
+
+	state_building_financial_centre_max_level_add = 0.1
+	state_market_access_price_impact = 0.1
+}
+
+REPLACE:financial_center_place_spe = {
+	icon = gfx/interface/icons/timed_modifier_icons/financial_center_place.dds
+
+	state_building_financial_centre_arg_max_level_add = 0.1
+	state_building_financial_centre_aus_max_level_add = 0.1
+	state_building_financial_centre_bav_max_level_add = 0.1
+	state_building_financial_centre_bel_max_level_add = 0.1
+	state_building_financial_centre_bic_max_level_add = 0.1
+	state_building_financial_centre_brz_max_level_add = 0.1
+	state_building_financial_centre_chi_max_level_add = 0.1
+	state_building_financial_centre_chl_max_level_add = 0.1
+	state_building_financial_centre_den_max_level_add = 0.1
+	state_building_financial_centre_dei_max_level_add = 0.1
+	state_building_financial_centre_egy_max_level_add = 0.1
+	state_building_financial_centre_fra_max_level_add = 0.1
+	state_building_financial_centre_frm_max_level_add = 0.1
+	state_building_financial_centre_gbr_max_level_add = 0.1
+	state_building_financial_centre_gbr_2_max_level_add = 0.1
+	state_building_financial_centre_gre_max_level_add = 0.1
+	state_building_financial_centre_hkh_max_level_add = 0.1
+	state_building_financial_centre_han_max_level_add = 0.1
+	state_building_financial_centre_ita_max_level_add = 0.1
+	state_building_financial_centre_jap_max_level_add = 0.1
+	state_building_financial_centre_mex_max_level_add = 0.1
+	state_building_financial_centre_net_max_level_add = 0.1
+	state_building_financial_centre_nsw_max_level_add = 0.1
+	state_building_financial_centre_ont_max_level_add = 0.1
+	state_building_financial_centre_peu_max_level_add = 0.1
+	state_building_financial_centre_por_max_level_add = 0.1
+	state_building_financial_centre_pru_max_level_add = 0.1
+	state_building_financial_centre_que_max_level_add = 0.1
+	state_building_financial_centre_rus_max_level_add = 0.1
+	state_building_financial_centre_saf_max_level_add = 0.1
+	state_building_financial_centre_sar_max_level_add = 0.1
+	state_building_financial_centre_sic_max_level_add = 0.1
+	state_building_financial_centre_spa_max_level_add = 0.1
+	state_building_financial_centre_swe_max_level_add = 0.1
+	state_building_financial_centre_swi_max_level_add = 0.1
+	state_building_financial_centre_tus_max_level_add = 0.1
+	state_building_financial_centre_tur_max_level_add = 0.1
+	state_building_financial_centre_uru_max_level_add = 0.1
+	state_building_financial_centre_usa_max_level_add = 0.1
+	state_building_financial_centre_usa_2_max_level_add = 0.1
+	state_building_financial_centre_sax_max_level_add = 0.1
+
+	state_market_access_price_impact = 0.1
+
+}

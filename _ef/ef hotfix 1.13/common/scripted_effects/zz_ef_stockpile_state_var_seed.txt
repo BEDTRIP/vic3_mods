@@ -1,0 +1,92 @@
+﻿#############################################
+# 7h. The seed itself, and a backstop for it
+#
+# Companion to common/on_actions/zz_ef_stockpile_state_var_init.txt. That file
+# hangs this off on_game_started_after_lobby; this one also gets called once
+# from the monthly pulse behind a global flag, because the first run of the
+# on_action version did not clear the errors it was written for.
+#
+# WHAT THE 20:03 RUN SHOWED
+# The errors dropped but did not go to zero: `stockpiling_*_var_state_1 due to
+# not being set` went from ~151 blocks per in-game day to ~24. Most of that
+# drop is 7g collapsing three transfert calls into one, so the seed is worth
+# roughly nothing so far -- something about it is not reaching the states the
+# gate actually reads. Two candidates, and this file covers both rather than
+# guessing:
+#
+#   1. on_game_started_after_lobby may not fire on a loaded save the way it
+#      does on a new campaign. -> zz_ef_seed_stockpile_state_vars_backstop
+#      runs from on_monthly_pulse_country, once ever, behind a global flag.
+#      One pass, then never again -- for the states that exist at that moment.
+#      (Written 12.09 as "states do not appear or vanish in Vic3". Wrong: a
+#      split state region gets a new state object. Those are now seeded from
+#      the monthly transfert path, see 7i in zz_ef_monthly_pulse_dedup.txt.)
+#
+#   2. `every_state` may not reach every state the gate walks. The gate is
+#      `any_scope_state` on a COUNTRY, so the set that matters is exactly
+#      "states someone owns". -> the seed makes a second pass as
+#      every_country -> every_scope_state. Guarded by has_variable like the
+#      first, so when the first pass was enough this writes nothing.
+#
+# If the next run is clean, both are cheap enough to leave. If it is not, the
+# seed is not the problem and the reads are coming from somewhere other than
+# the states a country owns.
+#############################################
+
+### Runs in STATE scope. Seven variables, every write guarded, values E&F's own
+### (01_ef_state_global_variable.txt:1362-1389).
+zz_ef_seed_stockpile_vars_on_state = {
+	if = {
+		limit = { NOT = { has_variable = stockpiling_bond_var_state_1 } }
+		set_variable = { name = stockpiling_bond_var_state_1 value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = stockpiling_manufacture_stock_var_state_1 } }
+		set_variable = { name = stockpiling_manufacture_stock_var_state_1 value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = stockpiling_agricultural_stock_var_state_1 } }
+		set_variable = { name = stockpiling_agricultural_stock_var_state_1 value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = stockpiling_mining_stock_var_state_1 } }
+		set_variable = { name = stockpiling_mining_stock_var_state_1 value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = stockpiling_railroad_stock_var_state_1 } }
+		set_variable = { name = stockpiling_railroad_stock_var_state_1 value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = financial_center_site_var } }
+		set_variable = { name = financial_center_site_var value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = looted_state } }
+		set_variable = { name = looted_state value = 0 }
+	}
+}
+
+### Two passes. `every_state` is the global list and covers unowned states too;
+### the country pass covers whatever that list does not reach, which is the set
+### the gate in stockpiling_capital_state_transfert actually walks.
+zz_ef_seed_stockpile_state_vars = {
+	every_state = {
+		zz_ef_seed_stockpile_vars_on_state = yes
+	}
+	every_country = {
+		every_scope_state = {
+			zz_ef_seed_stockpile_vars_on_state = yes
+		}
+	}
+}
+
+### Country scope, from on_monthly_pulse_country. The global flag makes this a
+### one-shot for the life of the save -- it fires on the first country's first
+### pulse after this file is installed and never costs anything again.
+zz_ef_seed_stockpile_state_vars_backstop = {
+	if = {
+		limit = { NOT = { has_global_variable = zz_ef_stockpile_state_vars_seeded } }
+		set_global_variable = { name = zz_ef_stockpile_state_vars_seeded value = 1 }
+		zz_ef_seed_stockpile_state_vars = yes
+	}
+}

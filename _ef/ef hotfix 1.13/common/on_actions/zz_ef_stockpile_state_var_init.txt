@@ -1,0 +1,64 @@
+﻿### E&F Hotfix — the seven stockpile state variables
+###
+### Additive: on_actions stack, nothing here overrides E&F.
+###
+### The writes themselves and the full reasoning live in
+### common/scripted_effects/zz_ef_stockpile_state_var_seed.txt (7h).
+### This file is only the two hooks.
+###
+### THE ERRORS, first measured in a 1858 save on 2026-09-12:
+###
+###   Failed to fetch variable for 'stockpiling_{bond,manufacture_stock,
+###   agricultural_stock,mining_stock,railroad_stock}_var_state_1'
+###   due to not being set          (+ two companion errors per read)
+###
+### ~151 error blocks per in-game day, from one gate in
+### stockpiling_capital_state_transfert (01_economic_scripted_effects.txt,
+### ~133298 in the 4.1.7 numbering). `any_scope_state` walks every state the
+### country owns, so a country with a bank pays three errors per missing
+### variable per state.
+###
+### WHY common/history/ CANNOT FIX IT
+### Both inits -- ours and E&F's own 01_ef_state_global_variable.txt:1362-1389
+### -- are `GLOBAL` blocks in common/history/, which runs when a CAMPAIGN
+### STARTS and never again. A save begun before either existed carries states
+### that have never had the variables and no history block can reach them.
+###
+### SCOPE: on_game_started_after_lobby has no scope. `every_state` is the
+### top-level global list and works there -- E&F's own seed uses exactly
+### `GLOBAL = { every_state = { ... } }`, and com_topbar_setup_ef
+### (00_ef_on_action.txt:349) uses top-level `every_country` off this same
+### on_action. It is `every_state`, NOT `every_scope_state`, which needs a
+### country or region and would silently do nothing here.
+###
+### The monthly hook is the backstop: it is gated on a global variable, so it
+### runs one pass on the first country pulse after install and never again.
+### See 7h for why it exists.
+###
+### The history file common/history/global/zz_ef_init_stockpiling_state_vars.txt
+### stays. It is guarded the same way, so on a new campaign it runs first and
+### these passes find nothing to do.
+
+on_game_started_after_lobby = {
+	on_actions = {
+		zz_ef_init_stockpile_state_vars
+	}
+}
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_init_stockpile_state_vars_monthly_backstop
+	}
+}
+
+zz_ef_init_stockpile_state_vars = {
+	effect = {
+		zz_ef_seed_stockpile_state_vars = yes
+	}
+}
+
+zz_ef_init_stockpile_state_vars_monthly_backstop = {
+	effect = {
+		zz_ef_seed_stockpile_state_vars_backstop = yes
+	}
+}

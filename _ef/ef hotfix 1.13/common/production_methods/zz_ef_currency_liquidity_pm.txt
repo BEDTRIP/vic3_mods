@@ -1,0 +1,27 @@
+#############################################
+# EF.14 (2026-09-24) -- icon of pm_currency_liquidity_currency
+#
+# E&F's body (production_methods/15_ef_bank.txt:264, 4.1.7), one field
+# changed: texture currency_type.dds -> the coin of the good it produces,
+# goods_icons/currencies/local_currency.dds (E&F's own file). The E&F icon
+# was the same generic "currency type" picture as pm_no_currency_type, so
+# the two methods of pmg_currency_type could not be told apart.
+#
+# REPLACE: restates the whole entry (it replaces, it does not merge) -- the
+# rest is E&F's, line for line. Re-diff after an E&F update.
+#############################################
+
+REPLACE:pm_currency_liquidity_currency = {
+	texture = "gfx/interface/icons/goods_icons/currencies/local_currency.dds"
+	is_hidden_when_unavailable = yes
+
+	disallowing_laws = {
+		law_no_market_liquidity
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_output_liquidity_currency_add = 1
+		}
+	}
+}

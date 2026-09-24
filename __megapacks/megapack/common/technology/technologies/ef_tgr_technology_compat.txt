@@ -1,19 +1,16 @@
 ﻿########################################
 # E&F + The Great Revision (TGR) - Technology compatibility
 #
-# Vic3 1.13 database prefixes patch PER SUB-BLOCK, not per entry:
-# REPLACE:key = { modifier = { ... } } swaps ONLY the `modifier` block and leaves
-# every field the mod did not list alone. Proof inside E&F itself: all 14 of its
-# REPLACE:pm_company_headquarter_* entries carry nothing but `building_modifiers`,
-# yet E&F standalone keeps vanilla textures and law gating on those PMs.
+# E&F restates ten vanilla techs with REPLACE: (ef_technology.txt: banking,
+# currency_standards, central_banking, mutual_funds, corporate_charters,
+# investment_banks, international_exchange_standards, joint_stock_companies,
+# postal_savings, modern_financial_instruments). REPLACE: replaces the WHOLE
+# entry (rules, settled 24.09.2026 -- the header of this file used to claim
+# per-sub-block patching, that was wrong). E&F loads after TGR, so every TGR
+# INJECT/REPLACE_OR_CREATE on those ten techs is wiped outright.
 #
-# So the only real conflict is where BOTH mods list the same sub-block.
-# On these techs TGR adds its trade keys via `modifier`, and E&F (loaded later)
-# lists `modifier` too - so TGR's keys are wiped. Everything else survives on
-# its own and needs no patch here.
-#
-# We re-add the wiped keys with INJECT: instead of restating E&F's whole tech
-# definition. Restating is what the previous version of this file did, and it
+# We re-add TGR's trade keys with INJECT: instead of restating E&F's whole tech
+# definition. Restating is what the first version of this file did, and it
 # drifted: it still carried E&F's pre-4.07.2026 `gdp_view >= 1` (missing `var:`,
 # which logs an error) and re-enabled unlocking_technologies that the E&F author
 # had deliberately commented out. INJECT touches only what is missing.
@@ -21,15 +18,36 @@
 # INJECT: and not TRY_INJECT: on purpose - these are vanilla techs that cannot
 # disappear, and if one ever does we want the log line rather than a silent no-op.
 #
-# Not patched, checked 21.08.2026:
-#   currency_standards               - E&F has no `modifier` block, TGR's INJECT survives
+# Only TGR's trade keys come back. TGR's ai_weight overrides (9999 on banking
+# and currency_standards) and the urbanization/charter keys of its
+# joint_stock_companies / investment_banks bodies stay E&F's.
+#
+# Not patched:
 #   international_exchange_standards - E&F's modifier is a superset of TGR's
 #   modern_financial_instruments     - same
+#   (checked 21.08.2026)
+#
+# KNOWN, NOT DECIDED (24.09.2026): state_max_trade_advantage_from_capacity_add.
+# TGR 1.3.10 puts -0.05 on banking and on central_banking (TGR_TRADE_society),
+# on top of +0.05 from its own central_banking body (TGR_LOANS_society) -- i.e.
+# TGR cancels the capacity bonus of those two techs. Here banking keeps E&F's
+# +0.05 and central_banking gets +0.05. Left as is until TGR's intent is clear.
 ########################################
 
 # TGR_TRADE_society.txt: INJECT:banking
 INJECT:banking = {
 	modifier = {
+		state_export_advantage_mult = 0.05
+	}
+}
+
+# TGR.2 (24.09.2026): currency_standards was listed above as "E&F has no
+# `modifier` block, TGR's INJECT survives". Under whole-entry REPLACE it does
+# not: E&F's body wipes TGR's +10 Trade Center levels and export advantage.
+# That was the one tech of TGR's ten +10s missing in game (90 instead of 100).
+INJECT:currency_standards = {
+	modifier = {
+		state_building_trade_center_max_level_add = 10
 		state_export_advantage_mult = 0.05
 	}
 }
@@ -45,8 +63,9 @@ INJECT:central_banking = {
 }
 
 # state_building_trade_center_max_level_add is the backbone of TGR's trade rework:
-# six techs give +10 each. E&F wipes it on four of them. Without this the state
-# Trade Center ceiling ends the game ~40 levels short and the AI market starves.
+# ten techs give +10 each. E&F wipes it on five of them (the four below and
+# currency_standards above). Without this the state Trade Center ceiling ends the
+# game 50 levels short and the AI market starves.
 INJECT:mutual_funds = {
 	modifier = {
 		state_building_trade_center_max_level_add = 10

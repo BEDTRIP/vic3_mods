@@ -1,0 +1,4 @@
+﻿l_polish:
+ # EF.18: construction brake (modifier on construction sectors when overbuilt).
+ zz_pb_ef_overbuilt_brake:0 "Overbuilt Economy"
+ zz_pb_ef_overbuilt_brake_desc:0 "More construction sectors than urban centres support at the current central bank rate: the further over, the lower their throughput (at most -50%)."

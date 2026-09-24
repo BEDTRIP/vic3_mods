@@ -10,6 +10,12 @@
 зависит от: —
 -->
 
+> **24.09.2026 — TGR.2 (1).** `ef_tgr_technology_compat.txt`: добавлен `INJECT:currency_standards`
+> (+10 уровней торговых центров, +0.05 экспортного преимущества). Прежняя шапка файла считала, что
+> `REPLACE:` E&F меняет только под-блок и TGR-инжект на `currency_standards` выживает; при полной
+> замене записи он стирается — в игре было 90 уровней из 100. Шапка переписана. Там же записано
+> нерешённое расхождение по `state_max_trade_advantage_from_capacity_add` на `banking`/`central_banking`.
+
 ## Для мастерской
 
 This is part of [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3638078714]this MegaComPatch[/url]

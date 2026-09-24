@@ -5,10 +5,18 @@
 статус: done
 версии: —
 позиция: —
-файлов: 60
+файлов: 74
 генератор: —
 зависит от: —
 -->
+
+> **24.09.2026 — EF.18, тормоз стройки.** `common/on_actions/zz_pb_ef_psc_overbuilt_off.txt`
+> по-прежнему держит счётчик E&F на нуле и теперь вешает свой модификатор
+> `zz_pb_ef_overbuilt_brake` (`building_throughput_add −1%` за каждый процент перестройки, до −50%)
+> на все `building_construction_sector` страны, у которой секторов больше потолка E&F
+> (уровни городских центров × фактор ставки ЦБ). Новые файлы: `script_values/zz_pb_ef_overbuilt_brake_values.txt`,
+> `static_modifiers/zz_pb_ef_overbuilt_brake.txt`, `localization/*/zz_pb_ef_overbuilt_brake_l_*.yml`.
+> Не проверено в игре. Работает в паре с EF.17 в E&F Hotfix.
 
 ## Для мастерской
 
