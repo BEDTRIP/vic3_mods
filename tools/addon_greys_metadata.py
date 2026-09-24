@@ -44,7 +44,11 @@ MODS = {
     'kai':   ('kai.kuromi', "Kuromi's AI", '7.5'),
 }
 
-DEPS = ['soft_econ', 'soft_pop', 'usu', 'cinosphere', 'food', 'ranch', 'diplo', 'subject',
+# 'diplo' is NOT a dependency (2026-09-24): grey_diplo's own metadata.json has
+# "id": "", and the launcher matches relationships by that id, not by the
+# Workshop number -- declaring 3646757534 made the launcher report it missing
+# in every playset. It stays in MODS (tested-with list, description).
+DEPS = ['soft_econ', 'soft_pop', 'usu', 'cinosphere', 'food', 'ranch', 'subject',
         'psc', 'ef', 'efhf', 'pbe', 'tgr', 'morg', 'llwa', 'mega', 'kai']
 
 

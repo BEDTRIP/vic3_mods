@@ -1,0 +1,42 @@
+# !! DISABLE, NOT A DATA FIX !!
+# joi_flavor_chi.29 (Victorian Century's own Chinese labour contract event) spawns
+# migrants that end up with SoL 100 and wreck the receiving state's economy.
+# Why they get SoL 100 is still not known (plan, open questions).
+#
+# WHY THE BUTTONS AND NOT THE EVENT (2026-09-24)
+# From 30.08 to 24.09 this compatch re-defined the event itself in
+# events/zzz_joi_flavor_chi_29_fix.txt. That never worked. debug.log:
+#   Duplicated event ID 'joi_flavor_chi.29' found.
+#   New Location: 'events/joi_flavor_chi.txt:2478',
+#   Previous Location: 'events/zzz_joi_flavor_chi_29_fix.txt:35'
+# Events are NOT resolved by mod load order: VC's definition was read after ours
+# and won, although this mod loads after VC. The same log shows CMF's intended
+# `regency.1` blocker and USU's own event overrides winning or losing by the same
+# unclear rule. Overriding an event by id is not reliable in this engine.
+#
+# The event has exactly one kind of caller: the twelve
+# chinese_labor_go_out_<tag>_button entries in VC's
+# common/scripted_buttons/joi_china_buttons.txt (15 trigger_event calls; the
+# `trigger` field of the event is never checked on a direct trigger_event).
+# Scripted buttons are ordinary database entries, and for those the later mod
+# wins. So the buttons go, and the event stays defined but unreachable.
+#
+# REPLACE_OR_CREATE replaces the whole entry (rules, decided 2026-09-24): what is
+# left is a button that is never shown and can never be pressed -- the same
+# shape as the TGR loans buttons we hid before.
+#
+# !! MAINTENANCE !! If VC adds another caller of joi_flavor_chi.29 (grep VC for
+# `joi_flavor_chi.29`), it needs the same treatment here.
+
+REPLACE_OR_CREATE:chinese_labor_go_out_gbr_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_fra_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_ger_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_usa_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_aus_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_rus_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_ita_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_spa_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_bel_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_tur_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_jap_button = { visible = { always = no } possible = { always = no } }
+REPLACE_OR_CREATE:chinese_labor_go_out_brz_button = { visible = { always = no } possible = { always = no } }
