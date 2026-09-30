@@ -65,6 +65,26 @@ REPLACE_OR_CREATE:base_rate_increase = {
 	}
 }
 
+# Colour of the policy rule rate box (gui/00_00_ef_cb_rate_panel.gui): red
+# when the rule wants a higher rate than we have (policy looser than the rule),
+# green when lower, plain when equal (within 0.01 pp).
+zz_ef_cb_rule_above_rate = {
+	is_shown = {
+		zz_ef_cb_rule_gap > 0.0001
+	}
+}
+zz_ef_cb_rule_below_rate = {
+	is_shown = {
+		zz_ef_cb_rule_gap < -0.0001
+	}
+}
+zz_ef_cb_rule_at_rate = {
+	is_shown = {
+		zz_ef_cb_rule_gap <= 0.0001
+		zz_ef_cb_rule_gap >= -0.0001
+	}
+}
+
 REPLACE_OR_CREATE:base_rate_reduce = {
 	is_shown = {
 	}

@@ -39,10 +39,6 @@ zz_ef_cb_rate_step = {
 			name = base_rate_percentage_old
 			value = var:base_rate_percentage
 		}
-		set_variable = {
-			name = zz_ef_cb_rate_target_var
-			value = zz_ef_cb_rate_target
-		}
 		change_variable = {
 			name = base_rate_percentage
 			add = zz_ef_cb_rate_next_step

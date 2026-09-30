@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.30 (2026-09-30, v2 same day) -- the central bank's quarterly step.
 # There is no quarterly pulse: a monthly counter 0, 1, 2; on reaching 3 the
 # rate steps (scripted_effects/zz_ef_central_bank_rate.txt) and the counter

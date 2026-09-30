@@ -1,0 +1,19 @@
+#############################################
+# EF.30 (2026-09-30) -- game concepts of the central bank's rate, linked from
+# the Finance tab boxes and the rate buttons (localization/*/zz_ef_cb_rate_panel_l_*.yml).
+#   concept_zz_ef_policy_rule_rate          -- what the bank computes from the
+#                                              credit rating (the rule)
+#   concept_zz_ef_discretionary_adjustment  -- the government's +-2 pp on top
+# They link to E&F's own concepts: concept_base_rate_percentage (the key rate),
+# concept_central_bank, concept_country_rating, concept_monetary_policy.
+#############################################
+
+concept_zz_ef_policy_rule_rate = {
+	texture = "gfx/interface/icons/invention_icons/central_banking.dds"
+	is_loading_tip = no
+}
+
+concept_zz_ef_discretionary_adjustment = {
+	texture = "gfx/interface/icons/invention_icons/central_banking.dds"
+	is_loading_tip = no
+}

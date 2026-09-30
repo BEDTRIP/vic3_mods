@@ -1,30 +1,37 @@
 ﻿l_turkish:
 
- # EF.30: key rate -- central bank boxes and button tooltips
- # (gui/00_00_ef_cb_rate_panel.gui, common/scripted_guis/zz_ef_cb_rate_buttons.txt).
+ # EF.30: key rate -- central bank boxes, button tooltips, concepts
+ # (gui/00_00_ef_cb_rate_panel.gui, common/scripted_guis/zz_ef_cb_rate_buttons.txt,
+ # common/game_concepts/zz_ef_cb_rate_concepts.txt).
  # Not translated yet: English text.
 
+ concept_zz_ef_policy_rule_rate:0 "Policy Rule Rate"
+ concept_zz_ef_policy_rule_rate_desc:0 "The [concept_zz_ef_policy_rule_rate] is the rate the [concept_central_bank] computes on its own, by rule, from the [concept_country_rating]: 10 points and above → 2%, 0 points → 12%, 1 pp per point. A country without a central bank: 6.5%.\n\nThe actual [concept_base_rate_percentage] moves towards the rule rate plus the government's [concept_zz_ef_discretionary_adjustment] (up to ±2 pp). The gap between them shows how much looser or tighter policy is than the rule.\n\nRules versus discretion is the classic debate of [concept_monetary_policy]: a rule makes the rate predictable, discretion gives freedom and pays for it in credibility (Kydland and Prescott, 1977; the Taylor rule, 1993)."
+ concept_zz_ef_discretionary_adjustment:0 "Discretionary Adjustment"
+ concept_zz_ef_discretionary_adjustment_desc:0 "The [concept_zz_ef_discretionary_adjustment] is how far the government has moved the [concept_base_rate_percentage] away from the [concept_zz_ef_policy_rule_rate] by its own decision: from −2 to +2 pp in steps of 0.5 pp, with the − and + buttons in the Finance tab. The central bank steers the rate to the rule plus this adjustment and does not walk it back.\n\nBelow the rule: cheaper credit, a faster growing investment pool, more private construction; above the rule: the reverse, the economy cools."
  zz_ef_rate_box_rating:0 "Credit rating"
  zz_ef_rate_box_rating_value:0 "[GetPlayer.GetCustom('country_credit_rating_texture')]\n[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]"
- zz_ef_rate_box_rating_tt:0 "The country's average credit rating: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]#! (normally 0–10, the central bank institution lifts it higher).\n\nUp to 10 points come from the economy and the state (details under \"View credit rating\" above), up to +2.5 from the central bank institution (0.5 per level). Taking loans multiplies the rating by 0.75, a long war and heavy debt lower it further.\n\nThe central bank picks the rate from the rating: 10 points and above → 2%, 0 points → 12%, #v 1 pp#! per point. A country without a central bank stays at 6.5%."
- zz_ef_rate_box_target:0 "Central bank target"
- zz_ef_rate_box_target_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]"
- zz_ef_rate_box_target_tt:0 "The rate the central bank is heading for: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]#!.\n\n12% − 1 pp × rating ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]) + government policy ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp). The bank alone stays within 2–12%; government policy may take the target 2 pp lower, but never below 0.5%. Without a central bank: 6.5% + government policy."
+ zz_ef_rate_box_rating_tt:0 "[concept_country_rating]: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]#! (normally 0–10, the central bank institution lifts it higher).\n\nUp to 10 points come from the economy and the state (details under \"View credit rating\" above), up to +2.5 from the central bank institution (0.5 per level). Taking loans multiplies the rating by 0.75, a long war and heavy debt lower it further.\n\nFrom the rating the [concept_central_bank] computes the [concept_zz_ef_policy_rule_rate]: 10 points and above → 2%, 0 points → 12%, #v 1 pp#! per point. A country without a central bank stays at 6.5%."
+ zz_ef_rate_box_target:0 "Policy rule rate"
+ zz_ef_rate_box_target_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|%2]"
+ zz_ef_rate_box_target_value_up:0 "#N [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|%2]#!"
+ zz_ef_rate_box_target_value_down:0 "#P [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|%2]#!"
+ zz_ef_rate_box_target_tt:0 "[concept_zz_ef_policy_rule_rate]: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|%2]#! — 12% − 1 pp × [concept_country_rating] ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]), within 2–12%. Without a central bank: 6.5%. The [concept_zz_ef_discretionary_adjustment] does not change it.\n\nCurrent [concept_base_rate_percentage]: [GetPlayer.MakeScope.Var('base_rate_percentage').GetValue|%2]. Rule minus rate: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rule_gap_pp')|2] pp#! #N Red#!: the rate is below the rule (looser policy), #P green#!: above it (tighter).\n\nThe central bank steers the rate to the rule plus the adjustment: to #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]#!."
  zz_ef_rate_box_step:0 "Trend"
  zz_ef_rate_box_step_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] pp\nin [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] mo."
- zz_ef_rate_box_step_tt:0 "Every quarter the central bank moves the rate towards its target: by at most #v 0.5 pp#!, or #v 1 pp#! when the target is more than 5 pp away.\n\nNext step: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] pp#! in [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] months."
- zz_ef_rate_box_policy:0 "Government policy"
+ zz_ef_rate_box_step_tt:0 "Every quarter the [concept_central_bank] moves the [concept_base_rate_percentage] towards the [concept_zz_ef_policy_rule_rate] plus the [concept_zz_ef_discretionary_adjustment] (now to #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]#!): by at most #v 0.5 pp#!, or #v 1 pp#! when that is more than 5 pp away.\n\nNext step: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] pp#! in [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] months."
+ zz_ef_rate_box_policy:0 "Discretionary adjustment"
  zz_ef_rate_box_policy_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp"
- zz_ef_rate_box_policy_tt:0 "How far our decisions have moved the central bank's target: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp#!\n\nThe − and + buttons under the rate: each press moves the rate by 0.5 pp at once and moves the target by the same, so the bank does not walk it back. At most ±2 pp in total."
- zz_ef_rate_tt_increase_desc:0 "#b Raise the key rate#!\nThe rate rises by 0.5 pp at once, and the central bank's target rises by the same, so the bank will not walk it back. Government policy now: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp of the allowed ±2.\n\n"
- zz_ef_rate_tt_reduce_desc:0 "#b Cut the key rate#!\nThe rate falls by 0.5 pp at once, and the central bank's target falls by the same, so the bank will not walk it back. Government policy now: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp of the allowed ±2.\n\n"
- zz_ef_rate_tt_effect_up:0 "Key rate: #P +0.5 pp#!, central bank target: +0.5 pp"
- zz_ef_rate_tt_effect_down:0 "Key rate: #P −0.5 pp#!, central bank target: −0.5 pp"
- zz_ef_rate_tt_conditions:0 "\n\n#b Requirements:#!\n"
+ zz_ef_rate_box_policy_tt:0 "[concept_zz_ef_discretionary_adjustment]: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp#!\n\nThe − and + buttons under the rate: each press moves the rate by 0.5 pp at once, and the central bank does not walk it back. At most ±2 pp in total. The [concept_zz_ef_policy_rule_rate] does not change with the adjustment."
+ zz_ef_rate_tt_increase_desc:0 "#b Raise the key rate#!\nThe [concept_base_rate_percentage] rises by 0.5 pp at once: the [concept_zz_ef_discretionary_adjustment] goes 0.5 pp up, and the central bank will not walk the rate back to the rule. Adjustment now: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp of the allowed ±2."
+ zz_ef_rate_tt_reduce_desc:0 "#b Cut the key rate#!\nThe [concept_base_rate_percentage] falls by 0.5 pp at once: the [concept_zz_ef_discretionary_adjustment] goes 0.5 pp down, and the central bank will not walk the rate back to the rule. Adjustment now: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp of the allowed ±2."
+ zz_ef_rate_tt_effect_up:0 "Key rate: #P +0.5 pp#!, discretionary adjustment: +0.5 pp"
+ zz_ef_rate_tt_effect_down:0 "Key rate: #P −0.5 pp#!, discretionary adjustment: −0.5 pp"
+ zz_ef_rate_tt_conditions:0 "\n\n#b Requirements and effect:#!\n"
  zz_ef_rate_tt_below_max:0 "Key rate below 12%"
  zz_ef_rate_tt_above_min:0 "Key rate above 0.5%"
- zz_ef_rate_tt_bias_up:0 "Government policy below +2 pp (now [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
- zz_ef_rate_tt_bias_down:0 "Government policy above −2 pp (now [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
+ zz_ef_rate_tt_bias_up:0 "Discretionary adjustment below +2 pp (now [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
+ zz_ef_rate_tt_bias_down:0 "Discretionary adjustment above −2 pp (now [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
  zz_ef_rate_tt_no_devaluation:0 "The [GetLawType('law_devaluation').GetName] law is not in force"
  zz_ef_rate_tt_no_revaluation:0 "The [GetLawType('law_revaluation').GetName] law is not in force"
  zz_ef_rate_tt_no_fx_controls:0 "No [GetStaticModifier('foreign_exchange_controls').GetName] modifier"

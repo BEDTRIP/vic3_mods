@@ -24,7 +24,11 @@
 # 5 pp.
 #############################################
 
-# The bank's own rate, from the rating alone: 2..12%.
+# The bank's own rate, from the rating alone: 2..12%. Shown as the "policy
+# rule rate" (concept_zz_ef_policy_rule_rate): what the bank computes, WITHOUT
+# the government's discretionary adjustment. Kept apart from the rate the bank
+# steers to (zz_ef_cb_rate_target = rule + adjustment): penalties for the gap
+# between the actual rate and this one come later (EF.31).
 zz_ef_cb_rate_rating_target = {
 	value = 0.065
 	if = {
@@ -115,7 +119,22 @@ zz_ef_cb_rate_note_value = {
 	}
 }
 
+# The policy rule rate minus the actual rate (positive: the rule wants a
+# higher rate than we have). Colours the rule box (scripted_guis
+# zz_ef_cb_rule_above_rate / _below_rate), shown in its tooltip.
+zz_ef_cb_rule_gap = {
+	value = zz_ef_cb_rate_rating_target
+	if = {
+		limit = { has_variable = base_rate_percentage }
+		subtract = var:base_rate_percentage
+	}
+}
+
 # Display in percentage points.
+zz_ef_cb_rule_gap_pp = {
+	value = zz_ef_cb_rule_gap
+	multiply = 100
+}
 zz_ef_cb_rate_next_step_pp = {
 	value = zz_ef_cb_rate_next_step
 	multiply = 100

@@ -9356,6 +9356,29 @@ types zz_ef_cb_rate_panel
 										}
 
 										textbox = {
+											visible = "[GetScriptedGui('zz_ef_cb_rule_above_rate').IsShown( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											autoresize = yes
+											text = "zz_ef_rate_box_target_value_up"
+											align = hcenter|nobaseline
+											parentanchor = hcenter
+											fontsize = 18
+											multiline = yes
+											minimumsize = { 115 40 }
+											maximumsize = { 115 -1 }
+										}
+										textbox = {
+											visible = "[GetScriptedGui('zz_ef_cb_rule_below_rate').IsShown( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											autoresize = yes
+											text = "zz_ef_rate_box_target_value_down"
+											align = hcenter|nobaseline
+											parentanchor = hcenter
+											fontsize = 18
+											multiline = yes
+											minimumsize = { 115 40 }
+											maximumsize = { 115 -1 }
+										}
+										textbox = {
+											visible = "[GetScriptedGui('zz_ef_cb_rule_at_rate').IsShown( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
 											autoresize = yes
 											text = "zz_ef_rate_box_target_value"
 											align = hcenter|nobaseline
@@ -9502,7 +9525,7 @@ types zz_ef_cb_rate_panel
 											onclick = "[GetScriptedGui('base_rate_reduce').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 											enabled = "[GetScriptedGui('base_rate_reduce').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope ).End)]"
 											using = tooltip_below
-											tooltip = "[Localize('zz_ef_rate_tt_reduce_desc')][GetScriptedGui('base_rate_reduce').ExecuteTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )][Localize('zz_ef_rate_tt_conditions')][GetScriptedGui('base_rate_reduce').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											tooltip = "[Localize('zz_ef_rate_tt_reduce_desc')][Localize('zz_ef_rate_tt_conditions')][GetScriptedGui('base_rate_reduce').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
 
 										}
 										textbox = {
@@ -9517,7 +9540,7 @@ types zz_ef_cb_rate_panel
 											size = { 35 35 }
 											parentanchor = vcenter
 											using = tooltip_below
-											tooltip = "[Localize('zz_ef_rate_tt_increase_desc')][GetScriptedGui('base_rate_increase').ExecuteTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )][Localize('zz_ef_rate_tt_conditions')][GetScriptedGui('base_rate_increase').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											tooltip = "[Localize('zz_ef_rate_tt_increase_desc')][Localize('zz_ef_rate_tt_conditions')][GetScriptedGui('base_rate_increase').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
 											onclick = "[GetScriptedGui('base_rate_increase').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 											enabled = "[GetScriptedGui('base_rate_increase').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope ).End)]"
 										}

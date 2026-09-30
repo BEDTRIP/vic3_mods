@@ -16,17 +16,17 @@ own policy.
 
 What this does
 --------------
-Re-issues that one type verbatim from a file that loads after E&F (a type
-defined twice is not an error, the later definition wins -- same technique as
-GR.21, tools/regen_ef_cmf_gui.py), with three edits:
-  1. "-" button: E&F's fixed tooltip -> description + effect
-     (ExecuteTooltip: the treasury cost) + the conditions green/red
-     (BuildTooltip over the custom_tooltip lines of
-     common/scripted_guis/zz_ef_cb_rate_buttons.txt).
+Re-issues that one type verbatim from a file that sorts BEFORE E&F's (the
+first file to register a type wins, see Output below), with three edits:
+  1. "-" button: E&F's fixed tooltip -> description + the conditions and the
+     effect (BuildTooltip over common/scripted_guis/zz_ef_cb_rate_buttons.txt;
+     it already lists the effect, a separate ExecuteTooltip doubled it --
+     removed 2026-09-30).
   2. "+" button: the same (it had no tooltip at all).
   3. A third row of four boxes under E&F's two: credit rating (letter and
-     note), the bank's target rate, the next step (and in how many months),
-     the player's policy. Each with a tooltip explaining it.
+     note), the policy rule rate (the bank's own rate from the rating; red
+     when above the actual rate, green when below), the next step (and in
+     how many months), the discretionary adjustment. Each with a tooltip.
 Texts are localization keys (localization/*/zz_ef_cb_rate_panel_l_*.yml).
 GUI @constants are file-local: the type uses @panel_width only, re-declared.
 
@@ -70,14 +70,36 @@ SCOPE = "GuiScope.SetRoot(GetPlayer.MakeScope).End"
 def button_tooltip(sgui: str, desc_key: str) -> str:
     return (
         f'tooltip = "[Localize(\'{desc_key}\')]'
-        f"[GetScriptedGui('{sgui}').ExecuteTooltip( {SCOPE} )]"
         f"[Localize('zz_ef_rate_tt_conditions')]"
         f"[GetScriptedGui('{sgui}').BuildTooltip( {SCOPE} )]\""
     )
 
 
-def box(title_key: str, value_key: str, tooltip_key: str, ind: str) -> str:
-    """One box in E&F's style (entry_bg_simple, 100x100)."""
+def value_textbox(key: str, ind: str, visible: str = "") -> str:
+    vis = ""
+    if visible:
+        vis = f"{ind}\tvisible = \"[GetScriptedGui('{visible}').IsShown( {SCOPE} )]\"\n"
+    return f"""{ind}textbox = {{
+{vis}{ind}	autoresize = yes
+{ind}	text = "{key}"
+{ind}	align = hcenter|nobaseline
+{ind}	parentanchor = hcenter
+{ind}	fontsize = 18
+{ind}	multiline = yes
+{ind}	minimumsize = {{ 115 40 }}
+{ind}	maximumsize = {{ 115 -1 }}
+{ind}}}
+"""
+
+
+def box(title_key: str, value_key, tooltip_key: str, ind: str) -> str:
+    """One box in E&F's style (entry_bg_simple, 100x100). value_key is a
+    localization key, or a list of (key, scripted_gui): colour variants, one
+    shown at a time."""
+    if isinstance(value_key, str):
+        values = value_textbox(value_key, ind + "\t")
+    else:
+        values = "".join(value_textbox(k, ind + "\t", vis) for k, vis in value_key)
     return f"""{ind}flowcontainer = {{
 {ind}	spacing = 5
 {ind}	direction = vertical
@@ -95,17 +117,7 @@ def box(title_key: str, value_key: str, tooltip_key: str, ind: str) -> str:
 {ind}		maximumsize = {{ 115 -1 }}
 {ind}	}}
 
-{ind}	textbox = {{
-{ind}		autoresize = yes
-{ind}		text = "{value_key}"
-{ind}		align = hcenter|nobaseline
-{ind}		parentanchor = hcenter
-{ind}		fontsize = 18
-{ind}		multiline = yes
-{ind}		minimumsize = {{ 115 40 }}
-{ind}		maximumsize = {{ 115 -1 }}
-{ind}	}}
-
+{values}
 {ind}	background = {{
 {ind}		using = entry_bg_simple
 {ind}		margin = {{ 10 10 }}
@@ -123,7 +135,11 @@ def cb_row(ind: str) -> str:
         box(t, v, tt, inner)
         for t, v, tt in (
             ("zz_ef_rate_box_rating", "zz_ef_rate_box_rating_value", "zz_ef_rate_box_rating_tt"),
-            ("zz_ef_rate_box_target", "zz_ef_rate_box_target_value", "zz_ef_rate_box_target_tt"),
+            ("zz_ef_rate_box_target", [
+                ("zz_ef_rate_box_target_value_up", "zz_ef_cb_rule_above_rate"),
+                ("zz_ef_rate_box_target_value_down", "zz_ef_cb_rule_below_rate"),
+                ("zz_ef_rate_box_target_value", "zz_ef_cb_rule_at_rate"),
+            ], "zz_ef_rate_box_target_tt"),
             ("zz_ef_rate_box_step", "zz_ef_rate_box_step_value", "zz_ef_rate_box_step_tt"),
             ("zz_ef_rate_box_policy", "zz_ef_rate_box_policy_value", "zz_ef_rate_box_policy_tt"),
         )
