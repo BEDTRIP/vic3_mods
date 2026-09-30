@@ -84,129 +84,34 @@
   pmg_currency_type:0 "Выпускаемая валюта"
 
   # Dinar
-  pm_currency_dinar_currency:0 "Динар"
-  pm_currency_dinar_algerian_dinar_currency:0 "Алжирский динар"
-  pm_currency_dinar_iraqi_dinar_currency:0 "Иракский динар"
-  pm_currency_dinar_libyan_dinar_currency:0 "Ливийский динар"
-  pm_currency_dinar_moroccan_dirham_currency:0 "Марокканский дирхам"
-  pm_currency_dinar_omanian_rial_currency:0 "Оманский риал"
-  pm_currency_dinar_qiran_currency:0 "Киран"
-  pm_currency_dinar_saudi_riyal_currency:0 "Саудовский риял"
-  pm_currency_dinar_serbian_dinar_currency:0 "Сербский динар"
-  pm_currency_dinar_tunisian_dinar_currency:0 "Тунисский динар"
-  pm_currency_dinar_yugoslav_dinar_currency:0 "Югославский динар"
 
   # Dollar
-  pm_currency_dollar_australian_dollar_currency:0 "Австралийский доллар"
-  pm_currency_dollar_canadian_dollar_currency:0 "Канадский доллар"
-  pm_currency_dollar_caribbean_dollar_currency:0 "Карибский доллар"
-  pm_currency_dollar_confederate_states_dollar_currency:0 "Доллар Конфедеративных Штатов"
-  pm_currency_dollar_liberian_dollar_currency:0 "Либерийский доллар"
-  pm_currency_dollar_new_zealand_dollar_currency:0 "Новозеландский доллар"
-  pm_currency_dollar_sierra_leonean_dollar_currency:0 "Доллар Сьерра-Леоне"
-  pm_currency_dollar_united_states_dollar_currency:0 "Доллар США"
 
   # Eco
-  pm_currency_eco_ariary_currency:0 "Ариари"
-  pm_currency_eco_central_african_eco_currency:0 "Центральноафриканский эко"
-  pm_currency_eco_east_african_eco_currency:0 "Восточноафриканский эко"
-  pm_currency_eco_ethiopian_birr_currency:0 "Эфиопский быр"
-  pm_currency_eco_ghanaian_pound_currency:0 "Ганский фунт"
-  pm_currency_eco_nigerian_naira_currency:0 "Нигерийская найра"
-  pm_currency_eco_south_african_rand_currency:0 "Южноафриканский ранд"
-  pm_currency_eco_tuareg_ouguiya_currency:0 "Туарегская угия"
-  pm_currency_eco_west_african_eco_currency:0 "Западноафриканский эко"
 
   # Franc
-  pm_currency_franc_belgian_franc_currency:0 "Бельгийский франк"
-  pm_currency_franc_french_franc_currency:0 "Французский франк"
-  pm_currency_franc_luxembourgish_franc_currency:0 "Люксембургский франк"
-  pm_currency_franc_swiss_franc_currency:0 "Швейцарский франк"
 
   # Gulden
-  pm_currency_gulden_currency:0 "Гульден"
-  pm_currency_gulden_bavarian_gulden_currency:0 "Баварский гульден"
-  pm_currency_gulden_florin_currency:0 "Флорин"
-  pm_currency_gulden_hungarian_forint_currency:0 "Венгерский форинт"
-  pm_currency_gulden_indies_guilder_currency:0 "Ост-индский гульден"
-  pm_currency_gulden_south_german_gulden_currency:0 "Южногерманский гульден"
 
   # Krone
-  pm_currency_krone_czech_koruna_currency:0 "Чешская крона"
-  pm_currency_krone_danish_krone_currency:0 "Датская крона"
-  pm_currency_krone_estonian_kroon_currency:0 "Эстонская крона"
-  pm_currency_krone_icelandic_krona_currency:0 "Исландская крона"
-  pm_currency_krone_norwegian_krone_currency:0 "Норвежская крона"
-  pm_currency_krone_slovak_koruna_currency:0 "Словацкая крона"
-  pm_currency_krone_swedish_krona_currency:0 "Шведская крона"
 
   # Leon
-  pm_currency_leon_leu_currency:0 "Лей"
-  pm_currency_leon_lev_currency:0 "Лев"
 
   # Lira
-  pm_currency_lira_currency:0 "Лира"
-  pm_currency_lira_ducato_currency:0 "Дукат"
-  pm_currency_lira_ottoman_lira_currency:0 "Османская лира"
-  pm_currency_lira_scudo_pontificio_currency:0 "Папский скудо"
-  pm_currency_lira_scudo_sardo_currency:0 "Сардинский скудо"
-  pm_currency_lira_toscane_lira_currency:0 "Тосканская лира"
 
   # Mark
-  pm_currency_mark_currency:0 "Марка"
-  pm_currency_mark_finnish_markka_currency:0 "Финская марка"
 
   # Peso
-  pm_currency_peso_currency:0 "Песо"
-  pm_currency_peso_argentine_peso_currency:0 "Аргентинское песо"
-  pm_currency_peso_bolivien_peso_currency:0 "Боливийское песо"
-  pm_currency_peso_chilean_peso_currency:0 "Чилийское песо"
-  pm_currency_peso_colombian_peso_currency:0 "Колумбийское песо"
-  pm_currency_peso_costa_rican_colon_currency:0 "Костариканский колон"
-  pm_currency_peso_cuban_peso_currency:0 "Кубинское песо"
-  pm_currency_peso_ecuadorian_peso_currency:0 "Эквадорское песо"
-  pm_currency_peso_el_salvador_colon_currency:0 "Сальвадорский колон"
-  pm_currency_peso_guatemalan_quetzal_currency:0 "Гватемальский кетсаль"
-  pm_currency_peso_honduran_lempira_currency:0 "Гондурасская лемпира"
-  pm_currency_peso_mexican_peso_currency:0 "Мексиканское песо"
-  pm_currency_peso_nicaraguan_cordoba_currency:0 "Никарагуанская кордоба"
-  pm_currency_peso_paraguayan_peso_currency:0 "Парагвайское песо"
-  pm_currency_peso_philippine_peso_currency:0 "Филиппинское песо"
-  pm_currency_peso_sol_de_oro_currency:0 "Соль де Оро"
-  pm_currency_peso_uruguayan_peso_currency:0 "Уругвайское песо"
-  pm_currency_peso_venezuelan_peso_currency:0 "Венесуэльское песо"
 
   # Pound
-  pm_currency_pound_egyptian_pound_currency:0 "Египетский фунт"
-  pm_currency_pound_irish_pound_currency:0 "Ирландский фунт"
-  pm_currency_pound_sterling_currency:0 "Фунт стерлингов"
 
   # Real
-  pm_currency_real_currency:0 "Реал"
-  pm_currency_real_brazilian_real_currency:0 "Бразильский реал"
 
   # Rupee
-  pm_currency_rupee_indian_rupee_currency:0 "Индийская рупия"
-  pm_currency_rupee_indonesian_rupiah_currency:0 "Индонезийская рупия"
 
   # Special
-  pm_currency_spe_baht_currency:0 "Бат"
-  pm_currency_spe_dong_currency:0 "Донг"
-  pm_currency_spe_drachma_currency:0 "Драхма"
-  pm_currency_spe_korean_won_currency:0 "Корейская вона"
-  pm_currency_spe_latvian_lats_currency:0 "Латвийский лат"
-  pm_currency_spe_lithuanian_litas_currency:0 "Литовский лит"
-  pm_currency_spe_peseta_currency:0 "Песета"
-  pm_currency_spe_ruble_currency:0 "Рубль"
-  pm_currency_spe_uni_currency:0 "Уни"
-  pm_currency_spe_yen_currency:0 "Иена"
-  pm_currency_spe_yuan_currency:0 "Юань"
-  pm_currency_spe_zloti_currency:0 "Злотый"
 
   # Thaler
-  pm_currency_thaler_hannoveraner_thaler_currency:0 "Ганноверский талер"
-  pm_currency_thaler_prussian_thaler_currency:0 "Прусский талер"
-  pm_currency_thaler_saxon_thaler_currency:0 "Саксонский талер"
 
   ################################
   ## Private ownership PM :
@@ -228,129 +133,34 @@
 
 
   # Dinar
-  pm_market_liquidity_dinar_currency:0 "Динар"
-  pm_market_liquidity_dinar_algerian_dinar_currency:0 "Алжирский динар"
-  pm_market_liquidity_dinar_iraqi_dinar_currency:0 "Иракский динар"
-  pm_market_liquidity_dinar_libyan_dinar_currency:0 "Ливийский динар"
-  pm_market_liquidity_dinar_moroccan_dirham_currency:0 "Марокканский дирхам"
-  pm_market_liquidity_dinar_omanian_rial_currency:0 "Оманский риал"
-  pm_market_liquidity_dinar_qiran_currency:0 "Киран"
-  pm_market_liquidity_dinar_saudi_riyal_currency:0 "Саудовский риял"
-  pm_market_liquidity_dinar_serbian_dinar_currency:0 "Сербский динар"
-  pm_market_liquidity_dinar_tunisian_dinar_currency:0 "Тунисский динар"
-  pm_market_liquidity_dinar_yugoslav_dinar_currency:0 "Югославский динар"
 
   # Dollar
-  pm_market_liquidity_dollar_australian_dollar_currency:0 "Австралийский доллар"
-  pm_market_liquidity_dollar_canadian_dollar_currency:0 "Канадский доллар"
-  pm_market_liquidity_dollar_caribbean_dollar_currency:0 "Карибский доллар"
-  pm_market_liquidity_dollar_confederate_states_dollar_currency:0 "Доллар Конфедеративных Штатов"
-  pm_market_liquidity_dollar_liberian_dollar_currency:0 "Либерийский доллар"
-  pm_market_liquidity_dollar_new_zealand_dollar_currency:0 "Новозеландский доллар"
-  pm_market_liquidity_dollar_sierra_leonean_dollar_currency:0 "Доллар Сьерра-Леоне"
-  pm_market_liquidity_dollar_united_states_dollar_currency:0 "Доллар США"
 
   # Eco
-  pm_market_liquidity_eco_ariary_currency:0 "Ариари"
-  pm_market_liquidity_eco_central_african_eco_currency:0 "Центральноафриканский эко"
-  pm_market_liquidity_eco_east_african_eco_currency:0 "Восточноафриканский эко"
-  pm_market_liquidity_eco_ethiopian_birr_currency:0 "Эфиопский быр"
-  pm_market_liquidity_eco_ghanaian_pound_currency:0 "Ганский фунт"
-  pm_market_liquidity_eco_nigerian_naira_currency:0 "Нигерийская найра"
-  pm_market_liquidity_eco_south_african_rand_currency:0 "Южноафриканский ранд"
-  pm_market_liquidity_eco_tuareg_ouguiya_currency:0 "Туарегская угия"
-  pm_market_liquidity_eco_west_african_eco_currency:0 "Западноафриканский эко"
 
   # Franc
-  pm_market_liquidity_franc_belgian_franc_currency:0 "Бельгийский франк"
-  pm_market_liquidity_franc_french_franc_currency:0 "Французский франк"
-  pm_market_liquidity_franc_luxembourgish_franc_currency:0 "Люксембургский франк"
-  pm_market_liquidity_franc_swiss_franc_currency:0 "Швейцарский франк"
 
   # Gulden
-  pm_market_liquidity_gulden_currency:0 "Гульден"
-  pm_market_liquidity_gulden_bavarian_gulden_currency:0 "Баварский гульден"
-  pm_market_liquidity_gulden_florin_currency:0 "Флорин"
-  pm_market_liquidity_gulden_hungarian_forint_currency:0 "Венгерский форинт"
-  pm_market_liquidity_gulden_indies_guilder_currency:0 "Ост-индский гульден"
-  pm_market_liquidity_gulden_south_german_gulden_currency:0 "Южногерманский гульден"
 
   # Krone
-  pm_market_liquidity_krone_czech_koruna_currency:0 "Чешская крона"
-  pm_market_liquidity_krone_danish_krone_currency:0 "Датская крона"
-  pm_market_liquidity_krone_estonian_kroon_currency:0 "Эстонская крона"
-  pm_market_liquidity_krone_icelandic_krona_currency:0 "Исландская крона"
-  pm_market_liquidity_krone_norwegian_krone_currency:0 "Норвежская крона"
-  pm_market_liquidity_krone_slovak_koruna_currency:0 "Словацкая крона"
-  pm_market_liquidity_krone_swedish_krona_currency:0 "Шведская крона"
 
   # Leon
-  pm_market_liquidity_leon_leu_currency:0 "Лей"
-  pm_market_liquidity_leon_lev_currency:0 "Лев"
 
   # Lira
-  pm_market_liquidity_lira_currency:0 "Лира"
-  pm_market_liquidity_lira_ducato_currency:0 "Дукат"
-  pm_market_liquidity_lira_ottoman_lira_currency:0 "Османская лира"
-  pm_market_liquidity_lira_scudo_pontificio_currency:0 "Папский скудо"
-  pm_market_liquidity_lira_scudo_sardo_currency:0 "Сардинский скудо"
-  pm_market_liquidity_lira_toscane_lira_currency:0 "Тосканская лира"
 
   # Mark
-  pm_market_liquidity_mark_currency:0 "Марка"
-  pm_market_liquidity_mark_finnish_markka_currency:0 "Финская марка"
 
   # Peso
-  pm_market_liquidity_peso_currency:0 "Песо"
-  pm_market_liquidity_peso_argentine_peso_currency:0 "Аргентинское песо"
-  pm_market_liquidity_peso_bolivien_peso_currency:0 "Боливийское песо"
-  pm_market_liquidity_peso_chilean_peso_currency:0 "Чилийское песо"
-  pm_market_liquidity_peso_colombian_peso_currency:0 "Колумбийское песо"
-  pm_market_liquidity_peso_costa_rican_colon_currency:0 "Костариканский колон"
-  pm_market_liquidity_peso_cuban_peso_currency:0 "Кубинское песо"
-  pm_market_liquidity_peso_ecuadorian_peso_currency:0 "Эквадорское песо"
-  pm_market_liquidity_peso_el_salvador_colon_currency:0 "Сальвадорский колон"
-  pm_market_liquidity_peso_guatemalan_quetzal_currency:0 "Гватемальский кетсаль"
-  pm_market_liquidity_peso_honduran_lempira_currency:0 "Гондурасская лемпира"
-  pm_market_liquidity_peso_mexican_peso_currency:0 "Мексиканское песо"
-  pm_market_liquidity_peso_nicaraguan_cordoba_currency:0 "Никарагуанская кордоба"
-  pm_market_liquidity_peso_paraguayan_peso_currency:0 "Парагвайское песо"
-  pm_market_liquidity_peso_philippine_peso_currency:0 "Филиппинское песо"
-  pm_market_liquidity_peso_sol_de_oro_currency:0 "Соль де Оро"
-  pm_market_liquidity_peso_uruguayan_peso_currency:0 "Уругвайское песо"
-  pm_market_liquidity_peso_venezuelan_peso_currency:0 "Венесуэльское песо"
 
   # Pound
-  pm_market_liquidity_pound_egyptian_pound_currency:0 "Египетский фунт"
-  pm_market_liquidity_pound_irish_pound_currency:0 "Ирландский фунт"
-  pm_market_liquidity_pound_sterling_currency:0 "Фунт стерлингов"
 
   # Real
-  pm_market_liquidity_real_currency:0 "Реал"
-  pm_market_liquidity_real_brazilian_real_currency:0 "Бразильский реал"
 
   # Rupee
-  pm_market_liquidity_rupee_indian_rupee_currency:0 "Индийская рупия"
-  pm_market_liquidity_rupee_indonesian_rupiah_currency:0 "Индонезийская рупия"
 
   # Special
-  pm_market_liquidity_spe_baht_currency:0 "Бат"
-  pm_market_liquidity_spe_dong_currency:0 "Донг"
-  pm_market_liquidity_spe_drachma_currency:0 "Драхма"
-  pm_market_liquidity_spe_korean_won_currency:0 "Корейская вона"
-  pm_market_liquidity_spe_latvian_lats_currency:0 "Латвийский лат"
-  pm_market_liquidity_spe_lithuanian_litas_currency:0 "Литовский лит"
-  pm_market_liquidity_spe_peseta_currency:0 "Песета"
-  pm_market_liquidity_spe_ruble_currency:0 "Рубль"
-  pm_market_liquidity_spe_uni_currency:0 "Уни"
-  pm_market_liquidity_spe_yen_currency:0 "Иена"
-  pm_market_liquidity_spe_yuan_currency:0 "Юань"
-  pm_market_liquidity_spe_zloti_currency:0 "Злотый"
 
   # Thaler
-  pm_market_liquidity_thaler_hannoveraner_thaler_currency:0 "Ганноверский талер"
-  pm_market_liquidity_thaler_prussian_thaler_currency:0 "Прусский талер"
-  pm_market_liquidity_thaler_saxon_thaler_currency:0 "Саксонский талер"
 
   ################################
   ## Reserve currency PM :
