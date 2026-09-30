@@ -1,4 +1,7 @@
-﻿# ComPatch note: nothing here is TGR-specific.
+﻿# In replace/ since 2026-09-24: these keys already exist in an earlier mod
+# or in vanilla, and localization is first-come -- outside replace/ this file
+# never showed.
+# ComPatch note: nothing here is TGR-specific.
 # E&F defines the pm_* keys itself since 04.07.2026 (01_ef_production_method_localization),
 # but never defined the four production_method_GROUP names, so the PM selector shows raw keys.
 # Kept in this patch so it works standalone; if you always run the E&F 1.13 Hotfix, this

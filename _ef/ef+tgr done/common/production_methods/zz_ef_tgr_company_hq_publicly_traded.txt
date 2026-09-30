@@ -1,0 +1,29 @@
+#############################################
+# EF.22 (2026-09-24) -- TGR's trade layer on the E&F Hotfix's publicly traded HQ
+#
+# The E&F Hotfix adds pm_company_headquarter_publicly_traded to the company HQ
+# ownership group (_ef/ef hotfix 1.13/common/production_methods/
+# zz_ef_company_hq_publicly_traded.txt). TGR gives every HQ ownership method
+# the same state_modifiers (TGR_TRADE_private_infrastructure_investors.txt:
+# pm_company_headquarter_privately_owned and siblings): trade capacity, weekly
+# trades, tax capacity per HQ level. Without it here, switching a company to
+# "Publicly Traded" would silently cost that capacity, and the AI (group
+# ai_selection = most_productive) would never pick it. The layer belongs to
+# TGR, so it is added in the E&F x TGR pair, not in the hotfix.
+#
+# TRY_INJECT: without the hotfix the method does not exist and this is a no-op
+# instead of a load error.
+#
+# !! MAINTENANCE !! Numbers copied from TGR's pm_company_headquarter_privately_owned
+# (TGR 24.09.2026). Re-check when TGR changes them.
+#############################################
+
+TRY_INJECT:pm_company_headquarter_publicly_traded = {
+	state_modifiers = {
+		level_scaled = {
+			state_weekly_trades_add = 0.5
+			state_trade_capacity_add = 1
+			state_tax_capacity_add = 0.25
+		}
+	}
+}
