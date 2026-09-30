@@ -24,6 +24,11 @@
 # (E&F cut only for players there; this sgui is player-only anyway).
 # Texts: localization/*/replace/zz_pb_ef_psc_l_*.yml.
 #
+# SWITCHED OFF 2026-09-30 (user): under EF.30 the central bank walks any
+# cut back within 1-4 quarters, and cutting to ~0.1% bypassed the 0.5% floor.
+# A custom_tooltip { always = no } heads each is_valid; the rework (the
+# buttons change the 5 in the sector limit 1 - 5 x rate) is plan item STR.4.
+#
 # Keep in sync with 00_financial_scripted_guis.txt on every E&F update.
 #############################################
 
@@ -32,6 +37,11 @@ REPLACE_OR_CREATE:speculative_share_9_button = { ### stimulus -1%: +10 overcapac
 	desc = "speculative_share_9_button_desc"
 
 	is_valid = {
+		### 2026-09-30: switched off until STR.4
+		custom_tooltip = {
+			text = zz_pb_ef_stimulus_off_tt
+			always = no
+		}
 		NOT = {
 			has_modifier = speculative_share_modifier_5
 		}
@@ -97,6 +107,11 @@ REPLACE_OR_CREATE:speculative_share_10_button = { ### stimulus -2%: +20 overcapa
 	desc = "speculative_share_10_button_desc"
 
 	is_valid = {
+		### 2026-09-30: switched off until STR.4
+		custom_tooltip = {
+			text = zz_pb_ef_stimulus_off_tt
+			always = no
+		}
 		NOT = {
 			has_modifier = speculative_share_modifier_5
 		}
@@ -169,6 +184,11 @@ REPLACE_OR_CREATE:speculative_share_11_button = { ### stimulus -3%: +30 overcapa
 	desc = "speculative_share_11_button_desc"
 
 	is_valid = {
+		### 2026-09-30: switched off until STR.4
+		custom_tooltip = {
+			text = zz_pb_ef_stimulus_off_tt
+			always = no
+		}
 		NOT = {
 			has_modifier = speculative_share_modifier_5
 		}
@@ -241,6 +261,11 @@ REPLACE_OR_CREATE:speculative_share_12_button = { ### stimulus -4%: +40 overcapa
 	desc = "speculative_share_12_button_desc"
 
 	is_valid = {
+		### 2026-09-30: switched off until STR.4
+		custom_tooltip = {
+			text = zz_pb_ef_stimulus_off_tt
+			always = no
+		}
 		NOT = {
 			has_modifier = speculative_share_modifier_5
 		}
