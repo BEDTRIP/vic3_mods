@@ -2,24 +2,29 @@
 # EF.48 GUI bridge: for each country the weekly money step queued in
 # global_var list zz_ef_hook_countries, hand the budget's lines outside the
 # accounts (GUI-only data) to script (scripted_guis/zz_ef_money_hook.txt).
-# BPM's pattern as is (BPM_factionhook.gui): the item is visible while the
-# country's var:zz_ef_hook_pending is set, and its _show state fires on_start.
-# The receiver consumes the var, so a second call (on_start may fire twice,
-# or another client in multiplayer) does nothing.
+# CMF's pattern as is (_cmf/gui/com_hidden_trigger.gui, character names):
+# a hidden but "visible" widget of real size, an item per list entry whose
+# state fires on_finish when trigger_when turns true. (BPM's _show/on_start
+# and trigger_on_create/on_start never fired here, 2026-09-30.) The receiver
+# consumes var:zz_ef_hook_pending, so repeated calls do nothing.
 widget = {
 	name = zz_ef_money_hook
-	layer = top
+	datacontext = "[GetMetaPlayer.GetPlayedOrObservedCountry]"
 	visible = "[GetMetaPlayer.GetPlayedOrObservedCountry.IsValid]"
+	size = { 500 500 }
+	allow_outside = yes
+	alwaystransparent = yes
+	alpha = 1
 
-	vbox = {
+	flowcontainer = {
+		visible = "[DataModelHasItems(GetGlobalList('zz_ef_hook_countries'))]"
 		datamodel = "[GetGlobalList('zz_ef_hook_countries')]"
 		item = {
-			hbox = {
+			widget = {
 				datacontext = "[Scope.GetCountry]"
-				visible = "[Country.MakeScope.Var('zz_ef_hook_pending').IsSet]"
 				state = {
-					name = _show
-					on_start = "[GetScriptedGui('zz_ef_money_hook_sg').Execute( GuiScope.SetRoot( Country.MakeScope ).AddScope( 'ext', MakeScopeValue( Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetMintingTrend)), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetDiplomaticPactsIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetTreatiesIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPowerBlocIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(Country.GetMarketFeesIncome))), Negate_CFixedPoint(Abs_CFixedPoint(Country.PredictTolls))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPiracyIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalIncomeTrend)))), Abs_CFixedPoint(GetTrendValue(Country.GetDiplomaticPactsExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetTreatiesExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetPowerBlocExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalExpensesTrend))) ) ).End )]"
+					trigger_when = "[Country.MakeScope.Var('zz_ef_hook_pending').IsSet]"
+					on_finish = "[GetScriptedGui('zz_ef_money_hook_sg').Execute( GuiScope.SetRoot( Country.MakeScope ).AddScope( 'ext', MakeScopeValue( Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetMintingTrend)), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetDiplomaticPactsIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetTreatiesIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPowerBlocIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(Country.GetMarketFeesIncome))), Negate_CFixedPoint(Abs_CFixedPoint(Country.PredictTolls))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPiracyIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalIncomeTrend)))), Abs_CFixedPoint(GetTrendValue(Country.GetDiplomaticPactsExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetTreatiesExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetPowerBlocExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalExpensesTrend))) ) ).End )]"
 				}
 			}
 		}
