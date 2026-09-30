@@ -10,6 +10,10 @@
 зависит от: —
 -->
 
+> **25.09.2026 — TGR.3.** В тело `foreign_investment_rights` добавлены два поля ванили 1.13 —
+> `max_target_involvement`, `target_involvement_applies_to` (у `grey_diplo`, как и у TGR, тело старше
+> 1.13). Читаются из ванили генератором; аддон Grey's пересобран.
+
 ## Для мастерской
 
 [h1]ComPatch: Grey's + KAI[/h1]

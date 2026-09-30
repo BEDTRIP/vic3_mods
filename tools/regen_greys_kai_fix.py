@@ -65,6 +65,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -79,6 +80,7 @@ KAI_BUILDINGS = os.path.join(KAI, "common/buildings/kai_buildings.txt")
 USU_GOV_FILE = os.path.join(GREYS, "grey_usu/common/buildings/yMoG_USU_government.txt")
 KAI_FIR = os.path.join(KAI, "common/treaty_articles/kai_foreign_investment_rights.txt")
 DIPLO_FIR = os.path.join(GREYS, "grey_diplo/common/treaty_articles/z07_foreign_investment_rights.txt")
+VAN_FIR = res("../../vic3_mods_out/.vanillaVIC3/common/treaty_articles/07_foreign_investment_rights.txt")
 OUT = res("../_greys/greys_kai_fix done")
 
 DATE = "2026-08-27"
@@ -160,6 +162,24 @@ def build_foreign_investment_rights():
     new_ai_inner = V.replace_sub(diplo_ai_inner, "wargoal_score_multiplier", kai_wgs)
     new_ai_full = "{" + new_ai_inner + "}"
     new_body = V.replace_sub(diplo_body, "ai", new_ai_full)
+
+    # TGR.3 (2026-09-25): grey_diplo's body (like TGR's) predates 1.13 and lacks the
+    # investment-involvement cap vanilla 1.13 added. Put vanilla's two fields back,
+    # read live; stop if grey_diplo ever carries them itself.
+    van_text = V.read(VAN_FIR)
+    _d3, van_body = V.entry(van_text, key)
+    added = []
+    for fld in ("max_target_involvement", "target_involvement_applies_to"):
+        assert not re.search(r"(?m)^\s*" + fld + r"\s*=", diplo_body), (
+            f"{key}: grey_diplo now has {fld} itself -- drop this restore")
+        m = re.search(r"(?m)^\s*(" + fld + r"\s*=\s*\S+)", van_body)
+        assert m, f"{key}: vanilla has no {fld} -- re-check"
+        added.append(m.group(1))
+    anchor = re.search(r"(?m)^(\s*)relations_improvement_max\s*=\s*\S+[^\n]*\n", new_body)
+    assert anchor, f"{key}: relations_improvement_max anchor gone -- re-check"
+    ind = anchor.group(1).lstrip("\n")
+    new_body = (new_body[:anchor.end()] + "\n" + ind + "# 1.13 vanilla, missing from grey_diplo's body (TGR.3)\n"
+                + "".join(ind + a + "\n" for a in added) + new_body[anchor.end():])
 
     write("common/treaty_articles/zz_greys_kai_fix_foreign_investment_rights.txt",
           f"TRY_REPLACE:{key} = {{{new_body}}}",
