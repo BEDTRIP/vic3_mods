@@ -1,0 +1,12 @@
+#############################################
+# EF.29 (2026-09-25) -- feed message when the speculative bubble climbs into a
+# new band of 10 (on_actions/zz_ef_bubble_on_actions.txt).
+# Format: vanilla common/messages/00_messages.txt.
+#############################################
+
+zz_ef_bubble_rising = {
+	type = country
+	texture = "gfx/interface/icons/timed_modifier_icons/speculative_bubble_modifier.dds"
+	notification_type = feed
+	color = bad
+}

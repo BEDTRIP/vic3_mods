@@ -1,0 +1,51 @@
+﻿#############################################
+# EF.25 (2026-09-24) -- mass shareholding: a share of company dividends goes
+# to the workers of company-owned buildings, growing with the stock market
+#
+# WHY
+# In 1.13 pops own nothing: dividends reach only the employees of the owning
+# building (a company HQ, a financial district, a manor house), by their
+# building_<class>_shares_add weights. E&F's stocks are a good pops BUY
+# (popneed_financial_products); nothing flows back. So a deep stock market
+# made no one but capitalists richer. Vanilla has exactly one wider channel:
+# building_company_worker_dividends_add -- the share of dividends from
+# company-owned levels paid to the workforce of those buildings (vanilla:
+# 0.75 under cooperative ownership, laws/01_economic_system.txt:558; 0.25 on
+# some HQ methods, production_methods/14_companies.txt:105). A country
+# modifier reaches every building of the country, as the law does.
+#
+# FORMULA (decided 2026-09-24, literacy added 2026-09-25)
+#   share = zz_ef_mass_shareholding_max x min(1, equity capitalization / GDP)
+#           x literacy
+# Literacy because capitalization alone did not tell countries apart: the
+# 1847 save had 0.6-2.1 GDP everywhere (Russia 1.19, Japan 1.64), so nearly
+# every country sat at the full 25%. Buying shares took people who could
+# read a prospectus: Britain (66% literate in 1847) gets ~16%, a 12%-literate
+# Russia ~3%.
+# equity capitalization = zz_ef_equity_capitalization (EF.24, the four stocks
+# at market price, no debt). At capitalization = 1 GDP (Britain in the 1870s)
+# the full 25%; Russia at 0.1-0.2 GDP gets 2.5-5%.
+#
+# Stacking: it adds to the law and HQ methods. Under cooperative ownership
+# (0.75) the total can reach 1.0; with an HQ method on top, more -- the engine's
+# own clamp applies, nothing here.
+#
+# All values COUNTRY scope. `gdp` is vanilla's.
+#
+# !! TUNING !! zz_ef_mass_shareholding_max (percentage points, 25 = 0.25).
+#############################################
+
+zz_ef_mass_shareholding_max = 25
+
+# Percentage points of building_company_worker_dividends_add, 0 .. max.
+zz_ef_mass_shareholding_points = {
+	value = zz_ef_equity_capitalization
+	divide = {
+		value = gdp
+		min = 1
+	}
+	max = 1
+	min = 0
+	multiply = literacy_rate	### 2026-09-25, 0..1
+	multiply = zz_ef_mass_shareholding_max
+}

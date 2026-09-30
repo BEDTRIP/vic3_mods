@@ -1,0 +1,32 @@
+#############################################
+# EF.27 (2026-09-25) -- central banks no longer urbanize
+#
+# E&F's bg_bank (building_groups/00_ef_building_groups.txt:18, 4.1.7) has
+# urbanization = 20 per level. Its one member, building_bank (the central
+# bank), sits in the capital and grows with the money supply: 1847 observer
+# run, Britain's Home Counties -- 250 levels, 5000 urbanization from one
+# government building with 250 employees. Urbanization feeds urban centres,
+# migration and, through urban centre levels, the construction sector limit
+# of the E&F x PSC compatch. Same reasoning as EF.17 for the exchanges
+# (zz_ef_financial_centre_group.txt).
+#
+# One field changed: urbanization 20 -> 0. The rest is E&F's line for line.
+# REPLACE: replaces the whole entry -- re-diff after an E&F update.
+#############################################
+
+REPLACE:bg_bank = {
+	category = development
+
+	always_possible = yes
+
+	inheritable_construction = no
+	is_government_funded = yes
+
+	economy_of_scale = no
+
+	lens = government
+
+	urbanization = 0	### EF.27: E&F has 20
+	infrastructure_usage_per_level = 0
+	economic_contribution = 0
+}

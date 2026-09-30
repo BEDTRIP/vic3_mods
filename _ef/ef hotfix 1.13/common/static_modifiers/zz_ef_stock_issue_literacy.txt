@@ -1,0 +1,12 @@
+#############################################
+# EF.28 (2026-09-25) -- see common/scripted_effects/zz_ef_stock_issue_literacy.txt
+# Country modifier, multiplier = percentage points cut (0..100).
+#############################################
+
+zz_ef_stock_issue_literacy = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
+	goods_output_manufacture_stock_mult = -0.01
+	goods_output_agricultural_stock_mult = -0.01
+	goods_output_mining_stock_mult = -0.01
+	goods_output_railroad_stock_mult = -0.01
+}

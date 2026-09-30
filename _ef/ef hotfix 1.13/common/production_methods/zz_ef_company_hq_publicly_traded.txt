@@ -1,0 +1,68 @@
+﻿#############################################
+# EF.22 (2026-09-24) -- "Publicly Traded" ownership for company headquarters
+#
+# WHY
+# In 1.13 a company's dividends go only to the employees of its HQ, by their
+# building_<class>_shares_add weights; the HQ ownership methods decide who
+# counts as "the owners" (capitalists, aristocrats, shopkeepers ...). Vanilla
+# has a publicly traded option only for the financial district
+# (pm_financial_district_publicly_traded, 11_private_infrastructure.txt:471),
+# not for companies. With E&F's stock market in the game a joint-stock company
+# whose shares are held by the middle classes is the missing case.
+#
+# WHAT
+# One new method in pmg_ownership_building_company_headquarter, added with
+# INJECT: (vanilla defines the group; grey_usu also only INJECTs into it, so
+# the list stays additive). Modelled on the vanilla private method
+# (production_methods/14_companies.txt:1):
+#   - capitalist_owned companies only, same law gates as the private method
+#     (not under command economy or cooperative ownership);
+#   - joint_stock_companies (era 2) unlocks it;
+#   - owners' weight moves from capitalists to shopkeepers and clerks, and
+#     15% of company dividends go to the workers of company-owned buildings
+#     (vanilla gives 0.25 on the shopkeeper/academic/bureaucrat variants);
+#   - employment at E&F's scale, ~10 per level (E&F cuts the HQ from vanilla's
+#     50; the Grey's addon carries the same cut, zz_greys_ef_company_hq.txt:
+#     capitalists 3 / shopkeepers 3.5 / clerks 3.5).
+# TGR gives every HQ method trade and tax capacity (state_modifiers); that
+# layer is TGR's, not E&F's, so it is added in the megapack
+# (_ef/ef+tgr done), not here -- the hotfix also runs without TGR.
+#
+# The Grey's generator (tools/regen_greys_ef.py) re-issues the 14 methods E&F
+# rewrites; this key is new and does not intersect with them.
+#
+# !! TUNING !! building_company_worker_dividends_add 0.15 (0.1-0.2 decided),
+# the shares split.
+#############################################
+
+pm_company_headquarter_publicly_traded = {
+	texture = "gfx/interface/icons/production_method_icons/publicly_traded.dds"
+	is_hidden_when_unavailable = yes
+
+	unlocking_technologies = {
+		joint_stock_companies
+	}
+
+	unlocking_company_categories = {
+		capitalist_owned
+	}
+
+	disallowing_laws = {
+		law_command_economy
+		law_cooperative_ownership
+	}
+
+	building_modifiers = {
+		level_scaled = {
+			building_employment_capitalists_add = 2
+			building_employment_shopkeepers_add = 4
+			building_employment_clerks_add = 4
+		}
+		unscaled = {
+			building_capitalists_shares_add = 5
+			building_shopkeepers_shares_add = 5
+			building_clerks_shares_add = 2
+			building_company_worker_dividends_add = 0.15
+		}
+	}
+}

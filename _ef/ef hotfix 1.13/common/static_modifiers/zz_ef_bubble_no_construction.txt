@@ -1,0 +1,24 @@
+#############################################
+# EF.18 v2 (2026-09-24) -- the speculative bubble no longer slows construction
+# (moved to the E&F hotfix 2026-09-25 as part of EF.29; was
+# zz_pb_ef_bubble_no_construction.txt in the E&F x PSC compatch)
+#
+# E&F: speculative_bubble_modifier (static_modifiers/
+# 00_ef_dynamic_modifier_country.txt:125), applied with multiplier = minus the
+# bubble (0..100), takes 1% per point from state_construction_mult, weekly
+# innovation and prestige. Under PSC construction is already braked by the
+# overbuilt economy (on_actions/zz_pb_ef_overbuild_counter.txt), on the same
+# modifier -- two counters on one lever (without PSC E&F's own overbuilt economy
+# does the same). Decided 2026-09-24: the bubble keeps
+# innovation and prestige, the construction malus goes.
+#
+# Full body: REPLACE: replaces the whole record (rules, section 1), so the
+# icon is named again.
+# !! MAINTENANCE !! Re-diff against E&F's speculative_bubble_modifier.
+#############################################
+
+REPLACE:speculative_bubble_modifier = {
+	icon = gfx/interface/icons/timed_modifier_icons/speculative_bubble_modifier.dds
+	country_weekly_innovation_mult = 0.01
+	country_prestige_mult = 0.01
+}

@@ -1,0 +1,10 @@
+﻿#############################################
+# EF.22 (2026-09-24) -- adds pm_company_headquarter_publicly_traded to the HQ
+# ownership group. The why: common/production_methods/zz_ef_company_hq_publicly_traded.txt
+#############################################
+
+INJECT:pmg_ownership_building_company_headquarter = {
+	production_methods = {
+		pm_company_headquarter_publicly_traded
+	}
+}

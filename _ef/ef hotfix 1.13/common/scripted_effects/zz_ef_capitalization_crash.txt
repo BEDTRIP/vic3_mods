@@ -1,0 +1,148 @@
+#############################################
+# EF.24 (2026-09-24) -- stock index change and crash: the half-year average
+# now against the same average exactly 12 months ago, checked every month
+#
+# WHAT E&F DOES
+# Every half year (financial_center_ef_on_half_yearly_pulse_country,
+# 00_on_action_main.txt:625, countries with a stock exchange) a country with
+# country_indice > 5M takes a snapshot of country_indice; every SECOND pulse
+# it compares with the previous snapshot and resets
+# (fluctuations_country_indice_value_year, 01_financial_scripted_effects.txt:
+# 32088). So: a fall over 6 months, checked once a year -- a fall between
+# the pairs is never seen. The relative change moves the stock market index,
+# and a fall of more than 50% is financial_crash.
+#
+# WHAT financial_crash DOES (01_financial_scripted_effects.txt:33574)
+# The first crisis only warns (economic_instability count 1). A second crisis
+# of any kind before the count resets (three calm half-years) brings the full
+# consequences (financial_crash_consequences, :34040): every stock exchange
+# of the country is demolished, the investment pool loses the same share as
+# the index fell, basic companies below 100 prosperity are dissolved, and
+# every majority-private industrial / farm building gets -100% throughput,
+# -90% cash reserves and -25 standard of living for 23 months. So a false
+# crash from a noisy snapshot is a real problem -- hence the averages.
+#
+# WHAT THIS DOES (decided 2026-09-24)
+#   marks    zz_ef_cap_m1 .. zz_ef_cap_m12: zz_ef_cap_half (all four stocks,
+#            moving average ~ the last half year, updated monthly in
+#            zz_ef_capitalization_average.txt) 1 .. 12 months ago. Shifted
+#            once a month. Chosen over two half-yearly marks so the check
+#            runs every month against exactly a year ago: no waiting for the
+#            pulse, up to 6 months earlier. Cost: 12 variable copies a month
+#            per country with a stock exchange -- nothing next to the state
+#            walk of the snapshot itself.
+#   change   half / m12 - 1 goes into E&F's own country_indice_value_dif_01:
+#            the menu shows it next to the index and in the country list, and
+#            financial_crash reads it for the investment-pool loss and the
+#            size of financial_crash_country. (Points a year, base_index_value_dif,
+#            are written in zz_ef_capitalization_average.txt since 2026-09-25.)
+#   crash    change < -50%, equity above zz_ef_crash_floor, and no crash in
+#            the last 15 months. The cooldown is required: after a fall the
+#            year-ago mark stays from before it for 12 months, so without it
+#            the same fall would fire every month -- and the second call is
+#            what brings the full consequences above.
+# The change is kept for every country with an average (2026-09-25, 1850
+# run: countries without an exchange, or below the floor, sat at 0.00% in the
+# menu's list next to a moving index). The CRASH needs a stock exchange
+# (E&F's own gate, has_financial_center), equity above the floor, and a game
+# date from 1838: in the 1850 run five countries (Spain, Mexico, Qing, the
+# EIC, North Peru) "crashed" in 1836-37 -- the marks start at the first
+# month's average, before EF.28 cuts the issuance of low-literacy countries,
+# so the settling of the average read as a fall of over 50%.
+# New marks start at the current average -- no false crash on old saves, the
+# first year compares against that.
+# E&F's half-yearly snapshot pair (index_value_count,
+# country_indice_value_1/2, fluctuations_country_indice_value_year) is no
+# longer used: the half-yearly effect is re-issued below without it.
+#
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of an E&F effect (21 lines,
+# 4.1.7). Re-diff after an E&F update.
+#############################################
+
+### COUNTRY scope, monthly, after zz_ef_cap_monthly_update
+### (on_actions/zz_ef_capitalization_on_actions.txt).
+zz_ef_cap_monthly_crash_check = {
+	if = {
+		limit = {
+			has_variable = zz_ef_cap_half
+		}
+		if = {
+			limit = { NOT = { has_variable = zz_ef_cap_m12 } }
+			set_variable = { name = zz_ef_cap_m1 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m2 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m3 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m4 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m5 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m6 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m7 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m8 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m9 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m10 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m11 value = var:zz_ef_cap_half }
+			set_variable = { name = zz_ef_cap_m12 value = var:zz_ef_cap_half }
+		}
+
+		if = {
+			limit = {
+				var:zz_ef_cap_m12 > 0
+			}
+			set_variable = {
+				name = country_indice_value_dif_01
+				value = {
+					value = var:zz_ef_cap_half
+					divide = var:zz_ef_cap_m12
+					subtract = 1
+				}
+			}
+			if = {
+				limit = {
+					var:country_indice_value_dif_01 < -0.5
+					NOT = { has_variable = zz_ef_cap_crash_cooldown }
+					has_modifier = has_financial_center
+					zz_ef_equity_capitalization > zz_ef_crash_floor
+					### 2026-09-25: the first two years settle the average.
+					game_date >= 1838.1.1
+				}
+				set_variable = {
+					name = zz_ef_cap_crash_cooldown
+					months = 15
+				}
+				### game.log: which country crashed and when (2026-09-25: the
+				### 1847 run crashed someone once, and the log could not say who).
+				debug_log = "ZZEF crash: equity fell by more than half in a year"
+				debug_log_scopes = yes
+				financial_crash = yes
+			}
+		}
+		else = {
+			### E&F's clear branch (fluctuations_country_indice_value_year_clear).
+			set_variable = { name = country_indice_value_dif_01 value = 0 }
+		}
+
+		### Shift: m12 <- m11 <- ... <- m1 <- this month's average.
+		set_variable = { name = zz_ef_cap_m12 value = var:zz_ef_cap_m11 }
+		set_variable = { name = zz_ef_cap_m11 value = var:zz_ef_cap_m10 }
+		set_variable = { name = zz_ef_cap_m10 value = var:zz_ef_cap_m9 }
+		set_variable = { name = zz_ef_cap_m9 value = var:zz_ef_cap_m8 }
+		set_variable = { name = zz_ef_cap_m8 value = var:zz_ef_cap_m7 }
+		set_variable = { name = zz_ef_cap_m7 value = var:zz_ef_cap_m6 }
+		set_variable = { name = zz_ef_cap_m6 value = var:zz_ef_cap_m5 }
+		set_variable = { name = zz_ef_cap_m5 value = var:zz_ef_cap_m4 }
+		set_variable = { name = zz_ef_cap_m4 value = var:zz_ef_cap_m3 }
+		set_variable = { name = zz_ef_cap_m3 value = var:zz_ef_cap_m2 }
+		set_variable = { name = zz_ef_cap_m2 value = var:zz_ef_cap_m1 }
+		set_variable = { name = zz_ef_cap_m1 value = var:zz_ef_cap_half }
+	}
+}
+
+### E&F's half-yearly financial-centre effect without the snapshot pair.
+REPLACE_OR_CREATE:financial_center_ef_on_half_yearly_pulse_country = {
+	### EF.24: the crash check and the index change are monthly now
+	### (zz_ef_cap_monthly_crash_check above).
+	if  = {
+		limit  = {
+			interest_per_month_from_foreign_debt_investment > 0
+		}
+		interest_per_month_from_foreign_debt_investment = yes
+	}
+}

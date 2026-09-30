@@ -1,0 +1,182 @@
+#############################################
+# EF.24 (2026-09-24) -- monthly update of the capitalization averages and the
+# stock market index. Numbers and the why:
+# script_values/zz_ef_capitalization_snapshot.txt (averages),
+# scripted_effects/zz_ef_capitalization_crash.txt (crash).
+#
+# COUNTRY scope, once a month, from on_actions/zz_ef_capitalization_on_actions.txt.
+#
+# Per country, 5 averages + 2 for the index (+ 12 monthly marks in
+# zz_ef_capitalization_crash.txt, countries with a stock exchange only):
+#   zz_ef_cap_avg_ms/_as/_mn/_rr  each stock's value, moving average, weight 1/12
+#   zz_ef_cap_half                all four together, weight 1/6 (crash check)
+#   zz_ef_cap_idx_prev, zz_ef_cap_idx_timer  the index at the last yearly
+#                                 mark (points a year); zz_ef_cap_ref0 and
+#                                 zz_ef_cap_index0 (the 24.09 base) are removed
+# avg = avg + weight x (snapshot - avg). A new average starts at the first
+# snapshot, not at 0 -- no warm-up, and no false crash on old saves.
+#
+# The snapshot is computed once into a local variable: each script value
+# read walks all the country's states.
+#
+# STOCK MARKET INDEX (var:base_index_value, shown in points in E&F's menu and
+# ranked in its country list): E&F moved it once a year by the % change of
+# capitalization, from 10 points. Since 2026-09-25: equity capitalization /
+# GDP x 1000 -- comparable between countries (Britain ~1500 in 1847, 1000 =
+# a market worth one year of GDP), falls in a crash, recomputed monthly.
+# (24.09-25.09 it was "10 x equity now / equity in the country's first month":
+# the first month is nearly always tiny, so it showed growth multiples of
+# up to 12000 that meant nothing.)
+# "Points a year" (var:base_index_value_dif) = the index now minus the index
+# at the last yearly mark (zz_ef_cap_idx_prev, taken every 12 months).
+#############################################
+
+zz_ef_cap_monthly_update = {
+	set_local_variable = { name = zz_s_ms value = zz_ef_cap_snap_manufacture_stock }
+	set_local_variable = { name = zz_s_as value = zz_ef_cap_snap_agricultural_stock }
+	set_local_variable = { name = zz_s_mn value = zz_ef_cap_snap_mining_stock }
+	set_local_variable = { name = zz_s_rr value = zz_ef_cap_snap_railroad_stock }
+	set_local_variable = {
+		name = zz_s_total
+		value = {
+			value = local_var:zz_s_ms
+			add = local_var:zz_s_as
+			add = local_var:zz_s_mn
+			add = local_var:zz_s_rr
+		}
+	}
+
+	if = {
+		limit = {
+			OR = {
+				local_var:zz_s_total > 0
+				has_variable = zz_ef_cap_half
+			}
+		}
+		if = {
+			limit = { has_variable = zz_ef_cap_avg_ms }
+			set_variable = {
+				name = zz_ef_cap_avg_ms
+				value = {
+					value = var:zz_ef_cap_avg_ms
+					add = {
+						value = local_var:zz_s_ms
+						subtract = var:zz_ef_cap_avg_ms
+						multiply = zz_ef_cap_weight_year
+					}
+				}
+			}
+		}
+		else = {
+			set_variable = { name = zz_ef_cap_avg_ms value = local_var:zz_s_ms }
+		}
+		if = {
+			limit = { has_variable = zz_ef_cap_avg_as }
+			set_variable = {
+				name = zz_ef_cap_avg_as
+				value = {
+					value = var:zz_ef_cap_avg_as
+					add = {
+						value = local_var:zz_s_as
+						subtract = var:zz_ef_cap_avg_as
+						multiply = zz_ef_cap_weight_year
+					}
+				}
+			}
+		}
+		else = {
+			set_variable = { name = zz_ef_cap_avg_as value = local_var:zz_s_as }
+		}
+		if = {
+			limit = { has_variable = zz_ef_cap_avg_mn }
+			set_variable = {
+				name = zz_ef_cap_avg_mn
+				value = {
+					value = var:zz_ef_cap_avg_mn
+					add = {
+						value = local_var:zz_s_mn
+						subtract = var:zz_ef_cap_avg_mn
+						multiply = zz_ef_cap_weight_year
+					}
+				}
+			}
+		}
+		else = {
+			set_variable = { name = zz_ef_cap_avg_mn value = local_var:zz_s_mn }
+		}
+		if = {
+			limit = { has_variable = zz_ef_cap_avg_rr }
+			set_variable = {
+				name = zz_ef_cap_avg_rr
+				value = {
+					value = var:zz_ef_cap_avg_rr
+					add = {
+						value = local_var:zz_s_rr
+						subtract = var:zz_ef_cap_avg_rr
+						multiply = zz_ef_cap_weight_year
+					}
+				}
+			}
+		}
+		else = {
+			set_variable = { name = zz_ef_cap_avg_rr value = local_var:zz_s_rr }
+		}
+		if = {
+			limit = { has_variable = zz_ef_cap_half }
+			set_variable = {
+				name = zz_ef_cap_half
+				value = {
+					value = var:zz_ef_cap_half
+					add = {
+						value = local_var:zz_s_total
+						subtract = var:zz_ef_cap_half
+						multiply = zz_ef_cap_weight_half
+					}
+				}
+			}
+		}
+		else = {
+			set_variable = { name = zz_ef_cap_half value = local_var:zz_s_total }
+		}
+
+		### Index: equity / GDP x 1000.
+		set_variable = {
+			name = base_index_value
+			value = {
+				value = zz_ef_equity_capitalization
+				divide = {
+					value = gdp
+					min = 1
+				}
+				multiply = 1000
+				min = 1
+				max = 100000
+			}
+		}
+		if = {
+			limit = { NOT = { has_variable = zz_ef_cap_idx_timer } }
+			if = {
+				limit = { NOT = { has_variable = zz_ef_cap_idx_prev } }
+				set_variable = { name = zz_ef_cap_idx_prev value = var:base_index_value }
+			}
+			set_variable = {
+				name = base_index_value_dif
+				value = {
+					value = var:base_index_value
+					subtract = var:zz_ef_cap_idx_prev
+				}
+			}
+			set_variable = { name = zz_ef_cap_idx_prev value = var:base_index_value }
+			set_variable = {
+				name = zz_ef_cap_idx_timer
+				months = 12
+			}
+		}
+		### Old level-index bases (24.09-25.09), no longer read.
+		if = {
+			limit = { has_variable = zz_ef_cap_ref0 }
+			remove_variable = zz_ef_cap_ref0
+			remove_variable = zz_ef_cap_index0
+		}
+	}
+}

@@ -1,0 +1,227 @@
+#############################################
+# EF.24 (2026-09-24) -- capitalization: this week's issuance, averaged over
+# about a year, instead of a running total since 1836
+#
+# WHAT E&F DOES
+# Capitalization (country_indice, 00_financial_scripted_value.txt:3119) =
+# five quantities x their price. Each quantity is a script value
+# (stockpiling_<type>_var_state, :2871-3057) that reads a counter in the
+# country's financial_center_historic_place state. The counters only grow:
+# every month the market owner adds 4 x the market's buy orders of each paper
+# (stockpile_finacial_product, 01_financial_scripted_effects.txt:793), and the
+# bond counter also gets every central-bank loan (ai_credit_at_central_bank,
+# :656). So capitalization was the integral of demand since 1836, and the bond
+# counter a debt that was never repaid. EF.23 (a 2%/month decay) only damped it.
+#
+# WHAT THIS DOES
+#   stocks (4)  snapshot = the COUNTRY's weekly output of that stock x K x
+#               E&F's price, 25 x (1 + market price deviation). Summed over the
+#               country's own states, not read from the market: a subject on
+#               its overlord's market would otherwise show the whole market.
+#               Capitalization shown = an exponential moving average of the
+#               monthly snapshots with weight 1/12 -- "about the last year":
+#               recent months weigh more, older ones fade, one number per stock
+#               (scripted_effects/zz_ef_capitalization_average.txt, monthly).
+#               Decided 2026-09-24 instead of a buffer of 12-18 monthly
+#               snapshots per stock: 5 averages + 12 monthly marks of one of
+#               them per country instead of 18-72 snapshots, and no
+#               vanilla trend is readable from script (trends exist only in the
+#               GUI, for engine values such as GDP or prices).
+#   bonds       quantity = the real national debt / bond price. The bond
+#               counter is not only a capitalization line: it is E&F's
+#               register of debt on sale (total_debt -> remaining_debt,
+#               :3214-3303), which foreign central banks and private banks
+#               buy from (ai_buy_bond_*, bond_quantity_scripted*). Decided
+#               2026-09-24: that register is the actual debt, so a country
+#               with no debt has no bonds to sell and repayment shrinks it.
+#               national_debt = country_credit (vanilla debt) +
+#               var:credit_at_central_bank (00_economic_scripted_value.txt:
+#               7196), the same number EF.15 reads. Not averaged: a debt is a
+#               stock already.
+#
+# HOW THE AVERAGE REACHES E&F'S FORMULAS
+# Everything in E&F computes quantity x price (the *_index values, the gold
+# conversions *_in_gold, country_indice, the menu, the financial-power
+# ranking). So the four quantities are re-issued as average / current price:
+# quantity x price then gives exactly the average, and quantity x
+# price_in_gold gives the average converted at today's rate. Before the first
+# monthly update (no variable yet) the quantity is this week's snapshot.
+#
+# The monthly accumulation is switched off
+# (scripted_effects/zz_ef_capitalization_accumulation_off.txt, formerly
+# EF.23's zz_ef_capitalization_decay.txt, now an empty
+# stockpile_finacial_product). E&F still writes its counters from
+# ai_credit_at_central_bank and moves them between states on relocation;
+# harmless, nothing reads the result.
+#
+# SCOPE: country. sg:<good> only exists in states that trade the good, hence
+# `?=`; a state without it adds 0.
+#
+# K = zz_ef_cap_weeks: how many weeks of issuance the market is worth -- a
+# price/earnings multiple, NOT a time window (the crash compares ratios, K
+# cancels out). 520 (ten years) chosen 2026-09-24. Target: the leaders' equity
+# capitalization around 1 x GDP in the 1870s (Britain 1-1.5, USA ~0.5, Russia
+# 0.1-0.2). Estimate before any in-game number: London's exchange bought ~10K
+# units a week in the 1840 run, 10K x 520 x 25 = 130M.
+#
+# !! TUNING !! zz_ef_cap_weeks, zz_ef_cap_weight_year, zz_ef_cap_weight_half,
+# zz_ef_crash_floor.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of five E&F script values
+# (4.1.7). E&F adding a sixth paper to country_indice would not be covered.
+#############################################
+
+zz_ef_cap_weeks = 520
+
+# Weights of the moving averages: 1/12 ~ the last year (shown capitalization),
+# 1/6 ~ the last half year (crash check, zz_ef_capitalization_crash.txt).
+zz_ef_cap_weight_year = 0.0833
+zz_ef_cap_weight_half = 0.1667
+
+# Equity below this is too small for E&F's half-yearly index and crash
+# (was E&F's 5000000 on country_indice; zz_ef_capitalization_crash.txt).
+zz_ef_crash_floor = 5000000
+
+### Per-state weekly output of each stock. STATE scope.
+zz_ef_cap_state_output_manufacture_stock = {
+	value = 0
+	sg:manufacture_stock ?= { add = state_goods_production }
+}
+zz_ef_cap_state_output_agricultural_stock = {
+	value = 0
+	sg:agricultural_stock ?= { add = state_goods_production }
+}
+zz_ef_cap_state_output_mining_stock = {
+	value = 0
+	sg:mining_stock ?= { add = state_goods_production }
+}
+zz_ef_cap_state_output_railroad_stock = {
+	value = 0
+	sg:railroad_stock ?= { add = state_goods_production }
+}
+
+### This week: quantity (output x K) and value (x price). COUNTRY scope.
+zz_ef_cap_qty_manufacture_stock = {
+	value = 0
+	every_scope_state = {
+		add = zz_ef_cap_state_output_manufacture_stock
+	}
+	multiply = zz_ef_cap_weeks
+}
+zz_ef_cap_snap_manufacture_stock = {
+	value = zz_ef_cap_qty_manufacture_stock
+	multiply = manufacture_stock_price
+}
+zz_ef_cap_qty_agricultural_stock = {
+	value = 0
+	every_scope_state = {
+		add = zz_ef_cap_state_output_agricultural_stock
+	}
+	multiply = zz_ef_cap_weeks
+}
+zz_ef_cap_snap_agricultural_stock = {
+	value = zz_ef_cap_qty_agricultural_stock
+	multiply = agricultural_stock_price
+}
+zz_ef_cap_qty_mining_stock = {
+	value = 0
+	every_scope_state = {
+		add = zz_ef_cap_state_output_mining_stock
+	}
+	multiply = zz_ef_cap_weeks
+}
+zz_ef_cap_snap_mining_stock = {
+	value = zz_ef_cap_qty_mining_stock
+	multiply = mining_stock_price
+}
+zz_ef_cap_qty_railroad_stock = {
+	value = 0
+	every_scope_state = {
+		add = zz_ef_cap_state_output_railroad_stock
+	}
+	multiply = zz_ef_cap_weeks
+}
+zz_ef_cap_snap_railroad_stock = {
+	value = zz_ef_cap_qty_railroad_stock
+	multiply = railroad_stock_price
+}
+
+### Quantities read by every E&F formula: the yearly average / today's price.
+REPLACE_OR_CREATE:stockpiling_manufacture_stock_var_state = {
+	if = {
+		limit = { has_variable = zz_ef_cap_avg_ms }
+		value = var:zz_ef_cap_avg_ms
+		divide = {
+			value = manufacture_stock_price
+			min = 1
+		}
+	}
+	else = {
+		value = zz_ef_cap_qty_manufacture_stock
+	}
+}
+REPLACE_OR_CREATE:stockpiling_agricultural_stock_var_state = {
+	if = {
+		limit = { has_variable = zz_ef_cap_avg_as }
+		value = var:zz_ef_cap_avg_as
+		divide = {
+			value = agricultural_stock_price
+			min = 1
+		}
+	}
+	else = {
+		value = zz_ef_cap_qty_agricultural_stock
+	}
+}
+REPLACE_OR_CREATE:stockpiling_mining_stock_var_state = {
+	if = {
+		limit = { has_variable = zz_ef_cap_avg_mn }
+		value = var:zz_ef_cap_avg_mn
+		divide = {
+			value = mining_stock_price
+			min = 1
+		}
+	}
+	else = {
+		value = zz_ef_cap_qty_mining_stock
+	}
+}
+REPLACE_OR_CREATE:stockpiling_railroad_stock_var_state = {
+	if = {
+		limit = { has_variable = zz_ef_cap_avg_rr }
+		value = var:zz_ef_cap_avg_rr
+		divide = {
+			value = railroad_stock_price
+			min = 1
+		}
+	}
+	else = {
+		value = zz_ef_cap_qty_railroad_stock
+	}
+}
+
+# var:credit_at_central_bank is only set once a country has touched E&F's
+# credit effects; without the guard every other country logs
+# "Failed to fetch variable" (same guard as EF.15).
+REPLACE_OR_CREATE:stockpiling_bond_var_state = {
+	value = country_credit
+	if = {
+		limit = { has_variable = credit_at_central_bank }
+		add = var:credit_at_central_bank
+	}
+	min = 0
+	divide = {
+		value = bond_price
+		min = 1
+	}
+}
+
+### Equity capitalization: the four stocks (yearly averages), without the debt.
+### Mass shareholding (EF.25) and the crash floor read it. country_indice
+### keeps E&F's meaning (stocks + debt): the menu total and the
+### financial-power ranking read it.
+zz_ef_equity_capitalization = {
+	value = manufacture_stock_index
+	add = agricultural_stock_index
+	add = mining_stock_index
+	add = railroad_stock_index
+}

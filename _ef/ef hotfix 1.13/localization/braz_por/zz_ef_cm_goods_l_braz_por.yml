@@ -6,7 +6,7 @@
  # The three prestige variants below and the central bank company/modifier
  # that mint them are for countries WITH a monetary system.
 
- liquidity_currency:0 "Local Currency"
+ # liquidity_currency itself: localization/braz_por/replace/zz_ef_cm_goods_replace_l_braz_por.yml
 
  zz_ef_cm_representative_currency:0 "Representative Currency"
  zz_ef_cm_pegged_currency:0 "Pegged Currency"
@@ -32,3 +32,15 @@
 
  # Modifier type of the minor-country currency grant (modifier_type_definitions/zz_ef_liquidity_currency_sell_orders.txt).
  state_sell_orders_liquidity_currency_add:0 "State Sell Orders: Local Currency"
+
+ # EF.25: company dividends to company workers, growing with equity capitalization / GDP.
+ zz_ef_mass_shareholding:0 "Mass Shareholding"
+ zz_ef_mass_shareholding_desc:0 "Shares are widely held: part of the dividends of company-owned buildings goes to their workers. Grows with the market capitalization of stocks relative to GDP, up to 25% at a capitalization equal to GDP."
+
+ # EF.22: publicly traded company headquarters.
+ pm_company_headquarter_publicly_traded:0 "$pm_publicly_traded$"
+  zz_ef_stock_issue_literacy:0 "Narrow Investor Base"
+  zz_ef_stock_issue_literacy_desc:0 "Only literate people wealthy enough to buy financial products can hold shares. They are under 12% of the population, so private buildings issue fewer stocks: issuance is proportional to the share of literate wealthy pops (wealth 15 and up), in full at 12% and above. Now: [GetPlayer.MakeScope.Var('zz_ef_literate_rich_share').GetValue|%1]."
+ notification_zz_ef_bubble_rising_name:0 "Speculative Bubble Grows"
+ notification_zz_ef_bubble_rising_desc:0 "The speculative market is growing faster than the economy. Speculative bubble: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue|0]%."
+ notification_zz_ef_bubble_rising_tooltip:0 "#header $notification_zz_ef_bubble_rising_name$#!\n$TOOLTIP_DELIMITER$\n$notification_zz_ef_bubble_rising_desc$"

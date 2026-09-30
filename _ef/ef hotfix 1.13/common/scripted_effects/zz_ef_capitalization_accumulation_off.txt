@@ -1,0 +1,37 @@
+﻿#############################################
+# EF.24 (2026-09-24) -- the monthly capitalization accumulation is off
+# (was EF.23, zz_ef_capitalization_decay.txt: a 2%/month decay on top of it)
+#
+# WHAT E&F DOES
+# Each month every market owner runs stockpile_finacial_product
+# (00_on_action_main.txt:509), which adds 4 x that market's buy orders of each
+# financial product to the stockpiling_<type>_var_state_1 counters of the
+# financial_center_historic_place state (01_financial_scripted_effects.txt:
+# 793-990). Capitalization was read from those counters.
+#
+# WHY IT IS EMPTY NOW
+# EF.24 (common/script_values/zz_ef_capitalization_snapshot.txt) computes the
+# five quantities directly -- stocks from this week's output, bonds from the
+# real debt -- so nothing reads the counters any more. Keeping the five calls
+# would be five every_scope_state passes a month per market owner for
+# numbers nobody looks at.
+#
+# What still touches the counters, harmlessly: ai_credit_at_central_bank
+# (:656) adds loans to the bond counter, and stockpiling_capital_state_transfert
+# (01_economic_scripted_effects.txt:130846) moves them between states when the
+# capital changes. The per-state seed (7h/7i) stays: that transfert still
+# reads them and would log "not being set" without it.
+#
+# EF.23 IS SUPERSEDED, NOT REVERTED: the decay existed to make the counters
+# follow today's market; the snapshot does that exactly. EF.23 also decayed
+# the bond counter, i.e. E&F's debt register -- its header said
+# "capitalization does not feed production, prices or AI", which was wrong:
+# the bond counter is what foreign central banks buy (total_debt ->
+# remaining_debt). EF.24 ties it to the real debt instead.
+#
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of a 7-line E&F effect
+# (4.1.7). If E&F puts something else into it, it is silently dropped here.
+#############################################
+
+REPLACE_OR_CREATE:stockpile_finacial_product = {
+}

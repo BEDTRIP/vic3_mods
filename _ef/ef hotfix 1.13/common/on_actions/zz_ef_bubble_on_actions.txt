@@ -1,0 +1,152 @@
+﻿#############################################
+# EF.29 (2026-09-25) -- the speculative bubble's monthly update, out of the journal
+#
+# E&F moves the bubble (var:speculative_share_1, 0..100) in the monthly pulse
+# of its Financial Stability Office journal (financial_center_je_2,
+# journal_entries/00_ef_financial_center_je.txt:115, 4.1.7). The bubble
+# follows the stock market, and the stock market is the hotfix's (EF.24
+# capitalization, EF.28 issuance), so the hotfix owns the bubble too:
+#   - this on_action runs E&F's code line for line, for countries whose
+#     journal is active (the same condition the journal's pulse had);
+#   - journal_entries/zz_ef_financial_center_je.txt re-issues E&F's journal
+#     without that part (the E&F x PSC compatch re-issues it again, also
+#     without it);
+#   - changes to E&F's code, marked ###: `has_role = executive` ->
+#     `character_role_executive` (the 1.13 key; E&F's line fails PostValidate
+#     and the executives' malus misfires), a feed notification when the bubble
+#     enters a new band of 10 upwards (common/messages/zz_ef_bubble_messages.txt);
+#   - the bubble's modifier no longer slows construction
+#     (static_modifiers/zz_ef_bubble_no_construction.txt).
+# Behaviour is unchanged from the E&F x PSC compatch of 24-25.09, where all of
+# this lived until now.
+#
+# !! MAINTENANCE !! Re-diff against E&F's journal pulse after every E&F update.
+#############################################
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_bubble_monthly
+	}
+}
+
+zz_ef_bubble_monthly = {
+	trigger = {
+		has_journal_entry = financial_center_je_2
+		has_variable = speculative_share_1
+	}
+	effect = {
+		####################################################################################
+		#Fiancial part
+		### EF.18 v2: remember the bubble before the change, for the notification.
+		set_variable = { name = zz_ef_bb_old value = var:speculative_share_1 }
+		if = {
+			limit = {
+				fiancial_center_week_balance_in_ratio < 0.10
+				var:speculative_share_1 > 0
+			}
+			change_variable = { name = speculative_share_1 add = -3 }
+		}
+		# 10–20% → -2
+		else_if = {
+			limit = {
+				fiancial_center_week_balance_in_ratio >= 0.10
+				fiancial_center_week_balance_in_ratio < 0.20
+				var:speculative_share_1 > 0
+			}
+			change_variable = { name = speculative_share_1 add = -2 }
+		}
+		# 20–30% → -1
+		else_if = {
+			limit = {
+				fiancial_center_week_balance_in_ratio >= 0.20
+				fiancial_center_week_balance_in_ratio < 0.30
+				var:speculative_share_1 > 0
+			}
+			change_variable = { name = speculative_share_1 add = -1 }
+		}
+		# 30–40% → +1
+		else_if = {
+			limit = {
+				fiancial_center_week_balance_in_ratio >= 0.30
+				fiancial_center_week_balance_in_ratio < 0.40
+				var:speculative_share_1 < 100
+			}
+			change_variable = { name = speculative_share_1 add = 1 }
+		}
+		# 40–50% → +2
+		else_if = {
+			limit = {
+				fiancial_center_week_balance_in_ratio >= 0.40
+				fiancial_center_week_balance_in_ratio < 0.50
+				var:speculative_share_1 < 100
+			}
+			change_variable = { name = speculative_share_1 add = 2 }
+		}
+		# ≥50% → +3
+		else_if = {
+			limit = {
+				fiancial_center_week_balance_in_ratio >= 0.50
+				var:speculative_share_1 < 100
+			}
+			change_variable = { name = speculative_share_1 add = 3}
+		}
+
+		#Regulation
+		if = {
+			limit = {
+				var:speculative_share_1 > 100
+			}
+			set_variable = { name = speculative_share_1 value = 100 }
+		}
+		if = {
+			limit = {
+				var:speculative_share_1 < 0
+			}
+			set_variable = { name = speculative_share_1 value = 0 }
+		}
+
+		#change_variable = { name = speculative_share_1 add = 10 } #debug
+
+		je:financial_center_je_2 ?= {
+			set_bar_progress = {
+				value = owner.var:speculative_share_1
+				name = speculative_share_progress_bar
+			}
+		}
+		### EF.18 v2: feed message when the bubble enters a new band of 10 upwards.
+		if = {
+			limit = {
+				var:speculative_share_1 > var:zz_ef_bb_old
+				zz_ef_bb_band_new > zz_ef_bb_band_old
+			}
+			post_notification = zz_ef_bubble_rising
+		}
+		remove_modifier = speculative_bubble_modifier
+		every_scope_character = {
+			limit = {
+				has_role = character_role_executive ### EF.18 v2: 1.13 role key
+			}
+			remove_modifier = speculative_bubble_character_modifier
+		}
+		if = {
+			limit = {
+				var:speculative_share_1 > 0
+			}
+			add_modifier = {
+				name = speculative_bubble_modifier
+				multiplier = speculative_share_1_penality #var:speculative_share_1 negativé
+				#months = 12
+			}
+			every_scope_character = {
+				limit = {
+					has_role = character_role_executive ### EF.18 v2: 1.13 role key
+				}
+				add_modifier = {
+					name = speculative_bubble_character_modifier
+					multiplier = speculative_share_1_penality
+				}
+			}
+		}
+		####################################################################################
+	}
+}

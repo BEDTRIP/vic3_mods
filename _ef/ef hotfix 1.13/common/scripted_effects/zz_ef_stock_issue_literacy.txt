@@ -1,0 +1,71 @@
+#############################################
+# EF.28 (2026-09-25) -- stock issuance follows the country's literate rich
+#
+# WHY
+# Stocks are a free by-product of private buildings (E&F's
+# pm_private_ownership_majority_<type>_stock, e.g. 12.5 manufacture stock
+# per level at full workforce), so the stock market -- and with it EF.24's
+# capitalization, EF.25's mass shareholding, the exchanges -- scaled with
+# the size of private industry and nothing else. 1847 save: capitalization
+# 0.6-2.1 GDP everywhere, Russia 1.19, Japan 1.64.
+# A joint-stock economy needs people who can buy and read a share: pops
+# rich enough to have financial products in their basket (wealth 15 and up,
+# where E&F's popneed_financial_products starts) AND literate. Their share of
+# the whole population, 1847 save: Belgium 30%, Netherlands 18%, Prussia 16%,
+# USA 14%, Britain 12%, France 5%, Spain 5%, Turkey 3%, Austria 3%, Russia 1%,
+# Japan 0.7%, China 0.5%.
+#
+# WHAT
+#   share = sum over pops with wealth >= 15 of (size x literacy) / all pops' size
+#           (monthly, var:zz_ef_literate_rich_share, 0..1)
+#   issue = min(1, share / zz_ef_stock_issue_reference_share)   reference 12%
+#   country modifier zz_ef_stock_issue_literacy: goods_output_<type>_stock_mult
+#           = -(1 - issue) for all four stocks (country-wide, like vanilla
+#           technology output modifiers)
+# Britain and everyone above it issue in full; Russia ~8%, Japan ~6%.
+# Bonds are not touched (the central bank issues them, EF.15).
+#
+# !! TUNING !! zz_ef_stock_issue_reference_share, the wealth threshold 15.
+#############################################
+
+# COUNTRY scope, monthly, from on_actions/zz_ef_capitalization_on_actions.txt.
+# One walk over the country's pops; sums in local variables.
+zz_ef_stock_issue_update = {
+	set_local_variable = { name = zz_lr_all value = 0 }
+	set_local_variable = { name = zz_lr_rich value = 0 }
+	every_scope_pop = {
+		change_local_variable = { name = zz_lr_all add = total_size }
+		if = {
+			limit = { wealth >= 15 }
+			change_local_variable = {
+				name = zz_lr_rich
+				add = {
+					value = total_size
+					multiply = literacy_rate
+				}
+			}
+		}
+	}
+	set_variable = {
+		name = zz_ef_literate_rich_share
+		value = {
+			value = local_var:zz_lr_rich
+			divide = {
+				value = local_var:zz_lr_all
+				min = 1
+			}
+		}
+	}
+	remove_modifier = zz_ef_stock_issue_literacy
+	set_variable = {
+		name = zz_ef_stock_issue_cut
+		value = zz_ef_stock_issue_cut_points
+	}
+	if = {
+		limit = { var:zz_ef_stock_issue_cut > 0 }
+		add_modifier = {
+			name = zz_ef_stock_issue_literacy
+			multiplier = var:zz_ef_stock_issue_cut
+		}
+	}
+}

@@ -1,0 +1,141 @@
+﻿#############################################
+# EF.29 (2026-09-25) -- E&F's Financial Stability Office journal without the
+# bubble's monthly update, which the hotfix runs itself
+# (on_actions/zz_ef_bubble_on_actions.txt, header there).
+#
+# E&F's financial_center_je_2 (journal_entries/00_ef_financial_center_je.txt:115,
+# 4.1.7) line for line, one block removed, marked ###. Full body: REPLACE:
+# replaces the whole record. With PSC, the E&F x PSC compatch re-issues the
+# journal once more (its construction part is PSC's); that copy has no bubble
+# part either.
+# !! MAINTENANCE !! Re-diff against E&F's financial_center_je_2 after every
+# E&F update.
+#############################################
+
+REPLACE:financial_center_je_2 = {
+	icon = "gfx/interface/icons/event_icons/financial_center_je_2.dds"
+
+	group = je_group_ef
+ 	should_be_pinned_by_default_uninvolved_or_context = yes
+
+	is_shown_when_inactive = {
+		always = yes
+	}
+	possible = {
+		has_financial_center = yes
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				desc = status_speculative_share_1_5
+				trigger = { var:speculative_share_1 > 75 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_1_4
+				trigger = { var:speculative_share_1 <= 75 var:speculative_share_1 > 50 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_1_3
+				trigger = { var:speculative_share_1 <= 50 var:speculative_share_1 > 25 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_1_2
+				trigger = { var:speculative_share_1 <= 25 var:speculative_share_1 > 0 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_1_1
+				trigger = { var:speculative_share_1 <= 0 }
+			}
+		}
+		first_valid = {
+			triggered_desc = {
+				desc = status_speculative_share_2_5
+				trigger = { var:speculative_share_2 > 75 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_2_4
+				trigger = { var:speculative_share_2 <= 75 var:speculative_share_2 > 50 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_2_3
+				trigger = { var:speculative_share_2 <= 50 var:speculative_share_2 > 25 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_2_2
+				trigger = { var:speculative_share_2 <= 25 var:speculative_share_2 > 0 }
+			}
+			triggered_desc = {
+				desc = status_speculative_share_2_1
+				trigger = { var:speculative_share_2 <= 0 }
+			}
+		}
+	}
+
+	#scripted_progress_bar = speculative_share_progress_bar
+	#scripted_progress_bar = overbuilt_economy_progress_bar
+
+	widget = {
+		gui = "gui/scripted_widgets/00_ef_custom_widgets.gui"
+		name = "widget_je_ef_fc_fso_situation"
+		container = "custom_widget_container_3"
+	}
+
+	widget = {
+		gui = "gui/scripted_widgets/00_ef_custom_widgets.gui"
+		name = "widget_je_ef_pcs_fso_situation"
+		container = "custom_widget_container_3"
+	}
+
+	scripted_button = speculative_share_1_button
+	scripted_button = speculative_share_2_button
+	scripted_button = speculative_share_3_button
+	scripted_button = speculative_share_4_button
+
+	scripted_button = speculative_share_5_button
+	scripted_button = speculative_share_6_button
+	scripted_button = speculative_share_7_button
+	scripted_button = speculative_share_8_button
+
+	scripted_button = speculative_share_9_button
+	scripted_button = speculative_share_10_button
+	scripted_button = speculative_share_11_button
+	scripted_button = speculative_share_12_button
+
+	scripted_button = speculative_share_13_button
+
+	#progressbar and var
+	on_monthly_pulse = {
+		effect = {
+
+			### EF.29: the bubble part is in on_actions/zz_ef_bubble_on_actions.txt.
+
+			####################################################################################
+			#Construction part
+			if = {
+				limit = {
+					building_ef_private_construction_lvl > building_urban_center_lvl_by_base_rate
+				}
+				change_variable = { name = speculative_share_2 add = 1 }
+			}
+			if = {
+				limit = {
+					building_ef_private_construction_lvl < building_urban_center_lvl_by_base_rate
+					var:speculative_share_2 > 0
+				}
+				change_variable = { name = speculative_share_2 subtract = 1 }
+			}
+
+			#change_variable = { name = speculative_share_2 add = 10 } #debug
+
+			je:financial_center_je_2 ?= {
+				set_bar_progress = {
+					value = owner.var:speculative_share_2
+					name = overbuilt_economy_progress_bar
+				}
+			}
+			#trouver un moyen de détruit les PCS en trop pour equilibré pour l'IA
+			####################################################################################
+		}
+	}
+}

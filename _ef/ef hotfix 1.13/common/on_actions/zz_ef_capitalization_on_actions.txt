@@ -1,0 +1,49 @@
+#############################################
+# EF.24 + EF.25 (2026-09-24), EF.28 (2026-09-25) -- monthly, per country:
+#   0. the share of literate rich pops and the stock issuance cut (EF.28);
+#   1. capitalization averages and the stock index
+#      (scripted_effects/zz_ef_capitalization_average.txt), then the
+#      12 monthly marks and the crash check (zz_ef_capitalization_crash.txt);
+#   2. mass shareholding, which reads the updated averages
+#      (script_values/zz_ef_mass_shareholding_values.txt).
+# One on_action, so the order is guaranteed. (Was
+# zz_ef_mass_shareholding_on_actions.txt, EF.25 alone.)
+#
+# Additive: our own on_action listed under on_monthly_pulse_country, never a
+# bare `effect` in the vanilla one (an on_action holds one effect and the
+# last loaded wins -- rules, section 1).
+#
+# The ratio is stored in a variable first and the modifier reads the
+# variable: the multiplier of add_modifier is not evaluated in the scope of
+# the effect (rules, section 2).
+#############################################
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_capitalization_monthly
+	}
+}
+
+zz_ef_capitalization_monthly = {
+	effect = {
+		### EF.28: stock issuance by the share of literate rich pops
+		### (scripted_effects/zz_ef_stock_issue_literacy.txt).
+		zz_ef_stock_issue_update = yes
+		zz_ef_cap_monthly_update = yes
+		zz_ef_cap_monthly_crash_check = yes
+
+		### EF.25
+		remove_modifier = zz_ef_mass_shareholding
+		set_variable = {
+			name = zz_ef_msh_points
+			value = zz_ef_mass_shareholding_points
+		}
+		if = {
+			limit = { var:zz_ef_msh_points > 0 }
+			add_modifier = {
+				name = zz_ef_mass_shareholding
+				multiplier = var:zz_ef_msh_points
+			}
+		}
+	}
+}

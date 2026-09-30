@@ -8,7 +8,7 @@
   09.09.2026 — меню компаний переделано (EF.11), см. «The companies panel»
 версии: —
 позиция: —
-файлов: 97
+файлов: 113
 генератор: — (списан 02.09.2026, tools/_to_delete/regen_ef_currency_merge_retired_2026-09-02.py)
 зависит от: —
 -->
@@ -1128,9 +1128,31 @@ Each file carries the full reasoning in its header; this is the map.
 | EF.17 (2) | `common/static_modifiers/zz_ef_financial_centre_cap.txt` | Exchange ceiling: `_max_level_add` 1 → 0.1 in `financial_center_place` and `_spe`, i.e. one level per 10M of GDP instead of 1M. Covers the generic and all 41 national exchanges with one number. |
 | EF.17 (4) | 7e in `zz_ef_div0_fix.txt` | **Reverted the same day.** Capping the output multiplier (25000 → 500) while the five input multipliers kept their own ceilings bankrupted every exchange — London in 1840 bought 269K a week of stock and sold 19K of funds. |
 | EF.17 (4b) | `common/script_values/zz_ef_exchange_margin.txt` | Instead: the exchange's margin. E&F sizes output to 1.5 × the cost of the inputs; now 1.25. Output and cost move together, value added per worker roughly halves. |
-| EF.23 | `common/scripted_effects/zz_ef_capitalization_decay.txt` | Capitalization counters decay 2 % a month, so capitalization follows today's market instead of the integral since 1836. |
+| EF.23 | ~~`common/scripted_effects/zz_ef_capitalization_decay.txt`~~ | Capitalization counters decay 2 % a month. **Superseded 2026-09-24 by EF.24** (the file is now `zz_ef_capitalization_accumulation_off.txt`). |
 
 Measure on a save after these (GDP, exchange levels and productivity, capital urbanization) before EF.17 (3, 5) and before EF.18 in the megapack is judged.
+
+## Balance pass 2, 2026-09-24 (EF.22, EF.24, EF.25) — not yet tested in game
+
+| Task | File | What |
+|---|---|---|
+| EF.24 | `common/script_values/zz_ef_capitalization_snapshot.txt` | Capitalization from this week's issuance, averaged: each stock's snapshot = the country's own weekly output × `zz_ef_cap_weeks` (520, a price/earnings multiple, not a time window) × E&F's price; shown capitalization = a moving average of monthly snapshots with weight 1/12 ("about the last year"). E&F's quantity values are re-issued as average / current price, so every quantity × price formula (menu, gold conversion, ranking) gives the average. Bonds = the real national debt (`country_credit` + `var:credit_at_central_bank`) / bond price: the bond line is E&F's register of debt on sale (`total_debt` → `remaining_debt`, what foreign central banks and private banks buy). |
+| EF.24 | `common/scripted_effects/zz_ef_capitalization_average.txt` | Monthly per country: the four averages (1/12), a half-year average of the total (1/6), and E&F's stock market index as a level index (value when the country first had stocks × equity now / equity then). 5 averages + 2 for the index. |
+| EF.24 | `common/scripted_effects/zz_ef_capitalization_accumulation_off.txt` | `stockpile_finacial_product` is empty: nothing reads the monthly counters any more. Replaces EF.23. |
+| EF.24 | `common/scripted_effects/zz_ef_capitalization_crash.txt` | Every month (countries with a stock exchange): the half-year average now against the same average exactly 12 months ago, kept in 12 monthly marks `zz_ef_cap_m1..m12` (E&F compared two snapshots 6 months apart, once a year, with a gap). E&F's half-yearly effect is re-issued without its snapshot pair. Change → E&F's `country_indice_value_dif_01` (menu, country list, size of the crash consequences); below −50 % with equity above `zz_ef_crash_floor` (5M) and no crash in the last 15 months → `financial_crash`. The cooldown keeps one fall from being seen by two checks — the second call is what brings E&F's full consequences (exchanges demolished, −100 % throughput on private industry for 23 months). |
+| EF.25 | `common/script_values/zz_ef_mass_shareholding_values.txt`, `common/static_modifiers/zz_ef_mass_shareholding.txt`, `common/on_actions/zz_ef_capitalization_on_actions.txt` | Mass shareholding: country modifier `building_company_worker_dividends_add` = 0.25 × min(1, equity capitalization / GDP), monthly, right after the averages (one on_action). Knob `zz_ef_mass_shareholding_max`. |
+| EF.22 | `common/production_methods/zz_ef_company_hq_publicly_traded.txt`, `common/production_method_groups/zz_ef_company_hq_publicly_traded.txt` | "Publicly Traded" ownership for company HQs: capitalist-owned companies, `joint_stock_companies`, owners' shares to shopkeepers and clerks, 15 % of company dividends to workers, E&F's ~10 employment per level. TGR's trade layer for it is in the megapack (`_ef/ef+tgr done`). |
+
+Names in all 11 `zz_ef_cm_goods_l_*.yml`.
+
+| EF.24 (index) | `common/scripted_effects/zz_ef_capitalization_average.txt` | 2026-09-25: E&F's stock market index (points) = equity capitalization / GDP × 1000, monthly; points a year = the index minus its value at the last yearly mark. The 24.09 level index (10 × equity / equity in the first month) showed growth multiples of up to 12000 from a tiny first month. |
+| EF.25 (literacy) | `common/script_values/zz_ef_mass_shareholding_values.txt` | 2026-09-25: the share × literacy. In the 1847 save capitalization / GDP was 0.6–2.1 everywhere, so nearly every country had the full 25 %. |
+| EF.29 | `common/on_actions/zz_ef_bubble_on_actions.txt`, `common/journal_entries/zz_ef_financial_center_je.txt`, `common/script_values/zz_ef_bubble_values.txt`, `common/messages/zz_ef_bubble_messages.txt`, `common/static_modifiers/zz_ef_bubble_no_construction.txt` | 2026-09-25: the speculative bubble moved here from the E&F x PSC compatch — it follows the stock market, which is the hotfix's (EF.24, EF.28). E&F's monthly bubble code runs in our own on_action (with the `character_role_executive` fix and a feed notification); E&F's journal is re-issued without it; the bubble modifier has no construction malus. Behaviour unchanged. The compatch's journal section reads `zz_ef_bubble_step_eff`, so the compatch now depends on the hotfix. |
+| EF.28 | `common/scripted_effects/zz_ef_stock_issue_literacy.txt`, `common/script_values/zz_ef_stock_issue_literacy_values.txt`, `common/static_modifiers/zz_ef_stock_issue_literacy.txt` | 2026-09-25: stock issuance × min(1, share of literate pops with wealth ≥ 15 in the whole population / 12 %). Monthly walk over the country's pops; country modifier `goods_output_<type>_stock_mult` on all four stocks. 1847 save: Britain 12 % (full issue), Russia 1 % (~8 %), Japan 0.7 %, China 0.5 %; Belgium 30 %, Netherlands 18 %. |
+| EF.27 | `common/building_groups/zz_ef_central_bank_group.txt` | `bg_bank` (the central bank) urbanization 20 → 0 per level. 1847 observer run: Britain's central bank had 250 levels in the Home Counties — 5000 urbanization from one government building of 250 employees. Same reasoning as EF.17 (1) for the exchanges. |
+| — | `common/scripted_effects/zz_ef_capitalization_crash.txt` | `debug_log` + `debug_log_scopes` before `financial_crash`: the 1847 run crashed some country once and `error.log` could not say which. Look for `ZZEF crash` in `debug.log` (not `game.log`). |
+| — | `common/scripted_effects/zz_ef_capitalization_crash.txt` | 2026-09-25, 1850 run: no crash before 1838 — five countries "crashed" in 1836-37 because the year-ago marks start at the first month, before EF.28 cuts the issuance of low-literacy countries. The yearly change is now kept for every country (the E&F list showed 0.00% for countries without an exchange or under the 5M floor); the crash itself still needs an exchange and the floor. |
+| loc | `localization/*/replace/zz_ef_cm_goods_replace_l_*.yml` | `liquidity_currency` ("Local Currency") moved to `replace/`: E&F and V4 RUS define the key first and localization is first-come, so the name never showed. |
 
 ### Found by the 1836–1840 observer run with the local hotfix (2026-09-24)
 

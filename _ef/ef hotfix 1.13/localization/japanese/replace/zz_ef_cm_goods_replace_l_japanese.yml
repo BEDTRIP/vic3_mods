@@ -1,0 +1,6 @@
+﻿l_japanese:
+ # liquidity_currency: the plain local currency minor countries without a
+ # monetary system get. Overrides E&F's own name ("Base Money"); E&F (and
+ # the V4 RUS translation) define the key first, and localization is
+ # first-come, so the override only works from replace/ (2026-09-24).
+ liquidity_currency:0 "Local Currency"

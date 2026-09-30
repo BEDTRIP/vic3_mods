@@ -6,7 +6,7 @@
  # ("Базовые деньги"). Три престижных варианта ниже и компания/модификатор
  # центробанка, которые их чеканят — для стран С монетной системой.
 
- liquidity_currency:0 "Локальная валюта"
+ # liquidity_currency itself: localization/russian/replace/zz_ef_cm_goods_replace_l_russian.yml
 
  zz_ef_cm_representative_currency:0 "Обеспеченная валюта"
  zz_ef_cm_pegged_currency:0 "Привязанная валюта"
@@ -28,3 +28,15 @@
 
  # Тип модификатора выдачи валюты минорам (modifier_type_definitions/zz_ef_liquidity_currency_sell_orders.txt).
  state_sell_orders_liquidity_currency_add:0 "Приказы о продаже локальной валюты"
+
+ # EF.25: доля дивидендов компаний работникам, растёт с капитализацией акций / ВВП.
+ zz_ef_mass_shareholding:0 "Массовое акционерство"
+ zz_ef_mass_shareholding_desc:0 "Акции широко распространены: часть дивидендов зданий, принадлежащих компаниям, получают их работники. Растёт с капитализацией акций относительно ВВП, до 25% при капитализации, равной ВВП."
+
+ # EF.22: публичная компания у штаба.
+ pm_company_headquarter_publicly_traded:0 "$pm_publicly_traded$"
+  zz_ef_stock_issue_literacy:0 "Узкий круг вкладчиков"
+  zz_ef_stock_issue_literacy_desc:0 "Покупать и понимать акции может только грамотный и достаточно богатый житель. Таких в стране меньше 12% населения, поэтому частные здания выпускают меньше акций: выпуск пропорционален доле грамотных богатых (от 15-го уровня богатства) и полный при 12% и выше. Сейчас: [GetPlayer.MakeScope.Var('zz_ef_literate_rich_share').GetValue|%1]."
+ notification_zz_ef_bubble_rising_name:0 "Спекулятивный пузырь растёт"
+ notification_zz_ef_bubble_rising_desc:0 "Спекулятивный рынок растёт быстрее экономики. Пузырь: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue|0]%."
+ notification_zz_ef_bubble_rising_tooltip:0 "#header $notification_zz_ef_bubble_rising_name$#!\n$TOOLTIP_DELIMITER$\n$notification_zz_ef_bubble_rising_desc$"

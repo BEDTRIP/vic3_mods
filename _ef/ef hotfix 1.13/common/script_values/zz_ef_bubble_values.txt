@@ -1,0 +1,56 @@
+#############################################
+# EF.29 (2026-09-25) -- numbers of the speculative bubble
+# (on_actions/zz_ef_bubble_on_actions.txt). Moved from the E&F x PSC compatch,
+# where they were zz_pb_ef_bubble_step / _eff and zz_pb_ef_bb_band_*; the
+# compatch's journal section reads zz_ef_bubble_step_eff.
+# COUNTRY scope.
+#############################################
+
+# The bubble's monthly step, as E&F's journal computes it
+# (on_actions/zz_ef_bubble_on_actions.txt).
+zz_ef_bubble_step = {
+	value = 0
+	if = {
+		limit = { fiancial_center_week_balance_in_ratio < 0.10 }
+		value = -3
+	}
+	else_if = {
+		limit = { fiancial_center_week_balance_in_ratio < 0.20 }
+		value = -2
+	}
+	else_if = {
+		limit = { fiancial_center_week_balance_in_ratio < 0.30 }
+		value = -1
+	}
+	else_if = {
+		limit = { fiancial_center_week_balance_in_ratio < 0.40 }
+		value = 1
+	}
+	else_if = {
+		limit = { fiancial_center_week_balance_in_ratio < 0.50 }
+		value = 2
+	}
+	else = {
+		value = 3
+	}
+}
+zz_ef_bubble_step_eff = {
+	value = var:speculative_share_1
+	add = zz_ef_bubble_step
+	min = 0
+	max = 100
+	subtract = var:speculative_share_1
+}
+
+# Bands of 10 for the "rising" notification: a message only when the bubble
+# enters a new band upwards.
+zz_ef_bb_band_new = {
+	value = var:speculative_share_1
+	divide = 10
+	floor = yes
+}
+zz_ef_bb_band_old = {
+	value = var:zz_ef_bb_old
+	divide = 10
+	floor = yes
+}
