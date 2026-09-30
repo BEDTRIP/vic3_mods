@@ -25,7 +25,7 @@ REPLACE_OR_CREATE:base_rate_increase = {
 	is_valid = {
 		custom_tooltip = {
 			text = zz_ef_rate_tt_below_max
-			var:base_rate_percentage < 0.12
+			var:base_rate_percentage < zz_ef_cb_rate_ceiling
 		}
 		custom_tooltip = {
 			text = zz_ef_rate_tt_bias_up
@@ -48,8 +48,8 @@ REPLACE_OR_CREATE:base_rate_increase = {
 		hidden_effect = {
 			change_variable = { name = base_rate_percentage add = 0.005 }
 			if = {
-				limit = { var:base_rate_percentage > 0.12 }
-				set_variable = { name = base_rate_percentage value = 0.12 }
+				limit = { var:base_rate_percentage > zz_ef_cb_rate_ceiling }
+				set_variable = { name = base_rate_percentage value = zz_ef_cb_rate_ceiling }
 			}
 			if = {
 				limit = { has_variable = zz_ef_rate_bias }

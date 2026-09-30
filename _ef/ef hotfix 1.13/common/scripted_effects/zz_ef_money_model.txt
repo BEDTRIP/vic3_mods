@@ -1,0 +1,63 @@
+﻿#############################################
+# EF.39 (2026-09-30) -- the money model, monthly step. Numbers and the why:
+# script_values/zz_ef_money_model_values.txt. Called from
+# on_actions/zz_ef_money_model_on_actions.txt for every country.
+#
+# E&F's investement_pool_borrowing (01_economic_scripted_effects.txt:135769,
+# yearly, market owners) is replaced: its +-2..10% of the money supply a year
+# by the rate, gated by the private credit limits, is what filled rich pools
+# for decades ahead. Kept from it: the interest the private banks earn on
+# the bonds they hold (ai_privat_bank_total_interest), now while the pool is
+# under the model's target instead of under E&F's limits.
+#
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of investement_pool_borrowing.
+#############################################
+
+REPLACE_OR_CREATE:investement_pool_borrowing = {
+	if = {
+		limit = {
+			ai_privat_bank_total_interest > 0
+			investment_pool < zz_ef_pool_target
+		}
+		add_investment_pool = ai_privat_bank_total_interest
+	}
+}
+
+zz_ef_money_model_step = {
+	# One-off seed: S to half of GDP, deposits to their share of it.
+	if = {
+		limit = {
+			NOT = { has_variable = zz_ef_money_model_seeded }
+			has_variable = pop_capital_loss_fix
+		}
+		set_variable = { name = zz_ef_money_model_seeded value = 1 }
+		change_variable = { name = pop_capital_loss_fix add = zz_ef_savings_seed_shift }
+		set_variable = { name = zz_ef_deposits value = zz_ef_deposits_seed }
+	}
+
+	if = {
+		limit = { has_variable = zz_ef_money_model_seeded }
+
+		# 1. Savings: outflow on goods and taxes.
+		change_variable = { name = pop_capital_loss_fix subtract = zz_ef_savings_outflow }
+
+		# 2. Deposits: S <-> D towards the target share.
+		set_local_variable = { name = zz_ef_flow value = zz_ef_deposit_flow }
+		change_variable = { name = pop_capital_loss_fix subtract = local_var:zz_ef_flow }
+		change_variable = { name = zz_ef_deposits add = local_var:zz_ef_flow }
+		if = {
+			limit = { var:zz_ef_deposits < 0 }
+			set_variable = { name = zz_ef_deposits value = 0 }
+		}
+
+		# 3. Pool towards deposits x credit multiplier.
+		add_investment_pool = zz_ef_pool_adjust
+	}
+
+	# EF.31: the rate's share of private construction, refreshed monthly.
+	remove_modifier = zz_ef_rate_private_construction
+	add_modifier = {
+		name = zz_ef_rate_private_construction
+		multiplier = zz_ef_rate_construction_mult
+	}
+}

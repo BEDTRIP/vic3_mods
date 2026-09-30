@@ -1,0 +1,17 @@
+﻿#############################################
+# EF.39 (2026-09-30) -- the money model's monthly step
+# (scripted_effects/zz_ef_money_model.txt). Every country.
+# Additive: our own on_action listed under on_monthly_pulse_country.
+#############################################
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_ef_money_model_monthly
+	}
+}
+
+zz_ef_money_model_monthly = {
+	effect = {
+		zz_ef_money_model_step = yes
+	}
+}

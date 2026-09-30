@@ -1,0 +1,227 @@
+﻿#############################################
+# EF.39 + EF.44 (2026-09-30) -- the money model: savings, deposits, bank credit.
+# COUNTRY scope. Money in the game's currency units; rates are fractions.
+#
+# WHAT E&F DOES (4.1.7)
+# - "Pop savings" (pop_savings = var:pop_capital_loss_fix +
+#   var:circulating_<currency>_c_var_1) only ever grows: every month += 4 x the
+#   market's buy orders of the currency good. By 1848 France held 1960M at a
+#   GDP of 85M. It is part of the money supply, so the money supply swells
+#   forever.
+# - Once a year (investement_pool_borrowing) the pool gets up to +10% of that
+#   money supply at a low rate: France 561M in the pool (31 years of its
+#   private construction), Britain 686M; Belgium, Spain, Sweden ~0.
+#
+# WHAT THIS DOES (decided by the user 2026-09-30, План проекта.md, EF.39)
+# 1. Savings S keep E&F's inflow and get an outflow: what pops spend on goods
+#    and pay in taxes. The engine does not give scripts the pops' spending
+#    (the Population overview reads it from the GUI only), so:
+#      pop outlays = pops' income - what they put into the pool
+#                  ~ GDP / 12 - investment_pool_gross_income x 52 / 12.
+#    Outflow saturates: outlays x S / (S + K), K = zz_ef_savings_months
+#    months of outlays. A large stock is spent from fully, a small one is
+#    hardly touched, so S settles instead of growing forever.
+#    Applied through var:pop_capital_loss_fix (E&F's free offset of
+#    pop_savings; only the crash writes it, adding the lost capital).
+# 2. Deposits D (var:zz_ef_deposits): a target share of the pops' money
+#    (S + D) sits in banks = access x rate x trust; every month
+#    zz_ef_deposit_speed of the gap moves between S and D, both ways.
+# 3. The pool is steered towards D x the credit multiplier (3 at 2%,
+#    1.2 at 12%): banks lend more per deposit when money is cheap. Below the
+#    target the pool is topped up (bank credit), above it the excess slowly
+#    drains. Construction spending and the pops' own pool contributions are
+#    vanilla and untouched. Replaces E&F's yearly +10% and the private credit
+#    limits (scripted_effects/zz_ef_money_model.txt).
+# Money supply stays E&F's sum -- CB reserves + S + buildings' cash + pool +
+# minted -- which with the new S and pool is M2 (EF.44); the currency value
+# is read from it, so exchange rates move (recalibrated after a run).
+#############################################
+
+# Months of outlays pops keep in hand before they spend from savings in
+# full. Start value, to be tuned by a run.
+zz_ef_savings_months = 24
+
+# Share of the S-D gap that moves per month.
+zz_ef_deposit_speed = 0.04
+# Share of the gap to the pool target closed per month: up, down.
+zz_ef_pool_up_speed = 0.05
+zz_ef_pool_down_speed = 0.02
+
+# The rate the model reads: the central bank's, else E&F's neutral 6.5%.
+zz_ef_money_rate = {
+	value = 0.065
+	if = {
+		limit = { has_variable = base_rate_percentage }
+		value = var:base_rate_percentage
+	}
+	min = 0
+	max = 0.3
+}
+
+# S, never negative.
+zz_ef_savings = {
+	value = pop_savings
+	min = 0
+}
+
+# Pops' spending on goods + taxes per month (see 1. above).
+zz_ef_pop_outlays_month = {
+	value = gdp
+	subtract = {
+		value = investment_pool_gross_income
+		multiply = 52
+	}
+	divide = 12
+	min = 0
+}
+
+zz_ef_savings_k = {
+	value = zz_ef_pop_outlays_month
+	multiply = zz_ef_savings_months
+	min = 1
+}
+
+# Monthly outflow from savings: outlays x S / (S + K).
+zz_ef_savings_outflow = {
+	value = zz_ef_savings
+	multiply = zz_ef_pop_outlays_month
+	divide = {
+		value = zz_ef_savings
+		add = zz_ef_savings_k
+	}
+	min = 0
+}
+
+zz_ef_deposits = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_deposits }
+		value = var:zz_ef_deposits
+	}
+	min = 0
+}
+
+# Target share of the pops' money in banks = access x rate x trust.
+# Access: literacy, and a central bank (a banking system to deposit in).
+# Banks as buildings (EF.42) will replace this proxy.
+zz_ef_deposit_access = {
+	value = 0.15
+	add = {
+		value = literacy_rate
+		multiply = 0.5
+	}
+	if = {
+		limit = { has_modifier = has_central_bank }
+		add = 0.15
+	}
+}
+# Rate: a higher rate makes cash in hand dearer (Keynes, Baumol-Tobin):
+# 0.8 at 2%, 1.05 at 7%, 1.3 at 12%.
+zz_ef_deposit_rate_factor = {
+	value = zz_ef_money_rate
+	multiply = 5
+	add = 0.7
+	max = 1.5
+}
+# Trust: halved in a crisis (depositors run).
+zz_ef_deposit_trust = {
+	value = 1
+	if = {
+		limit = {
+			OR = {
+				has_modifier = economic_instability
+				has_modifier = financial_crash
+			}
+		}
+		value = 0.5
+	}
+}
+zz_ef_deposit_share_target = {
+	value = zz_ef_deposit_access
+	multiply = zz_ef_deposit_rate_factor
+	multiply = zz_ef_deposit_trust
+	min = 0.05
+	max = 0.8
+}
+
+# Monthly move S -> D (negative: withdrawals D -> S).
+zz_ef_deposit_flow = {
+	value = zz_ef_savings
+	add = zz_ef_deposits
+	multiply = zz_ef_deposit_share_target
+	subtract = zz_ef_deposits
+	multiply = zz_ef_deposit_speed
+}
+
+# Credit multiplier: 3 at 2% and below, 1.2 at 12% and above.
+zz_ef_credit_multiplier = {
+	value = zz_ef_money_rate
+	subtract = 0.02
+	multiply = -18
+	add = 3
+	min = 1.2
+	max = 3
+}
+
+# Where the pool is steered: deposits x multiplier.
+zz_ef_pool_target = {
+	value = zz_ef_deposits
+	multiply = zz_ef_credit_multiplier
+}
+
+# Bank credit = pool above deposits (display, M2 - M1 split, EF.44).
+zz_ef_bank_credit = {
+	value = investment_pool
+	subtract = zz_ef_deposits
+}
+
+# This month's change of the pool (positive: new credit).
+zz_ef_pool_adjust = {
+	value = zz_ef_pool_target
+	subtract = investment_pool
+	if = {
+		limit = { investment_pool < zz_ef_pool_target }
+		multiply = zz_ef_pool_up_speed
+	}
+	else = {
+		multiply = zz_ef_pool_down_speed
+	}
+}
+
+# One-off seed (a new game or a running one): S to half of GDP, deposits to
+# their target share of it.
+zz_ef_savings_seed = {
+	value = gdp
+	multiply = 0.5
+}
+zz_ef_savings_seed_shift = {
+	value = zz_ef_savings_seed
+	subtract = pop_savings
+}
+zz_ef_deposits_seed = {
+	value = zz_ef_savings_seed
+	multiply = zz_ef_deposit_share_target
+}
+
+# Aggregates (EF.44), for display.
+# M1 part held by pops and buildings; M2 = the money supply E&F already sums.
+zz_ef_m2 = {
+	value = money_supply
+}
+zz_ef_m2_to_gdp = {
+	value = money_supply
+	divide = {
+		value = gdp
+		min = 1
+	}
+}
+
+# EF.31: multiplier of zz_ef_rate_private_construction (0.01 each):
+# 5 per pp under 6.5%, +-30.
+zz_ef_rate_construction_mult = {
+	value = 0.065
+	subtract = zz_ef_money_rate
+	multiply = 500
+	min = -30
+	max = 30
+}
