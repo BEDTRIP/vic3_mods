@@ -8,8 +8,9 @@ model writes one line a week per big economy into debug.log (EFW = the step,
 EFR = the GUI bridge's receiver, scripted_effects/zz_ef_money_model.txt);
 they are extracted into <OutDir>/eflog.txt.
 
-Progress is checked by the monthly autosaves (debug.log is buffered until
-the game closes), so autosave must be on (monthly).
+Progress is checked by the date on screen (debug.log is buffered until the
+game closes, autosaves may be half-yearly): the window must stay visible and
+the date at its top right uncovered; a standing date is unpaused.
 
 The save must be played as a country: in observer mode the game does not run
 GUI commands, so the bridge (and the savings) stay empty.
@@ -80,9 +81,27 @@ function Shot($p, $name) {
     Log "screenshot $f"
 }
 
-# debug.log is buffered while the game runs, so progress is read from the
-# save games written since a moment (monthly autosaves).
-function Count-Saves($since) { @(Get-ChildItem (Join-Path $Docs "save games") -Filter *.v3 | Where-Object { $_.LastWriteTime -gt $since }).Count }
+# debug.log is buffered while the game runs and autosaves may be half-yearly,
+# so progress is read from the screen: the date text at the top right of the
+# window (2560x1440: about 330..190 px from the right edge, 2..34 px down).
+function Date-Crop($p) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $bmp = New-Object System.Drawing.Bitmap 160, 32
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.R - 340, $r.T + 2, 0, 0, $bmp.Size)
+    $ms = New-Object System.IO.MemoryStream
+    $bmp.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png); $g.Dispose(); $bmp.Dispose()
+    [Convert]::ToBase64String($ms.ToArray())
+}
+
+# True if the date on screen changes within $sec seconds.
+function Is-Advancing($p, $sec) {
+    Focus-Game $p
+    $a = Date-Crop $p
+    for ($i = 0; $i -lt $sec; $i += 4) { Start-Sleep 4; if ((Date-Crop $p) -ne $a) { return $true } }
+    return $false
+}
 
 if (Get-Game) { throw "Victoria 3 is already running - close it first." }
 
@@ -102,18 +121,13 @@ Start-Sleep $LoadWaitSec
 $p = Get-Game
 Shot $p "01_loaded.png"
 
-# speed 5, unpause; verify by a new autosave, toggle pause once more if none
-$started = Get-Date
+# speed 5, unpause; verify by the date on screen, toggle pause once more if it stands
 Focus-Game $p
 Send-Key 0x35 0x06
 Send-Key 0x20 0x39
-$ok = $false
-for ($try = 0; $try -lt 2 -and -not $ok; $try++) {
-    $since = Get-Date
-    for ($i = 0; $i -lt 18 -and -not $ok; $i++) { Start-Sleep 5; if ((Count-Saves $since) -gt 0) { $ok = $true } }
-    Log ("advancing: " + $ok)
-    if (-not $ok) { Focus-Game $p; Send-Key 0x20 0x39 }
-}
+$ok = Is-Advancing $p 24
+if (-not $ok) { Send-Key 0x20 0x39; $ok = Is-Advancing $p 24 }
+Log ("advancing: " + $ok)
 if (-not $ok) { Shot $p "02_not_running.png"; Log "the game does not advance - stopping"; }
 else {
     Log "running for $RunMinutes min"
@@ -121,7 +135,13 @@ else {
     while ((Get-Date) -lt $end) {
         Start-Sleep 60
         if (-not (Get-Game)) { Log "the game exited"; break }
-        Log ("saves written since start: " + (Count-Saves $started))
+        $p = Get-Game
+        if (-not (Is-Advancing $p 16)) {
+            Log "date stands - unpausing"
+            Shot $p ("stall_" + (Get-Date -Format "HHmmss") + ".png")
+            Send-Key 0x20 0x39
+            if (-not (Is-Advancing $p 16)) { Send-Key 0x20 0x39; Log "still standing after a toggle" }
+        } else { Log "advancing" }
     }
     $p = Get-Game
     if ($p) { Focus-Game $p; Send-Key 0x20 0x39; Start-Sleep 3; Shot $p "03_end.png" }
