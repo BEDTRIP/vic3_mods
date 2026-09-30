@@ -1,7 +1,9 @@
-﻿#############################################
-# EF.39 (2026-09-30) -- the money model's monthly step
+#############################################
+# EF.39 / EF.48 (2026-09-30) -- the money model's steps
 # (scripted_effects/zz_ef_money_model.txt). Every country.
-# Additive: our own on_action listed under on_monthly_pulse_country.
+# Monthly: our own on_action listed under on_monthly_pulse_country (additive);
+# it also (re)starts the weekly chain. Weekly: a self-renewing chain, the
+# engine has no weekly country pulse.
 #############################################
 
 on_monthly_pulse_country = {
@@ -12,6 +14,21 @@ on_monthly_pulse_country = {
 
 zz_ef_money_model_monthly = {
 	effect = {
+		zz_ef_money_model_monthly_step = yes
+		zz_ef_money_week_start = yes
+	}
+}
+
+# Daily until the engine's budget tick, then the chain below.
+zz_ef_money_week_probe = {
+	effect = {
+		zz_ef_money_week_probe_step = yes
+	}
+}
+
+zz_ef_money_model_weekly = {
+	effect = {
 		zz_ef_money_model_step = yes
+		trigger_event = { on_action = zz_ef_money_model_weekly days = 7 }
 	}
 }

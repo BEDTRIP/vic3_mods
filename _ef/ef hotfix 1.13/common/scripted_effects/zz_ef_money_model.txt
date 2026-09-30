@@ -1,9 +1,19 @@
 #############################################
-# EF.39 / EF.48 (2026-09-30) -- the money model, monthly step, in the
-# engine's money: bank credit borrowed from the central bank at the key rate,
-# its interest to the treasury, and the ledger of each account's change.
-# Numbers and the why: script_values/zz_ef_money_model_values.txt. Called from
-# on_actions/zz_ef_money_model_on_actions.txt for every country.
+# EF.39 / EF.48 (2026-09-30) -- the money model, in the engine's money, on
+# the budget's own rhythm: a WEEKLY step (bank credit from the central bank
+# at the key rate, its interest to the treasury, the ledger of each account's
+# change, M0/M1/M2 history) and a monthly one (E&F's currency good, which
+# E&F moves monthly; EF.31's modifier). Numbers and the why:
+# script_values/zz_ef_money_model_values.txt. Started from
+# on_actions/zz_ef_money_model_on_actions.txt.
+#
+# The engine has no weekly pulse for countries (script_docs on_actions.log:
+# monthly and slower only), so the week is a chain: the weekly on_action
+# re-triggers itself 7 days later (trigger_event = { on_action days = 7 },
+# as LLWA and PSC do). The chain starts right after the engine's weekly
+# budget tick: a daily probe (at most 8 days) waits until the treasury
+# (gold_reserves - principal) changes. Then every 7-day window holds exactly
+# one tick, and the budget read at the step is the tick in the window.
 #
 # E&F's investement_pool_borrowing (01_economic_scripted_effects.txt:135769,
 # yearly, market owners) is replaced: its +-2..10% of the money supply a year
@@ -25,7 +35,48 @@ REPLACE_OR_CREATE:investement_pool_borrowing = {
 	}
 }
 
+# ---- the weekly chain -------------------------------------------------------
+
+# Monthly: (re)start the chain if it is not running (new game, new country,
+# a save that lost its delayed on_actions). var:zz_ef_week_alive lives 10
+# days and every step renews it.
+zz_ef_money_week_start = {
+	if = {
+		limit = {
+			NOT = { has_variable = zz_ef_week_alive }
+			NOT = { has_variable = zz_ef_week_probe }
+		}
+		set_variable = { name = zz_ef_week_probe value = 0 days = 10 }
+		set_variable = { name = zz_ef_week_probe_value value = zz_ef_budget_position }
+		trigger_event = { on_action = zz_ef_money_week_probe days = 1 }
+	}
+}
+
+# Daily until the treasury changes (the budget tick), at most 8 days.
+zz_ef_money_week_probe_step = {
+	if = {
+		limit = {
+			OR = {
+				NOT = { zz_ef_budget_position = var:zz_ef_week_probe_value }
+				var:zz_ef_week_probe >= 7
+			}
+		}
+		remove_variable = zz_ef_week_probe
+		remove_variable = zz_ef_week_probe_value
+		trigger_event = { on_action = zz_ef_money_model_weekly }
+	}
+	else = {
+		change_variable = { name = zz_ef_week_probe add = 1 }
+		set_variable = { name = zz_ef_week_probe_value value = zz_ef_budget_position }
+		trigger_event = { on_action = zz_ef_money_week_probe days = 1 }
+	}
+}
+
+# ---- the weekly step --------------------------------------------------------
+
 zz_ef_money_model_step = {
+	set_variable = { name = zz_ef_week_alive value = yes days = 10 }
+
 	# Gold parity re-anchor, once per change of what the money supply counts.
 	# The money supply is the engine's money now (treasury + businesses' cash +
 	# pool; since 2026-09-30 evening, version 2 -- E&F's goods counts are out),
@@ -56,6 +107,11 @@ zz_ef_money_model_step = {
 		}
 	}
 
+	# The budget's week, as the engine counted it at its last tick.
+	set_variable = { name = zz_ef_f_budget value = zz_ef_budget_week }
+	set_variable = { name = zz_ef_f_contrib value = investment_pool_gross_income }
+	set_variable = { name = zz_ef_f_transfer value = zz_ef_pool_transfer_week }
+
 	# Bank credit from the central bank: borrow when the pool is under its
 	# target, repay when over (at most the debt); interest at the key rate goes
 	# pool -> CB -> treasury (the CB's profit).
@@ -63,7 +119,6 @@ zz_ef_money_model_step = {
 		limit = { NOT = { has_variable = zz_ef_bank_cb_debt } }
 		set_variable = { name = zz_ef_bank_cb_debt value = 0 }
 	}
-	set_variable = { name = zz_ef_f_contrib value = zz_ef_pool_contrib_month }
 	set_variable = { name = zz_ef_f_cb_interest value = zz_ef_cb_interest }
 	set_variable = { name = zz_ef_f_cb_borrow value = zz_ef_cb_borrow }
 	set_variable = { name = zz_ef_f_cb_repay value = zz_ef_cb_repay }
@@ -80,15 +135,159 @@ zz_ef_money_model_step = {
 	}
 	add_treasury = var:zz_ef_f_cb_interest
 
-	# Month-on-month change of each account (0 in the first month).
+	# M0/M1/M2 history: a week ago, 4 weeks (month), 13 blocks of 4 weeks
+	# (year), 20 blocks of 13 weeks (5 years). Filled from last week's value.
+	if = {
+		limit = {
+			has_variable = zz_ef_prev_m0
+			has_variable = zz_ef_prev_m1
+			has_variable = zz_ef_prev_m2
+		}
+		if = {
+			limit = { NOT = { has_variable = zz_ef_ring_q } }
+			set_variable = { name = zz_ef_ring_q value = 0 }
+			set_variable = { name = zz_ef_ring_r value = 0 }
+		}
+		if = { limit = { has_variable = zz_ef_m0_w3 } set_variable = { name = zz_ef_m0_w4 value = var:zz_ef_m0_w3 } }
+		if = { limit = { has_variable = zz_ef_m0_w2 } set_variable = { name = zz_ef_m0_w3 value = var:zz_ef_m0_w2 } }
+		if = { limit = { has_variable = zz_ef_m0_w1 } set_variable = { name = zz_ef_m0_w2 value = var:zz_ef_m0_w1 } }
+		set_variable = { name = zz_ef_m0_w1 value = var:zz_ef_prev_m0 }
+		if = { limit = { has_variable = zz_ef_m1_w3 } set_variable = { name = zz_ef_m1_w4 value = var:zz_ef_m1_w3 } }
+		if = { limit = { has_variable = zz_ef_m1_w2 } set_variable = { name = zz_ef_m1_w3 value = var:zz_ef_m1_w2 } }
+		if = { limit = { has_variable = zz_ef_m1_w1 } set_variable = { name = zz_ef_m1_w2 value = var:zz_ef_m1_w1 } }
+		set_variable = { name = zz_ef_m1_w1 value = var:zz_ef_prev_m1 }
+		if = { limit = { has_variable = zz_ef_m2_w3 } set_variable = { name = zz_ef_m2_w4 value = var:zz_ef_m2_w3 } }
+		if = { limit = { has_variable = zz_ef_m2_w2 } set_variable = { name = zz_ef_m2_w3 value = var:zz_ef_m2_w2 } }
+		if = { limit = { has_variable = zz_ef_m2_w1 } set_variable = { name = zz_ef_m2_w2 value = var:zz_ef_m2_w1 } }
+		set_variable = { name = zz_ef_m2_w1 value = var:zz_ef_prev_m2 }
+		change_variable = { name = zz_ef_ring_q add = 1 }
+		if = {
+			limit = { var:zz_ef_ring_q >= 4 }
+			set_variable = { name = zz_ef_ring_q value = 0 }
+			if = { limit = { has_variable = zz_ef_m0_q12 } set_variable = { name = zz_ef_m0_q13 value = var:zz_ef_m0_q12 } }
+			if = { limit = { has_variable = zz_ef_m0_q11 } set_variable = { name = zz_ef_m0_q12 value = var:zz_ef_m0_q11 } }
+			if = { limit = { has_variable = zz_ef_m0_q10 } set_variable = { name = zz_ef_m0_q11 value = var:zz_ef_m0_q10 } }
+			if = { limit = { has_variable = zz_ef_m0_q9 } set_variable = { name = zz_ef_m0_q10 value = var:zz_ef_m0_q9 } }
+			if = { limit = { has_variable = zz_ef_m0_q8 } set_variable = { name = zz_ef_m0_q9 value = var:zz_ef_m0_q8 } }
+			if = { limit = { has_variable = zz_ef_m0_q7 } set_variable = { name = zz_ef_m0_q8 value = var:zz_ef_m0_q7 } }
+			if = { limit = { has_variable = zz_ef_m0_q6 } set_variable = { name = zz_ef_m0_q7 value = var:zz_ef_m0_q6 } }
+			if = { limit = { has_variable = zz_ef_m0_q5 } set_variable = { name = zz_ef_m0_q6 value = var:zz_ef_m0_q5 } }
+			if = { limit = { has_variable = zz_ef_m0_q4 } set_variable = { name = zz_ef_m0_q5 value = var:zz_ef_m0_q4 } }
+			if = { limit = { has_variable = zz_ef_m0_q3 } set_variable = { name = zz_ef_m0_q4 value = var:zz_ef_m0_q3 } }
+			if = { limit = { has_variable = zz_ef_m0_q2 } set_variable = { name = zz_ef_m0_q3 value = var:zz_ef_m0_q2 } }
+			if = { limit = { has_variable = zz_ef_m0_q1 } set_variable = { name = zz_ef_m0_q2 value = var:zz_ef_m0_q1 } }
+			set_variable = { name = zz_ef_m0_q1 value = var:zz_ef_prev_m0 }
+			if = { limit = { has_variable = zz_ef_m1_q12 } set_variable = { name = zz_ef_m1_q13 value = var:zz_ef_m1_q12 } }
+			if = { limit = { has_variable = zz_ef_m1_q11 } set_variable = { name = zz_ef_m1_q12 value = var:zz_ef_m1_q11 } }
+			if = { limit = { has_variable = zz_ef_m1_q10 } set_variable = { name = zz_ef_m1_q11 value = var:zz_ef_m1_q10 } }
+			if = { limit = { has_variable = zz_ef_m1_q9 } set_variable = { name = zz_ef_m1_q10 value = var:zz_ef_m1_q9 } }
+			if = { limit = { has_variable = zz_ef_m1_q8 } set_variable = { name = zz_ef_m1_q9 value = var:zz_ef_m1_q8 } }
+			if = { limit = { has_variable = zz_ef_m1_q7 } set_variable = { name = zz_ef_m1_q8 value = var:zz_ef_m1_q7 } }
+			if = { limit = { has_variable = zz_ef_m1_q6 } set_variable = { name = zz_ef_m1_q7 value = var:zz_ef_m1_q6 } }
+			if = { limit = { has_variable = zz_ef_m1_q5 } set_variable = { name = zz_ef_m1_q6 value = var:zz_ef_m1_q5 } }
+			if = { limit = { has_variable = zz_ef_m1_q4 } set_variable = { name = zz_ef_m1_q5 value = var:zz_ef_m1_q4 } }
+			if = { limit = { has_variable = zz_ef_m1_q3 } set_variable = { name = zz_ef_m1_q4 value = var:zz_ef_m1_q3 } }
+			if = { limit = { has_variable = zz_ef_m1_q2 } set_variable = { name = zz_ef_m1_q3 value = var:zz_ef_m1_q2 } }
+			if = { limit = { has_variable = zz_ef_m1_q1 } set_variable = { name = zz_ef_m1_q2 value = var:zz_ef_m1_q1 } }
+			set_variable = { name = zz_ef_m1_q1 value = var:zz_ef_prev_m1 }
+			if = { limit = { has_variable = zz_ef_m2_q12 } set_variable = { name = zz_ef_m2_q13 value = var:zz_ef_m2_q12 } }
+			if = { limit = { has_variable = zz_ef_m2_q11 } set_variable = { name = zz_ef_m2_q12 value = var:zz_ef_m2_q11 } }
+			if = { limit = { has_variable = zz_ef_m2_q10 } set_variable = { name = zz_ef_m2_q11 value = var:zz_ef_m2_q10 } }
+			if = { limit = { has_variable = zz_ef_m2_q9 } set_variable = { name = zz_ef_m2_q10 value = var:zz_ef_m2_q9 } }
+			if = { limit = { has_variable = zz_ef_m2_q8 } set_variable = { name = zz_ef_m2_q9 value = var:zz_ef_m2_q8 } }
+			if = { limit = { has_variable = zz_ef_m2_q7 } set_variable = { name = zz_ef_m2_q8 value = var:zz_ef_m2_q7 } }
+			if = { limit = { has_variable = zz_ef_m2_q6 } set_variable = { name = zz_ef_m2_q7 value = var:zz_ef_m2_q6 } }
+			if = { limit = { has_variable = zz_ef_m2_q5 } set_variable = { name = zz_ef_m2_q6 value = var:zz_ef_m2_q5 } }
+			if = { limit = { has_variable = zz_ef_m2_q4 } set_variable = { name = zz_ef_m2_q5 value = var:zz_ef_m2_q4 } }
+			if = { limit = { has_variable = zz_ef_m2_q3 } set_variable = { name = zz_ef_m2_q4 value = var:zz_ef_m2_q3 } }
+			if = { limit = { has_variable = zz_ef_m2_q2 } set_variable = { name = zz_ef_m2_q3 value = var:zz_ef_m2_q2 } }
+			if = { limit = { has_variable = zz_ef_m2_q1 } set_variable = { name = zz_ef_m2_q2 value = var:zz_ef_m2_q1 } }
+			set_variable = { name = zz_ef_m2_q1 value = var:zz_ef_prev_m2 }
+		}
+		change_variable = { name = zz_ef_ring_r add = 1 }
+		if = {
+			limit = { var:zz_ef_ring_r >= 13 }
+			set_variable = { name = zz_ef_ring_r value = 0 }
+			if = { limit = { has_variable = zz_ef_m0_r19 } set_variable = { name = zz_ef_m0_r20 value = var:zz_ef_m0_r19 } }
+			if = { limit = { has_variable = zz_ef_m0_r18 } set_variable = { name = zz_ef_m0_r19 value = var:zz_ef_m0_r18 } }
+			if = { limit = { has_variable = zz_ef_m0_r17 } set_variable = { name = zz_ef_m0_r18 value = var:zz_ef_m0_r17 } }
+			if = { limit = { has_variable = zz_ef_m0_r16 } set_variable = { name = zz_ef_m0_r17 value = var:zz_ef_m0_r16 } }
+			if = { limit = { has_variable = zz_ef_m0_r15 } set_variable = { name = zz_ef_m0_r16 value = var:zz_ef_m0_r15 } }
+			if = { limit = { has_variable = zz_ef_m0_r14 } set_variable = { name = zz_ef_m0_r15 value = var:zz_ef_m0_r14 } }
+			if = { limit = { has_variable = zz_ef_m0_r13 } set_variable = { name = zz_ef_m0_r14 value = var:zz_ef_m0_r13 } }
+			if = { limit = { has_variable = zz_ef_m0_r12 } set_variable = { name = zz_ef_m0_r13 value = var:zz_ef_m0_r12 } }
+			if = { limit = { has_variable = zz_ef_m0_r11 } set_variable = { name = zz_ef_m0_r12 value = var:zz_ef_m0_r11 } }
+			if = { limit = { has_variable = zz_ef_m0_r10 } set_variable = { name = zz_ef_m0_r11 value = var:zz_ef_m0_r10 } }
+			if = { limit = { has_variable = zz_ef_m0_r9 } set_variable = { name = zz_ef_m0_r10 value = var:zz_ef_m0_r9 } }
+			if = { limit = { has_variable = zz_ef_m0_r8 } set_variable = { name = zz_ef_m0_r9 value = var:zz_ef_m0_r8 } }
+			if = { limit = { has_variable = zz_ef_m0_r7 } set_variable = { name = zz_ef_m0_r8 value = var:zz_ef_m0_r7 } }
+			if = { limit = { has_variable = zz_ef_m0_r6 } set_variable = { name = zz_ef_m0_r7 value = var:zz_ef_m0_r6 } }
+			if = { limit = { has_variable = zz_ef_m0_r5 } set_variable = { name = zz_ef_m0_r6 value = var:zz_ef_m0_r5 } }
+			if = { limit = { has_variable = zz_ef_m0_r4 } set_variable = { name = zz_ef_m0_r5 value = var:zz_ef_m0_r4 } }
+			if = { limit = { has_variable = zz_ef_m0_r3 } set_variable = { name = zz_ef_m0_r4 value = var:zz_ef_m0_r3 } }
+			if = { limit = { has_variable = zz_ef_m0_r2 } set_variable = { name = zz_ef_m0_r3 value = var:zz_ef_m0_r2 } }
+			if = { limit = { has_variable = zz_ef_m0_r1 } set_variable = { name = zz_ef_m0_r2 value = var:zz_ef_m0_r1 } }
+			set_variable = { name = zz_ef_m0_r1 value = var:zz_ef_prev_m0 }
+			if = { limit = { has_variable = zz_ef_m1_r19 } set_variable = { name = zz_ef_m1_r20 value = var:zz_ef_m1_r19 } }
+			if = { limit = { has_variable = zz_ef_m1_r18 } set_variable = { name = zz_ef_m1_r19 value = var:zz_ef_m1_r18 } }
+			if = { limit = { has_variable = zz_ef_m1_r17 } set_variable = { name = zz_ef_m1_r18 value = var:zz_ef_m1_r17 } }
+			if = { limit = { has_variable = zz_ef_m1_r16 } set_variable = { name = zz_ef_m1_r17 value = var:zz_ef_m1_r16 } }
+			if = { limit = { has_variable = zz_ef_m1_r15 } set_variable = { name = zz_ef_m1_r16 value = var:zz_ef_m1_r15 } }
+			if = { limit = { has_variable = zz_ef_m1_r14 } set_variable = { name = zz_ef_m1_r15 value = var:zz_ef_m1_r14 } }
+			if = { limit = { has_variable = zz_ef_m1_r13 } set_variable = { name = zz_ef_m1_r14 value = var:zz_ef_m1_r13 } }
+			if = { limit = { has_variable = zz_ef_m1_r12 } set_variable = { name = zz_ef_m1_r13 value = var:zz_ef_m1_r12 } }
+			if = { limit = { has_variable = zz_ef_m1_r11 } set_variable = { name = zz_ef_m1_r12 value = var:zz_ef_m1_r11 } }
+			if = { limit = { has_variable = zz_ef_m1_r10 } set_variable = { name = zz_ef_m1_r11 value = var:zz_ef_m1_r10 } }
+			if = { limit = { has_variable = zz_ef_m1_r9 } set_variable = { name = zz_ef_m1_r10 value = var:zz_ef_m1_r9 } }
+			if = { limit = { has_variable = zz_ef_m1_r8 } set_variable = { name = zz_ef_m1_r9 value = var:zz_ef_m1_r8 } }
+			if = { limit = { has_variable = zz_ef_m1_r7 } set_variable = { name = zz_ef_m1_r8 value = var:zz_ef_m1_r7 } }
+			if = { limit = { has_variable = zz_ef_m1_r6 } set_variable = { name = zz_ef_m1_r7 value = var:zz_ef_m1_r6 } }
+			if = { limit = { has_variable = zz_ef_m1_r5 } set_variable = { name = zz_ef_m1_r6 value = var:zz_ef_m1_r5 } }
+			if = { limit = { has_variable = zz_ef_m1_r4 } set_variable = { name = zz_ef_m1_r5 value = var:zz_ef_m1_r4 } }
+			if = { limit = { has_variable = zz_ef_m1_r3 } set_variable = { name = zz_ef_m1_r4 value = var:zz_ef_m1_r3 } }
+			if = { limit = { has_variable = zz_ef_m1_r2 } set_variable = { name = zz_ef_m1_r3 value = var:zz_ef_m1_r2 } }
+			if = { limit = { has_variable = zz_ef_m1_r1 } set_variable = { name = zz_ef_m1_r2 value = var:zz_ef_m1_r1 } }
+			set_variable = { name = zz_ef_m1_r1 value = var:zz_ef_prev_m1 }
+			if = { limit = { has_variable = zz_ef_m2_r19 } set_variable = { name = zz_ef_m2_r20 value = var:zz_ef_m2_r19 } }
+			if = { limit = { has_variable = zz_ef_m2_r18 } set_variable = { name = zz_ef_m2_r19 value = var:zz_ef_m2_r18 } }
+			if = { limit = { has_variable = zz_ef_m2_r17 } set_variable = { name = zz_ef_m2_r18 value = var:zz_ef_m2_r17 } }
+			if = { limit = { has_variable = zz_ef_m2_r16 } set_variable = { name = zz_ef_m2_r17 value = var:zz_ef_m2_r16 } }
+			if = { limit = { has_variable = zz_ef_m2_r15 } set_variable = { name = zz_ef_m2_r16 value = var:zz_ef_m2_r15 } }
+			if = { limit = { has_variable = zz_ef_m2_r14 } set_variable = { name = zz_ef_m2_r15 value = var:zz_ef_m2_r14 } }
+			if = { limit = { has_variable = zz_ef_m2_r13 } set_variable = { name = zz_ef_m2_r14 value = var:zz_ef_m2_r13 } }
+			if = { limit = { has_variable = zz_ef_m2_r12 } set_variable = { name = zz_ef_m2_r13 value = var:zz_ef_m2_r12 } }
+			if = { limit = { has_variable = zz_ef_m2_r11 } set_variable = { name = zz_ef_m2_r12 value = var:zz_ef_m2_r11 } }
+			if = { limit = { has_variable = zz_ef_m2_r10 } set_variable = { name = zz_ef_m2_r11 value = var:zz_ef_m2_r10 } }
+			if = { limit = { has_variable = zz_ef_m2_r9 } set_variable = { name = zz_ef_m2_r10 value = var:zz_ef_m2_r9 } }
+			if = { limit = { has_variable = zz_ef_m2_r8 } set_variable = { name = zz_ef_m2_r9 value = var:zz_ef_m2_r8 } }
+			if = { limit = { has_variable = zz_ef_m2_r7 } set_variable = { name = zz_ef_m2_r8 value = var:zz_ef_m2_r7 } }
+			if = { limit = { has_variable = zz_ef_m2_r6 } set_variable = { name = zz_ef_m2_r7 value = var:zz_ef_m2_r6 } }
+			if = { limit = { has_variable = zz_ef_m2_r5 } set_variable = { name = zz_ef_m2_r6 value = var:zz_ef_m2_r5 } }
+			if = { limit = { has_variable = zz_ef_m2_r4 } set_variable = { name = zz_ef_m2_r5 value = var:zz_ef_m2_r4 } }
+			if = { limit = { has_variable = zz_ef_m2_r3 } set_variable = { name = zz_ef_m2_r4 value = var:zz_ef_m2_r3 } }
+			if = { limit = { has_variable = zz_ef_m2_r2 } set_variable = { name = zz_ef_m2_r3 value = var:zz_ef_m2_r2 } }
+			if = { limit = { has_variable = zz_ef_m2_r1 } set_variable = { name = zz_ef_m2_r2 value = var:zz_ef_m2_r1 } }
+			set_variable = { name = zz_ef_m2_r1 value = var:zz_ef_prev_m2 }
+		}
+	}
+
+	# Week-on-week change of each account (0 in the first week).
 	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
 	zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
 	zz_ef_money_ledger_delta = { ACC = treasury VALUE = zz_ef_treasury }
-	zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
-	zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
 	zz_ef_money_ledger_delta = { ACC = bonds VALUE = zz_ef_bank_bonds }
+	zz_ef_money_ledger_delta = { ACC = m0 VALUE = zz_ef_m0 }
+	zz_ef_money_ledger_delta = { ACC = m1 VALUE = zz_ef_m1 }
+	zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
+}
 
-	# EF.31: the rate's share of private construction, refreshed monthly.
+# ---- the monthly step -------------------------------------------------------
+
+zz_ef_money_model_monthly_step = {
+	# E&F's currency good moves monthly (stockpile_currency_type_1).
+	zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
+
+	# EF.31: the rate's share of private construction.
 	remove_modifier = zz_ef_rate_private_construction
 	add_modifier = {
 		name = zz_ef_rate_private_construction
@@ -96,8 +295,8 @@ zz_ef_money_model_step = {
 	}
 }
 
-# var:zz_ef_d_<ACC> = VALUE now - VALUE a month ago; var:zz_ef_prev_<ACC> keeps
-# this month's value.
+# var:zz_ef_d_<ACC> = VALUE now - VALUE at the previous step; var:zz_ef_prev_<ACC>
+# keeps this step's value.
 zz_ef_money_ledger_delta = {
 	if = {
 		limit = { has_variable = zz_ef_prev_$ACC$ }

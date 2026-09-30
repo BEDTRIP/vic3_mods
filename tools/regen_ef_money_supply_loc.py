@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 EF.39 / EF.44 / EF.48 -- the "Money Supply" tooltip as M0 / M1 / M2, with a
-card per account: every transfer of the month from and to each other account.
+card per account: every transfer of the week from and to each other account.
 
 E&F's tooltip is 12 localization keys MONEY_SUPPLY_DESC_* (one per monetary
 standard, AI and player variants), all the same text except the data context
@@ -19,10 +19,16 @@ becomes wealth, i.e. leaves the money). E&F's central-bank "reserves" and
 currency-good flows are counts of a good, shown in a separate card. Each
 transfer is ONE entry (FLOWS: from, to, label, value) and shows in both cards
 with opposite signs. Values come from the budget through GUI data functions
-(GetTrendValue(Country.Get...Trend), week x 4.333) -- exact per budget line,
-costing nothing unless the tooltip is open -- and from the model's script
-values (monthly step). "Other" = the account's change minus everything listed,
-computed in the GUI; pops close with "purchases and wealth growth".
+(GetTrendValue(Country.Get...Trend)) -- exact per budget line, costing
+nothing unless the tooltip is open -- and from the model's script values.
+"Other" = the account's change minus everything listed, computed in the GUI;
+pops close with "purchases and wealth growth".
+
+Per WEEK, as the engine's budget counts (the user, 2026-09-30: a monthly step
+against weekly budget lines did not add up -- the pool's card missed ~1M a
+month). The model steps weekly right after the budget tick; M0/M1/M2 show the
+week's change and % over a month, a year and 5 years. E&F's currency good
+moves monthly, its card stays monthly.
 
 Writes _ef/ef hotfix 1.13/localization/<lang>/replace/
 zz_ef_money_supply_replace_l_<lang>.yml (UTF-8 with BOM; RU and EN written,
@@ -47,7 +53,6 @@ KEYS_PLAYER = ["MONEY_SUPPLY_DESC_fiat_Player", "MONEY_SUPPLY_DESC_silver_Player
                "MONEY_SUPPLY_DESC_MONEY_VALUE_gold_exchange_standard_Player",
                "MONEY_SUPPLY_DESC_MONEY_VALUE_subject_player"]
 
-WEEKS = "'(CFixedPoint)4.333'"
 ZERO = "'(CFixedPoint)0'"
 
 
@@ -75,34 +80,41 @@ def main_text(lang, c):
     gold = "@gold!"
     ru = lang == "russian"
     if ru:
-        L = dict(title="Денежная масса", sub="деньги движка", total="Всего (M2)", month="за месяц",
+        L = dict(title="Денежная масса", sub="деньги движка", total="Всего (M2)", month="за неделю",
                  m0="M0 — деньги государства", tr="Казна", m1="M1 = M0 + деньги предприятий",
                  bld="Касса предприятий", m2="M2 = M1 + деньги банков", bank="Средства банков",
                  nostock="Счета без запаса (деньги проходят насквозь)", pops="Население", cb="Центральный банк",
                  abroad="Заграница", debt="Долг (не деньги)", princ="бюджета", dcb="перед ЦБ (E&F)",
                  bdebt="банков перед ЦБ", fx="Товар-валюта E&F (штуки, не деньги)", fxcb="склад ЦБ",
-                 fxab="у других стран", hint="Наведите на счёт — все переводы за месяц.")
+                 fxab="у других стран", hint="Наведите на счёт — все переводы за неделю.",
+                 dyn="месяц {0}, год {1}, 5 лет {2}", fxm="за месяц")
     else:
-        L = dict(title="Money Supply", sub="the engine's money", total="Total (M2)", month="this month",
+        L = dict(title="Money Supply", sub="the engine's money", total="Total (M2)", month="this week",
                  m0="M0 — state money", tr="Treasury", m1="M1 = M0 + business money", bld="Business cash",
                  m2="M2 = M1 + bank money", bank="Bank funds", nostock="Accounts without a stock (money passes through)",
                  pops="Pops", cb="Central bank", abroad="Abroad", debt="Debt (not money)", princ="budget",
                  dcb="to the CB (E&F)", bdebt="banks to the CB", fx="E&F currency good (counts, not money)",
-                 fxcb="CB stock", fxab="held by other countries", hint="Hover an account for all its transfers this month.")
+                 fxcb="CB stock", fxab="held by other countries", hint="Hover an account for all its transfers this week.",
+                 dyn="month {0}, year {1}, 5 years {2}", fxm="this month")
+
+    def dyn(m):
+        pc = [sv(f"zz_ef_{m}_pct_{p}", "+=1%") for p in ("month", "year", "5y")]
+        return f"{delta('zz_ef_v_d_' + m)} {L['month']}; " + L["dyn"].format(*pc)
+
     lines = [
         f"{L['title']} ({L['sub']}):",
-        f"{L['total']}: #p {money('money_supply')}#! ({delta('zz_ef_v_d_m2')} {L['month']})",
-        f" {L['m0']}: #T {money('zz_ef_m0')}#!",
+        f"{L['total']}: #p {money('money_supply')}#!",
+        f" {L['m0']}: #T {money('zz_ef_m0')}#! ({dyn('m0')})",
         f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#! ({delta('zz_ef_v_d_treasury')})",
-        f" {L['m1']}: #T {money('zz_ef_m1')}#!",
+        f" {L['m1']}: #T {money('zz_ef_m1')}#! ({dyn('m1')})",
         f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')})",
-        f" {L['m2']}: #T {money('money_supply')}#!",
+        f" {L['m2']}: #T {money('money_supply')}#! ({dyn('m2')})",
         f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')})",
         f" {L['nostock']}: {tt('zz_ef_ms_tt_pops', L['pops'])}, {tt('zz_ef_ms_tt_cb', L['cb'])}, "
         f"{tt('zz_ef_ms_tt_abroad', L['abroad'])}",
         f"{L['debt']}: {L['princ']} {money('zz_ef_debt_principal')}, {L['dcb']} {sv('zz_ef_debt_cb_gold')} {gold}, "
         f"{L['bdebt']} {money('zz_ef_bank_cb_debt')}",
-        f"{tt('zz_ef_ms_tt_fx', L['fx'])}: {L['fxcb']} {sv('money_supply_state')} ({sv('zz_ef_v_d_cb', 'D+=')}), "
+        f"{tt('zz_ef_ms_tt_fx', L['fx'])}: {L['fxcb']} {sv('money_supply_state')} ({sv('zz_ef_v_d_cb', 'D+=')} {L['fxm']}), "
         f"{L['fxab']} {sv('money_supply_stockpile_by_other_country')}",
         f"#italic {L['hint']}#!",
         "",
@@ -166,7 +178,7 @@ def svn(name):
 
 # (from, to, ru, en, value, only) -- only: the one card to show it in, or None.
 FLOWS = [
-    # --- budget, exact (GUI), week x 4.333 ---
+    # --- budget, exact (GUI), a week ---
     (N, K, "[concept_budget_income_taxes]", "[concept_budget_income_taxes]", gt("GetTaxIncomeTrend"), None),
     (N, K, "[concept_budget_poll_taxes]", "[concept_budget_poll_taxes]", gt("GetPollTaxTrend"), None),
     (N, K, "[concept_budget_consumption_taxes]", "[concept_budget_consumption_taxes]", gt("GetConsumptionTaxTrend"), None),
@@ -193,9 +205,10 @@ FLOWS = [
     (K, P, "постройка военных кораблей", "warship construction", gv("GetMilitaryShipConstructionGoodsExpenses"), None),
     (K, P, "содержание военных кораблей", "warship upkeep", gv("GetMilitaryShipMaintenanceExpenses"), None),
     (K, P, "маршруты поставок", "supply routes", gv("GetPortConnectionExpenses"), None),
-    # the pool's transfer to the budget for construction; GetInvestmentFundTrend is the pool's STOCK
+    # the pool's transfer to the budget for construction: pool gross - net income at the step (the budget's
+    # GetInvestmentIncomeTrend is a smoothed trend and did not match the pool; GetInvestmentFundTrend is the STOCK)
     (B, K, "[concept_budget_investment_income]: на стройку", "[concept_budget_investment_income]: for construction",
-     gt("GetInvestmentIncomeTrend"), None),
+     sv_("zz_ef_v_f_transfer"), None),
     (X, K, "[concept_budget_minting] — новые деньги движка", "[concept_budget_minting] — new engine money",
      gt("GetMintingTrend"), None),
     (K, X, "[concept_budget_interest] — держателям долга", "[concept_budget_interest] — to the debt holders",
@@ -214,7 +227,7 @@ FLOWS = [
     (K, X, "[concept_budget_additional_expenses]", "[concept_budget_additional_expenses]",
      gt("GetAdditionalExpensesTrend"), None),
     # --- pops: a transit account ---
-    (P, N, "зарплаты и дивиденды (оценка: ВВП / 12 − госвыплаты)", "wages and dividends (estimate: GDP / 12 − state pay)",
+    (P, N, "зарплаты и дивиденды (оценка: ВВП / 52 − госвыплаты)", "wages and dividends (estimate: GDP / 52 − state pay)",
      ("expr", "WAGES"), None),
     (N, P, "покупки товаров и прирост достатка — остаток дохода",
      "purchases of goods and wealth growth — the rest of the income", ("closing",), None),
@@ -232,13 +245,15 @@ FLOWS = [
     (B, C, "проценты по кредиту ЦБ", "interest on the CB's credit", sv_("zz_ef_v_f_cb_interest"), None),
     (C, K, "прибыль ЦБ: проценты банков", "the CB's profit: banks' interest", sv_("zz_ef_v_f_cb_interest"), None),
     # --- abroad ---
-    (Z, P, "торговля: экспорт сверх импорта (E&F)", "trade: exports over imports (E&F)", svp("zz_ef_trade_month"), None),
-    (P, Z, "торговля: импорт сверх экспорта (E&F)", "trade: imports over exports (E&F)", svn("zz_ef_trade_month"), None),
+    (Z, P, "торговля: экспорт сверх импорта (E&F)", "trade: exports over imports (E&F)", svp("zz_ef_trade_week"), None),
+    (P, Z, "торговля: импорт сверх экспорта (E&F)", "trade: imports over exports (E&F)", svn("zz_ef_trade_week"), None),
 ]
 
 NOTES = {
-    "treasury": ("Статьи бюджета — точно, неделя × 4.33; изменение казны — за месяц.",
-                 "Budget lines are exact, week × 4.33; the treasury's change is over the month."),
+    "treasury": ("Статьи бюджета — точно, за неделю, как в бюджете игры; изменение казны — между недельными "
+                 "шагами модели (сразу после недельного расчёта бюджета).",
+                 "Budget lines are exact, a week, as in the game's budget; the treasury's change is between the "
+                 "model's weekly steps (right after the budget's weekly tick)."),
     "buildings": ("Денежные резервы всех зданий: кредитный лимит − база − доля ВВП (COUNTRY_MIN_CREDIT_*). Прочее — "
                   "закупки у заграницы, налоги с прибыли, разница оценки зарплат и дивидендов.",
                   "Cash reserves of all buildings: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*). Other: "
@@ -265,23 +280,23 @@ EXPRS = {}
 
 
 def wages_expr():
-    e = "Country.MakeScope.ScriptValue('zz_ef_gdp_month')"
+    e = "Country.MakeScope.ScriptValue('zz_ef_gdp_week')"
     for fn in STATE_PAY:
-        e = f"Subtract_CFixedPoint({e}, Abs_CFixedPoint(Multiply_CFixedPoint(GetTrendValue(Country.{fn}), {WEEKS})))"
+        e = f"Subtract_CFixedPoint({e}, Abs_CFixedPoint(GetTrendValue(Country.{fn})))"
     return f"Max_CFixedPoint({e}, {ZERO})"
 
 
 def expr(v):
-    """GUI expression (CFixedPoint, non-negative, a month) for a flow value."""
+    """GUI expression (CFixedPoint, non-negative, a week) for a flow value."""
     if v[0] == "expr":
         return wages_expr()
     if v[0] == "closing":
         return EXPRS["closing"]
     kind, name = v
     if kind == "gt":
-        return f"Abs_CFixedPoint(Multiply_CFixedPoint(GetTrendValue(Country.{name}), {WEEKS}))"
+        return f"Abs_CFixedPoint(GetTrendValue(Country.{name}))"
     if kind == "gv":
-        return f"Abs_CFixedPoint(Multiply_CFixedPoint(Country.{name}, {WEEKS}))"
+        return f"Abs_CFixedPoint(Country.{name})"
     s = f"Country.MakeScope.ScriptValue('{name}')"
     if kind in ("sv", "svp"):
         return f"Max_CFixedPoint({s}, {ZERO})"
@@ -354,7 +369,7 @@ def nested(lang):
     d = {}
     for acc in ACC_ORDER:
         flows = card_flows(acc)
-        head = TITLES[acc][k] + (" за месяц" if ru else " this month")
+        head = TITLES[acc][k] + (" за неделю" if ru else " this week")
         L = [f"#b {head}: {delta(DELTA[acc])}#!" if acc in DELTA else f"#b {head}#!"]
         resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA else None
         fixed_resid = "Country.MakeScope.ScriptValue('zz_ef_other_treasury_budget')" if acc == K else None
@@ -379,10 +394,10 @@ def nested(lang):
             if other == X and resid:
                 L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur} {other_lab}")
             if other == X and acc == K:
-                bin_, bout = ("Country.MakeScope.ScriptValue('zz_ef_total_income_month')",
-                              "Country.MakeScope.ScriptValue('zz_ef_total_expenses_month')")
+                bin_, bout = ("Country.MakeScope.ScriptValue('zz_ef_total_income_week')",
+                              "Country.MakeScope.ScriptValue('zz_ef_total_expenses_week')")
                 for o, dr, f in flows:
-                    if f[4][0] in ("gt", "gv"):
+                    if f[4][0] in ("gt", "gv") or f[4] == sv_("zz_ef_v_f_transfer"):
                         if dr == "in":
                             bin_ = f"Subtract_CFixedPoint({bin_}, {expr(f[4])})"
                         else:
@@ -395,14 +410,15 @@ def nested(lang):
         L += ["", NOTES[acc][k]]
         if acc == B:
             L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель пула {money('zz_ef_pool_target')} = "
-                      f"взносы за месяц × {sv('zz_ef_credit_months', '1')} мес. при ставке {sv('zz_ef_money_rate', '%1')}.")
+                      f"взносы за месяц × {sv('zz_ef_credit_months', '1')} мес. при ставке {sv('zz_ef_money_rate', '%1')}; "
+                      f"занимают и гасят 1.15% разрыва в неделю (~5% в месяц).")
                      if ru else
                      (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}; pool target {money('zz_ef_pool_target')} = "
                       f"a month's contributions × {sv('zz_ef_credit_months', '1')} months at a rate of "
-                      f"{sv('zz_ef_money_rate', '%1')}."))
+                      f"{sv('zz_ef_money_rate', '%1')}; they borrow and repay 1.15% of the gap a week (~5% a month)."))
         if acc == N:
-            L.append((f"Доход населения ≈ ВВП / 12 = {money('zz_ef_gdp_month')}.") if ru else
-                     (f"Pops' income ≈ GDP / 12 = {money('zz_ef_gdp_month')}."))
+            L.append((f"Доход населения ≈ ВВП / 52 = {money('zz_ef_gdp_week')}.") if ru else
+                     (f"Pops' income ≈ GDP / 52 = {money('zz_ef_gdp_week')}."))
         d[f"zz_ef_ms_tt_{acc}"] = "\\n".join(L)
     d["zz_ef_ms_tt_fx"] = fx_card(lang)
     return d

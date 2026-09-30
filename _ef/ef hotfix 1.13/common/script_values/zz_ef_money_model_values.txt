@@ -1,7 +1,9 @@
 #############################################
 # EF.39 / EF.44 / EF.48 (2026-09-30) -- the money model as a flow matrix
-# between accounts, all in the ENGINE'S money. COUNTRY scope. Per month;
-# rates are fractions. Monthly step: scripted_effects/zz_ef_money_model.txt;
+# between accounts, all in the ENGINE'S money. COUNTRY scope. Per WEEK, as
+# the engine's budget counts (the user, 2026-09-30: a monthly step against
+# weekly budget lines did not add up); rates are fractions (a year). Steps:
+# scripted_effects/zz_ef_money_model.txt;
 # the tooltip: tools/regen_ef_money_supply_loc.py. Decisions: План проекта.md,
 # EF.48.
 #
@@ -23,8 +25,9 @@
 # WHAT THE MODEL MOVES
 #   Bank credit is borrowed from the central bank at the key rate: the pool is
 #   steered to (monthly contributions) x credit months (12 at 2%, 3 at 12%);
-#   below it banks borrow 5% of the gap (debt var:zz_ef_bank_cb_debt), above
-#   it they repay 5% (at most the debt); interest at the key rate pool -> CB
+#   below it banks borrow 1.15% of the gap a week (~5% a month; debt
+#   var:zz_ef_bank_cb_debt), above it they repay as much (at most the debt);
+#   interest at the key rate pool -> CB
 #   -> treasury (the CB's profit). CB credit creates money, repayment removes
 #   it. Everything else is the engine's own and only shown.
 # (Steps 2-3 of the afternoon -- pops' savings from flows, deposits and their
@@ -33,9 +36,10 @@
 
 # ---- parameters -----------------------------------------------------------
 
-# Share of the gap to the pool target borrowed / repaid per month.
-zz_ef_borrow_speed = 0.05
-zz_ef_repay_speed = 0.05
+# Share of the gap to the pool target borrowed / repaid per week (~5% a
+# month).
+zz_ef_borrow_speed = 0.0115
+zz_ef_repay_speed = 0.0115
 zz_ef_weeks_per_month = 4.333
 
 # ---- rate -----------------------------------------------------------------
@@ -98,6 +102,14 @@ zz_ef_m1 = {
 	value = zz_ef_treasury
 	add = zz_ef_building_cash
 }
+zz_ef_m2 = {
+	value = money_supply
+}
+# What the weekly probe watches for the budget tick: treasury net of debt.
+zz_ef_budget_position = {
+	value = gold_reserves
+	subtract = principal
+}
 
 # ---- bank credit from the central bank ------------------------------------
 
@@ -129,14 +141,14 @@ zz_ef_pool_target = {
 	value = zz_ef_pool_contrib_month
 	multiply = zz_ef_credit_months
 }
-# Borrowed from the central bank this month (pool under its target).
+# Borrowed from the central bank this week (pool under its target).
 zz_ef_cb_borrow = {
 	value = zz_ef_pool_target
 	subtract = investment_pool
 	multiply = zz_ef_borrow_speed
 	min = 0
 }
-# Repaid this month (pool over its target), not more than the debt.
+# Repaid this week (pool over its target), not more than the debt.
 zz_ef_cb_repay = {
 	value = investment_pool
 	subtract = zz_ef_pool_target
@@ -144,12 +156,12 @@ zz_ef_cb_repay = {
 	min = 0
 	max = zz_ef_bank_cb_debt
 }
-# Interest on the banks' debt at the key rate, a month (not more than the
+# Interest on the banks' debt at the key rate, a week (not more than the
 # pool); the CB remits it to the treasury.
 zz_ef_cb_interest = {
 	value = zz_ef_bank_cb_debt
 	multiply = zz_ef_money_rate
-	divide = 12
+	divide = 52
 	max = {
 		value = investment_pool
 		min = 0
@@ -158,7 +170,7 @@ zz_ef_cb_interest = {
 }
 
 # Private banks' foreign bonds (E&F ai_privat_bank_bond_1..25: bought straight
-# from the pool, add_investment_pool = -bond value). The monthly change of
+# from the pool, add_investment_pool = -bond value). The weekly change of
 # the sum is the bonds bought (+) or run off (-).
 zz_ef_bank_bonds = {
 	value = 0
@@ -216,9 +228,21 @@ zz_ef_debt_cb_gold = {
 
 # ---- engine and E&F flows, for the ledger ---------------------------------
 
-zz_ef_gdp_month = {
+zz_ef_gdp_week = {
 	value = gdp
-	divide = 12
+	divide = 52
+}
+# The budget's balance of the week (all income - all expenses).
+zz_ef_budget_week = {
+	value = total_income
+	subtract = total_expenses
+}
+# The pool's transfer to the treasury for private construction, this week:
+# gross income - net income (the pool tooltip's "new construction").
+zz_ef_pool_transfer_week = {
+	value = investment_pool_gross_income
+	subtract = investment_pool_net_income
+	min = 0
 }
 zz_ef_minting_month = {
 	value = modifier:country_minting_add
@@ -229,13 +253,11 @@ zz_ef_minting_month = {
 	multiply = zz_ef_weeks_per_month
 	min = 0
 }
-zz_ef_total_income_month = {
+zz_ef_total_income_week = {
 	value = total_income
-	multiply = zz_ef_weeks_per_month
 }
-zz_ef_total_expenses_month = {
+zz_ef_total_expenses_week = {
 	value = total_expenses
-	multiply = zz_ef_weeks_per_month
 }
 zz_ef_market_gdp_share = {
 	value = 1
@@ -292,9 +314,10 @@ zz_ef_cb_revaluation_month = {
 		abs = yes
 	}
 }
-# Trade balance of the month, E&F's trade_balance_in_gold_delta (gold) /
-# money_value_in_gold (gold per unit). Positive: exports over imports.
-zz_ef_trade_month = {
+# Trade balance of the week, E&F's trade_balance_in_gold_delta
+# (export_value_in_gold_week - import_value_in_gold_week) / money_value_in_gold
+# (gold per unit). Positive: exports over imports.
+zz_ef_trade_week = {
 	value = 0
 	if = {
 		limit = { money_value_in_gold > 0 }
@@ -302,16 +325,12 @@ zz_ef_trade_month = {
 		divide = money_value_in_gold
 	}
 }
-# The treasury card's "other": its change over the month minus the whole
-# budget (all income - all expenses, week x 4.333) minus the CB's profit the
+# The treasury card's "other": its change over the week minus the budget of
+# the week as read at the step (var:zz_ef_f_budget) minus the CB's profit the
 # model pays in.
 zz_ef_other_treasury_budget = {
 	value = zz_ef_v_d_treasury
-	subtract = {
-		value = total_income
-		subtract = total_expenses
-		multiply = zz_ef_weeks_per_month
-	}
+	subtract = zz_ef_v_f_budget
 	subtract = zz_ef_v_f_cb_interest
 }
 
@@ -335,6 +354,14 @@ zz_ef_raw_gdp = { value = gdp }
 zz_ef_v_f_contrib = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_contrib } value = var:zz_ef_f_contrib }
+}
+zz_ef_v_f_budget = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_budget } value = var:zz_ef_f_budget }
+}
+zz_ef_v_f_transfer = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_transfer } value = var:zz_ef_f_transfer }
 }
 zz_ef_v_f_cb_borrow = {
 	value = 0
@@ -371,6 +398,129 @@ zz_ef_v_d_m2 = {
 zz_ef_v_d_bonds = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_d_bonds } value = var:zz_ef_d_bonds }
+}
+# M0/M1/M2: the week's change, and the change in % (a fraction) against
+# the value 4 weeks ago (month), 49-52 weeks ago (year) and 248-260 weeks ago
+# (5 years; the history rings in zz_ef_money_model_step). 0 until filled.
+zz_ef_v_d_m0 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_m0 } value = var:zz_ef_d_m0 }
+}
+zz_ef_m0_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m0_w4
+			var:zz_ef_m0_w4 > 0
+		}
+		value = zz_ef_m0
+		subtract = var:zz_ef_m0_w4
+		divide = var:zz_ef_m0_w4
+	}
+}
+zz_ef_m0_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m0_q13
+			var:zz_ef_m0_q13 > 0
+		}
+		value = zz_ef_m0
+		subtract = var:zz_ef_m0_q13
+		divide = var:zz_ef_m0_q13
+	}
+}
+zz_ef_m0_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m0_r20
+			var:zz_ef_m0_r20 > 0
+		}
+		value = zz_ef_m0
+		subtract = var:zz_ef_m0_r20
+		divide = var:zz_ef_m0_r20
+	}
+}
+zz_ef_v_d_m1 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_m1 } value = var:zz_ef_d_m1 }
+}
+zz_ef_m1_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m1_w4
+			var:zz_ef_m1_w4 > 0
+		}
+		value = zz_ef_m1
+		subtract = var:zz_ef_m1_w4
+		divide = var:zz_ef_m1_w4
+	}
+}
+zz_ef_m1_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m1_q13
+			var:zz_ef_m1_q13 > 0
+		}
+		value = zz_ef_m1
+		subtract = var:zz_ef_m1_q13
+		divide = var:zz_ef_m1_q13
+	}
+}
+zz_ef_m1_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m1_r20
+			var:zz_ef_m1_r20 > 0
+		}
+		value = zz_ef_m1
+		subtract = var:zz_ef_m1_r20
+		divide = var:zz_ef_m1_r20
+	}
+}
+zz_ef_v_d_m2 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_m2 } value = var:zz_ef_d_m2 }
+}
+zz_ef_m2_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m2_w4
+			var:zz_ef_m2_w4 > 0
+		}
+		value = zz_ef_m2
+		subtract = var:zz_ef_m2_w4
+		divide = var:zz_ef_m2_w4
+	}
+}
+zz_ef_m2_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m2_q13
+			var:zz_ef_m2_q13 > 0
+		}
+		value = zz_ef_m2
+		subtract = var:zz_ef_m2_q13
+		divide = var:zz_ef_m2_q13
+	}
+}
+zz_ef_m2_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m2_r20
+			var:zz_ef_m2_r20 > 0
+		}
+		value = zz_ef_m2
+		subtract = var:zz_ef_m2_r20
+		divide = var:zz_ef_m2_r20
+	}
 }
 # Accounts without a stock (pops, CB in money, abroad): change 0.
 zz_ef_zero = 0
