@@ -80,6 +80,8 @@ zz_ef_money_model_step = {
 	# Gold parity re-anchor, once per change of what the money supply counts.
 	# The money supply is the engine's money now (treasury + businesses' cash +
 	# pool; since 2026-09-30 evening, version 2 -- E&F's goods counts are out),
+	# Version 3 (1.10 night, EF.48 item 6): E&F's trade balance left the
+	# national capacity (the CB's metal moves with the flows abroad instead).
 	# a fraction of what E&F counted, so every currency is worth several times
 	# its gold parity and the metal cover reads 200%+ (Britain 1848: 15.3 vs
 	# 7.32). E&F sets the parity itself from the value when a standard is
@@ -90,8 +92,8 @@ zz_ef_money_model_step = {
 		set_variable = { name = zz_ef_parity_version value = 0 }
 	}
 	if = {
-		limit = { var:zz_ef_parity_version < 2 }
-		set_variable = { name = zz_ef_parity_version value = 2 }
+		limit = { var:zz_ef_parity_version < 3 }
+		set_variable = { name = zz_ef_parity_version value = 3 }
 		if = {
 			limit = {
 				has_modifier = has_central_bank
@@ -274,6 +276,7 @@ zz_ef_money_model_step = {
 	# Week-on-week change of each account (0 in the first week).
 	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
 	zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
+	zz_ef_money_ledger_delta = { ACC = tc VALUE = zz_ef_tc_cash }
 	zz_ef_money_ledger_delta = { ACC = treasury VALUE = zz_ef_treasury }
 	zz_ef_money_ledger_delta = { ACC = bonds VALUE = zz_ef_bank_bonds }
 	zz_ef_money_ledger_delta = { ACC = m0 VALUE = zz_ef_m0 }
@@ -332,8 +335,11 @@ zz_ef_money_hook_receive = {
 		remove_variable = zz_ef_hook_pending
 		remove_list_global_variable = { name = zz_ef_hook_countries target = this }
 		set_variable = { name = zz_ef_f_ext value = scope:ext }
+		set_variable = { name = zz_ef_f_pool_other value = zz_ef_pool_other_week }
+		set_variable = { name = zz_ef_f_abr value = scope:abr }
 		set_variable = { name = zz_ef_f_leak value = zz_ef_leak_week }
 		zz_ef_pop_savings_step = yes
+		zz_ef_cb_hume_step = yes
 		if = {
 			limit = {
 				OR = {
@@ -341,7 +347,7 @@ zz_ef_money_hook_receive = {
 					gdp > 20000000
 				}
 			}
-			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]"
+			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]"
 		}
 	}
 }
@@ -360,7 +366,7 @@ zz_ef_money_window_roll = {
 # merged -- pops' income left over, which vanilla turns into wealth, and
 # payments abroad inside the market). var:zz_ef_pop_savings (S) holds all,
 # var:zz_ef_pop_deposits (D) the part in banks; cash at hand = S - D.
-# Deposits are real engine money again: add_investment_pool. D moves 2% of
+# Deposits are real engine money again: add_investment_pool. D moves 5% of
 # the gap a week towards S x the deposit share (by the key rate); interest at
 # the deposit rate is paid from the pool into D. The operations fall into the
 # next week's window and are taken out of that week's leak.
@@ -391,6 +397,46 @@ zz_ef_pop_savings_step = {
 	}
 	change_variable = { name = zz_ef_pop_deposits add = var:zz_ef_f_dep_int }
 	change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_dep_int }
+}
+
+# EF.48 item 6 (the user, 1.10): the CB and abroad are one account -- the CB
+# settles every payment abroad. Its reserves: metal (E&F's var:gold_state_1 /
+# silver_state_1 on the CB's state, re-read by E&F's storing_gold_1 every
+# month, so a change there stays) and E&F's currency-good stock. The week's
+# net flow abroad (zz_ef_ext_net_week: budget lines with other countries,
+# trade centres' cash, the pool's unexplained change, foreign bonds) moves
+# the metal at the currency's value (Hume's price-specie flow): an outflow
+# pays out metal, an inflow brings it in. Metal standards with a central
+# bank only (fiat: nothing moves, the rate does). Metal and money fall by
+# the same fraction, so an outflow alone does not move the currency's value.
+zz_ef_cb_hume_step = {
+	set_variable = { name = zz_ef_f_ext_net value = zz_ef_ext_net_week }
+	set_variable = { name = zz_ef_f_hume value = 0 }
+	if = {
+		limit = { zz_ef_hume_on > 0 }
+		set_variable = { name = zz_ef_f_hume value = zz_ef_hume_metal_week }
+		every_scope_state = {
+			limit = {
+				has_modifier = central_bank_historic_place
+				is_capital = yes
+			}
+			if = {
+				limit = { owner = { has_law = law_type:law_silver_standard } }
+				if = {
+					limit = { NOT = { has_variable = silver_state_1 } }
+					set_variable = { name = silver_state_1 value = 0 }
+				}
+				change_variable = { name = silver_state_1 add = owner.var:zz_ef_f_hume }
+			}
+			else = {
+				if = {
+					limit = { NOT = { has_variable = gold_state_1 } }
+					set_variable = { name = gold_state_1 value = 0 }
+				}
+				change_variable = { name = gold_state_1 add = owner.var:zz_ef_f_hume }
+			}
+		}
+	}
 }
 
 # ---- the monthly step -------------------------------------------------------

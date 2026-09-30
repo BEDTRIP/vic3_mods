@@ -111,6 +111,18 @@ zz_ef_budget_position = {
 	subtract = principal
 }
 
+# Cash of the country's trade centres (part of the businesses' cash). EF.48
+# item 1 (1.10): through them the country pays for imports -- their cash
+# fell 34M -> 15M in half a year in the sandbox run (Britain 1836). Its
+# change is a flow abroad, not pops' savings.
+zz_ef_tc_cash = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_trade_center }
+		add = cash_reserves_available
+	}
+}
+
 # ---- bank credit from the central bank ------------------------------------
 
 zz_ef_bank_cb_debt = {
@@ -395,6 +407,14 @@ zz_ef_v_d_m2 = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_d_m2 } value = var:zz_ef_d_m2 }
 }
+zz_ef_v_d_tc = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_tc } value = var:zz_ef_d_tc }
+}
+zz_ef_v_f_pool_other = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_pool_other } value = var:zz_ef_f_pool_other }
+}
 zz_ef_v_d_bonds = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_d_bonds } value = var:zz_ef_d_bonds }
@@ -546,9 +566,31 @@ zz_ef_hook_ok = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_ext } value = 1 }
 }
+# EF.48 item 2 (1.10): the pool's change nobody explains -- the change minus
+# the contributions, minus the transfer to the treasury, the CB's credit and
+# interest, the deposits and the foreign bonds. About 0 in a normal week; in
+# the sandbox run lump drops of 0.8-1.7M a week (Britain, Nov 1836 - Feb
+# 1837), not E&F (no bonds, no bank currency purchases): the country's
+# companies bought 44 levels abroad in the same half-year (saves 1836.7.1 /
+# 1837.1.1) -- foreign investment from the pool. Shown as a flow abroad and
+# kept out of the pops' savings. (Decided at night, 1.10 -- check.)
+zz_ef_pool_other_week = {
+	value = zz_ef_v_d_pool
+	subtract = zz_ef_v_f_contrib
+	add = zz_ef_v_f_transfer
+	subtract = zz_ef_v_f_cb_borrow
+	add = zz_ef_v_f_cb_repay
+	add = zz_ef_v_f_cb_interest
+	subtract = zz_ef_v_w_dep_in
+	add = zz_ef_v_w_dep_out
+	add = zz_ef_v_w_dep_int
+	add = zz_ef_v_d_bonds
+}
 # Unexplained change of M2 this week: the change minus the budget's lines
 # outside the accounts, minus the CB's net credit, plus the foreign bonds the
-# private banks bought (they left the pool for abroad).
+# private banks bought (they left the pool for abroad), minus the pool's own
+# unexplained change and the trade centres' cash (both abroad, items 1-2).
+# What is left is the treasury and the businesses' cash only.
 zz_ef_leak_week = {
 	value = zz_ef_v_d_m2
 	subtract = zz_ef_v_f_ext
@@ -558,11 +600,14 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_w_dep_in
 	add = zz_ef_v_w_dep_out
 	add = zz_ef_v_w_dep_int
+	subtract = zz_ef_v_f_pool_other
+	subtract = zz_ef_v_d_tc
 }
 
 # ---- pops' savings and deposits (the receiver, zz_ef_pop_savings_step) --------
 
-zz_ef_deposit_speed = 0.02
+# 5% of the gap a week (the user, 1.10; was 2%).
+zz_ef_deposit_speed = 0.05
 # Share of savings pops keep in banks: 30% at a 4% key rate, +5 pp per pp of
 # rate, 10..70%.
 zz_ef_deposit_share = {
@@ -658,5 +703,117 @@ zz_ef_v_w_dep_int = {
 	if = { limit = { has_variable = zz_ef_w_dep_int } value = var:zz_ef_w_dep_int }
 }
 
+# ---- the CB and abroad, one account (EF.48 item 6) ------------------------
+
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's national_capacity
+# (script_values/00_economic_scripted_value.txt): without
+# var:trade_balance_in_gold_fixe. E&F added its cumulative trade balance in
+# gold to the reserves; now the flows abroad move the CB's metal itself
+# (zz_ef_cb_hume_step), so counting both would count trade twice.
+REPLACE_OR_CREATE:national_capacity = {
+	value = 1
+	if = {
+		limit = {
+			or = {
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+				has_law = law_type:law_gold_standard
+			}
+		}
+		add = central_bank_reserves
+		add = gold_loaned_to_central_bank_in_national_metal
+	}
+	min = 0.01
+}
+
+# yes when the metal moves with the flows abroad: a central bank on a metal
+# standard (gold, silver, bimetallism; not fiat, not gold exchange).
+zz_ef_hume_on = {
+	value = 0
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		value = 1
+	}
+}
+# The metal the CB pays out from (silver standard: silver; else gold, for
+# bimetallism in gold terms).
+zz_ef_cb_metal = {
+	value = gold_state_native_for_stockpile
+	if = {
+		limit = { has_law = law_type:law_silver_standard }
+		value = silver_state_native_for_stockpile
+	}
+}
+# The week's net flow abroad in the engine's money (+ in, - out): the
+# budget's lines with other countries (the bridge's scope:abr), the trade
+# centres' cash, the pool's unexplained change, foreign bonds bought.
+zz_ef_ext_net_week = {
+	value = zz_ef_v_f_abr
+	add = zz_ef_v_d_tc
+	add = zz_ef_v_f_pool_other
+	subtract = zz_ef_v_d_bonds
+}
+# Metal moved by it: the flow x the currency's value (metal per unit of
+# money, E&F money_value_0), never more than the CB holds.
+zz_ef_hume_metal_week = {
+	value = zz_ef_ext_net_week
+	multiply = money_value_0
+	min = {
+		value = zz_ef_cb_metal
+		multiply = -1
+	}
+}
+# Metal cover: the reserves against the money at parity (1 = 100%).
+zz_ef_cb_cover = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		value = national_capacity
+		divide = money_supply
+		divide = var:money_value_target_1
+	}
+}
+zz_ef_v_f_abr = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_abr } value = var:zz_ef_f_abr }
+}
+zz_ef_v_f_ext_net = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_ext_net } value = var:zz_ef_f_ext_net }
+}
+zz_ef_v_f_hume = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_hume } value = var:zz_ef_f_hume }
+}
+
 # Accounts without a stock (pops, CB in money, abroad): change 0.
 zz_ef_zero = 0
+
+# ---- EF.48 item 7: the top sums in gold (E&F money_value_in_gold, gold per
+# unit of money; 0 for a subject or without a standard) ----------------------
+zz_ef_m0_gold = {
+	value = zz_ef_m0
+	multiply = money_value_in_gold
+}
+zz_ef_m1_gold = {
+	value = zz_ef_m1
+	multiply = money_value_in_gold
+}
+zz_ef_m2_gold = {
+	value = zz_ef_m2
+	multiply = money_value_in_gold
+}
+zz_ef_savings_gold = {
+	value = zz_ef_pop_savings
+	multiply = money_value_in_gold
+}
