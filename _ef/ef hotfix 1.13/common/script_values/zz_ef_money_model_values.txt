@@ -289,7 +289,8 @@ zz_ef_savings_over_cap = {
 #   (gold), shown apart.
 # - building_saving = vanilla `credit`, the credit LIMIT = buildings' cash
 #   reserves + COUNTRY_MIN_CREDIT_BASE + COUNTRY_MIN_CREDIT_SCALED x GDP
-#   (defines; MoG in this playset sets 10000 / 0.01, vanilla 100000 / 0.5).
+#   (defines; Grey's Soft Econ Adjustments, zzz_MoG_SEA_def.txt, sets 10000 /
+#   0.01 in this playset, vanilla 100000 / 0.5).
 #   The cash part is read back with define: (zz_ef_building_cash).
 # The treasury (gold_reserves, when positive) was not counted at all; it is
 # cash held by the state -> M0.
