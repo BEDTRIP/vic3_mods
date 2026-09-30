@@ -8,6 +8,9 @@ model writes one line a week per big economy into debug.log (EFW = the step,
 EFR = the GUI bridge's receiver, scripted_effects/zz_ef_money_model.txt);
 they are extracted into <OutDir>/eflog.txt.
 
+Progress is checked by the monthly autosaves (debug.log is buffered until
+the game closes), so autosave must be on (monthly).
+
 The save must be played as a country: in observer mode the game does not run
 GUI commands, so the bridge (and the savings) stay empty.
 
@@ -77,7 +80,9 @@ function Shot($p, $name) {
     Log "screenshot $f"
 }
 
-function Count-Weeks { $d = Join-Path $Logs "debug.log"; if (Test-Path $d) { @(Select-String -Path $d -Pattern "EFW\|" -SimpleMatch).Count } else { 0 } }
+# debug.log is buffered while the game runs, so progress is read from the
+# save games written since a moment (monthly autosaves).
+function Count-Saves($since) { @(Get-ChildItem (Join-Path $Docs "save games") -Filter *.v3 | Where-Object { $_.LastWriteTime -gt $since }).Count }
 
 if (Get-Game) { throw "Victoria 3 is already running - close it first." }
 
@@ -97,17 +102,17 @@ Start-Sleep $LoadWaitSec
 $p = Get-Game
 Shot $p "01_loaded.png"
 
-# speed 5, unpause; verify by the weekly log lines, toggle pause once more if nothing moves
+# speed 5, unpause; verify by a new autosave, toggle pause once more if none
+$started = Get-Date
 Focus-Game $p
 Send-Key 0x35 0x06
 Send-Key 0x20 0x39
 $ok = $false
 for ($try = 0; $try -lt 2 -and -not $ok; $try++) {
-    $n0 = Count-Weeks
-    Start-Sleep 45
-    $n1 = Count-Weeks
-    Log "weekly lines: $n0 -> $n1"
-    if ($n1 -gt $n0) { $ok = $true } else { Focus-Game $p; Send-Key 0x20 0x39 }
+    $since = Get-Date
+    for ($i = 0; $i -lt 18 -and -not $ok; $i++) { Start-Sleep 5; if ((Count-Saves $since) -gt 0) { $ok = $true } }
+    Log ("advancing: " + $ok)
+    if (-not $ok) { Focus-Game $p; Send-Key 0x20 0x39 }
 }
 if (-not $ok) { Shot $p "02_not_running.png"; Log "the game does not advance - stopping"; }
 else {
@@ -116,7 +121,7 @@ else {
     while ((Get-Date) -lt $end) {
         Start-Sleep 60
         if (-not (Get-Game)) { Log "the game exited"; break }
-        Log ("weekly lines: " + (Count-Weeks))
+        Log ("saves written since start: " + (Count-Saves $started))
     }
     $p = Get-Game
     if ($p) { Focus-Game $p; Send-Key 0x20 0x39; Start-Sleep 3; Shot $p "03_end.png" }
