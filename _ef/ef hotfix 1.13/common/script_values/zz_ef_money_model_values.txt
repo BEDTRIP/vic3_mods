@@ -522,5 +522,31 @@ zz_ef_m2_pct_5y = {
 		divide = var:zz_ef_m2_r20
 	}
 }
+# ---- the GUI bridge: the leak ----------------------------------------------
+
+zz_ef_v_f_ext = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_ext } value = var:zz_ef_f_ext }
+}
+zz_ef_v_f_leak = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_leak } value = var:zz_ef_f_leak }
+}
+# 1 when this week's bridge data arrived, else 0.
+zz_ef_hook_ok = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_ext } value = 1 }
+}
+# Unexplained change of M2 this week: the change minus the budget's lines
+# outside the accounts, minus the CB's net credit, plus the foreign bonds the
+# private banks bought (they left the pool for abroad).
+zz_ef_leak_week = {
+	value = zz_ef_v_d_m2
+	subtract = zz_ef_v_f_ext
+	subtract = zz_ef_v_f_cb_borrow
+	add = zz_ef_v_f_cb_repay
+	add = zz_ef_v_d_bonds
+}
+
 # Accounts without a stock (pops, CB in money, abroad): change 0.
 zz_ef_zero = 0

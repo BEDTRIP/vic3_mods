@@ -279,6 +279,38 @@ zz_ef_money_model_step = {
 	zz_ef_money_ledger_delta = { ACC = m0 VALUE = zz_ef_m0 }
 	zz_ef_money_ledger_delta = { ACC = m1 VALUE = zz_ef_m1 }
 	zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
+
+	# The GUI bridge (gui/zz_ef_money_hook.gui): the budget's lines outside
+	# the accounts (minting, additional income and expenses, diplomacy,
+	# treaties, power bloc, supply network fees, tolls, piracy) are GUI-only;
+	# the hook reads them for every country in the list and hands them back
+	# through scripted_guis/zz_ef_money_hook.txt, which computes the leak.
+	# Last week's values are dropped, so a week without the GUI reads 0.
+	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
+	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
+	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
+	if = {
+		limit = {
+			NOT = { is_target_in_global_variable_list = { name = zz_ef_hook_countries target = this } }
+		}
+		add_to_global_variable_list = { name = zz_ef_hook_countries target = this days = 6 }
+	}
+}
+
+# Called by the GUI bridge with scope:ext = the week's budget lines outside
+# the accounts (settled, GetTrendValue). Once per week: the pending var is
+# consumed (on_start may fire twice). The leak = what left the engine's
+# money unexplained: the change of M2 minus the outside lines, the CB's
+# credit and the private banks' foreign bonds. Negative = money went to pops
+# (their income left over, wealth) or abroad inside the market.
+zz_ef_money_hook_receive = {
+	if = {
+		limit = { has_variable = zz_ef_hook_pending }
+		remove_variable = zz_ef_hook_pending
+		remove_list_global_variable = { name = zz_ef_hook_countries target = this }
+		set_variable = { name = zz_ef_f_ext value = scope:ext }
+		set_variable = { name = zz_ef_f_leak value = zz_ef_leak_week }
+	}
 }
 
 # ---- the monthly step -------------------------------------------------------
