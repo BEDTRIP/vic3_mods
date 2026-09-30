@@ -4,9 +4,11 @@
 # accounts (GUI-only data) to script (scripted_guis/zz_ef_money_hook.txt).
 # CMF's pattern as is (_cmf/gui/com_hidden_trigger.gui, character names):
 # a hidden but "visible" widget of real size, an item per list entry whose
-# state fires on_finish when trigger_when turns true. (BPM's _show/on_start
-# and trigger_on_create/on_start never fired here, 2026-09-30.) The receiver
-# consumes var:zz_ef_hook_pending, so repeated calls do nothing.
+# state fires on_finish when trigger_when turns true -- CMF's own trigger,
+# [Scope.IsSet] (the item exists). BPM's _show/on_start, trigger_on_create/
+# on_start and trigger_when on the country's var never fired here
+# (2026-09-30/10-01). The receiver consumes var:zz_ef_hook_pending and takes
+# the country off the list, so repeated calls do nothing.
 widget = {
 	name = zz_ef_money_hook
 	datacontext = "[GetMetaPlayer.GetPlayedOrObservedCountry]"
@@ -22,8 +24,14 @@ widget = {
 		item = {
 			widget = {
 				datacontext = "[Scope.GetCountry]"
+				# Probe without a value: tells a failing launch from a failing
+				# value expression (global_var:zz_ef_hook_probe_calls).
 				state = {
-					trigger_when = "[Country.MakeScope.Var('zz_ef_hook_pending').IsSet]"
+					trigger_when = "[Scope.IsSet]"
+					on_finish = "[GetScriptedGui('zz_ef_money_hook_probe_sg').Execute( GuiScope.SetRoot( Country.MakeScope ).End )]"
+				}
+				state = {
+					trigger_when = "[Scope.IsSet]"
 					on_finish = "[GetScriptedGui('zz_ef_money_hook_sg').Execute( GuiScope.SetRoot( Country.MakeScope ).AddScope( 'ext', MakeScopeValue( Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Subtract_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetMintingTrend)), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetDiplomaticPactsIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetTreatiesIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPowerBlocIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(Country.GetMarketFeesIncome))), Negate_CFixedPoint(Abs_CFixedPoint(Country.PredictTolls))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPiracyIncomeTrend)))), Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalIncomeTrend)))), Abs_CFixedPoint(GetTrendValue(Country.GetDiplomaticPactsExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetTreatiesExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetPowerBlocExpenseTrend))), Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalExpensesTrend))) ) ).End )]"
 				}
 			}

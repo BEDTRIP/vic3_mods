@@ -537,6 +537,10 @@ zz_ef_hook_calls = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_hook_calls } value = global_var:zz_ef_hook_calls }
 }
+zz_ef_hook_probe_calls = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_hook_probe_calls } value = global_var:zz_ef_hook_probe_calls }
+}
 # 1 when this week's bridge data arrived, else 0.
 zz_ef_hook_ok = {
 	value = 0

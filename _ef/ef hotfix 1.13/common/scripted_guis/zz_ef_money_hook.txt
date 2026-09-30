@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.48 (2026-09-30) -- the GUI bridge's receiver. The hook
 # (gui/zz_ef_money_hook.gui) executes it once per queued country with
 # scope:ext = the budget's lines outside the accounts, read by GUI data
@@ -13,5 +13,17 @@ zz_ef_money_hook_sg = {
 	}
 	effect = {
 		zz_ef_money_hook_receive = yes
+	}
+}
+
+# Probe: counts launches of the hook's items, no value passed.
+zz_ef_money_hook_probe_sg = {
+	scope = country
+	effect = {
+		if = {
+			limit = { NOT = { has_global_variable = zz_ef_hook_probe_calls } }
+			set_global_variable = { name = zz_ef_hook_probe_calls value = 0 }
+		}
+		change_global_variable = { name = zz_ef_hook_probe_calls add = 1 }
 	}
 }
