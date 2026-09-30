@@ -760,3 +760,29 @@ zz_ef_raw_import_gold = {
 	}
 }
 zz_ef_raw_gdp = { value = gdp }
+
+# EF.48: trade balance of the month in the national currency, from E&F's
+# trade_balance_in_gold_delta (gold; E&F's tooltip shows it as "per month"; its
+# var:..._fix copies are set only under a debt condition and read 0) /
+# money_value_in_gold (gold per unit of currency). Positive: exports over
+# imports.
+zz_ef_trade_month = {
+	value = 0
+	if = {
+		limit = { money_value_in_gold > 0 }
+		value = trade_balance_in_gold_delta
+		divide = money_value_in_gold
+	}
+}
+
+# EF.48: the treasury card's "other": its change over the month minus the whole
+# budget (all income - all expenses, week x 4.333); every budget line is listed
+# in the card, so what is left is timing and loans.
+zz_ef_other_treasury_budget = {
+	value = zz_ef_v_d_treasury
+	subtract = {
+		value = total_income
+		subtract = total_expenses
+		multiply = zz_ef_weeks_per_month
+	}
+}
