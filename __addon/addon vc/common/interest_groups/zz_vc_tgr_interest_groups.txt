@@ -2519,7 +2519,7 @@ REPLACE_OR_CREATE:ig_industrialists = {
 				limit = {
 					is_pop_type = capitalists
 				}
-				value = 200			#250
+				value = 300			#250
 				add = this.standard_of_living
 			}
 		}		
@@ -3415,7 +3415,7 @@ REPLACE_OR_CREATE:ig_intelligentsia = {
 				limit = {
 					is_pop_type = academics
 				}
-				value = 250
+				value = 500
 			}
 		}
 		
@@ -3427,11 +3427,9 @@ REPLACE_OR_CREATE:ig_intelligentsia = {
 				limit = {
 					is_pop_type = bureaucrats
 				}
-				value = 250		#150
+				value = 500		#150
 			}
 		}
-		
-		#######################
 
 		add = {
 			desc = "POP_CLERKS"
@@ -3439,9 +3437,11 @@ REPLACE_OR_CREATE:ig_intelligentsia = {
 				limit = {
 					is_pop_type = clerks
 				}
-				value = 50
+				value = 100		#50
 			}
 		}
+		
+		#######################
 
 		add = {
 			desc = "POP_ARISTOCRATS"
@@ -3503,6 +3503,8 @@ REPLACE_OR_CREATE:ig_intelligentsia = {
 						pop_employment_building_group = bg_government
 						pop_employment_building_group = bg_private_infrastructure
 						pop_employment_building_group = bg_financial_districts
+						pop_employment_building_group = bg_company_headquarter
+						pop_employment_building_group = bg_company_regional_headquarter
 					}
 				}
 				value = 100
@@ -3563,25 +3565,31 @@ REPLACE_OR_CREATE:ig_intelligentsia = {
 			}
 		}
 		
-		##### TGR ADDITION #####
-		if = {
-			limit = {
-				owner = {
-					has_law = law_type:law_appointed_bureaucrats
+		##### TGR ADDITION #####				
+		multiply = {
+			desc = "APPOINTED_BUREAUCRATS_LAW"
+			if = {
+				limit = {
+					OR = {
+						is_pop_type = academics
+						#is_pop_type = aristocrats		#removed as being part of ereditary bureaucrats
+						is_pop_type = bureaucrats
+						is_pop_type = capitalists
+						is_pop_type = clergymen
+						is_pop_type = clerks
+						is_pop_type = engineers
+					}
 				}
-			}
-			multiply = {
-				desc = "APPOINTED_BUREAUCRATS_LAW"
 				if = {
 					limit = {
-						OR = {
-							is_pop_type = academics
-							is_pop_type = bureaucrats
-							is_pop_type = clerks
-							is_pop_type = engineers
+						owner = {
+							has_law_or_variant = law_type:law_appointed_bureaucrats
 						}
 					}
 					value = 2.0
+				}
+				else = {
+					value = 1.0
 				}
 			}
 		}
@@ -6734,7 +6742,7 @@ REPLACE_OR_CREATE:ig_trade_unions = {
 		
 		multiply = {
 			desc = "YES_SOCIALISM"
-			value = 1.5
+			value = 1.0
 
 			if = {
 				limit = {

@@ -121,12 +121,16 @@ REPLACE_OR_CREATE:popneed_heating = {
 REPLACE_OR_CREATE:popneed_household_items = {
 	default = furniture
 
+	obsession_demand_min = 0.75
+	obsession_demand_mult = 1.75
+	prestige_goods_demand_increase = 1.0
+
 
 
 	entry = {
 		goods = furniture
 
-		weight = 2
+		weight = 1
 		max_supply_share = 0.6	# TGR (0.75 vanilla)
 		min_supply_share = 0.3	# TGR (0.10 vanilla)
 	}
