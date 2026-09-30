@@ -1,0 +1,35 @@
+#############################################
+# EF.30 (2026-09-30) -- the central bank's target rate (a fraction: 0.05 = 5%).
+#
+# From the country's credit note (country_credit_note_fixe, 0..10, kept by
+# E&F's country_credit_rating): note 9+ -> 3%, every point lower -> +1 pp,
+# clamped to 2..12%. 1850 targets: AAA-AA ~3-4% (Britain, France), A-BBB
+# 5-7%, junk 9-12%. Plus the player's bias (var:zz_ef_rate_bias, +-2 pp,
+# moved by the "rate" buttons) -- the player pays to lean against the bank,
+# the bank drifts back half a point per half year only if the bias is gone.
+# A country without a note yet (no central bank) keeps its rate.
+#############################################
+
+zz_ef_cb_rate_target = {
+	value = 0.03
+	if = {
+		limit = { var:country_credit_note_fixe < 9 }
+		add = {
+			value = 9
+			subtract = var:country_credit_note_fixe
+			multiply = 0.01
+		}
+	}
+	if = {
+		limit = { has_variable = zz_ef_rate_bias }
+		add = var:zz_ef_rate_bias
+	}
+	min = 0.02
+	max = 0.12
+}
+
+# Treasury price of one button press: 1% of a year's GDP.
+zz_ef_cb_rate_button_cost = {
+	value = gdp
+	multiply = 0.01
+}

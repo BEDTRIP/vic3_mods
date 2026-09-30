@@ -1,0 +1,20 @@
+#############################################
+# EF.30 -- the player's central bank sets the rate too (E&F calls
+# base_rate_change for the AI only). Additive: our own on_action listed under
+# on_half_yearly_pulse_country (rules, section 1).
+#############################################
+
+on_half_yearly_pulse_country = {
+	on_actions = {
+		zz_ef_cb_rate_player
+	}
+}
+
+zz_ef_cb_rate_player = {
+	effect = {
+		if = {
+			limit = { is_player = yes }
+			base_rate_change = yes
+		}
+	}
+}

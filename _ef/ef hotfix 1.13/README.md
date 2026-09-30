@@ -8,7 +8,7 @@
   09.09.2026 — меню компаний переделано (EF.11), см. «The companies panel»
 версии: —
 позиция: —
-файлов: 113
+файлов: 117
 генератор: — (списан 02.09.2026, tools/_to_delete/regen_ef_currency_merge_retired_2026-09-02.py)
 зависит от: —
 -->
@@ -1152,6 +1152,8 @@ Names in all 11 `zz_ef_cm_goods_l_*.yml`.
 | EF.27 | `common/building_groups/zz_ef_central_bank_group.txt` | `bg_bank` (the central bank) urbanization 20 → 0 per level. 1847 observer run: Britain's central bank had 250 levels in the Home Counties — 5000 urbanization from one government building of 250 employees. Same reasoning as EF.17 (1) for the exchanges. |
 | — | `common/scripted_effects/zz_ef_capitalization_crash.txt` | `debug_log` + `debug_log_scopes` before `financial_crash`: the 1847 run crashed some country once and `error.log` could not say which. Look for `ZZEF crash` in `debug.log` (not `game.log`). |
 | — | `common/scripted_effects/zz_ef_capitalization_crash.txt` | 2026-09-25, 1850 run: no crash before 1838 — five countries "crashed" in 1836-37 because the year-ago marks start at the first month, before EF.28 cuts the issuance of low-literacy countries. The yearly change is now kept for every country (the E&F list showed 0.00% for countries without an exchange or under the 5M floor); the crash itself still needs an exchange and the floor. |
+| EF.26 | — (file removed 2026-09-30, replaced by EF.30) | E&F's AI rate controller `base_rate_change` gated its "raise the rate" branch on `var:base_rate_percentage > 0.7` (a fraction, so 70%, never true). The `0.07` fix opened the branch, but the yearly pool credit is itself a function of the rate, so outside 6-7% the rate confirmed its own trigger and crawled to 11.1% (9 of 45 big countries at the ceiling in 1850) or to 2%. |
+| EF.30 | `common/scripted_effects/zz_ef_central_bank_rate.txt`, `script_values/zz_ef_cb_rate_values.txt`, `on_actions/zz_ef_cb_rate_on_actions.txt`, `scripted_guis/zz_ef_cb_rate_buttons.txt` | The central bank sets the rate, one rule for AI and player: `base_rate_change` is replaced and moves the rate ≤ 0.5 pp per half year towards `zz_ef_cb_rate_target` = 3% (credit note ≥ 9) + 1 pp per note point below 9 + the player's bias, clamped 2-12%. The player is called from our own `on_half_yearly_pulse_country`. The ±0.5 pp buttons (same names, so the E&F GUI is untouched) now cost 1% of GDP in treasury and shift the bias (±2 pp max) so the bank does not walk the rate back. Not yet run in game. |
 | loc | `localization/*/replace/zz_ef_cm_goods_replace_l_*.yml` | `liquidity_currency` ("Local Currency") moved to `replace/`: E&F and V4 RUS define the key first and localization is first-come, so the name never showed. |
 
 ### Found by the 1836–1840 observer run with the local hotfix (2026-09-24)

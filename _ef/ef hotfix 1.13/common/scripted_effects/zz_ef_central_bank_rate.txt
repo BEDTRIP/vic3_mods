@@ -1,0 +1,78 @@
+#############################################
+# EF.30 + EF.26 (2026-09-30) -- the central bank sets the rate.
+#
+# WHAT E&F DOES (4.1.7)
+# base_rate_change (01_economic_scripted_effects.txt:135314) is the AI-only
+# half-yearly rate controller. It reads the private funds against limits and
+# metal cover, but the yearly pool credit is itself a function of the rate,
+# so outside 6-7% the rate confirms its own trigger and crawls to 11.1%
+# (or 2%). The EF.26 typo fix only opened the upward branch: 9 of the 45
+# biggest countries sat at the ceiling in 1850.
+#
+# WHAT THIS DOES
+# Replaces the whole effect (the EF.26 copy is gone). The bank moves the
+# rate towards zz_ef_cb_rate_target (script_values/zz_ef_cb_rate_values.txt,
+# from the credit rating) by at most 0.5 pp per half year. One rule for AI
+# and player. The player's on_action call is in
+# on_actions/zz_ef_cb_rate_on_actions.txt (E&F itself calls the effect for
+# the AI only).
+#
+# Kept from E&F: base_rate_percentage_old, the rise/down_base_rate labels
+# (they block the player's buttons for 6 months), the rate clamp.
+#
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE. Drop the file if E&F
+# rebuilds the rate itself.
+#############################################
+
+REPLACE_OR_CREATE:base_rate_change = {
+	if = {
+		limit = { has_variable = country_credit_note_fixe }
+
+		set_variable = {
+			name = base_rate_percentage_old
+			value = var:base_rate_percentage
+		}
+		set_variable = {
+			name = zz_ef_cb_rate_target_var
+			value = zz_ef_cb_rate_target
+		}
+
+		if = {
+			limit = {
+				var:base_rate_percentage < var:zz_ef_cb_rate_target_var
+			}
+			set_variable = {
+				name = base_rate_percentage
+				value = {
+					value = var:base_rate_percentage
+					add = 0.005
+					max = var:zz_ef_cb_rate_target_var
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				var:base_rate_percentage > var:zz_ef_cb_rate_target_var
+			}
+			set_variable = {
+				name = base_rate_percentage
+				value = {
+					value = var:base_rate_percentage
+					subtract = 0.005
+					min = var:zz_ef_cb_rate_target_var
+				}
+			}
+		}
+
+		if = {
+			limit = { var:base_rate_percentage_old > var:base_rate_percentage }
+			remove_modifier = down_base_rate
+			add_modifier = { name = down_base_rate months = 6 }
+		}
+		else_if = {
+			limit = { var:base_rate_percentage_old < var:base_rate_percentage }
+			remove_modifier = rise_base_rate
+			add_modifier = { name = rise_base_rate months = 6 }
+		}
+	}
+}
