@@ -30,9 +30,15 @@ GR.21, tools/regen_ef_cmf_gui.py), with three edits:
 Texts are localization keys (localization/*/zz_ef_cb_rate_panel_l_*.yml).
 GUI @constants are file-local: the type uses @panel_width only, re-declared.
 
-Output: `_ef/ef hotfix 1.13/gui/zz_ef_cb_rate_panel.gui`. The hotfix is a
-separate mod loaded after E&F; nothing else in the playset defines this type
-(checked 2026-09-30: E&F's budget_panel.gui and the TGR compatch only use it).
+Output: `_ef/ef hotfix 1.13/gui/00_00_ef_cb_rate_panel.gui`. The FIRST file to
+register a GUI type wins; files are read in ASCII order of their name across
+all mods, mod order does not matter. A later definition is ignored with
+"Type 'X' already registered at ..." in logs/gui.log. The first build wrote
+zz_ef_cb_rate_panel.gui and was ignored for exactly that reason (2026-09-30,
+Prussia run): the name must sort before E&F's 00_ef_deported_gui_1.gui.
+Check after a run: gui.log must not name this file. Nothing else in the
+playset defines this type (checked 2026-09-30: E&F's budget_panel.gui and the
+TGR compatch only use it).
 
 Usage:
     py tools/regen_ef_cb_rate_gui.py            # write
@@ -52,7 +58,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 res = lambda p: os.path.normpath(os.path.join(HERE, p))
 
 EF_GUI = r"C:\Games\Steam\steamapps\workshop\content\529340\3143591632\gui\00_ef_deported_gui_1.gui"
-OUT = res(r"..\_ef\ef hotfix 1.13\gui\zz_ef_cb_rate_panel.gui")
+OUT = res(r"..\_ef\ef hotfix 1.13\gui\00_00_ef_cb_rate_panel.gui")
 TYPE = "budget_panel_financial_panel_content"
 
 # sha of E&F's type body this generator was written against (--check).
