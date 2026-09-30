@@ -286,6 +286,11 @@ zz_ef_money_model_step = {
 	# the hook reads them for every country in the list and hands them back
 	# through scripted_guis/zz_ef_money_hook.txt, which computes the leak.
 	# Last week's values are dropped, so a week without the GUI reads 0.
+	# The deposit operations the receiver made after the previous step fell
+	# into the window just closed: moved to var:zz_ef_w_dep_* for the leak.
+	zz_ef_money_window_roll = { F = dep_in }
+	zz_ef_money_window_roll = { F = dep_out }
+	zz_ef_money_window_roll = { F = dep_int }
 	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
 	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
 	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
@@ -316,7 +321,55 @@ zz_ef_money_hook_receive = {
 		remove_list_global_variable = { name = zz_ef_hook_countries target = this }
 		set_variable = { name = zz_ef_f_ext value = scope:ext }
 		set_variable = { name = zz_ef_f_leak value = zz_ef_leak_week }
+		zz_ef_pop_savings_step = yes
 	}
+}
+
+# var:zz_ef_w_<F> = var:zz_ef_f_<F> (0 if unset); var:zz_ef_f_<F> = 0.
+zz_ef_money_window_roll = {
+	set_variable = { name = zz_ef_w_$F$ value = 0 }
+	if = {
+		limit = { has_variable = zz_ef_f_$F$ }
+		set_variable = { name = zz_ef_w_$F$ value = var:zz_ef_f_$F$ }
+	}
+	set_variable = { name = zz_ef_f_$F$ value = 0 }
+}
+
+# Pops' savings (decided 2026-09-30: savings = the money the engine lost,
+# merged -- pops' income left over, which vanilla turns into wealth, and
+# payments abroad inside the market). var:zz_ef_pop_savings (S) holds all,
+# var:zz_ef_pop_deposits (D) the part in banks; cash at hand = S - D.
+# Deposits are real engine money again: add_investment_pool. D moves 2% of
+# the gap a week towards S x the deposit share (by the key rate); interest at
+# the deposit rate is paid from the pool into D. The operations fall into the
+# next week's window and are taken out of that week's leak.
+zz_ef_pop_savings_step = {
+	if = {
+		limit = { NOT = { has_variable = zz_ef_pop_savings } }
+		set_variable = { name = zz_ef_pop_savings value = 0 }
+		set_variable = { name = zz_ef_pop_deposits value = 0 }
+	}
+	set_variable = { name = zz_ef_f_inflow value = zz_ef_v_f_leak }
+	change_variable = { name = zz_ef_f_inflow multiply = -1 }
+	change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_inflow }
+
+	set_variable = { name = zz_ef_f_dep_in value = zz_ef_dep_in }
+	set_variable = { name = zz_ef_f_dep_out value = zz_ef_dep_out }
+	add_investment_pool = var:zz_ef_f_dep_in
+	change_variable = { name = zz_ef_pop_deposits add = var:zz_ef_f_dep_in }
+	add_investment_pool = {
+		value = var:zz_ef_f_dep_out
+		multiply = -1
+	}
+	change_variable = { name = zz_ef_pop_deposits subtract = var:zz_ef_f_dep_out }
+
+	set_variable = { name = zz_ef_f_dep_int value = zz_ef_dep_interest }
+	add_investment_pool = {
+		value = var:zz_ef_f_dep_int
+		multiply = -1
+	}
+	change_variable = { name = zz_ef_pop_deposits add = var:zz_ef_f_dep_int }
+	change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_dep_int }
 }
 
 # ---- the monthly step -------------------------------------------------------

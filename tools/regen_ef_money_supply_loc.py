@@ -90,6 +90,8 @@ def main_text(lang, c):
                  m0="M0 — деньги государства", tr="Казна", m1="M1 = M0 + деньги предприятий",
                  bld="Касса предприятий", m2="M2 = M1 + деньги банков", bank="Средства банков",
                  nostock="Счета без запаса (деньги проходят насквозь)", pops="Население", cb="Центральный банк",
+                 sav="Накопления населения (счёт мода, вне денег движка)", savd="во вкладах (в пуле)",
+                 savc="на руках",
                  abroad="Заграница", debt="Долг (не деньги)", princ="бюджета", dcb="перед ЦБ (E&F)",
                  bdebt="банков перед ЦБ", fx="Товар-валюта E&F (штуки, не деньги)", fxcb="склад ЦБ",
                  fxab="у других стран", hint="Наведите на счёт — все переводы за неделю.",
@@ -99,6 +101,8 @@ def main_text(lang, c):
                  m0="M0 — state money", tr="Treasury", m1="M1 = M0 + business money", bld="Business cash",
                  m2="M2 = M1 + bank money", bank="Bank funds", nostock="Accounts without a stock (money passes through)",
                  pops="Pops", cb="Central bank", abroad="Abroad", debt="Debt (not money)", princ="budget",
+                 sav="Pops' savings (the mod's account, outside the engine's money)", savd="in deposits (in the pool)",
+                 savc="at hand",
                  dcb="to the CB (E&F)", bdebt="banks to the CB", fx="E&F currency good (counts, not money)",
                  fxcb="CB stock", fxab="held by other countries", hint="Hover an account for all its transfers this week.",
                  dyn="month {0}, year {1}, 5 years {2}", fxm="this month")
@@ -116,8 +120,10 @@ def main_text(lang, c):
         f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')})",
         f" {L['m2']}: #T {money('money_supply')}#! ({dyn('m2')})",
         f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')})",
-        f" {L['nostock']}: {tt('zz_ef_ms_tt_pops', L['pops'])}, {tt('zz_ef_ms_tt_cb', L['cb'])}, "
-        f"{tt('zz_ef_ms_tt_abroad', L['abroad'])}",
+        f"{tt('zz_ef_ms_tt_pops', L['sav'])}: #T {money('zz_ef_pop_savings')}#! "
+        f"({sv('zz_ef_pop_savings_week', 'D+=')}{cur} {L['month']}) — {L['savd']} {money('zz_ef_pop_deposits')}, "
+        f"{L['savc']} {money('zz_ef_pop_cash')}",
+        f" {L['nostock']}: {tt('zz_ef_ms_tt_cb', L['cb'])}, {tt('zz_ef_ms_tt_abroad', L['abroad'])}",
         f"{L['debt']}: {L['princ']} {money('zz_ef_debt_principal')}, {L['dcb']} {sv('zz_ef_debt_cb_gold')} {gold}, "
         f"{L['bdebt']} {money('zz_ef_bank_cb_debt')}",
         f"{tt('zz_ef_ms_tt_fx', L['fx'])}: {L['fxcb']} {sv('money_supply_state')} ({sv('zz_ef_v_d_cb', 'D+=')} {L['fxm']}), "
@@ -254,14 +260,25 @@ FLOWS = [
     # --- pops: a transit account ---
     (P, N, "зарплаты и дивиденды (оценка: ВВП / 52 − госвыплаты)", "wages and dividends (estimate: GDP / 52 − state pay)",
      ("expr", "WAGES"), None),
-    (N, P, "покупки товаров и прирост достатка — остаток дохода",
-     "purchases of goods and wealth growth — the rest of the income", ("closing",), None),
+    (N, P, "покупки товаров — остаток дохода (оценка)",
+     "purchases of goods — the rest of the income (estimate)", ("closing",), None),
+    # pops' savings: the money the engine lost this week, exact and merged (the bridge)
+    (N, X, "в накопления: деньги, выпавшие из денег движка (точно, слитно: остаток дохода и оплата заграницы "
+           "внутри рынка)",
+     "into savings: money that dropped out of the engine's money (exact, merged: income left over and payments "
+     "abroad inside the market)", svp("zz_ef_v_f_inflow"), None),
+    (X, N, "из накоплений: вернулось в деньги движка больше, чем выпало",
+     "from savings: more came back into the engine's money than dropped out", svn("zz_ef_v_f_inflow"), None),
     # --- banks ---
     (P, B, "взносы в пул — инвестиции зданий и сбережения богатых (ваниль)",
      "pool contributions — buildings' investment and the rich's saving (vanilla)", sv_("zz_ef_v_f_contrib"), None),
     (B, Z, "покупка облигаций других стран частными банками (E&F)", "foreign bonds bought by private banks (E&F)",
      svp("zz_ef_v_d_bonds"), None),
     (Z, B, "погашение облигаций других стран (E&F)", "foreign bonds run off (E&F)", svn("zz_ef_v_d_bonds"), None),
+    # deposits: from the savings, not from the week's income -- banks' card only (window values)
+    (N, B, "вклады населения из накоплений", "pops' deposits from their savings", sv_("zz_ef_v_w_dep_in"), B),
+    (B, N, "снятие вкладов", "deposits withdrawn", sv_("zz_ef_v_w_dep_out"), B),
+    (B, N, "проценты по вкладам", "interest on deposits", sv_("zz_ef_v_w_dep_int"), B),
     # --- central bank, in money (a transit account) ---
     (X, C, "выпуск: кредит банкам — новые деньги", "issue: credit to banks — new money", sv_("zz_ef_v_f_cb_borrow"), None),
     (C, B, "кредит банкам под ключевую ставку", "credit to banks at the key rate", sv_("zz_ef_v_f_cb_borrow"), None),
@@ -289,10 +306,13 @@ NOTES = {
               "The investment pool. Private construction goes through the treasury: pool → treasury (transfer) → "
               "businesses (construction goods). Banks keep several months of contributions in the pool (12 at 2%, 3 "
               "at 12%): below it they borrow from the CB at the key rate, above it they repay."),
-    "pops": ("Денег у населения в движке нет: доход уходит на налоги и покупки, остаток становится достатком "
-             "(числом, а не деньгами) — поэтому движок деньги не сохраняет.",
-             "Pops hold no money in the engine: income goes to taxes and purchases, the rest becomes wealth (a "
-             "number, not money) — that is why the engine does not conserve money."),
+    "pops": ("Денег у населения в движке нет: остаток дохода движок превращает в достаток (число). Мод ловит "
+             "эти деньги в накопления — точно, по сохранению денег (мост GUI → скрипт), но слитно с оплатой "
+             "заграницы внутри рынка. Часть накоплений лежит во вкладах — это снова деньги движка (пул).",
+             "Pops hold no money in the engine: it turns the income left over into wealth (a number). The mod "
+             "catches this money into savings — exact, by money conservation (the GUI → script bridge), but merged "
+             "with payments abroad inside the market. Part of the savings is in deposits — engine money again "
+             "(the pool)."),
     "cb": ("В деньгах движка у ЦБ запаса нет: кредит банкам — новые деньги, погашение их изымает, проценты уходят "
            "в казну. Склад товара-валюты E&F — отдельно, в штуках.",
            "In the engine's money the CB holds no stock: credit to banks is new money, repayment withdraws it, "
@@ -515,6 +535,19 @@ def nested(lang):
         if acc == N:
             L.append((f"Доход населения ≈ ВВП / 52 = {money('zz_ef_gdp_week')}.") if ru else
                      (f"Pops' income ≈ GDP / 52 = {money('zz_ef_gdp_week')}."))
+            L.append((f"#b Накопления: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} за "
+                      f"неделю) — во вкладах {money('zz_ef_pop_deposits')}, на руках {money('zz_ef_pop_cash')}. "
+                      f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, проценты по вкладам "
+                      f"{sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; внесено {money('zz_ef_v_f_dep_in')}, снято "
+                      f"{money('zz_ef_v_f_dep_out')}. Доля во вкладах — цель {sv('zz_ef_deposit_share', '%0')} "
+                      f"(по ставке), ставка по вкладам {sv('zz_ef_deposit_rate', '%1')}.")
+                     if ru else
+                     (f"#b Savings: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} this "
+                      f"week) — in deposits {money('zz_ef_pop_deposits')}, at hand {money('zz_ef_pop_cash')}. This "
+                      f"week: dropped out of the engine's money {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, deposit "
+                      f"interest {sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; deposited {money('zz_ef_v_f_dep_in')}, "
+                      f"withdrawn {money('zz_ef_v_f_dep_out')}. Deposit share target "
+                      f"{sv('zz_ef_deposit_share', '%0')} (by the rate), deposit rate {sv('zz_ef_deposit_rate', '%1')}."))
         d[f"zz_ef_ms_tt_{acc}"] = "\\n".join(L)
     d["zz_ef_ms_tt_fx"] = fx_card(lang)
     return d

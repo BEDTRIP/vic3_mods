@@ -555,6 +555,107 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_f_cb_borrow
 	add = zz_ef_v_f_cb_repay
 	add = zz_ef_v_d_bonds
+	subtract = zz_ef_v_w_dep_in
+	add = zz_ef_v_w_dep_out
+	add = zz_ef_v_w_dep_int
+}
+
+# ---- pops' savings and deposits (the receiver, zz_ef_pop_savings_step) --------
+
+zz_ef_deposit_speed = 0.02
+# Share of savings pops keep in banks: 30% at a 4% key rate, +5 pp per pp of
+# rate, 10..70%.
+zz_ef_deposit_share = {
+	value = zz_ef_money_rate
+	subtract = 0.04
+	multiply = 5
+	add = 0.3
+	min = 0.1
+	max = 0.7
+}
+# Deposit rate: the key rate - 1.5 pp, at least 0.5% (the banks' margin).
+zz_ef_deposit_rate = {
+	value = zz_ef_money_rate
+	subtract = 0.015
+	min = 0.005
+}
+zz_ef_pop_savings = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_pop_savings } value = var:zz_ef_pop_savings }
+}
+zz_ef_pop_deposits = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_pop_deposits } value = var:zz_ef_pop_deposits }
+}
+zz_ef_pop_cash = {
+	value = zz_ef_pop_savings
+	subtract = zz_ef_pop_deposits
+}
+zz_ef_dep_target = {
+	value = zz_ef_pop_savings
+	min = 0
+	multiply = zz_ef_deposit_share
+}
+zz_ef_dep_in = {
+	value = zz_ef_dep_target
+	subtract = zz_ef_pop_deposits
+	multiply = zz_ef_deposit_speed
+	min = 0
+}
+# Withdrawals, not more than the pool holds.
+zz_ef_dep_out = {
+	value = zz_ef_pop_deposits
+	subtract = zz_ef_dep_target
+	multiply = zz_ef_deposit_speed
+	min = 0
+	max = {
+		value = investment_pool
+		min = 0
+	}
+}
+zz_ef_dep_interest = {
+	value = zz_ef_pop_deposits
+	min = 0
+	multiply = zz_ef_deposit_rate
+	divide = 52
+	max = {
+		value = investment_pool
+		min = 0
+	}
+}
+# Change of the savings at this week's receive: what dropped out of the
+# engine's money + deposit interest.
+zz_ef_pop_savings_week = {
+	value = zz_ef_v_f_inflow
+	add = zz_ef_v_f_dep_int
+}
+zz_ef_v_f_inflow = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_inflow } value = var:zz_ef_f_inflow }
+}
+zz_ef_v_f_dep_in = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_dep_in } value = var:zz_ef_f_dep_in }
+}
+zz_ef_v_f_dep_out = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_dep_out } value = var:zz_ef_f_dep_out }
+}
+zz_ef_v_f_dep_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_dep_int } value = var:zz_ef_f_dep_int }
+}
+zz_ef_v_w_dep_in = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_dep_in } value = var:zz_ef_w_dep_in }
+}
+zz_ef_v_w_dep_out = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_dep_out } value = var:zz_ef_w_dep_out }
+}
+zz_ef_v_w_dep_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_dep_int } value = var:zz_ef_w_dep_int }
 }
 
 # Accounts without a stock (pops, CB in money, abroad): change 0.
