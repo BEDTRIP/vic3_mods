@@ -82,14 +82,16 @@ zz_ef_savings_k = {
 	min = 1
 }
 
-# Monthly outflow from savings: outlays x S / (S + K).
+# Monthly outflow from savings: outlays x S / (S + K). The ratio first:
+# S x outlays (Britain 60M x 6.6M = 4e14) overflows the engine's fixed point
+# (64 bit, 5 decimals: ~9.2e13) -- 2026-09-30 it came out as 150K for 1.8M.
 zz_ef_savings_outflow = {
 	value = zz_ef_savings
-	multiply = zz_ef_pop_outlays_month
 	divide = {
 		value = zz_ef_savings
 		add = zz_ef_savings_k
 	}
+	multiply = zz_ef_pop_outlays_month
 	min = 0
 }
 
