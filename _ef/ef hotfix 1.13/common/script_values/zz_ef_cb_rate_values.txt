@@ -16,14 +16,16 @@
 # counted from its rank alone (1..4); it is held at 6.5%, E&F's neutral
 # zone, where the yearly pool credit is zero.
 # The player's policy (var:zz_ef_rate_bias, +-2 pp, the rate buttons) is added
-# on top; the result is clamped to 2..12%.
+# on top (the bank alone stays within 2..12%, policy may take the target
+# 2 pp under the bank, but never below 0.5%).
 #
 # STEP. Every 3 months (on_actions/zz_ef_cb_rate_on_actions.txt) the rate
 # moves towards the target by at most 0.5 pp, or 1 pp when the gap is over
 # 5 pp.
 #############################################
 
-zz_ef_cb_rate_target = {
+# The bank's own rate, from the rating alone: 2..12%.
+zz_ef_cb_rate_rating_target = {
 	value = 0.065
 	if = {
 		limit = {
@@ -36,11 +38,20 @@ zz_ef_cb_rate_target = {
 			multiply = 0.01
 		}
 	}
+	min = 0.02
+	max = 0.12
+}
+
+# The target: the bank's rate + the player's policy (+-2 pp), 0.5..12%.
+# (2026-09-30: the bank's floor stays 2%, policy can go 2 pp under it, but
+# never below 0.5%.)
+zz_ef_cb_rate_target = {
+	value = zz_ef_cb_rate_rating_target
 	if = {
 		limit = { has_variable = zz_ef_rate_bias }
 		add = var:zz_ef_rate_bias
 	}
-	min = 0.02
+	min = 0.005
 	max = 0.12
 }
 
