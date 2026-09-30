@@ -47,7 +47,9 @@ regime currencies to keys that live in 00_ef_companies.txt. So the run also
 checks by KEY, and files that collide are carried here verbatim
 (VERBATIM_HOTFIX_JOBS); an uncovered collision fails --check.
 
-Localization is emitted as a small `zz_` overlay instead of a same-path copy.
+Localization is emitted as a small `zz_` overlay in localization/<lang>/replace/
+instead of a same-path copy (replace/ since 2026-09-24: a plain zz_ file next to
+E&F's never won -- the first file to define a key does).
 The old build shipped the whole 01_ef_je_localization file per language, which
 dropped 73 keys E&F had added since (fc_fso_situation, the crisis counters, the
 new widget strings) and, in Russian, shadowed the dedicated E&F RU mod with a
@@ -96,12 +98,25 @@ KEY_JOB = (
 
 # Hand-authored in localization/*/zz_pb_ef_psc_l_*.yml -- never regenerate these.
 MANUAL_LOC_KEYS = {
+    # EF.18 v2 (2026-09-24): E&F's text describes the old mechanics
+    # (x (1 - rate x 10), +1 a month, the bubble cutting construction).
+    "financial_center_je_2_reason",
+    "financial_center_je_2_reason_2",
     "concept_building_urban_center_lvl_by_base_rate_desc",
     "concept_maximum_pcs_capacity_desc",
     "speculative_share_9_button_tt_2",
     "speculative_share_10_button_tt_2",
     "speculative_share_11_button_tt_2",
     "speculative_share_12_button_tt_2",
+    # 2026-09-25: stimulus buttons 9-12 reworked -- no sectors built any more.
+    "speculative_share_9_button_desc",
+    "speculative_share_10_button_desc",
+    "speculative_share_11_button_desc",
+    "speculative_share_12_button_desc",
+    "speculative_share_9_button_tt_effect_1_1",
+    "speculative_share_10_button_tt_effect_1_1",
+    "speculative_share_11_button_tt_effect_1_1",
+    "speculative_share_12_button_tt_effect_1_1",
 }
 
 LOC_KEY_RE = re.compile(r'^\s*([^\s:#][^:#]*?)\s*:\s*[0-9]*\s*"')
@@ -348,7 +363,12 @@ def main() -> int:
             + "\n".join(kept)
             + "\n"
         )
-        jobs.append((f"localization/{lang}/zz_pb_ef_psc_je_l_{lang}.yml", src, origin, text, True))
+        # replace/: localization is first-come, the first file to define a key
+        # wins whatever the mod order, and E&F / the RU mod define these first.
+        # Keys under localization/<lang>/replace/ override (as Morgenroete does
+        # on vanilla). Until 2026-09-24 this overlay sat next to E&F's file and
+        # never showed.
+        jobs.append((f"localization/{lang}/replace/zz_pb_ef_psc_je_l_{lang}.yml", src, origin, text, True))
 
     # --- emit ---------------------------------------------------------------
     for rel, src, origin, body, is_loc in jobs:

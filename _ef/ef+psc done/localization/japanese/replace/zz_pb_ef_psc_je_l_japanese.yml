@@ -1,0 +1,17 @@
+﻿# GENERATED FILE -- do not edit by hand.
+# Rebuilt by tools/regen_ef_psc_copies.py from E&F: 01_ef_je_localization_l_japanese.yml
+# keeping only the lines that name building_ef_private_construction, renamed to building_construction_sector.
+# Hand-written strings live in zz_pb_ef_psc_l_japanese.yml and are skipped here.
+# ScriptValue('building_ef_private_construction_lvl') is left alone on purpose: that key name stays,
+# the compatch remaps its value to sum building_construction_sector instead.
+
+l_japanese:
+  economic_sentiment_index_base_1_button:1 "#b 5 [GetBuildingType('building_construction_sector').GetName]#!"
+  economic_sentiment_index_base_1_button_desc: "Request the private sector to invest in new [GetBuildingType('building_construction_sector').GetName]. A number of such sector will be built across the country.\nHowever, once this request is made, the private sector will be unable to respond to further government demands for a certain period of time."
+  economic_sentiment_index_base_3_button:1 "#b 10 [GetBuildingType('building_construction_sector').GetName]#!"
+  economic_sentiment_index_base_3_button_desc: "Request the private sector to invest in new [GetBuildingType('building_construction_sector').GetName]. A number of such sector will be built across the country.\nHowever, once this request is made, the private sector will be unable to respond to further government demands for a certain period of time."
+  economic_sentiment_index_base_5_button:1 "#b 20 [GetBuildingType('building_construction_sector').GetName]#!"
+  economic_sentiment_index_base_5_button_desc: "Request the private sector to invest in new [GetBuildingType('building_construction_sector').GetName]. A number of such sector will be built across the country.\nHowever, once this request is made, the private sector will be unable to respond to further government demands for a certain period of time."
+  speculative_share_13_button_tt_1:0 "- The theoretical maximum level of [GetBuildingType('building_construction_sector').GetName] (Current: #p [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')]#!) exceeds the current number of [GetBuildingType('building_construction_sector').GetName] in the country (Current: #p [GetPlayer.MakeScope.ScriptValue('building_ef_private_construction_lvl')]#!).\n- Does not have the modifier [GetStaticModifier('speculative_share_modifier_7').GetName|v]"
+  speculative_share_modifier_7:0 "Recent [GetBuildingType('building_construction_sector').GetName] regulatuion"
+  speculative_share_13_button_tt_effect_1_1:0 "A [GetBuildingType('building_construction_sector').GetName] in a random state will be completely dismantled, reducing the total number of [GetBuildingType('building_construction_sector').GetName] in the country."
