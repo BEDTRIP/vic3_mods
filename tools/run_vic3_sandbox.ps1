@@ -22,11 +22,15 @@ Usage (PowerShell):
 Parameters:
     -RunMinutes   real minutes to let the game run at speed 5 (default 5)
     -LoadWaitSec  seconds to wait after the window appears, for the save to load (default 150)
+    -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
+                  -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
+                  the state to read from the save needs the run to pass 1 Jan / 1 Jul.
     -OutDir       where to put logs and screenshots (default: %TEMP%\vic3_sandbox\<timestamp>)
 #>
 param(
     [int]$RunMinutes = 5,
     [int]$LoadWaitSec = 150,
+    [int]$Autosaves = 0,
     [string]$OutDir = ""
 )
 
@@ -130,10 +134,16 @@ if (-not $ok) { Send-Key 0x20 0x39; $ok = Is-Advancing $p 24 }
 Log ("advancing: " + $ok)
 if (-not $ok) { Shot $p "02_not_running.png"; Log "the game does not advance - stopping"; }
 else {
-    Log "running for $RunMinutes min"
+    Log "running for $RunMinutes min (autosaves wanted: $Autosaves)"
+    $since = Get-Date
     $end = (Get-Date).AddMinutes($RunMinutes)
     while ((Get-Date) -lt $end) {
         Start-Sleep 60
+        if ($Autosaves -gt 0) {
+            $n = @(Get-ChildItem (Join-Path $Docs "save games") -Filter "autosave*.v3" | Where-Object { $_.LastWriteTime -gt $since }).Count
+            Log "new autosaves: $n"
+            if ($n -ge $Autosaves) { Start-Sleep 20; break }
+        }
         if (-not (Get-Game)) { Log "the game exited"; break }
         $p = Get-Game
         if (-not (Is-Advancing $p 16)) {
