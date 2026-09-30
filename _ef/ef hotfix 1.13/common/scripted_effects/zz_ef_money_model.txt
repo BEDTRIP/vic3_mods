@@ -280,6 +280,18 @@ zz_ef_money_model_step = {
 	zz_ef_money_ledger_delta = { ACC = m1 VALUE = zz_ef_m1 }
 	zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
 
+	# Sandbox log (tools/run_vic3_sandbox.ps1 reads debug.log): one line a
+	# week for the player and the big economies.
+	if = {
+		limit = {
+			OR = {
+				is_player = yes
+				gdp > 20000000
+			}
+		}
+		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]"
+	}
+
 	# The GUI bridge (gui/zz_ef_money_hook.gui): the budget's lines outside
 	# the accounts (minting, additional income and expenses, diplomacy,
 	# treaties, power bloc, supply network fees, tolls, piracy) are GUI-only;
@@ -322,6 +334,15 @@ zz_ef_money_hook_receive = {
 		set_variable = { name = zz_ef_f_ext value = scope:ext }
 		set_variable = { name = zz_ef_f_leak value = zz_ef_leak_week }
 		zz_ef_pop_savings_step = yes
+		if = {
+			limit = {
+				OR = {
+					is_player = yes
+					gdp > 20000000
+				}
+			}
+			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]"
+		}
 	}
 }
 
