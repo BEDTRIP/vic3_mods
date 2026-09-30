@@ -21,9 +21,12 @@ in both cards with opposite signs. Values come from
   - the model's script values (monthly step).
 "Other" of a card = the account's change over the month minus everything
 listed, computed in the GUI, so the lines always add up to the change.
-Until the savings are computed from flows (EF.48 step 2), the pops' side of
-taxes and government wages is shown only in the treasury card, the model's
-own tax estimate only in the savings card ("only").
+Steps 2-3 (2026-09-30): pops' savings from flows -- the savings card shows
+the budget's taxes and state pay exactly, wages and dividends as GDP / 12 minus
+state pay, deposits, pool contributions, deposit interest, and purchases as
+its closing line (the rest of the pops' income, so the card adds up); bank
+credit is borrowed from the central bank (borrowing, repayment, interest, the
+CB's profit to the treasury).
 
 Writes _ef/ef hotfix 1.13/localization/<lang>/replace/
 zz_ef_money_supply_replace_l_<lang>.yml (UTF-8 with BOM; RU and EN written,
@@ -82,7 +85,8 @@ def main_text(lang, c):
                  m2="M2 = M1 + средства банков", bank="Средства банков", dep="вклады", cred="кредит банков",
                  mult="к вкладам, цель", mm="Денежный мультипликатор M2 / M0", other="Заграница",
                  other2="валюта у других стран", debt="Госдолг (не деньги)", princ="долг бюджета",
-                 dcb="перед центральным банком", hint="Наведите на счёт — все переводы за месяц.")
+                 dcb="перед центральным банком", bdebt="долг банков перед ЦБ",
+                 hint="Наведите на счёт — все переводы за месяц.")
     else:
         L = dict(title="Money Supply", total="Total", own="Owned in the country (M2)", month="this month",
                  m0="M0 — cash and state money", cb="Central bank reserves", tr="Treasury",
@@ -90,7 +94,8 @@ def main_text(lang, c):
                  m2="M2 = M1 + bank funds", bank="Bank funds", dep="deposits", cred="bank credit",
                  mult="of deposits, target", mm="Money multiplier M2 / M0", other="Abroad",
                  other2="currency held by other countries", debt="Government debt (not money)",
-                 princ="budget debt", dcb="to the central bank", hint="Hover an account for all its transfers this month.")
+                 princ="budget debt", dcb="to the central bank", bdebt="banks' debt to the CB",
+                 hint="Hover an account for all its transfers this month.")
     lines = [
         f"{L['title']}:",
         f"{L['total']} #v {L['title']}#!: #p {sv('total_money_supply')}#! {cur}",
@@ -107,7 +112,8 @@ def main_text(lang, c):
         f"×{sv('zz_ef_pool_to_deposits', '2')} {L['mult']} ×{sv('zz_ef_credit_multiplier', '2')}",
         f"   {L['mm']}: ×{sv('zz_ef_m2_to_m0', '2')}",
         f" - {tt('zz_ef_ms_tt_abroad', L['other'])}: {L['other2']} #T {money('money_supply_stockpile_by_other_country')}#!",
-        f"{L['debt']}: {L['princ']} {money('zz_ef_debt_principal')}, {L['dcb']} {sv('zz_ef_debt_cb_gold')} {gold}",
+        f"{L['debt']}: {L['princ']} {money('zz_ef_debt_principal')}, {L['dcb']} {sv('zz_ef_debt_cb_gold')} {gold}; "
+        f"{L['bdebt']} {money('zz_ef_bank_cb_debt')}",
         f"#italic {L['hint']}#!",
         "",
     ]
@@ -171,16 +177,16 @@ def svn(name):
 # (from, to, ru, en, value, only) -- only: the one card to show it in, or None.
 FLOWS = [
     # --- budget, exact (GUI), week x 4.333 ---
-    (N, K, "[concept_budget_income_taxes]", "[concept_budget_income_taxes]", gt("GetTaxIncomeTrend"), K),
-    (N, K, "[concept_budget_poll_taxes]", "[concept_budget_poll_taxes]", gt("GetPollTaxTrend"), K),
-    (N, K, "[concept_budget_consumption_taxes]", "[concept_budget_consumption_taxes]", gt("GetConsumptionTaxTrend"), K),
-    (N, K, "[concept_budget_dividends_taxes]", "[concept_budget_dividends_taxes]", gt("GetDividendsTaxTrend"), K),
+    (N, K, "[concept_budget_income_taxes]", "[concept_budget_income_taxes]", gt("GetTaxIncomeTrend"), None),
+    (N, K, "[concept_budget_poll_taxes]", "[concept_budget_poll_taxes]", gt("GetPollTaxTrend"), None),
+    (N, K, "[concept_budget_consumption_taxes]", "[concept_budget_consumption_taxes]", gt("GetConsumptionTaxTrend"), None),
+    (N, K, "[concept_budget_dividends_taxes]", "[concept_budget_dividends_taxes]", gt("GetDividendsTaxTrend"), None),
     (P, K, "[concept_tariffs] (платят импортёры)", "[concept_tariffs] (paid by importers)", gt("GetTariffTrend"), None),
     (P, K, "государственные дивиденды", "government dividends", gt("GetGovernmentShareDividendsTrend"), None),
     (K, P, "убытки государственных предприятий", "losses of state-owned businesses", gt("GetGovernmentShareLossesTrend"), None),
-    (K, N, "[concept_budget_government_wages]", "[concept_budget_government_wages]", gt("GetGovernmentWagesExpenseTrend"), K),
-    (K, N, "[concept_budget_military_wages]", "[concept_budget_military_wages]", gt("GetMilitaryWagesExpenseTrend"), K),
-    (K, N, "[concept_welfare_payments]", "[concept_welfare_payments]", gt("GetWelfarePaymentsTrend"), K),
+    (K, N, "[concept_budget_government_wages]", "[concept_budget_government_wages]", gt("GetGovernmentWagesExpenseTrend"), None),
+    (K, N, "[concept_budget_military_wages]", "[concept_budget_military_wages]", gt("GetMilitaryWagesExpenseTrend"), None),
+    (K, N, "[concept_welfare_payments]", "[concept_welfare_payments]", gt("GetWelfarePaymentsTrend"), None),
     (K, P, "[concept_budget_goods_for_government_buildings]", "[concept_budget_goods_for_government_buildings]",
      gt("GetGovernmentGoodsExpenseTrend"), None),
     (K, P, "[concept_budget_goods_for_military_upkeep]", "[concept_budget_goods_for_military_upkeep]",
@@ -220,32 +226,39 @@ FLOWS = [
     (K, X, "[concept_budget_additional_expenses]", "[concept_budget_additional_expenses]",
      gt("GetAdditionalExpensesTrend"), None),
     # --- model, monthly step ---
-    (N, K, "налоги (модель, оценка)", "taxes (model, estimate)", sv_("zz_ef_v_f_taxes"), N),
-    (N, P, "покупки товаров (модель)", "purchases of goods (model)", sv_("zz_ef_v_f_goods"), None),
+    (P, N, "зарплаты и дивиденды (оценка: ВВП / 12 − госвыплаты)", "wages and dividends (estimate: GDP / 12 − state pay)",
+     ("expr", "WAGES"), None),
+    (N, P, "покупки товаров — остаток дохода", "purchases of goods — the rest of the income", ("closing",), None),
     (N, B, "вклады", "deposits", svp("zz_ef_v_f_deposits"), None),
     (B, N, "изъятия вкладов", "deposit withdrawals", svn("zz_ef_v_f_deposits"), None),
-    (N, X, "срез выше 2 ВВП", "cut above 2 × GDP", sv_("zz_ef_v_f_cap"), None),
-    (C, N, "в обращение: спрос рынка на валюту — доля страны (E&F)",
-     "into circulation: market demand for the currency — the country's share (E&F)", sv_("zz_ef_v_f_inflow"), None),
+    (N, B, "взносы в пул — сбережения богатых (ваниль)", "pool contributions — the rich's saving (vanilla)",
+     sv_("zz_ef_v_f_contrib"), None),
+    (B, N, "проценты по вкладам", "interest on deposits", sv_("zz_ef_v_f_dep_interest"), None),
+    (C, P, "в обращение: спрос на товар-валюту — здания и население страны (E&F)",
+     "into circulation: demand for the currency good — the country's buildings and pops (E&F)",
+     sv_("zz_ef_cb_demand_own"), None),
     (C, Z, "в обращение: другим странам рынка (E&F)", "into circulation: other countries of the market (E&F)",
      sv_("zz_ef_cb_demand_others"), None),
     (X, C, "выпуск: продажи товара-валюты на рынке (E&F)", "issue: sales of the currency good (E&F)",
      sv_("zz_ef_cb_issue_month"), None),
     (X, C, "девальвация (E&F)", "devaluation (E&F)", sv_("zz_ef_cb_devaluation_month"), None),
     (C, X, "ревальвация (E&F)", "revaluation (E&F)", sv_("zz_ef_cb_revaluation_month"), None),
-    (X, B, "взносы в пул — население и здания (ваниль)", "pool contributions — pops and buildings (vanilla)",
-     sv_("zz_ef_v_f_contrib"), None),
-    (X, B, "новый кредит банков", "new bank credit", svp("zz_ef_v_f_credit"), None),
-    (B, X, "сжатие кредита", "credit contraction", svn("zz_ef_v_f_credit"), None),
+    (X, C, "выпуск: кредит банкам", "issue: credit to banks", sv_("zz_ef_v_f_cb_borrow"), None),
+    (C, B, "кредит банкам под ключевую ставку", "credit to banks at the key rate", sv_("zz_ef_v_f_cb_borrow"), None),
+    (B, C, "погашение кредита ЦБ", "repayment of the CB's credit", sv_("zz_ef_v_f_cb_repay"), None),
+    (C, X, "погашено — изъято из обращения", "repaid — withdrawn from circulation", sv_("zz_ef_v_f_cb_repay"), None),
+    (B, C, "проценты по кредиту ЦБ", "interest on the CB's credit", sv_("zz_ef_v_f_cb_interest"), None),
+    (C, K, "прибыль ЦБ: проценты банков", "the CB's profit: banks' interest", sv_("zz_ef_v_f_cb_interest"), None),
     (Z, P, "торговля: экспорт сверх импорта (E&F)", "trade: exports over imports (E&F)", svp("zz_ef_trade_month"), None),
     (P, Z, "торговля: импорт сверх экспорта (E&F)", "trade: imports over exports (E&F)", svn("zz_ef_trade_month"), None),
 ]
 
 NOTES = {
-    "savings": ("Наличные у населения — модель: денег у групп населения в движке нет. Бюджетные выплаты населению "
-                "и налоги по видам — в карточке казны; сбережения свяжутся с ними на шаге «сбережения из потоков».",
-                "Cash held by pops — a model: pops hold no money in the engine. Budget payments to pops and taxes by "
-                "kind are in the treasury card; savings will be tied to them in the savings-from-flows step."),
+    "savings": ("Наличные у населения — модель: денег у групп населения в движке нет. Население держит на руках "
+                "4 месяца дохода (кембриджская доля денег) и каждый месяц сдвигается к этому запасу на 5%; всё "
+                "остальное от дохода уходит в покупки.",
+                "Cash held by pops — a model: pops hold no money in the engine. Pops keep 4 months of income in hand "
+                "(the Cambridge k) and move 5% of the way there each month; the rest of the income goes to purchases."),
     "treasury": ("Статьи бюджета — точно, неделя × 4.33; изменение казны — за месяц. Государство держит деньги "
                  "вне обращения — часть M0.",
                  "Budget lines are exact, week × 4.33; the treasury's change is over the month. State money, out of "
@@ -254,21 +267,41 @@ NOTES = {
                   "дивиденды населению скрипту не видны — они в «прочем».",
                   "Buildings' cash reserves: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*). Wages and "
                   "dividends to pops are not visible to scripts — they are in other."),
-    "banks": ("Частная стройка идёт через казну: пул → казна (инвестфонд) → предприятия (строительные товары). "
-              "Банки тянут средства к вкладам × множитель (×3 при 2%, ×1.2 при 12%).",
-              "Private construction goes through the treasury: pool → treasury (investment fund) → businesses "
-              "(construction goods). Banks steer their funds to deposits × multiplier (×3 at 2%, ×1.2 at 12%)."),
+    "banks": ("Частная стройка идёт через казну: пул → казна (трансфер) → предприятия (строительные товары). "
+              "Банки держат средства около вкладов × множитель (×3 при 2%, ×1.2 при 12%): ниже — занимают у ЦБ под "
+              "ключевую ставку, выше — гасят долг. По вкладам платят ключевую − 1.5 п.п. (не меньше 0.5%).",
+              "Private construction goes through the treasury: pool → treasury (transfer) → businesses "
+              "(construction goods). Banks keep their funds near deposits × multiplier (×3 at 2%, ×1.2 at 12%): "
+              "below it they borrow from the CB at the key rate, above it they repay. Deposits earn the key rate − "
+              "1.5 pp (at least 0.5%)."),
     "cb": ("Валюта, которую держит центральный банк, вне обращения. Выпуск и спрос — рынок товара-валюты (E&F, у "
-           "хозяина рынка); чеканку ЦБ выпускает для казны.",
+           "хозяина рынка); чеканку и кредит банкам ЦБ выпускает, погашенный кредит изымает; проценты банков — "
+           "прибыль ЦБ, уходит в казну.",
            "Currency held by the central bank, out of circulation. Issue and demand: the currency good's market "
-           "(E&F, market owner); minting is issued by the central bank for the treasury."),
+           "(E&F, market owner); the CB issues minting and credit to banks, withdraws repaid credit; banks' "
+           "interest is the CB's profit, remitted to the treasury."),
     "abroad": ("Запаса у счёта нет — только переводы. Проценты иностранным держателям госдолга — шаг 3.",
                "The account holds no stock — only transfers. Interest to foreign holders of government debt: step 3."),
 }
 
 
+STATE_PAY = ["GetGovernmentWagesExpenseTrend", "GetMilitaryWagesExpenseTrend", "GetWelfarePaymentsTrend"]
+EXPRS = {}
+
+
+def wages_expr():
+    e = "Country.MakeScope.ScriptValue('zz_ef_gdp_month')"
+    for fn in STATE_PAY:
+        e = f"Subtract_CFixedPoint({e}, Abs_CFixedPoint(Multiply_CFixedPoint(GetTrendValue(Country.{fn}), {WEEKS})))"
+    return f"Max_CFixedPoint({e}, {ZERO})"
+
+
 def expr(v):
     """GUI expression (CFixedPoint, non-negative, a month) for a flow value."""
+    if v[0] == "expr":
+        return wages_expr()
+    if v[0] == "closing":
+        return EXPRS["closing"]
     kind, name = v
     if kind == "gt":
         return f"Abs_CFixedPoint(Multiply_CFixedPoint(GetTrendValue(Country.{name}), {WEEKS}))"
@@ -296,8 +329,26 @@ def card_flows(acc):
     return out
 
 
+def closing_expr():
+    """Pops' purchases: all other flows of the savings card minus its change."""
+    e = f"Country.MakeScope.ScriptValue('{DELTA[N]}')"
+    ins, outs = [], []
+    for other, dr, f in card_flows(N):
+        if f[4][0] == "closing":
+            continue
+        (ins if dr == "in" else outs).append(expr(f[4]))
+    # purchases = in - out - change
+    acc = ins[0]
+    for x in ins[1:]:
+        acc = f"Subtract_CFixedPoint({acc}, Negate_CFixedPoint({x}))"
+    for x in outs:
+        acc = f"Subtract_CFixedPoint({acc}, {x})"
+    return f"Subtract_CFixedPoint({acc}, {e})"
+
+
 def nested(lang):
     cur, sv, money, delta, tt = ctx("Country")
+    EXPRS["closing"] = closing_expr()
     ru = lang == "russian"
     k = 0 if ru else 1
     none = "  нет переводов" if ru else "  no transfers"
@@ -308,7 +359,7 @@ def nested(lang):
         head = TITLES[acc][k] + (" за месяц" if ru else " this month")
         L = [f"#b {head}: {delta(DELTA[acc])}#!" if acc in DELTA else f"#b {head}#!"]
         # residual: change - in + out
-        resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA else None
+        resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA and acc != N else None
         # the treasury lists the whole budget: its other is budget-free (script)
         fixed_resid = "Country.MakeScope.ScriptValue('zz_ef_other_treasury_budget')" if acc == K else None
         n = 0
@@ -344,13 +395,15 @@ def nested(lang):
                          + f"[{bout}|D+=] {cur}")
         L += ["", NOTES[acc][k]]
         if acc == "savings":
-            L.append((f"Траты населения в месяц (модель): {money('zz_ef_v_f_outlays')} = ВВП / 12 "
-                      f"{money('zz_ef_gdp_month')} − взносы в пул {money('zz_ef_pool_contrib_month_gdp')}; из "
-                      f"сбережений потрачено {money('zz_ef_v_f_outflow')}.") if ru else
-                     (f"Pops' outlays per month (model): {money('zz_ef_v_f_outlays')} = GDP / 12 "
-                      f"{money('zz_ef_gdp_month')} − pool contributions {money('zz_ef_pool_contrib_month_gdp')}; "
-                      f"spent from savings {money('zz_ef_v_f_outflow')}."))
+            L.append((f"Доход населения ≈ ВВП / 12 = {money('zz_ef_gdp_month')}; целевой запас на руках "
+                      f"{money('zz_ef_cash_target')}, сдвиг к нему за месяц {delta('zz_ef_v_f_cash')}.") if ru else
+                     (f"Pops' income ≈ GDP / 12 = {money('zz_ef_gdp_month')}; target cash in hand "
+                      f"{money('zz_ef_cash_target')}, this month's move to it {delta('zz_ef_v_f_cash')}."))
         if acc == "banks":
+            L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}, ставка по вкладам "
+                      f"{sv('zz_ef_deposit_rate', '%1')}.") if ru else
+                     (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}, deposit rate "
+                      f"{sv('zz_ef_deposit_rate', '%1')}."))
             L.append((f"Вклады {money('zz_ef_deposits')}, кредит банков {money('zz_ef_bank_credit')}: сейчас "
                       f"×{sv('zz_ef_pool_to_deposits', '2')}, цель ×{sv('zz_ef_credit_multiplier', '2')} при ставке "
                       f"{sv('zz_ef_money_rate', '%1')}.") if ru else

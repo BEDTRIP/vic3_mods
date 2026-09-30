@@ -1,52 +1,55 @@
-﻿#############################################
-# EF.39 + EF.44 (2026-09-30) -- the money model: savings, deposits, bank credit.
-# COUNTRY scope. Money in the game's currency units; rates are fractions.
+#############################################
+# EF.39 / EF.44 / EF.48 (2026-09-30) -- the money model as a flow matrix
+# between accounts. COUNTRY scope. Money in the game's currency units, per
+# month; rates are fractions. Monthly step: scripted_effects/
+# zz_ef_money_model.txt; the tooltip: tools/regen_ef_money_supply_loc.py.
+# Decisions: План проекта.md, EF.48.
 #
-# WHAT E&F DOES (4.1.7)
-# - "Pop savings" (pop_savings = var:pop_capital_loss_fix +
-#   var:circulating_<currency>_c_var_1) only ever grows: every month += 4 x the
-#   market's buy orders of the currency good. By 1848 France held 1960M at a
-#   GDP of 85M. It is part of the money supply, so the money supply swells
-#   forever.
-# - Once a year (investement_pool_borrowing) the pool gets up to +10% of that
-#   money supply at a low rate: France 561M in the pool (31 years of its
-#   private construction), Britain 686M; Belgium, Spain, Sweden ~0.
+# ACCOUNTS
+#   pops' savings S  (model: pops hold no money in the engine; kept in E&F's
+#                     pop_savings through its free offset var:pop_capital_loss_fix)
+#   treasury         (engine: gold_reserves > 0)
+#   businesses       (engine: buildings' cash = vanilla credit limit - defines)
+#   banks            (engine: the investment pool; deposits D and the banks'
+#                     debt to the central bank are model claims on it)
+#   central bank     (E&F: money_supply_state)
+#   abroad           (no stock; flows only)
+# M0 = CB reserves + treasury + S; M1 = M0 + business cash; M2 = M1 + pool
+# = money_supply, the base of E&F's currency value.
 #
-# WHAT THIS DOES (decided by the user 2026-09-30, План проекта.md, EF.39)
-# 1. Savings S keep E&F's inflow and get an outflow: what pops spend on goods
-#    and pay in taxes. The engine does not give scripts the pops' spending
-#    (the Population overview reads it from the GUI only), so:
-#      pop outlays = pops' income - what they put into the pool
-#                  ~ GDP / 12 - investment_pool_gross_income x 52 / 12.
-#    Outflow saturates: outlays x S / (S + K), K = zz_ef_savings_months
-#    months of outlays. A large stock is spent from fully, a small one is
-#    hardly touched, so S settles instead of growing forever.
-#    Applied through var:pop_capital_loss_fix (E&F's free offset of
-#    pop_savings; only the crash writes it, adding the lost capital).
-# 2. Deposits D (var:zz_ef_deposits): a target share of the pops' money
-#    (S + D) sits in banks = access x rate x trust; every month
-#    zz_ef_deposit_speed of the gap moves between S and D, both ways.
-# 3. The pool is steered towards D x the credit multiplier (3 at 2%,
-#    1.2 at 12%): banks lend more per deposit when money is cheap. Below the
-#    target the pool is topped up (bank credit), above it the excess slowly
-#    drains. Construction spending and the pops' own pool contributions are
-#    vanilla and untouched. Replaces E&F's yearly +10% and the private credit
-#    limits (scripted_effects/zz_ef_money_model.txt).
-# Money supply = M2 (EF.44): CB reserves + treasury + S + buildings' cash +
-# pool; E&F's government_loan counter is out (see COMPOSITION below). The
-# currency value is read from it; the gold parity is re-anchored once
-# (scripted_effects/zz_ef_money_model.txt).
+# WHAT THE MODEL MOVES (everything else is the engine's own and only shown)
+# 1. S towards k months of pops' income (Cambridge k, Baumol-Tobin): income
+#    ~ GDP / 12 (wages, dividends, state pay); purchases are what is left, so
+#    E&F's inflow (market demand for the currency good) no longer feeds S.
+# 2. Deposits D: S <-> pool towards a target share (access x rate x trust).
+#    Vanilla's pool contributions are pops' saving into banks too (shown as
+#    such), but are spent on construction at once, so D is only the
+#    withdrawable part.
+# 3. Interest on deposits: pool -> S at the deposit rate (key - margin).
+# 4. Bank credit is borrowed from the central bank at the key rate: the pool
+#    is steered to D x credit multiplier; below it banks borrow (debt to the
+#    CB), above it they repay; interest pool -> CB, remitted to the treasury
+#    (CB profit). Replaces credit "from nowhere" (E&F's yearly +10% of the
+#    money supply, then our multiplier alone).
 #############################################
 
-# Months of outlays pops keep in hand before they spend from savings in
-# full. Start value, to be tuned by a run.
-zz_ef_savings_months = 24
+# ---- parameters -----------------------------------------------------------
 
+# Months of income pops hold in cash (Cambridge k), and the share of the gap
+# closed per month.
+zz_ef_cash_months = 4
+zz_ef_cash_speed = 0.05
 # Share of the S-D gap that moves per month.
 zz_ef_deposit_speed = 0.04
-# Share of the gap to the pool target closed per month: up, down.
-zz_ef_pool_up_speed = 0.05
-zz_ef_pool_down_speed = 0.02
+# Deposit rate = key rate - margin, not below the floor.
+zz_ef_deposit_margin = 0.015
+zz_ef_deposit_rate_floor = 0.005
+# Share of the gap to the pool target borrowed / repaid per month.
+zz_ef_borrow_speed = 0.05
+zz_ef_repay_speed = 0.05
+zz_ef_weeks_per_month = 4.333
+
+# ---- rates ----------------------------------------------------------------
 
 # The rate the model reads: the central bank's, else E&F's neutral 6.5%.
 zz_ef_money_rate = {
@@ -58,43 +61,28 @@ zz_ef_money_rate = {
 	min = 0
 	max = 0.3
 }
+zz_ef_deposit_rate = {
+	value = zz_ef_money_rate
+	subtract = zz_ef_deposit_margin
+	min = zz_ef_deposit_rate_floor
+}
 
-# S, never negative.
+# ---- stocks ---------------------------------------------------------------
+
 zz_ef_savings = {
 	value = pop_savings
 	min = 0
 }
-
-# Pops' spending on goods + taxes per month (see 1. above).
-zz_ef_pop_outlays_month = {
-	value = gdp
-	subtract = {
-		value = investment_pool_gross_income
-		multiply = 52
-	}
-	divide = 12
-	min = 0
-}
-
-zz_ef_savings_k = {
-	value = zz_ef_pop_outlays_month
-	multiply = zz_ef_savings_months
-	min = 1
-}
-
-# Monthly outflow from savings: outlays x S / (S + K). The ratio first:
-# S x outlays (Britain 60M x 6.6M = 4e14) overflows the engine's fixed point
-# (64 bit, 5 decimals: ~9.2e13) -- 2026-09-30 it came out as 150K for 1.8M.
-zz_ef_savings_outflow = {
+# S as the model left it at the last step (E&F keeps adding its inflow to
+# pop_savings between steps; the step takes it back out).
+zz_ef_savings_base = {
 	value = zz_ef_savings
-	divide = {
-		value = zz_ef_savings
-		add = zz_ef_savings_k
+	if = {
+		limit = { has_variable = zz_ef_prev_savings }
+		value = var:zz_ef_prev_savings
 	}
-	multiply = zz_ef_pop_outlays_month
 	min = 0
 }
-
 zz_ef_deposits = {
 	value = 0
 	if = {
@@ -103,209 +91,25 @@ zz_ef_deposits = {
 	}
 	min = 0
 }
-
-# Target share of the pops' money in banks = access x rate x trust.
-# Access: literacy, and a central bank (a banking system to deposit in).
-# Banks as buildings (EF.42) will replace this proxy.
-zz_ef_deposit_access = {
-	value = 0.15
-	add = {
-		value = literacy_rate
-		multiply = 0.5
-	}
-	if = {
-		limit = { has_modifier = has_central_bank }
-		add = 0.15
-	}
-}
-# Rate: a higher rate makes cash in hand dearer (Keynes, Baumol-Tobin):
-# 0.8 at 2%, 1.05 at 7%, 1.3 at 12%.
-zz_ef_deposit_rate_factor = {
-	value = zz_ef_money_rate
-	multiply = 5
-	add = 0.7
-	max = 1.5
-}
-# Trust: halved in a crisis (depositors run).
-zz_ef_deposit_trust = {
-	value = 1
-	if = {
-		limit = {
-			OR = {
-				has_modifier = economic_instability
-				has_modifier = financial_crash
-			}
-		}
-		value = 0.5
-	}
-}
-zz_ef_deposit_share_target = {
-	value = zz_ef_deposit_access
-	multiply = zz_ef_deposit_rate_factor
-	multiply = zz_ef_deposit_trust
-	min = 0.05
-	max = 0.8
-}
-
-# Monthly move S -> D (negative: withdrawals D -> S).
-zz_ef_deposit_flow = {
-	value = zz_ef_savings
-	add = zz_ef_deposits
-	multiply = zz_ef_deposit_share_target
-	subtract = zz_ef_deposits
-	multiply = zz_ef_deposit_speed
-}
-
-# Credit multiplier: 3 at 2% and below, 1.2 at 12% and above.
-zz_ef_credit_multiplier = {
-	value = zz_ef_money_rate
-	subtract = 0.02
-	multiply = -18
-	add = 3
-	min = 1.2
-	max = 3
-}
-
-# Where the pool is steered: deposits x multiplier.
-zz_ef_pool_target = {
-	value = zz_ef_deposits
-	multiply = zz_ef_credit_multiplier
-}
-
-# Bank credit = pool above deposits (display, M2 - M1 split, EF.44).
-zz_ef_bank_credit = {
-	value = investment_pool
-	subtract = zz_ef_deposits
-}
-
-# This month's change of the pool (positive: new credit).
-zz_ef_pool_adjust = {
-	value = zz_ef_pool_target
-	subtract = investment_pool
-	if = {
-		limit = { investment_pool < zz_ef_pool_target }
-		multiply = zz_ef_pool_up_speed
-	}
-	else = {
-		multiply = zz_ef_pool_down_speed
-	}
-}
-
-# One-off seed (a new game or a running one): S to half of GDP, deposits to
-# their target share of it.
-zz_ef_savings_seed = {
-	value = gdp
-	multiply = 0.5
-}
-zz_ef_savings_seed_shift = {
-	value = zz_ef_savings_seed
-	subtract = pop_savings
-}
-zz_ef_deposits_seed = {
-	value = zz_ef_savings_seed
-	multiply = zz_ef_deposit_share_target
-}
-
-# Aggregates (EF.44), for display.
-# M1 part held by pops and buildings; M2 = the money supply E&F already sums.
-zz_ef_m2 = {
-	value = money_supply
-}
-zz_ef_m2_to_gdp = {
-	value = money_supply
-	divide = {
-		value = gdp
-		min = 1
-	}
-}
-
-# EF.31: multiplier of zz_ef_rate_private_construction (0.01 each):
-# 5 per pp under 6.5%, +-30.
-zz_ef_rate_construction_mult = {
-	value = 0.065
-	subtract = zz_ef_money_rate
-	multiply = 500
-	min = -30
-	max = 30
-}
-
-# INFLOW BY MARKET (run 2026-09-30, 1836-1840). E&F's inflow
-# (var:circulating_<currency>_c_var_2, pop_savings_monthly) is the whole
-# market's buy orders of the currency good, written to the market OWNER only:
-# Britain +2.13M a month, British India, Ontario, Bavaria 0 -- members' savings
-# melted to ~0 while owners got the whole market's. Split it by GDP share:
-# the owner keeps its share, each member gets its share of the owner's.
-zz_ef_market_gdp_share = {
-	value = 1
-	if = {
-		limit = { market.gdp > 0 }
-		value = gdp
-		divide = market.gdp
-	}
-	min = 0
-	max = 1
-}
-# Monthly correction of S: negative for the owner (gives away the members'
-# part), positive for a member.
-zz_ef_savings_market_shift = {
+zz_ef_bank_cb_debt = {
 	value = 0
 	if = {
-		limit = { market.owner = this }
-		value = pop_savings_monthly
-		multiply = {
-			value = 1
-			subtract = zz_ef_market_gdp_share
-		}
-		multiply = -1
+		limit = { has_variable = zz_ef_bank_cb_debt }
+		value = var:zz_ef_bank_cb_debt
 	}
-	else = {
-		value = market.owner.pop_savings_monthly
-		multiply = zz_ef_market_gdp_share
-	}
-}
-
-# Savings above this are E&F artifacts (a currency law change carries the old
-# counter over: Norway 1840 held 9.3 x GDP with no inflow at all).
-zz_ef_savings_cap = {
-	value = gdp
-	multiply = 2
-}
-zz_ef_savings_over_cap = {
-	value = zz_ef_savings
-	subtract = zz_ef_savings_cap
 	min = 0
 }
-
-#############################################
-# COMPOSITION OF THE MONEY SUPPLY + MONTHLY LEDGER (2026-09-30, user's
-# decisions after the 1848 run; План проекта.md, EF.39 / EF.44)
-#
-# E&F's money_circulating = pop savings + pool + building_saving +
-# government_loan. Two of those are not money:
-# - government_loan ("held by the government") is a counter: + E&F's
-#   minting each month (the same sum vanilla already pays into the treasury)
-#   + the government's loans from the central bank, - repayments. Spending
-#   never lowers it, so minted money was counted twice (in the treasury's
-#   spending, which lands with pops and buildings, and here). Loans from the
-#   central bank are debt: E&F keeps them as var:credit_at_central_bank
-#   (gold), shown apart.
-# - building_saving = vanilla `credit`, the credit LIMIT = buildings' cash
-#   reserves + COUNTRY_MIN_CREDIT_BASE + COUNTRY_MIN_CREDIT_SCALED x GDP
-#   (defines; Grey's Soft Econ Adjustments, zzz_MoG_SEA_def.txt, sets 10000 /
-#   0.01 in this playset, vanilla 100000 / 0.5).
-#   The cash part is read back with define: (zz_ef_building_cash).
-# The treasury (gold_reserves, when positive) was not counted at all; it is
-# cash held by the state -> M0.
-#   M0 = central bank reserves + treasury + pops' savings in hand
-#   M1 = M0 + buildings' cash
-#   M2 = M1 + investment pool (deposits + bank credit) = money_supply
-# Government debt is not money: vanilla principal + debt to the central bank.
-#############################################
-
+zz_ef_pool = {
+	value = investment_pool
+}
 zz_ef_treasury = {
 	value = gold_reserves
 	min = 0
 }
+# Vanilla `credit` is the credit LIMIT = buildings' cash reserves +
+# COUNTRY_MIN_CREDIT_BASE + COUNTRY_MIN_CREDIT_SCALED x GDP (defines; Grey's
+# Soft Econ Adjustments, zzz_MoG_SEA_def.txt, sets 10000 / 0.01 in this
+# playset, vanilla 100000 / 0.5). The cash part:
 zz_ef_building_cash = {
 	value = credit
 	subtract = define:NEconomy|COUNTRY_MIN_CREDIT_BASE
@@ -316,6 +120,10 @@ zz_ef_building_cash = {
 	min = 0
 }
 
+# E&F's money_circulating = pop savings + pool + building_saving (the whole
+# credit limit) + government_loan (a counter: cumulative minting, already paid
+# into the treasury, + loans from the CB, which are debt). Now: S + pool +
+# buildings' cash + treasury.
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's money_circulating
 # (script_values/00_economic_scripted_value.txt).
 REPLACE_OR_CREATE:money_circulating = {
@@ -343,6 +151,113 @@ zz_ef_m2_to_m0 = {
 		min = 1
 	}
 }
+
+# ---- 1. pops' cash --------------------------------------------------------
+
+zz_ef_gdp_month = {
+	value = gdp
+	divide = 12
+}
+zz_ef_cash_target = {
+	value = zz_ef_gdp_month
+	multiply = zz_ef_cash_months
+}
+# This month's move of S towards its target (purchases absorb the rest).
+zz_ef_cash_adjust = {
+	value = zz_ef_cash_target
+	subtract = zz_ef_savings_base
+	multiply = zz_ef_cash_speed
+}
+
+# ---- 2-3. deposits --------------------------------------------------------
+
+# Target share of the pops' money in banks = access x rate x trust.
+# Access: literacy, and a central bank (a banking system to deposit in).
+# Banks as buildings (EF.42) will replace this proxy.
+zz_ef_deposit_access = {
+	value = 0.15
+	add = {
+		value = literacy_rate
+		multiply = 0.5
+	}
+	if = {
+		limit = { has_modifier = has_central_bank }
+		add = 0.15
+	}
+}
+# A higher rate makes cash in hand dearer (Keynes, Baumol-Tobin):
+# 0.8 at 2%, 1.05 at 7%, 1.3 at 12%.
+zz_ef_deposit_rate_factor = {
+	value = zz_ef_money_rate
+	multiply = 5
+	add = 0.7
+	max = 1.5
+}
+# Trust: halved in a crisis (depositors run).
+zz_ef_deposit_trust = {
+	value = 1
+	if = {
+		limit = {
+			OR = {
+				has_modifier = economic_instability
+				has_modifier = financial_crash
+			}
+		}
+		value = 0.5
+	}
+}
+zz_ef_deposit_share_target = {
+	value = zz_ef_deposit_access
+	multiply = zz_ef_deposit_rate_factor
+	multiply = zz_ef_deposit_trust
+	min = 0.05
+	max = 0.8
+}
+# Monthly move S -> pool (negative: withdrawals, limited by the pool).
+zz_ef_deposit_flow = {
+	value = zz_ef_savings_base
+	add = zz_ef_deposits
+	multiply = zz_ef_deposit_share_target
+	subtract = zz_ef_deposits
+	multiply = zz_ef_deposit_speed
+	min = {
+		value = investment_pool
+		multiply = -1
+	}
+}
+# Interest on deposits, pool -> S, a month (not more than the pool).
+zz_ef_deposit_interest = {
+	value = zz_ef_deposits
+	multiply = zz_ef_deposit_rate
+	divide = 12
+	max = {
+		value = investment_pool
+		min = 0
+	}
+	min = 0
+}
+
+# ---- 4. bank credit from the central bank ---------------------------------
+
+# Credit multiplier: 3 at 2% and below, 1.2 at 12% and above.
+zz_ef_credit_multiplier = {
+	value = zz_ef_money_rate
+	subtract = 0.02
+	multiply = -18
+	add = 3
+	min = 1.2
+	max = 3
+}
+# Where the pool is steered: deposits x multiplier.
+zz_ef_pool_target = {
+	value = zz_ef_deposits
+	multiply = zz_ef_credit_multiplier
+}
+# Bank credit = pool above deposits (display, M2 - M1 split).
+zz_ef_bank_credit = {
+	value = investment_pool
+	subtract = zz_ef_deposits
+}
 zz_ef_pool_to_deposits = {
 	value = investment_pool
 	divide = {
@@ -350,6 +265,63 @@ zz_ef_pool_to_deposits = {
 		min = 1
 	}
 }
+# Borrowed from the central bank this month (pool under its target).
+zz_ef_cb_borrow = {
+	value = zz_ef_pool_target
+	subtract = investment_pool
+	multiply = zz_ef_borrow_speed
+	min = 0
+}
+# Repaid to the central bank this month (pool over its target), not more
+# than the debt.
+zz_ef_cb_repay = {
+	value = investment_pool
+	subtract = zz_ef_pool_target
+	multiply = zz_ef_repay_speed
+	min = 0
+	max = zz_ef_bank_cb_debt
+}
+# Interest on the banks' debt at the key rate, a month (not more than the
+# pool); remitted by the CB to the treasury.
+zz_ef_cb_interest = {
+	value = zz_ef_bank_cb_debt
+	multiply = zz_ef_money_rate
+	divide = 12
+	max = {
+		value = investment_pool
+		min = 0
+	}
+	min = 0
+}
+
+# ---- seed (a new game or a running one, once) -----------------------------
+
+zz_ef_savings_seed = {
+	value = zz_ef_cash_target
+}
+zz_ef_savings_seed_shift = {
+	value = zz_ef_savings_seed
+	subtract = pop_savings
+}
+zz_ef_deposits_seed = {
+	value = zz_ef_savings_seed
+	multiply = zz_ef_deposit_share_target
+}
+
+# ---- EF.31: the rate moves private construction ---------------------------
+
+# Multiplier of zz_ef_rate_private_construction (0.01 each): 5 per pp under
+# 6.5%, +-30.
+zz_ef_rate_construction_mult = {
+	value = 0.065
+	subtract = zz_ef_money_rate
+	multiply = 500
+	min = -30
+	max = 30
+}
+
+# ---- debt (not money) -----------------------------------------------------
+
 zz_ef_debt_principal = {
 	value = principal
 }
@@ -361,8 +333,8 @@ zz_ef_debt_cb_gold = {
 	}
 }
 
-# Ledger helpers, per month.
-zz_ef_weeks_per_month = 4.333
+# ---- engine and E&F flows, for the ledger ---------------------------------
+
 zz_ef_minting_month = {
 	value = modifier:country_minting_add
 	multiply = {
@@ -372,310 +344,35 @@ zz_ef_minting_month = {
 	multiply = zz_ef_weeks_per_month
 	min = 0
 }
-# This country's own share of the market's currency inflow (see INFLOW BY
-# MARKET): what pop savings actually received this month.
-zz_ef_savings_own_inflow = {
-	value = 0
-	if = {
-		limit = { market.owner = this }
-		value = pop_savings_monthly
-		multiply = zz_ef_market_gdp_share
-	}
-	else = {
-		value = market.owner.pop_savings_monthly
-		multiply = zz_ef_market_gdp_share
-	}
-}
-# Outflow split: taxes to the treasury ~ budget income without minting (the
-# engine has no tax total for scripts), the rest goods to buildings.
-zz_ef_taxes_month = {
-	value = income
-	multiply = zz_ef_weeks_per_month
-	subtract = zz_ef_minting_month
-	min = 0
-}
 zz_ef_pool_contrib_month = {
 	value = investment_pool_gross_income
 	multiply = zz_ef_weeks_per_month
 	min = 0
 }
-zz_ef_pool_construction_month = {
-	value = investment_pool_gross_income
-	subtract = investment_pool_net_income
+zz_ef_total_income_month = {
+	value = total_income
 	multiply = zz_ef_weeks_per_month
-	min = 0
 }
-
-# Ledger for the tooltip: flows of the last monthly step (var:zz_ef_f_*),
-# changes of each account over the month (var:zz_ef_d_*), and "other" = the
-# change not explained by the listed flows (vanilla's own flows the engine
-# does not give scripts: wages, dividends, exports, government construction
-# from the pool; timing of E&F's inflow).
-zz_ef_other_savings = {
-	value = 0
+zz_ef_total_expenses_month = {
+	value = total_expenses
+	multiply = zz_ef_weeks_per_month
+}
+# Market share by GDP (the currency good's demand of the market goes to its
+# countries by GDP).
+zz_ef_market_gdp_share = {
+	value = 1
 	if = {
-		limit = { has_variable = zz_ef_d_savings }
-		value = var:zz_ef_d_savings
-		subtract = var:zz_ef_f_inflow
-		add = var:zz_ef_f_cap
-		add = var:zz_ef_f_outflow
-		add = var:zz_ef_f_deposits
-	}
-}
-zz_ef_other_pool = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_pool }
-		value = var:zz_ef_d_pool
-		subtract = var:zz_ef_f_deposits
-		subtract = var:zz_ef_f_credit
-		subtract = var:zz_ef_f_contrib
-		add = var:zz_ef_f_construction
-	}
-}
-zz_ef_other_treasury = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_treasury }
-		value = var:zz_ef_d_treasury
-		subtract = zz_ef_v_f_taxes_all
-		subtract = var:zz_ef_f_minting
-	}
-}
-zz_ef_other_buildings = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_buildings }
-		value = var:zz_ef_d_buildings
-		subtract = var:zz_ef_f_goods
-		subtract = var:zz_ef_f_construction
-	}
-}
-# Sign-flipped flows for "to X" lines.
-zz_ef_f_outflow_neg = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_outflow }
-		value = var:zz_ef_f_outflow
-		multiply = -1
-	}
-}
-zz_ef_f_taxes_neg = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_taxes }
-		value = var:zz_ef_f_taxes
-		multiply = -1
-	}
-}
-zz_ef_f_goods_neg = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_goods }
-		value = var:zz_ef_f_goods
-		multiply = -1
-	}
-}
-zz_ef_f_deposits_neg = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_deposits }
-		value = var:zz_ef_f_deposits
-		multiply = -1
-	}
-}
-zz_ef_f_construction_neg = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_construction }
-		value = var:zz_ef_f_construction
-		multiply = -1
-	}
-}
-zz_ef_f_cap_neg = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_cap }
-		value = var:zz_ef_f_cap
-		multiply = -1
-	}
-}
-
-# Guarded reads of the ledger variables for the tooltip (0 before the first
-# monthly step, so the GUI never reads an unset variable).
-zz_ef_v_f_inflow = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_inflow }
-		value = var:zz_ef_f_inflow
-	}
-}
-zz_ef_v_f_cap = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_cap }
-		value = var:zz_ef_f_cap
-	}
-}
-zz_ef_v_f_outflow = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_outflow }
-		value = var:zz_ef_f_outflow
-	}
-}
-zz_ef_v_f_taxes = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_taxes }
-		value = var:zz_ef_f_taxes
-	}
-}
-zz_ef_v_f_goods = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_goods }
-		value = var:zz_ef_f_goods
-	}
-}
-zz_ef_v_f_deposits = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_deposits }
-		value = var:zz_ef_f_deposits
-	}
-}
-zz_ef_v_f_credit = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_credit }
-		value = var:zz_ef_f_credit
-	}
-}
-zz_ef_v_f_contrib = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_contrib }
-		value = var:zz_ef_f_contrib
-	}
-}
-zz_ef_v_f_construction = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_construction }
-		value = var:zz_ef_f_construction
-	}
-}
-zz_ef_v_f_minting = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_minting }
-		value = var:zz_ef_f_minting
-	}
-}
-zz_ef_v_d_savings = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_savings }
-		value = var:zz_ef_d_savings
-	}
-}
-zz_ef_v_d_pool = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_pool }
-		value = var:zz_ef_d_pool
-	}
-}
-zz_ef_v_d_deposits = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_deposits }
-		value = var:zz_ef_d_deposits
-	}
-}
-zz_ef_v_d_buildings = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_buildings }
-		value = var:zz_ef_d_buildings
-	}
-}
-zz_ef_v_d_treasury = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_treasury }
-		value = var:zz_ef_d_treasury
-	}
-}
-zz_ef_v_d_cb = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_cb }
-		value = var:zz_ef_d_cb
-	}
-}
-zz_ef_v_d_m2 = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_d_m2 }
-		value = var:zz_ef_d_m2
-	}
-}
-
-# 2026-09-30, screenshots of the ledger: investment_pool is an engine value,
-# not a script value -- ScriptValue('investment_pool') in the tooltip read 0.
-zz_ef_pool = {
-	value = investment_pool
-}
-# The pieces of the outlays estimate, for the savings tooltip.
-zz_ef_gdp_month = {
-	value = gdp
-	divide = 12
-}
-zz_ef_pool_contrib_month_gdp = {
-	value = investment_pool_gross_income
-	multiply = 52
-	divide = 12
-}
-# Share of pops' outlays that is taxes (for splitting the savings outflow);
-# the treasury line shows the whole estimate, uncapped.
-zz_ef_taxes_share = {
-	value = 0
-	if = {
-		limit = { zz_ef_pop_outlays_month > 0 }
-		value = zz_ef_taxes_month
-		divide = zz_ef_pop_outlays_month
+		limit = { market.gdp > 0 }
+		value = gdp
+		divide = market.gdp
 	}
 	min = 0
 	max = 1
 }
-zz_ef_v_f_taxes_all = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_taxes_all }
-		value = var:zz_ef_f_taxes_all
-	}
-}
-zz_ef_v_f_outlays = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_outlays }
-		value = var:zz_ef_f_outlays
-	}
-}
-zz_ef_v_f_outflow = {
-	value = 0
-	if = {
-		limit = { has_variable = zz_ef_f_outflow }
-		value = var:zz_ef_f_outflow
-	}
-}
-
 # Central bank reserves, month (E&F: stockpile_currency_type_1,
 # 01_economic_scripted_effects.txt:55549): var_2 = (sell - buy orders of the
 # currency good in the market) x 4 + devaluation - revaluation, market owner
-# only. Buy orders are the same money that pop savings receive (the inflow).
+# only.
 zz_ef_cb_issue_month = {
 	value = 0
 	if = {
@@ -692,8 +389,8 @@ zz_ef_cb_demand_month = {
 		multiply = 4
 	}
 }
-# Part of the market's demand that went to this country's savings, the rest to
-# the other countries of the market.
+# Bought by this country's buildings and pops, the rest by the other
+# countries of the market.
 zz_ef_cb_demand_own = {
 	value = zz_ef_cb_demand_month
 	multiply = zz_ef_market_gdp_share
@@ -719,51 +416,9 @@ zz_ef_cb_revaluation_month = {
 		abs = yes
 	}
 }
-zz_ef_other_cb = {
-	value = zz_ef_v_d_cb
-	subtract = zz_ef_cb_issue_month
-	add = zz_ef_cb_demand_month
-	subtract = zz_ef_cb_devaluation_month
-	add = zz_ef_cb_revaluation_month
-}
-
-# Reconciliation (2026-09-30, user: "first check the numbers"): the engine's
-# raw budget and money numbers, weekly, shown in the Money Supply tooltip to
-# be compared with the Money panel. Comparison triggers read as values
-# (investment_pool_gross_income already does).
-zz_ef_raw_fixed_income = { value = fixed_income }
-zz_ef_raw_total_income = { value = total_income }
-zz_ef_raw_fixed_expenses = { value = fixed_expenses }
-zz_ef_raw_total_expenses = { value = total_expenses }
-zz_ef_raw_military = { value = military_expenses }
-zz_ef_raw_income = { value = income }
-zz_ef_raw_minting_week = {
-	value = zz_ef_minting_month
-	divide = zz_ef_weeks_per_month
-}
-zz_ef_raw_tax_waste = { value = tax_waste }
-zz_ef_raw_pool_gross = { value = investment_pool_gross_income }
-zz_ef_raw_pool_net = { value = investment_pool_net_income }
-zz_ef_raw_transfers_out = { value = income_transfer_expenses }
-zz_ef_raw_export_gold = {
-	value = 0
-	if = {
-		limit = { has_variable = export_value_in_gold_week_fix }
-		value = var:export_value_in_gold_week_fix
-	}
-}
-zz_ef_raw_import_gold = {
-	value = 0
-	if = {
-		limit = { has_variable = import_value_in_gold_week_fix }
-		value = var:import_value_in_gold_week_fix
-	}
-}
-zz_ef_raw_gdp = { value = gdp }
-
-# EF.48: trade balance of the month in the national currency, from E&F's
-# trade_balance_in_gold_delta (gold; E&F's tooltip shows it as "per month"; its
-# var:..._fix copies are set only under a debt condition and read 0) /
+# Trade balance of the month in the national currency, from E&F's
+# trade_balance_in_gold_delta (gold; E&F's tooltip shows it as "per month";
+# its var:..._fix copies are set only under a debt condition and read 0) /
 # money_value_in_gold (gold per unit of currency). Positive: exports over
 # imports.
 zz_ef_trade_month = {
@@ -774,10 +429,9 @@ zz_ef_trade_month = {
 		divide = money_value_in_gold
 	}
 }
-
-# EF.48: the treasury card's "other": its change over the month minus the whole
-# budget (all income - all expenses, week x 4.333); every budget line is listed
-# in the card, so what is left is timing and loans.
+# The treasury card's "other": its change over the month minus the whole
+# budget (all income - all expenses, week x 4.333) minus the model's own
+# payments to it (CB interest remittance).
 zz_ef_other_treasury_budget = {
 	value = zz_ef_v_d_treasury
 	subtract = {
@@ -785,15 +439,79 @@ zz_ef_other_treasury_budget = {
 		subtract = total_expenses
 		multiply = zz_ef_weeks_per_month
 	}
+	subtract = zz_ef_v_f_cb_interest
 }
 
-# EF.48: the whole budget of the week x 4.333, for the treasury card's check
-# line (income / expenses not covered by any listed budget line).
-zz_ef_total_income_month = {
-	value = total_income
-	multiply = zz_ef_weeks_per_month
+# ---- reconciliation block (raw engine numbers, weekly) --------------------
+
+zz_ef_raw_fixed_income = { value = fixed_income }
+zz_ef_raw_total_income = { value = total_income }
+zz_ef_raw_fixed_expenses = { value = fixed_expenses }
+zz_ef_raw_total_expenses = { value = total_expenses }
+zz_ef_raw_military = { value = military_expenses }
+zz_ef_raw_minting_week = {
+	value = zz_ef_minting_month
+	divide = zz_ef_weeks_per_month
 }
-zz_ef_total_expenses_month = {
-	value = total_expenses
-	multiply = zz_ef_weeks_per_month
+zz_ef_raw_pool_gross = { value = investment_pool_gross_income }
+zz_ef_raw_pool_net = { value = investment_pool_net_income }
+zz_ef_raw_gdp = { value = gdp }
+
+# ---- guarded reads of the ledger variables (0 before the first step) ------
+
+zz_ef_v_f_cash = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cash } value = var:zz_ef_f_cash }
+}
+zz_ef_v_f_deposits = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_deposits } value = var:zz_ef_f_deposits }
+}
+zz_ef_v_f_dep_interest = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_dep_interest } value = var:zz_ef_f_dep_interest }
+}
+zz_ef_v_f_contrib = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_contrib } value = var:zz_ef_f_contrib }
+}
+zz_ef_v_f_cb_borrow = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_borrow } value = var:zz_ef_f_cb_borrow }
+}
+zz_ef_v_f_cb_repay = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_repay } value = var:zz_ef_f_cb_repay }
+}
+zz_ef_v_f_cb_interest = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_interest } value = var:zz_ef_f_cb_interest }
+}
+zz_ef_v_d_savings = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_savings } value = var:zz_ef_d_savings }
+}
+zz_ef_v_d_pool = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_pool } value = var:zz_ef_d_pool }
+}
+zz_ef_v_d_deposits = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_deposits } value = var:zz_ef_d_deposits }
+}
+zz_ef_v_d_buildings = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_buildings } value = var:zz_ef_d_buildings }
+}
+zz_ef_v_d_treasury = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_treasury } value = var:zz_ef_d_treasury }
+}
+zz_ef_v_d_cb = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_cb } value = var:zz_ef_d_cb }
+}
+zz_ef_v_d_m2 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_m2 } value = var:zz_ef_d_m2 }
 }

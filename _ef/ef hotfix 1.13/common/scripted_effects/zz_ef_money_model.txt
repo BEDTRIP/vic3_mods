@@ -1,5 +1,7 @@
 ﻿#############################################
-# EF.39 (2026-09-30) -- the money model, monthly step. Numbers and the why:
+# EF.39 / EF.48 (2026-09-30) -- the money model, monthly step: pops' cash
+# from flows, deposits and their interest, bank credit borrowed from the
+# central bank at the key rate. Numbers and the why:
 # script_values/zz_ef_money_model_values.txt. Called from
 # on_actions/zz_ef_money_model_on_actions.txt for every country.
 #
@@ -66,55 +68,66 @@ zz_ef_money_model_step = {
 	if = {
 		limit = { has_variable = zz_ef_money_model_seeded }
 
-		# 0. Inflow split over the market by GDP share; artifacts over 2 x GDP cut.
-		set_variable = { name = zz_ef_f_inflow value = zz_ef_savings_own_inflow }
-		change_variable = { name = pop_capital_loss_fix add = zz_ef_savings_market_shift }
-		set_variable = { name = zz_ef_f_cap value = zz_ef_savings_over_cap }
-		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_cap }
+		# EF.48 step 2-3 (2026-09-30). All amounts of this month are computed
+		# first, from the state left by the last step, then applied.
+		set_variable = { name = zz_ef_f_cash value = zz_ef_cash_adjust }
+		set_variable = { name = zz_ef_f_deposits value = zz_ef_deposit_flow }
+		set_variable = { name = zz_ef_f_dep_interest value = zz_ef_deposit_interest }
+		set_variable = { name = zz_ef_f_contrib value = zz_ef_pool_contrib_month }
 
-		# 1. Savings: outflow on goods and taxes (taxes -> treasury, goods ->
-		# buildings; for the ledger, the money itself is vanilla's).
-		set_variable = { name = zz_ef_f_outflow value = zz_ef_savings_outflow }
-		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_outflow }
-		# Split of the outflow from savings by the taxes' share of outlays;
-		# the treasury's tax line (zz_ef_f_taxes_all) is the whole estimate.
-		set_variable = { name = zz_ef_f_taxes_all value = zz_ef_taxes_month }
-		set_variable = { name = zz_ef_f_taxes value = var:zz_ef_f_outflow }
-		change_variable = { name = zz_ef_f_taxes multiply = zz_ef_taxes_share }
-		set_variable = { name = zz_ef_f_goods value = var:zz_ef_f_outflow }
-		change_variable = { name = zz_ef_f_goods subtract = var:zz_ef_f_taxes }
-		set_variable = { name = zz_ef_f_outlays value = zz_ef_pop_outlays_month }
-
-		# 2. Deposits: S <-> pool towards the target share. The money moves
-		# into (out of) the pool; D is the depositors' claim on it.
-		set_variable = {
-			name = zz_ef_f_deposits
-			value = {
-				value = zz_ef_deposit_flow
-				min = {
-					value = investment_pool
-					multiply = -1
-				}
-			}
+		# 1. Pops' cash: S = S at the last step + move to k months of income
+		# - deposits + interest. E&F's own inflow since the last step is taken
+		# back out (pop_capital_loss_fix absorbs the difference), so S follows
+		# the flows only; purchases are the rest of the pops' income.
+		set_local_variable = { name = zz_ef_s_new value = zz_ef_savings_base }
+		change_local_variable = { name = zz_ef_s_new add = var:zz_ef_f_cash }
+		change_local_variable = { name = zz_ef_s_new subtract = var:zz_ef_f_deposits }
+		change_local_variable = { name = zz_ef_s_new add = var:zz_ef_f_dep_interest }
+		if = {
+			limit = { local_var:zz_ef_s_new < 0 }
+			set_local_variable = { name = zz_ef_s_new value = 0 }
 		}
-		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_deposits }
+		# shift computed before touching the offset (pop_savings reads it)
+		set_local_variable = { name = zz_ef_s_shift value = local_var:zz_ef_s_new }
+		change_local_variable = { name = zz_ef_s_shift subtract = pop_savings }
+		change_variable = { name = pop_capital_loss_fix add = local_var:zz_ef_s_shift }
+
+		# 2. Deposits move into (out of) the pool; interest leaves the pool.
 		change_variable = { name = zz_ef_deposits add = var:zz_ef_f_deposits }
-		add_investment_pool = var:zz_ef_f_deposits
 		if = {
 			limit = { var:zz_ef_deposits < 0 }
 			set_variable = { name = zz_ef_deposits value = 0 }
 		}
+		add_investment_pool = var:zz_ef_f_deposits
+		add_investment_pool = {
+			value = var:zz_ef_f_dep_interest
+			multiply = -1
+		}
 
-		# 3. Bank credit: pool towards deposits x credit multiplier.
-		set_variable = { name = zz_ef_f_credit value = zz_ef_pool_adjust }
-		add_investment_pool = var:zz_ef_f_credit
+		# 3. Bank credit from the central bank: borrow when the pool is under
+		# deposits x multiplier, repay when over; interest at the key rate goes
+		# pool -> CB -> treasury (the CB's profit).
+		if = {
+			limit = { NOT = { has_variable = zz_ef_bank_cb_debt } }
+			set_variable = { name = zz_ef_bank_cb_debt value = 0 }
+		}
+		set_variable = { name = zz_ef_f_cb_interest value = zz_ef_cb_interest }
+		set_variable = { name = zz_ef_f_cb_borrow value = zz_ef_cb_borrow }
+		set_variable = { name = zz_ef_f_cb_repay value = zz_ef_cb_repay }
+		add_investment_pool = var:zz_ef_f_cb_borrow
+		change_variable = { name = zz_ef_bank_cb_debt add = var:zz_ef_f_cb_borrow }
+		add_investment_pool = {
+			value = var:zz_ef_f_cb_repay
+			multiply = -1
+		}
+		change_variable = { name = zz_ef_bank_cb_debt subtract = var:zz_ef_f_cb_repay }
+		add_investment_pool = {
+			value = var:zz_ef_f_cb_interest
+			multiply = -1
+		}
+		add_treasury = var:zz_ef_f_cb_interest
 
-		# 4. Vanilla flows of the pool, for the ledger.
-		set_variable = { name = zz_ef_f_contrib value = zz_ef_pool_contrib_month }
-		set_variable = { name = zz_ef_f_construction value = zz_ef_pool_construction_month }
-		set_variable = { name = zz_ef_f_minting value = zz_ef_minting_month }
-
-		# 5. Month-on-month change of each account (0 in the first month).
+		# 4. Month-on-month change of each account (0 in the first month).
 		zz_ef_money_ledger_delta = { ACC = savings VALUE = zz_ef_savings }
 		zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
 		zz_ef_money_ledger_delta = { ACC = deposits VALUE = zz_ef_deposits }
