@@ -25,12 +25,18 @@ Parameters:
     -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
                   -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
+    -AiTag        console "enable_ai <tag>" after loading, so the AI plays the player's country
+                  too (default "all"; "" to skip)
+    -NoDumps      skip the console dumps at the end (debugcountrybudgets, debugmarkets: budgets of
+                  every country by line and markets, as log files in logs/)
     -OutDir       where to put logs and screenshots (default: %TEMP%\vic3_sandbox\<timestamp>)
 #>
 param(
     [int]$RunMinutes = 5,
     [int]$LoadWaitSec = 150,
     [int]$Autosaves = 0,
+    [string]$AiTag = "all",
+    [switch]$NoDumps,
     [string]$OutDir = ""
 )
 
@@ -51,6 +57,19 @@ public static class W {
     [DllImport("user32.dll")] public static extern void keybd_event(byte vk, byte scan, uint flags, UIntPtr extra);
     [StructLayout(LayoutKind.Sequential)] public struct RECT { public int L, T, R, B; }
     [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h, out RECT r);
+    [StructLayout(LayoutKind.Sequential)] public struct KEYBDINPUT { public ushort wVk, wScan; public uint dwFlags, time; public IntPtr extra; }
+    [StructLayout(LayoutKind.Explicit, Size = 40)] public struct INPUT { [FieldOffset(0)] public uint type; [FieldOffset(8)] public KEYBDINPUT ki; }
+    [DllImport("user32.dll")] public static extern uint SendInput(uint n, INPUT[] inputs, int size);
+    // Types text as Unicode characters (WM_CHAR), whatever the keyboard layout.
+    public static void TypeText(string s) {
+        foreach (char c in s) {
+            INPUT[] a = new INPUT[2];
+            a[0].type = 1; a[0].ki.wScan = c; a[0].ki.dwFlags = 4;
+            a[1].type = 1; a[1].ki.wScan = c; a[1].ki.dwFlags = 4 | 2;
+            SendInput(2, a, Marshal.SizeOf(typeof(INPUT)));
+            System.Threading.Thread.Sleep(15);
+        }
+    }
 }
 "@
 
@@ -70,6 +89,19 @@ function Send-Key([byte]$vk, [byte]$scan) {
     Start-Sleep -Milliseconds 60
     [W]::keybd_event($vk, $scan, 2, [UIntPtr]::Zero)
     Start-Sleep -Milliseconds 200
+}
+
+# Console (debug_mode): the key left of 1 (VK_OEM_3, scan 0x29), type, Enter, close.
+function Console-Cmd($p, $cmd) {
+    Focus-Game $p
+    Send-Key 0xC0 0x29
+    Start-Sleep -Milliseconds 500
+    [W]::TypeText($cmd)
+    Start-Sleep -Milliseconds 200
+    Send-Key 0x0D 0x1C
+    Start-Sleep -Milliseconds 800
+    Send-Key 0xC0 0x29
+    Log "console: $cmd"
 }
 
 function Shot($p, $name) {
@@ -124,6 +156,7 @@ Log "window up, waiting $LoadWaitSec s for the save to load"
 Start-Sleep $LoadWaitSec
 $p = Get-Game
 Shot $p "01_loaded.png"
+if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
 
 # speed 5, unpause; verify by the date on screen, toggle pause once more if it stands
 Focus-Game $p
@@ -154,7 +187,10 @@ else {
         } else { Log "advancing" }
     }
     $p = Get-Game
-    if ($p) { Focus-Game $p; Send-Key 0x20 0x39; Start-Sleep 3; Shot $p "03_end.png" }
+    if ($p) {
+        Focus-Game $p; Send-Key 0x20 0x39; Start-Sleep 3; Shot $p "03_end.png"
+        if (-not $NoDumps) { Console-Cmd $p "debugcountrybudgets"; Console-Cmd $p "debugmarkets"; Start-Sleep 5 }
+    }
 }
 
 $p = Get-Game
@@ -164,10 +200,8 @@ if ($p) {
     if (-not $p.WaitForExit(30000)) { Log "force stop"; Stop-Process -Id $p.Id -Force }
 }
 Start-Sleep 2
-foreach ($f in "debug.log", "error.log", "game.log") {
-    $src = Join-Path $Logs $f
-    if (Test-Path $src) { Copy-Item $src (Join-Path $OutDir $f) }
-}
+# every log written during the run (debug/error/game.log, the console dumps)
+Get-ChildItem $Logs -File | Where-Object { $_.LastWriteTime -gt $t0 } | ForEach-Object { Copy-Item $_.FullName (Join-Path $OutDir $_.Name) }
 $d = Join-Path $OutDir "debug.log"
 if (Test-Path $d) {
     Select-String -Path $d -Pattern "EFW|", "EFR|" -SimpleMatch | ForEach-Object { $_.Line -replace "^.*?(EF[WR]\|)", '$1' } |
