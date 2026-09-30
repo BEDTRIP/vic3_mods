@@ -91,16 +91,20 @@ function Send-Key([byte]$vk, [byte]$scan) {
     Start-Sleep -Milliseconds 200
 }
 
-# Console (debug_mode): the key left of 1 (VK_OEM_3, scan 0x29), type, Enter, close.
+# Console (debug_mode): the key left of 1 (VK_OEM_3, scan 0x29), clear the line
+# (if the console was still open the key typed a character into it), type,
+# Enter, Escape to close. Run 2: closing with the same key left the console
+# open and the next command started with a stray "ё".
 function Console-Cmd($p, $cmd) {
     Focus-Game $p
     Send-Key 0xC0 0x29
     Start-Sleep -Milliseconds 500
+    for ($i = 0; $i -lt 3; $i++) { Send-Key 0x08 0x0E }
     [W]::TypeText($cmd)
     Start-Sleep -Milliseconds 200
     Send-Key 0x0D 0x1C
     Start-Sleep -Milliseconds 800
-    Send-Key 0xC0 0x29
+    Send-Key 0x1B 0x01
     Log "console: $cmd"
 }
 
@@ -202,9 +206,12 @@ if ($p) {
 Start-Sleep 2
 # every log written during the run (debug/error/game.log, the console dumps)
 Get-ChildItem $Logs -File | Where-Object { $_.LastWriteTime -gt $t0 } | ForEach-Object { Copy-Item $_.FullName (Join-Path $OutDir $_.Name) }
-$d = Join-Path $OutDir "debug.log"
-if (Test-Path $d) {
-    Select-String -Path $d -Pattern "EFW|", "EFR|" -SimpleMatch | ForEach-Object { $_.Line -replace "^.*?(EF[WR]\|)", '$1' } |
+# debug.log rotates at ~512 KB (debug.1.log .. debug.5.log): read the ones of
+# this run, oldest first.
+$parts = Get-ChildItem $OutDir -Filter "debug*.log" | Sort-Object LastWriteTime
+if ($parts) {
+    Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|" -SimpleMatch |
+        ForEach-Object { $_.Line -replace "^.*?(EF[WR]\|)", '$1' } |
         Set-Content -Encoding utf8 (Join-Path $OutDir "eflog.txt")
 }
 Log "done: $OutDir"
