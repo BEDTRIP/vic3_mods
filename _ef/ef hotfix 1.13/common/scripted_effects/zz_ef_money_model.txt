@@ -304,6 +304,12 @@ zz_ef_money_model_step = {
 # credit and the private banks' foreign bonds. Negative = money went to pops
 # (their income left over, wealth) or abroad inside the market.
 zz_ef_money_hook_receive = {
+	# Diagnostics: every call, also the ones that find nothing pending.
+	if = {
+		limit = { NOT = { has_global_variable = zz_ef_hook_calls } }
+		set_global_variable = { name = zz_ef_hook_calls value = 0 }
+	}
+	change_global_variable = { name = zz_ef_hook_calls add = 1 }
 	if = {
 		limit = { has_variable = zz_ef_hook_pending }
 		remove_variable = zz_ef_hook_pending

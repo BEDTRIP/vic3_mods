@@ -532,6 +532,11 @@ zz_ef_v_f_leak = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_leak } value = var:zz_ef_f_leak }
 }
+# Calls of the bridge's receiver since the start (diagnostics).
+zz_ef_hook_calls = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_hook_calls } value = global_var:zz_ef_hook_calls }
+}
 # 1 when this week's bridge data arrived, else 0.
 zz_ef_hook_ok = {
 	value = 0
