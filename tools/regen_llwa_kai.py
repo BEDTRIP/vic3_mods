@@ -265,8 +265,40 @@ def build_kai_vc_reforms():
         "# _llwa/llwa+vc done/README.md, which points back here instead of writing\n"
         "# these same three keys a second time.\n"
     )
-    write("common/ai_strategies/zzzz_llwa_kai_vc_reforms.txt",
-          header + "\n" + "\n\n".join(out_records))
+    # LLWA.10 (2026-09-25): the merge carries VC's layer. Active file = KAI x VC
+    # (what addon-LLWA players with VC need); the .off twin = KAI's own three
+    # records alone, for addon-LLWA WITHOUT Victorian Century. Both read live
+    # (rule: Правила -- сборка, "Опциональные зависимости").
+    kai_f = os.path.join(KAI, "common/ai_strategies/kai_political_strategies.txt")
+    base_records = []
+    for key in REFORM_KEYS:
+        prefix = raw_prefix(kai_f, key)
+        assert prefix in ("INJECT:", "REPLACE:", "REPLACE_OR_CREATE:"), (
+            f"unexpected prefix {prefix!r} for {key} in KAI -- re-check")
+        body = record(kai_f, key)
+        assert body, f"KAI has no {key} -- re-check the key list"
+        # REPLACE: -> REPLACE_OR_CREATE: -- same effect here: file 1 restores
+        # the vanilla floor, so the key always exists.
+        base_records.append(("REPLACE_OR_CREATE:" if prefix == "REPLACE:" else prefix) + "\n".join(body))
+    name = "zzzz_llwa_kai_vc_reforms.txt"
+    active_banner = (
+        "### === CARRIES A VC LAYER === the three reform strategies here are KAI's\n"
+        "### own tuning (needed by every addon-LLWA player with Kuromi's AI) merged\n"
+        "### with Victorian Century's. Playing addon-LLWA WITHOUT Victorian Century:\n"
+        f"### rename \"{name}.off\" to \"{name}\" (replacing this file).\n\n")
+    off_banner = (
+        "### === INACTIVE -- NO-VC VARIANT (.off) === Victoria 3 does not load\n"
+        "### unrecognized file extensions, so this file does nothing while named\n"
+        f"### \"{name}.off\". Same three reform strategies, KAI's own records only,\n"
+        "### WITHOUT Victorian Century's layer. Rename it to\n"
+        f"### \"{name}\" (replacing the active file) if you use addon-LLWA\n"
+        "### WITHOUT Victorian Century.\n\n")
+    write("common/ai_strategies/" + name,
+          active_banner + header + "\n" + "\n\n".join(out_records))
+    write("common/ai_strategies/" + name + ".off",
+          off_banner + header.replace("-- reapply the closed KAI x VC merge on three ai_strategies",
+                                      "-- KAI's own three reform strategies (no-VC variant)", 1)
+          + "\n" + "\n\n".join(base_records))
 
 
 def self_check() -> int:
@@ -294,6 +326,10 @@ def self_check() -> int:
             print(f"  FAIL {rel}: {len(doubled)} doubled prefix(es), e.g. {doubled[0]}")
             bad += 1
         category = os.path.dirname(rel)
+        if rel.endswith(".off"):
+            # inert no-VC twin (LLWA.10): the game does not load it, so its
+            # keys cannot duplicate the active file's
+            continue
         depth = 0
         for raw in text.split("\n"):
             code = raw.split("#", 1)[0]

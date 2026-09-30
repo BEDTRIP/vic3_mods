@@ -37,6 +37,15 @@ PAIRS = ['_llwa/llwa+tgr done',
 ADDON = '__addon/addon llwa'
 
 SKIP = {'.metadata', 'thumbnail.png'}
+
+# Files that live only in the addon, each with its reason (checked like the
+# compatch files: they must exist, and the rebuild must not move them away).
+ADDON_ONLY = {
+    'localization/russian/LLWA_l_russian.yml':
+        "Russian translation of LLWA's own strings. LLWA ships English text under "
+        "localization/russian/ at this same path, so the addon's file replaces it by "
+        "path. Not a compatch file -- declared 2026-09-25 (it was flagged since 02.09).",
+}
 SKIP_SUFFIX = ('.md', '.xlsx')
 
 # Repeated top-level keys the internal check would otherwise flag. Each one
@@ -100,7 +109,7 @@ def main(argv=None):
     # ---- copy ---------------------------------------------------------------
     if not a.check:
         have = walk(addon) if os.path.isdir(addon) else {}
-        protect = set(target)
+        protect = set(target) | set(ADDON_ONLY)
         stale = sorted(set(have) - protect)
         if stale:
             dump = os.path.join(addon, '_to_delete', 'rebuild_%s' % _today())
@@ -128,7 +137,11 @@ def main(argv=None):
         for r in missing + differ:
             print('      ! ' + r)
         bad += len(missing) + len(differ)
-    extra = sorted(set(walk(addon)) - set(target))
+    for r, why in sorted(ADDON_ONLY.items()):
+        ok = os.path.exists(os.path.join(addon, r))
+        print('  addon-only %s: %s -- %s' % ('declared' if ok else 'MISSING', r, why))
+        bad += 0 if ok else 1
+    extra = sorted(set(walk(addon)) - set(target) - set(ADDON_ONLY))
     print('  addon-only files: %d' % len(extra))
     for r in extra:
         print('      ! %s is in the addon but in no compatch and not declared' % r)

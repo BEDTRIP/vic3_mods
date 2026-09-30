@@ -111,7 +111,14 @@ Every number matches what the individual pair compatches' own machine matrices a
 
 ## Running it without one of the mods
 
-Victorian Century, Kuromi's AI, TGR, and E&F are all treated as permanent blocks in this set (not optional, per the plan's decisions #6/#7), so this addon does not carry the `.off`-pair / tag convention used for genuinely optional dependencies (rules file, section 8, decision #9) — unlike addon-HC's handling of Victorian Century. If any of them ever becomes optional here: `zzzz_llwa_kai_vc_reforms.txt` depends on `_vc/kai+vc done` existing; `llwa+ef done` and `llwa+morg+ef done` depend on E&F; `llwa+companies done`'s roadway/waterway/riverway additions depend on TGR/VC/HC/MoH respectively for the companies each contributes (harmless if any one is absent — `INJECT:` on a company that doesn't exist just does nothing, doesn't error).
+**Victorian Century is optional since decision #11 (26.08.2026: the HC+GoB+MoH block and Victorian Century are alternatives).** Two files carry VC, tagged 25.09.2026 (LLWA.10) per the rules file's optional-dependency convention:
+
+| file | tag | playing addon-LLWA WITHOUT Victorian Century |
+| --- | --- | --- |
+| `common/production_methods/zz_llwa_vc_rails.txt` | `VC-ONLY FILE` | delete it — LLWA's own rail bodies stand |
+| `common/ai_strategies/zzzz_llwa_kai_vc_reforms.txt` | `CARRIES A VC LAYER` | delete it and rename `zzzz_llwa_kai_vc_reforms.txt.off` to `zzzz_llwa_kai_vc_reforms.txt` (KAI's own three reform strategies) |
+
+Kuromi's AI, TGR and E&F stay permanent blocks (decisions #6/#7). If any of them ever becomes optional here: `zzzz_llwa_kai_vc_reforms.txt` depends on `_vc/kai+vc done` existing; `llwa+ef done` and `llwa+morg+ef done` depend on E&F; `llwa+companies done`'s roadway/waterway/riverway additions depend on TGR/VC/HC/MoH respectively for the companies each contributes (harmless if any one is absent — `INJECT:` on a company that doesn't exist just does nothing, doesn't error).
 
 ## Rebuilding
 

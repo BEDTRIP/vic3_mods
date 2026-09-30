@@ -5,10 +5,14 @@
 статус: done
 версии: Game 1.13 (exe 1.13.11) — Kuromi's AI 7.5, Locomotion (LLWA) 2.6.3, Victorian Century (declares no version).
 позиция: —
-файлов: 3
+файлов: 3 (+ `.off`-двойник, LLWA.10)
 генератор: tools/regen_llwa_kai.py
 зависит от: —
 -->
+
+> **25.09.2026 — LLWA.10.** `zzzz_llwa_kai_vc_reforms.txt` помечен `CARRIES A VC LAYER`, рядом
+> `zzzz_llwa_kai_vc_reforms.txt.off` — те же три стратегии реформ только из KAI (для игры без VC:
+> активный файл удалить, у `.off` убрать расширение). Оба из `tools/regen_llwa_kai.py`.
 
 ## Для мастерской
 

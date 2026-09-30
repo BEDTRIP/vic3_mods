@@ -6,9 +6,12 @@
 версии: Game 1.13 (exe 1.13.11) — Victorian Century (declares no version), Locomotion (LLWA) 2.6.3.
 позиция: —
 файлов: 1
-генератор: tools/regen_llwa_kai.py
+генератор: tools/regen_llwa_vc.py
 зависит от: —
 -->
+
+> **25.09.2026 — LLWA.10.** `zz_llwa_vc_rails.txt` помечен `VC-ONLY FILE`: без Victorian Century
+> его просто удалить. Баннер пишет `tools/regen_llwa_vc.py`.
 
 ## Для мастерской
 
