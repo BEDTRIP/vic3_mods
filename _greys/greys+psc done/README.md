@@ -10,6 +10,15 @@
 зависит от: мегапак (тела взяты из `zz_pb_ef_construction_sector.txt` / `zz_pb_ef_construction_pm.txt`), E&F (`pmg_market_liquidity`, `goods_output_manufacture_stock_add`), `_greys/greys+vc done` (слой VC на четырёх методах — там)
 -->
 
+> **25.09.2026 — перегенерировано.** Тело сектора стройки отстало от мегапака: не было запрета
+> частных секторов (EF.18 v2 — `can_build_private`, `ai_nationalization_desire` блоком) и гардов
+> молодых стран (`base_rate_percentage`). В ветке с Grey's кнопка запрета ничего не делала, а
+> молодые страны писали `Value of wrong type`. Аддон Grey's пересобран. USU 24.09 менял в
+> `yMoG_USU_construction.txt` только штат четырёх методов — их тела здесь переизданы целиком, на
+> игру не влияет.
+> **Правило:** после любой правки `zz_pb_ef_construction_sector.txt` / `zz_pb_ef_construction_pm.txt`
+> в мегапаке — `py tools/regen_greys_psc.py` и пересборка аддона Grey's.
+
 ## Для мастерской
 
 [h1]ComPatch: Grey's + PSC[/h1]

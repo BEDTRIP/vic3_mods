@@ -12,6 +12,10 @@ TRY_REPLACE:foreign_investment_rights = {
 	relations_progress_per_day = 0.5
 	relations_improvement_max = 50
 
+	# 1.13 vanilla, missing from grey_diplo's body (TGR.3)
+	max_target_involvement = 2000
+	target_involvement_applies_to = source_country
+
 	icon = "gfx/interface/icons/diplomatic_treaties_articles_icons/foreign_investment_agreement_treaties.dds"
 
 	flags = {
