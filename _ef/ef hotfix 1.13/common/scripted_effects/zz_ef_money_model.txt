@@ -1,16 +1,16 @@
-﻿#############################################
-# EF.39 / EF.48 (2026-09-30) -- the money model, monthly step: pops' cash
-# from flows, deposits and their interest, bank credit borrowed from the
-# central bank at the key rate. Numbers and the why:
-# script_values/zz_ef_money_model_values.txt. Called from
+#############################################
+# EF.39 / EF.48 (2026-09-30) -- the money model, monthly step, in the
+# engine's money: bank credit borrowed from the central bank at the key rate,
+# its interest to the treasury, and the ledger of each account's change.
+# Numbers and the why: script_values/zz_ef_money_model_values.txt. Called from
 # on_actions/zz_ef_money_model_on_actions.txt for every country.
 #
 # E&F's investement_pool_borrowing (01_economic_scripted_effects.txt:135769,
 # yearly, market owners) is replaced: its +-2..10% of the money supply a year
 # by the rate, gated by the private credit limits, is what filled rich pools
 # for decades ahead. Kept from it: the interest the private banks earn on
-# the bonds they hold (ai_privat_bank_total_interest), now while the pool is
-# under the model's target instead of under E&F's limits.
+# the foreign bonds they hold (ai_privat_bank_total_interest), while the pool
+# is under the model's target.
 #
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of investement_pool_borrowing.
 #############################################
@@ -26,30 +26,21 @@ REPLACE_OR_CREATE:investement_pool_borrowing = {
 }
 
 zz_ef_money_model_step = {
-	# One-off seed: S to half of GDP, deposits to their share of it.
+	# Gold parity re-anchor, once per change of what the money supply counts.
+	# The money supply is the engine's money now (treasury + businesses' cash +
+	# pool; since 2026-09-30 evening, version 2 -- E&F's goods counts are out),
+	# a fraction of what E&F counted, so every currency is worth several times
+	# its gold parity and the metal cover reads 200%+ (Britain 1848: 15.3 vs
+	# 7.32). E&F sets the parity itself from the value when a standard is
+	# adopted (money_value_target_valided); the same here: parity = today's
+	# value, cover back to ~100%. Metal standards with a central bank only.
 	if = {
-		limit = {
-			NOT = { has_variable = zz_ef_money_model_seeded }
-			has_variable = pop_capital_loss_fix
-		}
-		set_variable = { name = zz_ef_money_model_seeded value = 1 }
-		change_variable = { name = pop_capital_loss_fix add = zz_ef_savings_seed_shift }
-		set_variable = { name = zz_ef_deposits value = zz_ef_deposits_seed }
+		limit = { NOT = { has_variable = zz_ef_parity_version } }
+		set_variable = { name = zz_ef_parity_version value = 0 }
 	}
-
-	# One-off parity re-anchor, the step after the seed: the money supply is
-	# now M2 (a fraction of E&F's counters), so every currency is worth ~2-4x
-	# its old gold parity and the metal cover read 200%+ (Britain 1848: 15.3
-	# vs 7.32, 209%). E&F sets the parity itself from the value when a standard
-	# is adopted (money_value_target_valided); the same here: parity = today's
-	# value, cover back to ~100%. Metal standards with a central bank only
-	# (gold exchange follows its reference currency, fiat has no parity).
 	if = {
-		limit = {
-			has_variable = zz_ef_money_model_seeded
-			NOT = { has_variable = zz_ef_parity_anchored }
-		}
-		set_variable = { name = zz_ef_parity_anchored value = 1 }
+		limit = { var:zz_ef_parity_version < 2 }
+		set_variable = { name = zz_ef_parity_version value = 2 }
 		if = {
 			limit = {
 				has_modifier = has_central_bank
@@ -65,77 +56,37 @@ zz_ef_money_model_step = {
 		}
 	}
 
+	# Bank credit from the central bank: borrow when the pool is under its
+	# target, repay when over (at most the debt); interest at the key rate goes
+	# pool -> CB -> treasury (the CB's profit).
 	if = {
-		limit = { has_variable = zz_ef_money_model_seeded }
-
-		# EF.48 step 2-3 (2026-09-30). All amounts of this month are computed
-		# first, from the state left by the last step, then applied.
-		set_variable = { name = zz_ef_f_cash value = zz_ef_cash_adjust }
-		set_variable = { name = zz_ef_f_deposits value = zz_ef_deposit_flow }
-		set_variable = { name = zz_ef_f_dep_interest value = zz_ef_deposit_interest }
-		set_variable = { name = zz_ef_f_contrib value = zz_ef_pool_contrib_month }
-
-		# 1. Pops' cash: S = S at the last step + move to k months of income
-		# - deposits + interest. E&F's own inflow since the last step is taken
-		# back out (pop_capital_loss_fix absorbs the difference), so S follows
-		# the flows only; purchases are the rest of the pops' income.
-		set_local_variable = { name = zz_ef_s_new value = zz_ef_savings_base }
-		change_local_variable = { name = zz_ef_s_new add = var:zz_ef_f_cash }
-		change_local_variable = { name = zz_ef_s_new subtract = var:zz_ef_f_deposits }
-		change_local_variable = { name = zz_ef_s_new add = var:zz_ef_f_dep_interest }
-		if = {
-			limit = { local_var:zz_ef_s_new < 0 }
-			set_local_variable = { name = zz_ef_s_new value = 0 }
-		}
-		# shift computed before touching the offset (pop_savings reads it)
-		set_local_variable = { name = zz_ef_s_shift value = local_var:zz_ef_s_new }
-		change_local_variable = { name = zz_ef_s_shift subtract = pop_savings }
-		change_variable = { name = pop_capital_loss_fix add = local_var:zz_ef_s_shift }
-
-		# 2. Deposits move into (out of) the pool; interest leaves the pool.
-		change_variable = { name = zz_ef_deposits add = var:zz_ef_f_deposits }
-		if = {
-			limit = { var:zz_ef_deposits < 0 }
-			set_variable = { name = zz_ef_deposits value = 0 }
-		}
-		add_investment_pool = var:zz_ef_f_deposits
-		add_investment_pool = {
-			value = var:zz_ef_f_dep_interest
-			multiply = -1
-		}
-
-		# 3. Bank credit from the central bank: borrow when the pool is under
-		# deposits x multiplier, repay when over; interest at the key rate goes
-		# pool -> CB -> treasury (the CB's profit).
-		if = {
-			limit = { NOT = { has_variable = zz_ef_bank_cb_debt } }
-			set_variable = { name = zz_ef_bank_cb_debt value = 0 }
-		}
-		set_variable = { name = zz_ef_f_cb_interest value = zz_ef_cb_interest }
-		set_variable = { name = zz_ef_f_cb_borrow value = zz_ef_cb_borrow }
-		set_variable = { name = zz_ef_f_cb_repay value = zz_ef_cb_repay }
-		add_investment_pool = var:zz_ef_f_cb_borrow
-		change_variable = { name = zz_ef_bank_cb_debt add = var:zz_ef_f_cb_borrow }
-		add_investment_pool = {
-			value = var:zz_ef_f_cb_repay
-			multiply = -1
-		}
-		change_variable = { name = zz_ef_bank_cb_debt subtract = var:zz_ef_f_cb_repay }
-		add_investment_pool = {
-			value = var:zz_ef_f_cb_interest
-			multiply = -1
-		}
-		add_treasury = var:zz_ef_f_cb_interest
-
-		# 4. Month-on-month change of each account (0 in the first month).
-		zz_ef_money_ledger_delta = { ACC = savings VALUE = zz_ef_savings }
-		zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
-		zz_ef_money_ledger_delta = { ACC = deposits VALUE = zz_ef_deposits }
-		zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
-		zz_ef_money_ledger_delta = { ACC = treasury VALUE = zz_ef_treasury }
-		zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
-		zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
+		limit = { NOT = { has_variable = zz_ef_bank_cb_debt } }
+		set_variable = { name = zz_ef_bank_cb_debt value = 0 }
 	}
+	set_variable = { name = zz_ef_f_contrib value = zz_ef_pool_contrib_month }
+	set_variable = { name = zz_ef_f_cb_interest value = zz_ef_cb_interest }
+	set_variable = { name = zz_ef_f_cb_borrow value = zz_ef_cb_borrow }
+	set_variable = { name = zz_ef_f_cb_repay value = zz_ef_cb_repay }
+	add_investment_pool = var:zz_ef_f_cb_borrow
+	change_variable = { name = zz_ef_bank_cb_debt add = var:zz_ef_f_cb_borrow }
+	add_investment_pool = {
+		value = var:zz_ef_f_cb_repay
+		multiply = -1
+	}
+	change_variable = { name = zz_ef_bank_cb_debt subtract = var:zz_ef_f_cb_repay }
+	add_investment_pool = {
+		value = var:zz_ef_f_cb_interest
+		multiply = -1
+	}
+	add_treasury = var:zz_ef_f_cb_interest
+
+	# Month-on-month change of each account (0 in the first month).
+	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
+	zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
+	zz_ef_money_ledger_delta = { ACC = treasury VALUE = zz_ef_treasury }
+	zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
+	zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
+	zz_ef_money_ledger_delta = { ACC = bonds VALUE = zz_ef_bank_bonds }
 
 	# EF.31: the rate's share of private construction, refreshed monthly.
 	remove_modifier = zz_ef_rate_private_construction
