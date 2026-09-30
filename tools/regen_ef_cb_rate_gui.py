@@ -48,6 +48,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import re
 import os
 import sys
 
@@ -155,6 +156,61 @@ def cb_row(ind: str) -> str:
     )
 
 
+OPEN = re.compile(r"^\s*([A-Za-z_][\w]*)\s*=\s*\{")
+PROP = re.compile(r"^\s*([A-Za-z_][\w]*)\s*=\s*[^{]")
+
+
+def clean_ef_noise(body: str) -> tuple[str, list[int]]:
+    """Drop what the engine rejects in E&F's copy of the type (EF.30 cleanup,
+    2026-09-30, from logs/error.log + gui.log of the 1848 run: ~900 lines, all
+    E&F's own, none in our inserts). Returns the new body and the 0-based
+    indices of the lines touched (for the check against the logs):
+      - "nobaseline" / typo "nobaselin" in parentanchor ("Unknown anchor");
+      - align on icon / flag_icon ("Property 'align' not handled");
+      - ignoreinvisible on textbox, elide / default_format where the widget
+        does not take them (per the log: widgets other than textbox);
+      - a property repeated in the same block ("Duplicate property").
+    Nothing visible changes: the engine ignored all of these already."""
+    out, touched = [], []
+    stack: list[tuple[str, set]] = []
+    for i, line in enumerate(body.split("\n")):
+        code = line.split("#", 1)[0]
+        m_open = OPEN.match(code)
+        m_prop = PROP.match(code) if not m_open else None
+        drop = False
+        if m_prop and stack:
+            key = m_prop.group(1)
+            widget, seen = stack[-1]
+            if key == "parentanchor" and "|nobaselin" in code:
+                new = re.sub(r"\|nobaseline?\b", "", line)
+                out.append(new)
+                touched.append(i)
+                seen.add(key)
+                continue
+            if key == "align" and widget in ("icon", "flag_icon"):
+                drop = True
+            elif key == "ignoreinvisible" and widget == "textbox":
+                drop = True
+            elif key in ("elide", "default_format") and widget != "textbox":
+                drop = True
+            elif key in seen and key not in ("using", "block", "blockoverride", "onclick"):
+                drop = True
+            if not drop:
+                seen.add(key)
+        if drop:
+            touched.append(i)
+        else:
+            out.append(line)
+        # every "{" opens a block (the first one named, if the line is
+        # "name = {"), every "}" closes one
+        for k in range(code.count("{")):
+            stack.append((m_open.group(1) if (m_open and k == 0) else "?", set()))
+        for _ in range(code.count("}")):
+            if stack:
+                stack.pop()
+    return "\n".join(out), touched
+
+
 def build(src: str) -> tuple[str, str]:
     i = src.find(f"type {TYPE}")
     assert i >= 0, "type not found in E&F"
@@ -162,6 +218,10 @@ def build(src: str) -> tuple[str, str]:
     k = V._match_brace(src, j)
     body = src[i:k + 1]
     orig_sha = V.sha(body)
+
+    # 0. E&F's own engine-rejected properties (see clean_ef_noise)
+    body, touched = clean_ef_noise(body)
+    assert len(touched) > 700, f"cleanup hit {len(touched)} lines, expected ~800: E&F's type changed?"
 
     # 2. "+" button first: its commented-out line contains the "-" button's
     # line as a substring
