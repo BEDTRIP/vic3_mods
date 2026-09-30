@@ -7,8 +7,11 @@
 # 12.5: the score part is 0..10 (country_credit_score / 31), the central bank
 # institution adds 0.5 per level (5 levels, +2.5), taking loans x0.75, war and
 # heavy debt multiply it further down. A rank-1 AI is pinned to 10 by E&F.
-# The whole scale maps linearly onto 12%..2%: 0.8 pp per point.
-#   note 12.5 -> 2%, 10 -> 4%, 8.6 (USA 1836) -> 5.1%, 6 -> 7.2%, 0 -> 12%.
+# The scale 0..10 maps linearly onto 12%..2%: 1 pp per point; above 10
+# (only with the institution, 12.5 is practically out of reach) stays at 2%.
+#   note 10+ -> 2%, 8.6 (USA 1836) -> 3.4%, 6 -> 6%, 4 -> 8%, 0 -> 12%.
+# (v2 had 12.5 -> 2%, 0.8 pp per point: the top of the scale was unreachable,
+# changed 2026-09-30.)
 # A country WITHOUT a central bank has no bank to set a rate and a note
 # counted from its rank alone (1..4); it is held at 6.5%, E&F's neutral
 # zone, where the yearly pool credit is zero.
@@ -30,7 +33,7 @@ zz_ef_cb_rate_target = {
 		value = 0.12
 		subtract = {
 			value = var:country_credit_note_fixe
-			multiply = 0.008
+			multiply = 0.01
 		}
 	}
 	if = {
