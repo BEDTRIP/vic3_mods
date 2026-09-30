@@ -786,3 +786,14 @@ zz_ef_other_treasury_budget = {
 		multiply = zz_ef_weeks_per_month
 	}
 }
+
+# EF.48: the whole budget of the week x 4.333, for the treasury card's check
+# line (income / expenses not covered by any listed budget line).
+zz_ef_total_income_month = {
+	value = total_income
+	multiply = zz_ef_weeks_per_month
+}
+zz_ef_total_expenses_month = {
+	value = total_expenses
+	multiply = zz_ef_weeks_per_month
+}

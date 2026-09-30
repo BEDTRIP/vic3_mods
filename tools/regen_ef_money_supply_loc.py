@@ -199,14 +199,19 @@ FLOWS = [
     (K, P, "маршруты поставок", "supply routes", gv("GetPortConnectionExpenses"), None),
     (C, K, "[concept_budget_minting]", "[concept_budget_minting]", gt("GetMintingTrend"), None),
     (X, C, "выпуск для казны: чеканка", "issued for the treasury: minting", gt("GetMintingTrend"), None),
-    (B, K, "[concept_investment_pool]: на стройку", "[concept_investment_pool]: for construction",
-     gt("GetInvestmentFundTrend"), None),
+    # the pool's transfer to the budget for construction ("investment pool
+    # transfer"); GetInvestmentFundTrend is the pool's STOCK, not a flow
+    # (2026-09-30: it showed 335M = 77.3M x 4.333)
+    (B, K, "[concept_budget_investment_income]: на стройку", "[concept_budget_investment_income]: for construction",
+     gt("GetInvestmentIncomeTrend"), None),
     (K, X, "[concept_budget_interest] — держателям долга", "[concept_budget_interest] — to the debt holders",
      gt("GetInterestExpenseTrend"), None),
     (Z, K, "[concept_budget_diplomatic_pacts]", "[concept_budget_diplomatic_pacts]", gt("GetDiplomaticPactsIncomeTrend"), None),
     (Z, K, "[concept_budget_treaties]", "[concept_budget_treaties]", gt("GetTreatiesIncomeTrend"), None),
     (Z, K, "[concept_budget_power_bloc]", "[concept_budget_power_bloc]", gt("GetPowerBlocIncomeTrend"), None),
-    (Z, K, "[concept_budget_investment_income]", "[concept_budget_investment_income]", gt("GetInvestmentIncomeTrend"), None),
+    (Z, K, "[concept_supply_network] (сборы с участников рынка)", "[concept_supply_network] (fees from market members)",
+     gv("GetMarketFeesIncome"), None),
+    (Z, K, "[concept_tolls]", "[concept_tolls]", gv("PredictTolls"), None),
     (Z, K, "[concept_piracy]", "[concept_piracy]", gt("GetPiracyIncomeTrend"), None),
     (K, Z, "[concept_budget_diplomatic_pacts]", "[concept_budget_diplomatic_pacts]", gt("GetDiplomaticPactsExpenseTrend"), None),
     (K, Z, "[concept_budget_treaties]", "[concept_budget_treaties]", gt("GetTreatiesExpenseTrend"), None),
@@ -326,6 +331,17 @@ def nested(lang):
                         resid = f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({e}))"
             if other == X and resid:
                 L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur} {other_lab}")
+            if other == X and acc == K:
+                bin_, bout = "Country.MakeScope.ScriptValue('zz_ef_total_income_month')",                     "Country.MakeScope.ScriptValue('zz_ef_total_expenses_month')"
+                for o, dr, f in flows:
+                    if f[4][0] in ("gt", "gv"):
+                        if dr == "in":
+                            bin_ = f"Subtract_CFixedPoint({bin_}, {expr(f[4])})"
+                        else:
+                            bout = f"Subtract_CFixedPoint({bout}, {expr(f[4])})"
+                L.append(("  проверка: доходы бюджета вне строк " if ru else "  check: budget income not in any line ")
+                         + f"[{bin_}|D+=] {cur}" + (", расходы вне строк " if ru else ", expenses not in any line ")
+                         + f"[{bout}|D+=] {cur}")
         L += ["", NOTES[acc][k]]
         if acc == "savings":
             L.append((f"Траты населения в месяц (модель): {money('zz_ef_v_f_outlays')} = ВВП / 12 "
