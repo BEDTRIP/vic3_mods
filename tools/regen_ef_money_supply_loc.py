@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 EF.39 / EF.44 -- the "Money Supply" tooltip as M0 / M1 / M2, with a card per
-account: hover an account for what came in from and went out to each of the
-other accounts over the last month.
+account: hover an account for every transfer of the last month, from and to
+each of the other accounts.
 
 E&F's tooltip is 12 localization keys MONEY_SUPPLY_DESC_* (one per monetary
 standard, AI and player variants), all the same text except the data context
@@ -13,17 +13,19 @@ is rewritten. Each account line is a nested tooltip
 (#tooltippable;tooltip:[X.GetTooltipTag],key ...#!) with the account's card;
 the nested keys read the country through Country.* (the tag passes it).
 
-Card (user's layout, 2026-09-30): the change over the month, then rows 1-4 =
-the other four accounts, row 5 = outside the accounts (new money, vanilla's
-pool contributions, "other" the engine does not give scripts), each row
-"-> : +in" and "<- : -out". Amounts are from the last monthly step, so the
-rows add up to the change exactly ("other" closes the gap).
+Card (user's layout, 2026-09-30): the change over the month, then one block
+per other account and one "outside the accounts", each transfer on its own
+signed line: "← +in  what" / "→ −out  what". Amounts are from the last monthly
+step, so all lines add up to the change ("other" closes the gap).
+The main tooltip ends with a reconciliation block: the engine's raw weekly
+budget numbers, to be compared with the Money panel before the flows are
+rebuilt (decided 2026-09-30: savings from flows, a sixth account "abroad").
 
 Writes
   _ef/ef hotfix 1.13/localization/<lang>/replace/zz_ef_money_supply_replace_l_<lang>.yml
     (UTF-8 with BOM; RU and EN written, the other 9 languages get EN);
   _ef/ef hotfix 1.13/common/script_values/zz_ef_money_ledger_values.txt
-    (the card cells).
+    (one script value per card line).
 
 Usage:
     py tools/regen_ef_money_supply_loc.py
@@ -68,14 +70,15 @@ def ctx(c):
 def main_text(lang, c):
     cur, sv, money, delta, tt = ctx(c)
     gold = "@gold!"
-    if lang == "russian":
+    ru = lang == "russian"
+    if ru:
         L = dict(title="Денежная масса", total="Всего", own="В собственности страны (M2)", month="за месяц",
                  m0="M0 — наличные и деньги государства", cb="Резервы центрального банка", tr="Казна",
                  sav="Сбережения населения", m1="M1 = M0 + касса предприятий", bld="Касса предприятий",
                  m2="M2 = M1 + средства банков", bank="Средства банков", dep="вклады", cred="кредит банков",
                  mult="к вкладам, цель", mm="Денежный мультипликатор M2 / M0", other="В собственности других стран",
                  debt="Госдолг (не деньги)", princ="долг бюджета", dcb="перед центральным банком",
-                 hint="Наведите на счёт — переводы за месяц.")
+                 hint="Наведите на счёт — все переводы за месяц.")
     else:
         L = dict(title="Money Supply", total="Total", own="Owned in the country (M2)", month="this month",
                  m0="M0 — cash and state money", cb="Central bank reserves", tr="Treasury",
@@ -83,7 +86,7 @@ def main_text(lang, c):
                  m2="M2 = M1 + bank funds", bank="Bank funds", dep="deposits", cred="bank credit",
                  mult="of deposits, target", mm="Money multiplier M2 / M0", other="Owned by other countries",
                  debt="Government debt (not money)", princ="budget debt", dcb="to the central bank",
-                 hint="Hover an account for its transfers this month.")
+                 hint="Hover an account for all its transfers this month.")
     lines = [
         f"{L['title']}:",
         f"{L['total']} #v {L['title']}#!: #p {sv('total_money_supply')}#! {cur}",
@@ -102,16 +105,36 @@ def main_text(lang, c):
         f" - {L['other']}: #T {money('money_supply_stockpile_by_other_country')}#!",
         f"{L['debt']}: {L['princ']} {money('zz_ef_debt_principal')}, {L['dcb']} {sv('zz_ef_debt_cb_gold')} {gold}",
         f"#italic {L['hint']}#!",
+        "",
     ]
+    raw = [
+        ("fixed_income", "постоянные доходы", "fixed income"),
+        ("total_income", "все доходы", "total income"),
+        ("income", "income (движок)", "income (engine)"),
+        ("minting_week", "чеканка", "minting"),
+        ("fixed_expenses", "постоянные расходы", "fixed expenses"),
+        ("total_expenses", "все расходы", "total expenses"),
+        ("military", "армия", "military"),
+        ("transfers_out", "переводы по договорам", "treaty transfers"),
+        ("tax_waste", "недобранные налоги", "tax waste"),
+        ("pool_gross", "пул: приход", "pool: gross income"),
+        ("pool_net", "пул: чистый", "pool: net income"),
+    ]
+    lines.append("#b Сверка — сырые числа движка, в неделю:#!" if ru else "#b Reconciliation — engine raw numbers, weekly:#!")
+    lines.append(", ".join(f"{r[1] if ru else r[2]} {sv('zz_ef_raw_' + r[0])}" for r in raw))
+    lines.append((f"экспорт {sv('zz_ef_raw_export_gold')} {gold}, импорт {sv('zz_ef_raw_import_gold')} {gold}, "
+                  f"ВВП в год {sv('zz_ef_raw_gdp')}") if ru else
+                 (f"exports {sv('zz_ef_raw_export_gold')} {gold}, imports {sv('zz_ef_raw_import_gold')} {gold}, "
+                  f"GDP per year {sv('zz_ef_raw_gdp')}"))
     return "\\n".join(lines) + "\\n$TOOLTIP_DELIMITER$"
 
 
 # ---------------------------------------------------------------------------
 # Account cards.
-# Sources: ("var", x) a non-negative ledger variable var:zz_ef_<x>;
-# ("sv", x) a non-negative script value x;
+# A line: (dir, ru, en, source); dir "in" (money comes to this account) or
+# "out". Sources: ("var", x) var:zz_ef_<x>; ("sv", x) script value x;
 # ("pos"/"neg", "var"|"sv", x) the positive / negative part of a signed one.
-# A cell is the sum of its sources; [] is a flow the model does not see.
+# Every line is shown non-negative, with its sign from dir.
 # ---------------------------------------------------------------------------
 
 ACC_ORDER = ["savings", "treasury", "buildings", "banks", "cb"]
@@ -121,113 +144,123 @@ TITLES = {
     "buildings": ("Касса предприятий", "Business cash"),
     "banks": ("Средства банков", "Bank funds"),
     "cb": ("Резервы центрального банка", "Central bank reserves"),
+    "ext": ("Вне счетов", "Outside the accounts"),
 }
 DELTA = {"savings": "d_savings", "treasury": "d_treasury", "buildings": "d_buildings",
          "banks": "d_pool", "cb": "d_cb"}
 
-# CELLS[acc][other] = (in: sources, out: sources); other "ext" = outside.
-CELLS = {
+OTHER_POS = ("прочее — не видно скрипту", "other — not visible to scripts")
+
+LINES = {
     "savings": {
-        "treasury": ([], [("var", "f_taxes")]),
-        "buildings": ([], [("var", "f_goods")]),
-        "banks": ([("neg", "var", "f_deposits")], [("pos", "var", "f_deposits")]),
-        "cb": ([], []),
-        "ext": ([("var", "f_inflow"), ("pos", "sv", "zz_ef_other_savings")],
-                [("var", "f_cap"), ("neg", "sv", "zz_ef_other_savings")]),
+        "treasury": [("out", "налоги (оценка)", "taxes (estimate)", ("var", "f_taxes"))],
+        "buildings": [("out", "покупки товаров", "purchases of goods", ("var", "f_goods"))],
+        "banks": [("in", "изъятия вкладов", "deposit withdrawals", ("neg", "var", "f_deposits")),
+                  ("out", "вклады", "deposits", ("pos", "var", "f_deposits"))],
+        "cb": [("in", "спрос рынка на валюту — доля страны", "market demand for the currency — the country's share",
+                ("var", "f_inflow"))],
+        "ext": [("out", "срез выше 2 ВВП", "cut above 2 × GDP", ("var", "f_cap")),
+                ("in", *OTHER_POS, ("pos", "sv", "zz_ef_other_savings")),
+                ("out", *OTHER_POS, ("neg", "sv", "zz_ef_other_savings"))],
     },
     "treasury": {
-        "savings": ([("var", "f_taxes")], []),
-        "buildings": ([], []),
-        "banks": ([], []),
-        "cb": ([], []),
-        "ext": ([("var", "f_minting"), ("sv", "zz_ef_lg_taxes_rest"), ("pos", "sv", "zz_ef_other_treasury")],
-                [("neg", "sv", "zz_ef_other_treasury")]),
+        "savings": [("in", "налоги из сбережений (оценка)", "taxes from savings (estimate)", ("var", "f_taxes"))],
+        "buildings": [],
+        "banks": [],
+        "cb": [],
+        "ext": [("in", "чеканка — новые деньги", "minting — new money", ("var", "f_minting")),
+                ("in", "прочие доходы бюджета", "other budget income", ("sv", "zz_ef_lg_taxes_rest")),
+                ("in", *OTHER_POS, ("pos", "sv", "zz_ef_other_treasury")),
+                ("out", "расходы бюджета и прочее", "budget expenses and other", ("neg", "sv", "zz_ef_other_treasury"))],
     },
     "buildings": {
-        "savings": ([("var", "f_goods")], []),
-        "treasury": ([], []),
-        "banks": ([("var", "f_construction")], []),
-        "cb": ([], []),
-        "ext": ([("pos", "sv", "zz_ef_other_buildings")], [("neg", "sv", "zz_ef_other_buildings")]),
+        "savings": [("in", "покупки населения", "pops' purchases", ("var", "f_goods"))],
+        "treasury": [],
+        "banks": [("in", "стройка из пула", "construction from the pool", ("var", "f_construction"))],
+        "cb": [],
+        "ext": [("in", *OTHER_POS, ("pos", "sv", "zz_ef_other_buildings")),
+                ("out", "зарплаты, дивиденды, закупки, импорт и прочее", "wages, dividends, purchases, imports and other",
+                 ("neg", "sv", "zz_ef_other_buildings"))],
     },
     "banks": {
-        "savings": ([("pos", "var", "f_deposits")], [("neg", "var", "f_deposits")]),
-        "treasury": ([], []),
-        "buildings": ([], [("var", "f_construction")]),
-        "cb": ([], []),
-        "ext": ([("pos", "var", "f_credit"), ("var", "f_contrib"), ("pos", "sv", "zz_ef_other_pool")],
-                [("neg", "var", "f_credit"), ("neg", "sv", "zz_ef_other_pool")]),
+        "savings": [("in", "вклады", "deposits", ("pos", "var", "f_deposits")),
+                    ("out", "изъятия вкладов", "deposit withdrawals", ("neg", "var", "f_deposits"))],
+        "treasury": [],
+        "buildings": [("out", "стройка — частная и через казну", "construction — private and via the treasury",
+                       ("var", "f_construction"))],
+        "cb": [],
+        "ext": [("in", "новый кредит банков", "new bank credit", ("pos", "var", "f_credit")),
+                ("in", "взносы в пул — население и здания (ваниль)", "pool contributions — pops and buildings (vanilla)",
+                 ("var", "f_contrib")),
+                ("out", "сжатие кредита", "credit contraction", ("neg", "var", "f_credit")),
+                ("in", *OTHER_POS, ("pos", "sv", "zz_ef_other_pool")),
+                ("out", *OTHER_POS, ("neg", "sv", "zz_ef_other_pool"))],
     },
     "cb": {
-        "savings": ([], []),
-        "treasury": ([], []),
-        "buildings": ([], []),
-        "banks": ([], []),
-        "ext": ([("pos", "var", "d_cb")], [("neg", "var", "d_cb")]),
+        "savings": [("out", "в обращение: спрос рынка — доля страны", "into circulation: market demand — the country's share",
+                     ("sv", "zz_ef_cb_demand_own"))],
+        "treasury": [],
+        "buildings": [],
+        "banks": [],
+        "ext": [("in", "выпуск: продажи товара-валюты на рынке", "issue: sales of the currency good on the market",
+                 ("sv", "zz_ef_cb_issue_month")),
+                ("out", "в обращение: другим странам рынка", "into circulation: other countries of the market",
+                 ("sv", "zz_ef_cb_demand_others")),
+                ("in", "девальвация", "devaluation", ("sv", "zz_ef_cb_devaluation_month")),
+                ("out", "ревальвация", "revaluation", ("sv", "zz_ef_cb_revaluation_month")),
+                ("in", *OTHER_POS, ("pos", "sv", "zz_ef_other_cb")),
+                ("out", *OTHER_POS, ("neg", "sv", "zz_ef_other_cb"))],
     },
-}
-
-EXT = {
-    "savings": ("вне счетов: спрос на валюту / срез выше 2 ВВП, прочее",
-                "outside: currency demand / cut above 2 × GDP, other"),
-    "treasury": ("вне счетов: чеканка, прочие доходы бюджета / расходы бюджета",
-                 "outside: minting, other budget income / budget expenses"),
-    "buildings": ("вне счетов: зарплаты, дивиденды, закупки, экспорт",
-                  "outside: wages, dividends, purchases, exports"),
-    "banks": ("вне счетов: новый кредит банков, взносы в пул (ваниль) / сжатие кредита, прочее",
-              "outside: new bank credit, pool contributions (vanilla) / credit contraction, other"),
-    "cb": ("вне счетов: выпуск и выкуп по расчёту E&F", "outside: issue and buyback by E&F's reckoning"),
 }
 
 NOTES = {
-    "savings": ("Наличные у населения. Налоги и траты на товары — оценка: ВВП / 12 − взносы в пул, доля налогов — "
-                "доход бюджета без чеканки. Зарплаты и дивиденды скрипту не видны — они в «прочем» у предприятий.",
-                "Cash held by pops. Taxes and spending on goods are an estimate: GDP / 12 − pool contributions, the "
-                "taxes' share — budget income without minting. Wages and dividends are not visible to scripts — they "
-                "are in businesses' other."),
+    "savings": ("Наличные у населения — модель: денег у групп населения в движке нет. Налоги и покупки — оценка "
+                "(ВВП / 12 − взносы в пул; доля налогов — доход бюджета без чеканки).",
+                "Cash held by pops — a model: pops hold no money in the engine. Taxes and purchases are an estimate "
+                "(GDP / 12 − pool contributions; the taxes' share — budget income without minting)."),
     "treasury": ("Деньги государства — часть M0. Полный бюджет — «Деньги» в верхней панели.",
                  "State money, part of M0. The full budget: Money in the top bar."),
     "buildings": ("Денежные резервы зданий: кредитный лимит − база − доля ВВП (COUNTRY_MIN_CREDIT_*).",
                   "Buildings' cash reserves: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*)."),
-    "banks": ("Стройка — частная и через казну (перевод из пула в бюджет). Банки тянут средства к вкладам × "
-              "множитель (×3 при 2%, ×1.2 при 12%).",
-              "Construction: private and via the treasury (transfer from the pool to the budget). Banks steer "
-              "their funds to deposits × multiplier (×3 at 2%, ×1.2 at 12%)."),
-    "cb": ("Валюта, которую держит центральный банк, вне обращения.",
-           "Currency held by the central bank, out of circulation."),
+    "banks": ("Банки тянут средства к вкладам × множитель (×3 при 2%, ×1.2 при 12%).",
+              "Banks steer their funds to deposits × multiplier (×3 at 2%, ×1.2 at 12%)."),
+    "cb": ("Валюта, которую держит центральный банк, вне обращения. Выпуск и спрос — рынок товара-валюты за месяц "
+           "(E&F, у хозяина рынка).",
+           "Currency held by the central bank, out of circulation. Issue and demand: the currency good's market "
+           "this month (E&F, market owner)."),
 }
 
 
-def src_read(src):
-    """Lines of a script value adding one source (non-negative)."""
+def src_body(src):
+    """Body of a script value reading one source, non-negative."""
     if src[0] == "var":
         v = f"zz_ef_{src[1]}"
-        return f"\tif = {{\n\t\tlimit = {{ has_variable = {v} }}\n\t\tadd = {{\n\t\t\tvalue = var:{v}\n\t\t\tmin = 0\n\t\t}}\n\t}}\n"
+        return f"\tvalue = 0\n\tif = {{\n\t\tlimit = {{ has_variable = {v} }}\n\t\tvalue = var:{v}\n\t}}\n\tmin = 0\n"
     if src[0] == "sv":
-        return f"\tadd = {{\n\t\tvalue = {src[1]}\n\t\tmin = 0\n\t}}\n"
+        return f"\tvalue = {src[1]}\n\tmin = 0\n"
     sign, kind, name = src
-    flip = "\t\t\tmultiply = -1\n" if sign == "neg" else ""
+    flip = "\tmultiply = -1\n" if sign == "neg" else ""
     if kind == "var":
         v = f"zz_ef_{name}"
-        return (f"\tif = {{\n\t\tlimit = {{ has_variable = {v} }}\n\t\tadd = {{\n\t\t\tvalue = var:{v}\n"
-                f"{flip}\t\t\tmin = 0\n\t\t}}\n\t}}\n")
-    return f"\tadd = {{\n\t\tvalue = {name}\n{flip.replace(chr(9) * 3, chr(9) * 2)}\t\tmin = 0\n\t}}\n"
+        return (f"\tvalue = 0\n\tif = {{\n\t\tlimit = {{ has_variable = {v} }}\n\t\tvalue = var:{v}\n\t}}\n"
+                f"{flip}\tmin = 0\n")
+    return f"\tvalue = {name}\n{flip}\tmin = 0\n"
 
 
 def ledger_values():
     out = ["# GENERATED by tools/regen_ef_money_supply_loc.py -- do not edit by hand.",
-           "# EF.39/EF.44: cells of the account cards in the Money Supply tooltip, from the",
-           "# monthly ledger of scripted_effects/zz_ef_money_model.txt. COUNTRY scope.",
+           "# EF.39/EF.44: one script value per line of the account cards in the Money",
+           "# Supply tooltip, from the monthly ledger of scripted_effects/",
+           "# zz_ef_money_model.txt. COUNTRY scope.",
            "",
            "# Budget income without minting that did not come from pops' savings.",
            "zz_ef_lg_taxes_rest = {\n\tvalue = zz_ef_v_f_taxes_all\n\tif = {\n\t\tlimit = { has_variable = zz_ef_f_taxes }\n"
            "\t\tsubtract = var:zz_ef_f_taxes\n\t}\n\tmin = 0\n}",
            ""]
     for acc in ACC_ORDER:
-        for other, (cin, cout) in CELLS[acc].items():
-            for side, srcs in (("in", cin), ("out", cout)):
-                body = "\tvalue = 0\n" + "".join(src_read(s) for s in srcs)
-                out.append(f"zz_ef_lg_{acc}_{other}_{side} = {{\n{body}}}")
+        for other, lines in LINES[acc].items():
+            for i, (_, _, _, src) in enumerate(lines, 1):
+                out.append(f"zz_ef_lg_{acc}_{other}_{i} = {{\n{src_body(src)}}}")
         out.append("")
     return "\n".join(out) + "\n"
 
@@ -236,16 +269,21 @@ def nested(lang):
     cur, sv, money, delta, tt = ctx("Country")
     ru = lang == "russian"
     k = 0 if ru else 1
+    none = "  нет переводов, видимых скрипту" if ru else "  no transfers visible to scripts"
     d = {}
     for acc in ACC_ORDER:
         L = [f"#b {TITLES[acc][k]} {'за месяц' if ru else 'this month'}: {delta('zz_ef_v_' + DELTA[acc])}#!"]
         n = 0
         for other in [a for a in ACC_ORDER if a != acc] + ["ext"]:
             n += 1
-            name = TITLES[other][k] if other != "ext" else EXT[acc][k]
-            L.append(f"{n} {name}")
-            L.append(f"  -> : #P +{money(f'zz_ef_lg_{acc}_{other}_in')}#!")
-            L.append(f"  <- : #N −{money(f'zz_ef_lg_{acc}_{other}_out')}#!")
+            L.append(f"{n} {TITLES[other][k]}")
+            lines = LINES[acc][other]
+            if not lines:
+                L.append(none)
+            for i, (dr, lr, le, _) in enumerate(lines, 1):
+                v = money(f"zz_ef_lg_{acc}_{other}_{i}")
+                lab = lr if ru else le
+                L.append(f"  ← #P +{v}#! {lab}" if dr == "in" else f"  → #N −{v}#! {lab}")
         L += ["", NOTES[acc][k]]
         if acc == "savings":
             L.append((f"Траты населения в месяц: {money('zz_ef_v_f_outlays')} = ВВП / 12 {money('zz_ef_gdp_month')} "

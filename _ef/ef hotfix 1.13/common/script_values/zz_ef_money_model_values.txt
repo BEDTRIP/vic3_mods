@@ -671,3 +671,92 @@ zz_ef_v_f_outflow = {
 		value = var:zz_ef_f_outflow
 	}
 }
+
+# Central bank reserves, month (E&F: stockpile_currency_type_1,
+# 01_economic_scripted_effects.txt:55549): var_2 = (sell - buy orders of the
+# currency good in the market) x 4 + devaluation - revaluation, market owner
+# only. Buy orders are the same money that pop savings receive (the inflow).
+zz_ef_cb_issue_month = {
+	value = 0
+	if = {
+		limit = { market.owner = this }
+		value = market.mg:liquidity_currency.market_goods_sell_orders
+		multiply = 4
+	}
+}
+zz_ef_cb_demand_month = {
+	value = 0
+	if = {
+		limit = { market.owner = this }
+		value = market.mg:liquidity_currency.market_goods_buy_orders
+		multiply = 4
+	}
+}
+# Part of the market's demand that went to this country's savings, the rest to
+# the other countries of the market.
+zz_ef_cb_demand_own = {
+	value = zz_ef_cb_demand_month
+	multiply = zz_ef_market_gdp_share
+}
+zz_ef_cb_demand_others = {
+	value = zz_ef_cb_demand_month
+	subtract = zz_ef_cb_demand_own
+	min = 0
+}
+zz_ef_cb_devaluation_month = {
+	value = 0
+	if = {
+		limit = { has_variable = devaluation_on var:devaluation_on = 1 }
+		value = money_supply_to_add_per_month
+	}
+	min = 0
+}
+zz_ef_cb_revaluation_month = {
+	value = 0
+	if = {
+		limit = { has_variable = revaluation_on var:revaluation_on = 1 }
+		value = money_supply_to_subtract_per_month
+		abs = yes
+	}
+}
+zz_ef_other_cb = {
+	value = zz_ef_v_d_cb
+	subtract = zz_ef_cb_issue_month
+	add = zz_ef_cb_demand_month
+	subtract = zz_ef_cb_devaluation_month
+	add = zz_ef_cb_revaluation_month
+}
+
+# Reconciliation (2026-09-30, user: "first check the numbers"): the engine's
+# raw budget and money numbers, weekly, shown in the Money Supply tooltip to
+# be compared with the Money panel. Comparison triggers read as values
+# (investment_pool_gross_income already does).
+zz_ef_raw_fixed_income = { value = fixed_income }
+zz_ef_raw_total_income = { value = total_income }
+zz_ef_raw_fixed_expenses = { value = fixed_expenses }
+zz_ef_raw_total_expenses = { value = total_expenses }
+zz_ef_raw_military = { value = military_expenses }
+zz_ef_raw_income = { value = income }
+zz_ef_raw_minting_week = {
+	value = zz_ef_minting_month
+	divide = zz_ef_weeks_per_month
+}
+zz_ef_raw_tax_waste = { value = tax_waste }
+zz_ef_raw_pool_gross = { value = investment_pool_gross_income }
+zz_ef_raw_pool_net = { value = investment_pool_net_income }
+zz_ef_raw_transfers_out = { value = income_transfer_expenses }
+zz_ef_raw_export_gold = {
+	value = 0
+	if = {
+		limit = { has_variable = export_value_in_gold_week_fix }
+		value = var:export_value_in_gold_week_fix
+	}
+}
+zz_ef_raw_import_gold = {
+	value = 0
+	if = {
+		limit = { has_variable = import_value_in_gold_week_fix }
+		value = var:import_value_in_gold_week_fix
+	}
+}
+zz_ef_raw_gdp = { value = gdp }
