@@ -38,6 +38,10 @@ zz_ef_money_model_step = {
 	if = {
 		limit = { has_variable = zz_ef_money_model_seeded }
 
+		# 0. Inflow split over the market by GDP share; artifacts over 2 x GDP cut.
+		change_variable = { name = pop_capital_loss_fix add = zz_ef_savings_market_shift }
+		change_variable = { name = pop_capital_loss_fix subtract = zz_ef_savings_over_cap }
+
 		# 1. Savings: outflow on goods and taxes.
 		change_variable = { name = pop_capital_loss_fix subtract = zz_ef_savings_outflow }
 

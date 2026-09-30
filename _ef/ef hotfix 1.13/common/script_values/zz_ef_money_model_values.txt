@@ -225,3 +225,50 @@ zz_ef_rate_construction_mult = {
 	min = -30
 	max = 30
 }
+
+# INFLOW BY MARKET (run 2026-09-30, 1836-1840). E&F's inflow
+# (var:circulating_<currency>_c_var_2, pop_savings_monthly) is the whole
+# market's buy orders of the currency good, written to the market OWNER only:
+# Britain +2.13M a month, British India, Ontario, Bavaria 0 -- members' savings
+# melted to ~0 while owners got the whole market's. Split it by GDP share:
+# the owner keeps its share, each member gets its share of the owner's.
+zz_ef_market_gdp_share = {
+	value = 1
+	if = {
+		limit = { market.gdp > 0 }
+		value = gdp
+		divide = market.gdp
+	}
+	min = 0
+	max = 1
+}
+# Monthly correction of S: negative for the owner (gives away the members'
+# part), positive for a member.
+zz_ef_savings_market_shift = {
+	value = 0
+	if = {
+		limit = { market.owner = this }
+		value = pop_savings_monthly
+		multiply = {
+			value = 1
+			subtract = zz_ef_market_gdp_share
+		}
+		multiply = -1
+	}
+	else = {
+		value = market.owner.pop_savings_monthly
+		multiply = zz_ef_market_gdp_share
+	}
+}
+
+# Savings above this are E&F artifacts (a currency law change carries the old
+# counter over: Norway 1840 held 9.3 x GDP with no inflow at all).
+zz_ef_savings_cap = {
+	value = gdp
+	multiply = 2
+}
+zz_ef_savings_over_cap = {
+	value = zz_ef_savings
+	subtract = zz_ef_savings_cap
+	min = 0
+}
