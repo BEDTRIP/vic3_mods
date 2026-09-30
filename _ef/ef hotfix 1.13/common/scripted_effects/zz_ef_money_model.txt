@@ -35,27 +35,92 @@ zz_ef_money_model_step = {
 		set_variable = { name = zz_ef_deposits value = zz_ef_deposits_seed }
 	}
 
+	# One-off parity re-anchor, the step after the seed: the money supply is
+	# now M2 (a fraction of E&F's counters), so every currency is worth ~2-4x
+	# its old gold parity and the metal cover read 200%+ (Britain 1848: 15.3
+	# vs 7.32, 209%). E&F sets the parity itself from the value when a standard
+	# is adopted (money_value_target_valided); the same here: parity = today's
+	# value, cover back to ~100%. Metal standards with a central bank only
+	# (gold exchange follows its reference currency, fiat has no parity).
+	if = {
+		limit = {
+			has_variable = zz_ef_money_model_seeded
+			NOT = { has_variable = zz_ef_parity_anchored }
+		}
+		set_variable = { name = zz_ef_parity_anchored value = 1 }
+		if = {
+			limit = {
+				has_modifier = has_central_bank
+				has_variable = money_value_target_1
+				OR = {
+					has_law = law_type:law_gold_standard
+					has_law = law_type:law_silver_standard
+					has_law = law_type:law_bimetallism_standard
+				}
+			}
+			set_variable = { name = zz_ef_parity_before value = var:money_value_target_1 }
+			set_variable = { name = money_value_target_1 value = money_value_0 }
+		}
+	}
+
 	if = {
 		limit = { has_variable = zz_ef_money_model_seeded }
 
 		# 0. Inflow split over the market by GDP share; artifacts over 2 x GDP cut.
+		set_variable = { name = zz_ef_f_inflow value = zz_ef_savings_own_inflow }
 		change_variable = { name = pop_capital_loss_fix add = zz_ef_savings_market_shift }
-		change_variable = { name = pop_capital_loss_fix subtract = zz_ef_savings_over_cap }
+		set_variable = { name = zz_ef_f_cap value = zz_ef_savings_over_cap }
+		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_cap }
 
-		# 1. Savings: outflow on goods and taxes.
-		change_variable = { name = pop_capital_loss_fix subtract = zz_ef_savings_outflow }
+		# 1. Savings: outflow on goods and taxes (taxes -> treasury, goods ->
+		# buildings; for the ledger, the money itself is vanilla's).
+		set_variable = { name = zz_ef_f_outflow value = zz_ef_savings_outflow }
+		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_outflow }
+		set_variable = { name = zz_ef_f_taxes value = zz_ef_taxes_month }
+		if = {
+			limit = { var:zz_ef_f_taxes > var:zz_ef_f_outflow }
+			set_variable = { name = zz_ef_f_taxes value = var:zz_ef_f_outflow }
+		}
+		set_variable = { name = zz_ef_f_goods value = var:zz_ef_f_outflow }
+		change_variable = { name = zz_ef_f_goods subtract = var:zz_ef_f_taxes }
 
-		# 2. Deposits: S <-> D towards the target share.
-		set_local_variable = { name = zz_ef_flow value = zz_ef_deposit_flow }
-		change_variable = { name = pop_capital_loss_fix subtract = local_var:zz_ef_flow }
-		change_variable = { name = zz_ef_deposits add = local_var:zz_ef_flow }
+		# 2. Deposits: S <-> pool towards the target share. The money moves
+		# into (out of) the pool; D is the depositors' claim on it.
+		set_variable = {
+			name = zz_ef_f_deposits
+			value = {
+				value = zz_ef_deposit_flow
+				min = {
+					value = investment_pool
+					multiply = -1
+				}
+			}
+		}
+		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_deposits }
+		change_variable = { name = zz_ef_deposits add = var:zz_ef_f_deposits }
+		add_investment_pool = var:zz_ef_f_deposits
 		if = {
 			limit = { var:zz_ef_deposits < 0 }
 			set_variable = { name = zz_ef_deposits value = 0 }
 		}
 
-		# 3. Pool towards deposits x credit multiplier.
-		add_investment_pool = zz_ef_pool_adjust
+		# 3. Bank credit: pool towards deposits x credit multiplier.
+		set_variable = { name = zz_ef_f_credit value = zz_ef_pool_adjust }
+		add_investment_pool = var:zz_ef_f_credit
+
+		# 4. Vanilla flows of the pool, for the ledger.
+		set_variable = { name = zz_ef_f_contrib value = zz_ef_pool_contrib_month }
+		set_variable = { name = zz_ef_f_construction value = zz_ef_pool_construction_month }
+		set_variable = { name = zz_ef_f_minting value = zz_ef_minting_month }
+
+		# 5. Month-on-month change of each account (0 in the first month).
+		zz_ef_money_ledger_delta = { ACC = savings VALUE = zz_ef_savings }
+		zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
+		zz_ef_money_ledger_delta = { ACC = deposits VALUE = zz_ef_deposits }
+		zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
+		zz_ef_money_ledger_delta = { ACC = treasury VALUE = zz_ef_treasury }
+		zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
+		zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
 	}
 
 	# EF.31: the rate's share of private construction, refreshed monthly.
@@ -64,4 +129,18 @@ zz_ef_money_model_step = {
 		name = zz_ef_rate_private_construction
 		multiplier = zz_ef_rate_construction_mult
 	}
+}
+
+# var:zz_ef_d_<ACC> = VALUE now - VALUE a month ago; var:zz_ef_prev_<ACC> keeps
+# this month's value.
+zz_ef_money_ledger_delta = {
+	if = {
+		limit = { has_variable = zz_ef_prev_$ACC$ }
+		set_variable = { name = zz_ef_d_$ACC$ value = $VALUE$ }
+		change_variable = { name = zz_ef_d_$ACC$ subtract = var:zz_ef_prev_$ACC$ }
+	}
+	else = {
+		set_variable = { name = zz_ef_d_$ACC$ value = 0 }
+	}
+	set_variable = { name = zz_ef_prev_$ACC$ value = $VALUE$ }
 }

@@ -32,9 +32,10 @@
 #    drains. Construction spending and the pops' own pool contributions are
 #    vanilla and untouched. Replaces E&F's yearly +10% and the private credit
 #    limits (scripted_effects/zz_ef_money_model.txt).
-# Money supply stays E&F's sum -- CB reserves + S + buildings' cash + pool +
-# minted -- which with the new S and pool is M2 (EF.44); the currency value
-# is read from it, so exchange rates move (recalibrated after a run).
+# Money supply = M2 (EF.44): CB reserves + treasury + S + buildings' cash +
+# pool; E&F's government_loan counter is out (see COMPOSITION below). The
+# currency value is read from it; the gold parity is re-anchored once
+# (scripted_effects/zz_ef_money_model.txt).
 #############################################
 
 # Months of outlays pops keep in hand before they spend from savings in
@@ -271,4 +272,350 @@ zz_ef_savings_over_cap = {
 	value = zz_ef_savings
 	subtract = zz_ef_savings_cap
 	min = 0
+}
+
+#############################################
+# COMPOSITION OF THE MONEY SUPPLY + MONTHLY LEDGER (2026-09-30, user's
+# decisions after the 1848 run; План проекта.md, EF.39 / EF.44)
+#
+# E&F's money_circulating = pop savings + pool + building_saving +
+# government_loan. Two of those are not money:
+# - government_loan ("held by the government") is a counter: + E&F's
+#   minting each month (the same sum vanilla already pays into the treasury)
+#   + the government's loans from the central bank, - repayments. Spending
+#   never lowers it, so minted money was counted twice (in the treasury's
+#   spending, which lands with pops and buildings, and here). Loans from the
+#   central bank are debt: E&F keeps them as var:credit_at_central_bank
+#   (gold), shown apart.
+# - building_saving = vanilla `credit`, the credit LIMIT = buildings' cash
+#   reserves + COUNTRY_MIN_CREDIT_BASE + COUNTRY_MIN_CREDIT_SCALED x GDP
+#   (defines; MoG in this playset sets 10000 / 0.01, vanilla 100000 / 0.5).
+#   The cash part is read back with define: (zz_ef_building_cash).
+# The treasury (gold_reserves, when positive) was not counted at all; it is
+# cash held by the state -> M0.
+#   M0 = central bank reserves + treasury + pops' savings in hand
+#   M1 = M0 + buildings' cash
+#   M2 = M1 + investment pool (deposits + bank credit) = money_supply
+# Government debt is not money: vanilla principal + debt to the central bank.
+#############################################
+
+zz_ef_treasury = {
+	value = gold_reserves
+	min = 0
+}
+zz_ef_building_cash = {
+	value = credit
+	subtract = define:NEconomy|COUNTRY_MIN_CREDIT_BASE
+	subtract = {
+		value = gdp
+		multiply = define:NEconomy|COUNTRY_MIN_CREDIT_SCALED
+	}
+	min = 0
+}
+
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's money_circulating
+# (script_values/00_economic_scripted_value.txt).
+REPLACE_OR_CREATE:money_circulating = {
+	value = 0
+	add = pop_savings
+	add = private_bank_funds
+	add = zz_ef_building_cash
+	add = zz_ef_treasury
+	min = 1
+}
+
+zz_ef_m0 = {
+	value = money_supply_state
+	add = zz_ef_treasury
+	add = zz_ef_savings
+}
+zz_ef_m1 = {
+	value = zz_ef_m0
+	add = zz_ef_building_cash
+}
+zz_ef_m2_to_m0 = {
+	value = money_supply
+	divide = {
+		value = zz_ef_m0
+		min = 1
+	}
+}
+zz_ef_pool_to_deposits = {
+	value = investment_pool
+	divide = {
+		value = zz_ef_deposits
+		min = 1
+	}
+}
+zz_ef_debt_principal = {
+	value = principal
+}
+zz_ef_debt_cb_gold = {
+	value = 0
+	if = {
+		limit = { has_variable = credit_at_central_bank }
+		value = var:credit_at_central_bank
+	}
+}
+
+# Ledger helpers, per month.
+zz_ef_weeks_per_month = 4.333
+zz_ef_minting_month = {
+	value = modifier:country_minting_add
+	multiply = {
+		value = 1
+		add = modifier:country_minting_mult
+	}
+	multiply = zz_ef_weeks_per_month
+	min = 0
+}
+# This country's own share of the market's currency inflow (see INFLOW BY
+# MARKET): what pop savings actually received this month.
+zz_ef_savings_own_inflow = {
+	value = 0
+	if = {
+		limit = { market.owner = this }
+		value = pop_savings_monthly
+		multiply = zz_ef_market_gdp_share
+	}
+	else = {
+		value = market.owner.pop_savings_monthly
+		multiply = zz_ef_market_gdp_share
+	}
+}
+# Outflow split: taxes to the treasury ~ budget income without minting (the
+# engine has no tax total for scripts), the rest goods to buildings.
+zz_ef_taxes_month = {
+	value = income
+	multiply = zz_ef_weeks_per_month
+	subtract = zz_ef_minting_month
+	min = 0
+}
+zz_ef_pool_contrib_month = {
+	value = investment_pool_gross_income
+	multiply = zz_ef_weeks_per_month
+	min = 0
+}
+zz_ef_pool_construction_month = {
+	value = investment_pool_gross_income
+	subtract = investment_pool_net_income
+	multiply = zz_ef_weeks_per_month
+	min = 0
+}
+
+# Ledger for the tooltip: flows of the last monthly step (var:zz_ef_f_*),
+# changes of each account over the month (var:zz_ef_d_*), and "other" = the
+# change not explained by the listed flows (vanilla's own flows the engine
+# does not give scripts: wages, dividends, exports, government construction
+# from the pool; timing of E&F's inflow).
+zz_ef_other_savings = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_savings }
+		value = var:zz_ef_d_savings
+		subtract = var:zz_ef_f_inflow
+		add = var:zz_ef_f_cap
+		add = var:zz_ef_f_outflow
+		add = var:zz_ef_f_deposits
+	}
+}
+zz_ef_other_pool = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_pool }
+		value = var:zz_ef_d_pool
+		subtract = var:zz_ef_f_deposits
+		subtract = var:zz_ef_f_credit
+		subtract = var:zz_ef_f_contrib
+		add = var:zz_ef_f_construction
+	}
+}
+zz_ef_other_treasury = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_treasury }
+		value = var:zz_ef_d_treasury
+		subtract = var:zz_ef_f_taxes
+		subtract = var:zz_ef_f_minting
+	}
+}
+zz_ef_other_buildings = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_buildings }
+		value = var:zz_ef_d_buildings
+		subtract = var:zz_ef_f_goods
+		subtract = var:zz_ef_f_construction
+	}
+}
+# Sign-flipped flows for "to X" lines.
+zz_ef_f_outflow_neg = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_outflow }
+		value = var:zz_ef_f_outflow
+		multiply = -1
+	}
+}
+zz_ef_f_taxes_neg = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_taxes }
+		value = var:zz_ef_f_taxes
+		multiply = -1
+	}
+}
+zz_ef_f_goods_neg = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_goods }
+		value = var:zz_ef_f_goods
+		multiply = -1
+	}
+}
+zz_ef_f_deposits_neg = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_deposits }
+		value = var:zz_ef_f_deposits
+		multiply = -1
+	}
+}
+zz_ef_f_construction_neg = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_construction }
+		value = var:zz_ef_f_construction
+		multiply = -1
+	}
+}
+zz_ef_f_cap_neg = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_cap }
+		value = var:zz_ef_f_cap
+		multiply = -1
+	}
+}
+
+# Guarded reads of the ledger variables for the tooltip (0 before the first
+# monthly step, so the GUI never reads an unset variable).
+zz_ef_v_f_inflow = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_inflow }
+		value = var:zz_ef_f_inflow
+	}
+}
+zz_ef_v_f_cap = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_cap }
+		value = var:zz_ef_f_cap
+	}
+}
+zz_ef_v_f_outflow = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_outflow }
+		value = var:zz_ef_f_outflow
+	}
+}
+zz_ef_v_f_taxes = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_taxes }
+		value = var:zz_ef_f_taxes
+	}
+}
+zz_ef_v_f_goods = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_goods }
+		value = var:zz_ef_f_goods
+	}
+}
+zz_ef_v_f_deposits = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_deposits }
+		value = var:zz_ef_f_deposits
+	}
+}
+zz_ef_v_f_credit = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_credit }
+		value = var:zz_ef_f_credit
+	}
+}
+zz_ef_v_f_contrib = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_contrib }
+		value = var:zz_ef_f_contrib
+	}
+}
+zz_ef_v_f_construction = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_construction }
+		value = var:zz_ef_f_construction
+	}
+}
+zz_ef_v_f_minting = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_minting }
+		value = var:zz_ef_f_minting
+	}
+}
+zz_ef_v_d_savings = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_savings }
+		value = var:zz_ef_d_savings
+	}
+}
+zz_ef_v_d_pool = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_pool }
+		value = var:zz_ef_d_pool
+	}
+}
+zz_ef_v_d_deposits = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_deposits }
+		value = var:zz_ef_d_deposits
+	}
+}
+zz_ef_v_d_buildings = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_buildings }
+		value = var:zz_ef_d_buildings
+	}
+}
+zz_ef_v_d_treasury = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_treasury }
+		value = var:zz_ef_d_treasury
+	}
+}
+zz_ef_v_d_cb = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_cb }
+		value = var:zz_ef_d_cb
+	}
+}
+zz_ef_v_d_m2 = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_d_m2 }
+		value = var:zz_ef_d_m2
+	}
 }
