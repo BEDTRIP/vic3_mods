@@ -85,7 +85,7 @@ def main_text(lang, c):
         f"   {L['m1']}: #T {money('zz_ef_m1')}#!",
         f"    -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')})",
         f"   {L['m2']}: #T {money('money_supply')}#!",
-        f"    -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('investment_pool')}#! ({delta('zz_ef_v_d_pool')})",
+        f"    -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')})",
         f"       {L['dep']} {money('zz_ef_deposits')}, {L['cred']} {money('zz_ef_bank_credit')}: "
         f"×{sv('zz_ef_pool_to_deposits', '2')} {L['mult']} ×{sv('zz_ef_credit_multiplier', '2')}",
         f"   {L['mm']}: ×{sv('zz_ef_m2_to_m0', '2')}",
@@ -115,7 +115,11 @@ def nested(lang):
                 "",
                 "Наличные у населения. Приток — спрос рынка на валюту (E&F), делится между странами рынка по доле "
                 "ВВП. Траты на товары и налоги ≈ ВВП − взносы в пул; из большого запаса тратят целиком, из малого — "
-                "почти ничего. Налоги — оценка: доход бюджета без чеканки.",
+                "почти ничего. Доля налогов в тратах — оценка: доход бюджета без чеканки / траты населения.",
+                "",
+                f"Траты населения в месяц (оценка): {money('zz_ef_v_f_outlays')} = ВВП / 12 {money('zz_ef_gdp_month')} "
+                f"− взносы в пул {money('zz_ef_pool_contrib_month_gdp')}. Из сбережений потрачено "
+                f"{money('zz_ef_v_f_outflow')}.",
             ]),
             "zz_ef_ms_tt_banks": "\\n".join([
                 f"#b Средства банков за месяц: {delta('zz_ef_v_d_pool')}#!",
@@ -133,7 +137,7 @@ def nested(lang):
             ]),
             "zz_ef_ms_tt_treasury": "\\n".join([
                 f"#b Казна за месяц: {delta('zz_ef_v_d_treasury')}#!",
-                row("← население: налоги (оценка)", "zz_ef_v_f_taxes"),
+                row("налоги и прочие доходы бюджета (оценка)", "zz_ef_v_f_taxes_all"),
                 row("чеканка — новые деньги", "zz_ef_v_f_minting"),
                 row("прочее: расходы, пошлины, пакты, займы", "zz_ef_other_treasury"),
                 "",
@@ -169,7 +173,12 @@ def nested(lang):
             "",
             "Cash held by pops. Inflow is the market's demand for the currency (E&F), split among the market's "
             "countries by GDP share. Spending on goods and taxes ≈ GDP − pool contributions; a large stock is "
-            "spent from fully, a small one hardly at all. Taxes are an estimate: budget income without minting.",
+            "spent from fully, a small one hardly at all. The taxes' share of spending is an estimate: budget "
+            "income without minting / pops' outlays.",
+            "",
+            f"Pops' outlays per month (estimate): {money('zz_ef_v_f_outlays')} = GDP / 12 {money('zz_ef_gdp_month')} "
+            f"− pool contributions {money('zz_ef_pool_contrib_month_gdp')}. Spent from savings: "
+            f"{money('zz_ef_v_f_outflow')}.",
         ]),
         "zz_ef_ms_tt_banks": "\\n".join([
             f"#b Bank funds this month: {delta('zz_ef_v_d_pool')}#!",
@@ -187,7 +196,7 @@ def nested(lang):
         ]),
         "zz_ef_ms_tt_treasury": "\\n".join([
             f"#b Treasury this month: {delta('zz_ef_v_d_treasury')}#!",
-            row("← pops: taxes (estimate)", "zz_ef_v_f_taxes"),
+            row("taxes and other budget income (estimate)", "zz_ef_v_f_taxes_all"),
             row("minting — new money", "zz_ef_v_f_minting"),
             row("other: expenses, tariffs, pacts, loans", "zz_ef_other_treasury"),
             "",

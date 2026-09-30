@@ -76,13 +76,14 @@ zz_ef_money_model_step = {
 		# buildings; for the ledger, the money itself is vanilla's).
 		set_variable = { name = zz_ef_f_outflow value = zz_ef_savings_outflow }
 		change_variable = { name = pop_capital_loss_fix subtract = var:zz_ef_f_outflow }
-		set_variable = { name = zz_ef_f_taxes value = zz_ef_taxes_month }
-		if = {
-			limit = { var:zz_ef_f_taxes > var:zz_ef_f_outflow }
-			set_variable = { name = zz_ef_f_taxes value = var:zz_ef_f_outflow }
-		}
+		# Split of the outflow from savings by the taxes' share of outlays;
+		# the treasury's tax line (zz_ef_f_taxes_all) is the whole estimate.
+		set_variable = { name = zz_ef_f_taxes_all value = zz_ef_taxes_month }
+		set_variable = { name = zz_ef_f_taxes value = var:zz_ef_f_outflow }
+		change_variable = { name = zz_ef_f_taxes multiply = zz_ef_taxes_share }
 		set_variable = { name = zz_ef_f_goods value = var:zz_ef_f_outflow }
 		change_variable = { name = zz_ef_f_goods subtract = var:zz_ef_f_taxes }
+		set_variable = { name = zz_ef_f_outlays value = zz_ef_pop_outlays_month }
 
 		# 2. Deposits: S <-> pool towards the target share. The money moves
 		# into (out of) the pool; D is the depositors' claim on it.

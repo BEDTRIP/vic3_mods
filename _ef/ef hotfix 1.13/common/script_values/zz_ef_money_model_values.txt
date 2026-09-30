@@ -436,7 +436,7 @@ zz_ef_other_treasury = {
 	if = {
 		limit = { has_variable = zz_ef_d_treasury }
 		value = var:zz_ef_d_treasury
-		subtract = var:zz_ef_f_taxes
+		subtract = zz_ef_v_f_taxes_all
 		subtract = var:zz_ef_f_minting
 	}
 }
@@ -618,5 +618,54 @@ zz_ef_v_d_m2 = {
 	if = {
 		limit = { has_variable = zz_ef_d_m2 }
 		value = var:zz_ef_d_m2
+	}
+}
+
+# 2026-09-30, screenshots of the ledger: investment_pool is an engine value,
+# not a script value -- ScriptValue('investment_pool') in the tooltip read 0.
+zz_ef_pool = {
+	value = investment_pool
+}
+# The pieces of the outlays estimate, for the savings tooltip.
+zz_ef_gdp_month = {
+	value = gdp
+	divide = 12
+}
+zz_ef_pool_contrib_month_gdp = {
+	value = investment_pool_gross_income
+	multiply = 52
+	divide = 12
+}
+# Share of pops' outlays that is taxes (for splitting the savings outflow);
+# the treasury line shows the whole estimate, uncapped.
+zz_ef_taxes_share = {
+	value = 0
+	if = {
+		limit = { zz_ef_pop_outlays_month > 0 }
+		value = zz_ef_taxes_month
+		divide = zz_ef_pop_outlays_month
+	}
+	min = 0
+	max = 1
+}
+zz_ef_v_f_taxes_all = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_taxes_all }
+		value = var:zz_ef_f_taxes_all
+	}
+}
+zz_ef_v_f_outlays = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_outlays }
+		value = var:zz_ef_f_outlays
+	}
+}
+zz_ef_v_f_outflow = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_outflow }
+		value = var:zz_ef_f_outflow
 	}
 }
