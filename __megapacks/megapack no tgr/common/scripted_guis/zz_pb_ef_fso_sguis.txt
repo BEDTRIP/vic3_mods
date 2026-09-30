@@ -1,0 +1,133 @@
+#############################################
+# EF.18 v2 (2026-09-24) -- scripted guis of the rebuilt journal sections
+# (gui/scripted_widgets/zz_pb_ef_fso_widgets.gui): which line shows (colour
+# by sign: over the limit / index rising = red, the opposite = green), and
+# the player's ban / allow buttons. The AI presses the journal's scripted
+# buttons of the same effect (scripted_buttons/zz_pb_ef_css_private_ban_buttons.txt).
+# COUNTRY scope (the widget passes GetPlayer as root).
+#############################################
+
+zz_pb_ef_fso_bb_dyn_up = {
+	scope = country
+	is_shown = {
+		has_variable = speculative_share_1
+		zz_ef_bubble_step_eff > 0
+	}
+}
+zz_pb_ef_fso_bb_dyn_down = {
+	scope = country
+	is_shown = {
+		has_variable = speculative_share_1
+		zz_ef_bubble_step_eff < 0
+	}
+}
+zz_pb_ef_fso_bb_dyn_zero = {
+	scope = country
+	is_shown = {
+		OR = {
+			NOT = { has_variable = speculative_share_1 }
+			zz_ef_bubble_step_eff = 0
+		}
+	}
+}
+
+zz_pb_ef_fso_ob_over = {
+	scope = country
+	is_shown = {
+		has_variable = base_rate_percentage
+		zz_pb_ef_overbuild_pct > 0
+	}
+}
+zz_pb_ef_fso_ob_under = {
+	scope = country
+	is_shown = {
+		has_variable = base_rate_percentage
+		zz_pb_ef_overbuild_pct <= 0
+	}
+}
+zz_pb_ef_fso_ob_dyn_up = {
+	scope = country
+	is_shown = {
+		has_variable = base_rate_percentage
+		has_variable = speculative_share_2
+		zz_pb_ef_overbuild_step_eff > 0
+	}
+}
+zz_pb_ef_fso_ob_dyn_down = {
+	scope = country
+	is_shown = {
+		has_variable = base_rate_percentage
+		has_variable = speculative_share_2
+		zz_pb_ef_overbuild_step_eff < 0
+	}
+}
+zz_pb_ef_fso_ob_dyn_zero = {
+	scope = country
+	is_shown = {
+		OR = {
+			NOT = { has_variable = base_rate_percentage }
+			NOT = { has_variable = speculative_share_2 }
+			zz_pb_ef_overbuild_step_eff = 0
+		}
+	}
+}
+zz_pb_ef_fso_ob_target_on = {
+	scope = country
+	is_shown = {
+		has_variable = base_rate_percentage
+		zz_pb_ef_overcap_target > 0
+	}
+}
+zz_pb_ef_fso_ob_penalty = {
+	scope = country
+	is_shown = {
+		has_variable = speculative_share_2
+		var:speculative_share_2 > 0
+	}
+}
+zz_pb_ef_fso_ob_banned = {
+	scope = country
+	is_shown = {
+		has_variable = zz_pb_ef_css_private_ban
+	}
+}
+
+zz_pb_ef_css_private_ban_sgui = {
+	scope = country
+	is_shown = {
+		has_variable = base_rate_percentage
+		NOT = { has_variable = zz_pb_ef_css_private_ban }
+	}
+	is_valid = {
+		custom_tooltip = {
+			text = zz_pb_ef_css_private_ban_cooldown_tt
+			NOT = { has_variable = zz_pb_ef_css_private_ban_cooldown }
+		}
+	}
+	effect = {
+		set_variable = zz_pb_ef_css_private_ban
+		set_variable = {
+			name = zz_pb_ef_css_private_ban_cooldown
+			months = 6
+		}
+	}
+}
+zz_pb_ef_css_private_allow_sgui = {
+	scope = country
+	is_shown = {
+		has_variable = zz_pb_ef_css_private_ban
+	}
+	is_valid = {
+		custom_tooltip = {
+			text = zz_pb_ef_css_private_ban_cooldown_tt
+			NOT = { has_variable = zz_pb_ef_css_private_ban_cooldown }
+		}
+	}
+	effect = {
+		remove_variable = zz_pb_ef_css_private_ban
+		set_variable = {
+			name = zz_pb_ef_css_private_ban_cooldown
+			months = 6
+		}
+	}
+}

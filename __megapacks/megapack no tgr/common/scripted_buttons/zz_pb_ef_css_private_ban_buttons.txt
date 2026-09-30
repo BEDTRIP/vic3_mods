@@ -1,0 +1,89 @@
+#############################################
+# EF.18 v2 (2026-09-24) -- "ban private construction sectors" toggle
+#
+# Two journal buttons (financial_center_je_2, re-issued in
+# journal_entries/zz_pb_ef_financial_center_je.txt), shown one at a time,
+# AI ONLY (is_ai = yes, as E&F does with its own journal buttons): the
+# player gets the same two as widget buttons inside the construction section
+# (scripted_guis/zz_pb_ef_fso_sguis.txt), next to E&F's buttons 9-12.
+#
+# What the flag zz_pb_ef_css_private_ban does (buildings/zz_pb_ef_construction_sector.txt):
+#   - can_build_private is false: investors start no new construction sector;
+#   - ai_nationalization_desire of the sector goes up, so an AI government
+#     stops privatizing its own sectors.
+# What it cannot do: stop a PLAYER from privatizing -- the engine has no
+# trigger on privatization, only the AI's desire. Nationalization and
+# demolition buttons were considered and dropped (2026-09-24): the engine has
+# no nationalization effect, and add_building_level with a negative level
+# does not let us choose whose levels go.
+#
+# AI: bans at construction overcapacity > 25, lifts it below 10 (2026-09-25; was
+# "back to 0" -- in the 1850 run the ban stuck at France 15, USA 8: the penalty
+# settles on its target, which is rarely exactly 0).
+# A 6-month cooldown on both, so the AI does not flip it every month.
+#############################################
+
+zz_pb_ef_css_private_ban_button = {
+	name = "zz_pb_ef_css_private_ban_button"
+	desc = "zz_pb_ef_css_private_ban_button_desc"
+
+	visible = {
+		is_ai = yes
+		has_variable = base_rate_percentage
+		NOT = { has_variable = zz_pb_ef_css_private_ban }
+	}
+	possible = {
+		NOT = { has_variable = zz_pb_ef_css_private_ban_cooldown }
+	}
+	effect = {
+		set_variable = zz_pb_ef_css_private_ban
+		set_variable = {
+			name = zz_pb_ef_css_private_ban_cooldown
+			months = 6
+		}
+		custom_tooltip = zz_pb_ef_css_private_ban_button_tt
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				has_variable = speculative_share_2
+				var:speculative_share_2 > 25
+			}
+			value = 1000
+		}
+	}
+}
+
+zz_pb_ef_css_private_allow_button = {
+	name = "zz_pb_ef_css_private_allow_button"
+	desc = "zz_pb_ef_css_private_allow_button_desc"
+
+	visible = {
+		is_ai = yes
+		has_variable = zz_pb_ef_css_private_ban
+	}
+	possible = {
+		NOT = { has_variable = zz_pb_ef_css_private_ban_cooldown }
+	}
+	effect = {
+		remove_variable = zz_pb_ef_css_private_ban
+		set_variable = {
+			name = zz_pb_ef_css_private_ban_cooldown
+			months = 6
+		}
+		custom_tooltip = zz_pb_ef_css_private_allow_button_tt
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				OR = {
+					NOT = { has_variable = speculative_share_2 }
+					var:speculative_share_2 < 10
+				}
+			}
+			value = 1000
+		}
+	}
+}

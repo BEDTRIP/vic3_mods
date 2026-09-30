@@ -1,37 +1,36 @@
 ﻿#############################################
-# pb+ef: player-side speculation buttons, remapped to the unified sector.
+# pb+ef: player-side stimulus buttons 9-12 of E&F's Financial Stability
+# Office journal (financial_center_je_2), clicked from
+# gui/scripted_widgets/zz_pb_ef_fso_widgets.gui.
 #
 # E&F 04.07.2026 split these in two: common/scripted_buttons/00_ef_buttons.txt
-# is the AI branch (visible = { ... is_ai = yes }, ai_chance = 1000, fired off
-# the journal entry) and common/scripted_guis/00_financial_scripted_guis.txt is
-# the player branch, clicked from gui/scripted_widgets/00_ef_custom_widgets.gui
-# via GetScriptedGui('speculative_share_N_button').Execute.
+# is the AI branch (switched off here, scripted_buttons/zz_ef_buttons.txt) and
+# common/scripted_guis/00_financial_scripted_guis.txt the player branch.
 #
-# The earlier pb+ef build only patched the scripted_buttons copy, so the player
-# branch still ran
-#   start_privately_funded_building_construction = building_ef_private_construction
-# against a building this compatch disables (potential = { always = no } in
-# zz_pb_ef_disable_ef_private_construction.txt) -- the button lit up and built
-# nothing. This file covers the other half.
-#
-# Two edits per button, nothing else:
-#   1. build building_construction_sector instead of the disabled E&F type;
-#   2. the cap check. E&F asks "is there room for one more sector", but the
-#      effect builds 5/10/15/20 in one go, so we ask for that many free slots
-#      via pcs_construction_sector_headroom_by_base_rate
-#      (zz_pb_ef_remap_pcs_values.txt).
+# REWORKED 2026-09-25 (after the 1850 run, decided by the user). E&F's button
+# cut the base rate by 1-4% AND started 5/10/15/20 construction sectors; the
+# sectors never got built, and the button needed zero overcapacity. Now each
+# button is a pure rate cut with a price:
+#   button   cut   penalty   allowed while the penalty is below
+#     9      -1%     +10       90
+#    10      -2%     +20       80
+#    11      -3%     +30       70
+#    12      -4%     +40       60
+# so a press never takes the penalty past 100. Kept from E&F: the 12-month
+# cooldown (speculative_share_modifier_5), the monetary expansion lock (_6),
+# the bubble below 20, the rate window (above the cut + 0.1%, below 12%), the
+# down_base_rate modifier and, for 10-12, the sum locked in the government
+# fund (government_loan). Button 9 now cuts the rate for whoever presses it
+# (E&F cut only for players there; this sgui is player-only anyway).
+# Texts: localization/*/replace/zz_pb_ef_psc_l_*.yml.
 #
 # Keep in sync with 00_financial_scripted_guis.txt on every E&F update.
 #############################################
 
-REPLACE_OR_CREATE:speculative_share_9_button = { #count = 5/12mois
+REPLACE_OR_CREATE:speculative_share_9_button = { ### stimulus -1%: +10 overcapacity penalty
 	name = "speculative_share_9_button"
 	desc = "speculative_share_9_button_desc"
 
-	# is_shown = {
-	# 	var:speculative_share_1 = 0
-	# 	var:speculative_share_2 = 0
-	# }
 	is_valid = {
 		NOT = {
 			has_modifier = speculative_share_modifier_5
@@ -41,29 +40,22 @@ REPLACE_OR_CREATE:speculative_share_9_button = { #count = 5/12mois
 			text = speculative_share_5_button_tt_1
 			var:speculative_share_1 < 20
 		}
+		### 2026-09-25: was "overcapacity = 0" plus room for 5 more sectors.
+		### Now: the penalty after the press stays within 100.
 		custom_tooltip = {
 			text = speculative_share_9_button_tt_1
-			var:speculative_share_2 = 0
-		}
-		custom_tooltip = {
-			text = speculative_share_9_button_tt_2
-			pcs_construction_sector_headroom_by_base_rate >= 4
+			var:speculative_share_2 < 90
 		}
 		custom_tooltip = {
 			text = speculative_share_9_button_tt_3
 			base_rate_percentage_decimal < 12
 			base_rate_percentage_decimal > 1.10
 		}
-		#is_player = yes
 	}
 
 	effect = {
-		while = {
-			count = 5
-			random_scope_state = {
-				start_privately_funded_building_construction = building_construction_sector
-			}
-		}
+		### 2026-09-25: no sectors started (the private queue never built
+		### them) and no "expansion block" line.
 		add_modifier = {
 			name = speculative_share_modifier_5
 			months = 12
@@ -75,33 +67,35 @@ REPLACE_OR_CREATE:speculative_share_9_button = { #count = 5/12mois
 		custom_tooltip = {
 			text = speculative_share_9_button_tt_effect_1
 		}
-		# custom_tooltip = {
-		# 	text = speculative_share_9_button_tt_effect_2
-		# }
-		if = { #protection de l'IA
-			limit = {
-				is_player = yes
-			}
-			change_variable = {
-				name = base_rate_percentage
-				subtract =  0.01
-			}
-			add_modifier = {
-				name = down_base_rate
-				months = 6
+		change_variable = {
+			name = base_rate_percentage
+			subtract = 0.01
+		}
+		add_modifier = {
+			name = down_base_rate
+			months = 6
+		}
+		### The price of cheap credit: +10 points of the overcapacity penalty
+		### per 1% of the cut. It then goes back to its target by the usual
+		### 2 / 1 points a month (on_actions/zz_pb_ef_overbuild_counter.txt).
+		change_variable = {
+			name = speculative_share_2
+			add = 10
+		}
+		if = {
+			limit = { var:speculative_share_2 > 100 }
+			set_variable = {
+				name = speculative_share_2
+				value = 100
 			}
 		}
 	}
 }
 
-REPLACE_OR_CREATE:speculative_share_10_button = { #count = 10/18mois
+REPLACE_OR_CREATE:speculative_share_10_button = { ### stimulus -2%: +20 overcapacity penalty
 	name = "speculative_share_10_button"
 	desc = "speculative_share_10_button_desc"
 
-	# is_shown = {
-	# 	var:speculative_share_1 = 0
-	# 	var:speculative_share_2 = 0
-	# }
 	is_valid = {
 		NOT = {
 			has_modifier = speculative_share_modifier_5
@@ -111,29 +105,22 @@ REPLACE_OR_CREATE:speculative_share_10_button = { #count = 10/18mois
 			text = speculative_share_5_button_tt_1
 			var:speculative_share_1 < 20
 		}
+		### 2026-09-25: was "overcapacity = 0" plus room for 10 more sectors.
+		### Now: the penalty after the press stays within 100.
 		custom_tooltip = {
 			text = speculative_share_10_button_tt_1
-			var:speculative_share_2 = 0
-		}
-		custom_tooltip = {
-			text = speculative_share_10_button_tt_2
-			pcs_construction_sector_headroom_by_base_rate >= 9
+			var:speculative_share_2 < 80
 		}
 		custom_tooltip = {
 			text = speculative_share_10_button_tt_3
 			base_rate_percentage_decimal < 12
 			base_rate_percentage_decimal > 2.10
 		}
-		#is_player = yes
 	}
 
 	effect = {
-		while = {
-			count = 10
-			random_scope_state = {
-				start_privately_funded_building_construction = building_construction_sector
-			}
-		}
+		### 2026-09-25: no sectors started (the private queue never built
+		### them) and no "expansion block" line.
 		add_modifier = {
 			name = speculative_share_modifier_5
 			months = 12
@@ -150,7 +137,7 @@ REPLACE_OR_CREATE:speculative_share_10_button = { #count = 10/18mois
 		}
 		change_variable = {
 			name = base_rate_percentage
-			subtract =  0.02
+			subtract = 0.02
 		}
 		add_modifier = {
 			name = down_base_rate
@@ -160,17 +147,27 @@ REPLACE_OR_CREATE:speculative_share_10_button = { #count = 10/18mois
 			name = government_loan
 			subtract = private_bank_funds_proportion_by_psc_10_by_rarity
 		}
+		### The price of cheap credit: +10 points of the overcapacity penalty
+		### per 1% of the cut. It then goes back to its target by the usual
+		### 2 / 1 points a month (on_actions/zz_pb_ef_overbuild_counter.txt).
+		change_variable = {
+			name = speculative_share_2
+			add = 20
+		}
+		if = {
+			limit = { var:speculative_share_2 > 100 }
+			set_variable = {
+				name = speculative_share_2
+				value = 100
+			}
+		}
 	}
 }
 
-REPLACE_OR_CREATE:speculative_share_11_button = { #count = 15/24mois
+REPLACE_OR_CREATE:speculative_share_11_button = { ### stimulus -3%: +30 overcapacity penalty
 	name = "speculative_share_11_button"
 	desc = "speculative_share_11_button_desc"
 
-	# is_shown = {
-	# 	var:speculative_share_1 = 0
-	# 	var:speculative_share_2 = 0
-	# }
 	is_valid = {
 		NOT = {
 			has_modifier = speculative_share_modifier_5
@@ -180,29 +177,22 @@ REPLACE_OR_CREATE:speculative_share_11_button = { #count = 15/24mois
 			text = speculative_share_5_button_tt_1
 			var:speculative_share_1 < 20
 		}
+		### 2026-09-25: was "overcapacity = 0" plus room for 15 more sectors.
+		### Now: the penalty after the press stays within 100.
 		custom_tooltip = {
 			text = speculative_share_11_button_tt_1
-			var:speculative_share_2 = 0
-		}
-		custom_tooltip = {
-			text = speculative_share_11_button_tt_2
-			pcs_construction_sector_headroom_by_base_rate >= 14
+			var:speculative_share_2 < 70
 		}
 		custom_tooltip = {
 			text = speculative_share_11_button_tt_3
 			base_rate_percentage_decimal < 12
 			base_rate_percentage_decimal > 3.10
 		}
-		#is_player = yes
 	}
 
 	effect = {
-		while = {
-			count = 15
-			random_scope_state = {
-				start_privately_funded_building_construction = building_construction_sector
-			}
-		}
+		### 2026-09-25: no sectors started (the private queue never built
+		### them) and no "expansion block" line.
 		add_modifier = {
 			name = speculative_share_modifier_5
 			months = 12
@@ -219,7 +209,7 @@ REPLACE_OR_CREATE:speculative_share_11_button = { #count = 15/24mois
 		}
 		change_variable = {
 			name = base_rate_percentage
-			subtract =  0.03
+			subtract = 0.03
 		}
 		add_modifier = {
 			name = down_base_rate
@@ -229,17 +219,27 @@ REPLACE_OR_CREATE:speculative_share_11_button = { #count = 15/24mois
 			name = government_loan
 			subtract = private_bank_funds_proportion_by_psc_15_by_rarity
 		}
+		### The price of cheap credit: +10 points of the overcapacity penalty
+		### per 1% of the cut. It then goes back to its target by the usual
+		### 2 / 1 points a month (on_actions/zz_pb_ef_overbuild_counter.txt).
+		change_variable = {
+			name = speculative_share_2
+			add = 30
+		}
+		if = {
+			limit = { var:speculative_share_2 > 100 }
+			set_variable = {
+				name = speculative_share_2
+				value = 100
+			}
+		}
 	}
 }
 
-REPLACE_OR_CREATE:speculative_share_12_button = { #count = 20/30mois
+REPLACE_OR_CREATE:speculative_share_12_button = { ### stimulus -4%: +40 overcapacity penalty
 	name = "speculative_share_12_button"
 	desc = "speculative_share_12_button_desc"
 
-	# is_shown = {
-	# 	var:speculative_share_1 = 0
-	# 	var:speculative_share_2 = 0
-	# }
 	is_valid = {
 		NOT = {
 			has_modifier = speculative_share_modifier_5
@@ -249,29 +249,22 @@ REPLACE_OR_CREATE:speculative_share_12_button = { #count = 20/30mois
 			text = speculative_share_5_button_tt_1
 			var:speculative_share_1 < 20
 		}
+		### 2026-09-25: was "overcapacity = 0" plus room for 20 more sectors.
+		### Now: the penalty after the press stays within 100.
 		custom_tooltip = {
 			text = speculative_share_12_button_tt_1
-			var:speculative_share_2 = 0
-		}
-		custom_tooltip = {
-			text = speculative_share_12_button_tt_2
-			pcs_construction_sector_headroom_by_base_rate >= 19
+			var:speculative_share_2 < 60
 		}
 		custom_tooltip = {
 			text = speculative_share_12_button_tt_3
 			base_rate_percentage_decimal < 12
 			base_rate_percentage_decimal > 4.10
 		}
-		#is_player = yes
 	}
 
 	effect = {
-		while = {
-			count = 20
-			random_scope_state = {
-				start_privately_funded_building_construction = building_construction_sector
-			}
-		}
+		### 2026-09-25: no sectors started (the private queue never built
+		### them) and no "expansion block" line.
 		add_modifier = {
 			name = speculative_share_modifier_5
 			months = 12
@@ -288,7 +281,7 @@ REPLACE_OR_CREATE:speculative_share_12_button = { #count = 20/30mois
 		}
 		change_variable = {
 			name = base_rate_percentage
-			subtract =  0.04
+			subtract = 0.04
 		}
 		add_modifier = {
 			name = down_base_rate
@@ -298,6 +291,19 @@ REPLACE_OR_CREATE:speculative_share_12_button = { #count = 20/30mois
 			name = government_loan
 			subtract = private_bank_funds_proportion_by_psc_20_by_rarity
 		}
+		### The price of cheap credit: +10 points of the overcapacity penalty
+		### per 1% of the cut. It then goes back to its target by the usual
+		### 2 / 1 points a month (on_actions/zz_pb_ef_overbuild_counter.txt).
+		change_variable = {
+			name = speculative_share_2
+			add = 40
+		}
+		if = {
+			limit = { var:speculative_share_2 > 100 }
+			set_variable = {
+				name = speculative_share_2
+				value = 100
+			}
+		}
 	}
 }
-

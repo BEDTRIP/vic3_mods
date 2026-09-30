@@ -27,17 +27,25 @@
 #   modern_financial_instruments     - same
 #   (checked 21.08.2026)
 #
-# KNOWN, NOT DECIDED (24.09.2026): state_max_trade_advantage_from_capacity_add.
-# TGR 1.3.10 puts -0.05 on banking and on central_banking (TGR_TRADE_society),
-# on top of +0.05 from its own central_banking body (TGR_LOANS_society) -- i.e.
-# TGR cancels the capacity bonus of those two techs. Here banking keeps E&F's
-# +0.05 and central_banking gets +0.05. Left as is until TGR's intent is clear.
+# state_max_trade_advantage_from_capacity_add -- TGR's intent, restored
+# 2026-09-25 (TGR.2 tail). Vanilla gives +0.05 on banking, central_banking,
+# mutual_funds, international_exchange_standards. TGR 1.3.10 keeps those bodies
+# (TGR_LOANS_society) and then puts -0.05 on banking and central_banking
+# (TGR_TRADE_society) while adding +0.05 on investment_banks,
+# corporate_management and macroeconomics: the bonus moves from the early
+# banking techs to the late ones. E&F's whole-entry REPLACE of banking brings
+# back vanilla's +0.05 and drops TGR's -0.05, and this file used to add +0.05
+# to central_banking. Now: banking gets TGR's -0.05 back (net 0), and
+# central_banking gets nothing here (E&F's body has no such line: net 0).
+# investment_banks keeps +0.05 below; corporate_management and macroeconomics
+# are not touched by E&F, TGR's own bodies stand.
 ########################################
 
 # TGR_TRADE_society.txt: INJECT:banking
 INJECT:banking = {
 	modifier = {
 		state_export_advantage_mult = 0.05
+		state_max_trade_advantage_from_capacity_add = -0.05 ### TGR.2 tail, 2026-09-25
 	}
 }
 
@@ -58,7 +66,8 @@ INJECT:central_banking = {
 	modifier = {
 		country_minting_mult = 0.1
 		state_export_advantage_mult = 0.05
-		state_max_trade_advantage_from_capacity_add = 0.05
+		### TGR.2 tail (2026-09-25): no state_max_trade_advantage_from_capacity_add --
+		### TGR's +0.05 (TGR_LOANS) and -0.05 (TGR_TRADE) cancel out.
 	}
 }
 

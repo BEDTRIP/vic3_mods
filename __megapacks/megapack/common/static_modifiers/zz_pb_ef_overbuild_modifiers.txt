@@ -1,0 +1,29 @@
+#############################################
+# EF.18 v2 (2026-09-24) -- overbuilt economy under PSC: the modifiers.
+# (was zz_pb_ef_overbuilt_brake.txt, EF.18 v1)
+# The mechanism: common/on_actions/zz_pb_ef_overbuild_counter.txt.
+#############################################
+
+# COUNTRY modifier, multiplier = the index (speculative_share_2, 0..100):
+# -1% throughput of every construction sector of the country per point
+# (building_construction_sector_throughput_add -- the building-type modifier
+# vanilla companies give as +0.05). Shows in each sector's throughput
+# tooltip. Decided 2026-09-25, replacing state_construction_mult: in the
+# 1837 observer run Britain sat at 85 points (-85% construction efficiency)
+# and its construction still went 400 -> 750 -- the efficiency malus did not
+# visibly bite under PSC, and it showed nowhere on the sector.
+# Additive with the sector's other throughput bonuses (scale, companies,
+# traits), like any building_*_throughput_add.
+zz_pb_ef_overbuilt_economy = {
+	icon = gfx/interface/icons/timed_modifier_icons/overbuilt_economy_modifier.dds
+	building_construction_sector_throughput_add = -0.01
+}
+
+# LEGACY, EF.18 v1: building modifier on construction sectors
+# (building_throughput_add -0.01 x overbuild %). No longer applied; kept
+# defined so the one-time cleanup on old saves can remove it
+# (remove_modifier of an undefined key is a load error).
+zz_pb_ef_overbuilt_brake = {
+	icon = gfx/interface/icons/timed_modifier_icons/overbuilt_economy_modifier.dds
+	building_throughput_add = -0.01
+}

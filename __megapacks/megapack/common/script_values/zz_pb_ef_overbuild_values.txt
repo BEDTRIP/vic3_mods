@@ -1,0 +1,150 @@
+#############################################
+# EF.18 v2 (2026-09-24) -- overbuilt economy under PSC: the numbers.
+# (was zz_pb_ef_overbuilt_brake_values.txt, EF.18 v1 of 2026-09-24)
+# The mechanism: common/on_actions/zz_pb_ef_overbuild_counter.txt.
+#
+# COUNTRY scope throughout. Sums go per STATE through b: -- E&F's versions walk
+# every building of the country, and these run monthly for every country.
+#############################################
+
+# !! TUNING !! How hard the central bank rate squeezes the limit:
+#   limit = urban centre levels x (1 - zz_pb_ef_css_rate_mult x rate)
+# rate is var:base_rate_percentage, a fraction (0.0657 = 6.57%). At 5:
+# 1% -> 95% of urban centres, 6.57% (Britain 1840) -> 67%, 12% (E&F's
+# ceiling) -> 40%, 20% -> 0. E&F's own factor was 1 - (rate - 1%) / 11%,
+# i.e. 49% at 6.57%.
+zz_pb_ef_css_rate_mult = 5
+
+zz_pb_ef_css_levels = {
+	value = 0
+	every_scope_state = {
+		limit = { has_building = building_construction_sector }
+		add = b:building_construction_sector.level
+	}
+}
+
+zz_pb_ef_urban_center_levels = {
+	value = 0
+	every_scope_state = {
+		limit = { has_building = building_urban_center }
+		add = b:building_urban_center.level
+	}
+}
+
+zz_pb_ef_css_rate_factor = {
+	value = 1
+	subtract = {
+		value = var:base_rate_percentage
+		multiply = zz_pb_ef_css_rate_mult
+	}
+	min = 0
+	max = 1
+}
+
+# The limit. Re-issued under E&F's name, so everything that already asks
+# E&F for it -- can_build_private and ai_value of the sector
+# (zz_pb_ef_construction_sector.txt), pcs_construction_sector_headroom_by_base_rate
+# (buttons 9-12), E&F's button 13 tooltip -- gets the new formula.
+# E&F: 00_financial_scripted_value.txt:113, urban centre levels x
+# base_rate_to_pcs_factor, min 1, round. base_rate_to_pcs_factor itself is NOT
+# re-issued: E&F also feeds it into value_for_has_financial_center
+# (00_economic_scripted_value.txt:4617 -> country_max_companies_add), which is
+# not ours to change.
+# Callers guard on has_variable = base_rate_percentage (young countries).
+REPLACE_OR_CREATE:building_urban_center_lvl_by_base_rate = {
+	value = zz_pb_ef_urban_center_levels
+	multiply = zz_pb_ef_css_rate_factor
+	min = 1
+	round = yes
+}
+
+# Over / under the limit in percent of the limit: (sectors - limit) / limit x 100.
+# Negative = under. Shown in the journal section; the index itself follows
+# zz_pb_ef_overcap_target below.
+zz_pb_ef_overbuild_pct = {
+	value = zz_pb_ef_css_levels
+	subtract = building_urban_center_lvl_by_base_rate
+	multiply = 100
+	divide = building_urban_center_lvl_by_base_rate
+}
+
+# Sectors in percent of the limit, for the journal table (2026-09-25):
+# 100 = at the limit, over 100 = overcapacity. The limit is at least 1.
+zz_pb_ef_overcap_ratio_pct = {
+	value = zz_pb_ef_css_levels
+	multiply = 100
+	divide = building_urban_center_lvl_by_base_rate
+	round = yes
+}
+
+# Target of the overcapacity index (speculative_share_2, 0..100), decided
+# 2026-09-25: the throughput cut that makes the actual sectors produce what the
+# limit would -- sectors x (1 - cut) = limit, so cut = 1 - limit / sectors.
+# 59 sectors against a limit of 34: 1 - 34/59 = 0.42 -> 42 (-42% throughput).
+# At or under the limit the target is 0.
+zz_pb_ef_overcap_target = {
+	value = 0
+	if = {
+		limit = { zz_pb_ef_css_levels > building_urban_center_lvl_by_base_rate }
+		value = 1
+		subtract = {
+			value = building_urban_center_lvl_by_base_rate
+			divide = zz_pb_ef_css_levels
+		}
+		multiply = 100
+		round = yes
+	}
+	min = 0
+	max = 100
+}
+
+# Monthly move of the index towards its target, decided 2026-09-25:
+# 2 points while the gap is over 10, then 1 point, then stop on it.
+# !! TUNING !! the 2 / 1 and the 10.
+zz_pb_ef_overcap_gap = {
+	value = zz_pb_ef_overcap_target
+	subtract = var:speculative_share_2
+}
+zz_pb_ef_overbuild_step = {
+	value = 0
+	if = {
+		limit = { zz_pb_ef_overcap_gap > 10 }
+		value = 2
+	}
+	else_if = {
+		limit = { zz_pb_ef_overcap_gap > 0 }
+		value = 1
+	}
+	else_if = {
+		limit = { zz_pb_ef_overcap_gap < -10 }
+		value = -2
+	}
+	else_if = {
+		limit = { zz_pb_ef_overcap_gap < 0 }
+		value = -1
+	}
+}
+
+# For the journal section (gui/scripted_widgets/zz_pb_ef_fso_widgets.gui):
+# this month's change of each index after the 0..100 clamp -- the number the
+# section shows as the monthly change.
+zz_pb_ef_overbuild_step_eff = {
+	value = var:speculative_share_2
+	add = zz_pb_ef_overbuild_step
+	min = 0
+	max = 100
+	subtract = var:speculative_share_2
+}
+# Bands of 10 for the "rising" notification (on_actions/zz_pb_ef_overbuild_counter.txt):
+# a message only when the counter enters a new band upwards. The bubble's own
+# are in the E&F hotfix since 2026-09-25 (EF.29, zz_ef_bubble_values.txt).
+zz_pb_ef_ob_band_new = {
+	value = var:speculative_share_2
+	divide = 10
+	floor = yes
+}
+zz_pb_ef_ob_band_old = {
+	value = var:zz_pb_ef_ob_old
+	divide = 10
+	floor = yes
+}

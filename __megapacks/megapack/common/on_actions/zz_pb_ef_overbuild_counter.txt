@@ -1,0 +1,117 @@
+#############################################
+# EF.18 v2 (2026-09-24) -- overbuilt economy under PSC: counter and penalty
+# (was zz_pb_ef_psc_overbuilt_off.txt: v0 held E&F's counter at zero, v1 of
+# 2026-09-24 added our own brake on the sectors' throughput)
+#
+# WHAT E&F DOES
+# financial_center_je_2 (journal_entries/00_ef_financial_center_je.txt:115)
+# keeps speculative_share_2, 0..100, in its own on_monthly_pulse: +1 a month
+# while private construction sectors exceed urban centres x a rate factor, -1
+# while below. The counter drives overbuilt_economy_modifier on
+# building_ef_private_construction -- a building PSC replaces, and a modifier
+# whose throughput line E&F commented out (00_ef_dynamic_modifier_building.txt:
+# 269). Under PSC it never braked anything.
+#
+# WHY v1 WAS REPLACED
+# v1 held the counter at zero from on_monthly_pulse_country while the journal
+# added +1 from its own pulse on a different day, so the counter blinked 0/1
+# (and with it buttons 9-13). Its brake, -1% throughput per point of
+# overbuild on the sectors, was mostly eaten by economies of scale and company
+# bonuses (Britain 1840: +1% net instead of +51%).
+#
+# WHAT THIS DOES (design decided 2026-09-24)
+#   limit     = urban centre levels x (1 - 5 x central bank rate)
+#               (building_urban_center_lvl_by_base_rate, re-issued in
+#               script_values/zz_pb_ef_overbuild_values.txt)
+#   target    = round(100 x (1 - limit / sectors)) when over the limit, else 0
+#               -- the throughput cut that brings the sectors' output down to
+#               what the limit would produce (redesigned 2026-09-25; the first
+#               version grew by a step table and never settled)
+#   index     moves to the target: 2 a month while the gap is over 10, then 1
+#   penalty   = zz_pb_ef_overbuilt_economy x index: -1% throughput of every
+#               construction sector per point
+#               (static_modifiers/zz_pb_ef_overbuild_modifiers.txt)
+# The counter is ours now: the journal is re-issued without its construction
+# part (journal_entries/zz_pb_ef_financial_center_je.txt) and only draws the
+# bar. One writer, one pulse -- no blinking. It also runs for countries without
+# a stock exchange (the journal only runs where one exists): overbuilding is
+# about construction sectors, not about the exchange.
+#
+# An index that follows a target, not the target itself: the penalty builds
+# up over months and eases off over months when the gap closes.
+#
+# Countries E&F has not initialised yet (no var:base_rate_percentage: released
+# or formed after the start, until their first E&F pulse) are skipped -- the
+# limit reads the rate.
+#
+# NOTIFICATION: a feed message to the player when the counter rises into a
+# new band of 10 (common/messages/zz_pb_ef_overbuild_messages.txt). Monthly
+# messages for every +1 would be spam.
+#
+# OLD SAVES: once per country, strip what v0/v1 left on the sectors
+# (overbuilt_economy_modifier, zz_pb_ef_overbuilt_brake). v1's two variables
+# are left alone: naming them made debug.log report "used but never set".
+#
+# Cost per country and month: two per-state sums (sectors, urban centres) and
+# one modifier refresh.
+#############################################
+
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_pb_ef_overbuild_counter
+	}
+}
+
+zz_pb_ef_overbuild_counter = {
+	effect = {
+		### Old saves: leftovers of v0/v1, once.
+		if = {
+			limit = { NOT = { has_variable = zz_pb_ef_overbuild_v2 } }
+			set_variable = zz_pb_ef_overbuild_v2
+			every_scope_state = {
+				limit = { has_building = building_construction_sector }
+				every_scope_building = {
+					limit = { is_building_type = building_construction_sector }
+					remove_modifier = overbuilt_economy_modifier
+					remove_modifier = zz_pb_ef_overbuilt_brake
+				}
+			}
+		}
+
+		if = {
+			limit = { has_variable = base_rate_percentage }
+
+			if = {
+				limit = { NOT = { has_variable = speculative_share_2 } }
+				set_variable = { name = speculative_share_2 value = 0 }
+			}
+			set_variable = { name = zz_pb_ef_ob_old value = var:speculative_share_2 }
+			change_variable = { name = speculative_share_2 add = zz_pb_ef_overbuild_step }
+			clamp_variable = { name = speculative_share_2 min = 0 max = 100 }
+
+			remove_modifier = zz_pb_ef_overbuilt_economy
+			if = {
+				limit = { var:speculative_share_2 > 0 }
+				add_modifier = {
+					name = zz_pb_ef_overbuilt_economy
+					multiplier = var:speculative_share_2
+				}
+			}
+
+			if = {
+				limit = {
+					var:speculative_share_2 > var:zz_pb_ef_ob_old
+					zz_pb_ef_ob_band_new > zz_pb_ef_ob_band_old
+				}
+				post_notification = zz_pb_ef_overbuild_rising
+			}
+
+			je:financial_center_je_2 ?= {
+				set_bar_progress = {
+					value = owner.var:speculative_share_2
+					name = overbuilt_economy_progress_bar
+				}
+			}
+		}
+	}
+}

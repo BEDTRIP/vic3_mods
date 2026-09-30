@@ -1,0 +1,55 @@
+﻿l_braz_por:
+ # EF.18 v2: construction overcapacity -- country modifier from the index (on_actions/zz_pb_ef_overbuild_counter.txt).
+ zz_pb_ef_overbuilt_economy:0 "Construction Overcapacity"
+ zz_pb_ef_overbuilt_economy_desc:0 "More construction sectors than urbanization supports at the current central bank rate. The overcapacity index moves towards the cut that brings the sectors' output down to what the limit would produce; each point costs 1% throughput of every construction sector."
+ # EF.18 v1, no longer applied (kept for saves that still carry it).
+ zz_pb_ef_overbuilt_brake:0 "Construction Overcapacity (old)"
+ zz_pb_ef_overbuilt_brake_desc:0 "Construction sector throughput penalty from an earlier version. Removed on the next monthly update."
+
+ # EF.18 v2: feed messages when an index enters a new band of 10.
+ notification_zz_pb_ef_overbuild_rising_name:0 "Construction Overcapacity Grows"
+ notification_zz_pb_ef_overbuild_rising_desc:0 "Construction sectors exceed what our urban centres support at the current central bank rate. Overcapacity index: [GetPlayer.MakeScope.Var('speculative_share_2').GetValue|0] — construction sectors' throughput −[GetPlayer.MakeScope.Var('speculative_share_2').GetValue|0]%."
+ notification_zz_pb_ef_overbuild_rising_tooltip:0 "#header $notification_zz_pb_ef_overbuild_rising_name$#!\n$TOOLTIP_DELIMITER$\n$notification_zz_pb_ef_overbuild_rising_desc$"
+
+ # EF.18 v2: ban / allow private construction sectors.
+ zz_pb_ef_css_private_ban_button:0 "Ban Private Construction Sectors"
+ zz_pb_ef_css_private_ban_button_desc:0 "Investors may no longer build [GetBuildingType('building_construction_sector').GetName]. Use it against overcapacity: new sectors only add to it."
+ zz_pb_ef_css_private_ban_button_tt:0 "Private investors stop building [GetBuildingType('building_construction_sector').GetName]. Can be lifted after 6 months."
+ zz_pb_ef_css_private_allow_button:0 "Allow Private Construction Sectors"
+ zz_pb_ef_css_private_allow_button_desc:0 "Investors may build [GetBuildingType('building_construction_sector').GetName] again, up to the limit set by urban centres and the central bank rate."
+ zz_pb_ef_css_private_allow_button_tt:0 "Private investors may build [GetBuildingType('building_construction_sector').GetName] again. Can be banned again after 6 months."
+ zz_pb_ef_css_private_ban_cooldown_tt:0 "The policy was changed less than 6 months ago"
+
+ # EF.18 v2: journal sections (gui/scripted_widgets/zz_pb_ef_fso_widgets.gui).
+ zz_pb_ef_fso_bubble_bar:0 "Speculative bubble: [GetPlayer.MakeScope.Var('speculative_share_1').GetValue|0]%"
+ zz_pb_ef_fso_overcap_bar:0 "Construction overcapacity: [GetPlayer.MakeScope.Var('speculative_share_2').GetValue|0]"
+ zz_pb_ef_fso_bubble_share:0 "Speculative market: #b [GetPlayer.MakeScope.ScriptValue('fiancial_center_week_balance_in_ratio')|%1]#! of [concept_gdp] a year"
+ zz_pb_ef_fso_bubble_dyn_up:0 "Bubble: #N +[GetPlayer.MakeScope.ScriptValue('zz_ef_bubble_step_eff')|0] a month#!"
+ zz_pb_ef_fso_bubble_dyn_down:0 "Bubble: #P [GetPlayer.MakeScope.ScriptValue('zz_ef_bubble_step_eff')|0] a month#!"
+ zz_pb_ef_fso_bubble_dyn_zero:0 "Bubble: no change this month"
+ zz_pb_ef_fso_bubble_effects:0 "Now: innovation #N [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|0]%#!, prestige #N [GetPlayer.MakeScope.ScriptValue('speculative_share_1_penality')|0]%#!, company executives lose popularity"
+ zz_pb_ef_fso_bubble_desc:0 "#b How it works#!\nStock exchanges sell mutual funds for more than the shares they buy cost — that margin is the speculative market. Every month its yearly volume is compared with [concept_gdp]: below 30% the bubble deflates (up to −3 a month below 10%), above 30% it inflates (+1 at 30–40%, +2 at 40–50%, +3 at 50% and more).\n\nEach point of the bubble costs 1% of innovation and 1% of prestige, and company executives lose popularity. The bubble does not affect construction.\n\nThe buttons above are E&F's measures: with a bubble — curb the exchanges' purchases for a year; without one — stimulate the market. Details in their tooltips."
+
+ zz_pb_ef_fso_overcap_banned:0 "#b Private construction sectors are banned#!"
+ # 2026-09-25: the 2 x 4 table of the construction section (label over value).
+ zz_pb_ef_fso_t_sectors:0 "[GetBuildingType('building_construction_sector').GetName]"
+ zz_pb_ef_fso_t_urban:0 "[GetBuildingType('building_urban_center').GetName]"
+ zz_pb_ef_fso_t_rate:0 "[concept_base_rate_percentage]"
+ zz_pb_ef_fso_v_rate:0 "#b [GetPlayer.MakeScope.ScriptValue('base_rate_percentage_decimal')|2]%#!"
+ zz_pb_ef_fso_v_ratio_over:0 "#N [GetPlayer.MakeScope.ScriptValue('zz_pb_ef_overcap_ratio_pct')|0]%#!"
+ zz_pb_ef_fso_v_ratio_under:0 "#P [GetPlayer.MakeScope.ScriptValue('zz_pb_ef_overcap_ratio_pct')|0]%#!"
+ zz_pb_ef_fso_v_target_on:0 "#N −[GetPlayer.MakeScope.ScriptValue('zz_pb_ef_overcap_target')|0]%#!"
+ zz_pb_ef_fso_v_zero:0 "0%"
+ zz_pb_ef_fso_v_penalty_on:0 "#N −[GetPlayer.MakeScope.Var('speculative_share_2').GetValue|0]%#!"
+ zz_pb_ef_fso_t_limit:0 "Limit"
+ zz_pb_ef_fso_t_ratio:0 "Ratio to the limit"
+ zz_pb_ef_fso_t_target:0 "Target penalty"
+ zz_pb_ef_fso_t_dyn:0 "Change"
+ zz_pb_ef_fso_t_penalty:0 "Current penalty"
+ zz_pb_ef_fso_v_sectors:0 "#b [GetPlayer.MakeScope.ScriptValue('zz_pb_ef_css_levels')|0]#! lv."
+ zz_pb_ef_fso_v_urban:0 "#b [GetPlayer.MakeScope.ScriptValue('zz_pb_ef_urban_center_levels')|0]#! lv."
+ zz_pb_ef_fso_v_limit:0 "#b [GetPlayer.MakeScope.ScriptValue('zz_pb_ef_css_rate_factor')|%0]#!\n= #b [GetPlayer.MakeScope.ScriptValue('building_urban_center_lvl_by_base_rate')|0]#! lv."
+ zz_pb_ef_fso_v_dyn_up:0 "#N +[GetPlayer.MakeScope.ScriptValue('zz_pb_ef_overbuild_step_eff')|0] a month#!"
+ zz_pb_ef_fso_v_dyn_down:0 "#P [GetPlayer.MakeScope.ScriptValue('zz_pb_ef_overbuild_step_eff')|0] a month#!"
+ zz_pb_ef_fso_v_dyn_zero:0 "at target"
+ zz_pb_ef_fso_overcap_desc:0 "#b [GetBuildingType('building_construction_sector').GetName]#! are the country's construction capacity: they produce construction for every project, public and private.\n\n#b Limit#! — how many sectors the economy can keep busy: total level of [GetBuildingType('building_urban_center').GetName] × (1 − 5 × [concept_base_rate_percentage]). At a 1% rate that is 95% of the urban centres, at 6% — 70%, at 12% — 40%. Ratio to the limit — sectors / limit: above 100% there is more capacity than the economy can use.\n\n#b Penalty#! — −1% throughput of every construction sector per point: the country modifier \"Construction Overcapacity\", shown in each sector's throughput tooltip. Every month the penalty moves towards its target: 2 points while it is more than 10 away, then 1.\n\n#b Target penalty#! — the cut at which all sectors together produce what the limit would: 1 − limit / sectors. While there are no more sectors than the limit, the target is 0 and the penalty eases off the same way.\n\n#b Example.#! 59 sectors against a limit of 34: ratio 174%, target 1 − 34 / 59 = 42%. The penalty grows 2 points a month up to 32, then 1, and after 26 months stops at 42%: the sectors work at 58% and together produce as much as 34 sectors without a penalty.\n\n#b Private sectors#! — private investors build sectors only up to the limit; the government can build past it. The ban button stops private sector construction altogether; it can be reversed after 6 months at the earliest. To bring the overcapacity down: lower the rate (the limit rises), wait for urban centres to grow, or ban private sectors.\n\n#b Stimulus#! — the four buttons below cut the base rate by 1–4%. The limit rises, but every 1% adds 10 penalty points at once, and the penalty then moves to its target as usual. A button is available while the penalty is below 90, 80, 70 or 60, so a press never takes it past 100; it can be repeated after 12 months."
