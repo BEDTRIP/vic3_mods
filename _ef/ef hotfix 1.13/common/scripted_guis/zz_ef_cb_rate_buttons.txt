@@ -1,6 +1,6 @@
 #############################################
-# EF.30 (2026-09-30, v2 same day) -- the player's rate buttons: a policy with
-# a price.
+# EF.30 (2026-09-30, v2 same day) -- the player's rate buttons: government
+# policy on top of the central bank.
 #
 # E&F's base_rate_increase / base_rate_reduce (00_financial_scripted_guis.txt
 # :3668) moved the rate +-0.5 pp for free and were blocked while
@@ -9,12 +9,13 @@
 # for good -- the "why can't I press it" of the 30.09 test.
 #
 # Now: each press moves the rate 0.5 pp at once AND moves the bank's target
-# by the same (var:zz_ef_rate_bias, within +-2 pp), so the bank keeps it;
-# costs 1% of a year's GDP in treasury; 3 months of cooldown
-# (zz_ef_rate_policy_cooldown). Kept from E&F: devaluation law blocks raising,
+# by the same (var:zz_ef_rate_bias, within +-2 pp), so the bank keeps it.
+# Free and without a cooldown (user 2026-09-30: the price and the 3-month
+# cooldown of v2 removed; the cost of deviating from the bank's target comes
+# later as a standing penalty, see EF.31). Kept from E&F: devaluation law blocks raising,
 # revaluation blocks cutting, foreign exchange controls block both. Every
 # condition is a custom_tooltip line, so the button's tooltip
-# (BuildTooltip, gui/zz_ef_cb_rate_panel.gui) lists them green/red.
+# (BuildTooltip, gui/00_00_ef_cb_rate_panel.gui) lists them green/red.
 # Same names, so E&F's other callers keep working.
 #############################################
 
@@ -34,10 +35,6 @@ REPLACE_OR_CREATE:base_rate_increase = {
 			}
 		}
 		custom_tooltip = {
-			text = zz_ef_rate_tt_cooldown
-			NOT = { has_modifier = zz_ef_rate_policy_cooldown }
-		}
-		custom_tooltip = {
 			text = zz_ef_rate_tt_no_devaluation
 			NOT = { has_law = law_type:law_devaluation }
 		}
@@ -47,7 +44,6 @@ REPLACE_OR_CREATE:base_rate_increase = {
 		}
 	}
 	effect = {
-		add_treasury = zz_ef_cb_rate_button_cost_neg
 		custom_tooltip = zz_ef_rate_tt_effect_up
 		hidden_effect = {
 			change_variable = { name = base_rate_percentage add = 0.005 }
@@ -65,7 +61,6 @@ REPLACE_OR_CREATE:base_rate_increase = {
 			remove_modifier = down_base_rate
 			remove_modifier = rise_base_rate
 			add_modifier = { name = rise_base_rate months = 3 }
-			add_modifier = { name = zz_ef_rate_policy_cooldown months = 3 }
 		}
 	}
 }
@@ -86,10 +81,6 @@ REPLACE_OR_CREATE:base_rate_reduce = {
 			}
 		}
 		custom_tooltip = {
-			text = zz_ef_rate_tt_cooldown
-			NOT = { has_modifier = zz_ef_rate_policy_cooldown }
-		}
-		custom_tooltip = {
 			text = zz_ef_rate_tt_no_revaluation
 			NOT = { has_law = law_type:law_revaluation }
 		}
@@ -99,7 +90,6 @@ REPLACE_OR_CREATE:base_rate_reduce = {
 		}
 	}
 	effect = {
-		add_treasury = zz_ef_cb_rate_button_cost_neg
 		custom_tooltip = zz_ef_rate_tt_effect_down
 		hidden_effect = {
 			change_variable = { name = base_rate_percentage add = -0.005 }
@@ -117,7 +107,6 @@ REPLACE_OR_CREATE:base_rate_reduce = {
 			remove_modifier = rise_base_rate
 			remove_modifier = down_base_rate
 			add_modifier = { name = down_base_rate months = 3 }
-			add_modifier = { name = zz_ef_rate_policy_cooldown months = 3 }
 		}
 	}
 }

@@ -20,9 +20,8 @@
 # for private-bank currency arbitrage (00_on_action_main.txt:446) and for the
 # inflation policy (01_economic_scripted_effects.txt:10126). A step sets the
 # matching one for 3 months, as a rate change did in E&F. The player's buttons
-# no longer check them (they have their own cooldown,
-# static_modifiers/zz_ef_cb_rate_policy.txt), so the bank's steps do not
-# lock the buttons.
+# no longer check them (free, no cooldown since 2026-09-30), so the bank's
+# steps do not lock the buttons.
 #
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of base_rate_change. Drop the
 # file if E&F rebuilds the rate itself.

@@ -115,16 +115,6 @@ zz_ef_cb_rate_note_value = {
 	}
 }
 
-# Treasury price of one rate button press: 1% of a year's GDP.
-zz_ef_cb_rate_button_cost = {
-	value = gdp
-	multiply = 0.01
-}
-zz_ef_cb_rate_button_cost_neg = {
-	value = zz_ef_cb_rate_button_cost
-	multiply = -1
-}
-
 # Display in percentage points.
 zz_ef_cb_rate_next_step_pp = {
 	value = zz_ef_cb_rate_next_step
