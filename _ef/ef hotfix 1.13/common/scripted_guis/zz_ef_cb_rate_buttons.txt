@@ -1,38 +1,72 @@
 #############################################
-# EF.30 -- the player's rate buttons, now with a price and a bias.
+# EF.30 (2026-09-30, v2 same day) -- the player's rate buttons: a policy with
+# a price.
 #
 # E&F's base_rate_increase / base_rate_reduce (00_financial_scripted_guis.txt
-# :3668) moved the rate +-0.5 pp for free, and the AI regulator then undid it.
-# Now each press moves the rate at once, shifts the central bank's target by
-# the same 0.5 pp (var:zz_ef_rate_bias, kept within +-2 pp, so the bank does not
-# walk it back) and costs zz_ef_cb_rate_button_cost of treasury. The validity
-# conditions are E&F's; the bias limit is added. Same names, so the E&F GUI
-# needs no change.
+# :3668) moved the rate +-0.5 pp for free and were blocked while
+# rise_base_rate / down_base_rate were active. The central bank now sets
+# those on each of its quarterly steps, so the old check locked the buttons
+# for good -- the "why can't I press it" of the 30.09 test.
+#
+# Now: each press moves the rate 0.5 pp at once AND moves the bank's target
+# by the same (var:zz_ef_rate_bias, within +-2 pp), so the bank keeps it;
+# costs 1% of a year's GDP in treasury; 3 months of cooldown
+# (zz_ef_rate_policy_cooldown). Kept from E&F: devaluation law blocks raising,
+# revaluation blocks cutting, foreign exchange controls block both. Every
+# condition is a custom_tooltip line, so the button's tooltip
+# (BuildTooltip, gui/zz_ef_cb_rate_panel.gui) lists them green/red.
+# Same names, so E&F's other callers keep working.
 #############################################
 
 REPLACE_OR_CREATE:base_rate_increase = {
 	is_shown = {
 	}
 	is_valid = {
-		var:base_rate_percentage < 0.12
-		not = { var:zz_ef_rate_bias >= 0.02 }
-		not = {
-			or = {
-				has_modifier = rise_base_rate
-				has_modifier = down_base_rate
-				has_law = law_type:law_devaluation
-				has_modifier = foreign_exchange_controls
+		custom_tooltip = {
+			text = zz_ef_rate_tt_below_max
+			var:base_rate_percentage < 0.12
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_bias_up
+			OR = {
+				NOT = { has_variable = zz_ef_rate_bias }
+				var:zz_ef_rate_bias < 0.0199
 			}
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_cooldown
+			NOT = { has_modifier = zz_ef_rate_policy_cooldown }
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_no_devaluation
+			NOT = { has_law = law_type:law_devaluation }
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_no_fx_controls
+			NOT = { has_modifier = foreign_exchange_controls }
 		}
 	}
 	effect = {
-		add_treasury = {
-			value = zz_ef_cb_rate_button_cost
-			multiply = -1
+		add_treasury = zz_ef_cb_rate_button_cost_neg
+		custom_tooltip = zz_ef_rate_tt_effect_up
+		hidden_effect = {
+			change_variable = { name = base_rate_percentage add = 0.005 }
+			if = {
+				limit = { var:base_rate_percentage > 0.12 }
+				set_variable = { name = base_rate_percentage value = 0.12 }
+			}
+			if = {
+				limit = { has_variable = zz_ef_rate_bias }
+				change_variable = { name = zz_ef_rate_bias add = 0.005 }
+			}
+			else = {
+				set_variable = { name = zz_ef_rate_bias value = 0.005 }
+			}
+			remove_modifier = down_base_rate
+			remove_modifier = rise_base_rate
+			add_modifier = { name = rise_base_rate months = 3 }
+			add_modifier = { name = zz_ef_rate_policy_cooldown months = 3 }
 		}
-		change_variable = { name = base_rate_percentage add = 0.005 }
-		change_variable = { name = zz_ef_rate_bias add = 0.005 }
-		add_modifier = { name = rise_base_rate months = 6 }
 	}
 }
 
@@ -40,24 +74,50 @@ REPLACE_OR_CREATE:base_rate_reduce = {
 	is_shown = {
 	}
 	is_valid = {
-		var:base_rate_percentage > 0.02
-		not = { var:zz_ef_rate_bias <= -0.02 }
-		not = {
-			or = {
-				has_modifier = rise_base_rate
-				has_modifier = down_base_rate
-				has_law = law_type:law_revaluation
-				has_modifier = foreign_exchange_controls
+		custom_tooltip = {
+			text = zz_ef_rate_tt_above_min
+			var:base_rate_percentage > 0.02
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_bias_down
+			OR = {
+				NOT = { has_variable = zz_ef_rate_bias }
+				var:zz_ef_rate_bias > -0.0199
 			}
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_cooldown
+			NOT = { has_modifier = zz_ef_rate_policy_cooldown }
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_no_revaluation
+			NOT = { has_law = law_type:law_revaluation }
+		}
+		custom_tooltip = {
+			text = zz_ef_rate_tt_no_fx_controls
+			NOT = { has_modifier = foreign_exchange_controls }
 		}
 	}
 	effect = {
-		add_treasury = {
-			value = zz_ef_cb_rate_button_cost
-			multiply = -1
+		add_treasury = zz_ef_cb_rate_button_cost_neg
+		custom_tooltip = zz_ef_rate_tt_effect_down
+		hidden_effect = {
+			change_variable = { name = base_rate_percentage add = -0.005 }
+			if = {
+				limit = { var:base_rate_percentage < 0.02 }
+				set_variable = { name = base_rate_percentage value = 0.02 }
+			}
+			if = {
+				limit = { has_variable = zz_ef_rate_bias }
+				change_variable = { name = zz_ef_rate_bias add = -0.005 }
+			}
+			else = {
+				set_variable = { name = zz_ef_rate_bias value = -0.005 }
+			}
+			remove_modifier = rise_base_rate
+			remove_modifier = down_base_rate
+			add_modifier = { name = down_base_rate months = 3 }
+			add_modifier = { name = zz_ef_rate_policy_cooldown months = 3 }
 		}
-		change_variable = { name = base_rate_percentage add = -0.005 }
-		change_variable = { name = zz_ef_rate_bias add = -0.005 }
-		add_modifier = { name = down_base_rate months = 6 }
 	}
 }

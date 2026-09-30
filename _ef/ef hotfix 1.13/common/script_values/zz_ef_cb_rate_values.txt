@@ -1,23 +1,36 @@
 #############################################
-# EF.30 (2026-09-30) -- the central bank's target rate (a fraction: 0.05 = 5%).
+# EF.30 (2026-09-30, v2 same day) -- the central bank's rate, as values.
+# Rates are fractions (0.05 = 5%), as E&F's var:base_rate_percentage.
 #
-# From the country's credit note (country_credit_note_fixe, 0..10, kept by
-# E&F's country_credit_rating): note 9+ -> 3%, every point lower -> +1 pp,
-# clamped to 2..12%. 1850 targets: AAA-AA ~3-4% (Britain, France), A-BBB
-# 5-7%, junk 9-12%. Plus the player's bias (var:zz_ef_rate_bias, +-2 pp,
-# moved by the "rate" buttons) -- the player pays to lean against the bank,
-# the bank drifts back half a point per half year only if the bias is gone.
-# A country without a note yet (no central bank) keeps its rate.
+# TARGET. The credit note (var:country_credit_note_fixe, set by E&F's
+# country_credit_rating from country_credit_pondered_mean) runs from 0 to
+# 12.5: the score part is 0..10 (country_credit_score / 31), the central bank
+# institution adds 0.5 per level (5 levels, +2.5), taking loans x0.75, war and
+# heavy debt multiply it further down. A rank-1 AI is pinned to 10 by E&F.
+# The whole scale maps linearly onto 12%..2%: 0.8 pp per point.
+#   note 12.5 -> 2%, 10 -> 4%, 8.6 (USA 1836) -> 5.1%, 6 -> 7.2%, 0 -> 12%.
+# A country WITHOUT a central bank has no bank to set a rate and a note
+# counted from its rank alone (1..4); it is held at 6.5%, E&F's neutral
+# zone, where the yearly pool credit is zero.
+# The player's policy (var:zz_ef_rate_bias, +-2 pp, the rate buttons) is added
+# on top; the result is clamped to 2..12%.
+#
+# STEP. Every 3 months (on_actions/zz_ef_cb_rate_on_actions.txt) the rate
+# moves towards the target by at most 0.5 pp, or 1 pp when the gap is over
+# 5 pp.
 #############################################
 
 zz_ef_cb_rate_target = {
-	value = 0.03
+	value = 0.065
 	if = {
-		limit = { var:country_credit_note_fixe < 9 }
-		add = {
-			value = 9
-			subtract = var:country_credit_note_fixe
-			multiply = 0.01
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = country_credit_note_fixe
+		}
+		value = 0.12
+		subtract = {
+			value = var:country_credit_note_fixe
+			multiply = 0.008
 		}
 	}
 	if = {
@@ -28,8 +41,82 @@ zz_ef_cb_rate_target = {
 	max = 0.12
 }
 
-# Treasury price of one button press: 1% of a year's GDP.
+# Target minus the current rate (positive: the bank will raise).
+zz_ef_cb_rate_gap = {
+	value = zz_ef_cb_rate_target
+	if = {
+		limit = { has_variable = base_rate_percentage }
+		subtract = var:base_rate_percentage
+	}
+}
+
+zz_ef_cb_rate_step_max = {
+	value = 0.005
+	if = {
+		limit = {
+			OR = {
+				zz_ef_cb_rate_gap > 0.05
+				zz_ef_cb_rate_gap < -0.05
+			}
+		}
+		value = 0.01
+	}
+}
+zz_ef_cb_rate_step_min = {
+	value = zz_ef_cb_rate_step_max
+	multiply = -1
+}
+
+# What the next quarterly step will do to the rate.
+zz_ef_cb_rate_next_step = {
+	value = zz_ef_cb_rate_gap
+	min = zz_ef_cb_rate_step_min
+	max = zz_ef_cb_rate_step_max
+}
+
+# Months until the next step (the counter runs 0, 1, 2).
+zz_ef_cb_rate_months_to_step = {
+	value = 3
+	if = {
+		limit = { has_variable = zz_ef_cb_rate_month }
+		subtract = var:zz_ef_cb_rate_month
+	}
+}
+
+# The player's policy for display (0 when never used).
+zz_ef_cb_rate_bias_value = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_rate_bias }
+		value = var:zz_ef_rate_bias
+	}
+}
+
+# The credit note for display.
+zz_ef_cb_rate_note_value = {
+	value = 0
+	if = {
+		limit = { has_variable = country_credit_note_fixe }
+		value = var:country_credit_note_fixe
+	}
+}
+
+# Treasury price of one rate button press: 1% of a year's GDP.
 zz_ef_cb_rate_button_cost = {
 	value = gdp
 	multiply = 0.01
+}
+zz_ef_cb_rate_button_cost_neg = {
+	value = zz_ef_cb_rate_button_cost
+	multiply = -1
+}
+
+# Display in percentage points.
+zz_ef_cb_rate_next_step_pp = {
+	value = zz_ef_cb_rate_next_step
+	multiply = 100
+}
+zz_ef_cb_rate_bias_pp = {
+	value = zz_ef_cb_rate_bias_value
+	multiply = 100
 }

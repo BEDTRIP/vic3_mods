@@ -1,5 +1,5 @@
 #############################################
-# EF.30 + EF.26 (2026-09-30) -- the central bank sets the rate.
+# EF.30 + EF.26 (2026-09-30, v2 same day) -- the central bank sets the rate.
 #
 # WHAT E&F DOES (4.1.7)
 # base_rate_change (01_economic_scripted_effects.txt:135314) is the AI-only
@@ -10,23 +10,31 @@
 # biggest countries sat at the ceiling in 1850.
 #
 # WHAT THIS DOES
-# Replaces the whole effect (the EF.26 copy is gone). The bank moves the
-# rate towards zz_ef_cb_rate_target (script_values/zz_ef_cb_rate_values.txt,
-# from the credit rating) by at most 0.5 pp per half year. One rule for AI
-# and player. The player's on_action call is in
-# on_actions/zz_ef_cb_rate_on_actions.txt (E&F itself calls the effect for
-# the AI only).
+# base_rate_change is emptied (E&F still calls it half-yearly for the AI).
+# zz_ef_cb_rate_step moves the rate by zz_ef_cb_rate_next_step
+# (script_values/zz_ef_cb_rate_values.txt) -- towards the target from the
+# credit rating -- for every country, AI and player alike, every 3 months
+# (on_actions/zz_ef_cb_rate_on_actions.txt).
 #
-# Kept from E&F: base_rate_percentage_old, the rise/down_base_rate labels
-# (they block the player's buttons for 6 months), the rate clamp.
+# rise_base_rate / down_base_rate are NOT empty labels: E&F reads them monthly
+# for private-bank currency arbitrage (00_on_action_main.txt:446) and for the
+# inflation policy (01_economic_scripted_effects.txt:10126). A step sets the
+# matching one for 3 months, as a rate change did in E&F. The player's buttons
+# no longer check them (they have their own cooldown,
+# static_modifiers/zz_ef_cb_rate_policy.txt), so the bank's steps do not
+# lock the buttons.
 #
-# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE. Drop the file if E&F
-# rebuilds the rate itself.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of base_rate_change. Drop the
+# file if E&F rebuilds the rate itself.
 #############################################
 
 REPLACE_OR_CREATE:base_rate_change = {
+	# EF.30: the rate is set by zz_ef_cb_rate_step.
+}
+
+zz_ef_cb_rate_step = {
 	if = {
-		limit = { has_variable = country_credit_note_fixe }
+		limit = { has_variable = base_rate_percentage }
 
 		set_variable = {
 			name = base_rate_percentage_old
@@ -36,43 +44,22 @@ REPLACE_OR_CREATE:base_rate_change = {
 			name = zz_ef_cb_rate_target_var
 			value = zz_ef_cb_rate_target
 		}
-
-		if = {
-			limit = {
-				var:base_rate_percentage < var:zz_ef_cb_rate_target_var
-			}
-			set_variable = {
-				name = base_rate_percentage
-				value = {
-					value = var:base_rate_percentage
-					add = 0.005
-					max = var:zz_ef_cb_rate_target_var
-				}
-			}
-		}
-		else_if = {
-			limit = {
-				var:base_rate_percentage > var:zz_ef_cb_rate_target_var
-			}
-			set_variable = {
-				name = base_rate_percentage
-				value = {
-					value = var:base_rate_percentage
-					subtract = 0.005
-					min = var:zz_ef_cb_rate_target_var
-				}
-			}
+		change_variable = {
+			name = base_rate_percentage
+			add = zz_ef_cb_rate_next_step
 		}
 
 		if = {
 			limit = { var:base_rate_percentage_old > var:base_rate_percentage }
+			remove_modifier = rise_base_rate
 			remove_modifier = down_base_rate
-			add_modifier = { name = down_base_rate months = 6 }
+			add_modifier = { name = down_base_rate months = 3 }
 		}
 		else_if = {
 			limit = { var:base_rate_percentage_old < var:base_rate_percentage }
+			remove_modifier = down_base_rate
 			remove_modifier = rise_base_rate
-			add_modifier = { name = rise_base_rate months = 6 }
+			add_modifier = { name = rise_base_rate months = 3 }
 		}
 	}
 }

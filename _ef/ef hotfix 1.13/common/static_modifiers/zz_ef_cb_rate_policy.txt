@@ -1,0 +1,10 @@
+#############################################
+# EF.30 (2026-09-30) -- cooldown of the player's rate buttons (3 months, one
+# central-bank step). No effect of its own. Before, the buttons were blocked
+# by rise_base_rate / down_base_rate, which the bank's own steps now set --
+# the buttons would have been locked for good.
+#############################################
+
+zz_ef_rate_policy_cooldown = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_negative.dds
+}

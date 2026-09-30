@@ -1,0 +1,32 @@
+﻿l_russian:
+
+ # EF.30: ключевая ставка — показатели центробанка и подсказки кнопок
+ # (gui/zz_ef_cb_rate_panel.gui, common/scripted_guis/zz_ef_cb_rate_buttons.txt).
+
+ zz_ef_rate_box_rating:0 "Кредитный рейтинг"
+ zz_ef_rate_box_rating_value:0 "[GetPlayer.GetCustom('country_credit_rating_texture')]\n[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]"
+ zz_ef_rate_box_rating_tt:0 "Средний кредитный рейтинг страны — #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]#! из 12.5.\n\nДо 10 баллов дают показатели экономики и государства (подробно — «Посмотреть кредитный рейтинг» выше), до +2.5 — институт центрального банка (0.5 за уровень). Взятые кредиты умножают рейтинг на 0.75, долгая война и большой госдолг снижают его ещё.\n\nПо рейтингу центробанк выбирает ставку: 12.5 баллов → 2%, 0 баллов → 12%, #v 0.8 п.п.#! за балл. Страна без центробанка держит 6.5%."
+ zz_ef_rate_box_target:0 "Цель центробанка"
+ zz_ef_rate_box_target_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]"
+ zz_ef_rate_box_target_tt:0 "Ставка, к которой ведёт центробанк: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]#!.\n\n12% − 0.8 п.п. × рейтинг ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]) + госполитика ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] п.п.), в пределах 2–12%. У страны без центробанка — 6.5% + госполитика."
+ zz_ef_rate_box_step:0 "Динамика"
+ zz_ef_rate_box_step_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] п.п.\nчерез [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] мес."
+ zz_ef_rate_box_step_tt:0 "Раз в квартал центробанк сдвигает ставку к цели: не больше чем на #v 0.5 п.п.#!, или на #v 1 п.п.#!, если до цели больше 5 п.п.\n\nСледующий шаг: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] п.п.#! через [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] мес."
+ zz_ef_rate_box_policy:0 "Госполитика"
+ zz_ef_rate_box_policy_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] п.п."
+ zz_ef_rate_box_policy_tt:0 "Насколько наши решения сдвинули цель центробанка: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] п.п.#!\n\nКнопки «−» и «+» под ставкой: каждое нажатие сразу меняет ставку на 0.5 п.п. и на столько же сдвигает цель, поэтому центробанк не отыгрывает решение назад. Всего не больше ±2 п.п., одно решение в 3 месяца, цена — 1% годового ВВП."
+ zz_ef_rate_tt_increase_desc:0 "#b Повысить ключевую ставку#!\nСтавка сразу вырастет на 0.5 п.п., и на столько же поднимется цель центробанка — он не станет возвращать ставку назад. Госполитика сейчас: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] п.п. из допустимых ±2.\n\n"
+ zz_ef_rate_tt_reduce_desc:0 "#b Снизить ключевую ставку#!\nСтавка сразу снизится на 0.5 п.п., и на столько же опустится цель центробанка — он не станет возвращать ставку назад. Госполитика сейчас: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] п.п. из допустимых ±2.\n\n"
+ zz_ef_rate_tt_effect_up:0 "Ключевая ставка: #P +0.5 п.п.#!, цель центробанка: +0.5 п.п.\nСледующее решение — через 3 месяца."
+ zz_ef_rate_tt_effect_down:0 "Ключевая ставка: #P −0.5 п.п.#!, цель центробанка: −0.5 п.п.\nСледующее решение — через 3 месяца."
+ zz_ef_rate_tt_conditions:0 "\n\n#b Условия:#!\n"
+ zz_ef_rate_tt_below_max:0 "Ключевая ставка ниже 12%"
+ zz_ef_rate_tt_above_min:0 "Ключевая ставка выше 2%"
+ zz_ef_rate_tt_bias_up:0 "Госполитика ниже +2 п.п. (сейчас [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
+ zz_ef_rate_tt_bias_down:0 "Госполитика выше −2 п.п. (сейчас [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
+ zz_ef_rate_tt_cooldown:0 "С прошлого решения по ставке прошло 3 месяца"
+ zz_ef_rate_tt_no_devaluation:0 "Не действует закон «[GetLawType('law_devaluation').GetName]»"
+ zz_ef_rate_tt_no_revaluation:0 "Не действует закон «[GetLawType('law_revaluation').GetName]»"
+ zz_ef_rate_tt_no_fx_controls:0 "Нет модификатора «[GetStaticModifier('foreign_exchange_controls').GetName]»"
+ zz_ef_rate_policy_cooldown:0 "Решение по ключевой ставке"
+ zz_ef_rate_policy_cooldown_desc:0 "Правительство недавно изменило ключевую ставку; следующее решение — когда модификатор истечёт."

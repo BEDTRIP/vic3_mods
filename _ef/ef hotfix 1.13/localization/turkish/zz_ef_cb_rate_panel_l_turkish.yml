@@ -1,0 +1,33 @@
+﻿l_turkish:
+
+ # EF.30: key rate -- central bank boxes and button tooltips
+ # (gui/zz_ef_cb_rate_panel.gui, common/scripted_guis/zz_ef_cb_rate_buttons.txt).
+ # Not translated yet: English text.
+
+ zz_ef_rate_box_rating:0 "Credit rating"
+ zz_ef_rate_box_rating_value:0 "[GetPlayer.GetCustom('country_credit_rating_texture')]\n[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]"
+ zz_ef_rate_box_rating_tt:0 "The country's average credit rating: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]#! of 12.5.\n\nUp to 10 points come from the economy and the state (details under \"View credit rating\" above), up to +2.5 from the central bank institution (0.5 per level). Taking loans multiplies the rating by 0.75, a long war and heavy debt lower it further.\n\nThe central bank picks the rate from the rating: 12.5 points → 2%, 0 points → 12%, #v 0.8 pp#! per point. A country without a central bank stays at 6.5%."
+ zz_ef_rate_box_target:0 "Central bank target"
+ zz_ef_rate_box_target_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]"
+ zz_ef_rate_box_target_tt:0 "The rate the central bank is heading for: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_target')|%2]#!.\n\n12% − 0.8 pp × rating ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_note_value')|2]) + government policy ([GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp), within 2–12%. Without a central bank: 6.5% + government policy."
+ zz_ef_rate_box_step:0 "Trend"
+ zz_ef_rate_box_step_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] pp\nin [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] mo."
+ zz_ef_rate_box_step_tt:0 "Every quarter the central bank moves the rate towards its target: by at most #v 0.5 pp#!, or #v 1 pp#! when the target is more than 5 pp away.\n\nNext step: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_next_step_pp')|+2] pp#! in [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_months_to_step')|0] months."
+ zz_ef_rate_box_policy:0 "Government policy"
+ zz_ef_rate_box_policy_value:0 "[GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp"
+ zz_ef_rate_box_policy_tt:0 "How far our decisions have moved the central bank's target: #v [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp#!\n\nThe − and + buttons under the rate: each press moves the rate by 0.5 pp at once and moves the target by the same, so the bank does not walk it back. At most ±2 pp in total, one decision per 3 months, costs 1% of a year's GDP."
+ zz_ef_rate_tt_increase_desc:0 "#b Raise the key rate#!\nThe rate rises by 0.5 pp at once, and the central bank's target rises by the same, so the bank will not walk it back. Government policy now: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp of the allowed ±2.\n\n"
+ zz_ef_rate_tt_reduce_desc:0 "#b Cut the key rate#!\nThe rate falls by 0.5 pp at once, and the central bank's target falls by the same, so the bank will not walk it back. Government policy now: [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1] pp of the allowed ±2.\n\n"
+ zz_ef_rate_tt_effect_up:0 "Key rate: #P +0.5 pp#!, central bank target: +0.5 pp\nNext decision in 3 months."
+ zz_ef_rate_tt_effect_down:0 "Key rate: #P −0.5 pp#!, central bank target: −0.5 pp\nNext decision in 3 months."
+ zz_ef_rate_tt_conditions:0 "\n\n#b Requirements:#!\n"
+ zz_ef_rate_tt_below_max:0 "Key rate below 12%"
+ zz_ef_rate_tt_above_min:0 "Key rate above 2%"
+ zz_ef_rate_tt_bias_up:0 "Government policy below +2 pp (now [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
+ zz_ef_rate_tt_bias_down:0 "Government policy above −2 pp (now [GetPlayer.MakeScope.ScriptValue('zz_ef_cb_rate_bias_pp')|+1])"
+ zz_ef_rate_tt_cooldown:0 "3 months since the last rate decision"
+ zz_ef_rate_tt_no_devaluation:0 "The [GetLawType('law_devaluation').GetName] law is not in force"
+ zz_ef_rate_tt_no_revaluation:0 "The [GetLawType('law_revaluation').GetName] law is not in force"
+ zz_ef_rate_tt_no_fx_controls:0 "No [GetStaticModifier('foreign_exchange_controls').GetName] modifier"
+ zz_ef_rate_policy_cooldown:0 "Key rate decision"
+ zz_ef_rate_policy_cooldown_desc:0 "The government has recently changed the key rate; the next decision is possible when this expires."
