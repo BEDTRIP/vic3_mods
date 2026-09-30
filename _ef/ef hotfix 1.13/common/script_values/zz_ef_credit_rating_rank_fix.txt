@@ -1,0 +1,113 @@
+#############################################
+# EF.46 (2026-09-30) -- a central bank outside the top 50 no longer rates 0.
+#
+# E&F's country_credit_pondered_mean counts the score (country_credit_score
+# / 31 + the central bank institution) only for ranks 2..49 (and the player);
+# the rank bonus 1..4 goes only to countries WITHOUT a central bank. A country
+# WITH a central bank at rank 50+ (not the player) got nothing: note 0, credit
+# rating D -- and D carries market_disallow_trade_routes_bool, so it lost all
+# its trade routes. With EF.30 the same note 0 pins its rate to 12%.
+# 1845 run: FIN, TUS, PER, QUE, ONT, NPU -- note 0, rating D, QUE and TUS at 12%.
+#
+# Fix: the score branch runs for every central bank country ranked below 1
+# (rank 1 AI stays pinned to 10 by E&F, the player is counted as before).
+# The rating is recalculated yearly (ef_on_yearly_pulse_country), so the few
+# extra countries cost nothing noticeable. Everything else is E&F 4.1.7 as is.
+#
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's
+# country_credit_pondered_mean (common/script_values/00_financial_scripted_value.txt,
+# E&F 4.1.7) -- re-copy if E&F changes it.
+#############################################
+
+REPLACE_OR_CREATE:country_credit_pondered_mean = {
+	value = 0
+
+	if = {
+		limit = {
+			global_country_ranking = 1
+			not = {
+				is_player = yes
+			}
+		}
+		add = 10
+	}
+
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			or  = {
+				global_country_ranking > 1
+				is_player = yes
+			}
+		}
+
+		value = country_credit_score
+		divide = 31
+		add = institution_economic_central_bank_lvl
+
+		#is_at_war
+		if = {
+			limit  = {
+				is_at_war = yes
+			}
+			multiply = is_at_war_years_pulse_malus
+		}
+		#taking_loans
+		if = {
+			limit  = {
+				taking_loans = yes
+			}
+			multiply = 0.75
+		}
+		#credit_rating_national_debt_compared_gdp
+		if = {
+			limit  = {
+				country_credit_rating_national_debt_compared_gdp = 0
+			}
+			multiply = country_credit_rating_national_debt_compared_gdp_malus_100
+		}
+	}
+
+	#<50 and no Bc
+	if = {
+		limit = {
+			global_country_ranking < 50
+			not = {
+				has_modifier = has_central_bank
+			}
+		}
+		add = 4
+	}
+	#>= 50
+	if = {
+		limit = {
+			global_country_ranking >= 50
+			global_country_ranking < 100
+			not = {
+				has_modifier = has_central_bank
+			}
+		}
+		add = 3
+	}
+	#>= 100
+	if = {
+		limit = {
+			global_country_ranking >= 100
+			global_country_ranking < 150
+			not = {
+				has_modifier = has_central_bank
+			}
+		}
+		add = 2
+	}
+	#>= 150
+	if = {
+		limit = {
+			global_country_ranking >= 150
+			not = {
+				has_modifier = has_central_bank
+			}
+		}
+		add = 1
+	}
+}
