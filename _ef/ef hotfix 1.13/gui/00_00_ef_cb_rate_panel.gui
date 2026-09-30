@@ -15343,7 +15343,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_1')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_1_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -15482,7 +15482,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_2')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_2_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -15621,7 +15621,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_3')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_3_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -15760,7 +15760,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_4')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_4_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -15899,7 +15899,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_5')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_5_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -16038,7 +16038,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_6')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_6_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -16177,7 +16177,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_7')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_7_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -16316,7 +16316,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_8')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_8_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -16455,7 +16455,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_9')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_9_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -16594,7 +16594,7 @@ types zz_ef_cb_rate_panel
 										flowcontainer = {
 											direction = vertical
 											datamodel = "[GetPlayer.MakeScope.GetList('ai_seller_country_general_10')]"
-											visible = "[GetScriptedGui('ai_quantity_purchasing_10_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+											visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 											item = {
 												button = {
@@ -17411,7 +17411,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_1')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_1_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -17548,7 +17548,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_2')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_2_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -17685,7 +17685,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_3')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_3_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -17822,7 +17822,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_4')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_4_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -17959,7 +17959,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_5')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_5_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -18096,7 +18096,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_6')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_6_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -18233,7 +18233,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_7')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_7_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -18370,7 +18370,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_8')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_8_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -18507,7 +18507,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_9')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_9_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {
@@ -18644,7 +18644,7 @@ types zz_ef_cb_rate_panel
 									flowcontainer = {
 										direction = vertical
 										datamodel = "[GetPlayer.MakeScope.GetList('central_bank_debt_buyer_list_10')]"
-										visible = "[GetScriptedGui('ai_quantity_purchasing_10_visibility').IsShown( GuiScope.SetRoot(Country.MakeScope).End)]"
+										visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)
 
 										item = {
 											button = {

@@ -223,6 +223,21 @@ def build(src: str) -> tuple[str, str]:
     body, touched = clean_ef_noise(body)
     assert len(touched) > 700, f"cleanup hit {len(touched)} lines, expected ~800: E&F's type changed?"
 
+    # 0b. The debt buyer / seller lists (central_bank_debt_buyer_list_N,
+    # ai_seller_country_general_N, 20 live, 50 more commented out) are gated on
+    # GetScriptedGui('ai_quantity_purchasing_N_visibility') with
+    # Country.MakeScope at list level: there is no Country in context there,
+    # and E&F defines only _1 of the 19. The check fails every frame -- ~15k
+    # log lines, all five error.log rotations filled within a minute (run
+    # 2026-09-30, 1848) -- and a failed visible hides the list, so they were
+    # never shown. Same look, no spam: visible = no. Showing them is EF.13 / UI.
+    body, n = re.subn(
+        r"""(?m)^(\s*)visible = "\[GetScriptedGui\('ai_quantity_purchasing_\d+_visibility'\)\.IsShown\( GuiScope\.SetRoot\(Country\.MakeScope\)\.End\)\]"$""",
+        r"\1visible = no  # EF.30: E&F's check failed every frame (tools/regen_ef_cb_rate_gui.py)",
+        body,
+    )
+    assert n == 20, f"{n} debt list checks, expected 20"
+
     # 2. "+" button first: its commented-out line contains the "-" button's
     # line as a substring
     old = '#tooltip = "base_rate_percentage_modification"'
