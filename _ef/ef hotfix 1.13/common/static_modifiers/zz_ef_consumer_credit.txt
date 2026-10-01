@@ -1,0 +1,15 @@
+#############################################
+# EF.48 item 4 (1.10 night) -- consumer credit. Applied weekly by
+# zz_ef_consumer_credit_step (scripted_effects/zz_ef_money_model.txt) with
+# multiplier = the week's net credit flow to pops x 52 / the country's
+# dependents: the same surcharge on every dependent of the country (the
+# user, 1.10: uniform, cheaper than by state). Negative while pops repay more
+# than they borrow. The unit of state_dependent_wage_add is read as money a
+# year per dependent ("к ежегодному доходу от иждивенцев") -- decided at
+# night, check.
+#############################################
+
+zz_ef_consumer_credit = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
+	state_dependent_wage_add = 1
+}

@@ -585,12 +585,18 @@ zz_ef_pool_other_week = {
 	add = zz_ef_v_w_dep_out
 	add = zz_ef_v_w_dep_int
 	add = zz_ef_v_d_bonds
+	add = zz_ef_v_w_cc_issue
+	subtract = zz_ef_v_w_cc_repay
+	subtract = zz_ef_v_w_cc_int
 }
 # Unexplained change of M2 this week: the change minus the budget's lines
 # outside the accounts, minus the CB's net credit, plus the foreign bonds the
 # private banks bought (they left the pool for abroad), minus the pool's own
 # unexplained change and the trade centres' cash (both abroad, items 1-2).
-# What is left is the treasury and the businesses' cash only.
+# What is left is the treasury and the businesses' cash only. The consumer
+# credit paid to pops last week (through their dependents' income, item 4)
+# came from the pool: what of it is not spent is savings, what is spent shows
+# up in the businesses' cash -- so it is taken out here.
 zz_ef_leak_week = {
 	value = zz_ef_v_d_m2
 	subtract = zz_ef_v_f_ext
@@ -602,6 +608,7 @@ zz_ef_leak_week = {
 	add = zz_ef_v_w_dep_int
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
+	subtract = zz_ef_v_w_cc_net
 }
 
 # ---- pops' savings and deposits (the receiver, zz_ef_pop_savings_step) --------
@@ -726,22 +733,6 @@ REPLACE_OR_CREATE:national_capacity = {
 	min = 0.01
 }
 
-# yes when the metal moves with the flows abroad: a central bank on a metal
-# standard (gold, silver, bimetallism; not fiat, not gold exchange).
-zz_ef_hume_on = {
-	value = 0
-	if = {
-		limit = {
-			has_modifier = has_central_bank
-			OR = {
-				has_law = law_type:law_gold_standard
-				has_law = law_type:law_silver_standard
-				has_law = law_type:law_bimetallism_standard
-			}
-		}
-		value = 1
-	}
-}
 # The metal the CB pays out from (silver standard: silver; else gold, for
 # bimetallism in gold terms).
 zz_ef_cb_metal = {
@@ -816,4 +807,215 @@ zz_ef_m2_gold = {
 zz_ef_savings_gold = {
 	value = zz_ef_pop_savings
 	multiply = money_value_in_gold
+}
+
+# ---- EF.48 item 4: consumer credit (the user, 1.10) -------------------------
+# One debt per country (var:zz_ef_cc_debt), countries with a central bank.
+# Limit: 4 months of income (GDP / 12 x 4); target = limit x f(rate): 100% at
+# a 2% key rate, 0 at 12%. Net borrowing moves 5% of the gap a week; the debt
+# rolls over in a year (1/52 repaid and re-lent a week). Rate: key + 3 pp,
+# interest to the pool (banks' income). New loans only from the free pool.
+# Money: pool -> pops through the dependents' surcharge (static_modifiers/
+# zz_ef_consumer_credit.txt), back pops -> pool. Mortgages: with housing (СТР.3).
+zz_ef_cc_speed = 0.05
+zz_ef_cc_debt = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_cc_debt } value = var:zz_ef_cc_debt }
+	min = 0
+}
+zz_ef_cc_rate = {
+	value = zz_ef_money_rate
+	add = 0.03
+}
+zz_ef_cc_share = {
+	value = 0.12
+	subtract = zz_ef_money_rate
+	divide = 0.10
+	min = 0
+	max = 1
+}
+zz_ef_cc_limit = {
+	value = gdp
+	divide = 3
+	min = 0
+}
+zz_ef_cc_target = {
+	value = zz_ef_cc_limit
+	multiply = zz_ef_cc_share
+}
+# Rollover of a year's term.
+zz_ef_cc_rollover = {
+	value = zz_ef_cc_debt
+	divide = 52
+}
+# Lent this week: the rollover + 5% of the gap below the target, from the
+# free pool only.
+zz_ef_cc_issue = {
+	value = zz_ef_cc_target
+	subtract = zz_ef_cc_debt
+	multiply = zz_ef_cc_speed
+	min = 0
+	add = zz_ef_cc_rollover
+	max = {
+		value = investment_pool
+		min = 0
+	}
+	min = 0
+}
+# Repaid this week: the rollover + 5% of the gap above the target.
+zz_ef_cc_repay = {
+	value = zz_ef_cc_debt
+	subtract = zz_ef_cc_target
+	multiply = zz_ef_cc_speed
+	min = 0
+	add = zz_ef_cc_rollover
+	max = zz_ef_cc_debt
+}
+zz_ef_cc_interest = {
+	value = zz_ef_cc_debt
+	multiply = zz_ef_cc_rate
+	divide = 52
+}
+# Pops' dependents (var:zz_ef_dependents, refreshed monthly: the sum over
+# pops is not cheap).
+zz_ef_dependents_count = {
+	value = 0
+	every_scope_pop = {
+		add = dependents
+	}
+}
+# The surcharge per dependent a year for this week's net flow.
+zz_ef_cc_wage_add = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_dependents
+			var:zz_ef_dependents > 0
+			has_variable = zz_ef_f_cc_net
+		}
+		value = var:zz_ef_f_cc_net
+		multiply = 52
+		divide = var:zz_ef_dependents
+	}
+}
+zz_ef_v_f_cc_issue = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cc_issue } value = var:zz_ef_f_cc_issue }
+}
+zz_ef_v_f_cc_repay = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cc_repay } value = var:zz_ef_f_cc_repay }
+}
+zz_ef_v_f_cc_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cc_int } value = var:zz_ef_f_cc_int }
+}
+zz_ef_v_f_cc_net = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cc_net } value = var:zz_ef_f_cc_net }
+}
+zz_ef_v_w_cc_issue = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_cc_issue } value = var:zz_ef_w_cc_issue }
+}
+zz_ef_v_w_cc_repay = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_cc_repay } value = var:zz_ef_w_cc_repay }
+}
+zz_ef_v_w_cc_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_cc_int } value = var:zz_ef_w_cc_int }
+}
+zz_ef_v_w_cc_net = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_cc_net } value = var:zz_ef_w_cc_net }
+}
+zz_ef_cc_debt_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_cc_debt
+		divide = gdp
+	}
+}
+zz_ef_v_dependents = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_dependents } value = var:zz_ef_dependents }
+}
+
+# ---- EF.48 item 5: business credit, accounting only (the user, 1.10) -------
+# One debt per country (var:zz_ef_bc_debt). Private construction is paid from
+# the pool (the transfer to the treasury); the part of it that was the banks'
+# borrowed money -- the CB's credit and pops' deposits, by their share of the
+# pool -- becomes the businesses' debt. Interest at the consumer rate (key +
+# 3 pp), repaid over 5 years (term decided at night, check); both are
+# counted against the buildings' contributions to the pool -- no money moves.
+# What the contributions do not cover is added to the debt.
+zz_ef_bc_term_weeks = 260
+zz_ef_bc_debt = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bc_debt } value = var:zz_ef_bc_debt }
+	min = 0
+}
+zz_ef_bc_borrowed_share = {
+	value = 0
+	if = {
+		limit = { investment_pool > 0 }
+		value = zz_ef_bank_cb_debt
+		add = zz_ef_pop_deposits
+		divide = investment_pool
+	}
+	min = 0
+	max = 1
+}
+zz_ef_bc_new = {
+	value = zz_ef_v_f_transfer
+	multiply = zz_ef_bc_borrowed_share
+}
+zz_ef_bc_interest = {
+	value = zz_ef_bc_debt
+	multiply = zz_ef_cc_rate
+	divide = 52
+}
+zz_ef_bc_due = {
+	value = zz_ef_bc_debt
+	divide = zz_ef_bc_term_weeks
+	add = zz_ef_bc_interest
+}
+# Paid from the week's contributions, at most all of them.
+zz_ef_bc_paid = {
+	value = zz_ef_bc_due
+	max = {
+		value = zz_ef_v_f_contrib
+		min = 0
+	}
+}
+zz_ef_v_f_bc_new = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_bc_new } value = var:zz_ef_f_bc_new }
+}
+zz_ef_v_f_bc_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_bc_int } value = var:zz_ef_f_bc_int }
+}
+zz_ef_v_f_bc_paid = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_bc_paid } value = var:zz_ef_f_bc_paid }
+}
+zz_ef_bc_debt_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_bc_debt
+		divide = gdp
+	}
+}
+# Share of the contributions that went to debt service this week.
+zz_ef_bc_service_share = {
+	value = 0
+	if = {
+		limit = { zz_ef_v_f_contrib > 0 }
+		value = zz_ef_v_f_bc_paid
+		divide = zz_ef_v_f_contrib
+	}
 }

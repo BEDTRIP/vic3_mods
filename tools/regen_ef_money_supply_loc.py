@@ -288,6 +288,10 @@ FLOWS = [
     (N, B, "вклады населения из накоплений", "pops' deposits from their savings", sv_("zz_ef_v_w_dep_in"), B),
     (B, N, "снятие вкладов", "deposits withdrawn", sv_("zz_ef_v_w_dep_out"), B),
     (B, N, "проценты по вкладам", "interest on deposits", sv_("zz_ef_v_w_dep_int"), B),
+    # consumer credit (EF.48 item 4): pool <-> pops through the dependents' surcharge
+    (B, N, "потребительский кредит: выдано", "consumer credit: lent", sv_("zz_ef_v_w_cc_issue"), B),
+    (N, B, "потребительский кредит: погашено", "consumer credit: repaid", sv_("zz_ef_v_w_cc_repay"), B),
+    (N, B, "потребительский кредит: проценты", "consumer credit: interest", sv_("zz_ef_v_w_cc_int"), B),
     # --- central bank, in money (a transit account) ---
     (X, C, "выпуск: кредит банкам — новые деньги", "issue: credit to banks — new money", sv_("zz_ef_v_f_cb_borrow"), None),
     (C, B, "кредит банкам под ключевую ставку", "credit to banks at the key rate", sv_("zz_ef_v_f_cb_borrow"), None),
@@ -590,7 +594,38 @@ def nested(lang):
                       f"net flow with abroad {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; value {sv('money_value_0', '3')} "
                       f"metal per {cur}; cover at parity {sv('zz_ef_cb_cover', '%0')}. Currency-good stock "
                       f"{sv('money_supply_state')} units."))
+        if acc == B:
+            L.append((f"#b Кредит бизнесу (учёт): долг предприятий {money('zz_ef_bc_debt')}#! "
+                      f"({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП). Частная стройка за неделю оплачена заёмными "
+                      f"деньгами банков на {sv('zz_ef_bc_borrowed_share', '%0')} (кредит ЦБ и вклады к пулу): новый "
+                      f"долг {money('zz_ef_v_f_bc_new')}; проценты {money('zz_ef_v_f_bc_int')} (ключевая + 3 п.п.), "
+                      f"срок 5 лет; из взносов зданий в счёт долга {money('zz_ef_v_f_bc_paid')} "
+                      f"({sv('zz_ef_bc_service_share', '%0')} взносов). Деньги не двигаются — только учёт.")
+                     if ru else
+                     (f"#b Business credit (accounting): businesses' debt {money('zz_ef_bc_debt')}#! "
+                      f"({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP). This week's private construction was paid with "
+                      f"the banks' borrowed money for {sv('zz_ef_bc_borrowed_share', '%0')} (CB credit and deposits "
+                      f"to the pool): new debt {money('zz_ef_v_f_bc_new')}; interest {money('zz_ef_v_f_bc_int')} (key "
+                      f"+ 3 pp), term 5 years; counted from the buildings' contributions {money('zz_ef_v_f_bc_paid')} "
+                      f"({sv('zz_ef_bc_service_share', '%0')} of them). No money moves — accounting only."))
         if acc == N:
+            L.append((f"#b Потребительский кредит: долг {money('zz_ef_cc_debt')}#! "
+                      f"({sv('zz_ef_cc_debt_to_gdp', '%1')} ВВП); предел 4 месяца дохода {money('zz_ef_cc_limit')}, "
+                      f"цель {money('zz_ef_cc_target')} ({sv('zz_ef_cc_share', '%0')} предела по ставке: 100% при 2%, "
+                      f"0 при 12%); ставка {sv('zz_ef_cc_rate', '%1')} (ключевая + 3 п.п.), срок год. На эту неделю: "
+                      f"выдано {money('zz_ef_v_f_cc_issue')}, погашено {money('zz_ef_v_f_cc_repay')}, проценты "
+                      f"{money('zz_ef_v_f_cc_int')} — итого населению {sv('zz_ef_v_f_cc_net', 'D+=')}{cur}, надбавка "
+                      f"к доходу иждивенцев {sv('zz_ef_cc_wage_add', '+=2')} в год на иждивенца "
+                      f"({sv('zz_ef_v_dependents')} иждивенцев).")
+                     if ru else
+                     (f"#b Consumer credit: debt {money('zz_ef_cc_debt')}#! "
+                      f"({sv('zz_ef_cc_debt_to_gdp', '%1')} of GDP); limit 4 months of income {money('zz_ef_cc_limit')}, "
+                      f"target {money('zz_ef_cc_target')} ({sv('zz_ef_cc_share', '%0')} of the limit by the rate: 100% "
+                      f"at 2%, 0 at 12%); rate {sv('zz_ef_cc_rate', '%1')} (key + 3 pp), term a year. This week: lent "
+                      f"{money('zz_ef_v_f_cc_issue')}, repaid {money('zz_ef_v_f_cc_repay')}, interest "
+                      f"{money('zz_ef_v_f_cc_int')} — net to pops {sv('zz_ef_v_f_cc_net', 'D+=')}{cur}, dependents' "
+                      f"surcharge {sv('zz_ef_cc_wage_add', '+=2')} a year per dependent "
+                      f"({sv('zz_ef_v_dependents')} dependents)."))
             L.append((f"Доход населения ≈ ВВП / 52 = {money('zz_ef_gdp_week')}.") if ru else
                      (f"Pops' income ≈ GDP / 52 = {money('zz_ef_gdp_week')}."))
             L.append((f"#b Накопления: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} за "

@@ -273,6 +273,22 @@ zz_ef_money_model_step = {
 		}
 	}
 
+	# EF.48 item 5: business credit, accounting only (values file).
+	if = {
+		limit = { NOT = { has_variable = zz_ef_bc_debt } }
+		set_variable = { name = zz_ef_bc_debt value = 0 }
+	}
+	set_variable = { name = zz_ef_f_bc_new value = zz_ef_bc_new }
+	set_variable = { name = zz_ef_f_bc_int value = zz_ef_bc_interest }
+	set_variable = { name = zz_ef_f_bc_paid value = zz_ef_bc_paid }
+	change_variable = { name = zz_ef_bc_debt add = var:zz_ef_f_bc_new }
+	change_variable = { name = zz_ef_bc_debt add = var:zz_ef_f_bc_int }
+	change_variable = { name = zz_ef_bc_debt subtract = var:zz_ef_f_bc_paid }
+	if = {
+		limit = { var:zz_ef_bc_debt < 0 }
+		set_variable = { name = zz_ef_bc_debt value = 0 }
+	}
+
 	# Week-on-week change of each account (0 in the first week).
 	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
 	zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
@@ -306,6 +322,10 @@ zz_ef_money_model_step = {
 	zz_ef_money_window_roll = { F = dep_in }
 	zz_ef_money_window_roll = { F = dep_out }
 	zz_ef_money_window_roll = { F = dep_int }
+	zz_ef_money_window_roll = { F = cc_issue }
+	zz_ef_money_window_roll = { F = cc_repay }
+	zz_ef_money_window_roll = { F = cc_int }
+	zz_ef_money_window_roll = { F = cc_net }
 	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
 	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
 	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
@@ -340,6 +360,7 @@ zz_ef_money_hook_receive = {
 		set_variable = { name = zz_ef_f_leak value = zz_ef_leak_week }
 		zz_ef_pop_savings_step = yes
 		zz_ef_cb_hume_step = yes
+		zz_ef_consumer_credit_step = yes
 		if = {
 			limit = {
 				OR = {
@@ -347,7 +368,7 @@ zz_ef_money_hook_receive = {
 					gdp > 20000000
 				}
 			}
-			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]"
+			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]"
 		}
 	}
 }
@@ -413,7 +434,14 @@ zz_ef_cb_hume_step = {
 	set_variable = { name = zz_ef_f_ext_net value = zz_ef_ext_net_week }
 	set_variable = { name = zz_ef_f_hume value = 0 }
 	if = {
-		limit = { zz_ef_hume_on > 0 }
+		limit = {
+			has_modifier = has_central_bank
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
 		set_variable = { name = zz_ef_f_hume value = zz_ef_hume_metal_week }
 		every_scope_state = {
 			limit = {
@@ -439,9 +467,51 @@ zz_ef_cb_hume_step = {
 	}
 }
 
+# EF.48 item 4: consumer credit, in the receiver after the savings (its pool
+# operations fall into the next week's window, like the deposits). Values:
+# script_values/zz_ef_money_model_values.txt.
+zz_ef_consumer_credit_step = {
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = zz_ef_dependents
+			var:zz_ef_dependents > 0
+		}
+		if = {
+			limit = { NOT = { has_variable = zz_ef_cc_debt } }
+			set_variable = { name = zz_ef_cc_debt value = 0 }
+		}
+		set_variable = { name = zz_ef_f_cc_issue value = zz_ef_cc_issue }
+		set_variable = { name = zz_ef_f_cc_repay value = zz_ef_cc_repay }
+		set_variable = { name = zz_ef_f_cc_int value = zz_ef_cc_interest }
+		change_variable = { name = zz_ef_cc_debt add = var:zz_ef_f_cc_issue }
+		change_variable = { name = zz_ef_cc_debt subtract = var:zz_ef_f_cc_repay }
+		set_variable = { name = zz_ef_f_cc_net value = var:zz_ef_f_cc_issue }
+		change_variable = { name = zz_ef_f_cc_net subtract = var:zz_ef_f_cc_repay }
+		change_variable = { name = zz_ef_f_cc_net subtract = var:zz_ef_f_cc_int }
+		# pool side
+		add_investment_pool = {
+			value = var:zz_ef_f_cc_net
+			multiply = -1
+		}
+		# pops side: the dependents' surcharge for the coming week
+		remove_modifier = zz_ef_consumer_credit
+		add_modifier = {
+			name = zz_ef_consumer_credit
+			multiplier = zz_ef_cc_wage_add
+		}
+	}
+}
+
 # ---- the monthly step -------------------------------------------------------
 
 zz_ef_money_model_monthly_step = {
+	# EF.48 item 4: dependents for the consumer credit's surcharge.
+	if = {
+		limit = { has_modifier = has_central_bank }
+		set_variable = { name = zz_ef_dependents value = zz_ef_dependents_count }
+	}
+
 	# E&F's currency good moves monthly (stockpile_currency_type_1).
 	zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
 
