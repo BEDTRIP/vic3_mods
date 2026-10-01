@@ -26,6 +26,8 @@ Parameters:
     -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
                   -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
+    -Commands     extra console commands after loading, ';'-separated (e.g. "dump_data_types"); their
+                  output files in logs/ are copied with the other logs
     -AiTag        console "enable_ai <tag>" after loading, so the AI plays the player's country
                   too (default "all"; "" to skip)
     -StartSave    start from this save instead of the last one: a file name in "save games" (e.g.
@@ -46,6 +48,7 @@ param(
     [int]$LoadWaitSec = 400,
     [int]$Autosaves = 0,
     [string]$AiTag = "all",
+    [string]$Commands = "",
     [string]$StartSave = "",
     [switch]$NewGame,
     [string]$Tag = "GBR",
@@ -309,6 +312,7 @@ if ($NewGame) {
 $p = Get-Game
 Shot $p "01_loaded.png"
 if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
+foreach ($c in ($Commands -split ';' | Where-Object { $_.Trim() })) { Console-Cmd $p $c.Trim(); Start-Sleep 5; Log "console: $($c.Trim())" }
 
 # speed 5, unpause; verify by the date on screen, toggle pause once more if it stands
 Focus-Game $p
