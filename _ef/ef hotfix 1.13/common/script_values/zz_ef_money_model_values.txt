@@ -1421,10 +1421,14 @@ zz_ef_trade_account = {
 		divide = zz_ef_gold_per_unit
 	}
 }
+# Claims on abroad in M3: the banks' and the treasury's foreign bonds. E&F's
+# trade account is shown apart and NOT added: in runs 8-9 (1844) it read
+# 12.6 billion for Belgium (M2 182M) and 2.2 billion for Russia -- E&F's
+# cumulative counter in "gold" since 1836, blown up at a weak currency's
+# value. Whether it belongs in M3 is the user's call (1.10 day).
 zz_ef_foreign_assets = {
 	value = zz_ef_bank_bonds
 	add = zz_ef_treasury_bonds
-	add = zz_ef_trade_account
 }
 zz_ef_agg_m0 = {
 	value = zz_ef_treasury
