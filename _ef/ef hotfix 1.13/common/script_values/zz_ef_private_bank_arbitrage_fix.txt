@@ -1,0 +1,43 @@
+#############################################
+# EF.48, night 2 item 8 (2.10): E&F's private banks run the gold/silver
+# arbitrage against a bimetallic CB (central_bank_ef_on_yearly_pulse_country,
+# scripted_effects/00_on_action_main.txt:1060, before 1873): on a gold drain the
+# CB loses gold_lost of its gold and the bank pays silver_gained = gold_lost x
+# the market rate from its silver; on a silver drain the CB loses silver_lost
+# and the bank pays gold_gained in gold. Nothing checks what the bank holds:
+# its stock went negative (run 18: Rothschild's metal under zero) -- metal
+# out of nothing for the CB, a bank in debt in metal. Now the deal is at most
+# what the bank can pay: gold_lost <= the bank's silver / the rate,
+# silver_lost <= the bank's gold x the rate (the bank's stock: E&F's
+# private_bank_*_reserve_per_bank_gui, company scope). Without the bank in
+# scope (E&F's debug window) E&F's number.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's gold_lost and
+# silver_lost (script_values/00_economic_scripted_value.txt).
+#############################################
+
+REPLACE_OR_CREATE:gold_lost = {
+	value = gold_state_native_for_stockpile
+	multiply = misalignment_rate_gold_drain
+	if = {
+		limit = { exists = scope:arbitrage_privat_bank }
+		max = {
+			value = scope:arbitrage_privat_bank.private_bank_silver_reserve_per_bank_gui
+			divide = gold_to_silver_rate
+			min = 0
+		}
+	}
+	min = 0
+}
+REPLACE_OR_CREATE:silver_lost = {
+	value = silver_state_native_for_stockpile
+	multiply = misalignment_rate_silver_drain
+	if = {
+		limit = { exists = scope:arbitrage_privat_bank }
+		max = {
+			value = scope:arbitrage_privat_bank.private_bank_gold_reserve_per_bank_gui
+			multiply = gold_to_silver_rate
+			min = 0
+		}
+	}
+	min = 0
+}
