@@ -60,6 +60,9 @@ public static class W {
     [StructLayout(LayoutKind.Sequential)] public struct KEYBDINPUT { public ushort wVk, wScan; public uint dwFlags, time; public IntPtr extra; }
     [StructLayout(LayoutKind.Explicit, Size = 40)] public struct INPUT { [FieldOffset(0)] public uint type; [FieldOffset(8)] public KEYBDINPUT ki; }
     [DllImport("user32.dll")] public static extern uint SendInput(uint n, INPUT[] inputs, int size);
+    [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
+    [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
+    [DllImport("user32.dll")] public static extern void mouse_event(uint f, int x, int y, uint d, UIntPtr e);
     // Types text as Unicode characters (WM_CHAR), whatever the keyboard layout.
     public static void TypeText(string s) {
         foreach (char c in s) {
@@ -77,34 +80,70 @@ function Log($m) { $l = "[{0}] {1}" -f (Get-Date -Format "HH:mm:ss"), $m; Write-
 
 function Get-Game { Get-Process -Name "victoria3" -ErrorAction SilentlyContinue | Select-Object -First 1 }
 
+# Keys and clicks go to whatever window has the focus. Windows may refuse to
+# bring the game forward (the user is working in another window): then every
+# key would land in the user's window (1.10 morning: "enable_ai all" was typed
+# into the user's chat). So nothing is sent unless the game is in front; if
+# it cannot be brought forward the run stops.
 function Focus-Game($p) {
     [W]::ShowWindow($p.MainWindowHandle, 9) | Out-Null
     [W]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
     Start-Sleep -Milliseconds 400
+    if ([W]::GetForegroundWindow() -ne $p.MainWindowHandle) {
+        # the ALT trick: a key event lets this process take the foreground
+        [W]::keybd_event(0x12, 0x38, 0, [UIntPtr]::Zero); [W]::keybd_event(0x12, 0x38, 2, [UIntPtr]::Zero)
+        [W]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
+        Start-Sleep -Milliseconds 400
+    }
+    if ([W]::GetForegroundWindow() -ne $p.MainWindowHandle) {
+        Log "the game is not in front (another window has the focus) - stopping, nothing sent"
+        throw "game window not in front"
+    }
+}
+
+function Assert-Front($p) {
+    if ([W]::GetForegroundWindow() -ne $p.MainWindowHandle) { Focus-Game $p }
 }
 
 # vk + scan code (DirectInput reads scan codes): Space 0x20/0x39, '5' 0x35/0x06
 function Send-Key([byte]$vk, [byte]$scan) {
+    Assert-Front (Get-Game)
     [W]::keybd_event($vk, $scan, 0, [UIntPtr]::Zero)
     Start-Sleep -Milliseconds 60
     [W]::keybd_event($vk, $scan, 2, [UIntPtr]::Zero)
     Start-Sleep -Milliseconds 200
 }
 
+# Left click at a point of the window (fraction of its size).
+function Click-Window($p, $fx, $fy) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    Assert-Front $p
+    [W]::SetCursorPos([int]($r.L + ($r.R - $r.L) * $fx), [int]($r.T + ($r.B - $r.T) * $fy)) | Out-Null
+    Start-Sleep -Milliseconds 150
+    [W]::mouse_event(2, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 60
+    [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 300
+}
+
 # Console (debug_mode): the key left of 1 (VK_OEM_3, scan 0x29), clear the line
 # (if the console was still open the key typed a character into it), type,
-# Enter, Escape to close. Run 2: closing with the same key left the console
-# open and the next command started with a stray "ё".
+# Enter. Closing: while the input line has the focus neither Escape nor the
+# console key close it (run 2: a stray "ё"; run 3, 1.10: the console stayed
+# open and the speed key "5" went into it, the game never ran). So a click on
+# the map takes the focus off the line, then the console key closes it.
 function Console-Cmd($p, $cmd) {
     Focus-Game $p
     Send-Key 0xC0 0x29
     Start-Sleep -Milliseconds 500
     for ($i = 0; $i -lt 3; $i++) { Send-Key 0x08 0x0E }
+    Assert-Front $p
     [W]::TypeText($cmd)
     Start-Sleep -Milliseconds 200
     Send-Key 0x0D 0x1C
     Start-Sleep -Milliseconds 800
-    Send-Key 0x1B 0x01
+    Click-Window $p 0.62 0.45
+    Send-Key 0xC0 0x29
+    Start-Sleep -Milliseconds 400
     Log "console: $cmd"
 }
 
