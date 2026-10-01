@@ -36,8 +36,9 @@ Parameters:
                   main menu -> New game -> Sandbox -> Random country -> Start, then the console
                   "tag <Tag>". Clicks are at fractions of the window, measured on 2560x1440 (16:9).
     -Tag          the country to play in a new game (default GBR)
-    -NoDumps      skip the console dumps at the end (debugcountrybudgets, debugmarkets: budgets of
-                  every country by line and markets, as log files in logs/)
+    -NoDumps      kept for old command lines; does nothing (1.10 night: debugcountrybudgets and
+                  debugmarkets are strings in victoria3.exe, but the release console answers
+                  "Unknown command" -- developer-build commands)
     -OutDir       where to put logs and screenshots (default: %TEMP%\vic3_sandbox\<timestamp>)
 #>
 param(
@@ -342,7 +343,6 @@ else {
     $p = Get-Game
     if ($p) {
         Focus-Game $p; Send-Key 0x20 0x39; Start-Sleep 3; Shot $p "03_end.png"
-        if (-not $NoDumps) { Console-Cmd $p "debugcountrybudgets"; Console-Cmd $p "debugmarkets"; Start-Sleep 5 }
     }
 }
 
