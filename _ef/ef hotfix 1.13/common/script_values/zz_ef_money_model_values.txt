@@ -574,10 +574,12 @@ zz_ef_hook_ok = {
 # the contributions, minus the transfer to the treasury, the CB's credit and
 # interest, the deposits and the foreign bonds. About 0 in a normal week; in
 # the sandbox run lump drops of 0.8-1.7M a week (Britain, Nov 1836 - Feb
-# 1837), not E&F (no bonds, no bank currency purchases): the country's
-# companies bought 44 levels abroad in the same half-year (saves 1836.7.1 /
-# 1837.1.1) -- foreign investment from the pool. Shown as a flow abroad and
-# kept out of the pops' savings. (Decided at night, 1.10 -- check.)
+# 1837), not E&F (no bonds, no bank currency purchases). Run 5 (1.10): the
+# drops are multiples of 15 000 = VC's PRIVATIZATION_PER_LEVEL_COST 150 x
+# MIN_FAKE_CONSTRUCTION_COST 100 -- the pool buying building levels at the
+# privatization price; no treasury receives it. Shown as money leaving
+# circulation, kept out of the pops' savings and out of the CB's metal.
+# (1.10 -- check where it goes.)
 zz_ef_pool_other_week = {
 	value = zz_ef_v_d_pool
 	subtract = zz_ef_v_f_contrib
@@ -613,6 +615,18 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_v_w_cc_net
+	subtract = zz_ef_v_f_tr_other
+}
+# The treasury's change beyond the week's budget and the CB's profit: E&F's
+# scripted moves on the treasury -- ai_refund_central_bank (the government
+# repays the CB from the treasury) and ai_buy_bond_N (the treasury buys other
+# countries' bonds), around 1 January: run 6 (1.10), Russia 1840.1.2 -16.7M
+# with a budget of -17K, France -6.4M. Not pops' savings: shown as treasury
+# -> the CB and abroad. Not in the CB's metal (a refund and a bond purchase
+# cannot be told apart -- check).
+zz_ef_v_f_tr_other = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_tr_other } value = var:zz_ef_f_tr_other }
 }
 
 # ---- pops' savings and deposits (the receiver, zz_ef_pop_savings_step) --------
@@ -748,11 +762,14 @@ zz_ef_cb_metal = {
 }
 # The week's net flow abroad in the engine's money (+ in, - out): the
 # budget's lines with other countries (the bridge's scope:abr), the trade
-# centres' cash, the pool's unexplained change, foreign bonds bought.
+# centres' cash, foreign bonds bought. Not the pool's unexplained change: run
+# 5 showed it in multiples of 15 000 = VC's PRIVATIZATION_PER_LEVEL_COST 150
+# x MIN_FAKE_CONSTRUCTION_COST 100 -- the pool buying building levels at the
+# privatization price; the money reaches no treasury, so it is a sink, not a
+# payment abroad (1.10, check).
 zz_ef_ext_net_week = {
 	value = zz_ef_v_f_abr
 	add = zz_ef_v_d_tc
-	add = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_bonds
 }
 # Metal moved by it: the flow x the currency's value (metal per unit of
@@ -879,6 +896,22 @@ zz_ef_cc_interest = {
 	value = zz_ef_cc_debt
 	multiply = zz_ef_cc_rate
 	divide = 52
+}
+# The engine never lets dependents' income go below 0 (the 1840.7.1 save of
+# run 6: Prussia's surcharge -0.27 a year per dependent, its dependents' income
+# 0 everywhere; Britain's base ~0.2 + -0.17 = 0.03): a repayment larger than
+# their income would not be collected, while the pool got it. So pops pay at
+# most 0.1 a year per dependent net; the rest of the repayment waits, unpaid
+# interest is added to the debt (1.10, check the floor).
+zz_ef_cc_floor_per_dependent = -0.1
+zz_ef_cc_floor_week = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_dependents }
+		value = var:zz_ef_dependents
+		multiply = zz_ef_cc_floor_per_dependent
+		divide = 52
+	}
 }
 # Pops' dependents (var:zz_ef_dependents, refreshed monthly: the sum over
 # pops is not cheap).
@@ -1359,4 +1392,10 @@ zz_ef_savings_to_gdp = {
 		value = zz_ef_pop_savings
 		divide = gdp
 	}
+}
+# The treasury card's "other" after the E&F moves are shown as their own line
+# (0 once the week's bridge data arrived).
+zz_ef_other_treasury_rest = {
+	value = zz_ef_other_treasury_budget
+	subtract = zz_ef_v_f_tr_other
 }

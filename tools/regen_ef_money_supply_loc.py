@@ -318,11 +318,18 @@ FLOWS = [
      svn("zz_ef_v_d_tc"), None),
     (Z, P, "торговые центры: выручка экспорта — прирост их кассы", "trade centres: export revenue — their cash grew",
      svp("zz_ef_v_d_tc"), None),
+    # E&F's scripted moves on the treasury (refunds to the CB, bonds bought), 1.10
+    (K, C, "E&F: погашение долга ЦБ и покупка облигаций из казны (изменение казны сверх бюджета)",
+     "E&F: repaying the CB and buying bonds from the treasury (the treasury's change beyond the budget)",
+     svn("zz_ef_v_f_tr_other"), None),
+    (C, K, "E&F: прочий приход в казну сверх бюджета", "E&F: other income to the treasury beyond the budget",
+     svp("zz_ef_v_f_tr_other"), None),
     # the pool's unexplained change (EF.48 item 2): foreign investment from the pool
-    (B, Z, "за рубеж: иностранные инвестиции и прочее (необъяснённый остаток пула)",
-     "abroad: foreign investment and other (the pool's unexplained change)", svn("zz_ef_v_f_pool_other"), None),
-    (Z, B, "из-за рубежа: необъяснённый приход в пул", "from abroad: the pool's unexplained gain",
-     svp("zz_ef_v_f_pool_other"), None),
+    (B, X, "выкуп уровней зданий по цене приватизации (15 000 за уровень) — деньги выходят из обращения "
+           "(необъяснённый остаток пула)",
+     "building levels bought at the privatization price (15 000 a level) — money leaves circulation (the "
+     "pool's unexplained change)", svn("zz_ef_v_f_pool_other"), None),
+    (X, B, "необъяснённый приход в пул", "the pool's unexplained gain", svp("zz_ef_v_f_pool_other"), None),
 ]
 
 NOTES = {
@@ -343,12 +350,12 @@ NOTES = {
     "pops": ("Денег у населения в движке нет: остаток дохода движок превращает в достаток (число). Мод ловит "
              "эти деньги в накопления — по сохранению денег (мост GUI → скрипт): что пропало из казны и касс "
              "предприятий сверх известных переводов. Оплата заграницы (касса торговых центров) и необъяснённый "
-             "остаток пула сюда не входят — это переводы за рубеж. Часть накоплений лежит во вкладах — это снова "
+             "остаток пула (выкуп уровней) сюда не входят. Часть накоплений лежит во вкладах — это снова "
              "деньги движка (пул).",
              "Pops hold no money in the engine: it turns the income left over into wealth (a number). The mod "
              "catches this money into savings by money conservation (the GUI → script bridge): what vanished from "
              "the treasury and business cash beyond the known transfers. Payments abroad (the trade centres' cash) "
-             "and the pool's unexplained change are not in it — they are transfers abroad. Part of the savings is "
+             "and the pool's unexplained change (levels bought) are not in it. Part of the savings is "
              "in deposits — engine money again (the pool)."),
     "cb": ("ЦБ — расчётный агент страны: все платежи с заграницей идут через него. Кредит банкам — новые деньги, "
            "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (и склад товара-валюты "
@@ -553,7 +560,7 @@ def nested(lang):
         head = TITLES[acc][k] + (" за неделю" if ru else " this week")
         L = [f"#b {head}: {delta(DELTA[acc])}#!" if acc in DELTA else f"#b {head}#!"]
         resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA else None
-        fixed_resid = "Country.MakeScope.ScriptValue('zz_ef_other_treasury_budget')" if acc == K else None
+        fixed_resid = "Country.MakeScope.ScriptValue('zz_ef_other_treasury_rest')" if acc == K else None
         n = 0
         for other in [a for a in ACC_ORDER if a != acc] + [X]:
             rows = [(dr, f) for o, dr, f in flows if o == other]
