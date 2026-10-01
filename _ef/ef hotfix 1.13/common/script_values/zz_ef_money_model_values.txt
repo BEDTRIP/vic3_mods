@@ -782,6 +782,9 @@ REPLACE_OR_CREATE:national_capacity = {
 		}
 		add = central_bank_reserves
 		add = gold_loaned_to_central_bank_in_national_metal
+		# night 2, item 2 (2.10): foreign currency in the reserves, in the
+		# standard's metal (var:zz_ef_fx_metal, kept weekly by the step)
+		add = zz_ef_v_fx_metal
 		multiply = zz_ef_capacity_per_metal
 	}
 	min = 0.01
@@ -2243,4 +2246,135 @@ zz_ef_v_g_maxcred = {
 zz_ef_v_g_wgdp = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_g_wgdp } value = var:zz_ef_g_wgdp }
+}
+
+# ---- night 2 (2.10): currencies, the silver rate, reserves -----------------
+
+# Item 1 (the user, 1.10 night): the silver-to-gold rate (gold per unit of
+# silver, E&F's silver_to_gold_rate) from the metals' prices: (silver price /
+# gold price) x (gold base price / silver base price) / 15.5 -- 1:15.5 at the
+# base prices (the French legal ratio of 1803, near the 1830s market). E&F's
+# was world gold / silver production (global_var:global_*_production_fix, 2 /
+# 13), clamped to 1:5 .. 1:64: silver currencies read ~3 times their gold
+# value, the "average value of money" followed them up and the pound read as
+# "weak, -55%" (run 18). Prices over every market, weighted by the metal's
+# sell + buy orders there (the world price); 1 if nothing is traded. Kept
+# monthly in global_var:zz_ef_s2g (zz_ef_silver_rate_update); E&F's bounds.
+zz_ef_world_gold_price_mult = {
+	value = 1
+	if = {
+		limit = { zz_ef_world_gold_orders > 0 }
+		value = 0
+		every_market = {
+			add = {
+				value = mg:gold.market_goods_pricier
+				add = 1
+				multiply = {
+					value = mg:gold.market_goods_sell_orders
+					add = mg:gold.market_goods_buy_orders
+				}
+			}
+		}
+		divide = zz_ef_world_gold_orders
+	}
+	min = 0.05
+}
+zz_ef_world_gold_orders = {
+	value = 0
+	every_market = {
+		add = mg:gold.market_goods_sell_orders
+		add = mg:gold.market_goods_buy_orders
+	}
+}
+zz_ef_world_silver_price_mult = {
+	value = 1
+	if = {
+		limit = { zz_ef_world_silver_orders > 0 }
+		value = 0
+		every_market = {
+			add = {
+				value = mg:silver.market_goods_pricier
+				add = 1
+				multiply = {
+					value = mg:silver.market_goods_sell_orders
+					add = mg:silver.market_goods_buy_orders
+				}
+			}
+		}
+		divide = zz_ef_world_silver_orders
+	}
+	min = 0.05
+}
+zz_ef_world_silver_orders = {
+	value = 0
+	every_market = {
+		add = mg:silver.market_goods_sell_orders
+		add = mg:silver.market_goods_buy_orders
+	}
+}
+zz_ef_silver_to_gold_market = {
+	value = zz_ef_world_silver_price_mult
+	divide = zz_ef_world_gold_price_mult
+	divide = 15.5
+	max = 0.2
+	min = 0.015625
+}
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's silver_to_gold_rate
+# (script_values/00_economic_scripted_value.txt); gold_to_silver_rate = 1 /
+# it stays E&F's. Before the first month of a game (E&F's history at the
+# start): 1 / 15.5.
+REPLACE_OR_CREATE:silver_to_gold_rate = {
+	value = 0.064516
+	if = {
+		limit = { has_global_variable = zz_ef_s2g }
+		value = global_var:zz_ef_s2g
+	}
+	max = 0.2
+	min = 0.015625
+}
+
+# Item 2: foreign currency in the reserves, in the standard's metal (kept
+# weekly by zz_ef_fx_metal_update).
+zz_ef_v_fx_metal = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_fx_metal } value = var:zz_ef_fx_metal }
+	min = 0
+}
+
+# Item 3: the crisis redemption, for the log.
+zz_ef_v_crisis_due = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_crisis_due } value = var:zz_ef_crisis_due }
+}
+zz_ef_v_crisis_paid = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_crisis_paid } value = var:zz_ef_crisis_paid }
+}
+
+# The monthly currency line (EFX): standard (1 gold, 2 silver, 3 bimetallism,
+# 4 gold exchange, 5 fiat, 0 none), CB, subject, E&F's crisis flags.
+zz_ef_std_code = {
+	value = 0
+	if = { limit = { has_law = law_type:law_gold_standard } value = 1 }
+	else_if = { limit = { has_law = law_type:law_silver_standard } value = 2 }
+	else_if = { limit = { has_law = law_type:law_bimetallism_standard } value = 3 }
+	else_if = { limit = { has_law = law_type:law_gold_exchange_standard } value = 4 }
+	else_if = { limit = { has_law = law_type:law_fiat_standard } value = 5 }
+}
+zz_ef_has_cb = {
+	value = 0
+	if = { limit = { has_modifier = has_central_bank } value = 1 }
+}
+zz_ef_is_subject = {
+	value = 0
+	if = { limit = { is_subject = yes } value = 1 }
+}
+zz_ef_crisis_flag = {
+	value = 0
+	if = { limit = { has_variable = currency_crisis var:currency_crisis = 1 } add = 1 }
+	if = { limit = { has_variable = central_bank_bankruptcy var:central_bank_bankruptcy = 1 } add = 2 }
+}
+zz_ef_money_median = {
+	value = 0
+	if = { limit = { has_global_variable = money_value_median } value = global_var:money_value_median }
 }

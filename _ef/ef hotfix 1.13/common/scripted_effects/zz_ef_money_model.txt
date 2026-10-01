@@ -86,6 +86,8 @@ zz_ef_money_model_step = {
 	# estimate from the credit limit -- credit - base - 1.7 x GDP -- swung by
 	# millions a week, M2 by +-30%).
 	set_variable = { name = zz_ef_bcash value = zz_ef_building_cash_sum }
+	# foreign currency in the reserves (night 2, item 2), before the rescale
+	zz_ef_fx_metal_update = yes
 	if = {
 		limit = { NOT = { has_variable = zz_ef_weeks_run } }
 		set_variable = { name = zz_ef_weeks_run value = 0 }
@@ -541,6 +543,16 @@ zz_ef_pop_extra_income_step = {
 # ---- the monthly step -------------------------------------------------------
 
 zz_ef_money_model_monthly_step = {
+	# night 2, item 1: the silver-to-gold rate from market prices
+	zz_ef_silver_rate_update = yes
+	# night 2: every currency once a month (Hanover's thaler, silver rates)
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			gdp > 1000000
+		}
+		debug_log = "EFX|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|std [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_std_code')|0]|cb [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_has_cb')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|3]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|3]|gpu [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_unit')|4]|subj [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_subject')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|gold [THIS.GetCountry.MakeScope.ScriptValue('gold_state_native_for_stockpile')|0]|silver [THIS.GetCountry.MakeScope.ScriptValue('silver_state_native_for_stockpile')|0]|fxm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_fx_metal')|0]|own [THIS.GetCountry.MakeScope.ScriptValue('money_supply_state')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|crisis [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_crisis_flag')|0]|s2g [THIS.GetCountry.MakeScope.ScriptValue('silver_to_gold_rate')|5]|median [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_median')|3]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]"
+	}
 	# EF.48 item 4: dependents for the surcharge (consumer credit; since 1.10
 	# evening also the savings spent -- every country).
 	set_variable = { name = zz_ef_dependents value = zz_ef_dependents_count }
@@ -662,7 +674,118 @@ zz_ef_metal_rescale_step = {
 				limit = { has_variable = silver_state_1 }
 				change_variable = { name = silver_state_1 multiply = owner.var:zz_ef_metal_rescale }
 			}
+			# night 2, item 2 (2.10): E&F's currency stocks with the metal
+			# (generated, scripted_effects/zz_ef_fx_stock_rescale.txt)
+			zz_ef_fx_stock_rescale = yes
 		}
+		if = {
+			limit = { has_variable = zz_ef_fx_metal }
+			change_variable = { name = zz_ef_fx_metal multiply = var:zz_ef_metal_rescale }
+		}
+	}
+}
+
+# Night 2, item 2 (2.10): foreign currency in the CB's reserves, kept weekly
+# (zz_ef_fx_reserves_metal walks 95 currencies x the CB states; the national
+# capacity reads it hundreds of times a month). E&F values it in gold
+# (money_value_target_real_in_gold of the issuer); a silver standard holds
+# its cover in silver.
+zz_ef_fx_metal_update = {
+	set_variable = { name = zz_ef_fx_metal value = zz_ef_fx_reserves_metal }
+	if = {
+		limit = { has_law = law_type:law_silver_standard }
+		change_variable = { name = zz_ef_fx_metal multiply = gold_to_silver_rate }
+	}
+}
+
+# Night 2, item 3 (2.10): a seller redeems a currency in crisis for the
+# issuer's metal (generated sell_<currency>_currency_crisis,
+# scripted_effects/zz_ef_fx_crisis.txt). SELLER scope; var:zz_ef_crisis_due =
+# the holdings at the issuer's parity, in the issuer's metal. The issuer pays
+# from its CB capital's stock, at most what it holds; the seller gets it in
+# its own standard's metal at the market rate (silver_to_gold_rate). Was:
+# the issuer's metal set to 0, the sellers' stocks to 0, nobody paid.
+zz_ef_crisis_redeem = {
+	set_variable = { name = zz_ef_crisis_paid value = 0 }
+	set_variable = { name = zz_ef_crisis_got value = 0 }
+	if = {
+		limit = {
+			scope:overrated_currency_country_owner = { has_law = law_type:law_silver_standard }
+			scope:central_bank_site_overrated_currency_owner = { has_variable = silver_state_1 }
+		}
+		set_variable = {
+			name = zz_ef_crisis_paid
+			value = {
+				value = var:zz_ef_crisis_due
+				max = scope:central_bank_site_overrated_currency_owner.var:silver_state_1
+				min = 0
+			}
+		}
+		scope:central_bank_site_overrated_currency_owner = {
+			change_variable = { name = silver_state_1 subtract = scope:seller_root.var:zz_ef_crisis_paid }
+		}
+		set_variable = { name = zz_ef_crisis_got value = var:zz_ef_crisis_paid }
+		if = {
+			limit = { NOT = { has_law = law_type:law_silver_standard } }
+			change_variable = { name = zz_ef_crisis_got multiply = silver_to_gold_rate }
+		}
+	}
+	else_if = {
+		limit = {
+			scope:overrated_currency_country_owner = { NOT = { has_law = law_type:law_fiat_standard } }
+			scope:central_bank_site_overrated_currency_owner = { has_variable = gold_state_1 }
+		}
+		set_variable = {
+			name = zz_ef_crisis_paid
+			value = {
+				value = var:zz_ef_crisis_due
+				max = scope:central_bank_site_overrated_currency_owner.var:gold_state_1
+				min = 0
+			}
+		}
+		scope:central_bank_site_overrated_currency_owner = {
+			change_variable = { name = gold_state_1 subtract = scope:seller_root.var:zz_ef_crisis_paid }
+		}
+		set_variable = { name = zz_ef_crisis_got value = var:zz_ef_crisis_paid }
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			change_variable = { name = zz_ef_crisis_got multiply = gold_to_silver_rate }
+		}
+	}
+	scope:central_bank_site_root = {
+		if = {
+			limit = { owner = { has_law = law_type:law_silver_standard } }
+			if = {
+				limit = { NOT = { has_variable = silver_state_1 } }
+				set_variable = { name = silver_state_1 value = 0 }
+			}
+			change_variable = { name = silver_state_1 add = scope:seller_root.var:zz_ef_crisis_got }
+		}
+		else = {
+			if = {
+				limit = { NOT = { has_variable = gold_state_1 } }
+				set_variable = { name = gold_state_1 value = 0 }
+			}
+			change_variable = { name = gold_state_1 add = scope:seller_root.var:zz_ef_crisis_got }
+		}
+	}
+	if = {
+		limit = { var:zz_ef_crisis_due > 0 }
+		debug_log = "EFC|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|due [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_crisis_due')|0]|paid [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_crisis_paid')|0]"
+		scope:overrated_currency_country_owner = {
+			debug_log = "EFC|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|issuer"
+		}
+	}
+}
+
+# Night 2, item 1 (2.10, the user): the silver-to-gold rate from the metals'
+# market prices (values file, zz_ef_silver_to_gold_market), once a month by
+# the first country of the month (a 25-day global flag).
+zz_ef_silver_rate_update = {
+	if = {
+		limit = { NOT = { has_global_variable = zz_ef_s2g_fresh } }
+		set_global_variable = { name = zz_ef_s2g_fresh value = yes days = 25 }
+		set_global_variable = { name = zz_ef_s2g value = zz_ef_silver_to_gold_market }
 	}
 }
 
