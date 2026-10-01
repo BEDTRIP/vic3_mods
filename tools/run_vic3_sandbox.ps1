@@ -192,11 +192,19 @@ function Shot($p, $name) {
 $Screens = @{
     menu  = @{ box = @(340, 545, 730, 590); rgb = @(33, 46, 42); tol = 15 }
     goals = @{ box = @(5, 5, 130, 90); rgb = @(33, 31, 32); tol = 15 }
-    lobby = @{ box = @(340, 545, 730, 590); rgb = @(183, 196, 196); tol = 20 }
+    # the lobby: the dark right panel AND the grey "Start" button -- run 17 (1.10 night) took a
+    # loading screen's light stadium for the lobby's sea and clicked into the void
+    lobby = @{ box = @(2200, 300, 2540, 900); rgb = @(47, 52, 49); tol = 15; box2 = @(2180, 1395, 2540, 1430); rgb2 = @(53, 53, 53); tol2 = 15 }
     game  = @{ box = @(5, 210, 45, 980); rgb = @(76, 68, 68); tol = 15 }
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]
+    if (-not (Is-Box $p $sc.box $sc.rgb $sc.tol)) { return $false }
+    if ($sc.box2) { return (Is-Box $p $sc.box2 $sc.rgb2 $sc.tol2) }
+    return $true
+}
+function Is-Box($p, $box, $rgb, $tol) {
+    $sc = @{ box = $box; rgb = $rgb; tol = $tol }
     $r = New-Object W+RECT
     [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
     $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
