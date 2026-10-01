@@ -351,11 +351,12 @@ NOTES = {
                   "Cash reserves of all buildings: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*). Other: "
                   "purchases abroad, profit taxes, the error of the wages-and-dividends estimate."),
     "banks": ("Инвестиционный пул. Частная стройка идёт через казну: пул → казна (трансфер) → предприятия "
-              "(строительные товары). Банки держат в пуле взносы за несколько месяцев (12 при ставке 2%, 3 при 12%): "
-              "ниже — занимают у ЦБ под ключевую ставку, выше — гасят долг.",
+              "(строительные товары). Банки занимают у ЦБ под ключевую ставку — долг идёт к доле ВВП по ставке "
+              "(50% при 2%, 0 при 12%): ставка ниже — больше новых денег в пул, выше — банки гасят долг из пула.",
               "The investment pool. Private construction goes through the treasury: pool → treasury (transfer) → "
-              "businesses (construction goods). Banks keep several months of contributions in the pool (12 at 2%, 3 "
-              "at 12%): below it they borrow from the CB at the key rate, above it they repay."),
+              "businesses (construction goods). Banks borrow from the CB at the key rate — the debt goes to a share of "
+              "GDP by the rate (50% at 2%, 0 at 12%): a lower rate puts more new money into the pool, a higher one "
+              "makes banks repay from the pool."),
     "pops": ("Денег у населения в движке нет: остаток дохода движок превращает в достаток (число). Мод ловит "
              "эти деньги в накопления — по сохранению денег (мост GUI → скрипт): что пропало из казны и касс "
              "предприятий сверх известных переводов. Оплата заграницы (касса торговых центров) и необъяснённый "
@@ -612,13 +613,15 @@ def nested(lang):
             L.append(none)
         L += ["", NOTES[acc][k]]
         if acc == B:
-            L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель пула {money('zz_ef_pool_target')} = "
-                      f"взносы за месяц × {sv('zz_ef_credit_months', '1')} мес. при ставке {sv('zz_ef_money_rate', '%1')}; "
-                      f"занимают и гасят 1.15% разрыва в неделю (~5% в месяц). Вклады идут к цели на 5% разрыва в неделю.")
+            L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель {money('zz_ef_cb_credit_target')} = "
+                      f"ВВП × {sv('zz_ef_cb_credit_share', '%0')} от 50% при ставке {sv('zz_ef_money_rate', '%1')}; "
+                      f"занимают и гасят 1.15% разрыва в неделю (~5% в месяц). Пул — {sv('zz_ef_pool_months', '1')} мес. "
+                      f"взносов. Вклады идут к цели на 5% разрыва в неделю.")
                      if ru else
-                     (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}; pool target {money('zz_ef_pool_target')} = "
-                      f"a month's contributions × {sv('zz_ef_credit_months', '1')} months at a rate of "
-                      f"{sv('zz_ef_money_rate', '%1')}; they borrow and repay 1.15% of the gap a week (~5% a month). Deposits move 5% of their gap a week."))
+                     (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}; target {money('zz_ef_cb_credit_target')} = "
+                      f"GDP × {sv('zz_ef_cb_credit_share', '%0')} of 50% at a rate of {sv('zz_ef_money_rate', '%1')}; "
+                      f"they borrow and repay 1.15% of the gap a week (~5% a month). The pool holds "
+                      f"{sv('zz_ef_pool_months', '1')} months of contributions. Deposits move 5% of their gap a week."))
         if acc == C:
             L.append((f"#b Резервы металла: {sv('zz_ef_cb_metal')} {gold}#! (за неделю {sv('zz_ef_v_f_hume', 'D+=')}); "
                       f"чистый поток с заграницей {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; курс {sv('money_value_0', '3')} "

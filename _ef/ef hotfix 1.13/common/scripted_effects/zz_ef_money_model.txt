@@ -117,8 +117,9 @@ zz_ef_money_model_step = {
 	set_variable = { name = zz_ef_f_contrib value = investment_pool_gross_income }
 	set_variable = { name = zz_ef_f_transfer value = zz_ef_pool_transfer_week }
 
-	# Bank credit from the central bank: borrow when the pool is under its
-	# target, repay when over (at most the debt); interest at the key rate goes
+	# Bank credit from the central bank: the debt goes to GDP x a share by the
+	# rate (zz_ef_cb_credit_target, 1.10 evening), repaid from the pool when
+	# over it (at most the debt); interest at the key rate goes
 	# pool -> CB -> treasury (the CB's profit).
 	if = {
 		limit = { NOT = { has_variable = zz_ef_bank_cb_debt } }

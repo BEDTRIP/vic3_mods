@@ -156,20 +156,47 @@ zz_ef_pool_target = {
 	value = zz_ef_pool_contrib_month
 	multiply = zz_ef_credit_months
 }
-# Borrowed from the central bank this week (pool under its target).
+# Banks' credit from the central bank, steered by the rate against GDP (the
+# user, 1.10 evening, run 10): with the target "pool = contributions x months"
+# the pool was almost always over it, and in 6 years the CB lent Britain 1.2M
+# at M2 ~300M -- the credit channel was off. Now the banks' debt to the CB goes
+# to GDP x share: 50% at a 2% key rate, 0 at 12%, linear (27.5% at E&F's
+# neutral 6.5%); the money comes into the pool and the engine spends it on
+# private construction (and the consumer credit lends from it). 1.10 evening,
+# check the 50%.
+zz_ef_cb_credit_gdp_max = 0.5
+zz_ef_cb_credit_share = {
+	value = 0.12
+	subtract = zz_ef_money_rate
+	divide = 0.10
+	min = 0
+	max = 1
+}
+zz_ef_cb_credit_target = {
+	value = gdp
+	min = 0
+	multiply = zz_ef_cb_credit_gdp_max
+	multiply = zz_ef_cb_credit_share
+}
+# Borrowed from the central bank this week (the debt under its target).
 zz_ef_cb_borrow = {
-	value = zz_ef_pool_target
-	subtract = investment_pool
+	value = zz_ef_cb_credit_target
+	subtract = zz_ef_bank_cb_debt
 	multiply = zz_ef_borrow_speed
 	min = 0
 }
-# Repaid this week (pool over its target), not more than the debt.
+# Repaid this week (the debt over its target), not more than the debt and
+# the pool holds.
 zz_ef_cb_repay = {
-	value = investment_pool
-	subtract = zz_ef_pool_target
+	value = zz_ef_bank_cb_debt
+	subtract = zz_ef_cb_credit_target
 	multiply = zz_ef_repay_speed
 	min = 0
 	max = zz_ef_bank_cb_debt
+	max = {
+		value = investment_pool
+		min = 0
+	}
 }
 # Interest on the banks' debt at the key rate, a week (not more than the
 # pool); the CB remits it to the treasury.
