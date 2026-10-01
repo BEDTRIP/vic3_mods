@@ -31,6 +31,10 @@ Parameters:
                   sandbox_1836.v3). It is copied to sandbox_start.v3 and continue_game.json is pointed at
                   the copy, so the original is never written to; later runs without -StartSave go on
                   from the run's own autosaves.
+    -NewGame      start a new game from 1836 instead of a save (start conditions, history files):
+                  main menu -> New game -> Sandbox -> Random country -> Start, then the console
+                  "tag <Tag>". Clicks are at fractions of the window, measured on 2560x1440 (16:9).
+    -Tag          the country to play in a new game (default GBR)
     -NoDumps      skip the console dumps at the end (debugcountrybudgets, debugmarkets: budgets of
                   every country by line and markets, as log files in logs/)
     -OutDir       where to put logs and screenshots (default: %TEMP%\vic3_sandbox\<timestamp>)
@@ -41,6 +45,8 @@ param(
     [int]$Autosaves = 0,
     [string]$AiTag = "all",
     [string]$StartSave = "",
+    [switch]$NewGame,
+    [string]$Tag = "GBR",
     [switch]$NoDumps,
     [string]$OutDir = ""
 )
@@ -202,8 +208,13 @@ if ($StartSave) {
     Log "start save: $StartSave (copied to sandbox_start.v3)"
 }
 
-Log "launching $Exe -continuelastsave -debug_mode"
-Start-Process -FilePath $Exe -ArgumentList "-continuelastsave", "-debug_mode" -WorkingDirectory (Split-Path $Exe)
+if ($NewGame) {
+    Log "launching $Exe -debug_mode (new game)"
+    Start-Process -FilePath $Exe -ArgumentList "-debug_mode" -WorkingDirectory (Split-Path $Exe)
+} else {
+    Log "launching $Exe -continuelastsave -debug_mode"
+    Start-Process -FilePath $Exe -ArgumentList "-continuelastsave", "-debug_mode" -WorkingDirectory (Split-Path $Exe)
+}
 
 $t0 = Get-Date
 $p = $null
@@ -213,8 +224,23 @@ while (((Get-Date) - $t0).TotalSeconds -lt 240) {
     Start-Sleep 3
 }
 if (-not $p -or $p.MainWindowHandle -eq 0) { throw "no game window after 4 minutes" }
-Log "window up, waiting $LoadWaitSec s for the save to load"
-Start-Sleep $LoadWaitSec
+if ($NewGame) {
+    # The main menu, the goals screen, the lobby (map), the game (2026-10-01, 1.13.11 with this playset).
+    Log "window up, waiting 120 s for the main menu"
+    Start-Sleep 120
+    $p = Get-Game
+    Shot $p "00a_menu.png"
+    Click-Window $p 0.2086 0.394; Start-Sleep 25; Shot $p "00b_goals.png"      # New game
+    Click-Window $p 0.8665 0.625; Start-Sleep 45; Shot $p "00c_lobby.png"      # Sandbox: start the game
+    Click-Window $p 0.25 0.981; Start-Sleep 4                                  # Random country
+    Click-Window $p 0.9215 0.975; Log "new game: starting"; Start-Sleep 90     # Start
+    $p = Get-Game
+    Console-Cmd $p "tag $Tag"
+    Start-Sleep 5
+} else {
+    Log "window up, waiting $LoadWaitSec s for the save to load"
+    Start-Sleep $LoadWaitSec
+}
 $p = Get-Game
 Shot $p "01_loaded.png"
 if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
