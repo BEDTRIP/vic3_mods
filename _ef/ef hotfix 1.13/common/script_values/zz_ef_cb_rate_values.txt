@@ -63,13 +63,11 @@ zz_ef_cb_rate_ceiling = {
 
 # Parts of the rule, as fractions (shown in the rule box tooltip).
 zz_ef_cb_rule_neutral = 0.025
+# EF.48 item 12 (1.10): the inflation from the money accounting (a year,
+# zz_ef_inflation in zz_ef_money_model_values.txt) replaces E&F's consumer
+# goods inflation x2.
 zz_ef_cb_rule_inflation = {
-	value = 0
-	if = {
-		limit = { has_variable = inflation_on_consumer_goods_rolling_inflation_6_months }
-		value = var:inflation_on_consumer_goods_rolling_inflation_6_months
-		multiply = 2
-	}
+	value = zz_ef_inflation
 	if = {
 		limit = { zz_ef_cb_rate_is_fiat = 1 }
 		min = -0.2
@@ -80,7 +78,7 @@ zz_ef_cb_rule_inflation = {
 		max = 0.06
 	}
 }
-zz_ef_cb_rule_risk = {
+zz_ef_cb_rule_rating = {
 	value = 0.06
 	if = {
 		limit = { has_variable = country_credit_note_fixe }
@@ -90,6 +88,51 @@ zz_ef_cb_rule_risk = {
 	}
 	min = 0
 	max = 0.06
+}
+# EF.43 item 14 (1.10): the risk premium beyond E&F's rating, which bunches
+# the big countries together (Russia = France = 8.6 in 1836, while history
+# had Russia borrowing 2-7 pp dearer): a default +3 pp; instability -- the
+# radicals' share x 10 (up to +2 pp), legitimacy under 50 +0.5 / under 25
+# +1 pp, war +0.5 pp; an illiterate state collects its taxes and keeps its
+# books worse -- (40% - literacy) x 2.5, up to +1 pp. Weights decided at
+# night -- check.
+zz_ef_cb_rule_stability = {
+	value = 0
+	if = {
+		limit = { in_default = yes }
+		add = 0.03
+	}
+	add = {
+		value = radical_population_fraction
+		multiply = 0.1
+		max = 0.02
+	}
+	if = {
+		limit = { legitimacy < 25 }
+		add = 0.01
+	}
+	else_if = {
+		limit = { legitimacy < 50 }
+		add = 0.005
+	}
+	if = {
+		limit = { is_at_war = yes }
+		add = 0.005
+	}
+	add = {
+		value = 0.4
+		subtract = literacy_rate
+		multiply = 0.025
+		min = 0
+		max = 0.01
+	}
+}
+# The premium: the rating's part + the stability part, 0..8 pp.
+zz_ef_cb_rule_risk = {
+	value = zz_ef_cb_rule_rating
+	add = zz_ef_cb_rule_stability
+	min = 0
+	max = 0.08
 }
 zz_ef_cb_rule_cover = {
 	value = 0
@@ -246,5 +289,30 @@ zz_ef_cb_rule_risk_pp = {
 }
 zz_ef_cb_rule_cover_pp = {
 	value = zz_ef_cb_rule_cover
+	multiply = 100
+}
+
+# ---- EF.31 items 8-9 (1.10): the price of the government's policy ---------
+zz_ef_rate_bias_signed = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_rate_bias } value = var:zz_ef_rate_bias }
+}
+# 0.5 pp steps of the policy off the CB's target (rounded to the nearest).
+zz_ef_rate_policy_steps = {
+	value = zz_ef_rate_bias_signed
+	abs = yes
+	divide = 0.005
+	round = yes
+}
+zz_ef_rate_policy_ig_steps = {
+	value = zz_ef_rate_policy_steps
+	max = 5
+}
+zz_ef_cb_rule_rating_pp = {
+	value = zz_ef_cb_rule_rating
+	multiply = 100
+}
+zz_ef_cb_rule_stability_pp = {
+	value = zz_ef_cb_rule_stability
 	multiply = 100
 }

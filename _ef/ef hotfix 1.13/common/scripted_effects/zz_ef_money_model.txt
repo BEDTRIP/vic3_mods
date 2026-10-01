@@ -80,6 +80,7 @@ zz_ef_money_model_step = {
 	# Gold parity re-anchor, once per change of what the money supply counts.
 	# The money supply is the engine's money now (treasury + businesses' cash +
 	# pool; since 2026-09-30 evening, version 2 -- E&F's goods counts are out),
+	# Version 4 (1.10, item 11): the treasury left the money supply.
 	# Version 3 (1.10 night, EF.48 item 6): E&F's trade balance left the
 	# national capacity (the CB's metal moves with the flows abroad instead).
 	# a fraction of what E&F counted, so every currency is worth several times
@@ -92,8 +93,8 @@ zz_ef_money_model_step = {
 		set_variable = { name = zz_ef_parity_version value = 0 }
 	}
 	if = {
-		limit = { var:zz_ef_parity_version < 3 }
-		set_variable = { name = zz_ef_parity_version value = 3 }
+		limit = { var:zz_ef_parity_version < 4 }
+		set_variable = { name = zz_ef_parity_version value = 4 }
 		if = {
 			limit = {
 				has_modifier = has_central_bank
@@ -205,6 +206,15 @@ zz_ef_money_model_step = {
 			if = { limit = { has_variable = zz_ef_m2_q2 } set_variable = { name = zz_ef_m2_q3 value = var:zz_ef_m2_q2 } }
 			if = { limit = { has_variable = zz_ef_m2_q1 } set_variable = { name = zz_ef_m2_q2 value = var:zz_ef_m2_q1 } }
 			set_variable = { name = zz_ef_m2_q1 value = var:zz_ef_prev_m2 }
+			# items 11-12: M3 and GDP for the inflation
+			if = {
+				limit = {
+					has_variable = zz_ef_prev_m3
+					has_variable = zz_ef_prev_gdp
+				}
+				zz_ef_ring_q_push = { M = m3 }
+				zz_ef_ring_q_push = { M = gdp }
+			}
 		}
 		change_variable = { name = zz_ef_ring_r add = 1 }
 		if = {
@@ -297,7 +307,9 @@ zz_ef_money_model_step = {
 	zz_ef_money_ledger_delta = { ACC = bonds VALUE = zz_ef_bank_bonds }
 	zz_ef_money_ledger_delta = { ACC = m0 VALUE = zz_ef_m0 }
 	zz_ef_money_ledger_delta = { ACC = m1 VALUE = zz_ef_m1 }
-	zz_ef_money_ledger_delta = { ACC = m2 VALUE = money_supply }
+	zz_ef_money_ledger_delta = { ACC = m2 VALUE = zz_ef_m2 }
+	zz_ef_money_ledger_delta = { ACC = m3 VALUE = zz_ef_m3 }
+	zz_ef_money_ledger_delta = { ACC = gdp VALUE = gdp }
 
 	# Sandbox log (tools/run_vic3_sandbox.ps1 reads debug.log): one line a
 	# week for the player and the big economies.
@@ -308,7 +320,7 @@ zz_ef_money_model_step = {
 				gdp > 20000000
 			}
 		}
-		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]"
+		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m3')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m3_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]"
 	}
 
 	# The GUI bridge (gui/zz_ef_money_hook.gui): the budget's lines outside
@@ -515,12 +527,33 @@ zz_ef_money_model_monthly_step = {
 	# E&F's currency good moves monthly (stockpile_currency_type_1).
 	zz_ef_money_ledger_delta = { ACC = cb VALUE = money_supply_state }
 
+	# EF.31 items 8-9: the price of the government's rate policy.
+	zz_ef_rate_policy_costs = yes
+
 	# EF.31: the rate's share of private construction.
 	remove_modifier = zz_ef_rate_private_construction
 	add_modifier = {
 		name = zz_ef_rate_private_construction
 		multiplier = zz_ef_rate_construction_mult
 	}
+}
+
+# The year ring of one more quantity (items 11-12): var:zz_ef_<M>_q1..13 <-
+# var:zz_ef_prev_<M>, oldest out.
+zz_ef_ring_q_push = {
+	if = { limit = { has_variable = zz_ef_$M$_q12 } set_variable = { name = zz_ef_$M$_q13 value = var:zz_ef_$M$_q12 } }
+	if = { limit = { has_variable = zz_ef_$M$_q11 } set_variable = { name = zz_ef_$M$_q12 value = var:zz_ef_$M$_q11 } }
+	if = { limit = { has_variable = zz_ef_$M$_q10 } set_variable = { name = zz_ef_$M$_q11 value = var:zz_ef_$M$_q10 } }
+	if = { limit = { has_variable = zz_ef_$M$_q9 } set_variable = { name = zz_ef_$M$_q10 value = var:zz_ef_$M$_q9 } }
+	if = { limit = { has_variable = zz_ef_$M$_q8 } set_variable = { name = zz_ef_$M$_q9 value = var:zz_ef_$M$_q8 } }
+	if = { limit = { has_variable = zz_ef_$M$_q7 } set_variable = { name = zz_ef_$M$_q8 value = var:zz_ef_$M$_q7 } }
+	if = { limit = { has_variable = zz_ef_$M$_q6 } set_variable = { name = zz_ef_$M$_q7 value = var:zz_ef_$M$_q6 } }
+	if = { limit = { has_variable = zz_ef_$M$_q5 } set_variable = { name = zz_ef_$M$_q6 value = var:zz_ef_$M$_q5 } }
+	if = { limit = { has_variable = zz_ef_$M$_q4 } set_variable = { name = zz_ef_$M$_q5 value = var:zz_ef_$M$_q4 } }
+	if = { limit = { has_variable = zz_ef_$M$_q3 } set_variable = { name = zz_ef_$M$_q4 value = var:zz_ef_$M$_q3 } }
+	if = { limit = { has_variable = zz_ef_$M$_q2 } set_variable = { name = zz_ef_$M$_q3 value = var:zz_ef_$M$_q2 } }
+	if = { limit = { has_variable = zz_ef_$M$_q1 } set_variable = { name = zz_ef_$M$_q2 value = var:zz_ef_$M$_q1 } }
+	set_variable = { name = zz_ef_$M$_q1 value = var:zz_ef_prev_$M$ }
 }
 
 # var:zz_ef_d_<ACC> = VALUE now - VALUE at the previous step; var:zz_ef_prev_<ACC>

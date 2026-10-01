@@ -83,9 +83,11 @@ zz_ef_building_cash = {
 # money_supply (script_values/00_economic_scripted_value.txt). E&F's
 # money_supply = money_supply_state (goods) + money_circulating (pop savings
 # counter + pool + credit limit + government_loan counter).
+# EF.48 item 11 (1.10): the treasury is out of circulation -- the currency's
+# value and the inflation read businesses' cash + the pool; M0..M2 still
+# show it.
 REPLACE_OR_CREATE:money_circulating = {
 	value = 0
-	add = zz_ef_treasury
 	add = zz_ef_building_cash
 	add = investment_pool
 	min = 1
@@ -103,7 +105,9 @@ zz_ef_m1 = {
 	add = zz_ef_building_cash
 }
 zz_ef_m2 = {
-	value = money_supply
+	value = zz_ef_treasury
+	add = zz_ef_building_cash
+	add = investment_pool
 }
 # What the weekly probe watches for the budget tick: treasury net of debt.
 zz_ef_budget_position = {
@@ -1017,5 +1021,342 @@ zz_ef_bc_service_share = {
 		limit = { zz_ef_v_f_contrib > 0 }
 		value = zz_ef_v_f_bc_paid
 		divide = zz_ef_v_f_contrib
+	}
+}
+
+# ---- EF.48 items 11-12: money in circulation, M3, inflation (the user, 1.10)
+# M3 = the money in circulation (businesses' cash + the pool -- the treasury
+# is out, item 11) + pops' savings at hand (deposits are in the pool already).
+zz_ef_m3 = {
+	value = money_supply
+	add = zz_ef_pop_cash
+	min = 1
+}
+zz_ef_m3_now = {
+	value = zz_ef_m3
+}
+zz_ef_gdp_now = {
+	value = gdp
+	min = 1
+}
+# Growth a year, annualised from the oldest slot of the year ring (4-week
+# blocks, var:zz_ef_<m>_q1..13; 13 = a year ago). 0 before the first block.
+zz_ef_m3_growth_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_m3_q13
+			var:zz_ef_m3_q13 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q13
+		subtract = 1
+		multiply = 1.00000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q12
+			var:zz_ef_m3_q12 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q12
+		subtract = 1
+		multiply = 1.08333
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q11
+			var:zz_ef_m3_q11 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q11
+		subtract = 1
+		multiply = 1.18182
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q10
+			var:zz_ef_m3_q10 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q10
+		subtract = 1
+		multiply = 1.30000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q9
+			var:zz_ef_m3_q9 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q9
+		subtract = 1
+		multiply = 1.44444
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q8
+			var:zz_ef_m3_q8 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q8
+		subtract = 1
+		multiply = 1.62500
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q7
+			var:zz_ef_m3_q7 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q7
+		subtract = 1
+		multiply = 1.85714
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q6
+			var:zz_ef_m3_q6 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q6
+		subtract = 1
+		multiply = 2.16667
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q5
+			var:zz_ef_m3_q5 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q5
+		subtract = 1
+		multiply = 2.60000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q4
+			var:zz_ef_m3_q4 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q4
+		subtract = 1
+		multiply = 3.25000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q3
+			var:zz_ef_m3_q3 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q3
+		subtract = 1
+		multiply = 4.33333
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q2
+			var:zz_ef_m3_q2 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q2
+		subtract = 1
+		multiply = 6.50000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_m3_q1
+			var:zz_ef_m3_q1 > 0
+		}
+		value = zz_ef_m3_now
+		divide = var:zz_ef_m3_q1
+		subtract = 1
+		multiply = 13.00000
+	}
+}
+zz_ef_gdp_growth_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_gdp_q13
+			var:zz_ef_gdp_q13 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q13
+		subtract = 1
+		multiply = 1.00000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q12
+			var:zz_ef_gdp_q12 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q12
+		subtract = 1
+		multiply = 1.08333
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q11
+			var:zz_ef_gdp_q11 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q11
+		subtract = 1
+		multiply = 1.18182
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q10
+			var:zz_ef_gdp_q10 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q10
+		subtract = 1
+		multiply = 1.30000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q9
+			var:zz_ef_gdp_q9 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q9
+		subtract = 1
+		multiply = 1.44444
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q8
+			var:zz_ef_gdp_q8 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q8
+		subtract = 1
+		multiply = 1.62500
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q7
+			var:zz_ef_gdp_q7 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q7
+		subtract = 1
+		multiply = 1.85714
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q6
+			var:zz_ef_gdp_q6 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q6
+		subtract = 1
+		multiply = 2.16667
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q5
+			var:zz_ef_gdp_q5 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q5
+		subtract = 1
+		multiply = 2.60000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q4
+			var:zz_ef_gdp_q4 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q4
+		subtract = 1
+		multiply = 3.25000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q3
+			var:zz_ef_gdp_q3 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q3
+		subtract = 1
+		multiply = 4.33333
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q2
+			var:zz_ef_gdp_q2 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q2
+		subtract = 1
+		multiply = 6.50000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_gdp_q1
+			var:zz_ef_gdp_q1 > 0
+		}
+		value = zz_ef_gdp_now
+		divide = var:zz_ef_gdp_q1
+		subtract = 1
+		multiply = 13.00000
+	}
+}
+# Inflation a year (equation of exchange): money grows faster than the
+# economy -> prices rise. The game's GDP is nominal (no real GDP in script):
+# so this is the growth of M3 against GDP -- decided at night, check.
+zz_ef_inflation = {
+	value = zz_ef_m3_growth_year
+	subtract = zz_ef_gdp_growth_year
+	min = -0.5
+	max = 1
+}
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's inflation_value
+# (script_values/00_economic_scripted_value.txt: the 6-month price change of
+# five goods groups + the currency's change + E&F's monetary-policy marks).
+# E&F's consumers (inflation_country / deflation_country, the Fisher target,
+# cumulative inflation, money_value_rapported_inflation) read ours unchanged.
+REPLACE_OR_CREATE:inflation_value = {
+	value = zz_ef_inflation
+}
+
+# ---- EF.31 item 10 (the user, 1.10): no manual penalty for a cheap rate --
+# a low rate pays back through the money itself (more credit -> faster M3 ->
+# inflation, item 12). The bubble (EF.34) is only measured here, from the
+# accounting; its mechanics come with block Б.
+zz_ef_credit_total = {
+	value = zz_ef_bank_cb_debt
+	add = zz_ef_cc_debt
+	add = zz_ef_bc_debt
+}
+zz_ef_credit_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_credit_total
+		divide = gdp
+	}
+}
+# The pool in months of contributions (E&F's bubble grows when money piles
+# up in the pool faster than it is invested).
+zz_ef_pool_months = {
+	value = 0
+	if = {
+		limit = { zz_ef_pool_contrib_month > 0 }
+		value = investment_pool
+		divide = zz_ef_pool_contrib_month
+	}
+}
+zz_ef_savings_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_pop_savings
+		divide = gdp
 	}
 }

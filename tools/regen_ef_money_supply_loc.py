@@ -89,6 +89,8 @@ def main_text(lang, c):
         L = dict(title="Денежная масса", sub="деньги движка", total="Всего (M2)", month="за неделю",
                  m0="M0 — деньги государства", tr="Казна", m1="M1 = M0 + деньги предприятий",
                  bld="Касса предприятий", tc="из них торговые центры", m2="M2 = M1 + деньги банков", bank="Средства банков",
+                 m3="M3 — в обращении: касса предприятий + пул + накопления на руках (без казны)",
+                 infl="Инфляция из учёта денег за год", inflf="рост M3 {0} − рост ВВП {1}",
                  pops="Население", cbab="ЦБ и заграница", metal="резервы металла", cover="покрытие по паритету",
                  sav="Накопления населения (счёт мода, вне денег движка)", savd="во вкладах (в пуле)",
                  savc="на руках",
@@ -100,7 +102,9 @@ def main_text(lang, c):
         L = dict(title="Money Supply", sub="the engine's money", total="Total (M2)", month="this week",
                  m0="M0 — state money", tr="Treasury", m1="M1 = M0 + business money", bld="Business cash",
                  tc="of it trade centres",
-                 m2="M2 = M1 + bank money", bank="Bank funds", cbab="The CB and abroad", metal="metal reserves",
+                 m2="M2 = M1 + bank money", bank="Bank funds",
+                 m3="M3 — in circulation: business cash + the pool + savings at hand (no treasury)",
+                 infl="Inflation from the money accounting, a year", inflf="M3 growth {0} − GDP growth {1}", cbab="The CB and abroad", metal="metal reserves",
                  cover="cover at parity",
                  pops="Pops", debt="Debt (not money)", princ="budget",
                  sav="Pops' savings (the mod's account, outside the engine's money)", savd="in deposits (in the pool)",
@@ -118,14 +122,23 @@ def main_text(lang, c):
 
     lines = [
         f"{L['title']} ({L['sub']}):",
-        f"{L['total']}: #p {money('money_supply')}#!{ing('zz_ef_m2_gold')}",
+        f"{L['total']}: #p {money('zz_ef_m2')}#!{ing('zz_ef_m2_gold')}",
         f" {L['m0']}: #T {money('zz_ef_m0')}#!{ing('zz_ef_m0_gold')} ({dyn('m0')})",
         f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#! ({delta('zz_ef_v_d_treasury')})",
         f" {L['m1']}: #T {money('zz_ef_m1')}#!{ing('zz_ef_m1_gold')} ({dyn('m1')})",
         f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')}; "
         f"{L['tc']} {money('zz_ef_tc_cash')}, {delta('zz_ef_v_d_tc')})",
-        f" {L['m2']}: #T {money('money_supply')}#!{ing('zz_ef_m2_gold')} ({dyn('m2')})",
+        f" {L['m2']}: #T {money('zz_ef_m2')}#!{ing('zz_ef_m2_gold')} ({dyn('m2')})",
         f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')})",
+        f" {L['m3']}: #T {money('zz_ef_m3')}#!",
+        f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
+            sv('zz_ef_m3_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%')) + ")",
+        (f"Признаки пузыря: кредит {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} ВВП (ЦБ банкам, "
+         f"потребительский, бизнесу); пул — {sv('zz_ef_pool_months', '1')} мес. взносов; накопления — "
+         f"{sv('zz_ef_savings_to_gdp', '%0')} ВВП") if ru else
+        (f"Bubble signs: credit {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} of GDP (CB to banks, "
+         f"consumer, business); the pool — {sv('zz_ef_pool_months', '1')} months of contributions; savings — "
+         f"{sv('zz_ef_savings_to_gdp', '%0')} of GDP"),
         f"{tt('zz_ef_ms_tt_pops', L['sav'])}: #T {money('zz_ef_pop_savings')}#!{ing('zz_ef_savings_gold')} "
         f"({sv('zz_ef_pop_savings_week', 'D+=')}{cur} {L['month']}) — {L['savd']} {money('zz_ef_pop_deposits')}, "
         f"{L['savc']} {money('zz_ef_pop_cash')}",

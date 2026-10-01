@@ -14,9 +14,11 @@
 #
 # Scaling the per-unit step here covers both paths with one number and does not
 # touch E&F's 1000-branch ladder. `_max_level_add` 1 -> 0.1 = ceiling / 10.
-# Everything else is E&F's, line for line -- including
-# state_market_access_price_impact = 0.1, which is multiplied by the same
-# gdp_view_fc (x thousands) and left alone here on purpose.
+# Everything else is E&F's, line for line -- except
+# state_market_access_price_impact = 0.1: it is multiplied by the same
+# gdp_view_fc (GDP / 1M, up to thousands), so the exchange's state had its
+# prices bent by market access x40 for a 40M-GDP Britain and far more later.
+# Removed (EF.48 item 13, 1.10 -- decided at night, check).
 #
 # ON AN EXISTING SAVE exchanges above the new ceiling keep their levels
 # (downsizeable = no); they just stop growing.
@@ -29,7 +31,7 @@ REPLACE:financial_center_place = {
 	icon = gfx/interface/icons/timed_modifier_icons/financial_center_place.dds
 
 	state_building_financial_centre_max_level_add = 0.1
-	state_market_access_price_impact = 0.1
+	# state_market_access_price_impact = 0.1 -- removed, EF.48 item 13 (header)
 }
 
 REPLACE:financial_center_place_spe = {
@@ -77,6 +79,6 @@ REPLACE:financial_center_place_spe = {
 	state_building_financial_centre_usa_2_max_level_add = 0.1
 	state_building_financial_centre_sax_max_level_add = 0.1
 
-	state_market_access_price_impact = 0.1
+	# state_market_access_price_impact = 0.1 -- removed, EF.48 item 13 (header)
 
 }

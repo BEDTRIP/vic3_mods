@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.30 (2026-09-30, v2 same day) -- the player's rate buttons: government
 # policy on top of the central bank.
 #
@@ -61,6 +61,7 @@ REPLACE_OR_CREATE:base_rate_increase = {
 			remove_modifier = down_base_rate
 			remove_modifier = rise_base_rate
 			add_modifier = { name = rise_base_rate months = 3 }
+			zz_ef_rate_policy_costs = yes
 		}
 	}
 }
@@ -127,6 +128,7 @@ REPLACE_OR_CREATE:base_rate_reduce = {
 			remove_modifier = rise_base_rate
 			remove_modifier = down_base_rate
 			add_modifier = { name = down_base_rate months = 3 }
+			zz_ef_rate_policy_costs = yes
 		}
 	}
 }

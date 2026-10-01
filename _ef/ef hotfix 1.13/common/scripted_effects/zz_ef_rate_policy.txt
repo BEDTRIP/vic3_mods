@@ -1,0 +1,93 @@
+#############################################
+# EF.31 items 8-9 (the user, 1.10) -- the price of the government's rate
+# policy (static_modifiers/zz_ef_rate_policy.txt). Recomputed on every press
+# of the rate buttons (scripted_guis/zz_ef_cb_rate_buttons.txt) and monthly
+# (zz_ef_money_model_monthly_step).
+#
+# E&F's monetary_policy_ideology_dynamic (01_economic_scripted_effects.txt,
+# monthly from 00_on_action_main.txt:560) gave an interest group the "large
+# monetary policy" ideology (event .106) only when the metal cover left
+# 75..125%, and took it back (.107) inside it. Now also a policy of 1 pp or
+# more off the CB's target calls for it, and it is taken back only when both
+# the cover and the policy are calm.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of
+# monetary_policy_ideology_dynamic.
+#############################################
+
+zz_ef_rate_policy_costs = {
+	remove_modifier = zz_ef_rate_policy_authority
+	if = {
+		limit = { zz_ef_rate_policy_steps > 0 }
+		add_modifier = {
+			name = zz_ef_rate_policy_authority
+			multiplier = zz_ef_rate_policy_steps
+		}
+	}
+	every_interest_group = {
+		remove_modifier = zz_ef_rate_policy_hard_money
+		remove_modifier = zz_ef_rate_policy_soft_money
+	}
+	if = {
+		limit = { zz_ef_rate_policy_steps > 0 }
+		if = {
+			limit = { zz_ef_rate_bias_signed < 0 }
+			every_interest_group = {
+				limit = { has_ideology = ideology:ideology_monetary_conservative }
+				add_modifier = {
+					name = zz_ef_rate_policy_hard_money
+					multiplier = owner.zz_ef_rate_policy_ig_steps
+				}
+			}
+		}
+		else = {
+			every_interest_group = {
+				limit = { has_ideology = ideology:ideology_monetary_left }
+				add_modifier = {
+					name = zz_ef_rate_policy_soft_money
+					multiplier = owner.zz_ef_rate_policy_ig_steps
+				}
+			}
+		}
+	}
+}
+
+REPLACE_OR_CREATE:monetary_policy_ideology_dynamic = {
+	capital = {
+		save_scope_as = capital_state
+	}
+	save_scope_as = target_country
+
+	random_interest_group = {
+		limit = {
+			NOT = { has_ideology = ideology:ideology_monetary_policy }
+		}
+		save_scope_as = ig_want_a_large_monetary_policy
+	}
+	if = {
+		limit = {
+			exists = scope:ig_want_a_large_monetary_policy
+			OR = {
+				central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent > 1.25
+				central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent < 0.75
+				zz_ef_rate_policy_steps >= 2
+			}
+		}
+		trigger_event = 00_ef_economic_event.106
+	}
+
+	random_interest_group = {
+		limit = {
+			has_ideology = ideology:ideology_monetary_policy
+		}
+		save_scope_as = ig_no_want_a_large_monetary_policy
+	}
+	if = {
+		limit = {
+			exists = scope:ig_no_want_a_large_monetary_policy
+			central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent < 1.25
+			central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent > 0.75
+			zz_ef_rate_policy_steps < 2
+		}
+		trigger_event = 00_ef_economic_event.107
+	}
+}

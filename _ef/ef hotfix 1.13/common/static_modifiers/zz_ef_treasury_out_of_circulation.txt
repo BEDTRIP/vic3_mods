@@ -1,0 +1,15 @@
+#############################################
+# EF.38 / EF.48 item 11 (the user, 1.10): the treasury is out of circulation
+# -- its money no longer counts in the money supply the currency's value and
+# the inflation read (script_values/zz_ef_money_model_values.txt), so a big
+# treasury does not weaken the currency; hoarding is deflationary, spending
+# inflationary. The CB's treasury cap: x4 -> x2 (the cap 0.2 GDP x 3 = 0.6
+# GDP instead of x 5 = 1.0 GDP; 1850: France 215M at a GDP of 447M).
+# !! MAINTENANCE !! Full-body REPLACE of E&F's has_central_bank
+# (static_modifiers/00_ef_dynamic_modifier_country.txt).
+#############################################
+
+REPLACE:has_central_bank = {
+	icon = gfx/interface/icons/timed_modifier_icons/central_bank_place.dds
+	country_gold_reserve_limit_mult = 2
+}

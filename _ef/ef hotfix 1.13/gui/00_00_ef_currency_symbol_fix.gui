@@ -1,0 +1,25 @@
+﻿# EF.48 item 13 (1.10) -- E&F's currency_symbol_country_panel
+# (gui/00_ef_deported_gui_2.gui:8605) holds ~220 textboxes, one per currency,
+# each [Country.GetCustom('currency_symbol_<currency>')], all evaluated every
+# frame while one shows a symbol -- a FPS cost. One textbox with E&F's own
+# generic custom loc currency_symbol (used across E&F's panels) does the same.
+# Loaded before E&F's file (00_00_...), so this definition of the type is the
+# one used, as gui/00_00_ef_cb_rate_panel.gui does. Font size and offset are
+# E&F's generic ones (35, 175/3) for every currency.
+
+types zz_ef_currency_symbol_fix
+{
+	type currency_symbol_country_panel = flowcontainer {
+		icon = {
+			size = { 36 36 }
+			name = dip_power_icon
+
+			textbox = {
+				position = { 175 3 }
+				fontsize = 35
+				text = "[Country.GetCustom('currency_symbol')]"
+				parentanchor = vcenter
+			}
+		}
+	}
+}

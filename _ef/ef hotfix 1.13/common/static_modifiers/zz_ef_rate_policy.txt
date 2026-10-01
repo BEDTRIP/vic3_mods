@@ -1,0 +1,26 @@
+#############################################
+# EF.31 items 8-9 (the user, 1.10) -- the standing price of the government's
+# rate policy (var:zz_ef_rate_bias, the rate buttons, +-2 pp over the CB's
+# target). Applied by zz_ef_rate_policy_costs (scripted_effects/
+# zz_ef_rate_policy.txt) with multiplier = 0.5 pp steps of the policy:
+#   authority -100 per step, as long as the policy holds;
+#   interest groups by E&F's monetary ideologies: hard money
+#   (ideology_monetary_conservative) against a rate under the target, soft
+#   money (ideology_monetary_left) against one over it -- -1 approval per
+#   step, at most -5.
+#############################################
+
+zz_ef_rate_policy_authority = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_gear_negative.dds
+	country_authority_add = -100
+}
+
+zz_ef_rate_policy_hard_money = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
+	interest_group_approval_add = -1
+}
+
+zz_ef_rate_policy_soft_money = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
+	interest_group_approval_add = -1
+}
