@@ -524,6 +524,7 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_v_w_cc_net
+	subtract = zz_ef_v_w_sp
 	subtract = zz_ef_tr_other_net
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
@@ -581,6 +582,37 @@ zz_ef_pop_start_savings = {
 	value = gdp
 	multiply = 0.15
 	min = 0
+}
+# ---- pops spend savings over the norm (the user, 1.10 evening, run 13) -------
+# Without it the savings at hand only grew (Britain's M0 0 -> 26M = 0.66 GDP in
+# 2.7 years) while the engine's money (business cash, pool) melted: the money
+# pops did not spend left the engine for good. Now cash at hand over the norm
+# -- 12% of a year's GDP, ~1.5 months of income (Britain's coin and notes in
+# the 1830s ~11% of GDP) -- is spent at 5% of the excess a week: it comes to
+# pops as income through the dependents' surcharge (with the consumer credit,
+# zz_ef_consumer_credit) and goes into purchases -- business cash. What pops
+# do not spend of it vanishes again and comes back into the savings by the
+# leak. Demand from savings is also the channel from money to prices.
+zz_ef_cash_norm_gdp = 0.12
+zz_ef_spend_speed = 0.05
+zz_ef_pop_cash_norm = {
+	value = gdp
+	min = 0
+	multiply = zz_ef_cash_norm_gdp
+}
+zz_ef_sav_spend = {
+	value = zz_ef_pop_cash
+	subtract = zz_ef_pop_cash_norm
+	multiply = zz_ef_spend_speed
+	min = 0
+}
+zz_ef_v_f_sp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_sp } value = var:zz_ef_f_sp }
+}
+zz_ef_v_w_sp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_sp } value = var:zz_ef_w_sp }
 }
 # 5% of the gap a week (the user, 1.10; was 2%).
 zz_ef_deposit_speed = 0.05
@@ -649,6 +681,7 @@ zz_ef_dep_interest = {
 zz_ef_pop_savings_week = {
 	value = zz_ef_v_f_inflow
 	add = zz_ef_v_f_dep_int
+	subtract = zz_ef_v_f_sp
 }
 zz_ef_v_f_inflow = {
 	value = 0
@@ -924,12 +957,18 @@ zz_ef_cc_wage_add = {
 		limit = {
 			has_variable = zz_ef_dependents
 			var:zz_ef_dependents > 0
-			has_variable = zz_ef_f_cc_net
 		}
-		value = var:zz_ef_f_cc_net
+		value = zz_ef_pop_extra_income_week
 		multiply = 52
 		divide = var:zz_ef_dependents
 	}
+}
+# The week's extra income to pops through the dependents' surcharge: the
+# consumer credit's net flow + the savings they spend (1.10 evening).
+zz_ef_pop_extra_income_week = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cc_net } add = var:zz_ef_f_cc_net }
+	if = { limit = { has_variable = zz_ef_f_sp } add = var:zz_ef_f_sp }
 }
 zz_ef_v_f_cc_issue = {
 	value = 0
