@@ -335,9 +335,9 @@ zz_ef_cb_revaluation_month = {
 zz_ef_trade_week = {
 	value = 0
 	if = {
-		limit = { money_value_in_gold > 0 }
+		limit = { zz_ef_gold_per_unit > 0 }
 		value = trade_balance_in_gold_delta
-		divide = money_value_in_gold
+		divide = zz_ef_gold_per_unit
 	}
 }
 # The treasury card's "other": its change over the week minus the budget of
@@ -695,23 +695,23 @@ zz_ef_zero = 0
 # unit of money; 0 for a subject or without a standard) ----------------------
 zz_ef_agg_m0_gold = {
 	value = zz_ef_agg_m0
-	multiply = money_value_in_gold
+	multiply = zz_ef_gold_per_unit
 }
 zz_ef_agg_m1_gold = {
 	value = zz_ef_agg_m1
-	multiply = money_value_in_gold
+	multiply = zz_ef_gold_per_unit
 }
 zz_ef_agg_m2_gold = {
 	value = zz_ef_agg_m2
-	multiply = money_value_in_gold
+	multiply = zz_ef_gold_per_unit
 }
 zz_ef_agg_m3_gold = {
 	value = zz_ef_agg_m3
-	multiply = money_value_in_gold
+	multiply = zz_ef_gold_per_unit
 }
 zz_ef_savings_gold = {
 	value = zz_ef_pop_savings
-	multiply = money_value_in_gold
+	multiply = zz_ef_gold_per_unit
 }
 
 # ---- EF.48 item 4: consumer credit (the user, 1.10) -------------------------
@@ -1300,8 +1300,17 @@ zz_ef_cb_metal_money = {
 			var:money_value_target_1 > 0
 		}
 		value = central_bank_reserves
-		divide = var:money_value_target_1
+		divide = zz_ef_cb_valuation
 	}
+}
+# Metal per unit the CB's metal is valued at: the parity, but never under
+# today's value -- after a collapse the parity can be re-anchored at a tiny
+# value (run 8: Spain, Ottomans, Belgium -- the CB's money jumped to billions).
+# So the CB's metal is worth at most the money in circulation.
+zz_ef_cb_valuation = {
+	value = var:money_value_target_1
+	max = 1000000
+	min = money_value_0
 }
 zz_ef_cb_money = {
 	value = zz_ef_cb_metal_money
@@ -1406,10 +1415,10 @@ zz_ef_trade_account = {
 	if = {
 		limit = {
 			has_variable = trade_balance_in_gold_fixe
-			money_value_in_gold > 0
+			zz_ef_gold_per_unit > 0
 		}
 		value = var:trade_balance_in_gold_fixe
-		divide = money_value_in_gold
+		divide = zz_ef_gold_per_unit
 	}
 }
 zz_ef_foreign_assets = {
@@ -1611,4 +1620,33 @@ zz_ef_v_d_cbm = {
 zz_ef_v_d_abroad = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_d_abroad } value = var:zz_ef_d_abroad }
+}
+
+# Gold per unit of the country's own money, from its OWN value only
+# (money_value_0: capacity / money in circulation, in the standard's metal;
+# silver converted by E&F's silver_to_gold_rate, from world production).
+# E&F's money_value_in_gold goes through the market owner for subjects; read
+# weekly for every country (M3, run 8, 1.10) it ended in a stack overflow
+# crash -- so it is not read here. 0 without a central bank on a metal
+# standard.
+zz_ef_gold_per_unit = {
+	value = 0
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		value = money_value_0
+	}
+	else_if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_law = law_type:law_silver_standard
+		}
+		value = money_value_0
+		multiply = silver_to_gold_rate
+	}
 }
