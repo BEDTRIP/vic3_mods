@@ -1454,13 +1454,181 @@ zz_ef_gdp_growth_year = {
 		multiply = 13.00000
 	}
 }
-# Inflation a year (equation of exchange): money grows faster than the
-# economy -> prices rise; money = the money in circulation (M2). The
-# game's GDP is nominal (no real GDP in script): so this is the growth of
-# money against GDP -- check.
+# ---- inflation from prices (the user, 1.10 night) --------------------------
+# A consumer price index of the country's market: the vanilla consumer goods
+# (staple and luxury, + electricity; without gold, merchant marine and the
+# mods' goods -- not every mod is in the playset), each at its price
+# (base price x (1 + market_goods_pricier)) weighted by its buy orders x base
+# price: sum(price x q) / sum(base x q) x 100 -- 100 = base prices. The
+# weights are this week's (a Paasche-type level); the index is kept weekly
+# in the year ring (var:zz_ef_price_q1..13). Replaces E&F's inflation: E&F
+# summed five groups' mean changes unweighted, took the price deviation in
+# absolute value (prices under base read as inflation too) and added manual
+# monetary-policy marks.
+zz_ef_cpi_value = {
+	value = 0
+	market = {
+		mg:grain = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:grain.base_price } }
+		mg:fish = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:fish.base_price } }
+		mg:fabric = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:fabric.base_price } }
+		mg:wood = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:wood.base_price } }
+		mg:groceries = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:groceries.base_price } }
+		mg:clothes = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:clothes.base_price } }
+		mg:furniture = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:furniture.base_price } }
+		mg:paper = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:paper.base_price } }
+		mg:services = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:services.base_price } }
+		mg:transportation = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:transportation.base_price } }
+		mg:electricity = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:electricity.base_price } }
+		mg:porcelain = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:porcelain.base_price } }
+		mg:meat = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:meat.base_price } }
+		mg:fruit = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:fruit.base_price } }
+		mg:liquor = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:liquor.base_price } }
+		mg:wine = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:wine.base_price } }
+		mg:tea = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:tea.base_price } }
+		mg:coffee = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:coffee.base_price } }
+		mg:sugar = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:sugar.base_price } }
+		mg:tobacco = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:tobacco.base_price } }
+		mg:opium = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:opium.base_price } }
+		mg:automobiles = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:automobiles.base_price } }
+		mg:telephones = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:telephones.base_price } }
+		mg:radios = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:radios.base_price } }
+		mg:luxury_clothes = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:luxury_clothes.base_price } }
+		mg:luxury_furniture = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:luxury_furniture.base_price } }
+		mg:fine_art = { add = { value = market_goods_pricier add = 1 multiply = market_goods_buy_orders multiply = g:fine_art.base_price } }
+	}
+}
+zz_ef_cpi_weight = {
+	value = 0
+	market = {
+		mg:grain = { add = { value = market_goods_buy_orders multiply = g:grain.base_price } }
+		mg:fish = { add = { value = market_goods_buy_orders multiply = g:fish.base_price } }
+		mg:fabric = { add = { value = market_goods_buy_orders multiply = g:fabric.base_price } }
+		mg:wood = { add = { value = market_goods_buy_orders multiply = g:wood.base_price } }
+		mg:groceries = { add = { value = market_goods_buy_orders multiply = g:groceries.base_price } }
+		mg:clothes = { add = { value = market_goods_buy_orders multiply = g:clothes.base_price } }
+		mg:furniture = { add = { value = market_goods_buy_orders multiply = g:furniture.base_price } }
+		mg:paper = { add = { value = market_goods_buy_orders multiply = g:paper.base_price } }
+		mg:services = { add = { value = market_goods_buy_orders multiply = g:services.base_price } }
+		mg:transportation = { add = { value = market_goods_buy_orders multiply = g:transportation.base_price } }
+		mg:electricity = { add = { value = market_goods_buy_orders multiply = g:electricity.base_price } }
+		mg:porcelain = { add = { value = market_goods_buy_orders multiply = g:porcelain.base_price } }
+		mg:meat = { add = { value = market_goods_buy_orders multiply = g:meat.base_price } }
+		mg:fruit = { add = { value = market_goods_buy_orders multiply = g:fruit.base_price } }
+		mg:liquor = { add = { value = market_goods_buy_orders multiply = g:liquor.base_price } }
+		mg:wine = { add = { value = market_goods_buy_orders multiply = g:wine.base_price } }
+		mg:tea = { add = { value = market_goods_buy_orders multiply = g:tea.base_price } }
+		mg:coffee = { add = { value = market_goods_buy_orders multiply = g:coffee.base_price } }
+		mg:sugar = { add = { value = market_goods_buy_orders multiply = g:sugar.base_price } }
+		mg:tobacco = { add = { value = market_goods_buy_orders multiply = g:tobacco.base_price } }
+		mg:opium = { add = { value = market_goods_buy_orders multiply = g:opium.base_price } }
+		mg:automobiles = { add = { value = market_goods_buy_orders multiply = g:automobiles.base_price } }
+		mg:telephones = { add = { value = market_goods_buy_orders multiply = g:telephones.base_price } }
+		mg:radios = { add = { value = market_goods_buy_orders multiply = g:radios.base_price } }
+		mg:luxury_clothes = { add = { value = market_goods_buy_orders multiply = g:luxury_clothes.base_price } }
+		mg:luxury_furniture = { add = { value = market_goods_buy_orders multiply = g:luxury_furniture.base_price } }
+		mg:fine_art = { add = { value = market_goods_buy_orders multiply = g:fine_art.base_price } }
+	}
+}
+zz_ef_price_index = {
+	value = 100
+	if = {
+		limit = { zz_ef_cpi_weight > 0 }
+		value = zz_ef_cpi_value
+		divide = zz_ef_cpi_weight
+		multiply = 100
+	}
+}
+# Change of the index over a year (13 four-week blocks); before the year is
+# full, the change since the oldest block from the 6th on, annualised; under 6
+# blocks 0 (one month's noise is not a year's inflation).
+zz_ef_price_growth_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_price_q13
+			var:zz_ef_price_q13 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q13
+		subtract = 1
+		multiply = 1.00000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q12
+			var:zz_ef_price_q12 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q12
+		subtract = 1
+		multiply = 1.08333
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q11
+			var:zz_ef_price_q11 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q11
+		subtract = 1
+		multiply = 1.18182
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q10
+			var:zz_ef_price_q10 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q10
+		subtract = 1
+		multiply = 1.30000
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q9
+			var:zz_ef_price_q9 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q9
+		subtract = 1
+		multiply = 1.44444
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q8
+			var:zz_ef_price_q8 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q8
+		subtract = 1
+		multiply = 1.62500
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q7
+			var:zz_ef_price_q7 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q7
+		subtract = 1
+		multiply = 1.85714
+	}
+	else_if = {
+		limit = {
+			has_variable = zz_ef_price_q6
+			var:zz_ef_price_q6 > 0
+		}
+		value = zz_ef_price_index
+		divide = var:zz_ef_price_q6
+		subtract = 1
+		multiply = 2.16667
+	}
+}
+# Inflation a year: the consumer price index's change (the user, 1.10 night;
+# until then money growth - nominal GDP growth, which measured the velocity
+# of money, not prices, and multiplied a month by 13 in the first year).
 zz_ef_inflation = {
-	value = zz_ef_circ_growth_year
-	subtract = zz_ef_gdp_growth_year
+	value = zz_ef_price_growth_year
 	min = -0.5
 	max = 1
 }

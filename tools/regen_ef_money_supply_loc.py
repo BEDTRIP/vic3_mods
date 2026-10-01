@@ -100,7 +100,7 @@ def main_text(lang, c):
                  cb="Резервы ЦБ — покрытие валюты, не деньги",
                  cbf="металл по паритету; покрытие M2 {1} (норма 40%; ниже — кредит ЦБ сжимается, при 20% — ноль, сейчас {2} цели); выпущено ЦБ (долг банков) {3}",
                  circ="Курс и инфляция считаются по M2",
-                 infl="Инфляция за год", inflf="рост M2 {0} − рост ВВП {1}",
+                 infl="Инфляция за год", inflf="индекс цен потребительской корзины {2} (100 = базовые цены); для сравнения: рост M2 {0}, рост ВВП {1}",
                  debt="Долги (не деньги)", debtf="бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}",
                  hint="Наведите на счёт — все переводы за неделю.",
                  dyn="месяц {0}, год {1}, 5 лет {2}", gdp="к ВВП")
@@ -116,7 +116,7 @@ def main_text(lang, c):
                  cb="CB reserves — the currency's cover, not money",
                  cbf="metal at parity; cover of M2 {1} (normal 40%; under it the CB's credit shrinks, zero at 20%, now {2} of the target); issued by the CB (banks' debt) {3}",
                  circ="The value and the inflation read M2",
-                 infl="Inflation, a year", inflf="M2 growth {0} − GDP growth {1}",
+                 infl="Inflation, a year", inflf="consumer price index {2} (100 = base prices); for comparison: M2 growth {0}, GDP growth {1}",
                  debt="Debts (not money)", debtf="budget {0}, banks to the CB {1}, consumer credit {2}, business {3}",
                  hint="Hover an account for all its transfers this week.",
                  dyn="month {0}, year {1}, 5 years {2}", gdp="of GDP")
@@ -155,7 +155,7 @@ def main_text(lang, c):
                           money("zz_ef_bank_cb_debt")) + ")",
         f"{L['circ']}.",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
-            sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%')) + ")",
+            sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%'), sv('zz_ef_price_index', '1')) + ")",
         (f"Признаки пузыря: кредит {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} ВВП; пул — "
          f"{sv('zz_ef_pool_months', '1')} мес. взносов; накопления — {sv('zz_ef_savings_to_gdp', '%0')} ВВП") if ru else
         (f"Bubble signs: credit {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} of GDP; the pool — "

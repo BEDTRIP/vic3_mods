@@ -239,6 +239,7 @@ zz_ef_money_model_step = {
 		zz_ef_ring_q_push = { M = agg3 }
 		zz_ef_ring_q_push = { M = circ }
 		zz_ef_ring_q_push = { M = gdp }
+		zz_ef_ring_q_push = { M = price }
 	}
 	change_variable = { name = zz_ef_ring_r add = 1 }
 	if = {
@@ -266,6 +267,7 @@ zz_ef_money_model_step = {
 	zz_ef_money_ledger_delta = { ACC = agg3 VALUE = zz_ef_agg_m3 }
 	zz_ef_money_ledger_delta = { ACC = circ VALUE = zz_ef_circulation }
 	zz_ef_money_ledger_delta = { ACC = gdp VALUE = gdp }
+	zz_ef_money_ledger_delta = { ACC = price VALUE = zz_ef_price_index }
 
 	# Sandbox log (tools/run_vic3_sandbox.ps1 reads debug.log): one line a
 	# week for the player and the big economies.
@@ -338,7 +340,7 @@ zz_ef_money_hook_receive = {
 					gdp > 20000000
 				}
 			}
-			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|tr_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_tr_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]|norm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_cash_norm')|0]|bc_new [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bc_new')|0]|bc_paid [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bc_paid')|0]|svc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_bc_svc')|0]"
+			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|tr_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_tr_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]|norm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_cash_norm')|0]|cpi [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_price_index')|2]|bc_new [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bc_new')|0]|bc_paid [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bc_paid')|0]|svc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_bc_svc')|0]"
 		}
 	}
 }

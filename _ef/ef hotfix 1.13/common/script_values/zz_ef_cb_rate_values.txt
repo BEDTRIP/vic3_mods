@@ -65,7 +65,8 @@ zz_ef_cb_rate_ceiling = {
 # 1.10 evening (the user, run 15): the CB reads the money system, not the
 # rating. Metal standards (the Bank of England's practice: the rate set by
 # its reserves): 3% + the cover term + the money growth term. Fiat (the Taylor
-# rule): 2.5% + inflation + 0.5 x (inflation - 2%). The rating and the
+# rule): 2.5% + inflation (consumer prices) + 0.5 x (inflation - 2%) + the
+# money growth term. The rating and the
 # stability are the premium lenders ask of the GOVERNMENT (its bonds), not the
 # CB's rate: zz_ef_cb_rule_risk stays, outside the rule.
 zz_ef_cb_rule_neutral = {
@@ -90,20 +91,15 @@ zz_ef_cb_rule_inflation = {
 		max = 0.3
 	}
 }
-# Metal standards: +0.5 pp per pp the money in circulation (M2) grows faster
-# than GDP in a year (zz_ef_circ_growth_year - zz_ef_gdp_growth_year),
-# -2..+3 pp. (Until the inflation from prices, the fiat rule's inflation is
-# this same gap -- not added twice.)
+# +0.5 pp per pp the money in circulation (M2) grows faster than GDP in a
+# year (zz_ef_circ_growth_year - zz_ef_gdp_growth_year), -2..+3 pp; every
+# standard since the inflation comes from prices (1.10 night).
 zz_ef_cb_rule_money = {
-	value = 0
-	if = {
-		limit = { zz_ef_cb_rate_is_fiat = 0 }
-		value = zz_ef_circ_growth_year
-		subtract = zz_ef_gdp_growth_year
-		multiply = 0.5
-		min = -0.02
-		max = 0.03
-	}
+	value = zz_ef_circ_growth_year
+	subtract = zz_ef_gdp_growth_year
+	multiply = 0.5
+	min = -0.02
+	max = 0.03
 }
 zz_ef_cb_rule_rating = {
 	value = 0.06
