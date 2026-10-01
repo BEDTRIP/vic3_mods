@@ -1,0 +1,133 @@
+#############################################
+# 2026-10-01 -- crash fix: PSC's square root never returns for a negative or
+# a too large number.
+#
+# Every sandbox run from a 1844 save crashed with EXCEPTION_STACK_OVERFLOW
+# (the same address) within 1-8 minutes, also with the money model switched
+# off. A search for recursion over the whole playset found PSC's
+# calculate_sqrt (PSC_construction_values.txt:272, used by
+# state_construction_allocation for every state's construction): it scales
+# `a` by 100 in recurse_a while a < 1 -- forever for a negative number -- and
+# runs Newton's method in recurse_sqrt1 until the error is small, which never
+# happens for a negative number, nor for one so large that guess x guess
+# overflows the fixed point. The number under the root grows with the
+# construction sector's production x spending (PSC guards only production).
+#
+# Here: a number <= 0 gives 0, the number is held to 1e12 (sqrt 1e6), and
+# Newton's method stops after 60 steps. Otherwise PSC's own code, line for line.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of PSC's calculate_sqrt and
+# recurse_sqrt1 -- re-diff after a PSC update.
+#############################################
+
+REPLACE_OR_CREATE:calculate_sqrt = {
+	value = scope:num_to_sqrt
+	max = 1000000000000
+	save_temporary_value_as = num_to_sqrt
+	save_temporary_value_as = a
+	value = 0
+	save_temporary_value_as = n
+	save_temporary_value_as = sqrt_iter
+	if = {
+		limit = {
+			scope:a <= 0
+		}
+		value = 0
+	}
+	else = {
+		if = {
+			limit = {
+				scope:a >= 100
+			}
+			value = recurse_a
+			divide = 100
+		}
+		else_if = {
+			limit = {
+				scope:a < 1
+			}
+			value = recurse_a
+			multiply = 100
+		}
+		if = {
+			limit = {
+				scope:a < 10
+			}
+			value = 0.28
+			multiply = scope:a
+			add = 0.89
+		}
+		else = {
+			value = 0.089
+			multiply = scope:a
+			add = 2.8
+		}
+		multiply = {
+			value = 1
+			if = {
+				limit = {
+					scope:n > 0
+				}
+				value = recurse_n
+				multiply = 10
+			}
+			else_if = {
+				limit = {
+					scope:n < 0
+				}
+				value = recurse_n
+				divide = 10
+			}
+		}
+		save_temporary_value_as = guess
+		value = recurse_sqrt1
+	}
+}
+
+REPLACE_OR_CREATE:recurse_sqrt1 = {
+	value = scope:sqrt_iter
+	add = 1
+	save_temporary_value_as = sqrt_iter
+	value = {
+		add = scope:guess
+		subtract = {
+			add = {
+				add = scope:guess
+				multiply = scope:guess
+			}
+			subtract = scope:num_to_sqrt
+			divide = {
+				add = scope:guess
+				multiply = 2
+			}
+		}
+	}
+	save_temporary_value_as = guess
+	value = scope:num_to_sqrt
+	subtract = {
+		value = scope:guess
+		multiply = scope:guess
+	}
+	save_temporary_value_as = error_absolute
+	divide = scope:num_to_sqrt # error proportional to total
+	multiply = error_accuracy_denominator
+	save_temporary_value_as = error_relative
+	if = {
+		limit = {
+			scope:sqrt_iter < 60
+			AND = {
+				OR = {
+					scope:error_relative > 1
+					scope:error_relative < -1
+				}
+				OR = {
+					scope:error_absolute > 0.01
+					scope:error_absolute < -0.01
+				}
+			}
+		}
+		value = recurse_sqrt2
+	}
+	else = {
+		value = scope:guess
+	}
+}

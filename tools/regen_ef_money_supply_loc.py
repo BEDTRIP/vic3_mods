@@ -96,7 +96,7 @@ def main_text(lang, c):
                  m2="M2 = M1 + предприятия и население", bld="Касса предприятий", tc="из них торговые центры",
                  cash="Накопления населения на руках", savall="всего накоплений {0}, во вкладах {1}",
                  m3="M3 = M2 + заграница", abroad="Заграница",
-                 abf="облигации банков {0}, облигации казны {1}; торговый счёт E&F {2} — не входит (накопленный счётчик E&F, по курсу слабых валют раздувается)",
+                 abf="облигации банков {0}, облигации казны {1}",
                  circ="В обращении (курс и инфляция): M2 − M0",
                  infl="Инфляция за год", inflf="рост денег в обращении {0} − рост ВВП {1}",
                  debt="Долги (не деньги)", debtf="бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}",
@@ -110,7 +110,7 @@ def main_text(lang, c):
                  m2="M2 = M1 + businesses and pops", bld="Business cash", tc="of it trade centres",
                  cash="Pops' savings at hand", savall="all savings {0}, in deposits {1}",
                  m3="M3 = M2 + abroad", abroad="Abroad",
-                 abf="banks' bonds {0}, treasury's bonds {1}; E&F trade account {2} — not added (E&F's cumulative counter, blown up at weak currencies)",
+                 abf="banks' bonds {0}, treasury's bonds {1}",
                  circ="In circulation (value and inflation): M2 − M0",
                  infl="Inflation, a year", inflf="money in circulation growth {0} − GDP growth {1}",
                  debt="Debts (not money)", debtf="budget {0}, banks to the CB {1}, consumer credit {2}, business {3}",
@@ -142,7 +142,7 @@ def main_text(lang, c):
         + L["savall"].format(money("zz_ef_pop_savings"), money("zz_ef_pop_deposits")) + ")",
         f" {L['m3']}: #T {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')} ({dyn(3)})",
         f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#! ({delta('zz_ef_v_d_abroad')}; "
-        + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds"), money("zz_ef_trade_account")) + ")",
+        + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
         f"{L['circ']}: #T {money('zz_ef_circulation')}#!",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
             sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%')) + ")",
@@ -364,11 +364,9 @@ NOTES = {
              "the treasury and business cash beyond the known transfers. Payments abroad (the trade centres' cash) "
              "and the pool's unexplained change (levels bought) are not in it. Part of the savings is "
              "in deposits — engine money again (the pool)."),
-    "abroad": ("Заграница — требования страны к другим странам: облигации частных банков и казны (E&F) и "
-               "накопленный торговый счёт E&F (по курсу). Все платежи с заграницей идут через ЦБ: чистый отток "
+    "abroad": ("Заграница — требования страны к другим странам: облигации частных банков и казны (E&F). Все платежи с заграницей идут через ЦБ: чистый отток "
                "списывает его металл (механизм Юма).",
-               "Abroad — the country's claims on other countries: the private banks' and the treasury's bonds (E&F) "
-               "and E&F's accumulated trade account (at the currency's value). Every payment with abroad goes through "
+               "Abroad — the country's claims on other countries: the private banks' and the treasury's bonds (E&F). Every payment with abroad goes through "
                "the CB: a net outflow pays out its metal (Hume's mechanism)."),
     "cb": ("ЦБ — расчётный агент страны: все платежи с заграницей идут через него. Кредит банкам — новые деньги, "
            "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (и склад товара-валюты "
