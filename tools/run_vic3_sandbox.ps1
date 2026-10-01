@@ -21,7 +21,8 @@ Usage (PowerShell):
     powershell -ExecutionPolicy Bypass -File tools\run_vic3_sandbox.ps1 -RunMinutes 5
 Parameters:
     -RunMinutes   real minutes to let the game run at speed 5 (default 5)
-    -LoadWaitSec  seconds to wait after the window appears, for the save to load (default 150)
+    -LoadWaitSec  at most this many seconds for the save to load (default 400); the script goes on as
+                  soon as the game's screen is up (Wait-Screen, by the colour of the left icon column)
     -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
                   -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
@@ -41,7 +42,7 @@ Parameters:
 #>
 param(
     [int]$RunMinutes = 5,
-    [int]$LoadWaitSec = 150,
+    [int]$LoadWaitSec = 400,
     [int]$Autosaves = 0,
     [string]$AiTag = "all",
     [string]$StartSave = "",
@@ -171,6 +172,47 @@ function Shot($p, $name) {
     Log "screenshot $f"
 }
 
+# Which screen is up, from the mean colour of a box (2560x1440 coordinates, scaled to the
+# window). Measured 2026-10-01 on the screenshots of runs 14-15: the main menu's "New game"
+# button is dark green, the goals screen's top-left corner near black, the lobby's ocean light,
+# and in a loaded game the left column of icons is (76,68,68) for every country (the top-left
+# corner is the flag, different per country).
+$Screens = @{
+    menu  = @{ box = @(340, 545, 730, 590); rgb = @(33, 46, 42); tol = 15 }
+    goals = @{ box = @(5, 5, 130, 90); rgb = @(33, 31, 32); tol = 15 }
+    lobby = @{ box = @(340, 545, 730, 590); rgb = @(183, 196, 196); tol = 20 }
+    game  = @{ box = @(5, 210, 45, 980); rgb = @(76, 68, 68); tol = 15 }
+}
+function Is-Screen($p, $name) {
+    $sc = $Screens[$name]
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $x0 = [int]($sc.box[0] * $kx); $y0 = [int]($sc.box[1] * $ky)
+    $w = [Math]::Max(1, [int](($sc.box[2] - $sc.box[0]) * $kx)); $h = [Math]::Max(1, [int](($sc.box[3] - $sc.box[1]) * $ky))
+    $bmp = New-Object System.Drawing.Bitmap $w, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + $x0, $r.T + $y0, 0, 0, $bmp.Size)
+    $sum = @(0, 0, 0); $n = 0
+    for ($x = 0; $x -lt $w; $x += 3) { for ($y = 0; $y -lt $h; $y += 3) { $c = $bmp.GetPixel($x, $y); $sum[0] += $c.R; $sum[1] += $c.G; $sum[2] += $c.B; $n++ } }
+    $g.Dispose(); $bmp.Dispose()
+    for ($i = 0; $i -lt 3; $i++) { if ([Math]::Abs($sum[$i] / $n - $sc.rgb[$i]) -gt $sc.tol) { return $false } }
+    return $true
+}
+# Waits until the screen is up (polled every 3 s), at most $max seconds; then $settle seconds.
+function Wait-Screen($name, $max, $settle) {
+    $t = Get-Date
+    while (((Get-Date) - $t).TotalSeconds -lt $max) {
+        $p = Get-Game
+        if ($p -and $p.MainWindowHandle -ne 0 -and (Is-Screen $p $name)) {
+            Log ("screen '$name' after {0:N0} s" -f ((Get-Date) - $t).TotalSeconds); Start-Sleep $settle; return $true
+        }
+        Start-Sleep 3
+    }
+    Log "screen '$name' not seen in $max s - going on"
+    return $false
+}
+
 # debug.log is buffered while the game runs and autosaves may be half-yearly,
 # so progress is read from the screen: the date text at the top right of the
 # window (2560x1440: about 330..190 px from the right edge, 2..34 px down).
@@ -226,20 +268,22 @@ while (((Get-Date) - $t0).TotalSeconds -lt 240) {
 if (-not $p -or $p.MainWindowHandle -eq 0) { throw "no game window after 4 minutes" }
 if ($NewGame) {
     # The main menu, the goals screen, the lobby (map), the game (2026-10-01, 1.13.11 with this playset).
-    Log "window up, waiting 120 s for the main menu"
-    Start-Sleep 120
+    Wait-Screen "menu" 300 3 | Out-Null
     $p = Get-Game
     Shot $p "00a_menu.png"
-    Click-Window $p 0.2086 0.394; Start-Sleep 25; Shot $p "00b_goals.png"      # New game
-    Click-Window $p 0.8665 0.625; Start-Sleep 45; Shot $p "00c_lobby.png"      # Sandbox: start the game
-    Click-Window $p 0.25 0.981; Start-Sleep 4                                  # Random country
-    Click-Window $p 0.9215 0.975; Log "new game: starting"; Start-Sleep 90     # Start
+    Click-Window $p 0.2086 0.394                                               # New game
+    Wait-Screen "goals" 90 4 | Out-Null; Shot $p "00b_goals.png"
+    Click-Window $p 0.8665 0.625                                               # Sandbox: start the game
+    Wait-Screen "lobby" 180 3 | Out-Null; Shot $p "00c_lobby.png"
+    Click-Window $p 0.25 0.981; Start-Sleep 2                                  # Random country
+    Click-Window $p 0.9215 0.975; Log "new game: starting"                     # Start
+    Wait-Screen "game" 300 8 | Out-Null
     $p = Get-Game
     Console-Cmd $p "tag $Tag"
     Start-Sleep 5
 } else {
-    Log "window up, waiting $LoadWaitSec s for the save to load"
-    Start-Sleep $LoadWaitSec
+    Log "window up, waiting for the save to load (at most $LoadWaitSec s)"
+    Wait-Screen "game" $LoadWaitSec 8 | Out-Null
 }
 $p = Get-Game
 Shot $p "01_loaded.png"
