@@ -1,0 +1,179 @@
+<title>Блок В: ночь 2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,650&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+/* Layout: one reading column; a country switch, then a 2-column grid of small charts; ledger tables below. */
+:root {
+  --bg: #f6f7f5; --panel: #ffffff; --ink: #1d2523; --muted: #5d6965; --rule: #d8ddd9;
+  --gold: #a87b1c; --c1: #2f6f8f; --c2: #a87b1c; --c3: #6b8e3a; --c4: #8a4f7d; --warn: #b4532a;
+  --serif: "Source Serif 4", Georgia, serif; --sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #141917; --panel: #1c2220; --ink: #e3e8e5; --muted: #9aa6a1; --rule: #33403b;
+  --gold: #d6a843; --c1: #6fb1d1; --c2: #d6a843; --c3: #9cc46a; --c4: #c58ab8; --warn: #e2804f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #141917; --panel: #1c2220; --ink: #e3e8e5; --muted: #9aa6a1; --rule: #33403b;
+  --gold: #d6a843; --c1: #6fb1d1; --c2: #d6a843; --c3: #9cc46a; --c4: #c58ab8; --warn: #e2804f; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--sans); }
+.wrap { max-width: 1060px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--serif); text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; font-weight: 650; }
+h2 { font-size: 1.35rem; font-weight: 650; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.02rem; font-weight: 500; }
+p { margin: 0; max-width: 72ch; }
+.lede { color: var(--muted); }
+.eyebrow { font: 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+section { display: grid; gap: 14px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tabs button { font: 600 14px var(--sans); color: var(--ink); background: var(--panel); border: 1px solid var(--rule);
+  padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+.tabs button[aria-pressed="true"] { border-color: var(--gold); box-shadow: inset 0 -3px 0 var(--gold); }
+.tabs button:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.chart { background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 12px 8px; min-width: 0; display: grid; gap: 6px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font: 12px var(--mono); color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 3px; vertical-align: middle; margin-right: 4px; }
+.note { font-size: 13px; color: var(--muted); }
+.items { display: grid; gap: 10px; }
+.item { display: grid; grid-template-columns: 3.2rem 1fr; gap: 10px; align-items: baseline; }
+.item b { font: 13px var(--mono); color: var(--gold); }
+.item div { min-width: 0; }
+.commits { font: 12px var(--mono); color: var(--muted); }
+.tag { display: inline-block; font: 600 11px var(--sans); letter-spacing: .04em; text-transform: uppercase;
+  padding: 1px 6px; border-radius: 3px; border: 1px solid currentColor; margin-left: 6px; }
+.tag.done { color: var(--c3); } .tag.check { color: var(--c1); } .tag.open { color: var(--warn); }
+ol.decide { margin: 0; padding-left: 1.3rem; display: grid; gap: 8px; max-width: 80ch; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; font: 13px var(--sans); font-variant-numeric: tabular-nums; min-width: 640px; }
+th, td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font-weight: 600; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .chart path.line { transition: d .2s; } }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <div class="eyebrow">EF.48 · блок В · ночь 2 · 2.10.2026</div>
+    <h1>Деньги и кредит: ночь 2</h1>
+    <p class="lede" id="lede"></p>
+  </header>
+
+  <section>
+    <h2>Что сделано</h2>
+    <div class="items" id="items"></div>
+  </section>
+
+  <section>
+    <h2>Ждёт решения</h2>
+    <ol class="decide" id="decide"></ol>
+  </section>
+
+  <section>
+    <h2>Итоговый прогон по странам</h2>
+    <p class="note" id="runnote"></p>
+    <div class="tabs" id="tabs" role="group" aria-label="Страна"></div>
+    <div class="grid" id="charts"></div>
+  </section>
+
+  <section>
+    <h2>Сводка: начало и конец прогона</h2>
+    <div class="tablewrap"><table id="summary"></table></div>
+  </section>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const META = /*__META__*/null;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+document.getElementById("lede").textContent = META.lede;
+document.getElementById("runnote").textContent = META.run_note;
+for (const it of META.items) {
+  const el = document.createElement("div"); el.className = "item";
+  el.innerHTML = `<b>п. ${it.n}</b><div><h3>${it.title}<span class="tag ${it.state}">${{done:"сделано",check:"проверить",open:"открыто"}[it.state]}</span></h3><p>${it.text}</p><div class="commits">${it.commits || ""}</div></div>`;
+  document.getElementById("items").appendChild(el);
+}
+for (const d of META.decide) {
+  const li = document.createElement("li"); li.innerHTML = d; document.getElementById("decide").appendChild(li);
+}
+
+const CHARTS = [
+  { title: "Денежная масса к ВВП", keys: [["m0","M0"],["m1","M1"],["m2","M2"],["tr","казна"]], fmt: v => v.toFixed(2), zero: true },
+  { title: "Инфляция из цен, % в год", keys: [["infl","инфляция"]], fmt: v => (v*100).toFixed(1), zero: true, mul: 100 },
+  { title: "Покрытие металлом и курс к паритету", keys: [["cover","покрытие M2"],["val","курс / паритет"]], fmt: v => v.toFixed(2), zero: true, ref: [0.4, 1] },
+  { title: "Ставки, % в год", keys: [["rate","ключевая"],["grt","правительства"]], fmt: v => (v*100).toFixed(1), zero: true, mul: 100 },
+  { title: "Торговый баланс, доля ВВП в год", keys: [["trade","экспорт − импорт"]], fmt: v => (v*100).toFixed(1), zero: true, mul: 100 },
+  { title: "ВВП, млн", keys: [["gdp","ВВП"]], fmt: v => v.toFixed(0) },
+];
+const COLORS = ["--c1","--c2","--c3","--c4"];
+
+function chart(rows, spec) {
+  const W = 460, H = 210, L = 44, R = 10, T = 10, B = 26;
+  const mul = spec.mul || 1;
+  const pts = spec.keys.map(([k]) => rows.map((r, i) => [i, r[k]]).filter(p => p[1] !== null && p[1] !== undefined && isFinite(p[1])));
+  let vals = pts.flat().map(p => p[1] * mul);
+  if (spec.ref) vals = vals.concat(spec.ref.map(v => v * mul));
+  if (!vals.length) return null;
+  let lo = Math.min(...vals), hi = Math.max(...vals);
+  if (spec.zero) { lo = Math.min(lo, 0); hi = Math.max(hi, 0); }
+  if (hi - lo < 1e-9) { hi += 1; lo -= 1; }
+  const pad = (hi - lo) * 0.06; lo -= pad; hi += pad;
+  const x = i => L + (W - L - R) * (rows.length > 1 ? i / (rows.length - 1) : 0.5);
+  const y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+  const ink = css("--muted"), rule = css("--rule");
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${spec.title}">`;
+  const step = niceStep((hi - lo) / 4);
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+    s += `<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${rule}" stroke-width="1"/>`;
+    s += `<text x="${L-6}" y="${y(v)+4}" text-anchor="end" font-size="11" font-family="JetBrains Mono, monospace" fill="${ink}">${fmtTick(v)}</text>`;
+  }
+  if (spec.ref) for (const rv of spec.ref) s += `<line x1="${L}" x2="${W-R}" y1="${y(rv*mul)}" y2="${y(rv*mul)}" stroke="${css("--gold")}" stroke-dasharray="4 4" stroke-width="1"/>`;
+  const years = {}; rows.forEach((r, i) => { const yv = r.d.slice(0, 4); if (!(yv in years)) years[yv] = i; });
+  for (const [yv, i] of Object.entries(years)) s += `<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" font-family="JetBrains Mono, monospace" fill="${ink}">${yv}</text>`;
+  pts.forEach((p, j) => {
+    if (!p.length) return;
+    const col = css(COLORS[j]);
+    const d = p.map((q, n) => `${n ? "L" : "M"}${x(q[0]).toFixed(1)},${y(q[1]*mul).toFixed(1)}`).join("");
+    s += `<path class="line" d="${d}" fill="none" stroke="${col}" stroke-width="2"/>`;
+    const last = p[p.length - 1];
+    s += `<circle cx="${x(last[0])}" cy="${y(last[1]*mul)}" r="3" fill="${col}"/>`;
+  });
+  s += `</svg>`;
+  const leg = spec.keys.map(([k, name], j) => {
+    const p = pts[j]; const last = p.length ? spec.fmt(p[p.length - 1][1]) : "—";
+    return `<span><i style="background:var(${COLORS[j]})"></i>${name} ${last}</span>`;
+  }).join("");
+  return `<div class="chart"><h3>${spec.title}</h3>${s}<div class="legend">${leg}</div></div>`;
+}
+function niceStep(raw) { const p = Math.pow(10, Math.floor(Math.log10(raw))); const f = raw / p; return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p; }
+function fmtTick(v) { const a = Math.abs(v); return a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(0) : a >= 1 ? v.toFixed(1) : v.toFixed(2); }
+
+const names = Object.keys(DATA);
+let current = names[0];
+let saved = null; try { saved = localStorage.getItem("ef48n2-country"); } catch (e) {}
+if (saved && DATA[saved]) current = saved;
+function render() {
+  document.getElementById("charts").innerHTML = CHARTS.map(c => chart(DATA[current], c)).filter(Boolean).join("");
+  for (const b of document.querySelectorAll("#tabs button")) b.setAttribute("aria-pressed", b.dataset.c === current);
+}
+for (const n of names) {
+  const b = document.createElement("button"); b.type = "button"; b.textContent = n; b.dataset.c = n;
+  b.onclick = () => { current = n; try { localStorage.setItem("ef48n2-country", n); } catch (e) {} render(); };
+  document.getElementById("tabs").appendChild(b);
+}
+render();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+
+const tb = document.getElementById("summary");
+const cols = [["gdp","ВВП, млн",v=>v.toFixed(1)],["m2","M2/ВВП",v=>v.toFixed(2)],["tr","казна/ВВП",v=>v.toFixed(2)],["cover","покрытие",v=>(v*100).toFixed(0)+"%"],
+  ["val","курс/паритет",v=>v.toFixed(2)],["rate","ключевая",v=>(v*100).toFixed(1)+"%"],["grt","правительства",v=>(v*100).toFixed(1)+"%"],["infl","инфляция",v=>(v*100).toFixed(1)+"%"]];
+let h = "<tr><th>Страна</th><th>Дата</th>" + cols.map(c => `<th>${c[1]}</th>`).join("") + "</tr>";
+for (const n of names) {
+  const rows = DATA[n]; if (!rows.length) continue;
+  for (const r of [rows[0], rows[rows.length - 1]]) {
+    h += `<tr><td>${n}</td><td>${r.d}</td>` + cols.map(([k,,f]) => `<td>${r[k] === null || r[k] === undefined ? "—" : f(r[k])}</td>`).join("") + "</tr>";
+  }
+}
+tb.innerHTML = h;
+</script>
