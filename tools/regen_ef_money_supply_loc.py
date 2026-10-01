@@ -92,7 +92,7 @@ def main_text(lang, c):
     if ru:
         L = dict(title="Денежная масса", total="Всего (M3)", week="за неделю",
                  m0="M0 = казна", tr="Казна", cb="Резервы ЦБ — покрытие валюты, не деньги",
-                 cbf="металл по паритету {0}, товар-валюта {1}; покрытие {2}; выпущено ЦБ (долг банков) {3}",
+                 cbf="металл по паритету; покрытие денег в обращении {1} (норма 40%; ниже — кредит ЦБ сжимается, при 20% — ноль, сейчас {2} цели); выпущено ЦБ (долг банков) {3}",
                  m1="M1 = M0 + банки", bank="Средства банков (пул)", dep="в т.ч. вклады населения",
                  m2="M2 = M1 + предприятия и население", bld="Касса предприятий", tc="из них торговые центры",
                  cash="Накопления населения на руках", savall="всего накоплений {0}, во вкладах {1}",
@@ -106,7 +106,7 @@ def main_text(lang, c):
     else:
         L = dict(title="Money Supply", total="Total (M3)", week="this week",
                  m0="M0 = treasury", tr="Treasury", cb="CB reserves — the currency's cover, not money",
-                 cbf="metal at parity {0}, currency good {1}; cover {2}; issued by the CB (banks' debt) {3}",
+                 cbf="metal at parity; cover of the money in circulation {1} (normal 40%; under it the CB's credit shrinks, zero at 20%, now {2} of the target); issued by the CB (banks' debt) {3}",
                  m1="M1 = M0 + banks", bank="Bank funds (the pool)", dep="of it pops' deposits",
                  m2="M2 = M1 + businesses and pops", bld="Business cash", tc="of it trade centres",
                  cash="Pops' savings at hand", savall="all savings {0}, in deposits {1}",
@@ -143,7 +143,7 @@ def main_text(lang, c):
         f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#! ({delta('zz_ef_v_d_abroad')}; "
         + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
         f"{tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#! ({delta('zz_ef_v_d_cbm')}; "
-        + L["cbf"].format(money("zz_ef_cb_metal_money"), money("money_supply_state"), sv("zz_ef_cb_cover", "%0"),
+        + L["cbf"].format("", sv("zz_ef_cb_cover", "%0"), sv("zz_ef_cb_cover_credit_mult", "%0"),
                           money("zz_ef_bank_cb_debt")) + ")",
         f"{L['circ']}: #T {money('zz_ef_circulation')}#!",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
@@ -372,14 +372,14 @@ NOTES = {
                "Abroad — the country's claims on other countries: the private banks' and the treasury's bonds (E&F). Every payment with abroad goes through "
                "the CB: a net outflow pays out its metal (Hume's mechanism)."),
     "cb": ("ЦБ — расчётный агент страны: все платежи с заграницей идут через него. Кредит банкам — новые деньги, "
-           "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (и склад товара-валюты "
-           "E&F в штуках): чистый отток за рубеж по курсу списывает металл, приток — добавляет (механизм Юма, "
+           "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (склад товара-валюты "
+           "E&F — штуки товара, в резервы не входит): чистый отток за рубеж по курсу списывает металл, приток — добавляет (механизм Юма, "
            "только металлический стандарт с ЦБ). Резервы — покрытие валюты, а не деньги: в M0–M3 не входят, "
            "иначе отток за рубеж считался бы дважды (деньги ушли из пула или касс и тот же металл ушёл из ЦБ). "
            "Отток уменьшает деньги и покрытие на одну сумму; торговый баланс E&F в резервы больше не входит.",
            "The CB is the country's settlement agent: every payment with abroad goes through it. Credit to banks is "
            "new money, repayment withdraws it, interest goes to the treasury. The account's stock is the metal "
-           "reserves (and E&F's currency-good stock, in counts): a net outflow abroad pays out metal at the "
+           "reserves (E&F's currency-good stock is counts of a good, not in them): a net outflow abroad pays out metal at the "
            "currency's value, an inflow brings it in (Hume's mechanism, metal standards with a CB only). The reserves "
            "are the currency's cover, not money: they are outside M0–M3, else a payment abroad would count twice "
            "(the money left the pool or business cash and the same metal left the CB). An outflow lowers the money "

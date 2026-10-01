@@ -177,6 +177,7 @@ zz_ef_cb_credit_target = {
 	min = 0
 	multiply = zz_ef_cb_credit_gdp_max
 	multiply = zz_ef_cb_credit_share
+	multiply = zz_ef_cb_cover_credit_mult
 }
 # Borrowed from the central bank this week (the debt under its target).
 zz_ef_cb_borrow = {
@@ -673,6 +674,17 @@ zz_ef_v_w_dep_int = {
 # var:trade_balance_in_gold_fixe. E&F added its cumulative trade balance in
 # gold to the reserves; now the flows abroad move the CB's metal itself
 # (zz_ef_cb_hume_step), so counting both would count trade twice.
+# Times zz_ef_capacity_per_metal (the user, 1.10 evening): E&F's value =
+# capacity / money in circulation means the metal always covers 100% of the
+# money at the current value -- and our parity re-anchor (value = parity) made
+# every country start at 100% cover. With the capacity x 1/0.4 the value is
+# metal per unit AT PARITY while the metal covers 40% of the money (the Bank
+# of England in the 1830s); the value falls under the parity exactly when the
+# cover falls under 40%. The CB's reserves in money (zz_ef_cb_metal_money) and
+# Hume's metal per unit (money_value_0) stay consistent: an outflow of X
+# lowers the reserves by X.
+zz_ef_cover_normal = 0.4
+zz_ef_capacity_per_metal = 2.5
 REPLACE_OR_CREATE:national_capacity = {
 	value = 1
 	if = {
@@ -685,6 +697,7 @@ REPLACE_OR_CREATE:national_capacity = {
 		}
 		add = central_bank_reserves
 		add = gold_loaned_to_central_bank_in_national_metal
+		multiply = zz_ef_capacity_per_metal
 	}
 	min = 0.01
 }
@@ -722,7 +735,8 @@ zz_ef_hume_metal_week = {
 		multiply = -1
 	}
 }
-# Metal cover: the reserves against the money at parity (1 = 100%).
+# Metal cover: the metal at parity against the money in circulation (1 =
+# 100%; 40% at the start, zz_ef_cover_normal).
 zz_ef_cb_cover = {
 	value = 0
 	if = {
@@ -731,8 +745,34 @@ zz_ef_cb_cover = {
 			var:money_value_target_1 > 0
 		}
 		value = national_capacity
+		divide = zz_ef_capacity_per_metal
 		divide = money_supply
 		divide = var:money_value_target_1
+	}
+}
+# The cover limits the CB's credit to banks (the user, 1.10 evening): 1 at the
+# normal cover (40%) and above, down to 0 at half of it (20%), linear. Metal
+# standards with a CB only; else 1. A CB lending too much lowers its own cover
+# (the money grows, the metal does not), and an outflow of metal abroad
+# tightens the credit -- the gold standard's discipline, no manual penalty.
+zz_ef_cb_cover_credit_mult = {
+	value = 1
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		value = zz_ef_cb_cover
+		divide = zz_ef_cover_normal
+		subtract = 0.5
+		multiply = 2
+		min = 0
+		max = 1
 	}
 }
 zz_ef_v_f_abr = {
@@ -1354,9 +1394,10 @@ zz_ef_other_treasury_rest = {
 # lowers the money once and the cover by the same sum. The CB issues money
 # only as credit to banks; that money is in the pool (M1).
 
-# The central bank's money: its metal at parity (E&F's central_bank_reserves,
-# in the standard's metal, / var:money_value_target_1, metal per unit) + E&F's
-# currency-good stock (money_supply_state, drawn by E&F as money).
+# The central bank's reserves in money: its metal at parity (E&F's
+# central_bank_reserves, in the standard's metal, / var:money_value_target_1,
+# metal per unit). Metal only (the user, 1.10 evening): E&F's currency-good
+# stock (money_supply_state) is counts of a good, shown in the CB's card.
 zz_ef_cb_metal_money = {
 	value = 0
 	if = {
@@ -1381,7 +1422,6 @@ zz_ef_cb_valuation = {
 # The CB's reserves in money (not money: outside M0-M3, shown as the cover).
 zz_ef_cb_money = {
 	value = zz_ef_cb_metal_money
-	add = money_supply_state
 	min = 0
 }
 zz_ef_pop_cash_held = {

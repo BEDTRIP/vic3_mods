@@ -80,6 +80,8 @@ zz_ef_money_model_step = {
 	# Gold parity re-anchor, once per change of what the money supply counts.
 	# The money supply is the engine's money now (treasury + businesses' cash +
 	# pool; since 2026-09-30 evening, version 2 -- E&F's goods counts are out),
+	# Version 6 (1.10 evening): the national capacity x 2.5 -- parity = value
+	# with the metal covering 40% of the money (zz_ef_capacity_per_metal).
 	# Version 5 (1.10 day): the money in circulation now holds pops' savings
 	# at hand too (the user's M2 - M0).
 	# Version 4 (1.10, item 11): the treasury left the money supply.
@@ -95,8 +97,8 @@ zz_ef_money_model_step = {
 		set_variable = { name = zz_ef_parity_version value = 0 }
 	}
 	if = {
-		limit = { var:zz_ef_parity_version < 5 }
-		set_variable = { name = zz_ef_parity_version value = 5 }
+		limit = { var:zz_ef_parity_version < 6 }
+		set_variable = { name = zz_ef_parity_version value = 6 }
 		if = {
 			limit = {
 				has_modifier = has_central_bank
