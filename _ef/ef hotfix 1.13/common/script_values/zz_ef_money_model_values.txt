@@ -578,6 +578,9 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_v_w_cc_net
 	subtract = zz_ef_tr_other_net
+	# night 2, item 4: dividends to foreign owners left the country's money,
+	# dividends from abroad came in -- not pops' savings
+	subtract = zz_ef_v_f_div
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
 # scripted moves on the treasury -- ai_refund_central_bank (the government
@@ -806,10 +809,15 @@ zz_ef_cb_metal = {
 # x MIN_FAKE_CONSTRUCTION_COST 100 -- the pool buying building levels at the
 # privatization price; the money reaches no treasury, so it is a sink, not a
 # payment abroad (1.10, check).
+# Night 2, item 4 (2.10): the trade by the market's own trade balance in money
+# (zz_ef_trade_net_week: exports - imports x price) and the dividends to and
+# from foreign owners (zz_ef_div_net_week), instead of the trade centres' cash
+# (their cash is their profit and cash flow, not what the country paid abroad).
 zz_ef_ext_net_week = {
 	value = zz_ef_v_f_abr
 	subtract = zz_ef_tr_abr_overlap
-	add = zz_ef_v_d_tc
+	add = zz_ef_v_f_trade
+	add = zz_ef_v_f_div
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
 }
@@ -2377,4 +2385,123 @@ zz_ef_crisis_flag = {
 zz_ef_money_median = {
 	value = 0
 	if = { limit = { has_global_variable = money_value_median } value = global_var:money_value_median }
+}
+
+# Item 4 (the user, 1.10 night): the trade balance from the engine's data. The
+# engine counts imports and exports in units of goods (run 19); in money: the
+# market's exports - imports of every good x its price there (base price x (1 +
+# market_goods_pricier)), a week. Trade is the market's: the market owner
+# holds it, the other members 0. All goods, the financial ones (E&F's bonds,
+# stocks, funds, currency) too -- a payment abroad either way; they are also
+# shown apart (zz_ef_trade_fin_week).
+zz_ef_trade_net_week = {
+	value = 0
+	if = {
+		limit = { market.owner = this }
+		market = {
+			every_market_goods = {
+				add = {
+					value = market_goods_exports
+					subtract = market_goods_imports
+					multiply = {
+						value = market_goods_pricier
+						add = 1
+					}
+					multiply = goods.base_price
+				}
+			}
+		}
+	}
+}
+zz_ef_trade_fin_week = {
+	value = 0
+	if = {
+		limit = { market.owner = this }
+		market = {
+			mg:bond = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:bond.base_price } }
+			mg:manufacture_stock = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:manufacture_stock.base_price } }
+			mg:agricultural_stock = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:agricultural_stock.base_price } }
+			mg:mining_stock = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:mining_stock.base_price } }
+			mg:railroad_stock = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:railroad_stock.base_price } }
+			mg:mutual_funds = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:mutual_funds.base_price } }
+			mg:liquidity_currency = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:liquidity_currency.base_price } }
+		}
+	}
+}
+# Dividends abroad (an estimate from the engine's numbers): the week's profit
+# of the country's buildings (weekly_profit, losses not counted) x the share of
+# its GDP foreign owners hold (GetForeignOwnedGDP, the bridge) out; the same
+# profit rate x the GDP the country owns abroad (GetGDPOwnedInForeignCountries)
+# in. + in, - out. Accepted at night -- check against the budget tooltips.
+zz_ef_profit_week = {
+	value = 0
+	every_scope_building = {
+		add = {
+			value = weekly_profit
+			min = 0
+		}
+	}
+}
+zz_ef_div_net_week = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_v_g_aown
+		subtract = zz_ef_v_g_fown
+		multiply = zz_ef_profit_week
+		divide = gdp
+	}
+}
+zz_ef_v_f_trade = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_trade } value = var:zz_ef_f_trade }
+}
+zz_ef_v_f_trade_fin = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_trade_fin } value = var:zz_ef_f_trade_fin }
+}
+zz_ef_v_f_div = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_div } value = var:zz_ef_f_div }
+}
+
+# Item 5: the government's rate -- the probes and the engine's modifier sums.
+zz_ef_v_g_wrate = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_wrate } value = var:zz_ef_g_wrate }
+}
+zz_ef_v_g_ipay = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_ipay } value = var:zz_ef_g_ipay }
+}
+zz_ef_v_g_sdebt = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_sdebt } value = var:zz_ef_g_sdebt }
+}
+zz_ef_v_g_sdebtf = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_sdebtf } value = var:zz_ef_g_sdebtf }
+}
+zz_ef_ir_add = {
+	value = modifier:country_loan_interest_rate_add
+}
+zz_ef_ir_mult = {
+	value = modifier:country_loan_interest_rate_mult
+}
+
+# Item 6: building levels the government owns -- a drop in a week with the
+# pool's unexplained loss (zz_ef_pool_other_week) tells a privatization.
+zz_ef_gov_levels = {
+	value = 0
+	every_scope_building = {
+		limit = { country_ownership_fraction > 0 }
+		add = {
+			value = level
+			multiply = country_ownership_fraction
+		}
+	}
+}
+zz_ef_v_d_govlv = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_govlv } value = var:zz_ef_d_govlv }
 }

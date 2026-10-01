@@ -530,6 +530,12 @@ PROBES = [
     ("grate", "Country.GetYearlyInterestRate"),
     ("maxcred", "Country.GetMaxCredit"),
     ("wgdp", "Country.GetWeeklyGDP"),
+    # night 2, item 5 (2.10): the government's rate -- weekly, the interest paid, the debt the
+    # country's own pool holds
+    ("wrate", "Country.GetWeeklyInterestRate"),
+    ("ipay", "Country.GetInterestPayment"),
+    ("sdebt", "Country.GetGovernmentSelfDebt"),
+    ("sdebtf", "Country.GetGovernmentSelfDebtFraction"),
 ]
 
 
