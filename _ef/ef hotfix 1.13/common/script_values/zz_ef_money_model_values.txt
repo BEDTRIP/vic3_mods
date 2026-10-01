@@ -524,7 +524,6 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_v_w_cc_net
-	subtract = zz_ef_v_w_sp
 	subtract = zz_ef_tr_other_net
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
@@ -583,48 +582,20 @@ zz_ef_pop_start_savings = {
 	multiply = 0.15
 	min = 0
 }
-# ---- pops spend savings over the norm (the user, 1.10 evening, run 13) -------
-# Without it the savings at hand only grew (Britain's M0 0 -> 26M = 0.66 GDP in
-# 2.7 years) while the engine's money (business cash, pool) melted: the money
-# pops did not spend left the engine for good. Now cash at hand over the norm
-# -- 12% of a year's GDP, ~1.5 months of income (Britain's coin and notes in
-# the 1830s ~11% of GDP) -- is spent at 5% of the excess a week: it comes to
-# pops as income through the dependents' surcharge (with the consumer credit,
-# zz_ef_consumer_credit) and goes into purchases -- business cash. What pops
-# do not spend of it vanishes again and comes back into the savings by the
-# leak. Demand from savings is also the channel from money to prices.
+# ---- pops' cash at hand and deposits (the user, 1.10 evening, run 14) -------
+# Cash at hand is held at a norm -- 12% of a year's GDP, ~1.5 months of income
+# (Britain's coin and notes in the 1830s ~11% of GDP); everything over it goes
+# to bank deposits at once, under it pops withdraw 25% of the gap a week.
+# Run 14 tried spending the excess as income (the dependents' surcharge): pops
+# in the engine hold no money, what they did not spend vanished back into the
+# savings -- a perpetual surcharge (Britain ~71M a year at a GDP of 58M), the
+# savings kept growing. Deposits are engine money in the pool, which builds.
 zz_ef_cash_norm_gdp = 0.12
-zz_ef_spend_speed = 0.05
+zz_ef_withdraw_speed = 0.25
 zz_ef_pop_cash_norm = {
 	value = gdp
 	min = 0
 	multiply = zz_ef_cash_norm_gdp
-}
-zz_ef_sav_spend = {
-	value = zz_ef_pop_cash
-	subtract = zz_ef_pop_cash_norm
-	multiply = zz_ef_spend_speed
-	min = 0
-}
-zz_ef_v_f_sp = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_f_sp } value = var:zz_ef_f_sp }
-}
-zz_ef_v_w_sp = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_w_sp } value = var:zz_ef_w_sp }
-}
-# 5% of the gap a week (the user, 1.10; was 2%).
-zz_ef_deposit_speed = 0.05
-# Share of savings pops keep in banks: 30% at a 4% key rate, +5 pp per pp of
-# rate, 10..70%.
-zz_ef_deposit_share = {
-	value = zz_ef_money_rate
-	subtract = 0.04
-	multiply = 5
-	add = 0.3
-	min = 0.1
-	max = 0.7
 }
 # Deposit rate: the key rate - 1.5 pp, at least 0.5% (the banks' margin).
 zz_ef_deposit_rate = {
@@ -644,23 +615,23 @@ zz_ef_pop_cash = {
 	value = zz_ef_pop_savings
 	subtract = zz_ef_pop_deposits
 }
-zz_ef_dep_target = {
-	value = zz_ef_pop_savings
-	min = 0
-	multiply = zz_ef_deposit_share
-}
+# Deposited this week: all the cash over the norm.
 zz_ef_dep_in = {
-	value = zz_ef_dep_target
-	subtract = zz_ef_pop_deposits
-	multiply = zz_ef_deposit_speed
+	value = zz_ef_pop_cash
+	subtract = zz_ef_pop_cash_norm
 	min = 0
 }
-# Withdrawals, not more than the pool holds.
+# Withdrawn: 25% of the cash under the norm, not more than the deposits and
+# the pool hold.
 zz_ef_dep_out = {
-	value = zz_ef_pop_deposits
-	subtract = zz_ef_dep_target
-	multiply = zz_ef_deposit_speed
+	value = zz_ef_pop_cash_norm
+	subtract = zz_ef_pop_cash
+	multiply = zz_ef_withdraw_speed
 	min = 0
+	max = {
+		value = zz_ef_pop_deposits
+		min = 0
+	}
 	max = {
 		value = investment_pool
 		min = 0
@@ -681,7 +652,6 @@ zz_ef_dep_interest = {
 zz_ef_pop_savings_week = {
 	value = zz_ef_v_f_inflow
 	add = zz_ef_v_f_dep_int
-	subtract = zz_ef_v_f_sp
 }
 zz_ef_v_f_inflow = {
 	value = 0
@@ -964,11 +934,10 @@ zz_ef_cc_wage_add = {
 	}
 }
 # The week's extra income to pops through the dependents' surcharge: the
-# consumer credit's net flow + the savings they spend (1.10 evening).
+# consumer credit's net flow.
 zz_ef_pop_extra_income_week = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_cc_net } add = var:zz_ef_f_cc_net }
-	if = { limit = { has_variable = zz_ef_f_sp } add = var:zz_ef_f_sp }
 }
 zz_ef_v_f_cc_issue = {
 	value = 0

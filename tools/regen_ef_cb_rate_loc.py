@@ -127,8 +127,7 @@ RU = {
     ),
     "zz_ef_business_cash": "Денежная масса: касса предприятий",
     "zz_ef_business_cash_desc": (
-        "Запас денег у зданий — около трети годового ВВП, как деньги предприятий на счетах в 1830-х "
-        "(без модификатора — около двух ВВП). Кредитный лимит страны поднят долей ВВП взамен."
+        "Устаревший: потолок кассы зданий теперь в базовых значениях страны. Снимается сам в начале месяца."
     ),
 }
 
@@ -220,8 +219,7 @@ EN = {
     ),
     "zz_ef_business_cash": "Money supply: business cash",
     "zz_ef_business_cash_desc": (
-        "Buildings' cash reserves at about a third of a year's GDP, like businesses' bank balances in the 1830s "
-        "(without the modifier about two GDPs). The country's credit limit takes a share of GDP instead."
+        "Obsolete: the buildings' cash cap is in the country's base values now. Removed at the start of a month."
     ),
 }
 assert set(RU) == set(EN)

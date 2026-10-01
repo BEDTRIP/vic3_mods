@@ -3,14 +3,26 @@
 # historical norm. The engine keeps a fixed cash reserve per building level --
 # Britain 1836 held 94M of business cash at a GDP of 46M a year (2 GDPs; the
 # whole M2 was 2.5 GDPs, Britain's real broad money ~45% of GDP). x 0.15 puts
-# it at ~0.3 GDP. Added monthly to every country by zz_ef_money_week_start
-# (scripted_effects/zz_ef_money_model.txt). The credit limit (vanilla: cash
-# reserves + base + GDP share) is kept by COUNTRY_MIN_CREDIT_SCALED
-# (defines/zzzz_ef_credit_def.txt). Side effect: buildings have a smaller
+# it at ~0.3 GDP. The credit limit (vanilla: cash reserves + base + GDP share)
+# is kept by COUNTRY_MIN_CREDIT_SCALED (defines/zzzz_ef_credit_def.txt).
+#
+# Run 13 (330ba50): added monthly as zz_ef_business_cash, the cap fell but the
+# starting cash -- filled to the old cap -- melted for ~3 years (Britain 81 ->
+# 24M), and the user asked to cut the cash itself by the same 85% at the
+# start. The engine has no effect on a building's cash (script_docs: only the
+# triggers cash_reserves_available / cash_reserves_ratio), so the cap is put
+# into the code-applied base_values, active from the first day -- if the
+# engine fills the starting cash to the cap, it starts cut. INJECT: E&F, TGR
+# and VC override base_values too. Side effect: buildings have a smaller
 # buffer against losses -- check in runs.
 #############################################
 
+INJECT:base_values = {
+	building_cash_reserves_mult = -0.85
+}
+
+# The monthly modifier of 330ba50 -- kept empty so saves that carry it load;
+# zz_ef_money_week_start removes it.
 zz_ef_business_cash = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
-	building_cash_reserves_mult = -0.85
 }

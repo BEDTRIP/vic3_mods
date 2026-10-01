@@ -306,9 +306,6 @@ FLOWS = [
      "conservation)", svp("zz_ef_v_f_inflow"), None),
     (X, N, "из накоплений: вернулось в деньги движка больше, чем выпало",
      "from savings: more came back into the engine's money than dropped out", svn("zz_ef_v_f_inflow"), None),
-    # pops spend savings over the norm (1.10 evening): paid as income through the dependents' surcharge
-    (X, N, "траты накоплений сверх нормы — доход населению (надбавка иждивенцам)",
-     "savings over the norm spent — income to pops (dependents' surcharge)", sv_("zz_ef_v_w_sp"), None),
     # --- banks ---
     (P, B, "взносы в пул — инвестиции зданий и сбережения богатых (ваниль)",
      "pool contributions — buildings' investment and the rich's saving (vanilla)", sv_("zz_ef_v_f_contrib"), None),
@@ -627,12 +624,12 @@ def nested(lang):
             L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель {money('zz_ef_cb_credit_target')} = "
                       f"ВВП × {sv('zz_ef_cb_credit_share', '%0')} от 50% при ставке {sv('zz_ef_money_rate', '%1')}; "
                       f"занимают и гасят 1.15% разрыва в неделю (~5% в месяц). Пул — {sv('zz_ef_pool_months', '1')} мес. "
-                      f"взносов. Вклады идут к цели на 5% разрыва в неделю.")
+                      f"взносов. Вклады — наличные населения сверх нормы (12% ВВП).")
                      if ru else
                      (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}; target {money('zz_ef_cb_credit_target')} = "
                       f"GDP × {sv('zz_ef_cb_credit_share', '%0')} of 50% at a rate of {sv('zz_ef_money_rate', '%1')}; "
                       f"they borrow and repay 1.15% of the gap a week (~5% a month). The pool holds "
-                      f"{sv('zz_ef_pool_months', '1')} months of contributions. Deposits move 5% of their gap a week."))
+                      f"{sv('zz_ef_pool_months', '1')} months of contributions. Deposits are pops' cash over the norm (12% of GDP)."))
         if acc == C:
             L.append((f"#b Резервы металла: {sv('zz_ef_cb_metal')} {gold}#! (за неделю {sv('zz_ef_v_f_hume', 'D+=')}); "
                       f"чистый поток с заграницей {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; курс {sv('money_value_0', '3')} "
@@ -681,19 +678,17 @@ def nested(lang):
                       f"неделю) — во вкладах {money('zz_ef_pop_deposits')}, на руках {money('zz_ef_pop_cash')}. "
                       f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, проценты по вкладам "
                       f"{sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; внесено {money('zz_ef_v_f_dep_in')}, снято "
-                      f"{money('zz_ef_v_f_dep_out')}. Доля во вкладах — цель {sv('zz_ef_deposit_share', '%0')} "
-                      f"(по ставке), ставка по вкладам {sv('zz_ef_deposit_rate', '%1')}. Норма наличных — "
-                      f"{money('zz_ef_pop_cash_norm')} (12% ВВП, ~1.5 месяца дохода): излишек население тратит, "
-                      f"5% в неделю — на этой неделе {money('zz_ef_v_f_sp')}.")
+                      f"{money('zz_ef_v_f_dep_out')}. Норма наличных на руках — {money('zz_ef_pop_cash_norm')} (12% ВВП, "
+                      f"~1.5 месяца дохода): всё сверх неё сразу идёт во вклады, ниже — население снимает 25% "
+                      f"недостачи в неделю. Ставка по вкладам {sv('zz_ef_deposit_rate', '%1')}.")
                      if ru else
                      (f"#b Savings: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} this "
                       f"week) — in deposits {money('zz_ef_pop_deposits')}, at hand {money('zz_ef_pop_cash')}. This "
                       f"week: dropped out of the engine's money {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, deposit "
                       f"interest {sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; deposited {money('zz_ef_v_f_dep_in')}, "
-                      f"withdrawn {money('zz_ef_v_f_dep_out')}. Deposit share target "
-                      f"{sv('zz_ef_deposit_share', '%0')} (by the rate), deposit rate {sv('zz_ef_deposit_rate', '%1')}. "
-                      f"Cash norm {money('zz_ef_pop_cash_norm')} (12% of GDP, ~1.5 months of income): pops spend the "
-                      f"excess, 5% a week — this week {money('zz_ef_v_f_sp')}."))
+                      f"withdrawn {money('zz_ef_v_f_dep_out')}. Cash norm at hand {money('zz_ef_pop_cash_norm')} (12% of "
+                      f"GDP, ~1.5 months of income): all over it goes to deposits at once, under it pops withdraw "
+                      f"25% of the gap a week. Deposit rate {sv('zz_ef_deposit_rate', '%1')}."))
         d[f"zz_ef_ms_tt_{acc}"] = "\\n".join(L)
     return d
 

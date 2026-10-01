@@ -38,4 +38,4 @@
  zz_ef_rate_private_construction:0 "Key rate: private construction"
  zz_ef_rate_private_construction_desc:0 "A [concept_base_rate_percentage] below 6.5% raises the private sector's share of construction points, above it lowers it: 5 pp of share per percent of rate, at most ±30."
  zz_ef_business_cash:0 "Money supply: business cash"
- zz_ef_business_cash_desc:0 "Buildings' cash reserves at about a third of a year's GDP, like businesses' bank balances in the 1830s (without the modifier about two GDPs). The country's credit limit takes a share of GDP instead."
+ zz_ef_business_cash_desc:0 "Obsolete: the buildings' cash cap is in the country's base values now. Removed at the start of a month."

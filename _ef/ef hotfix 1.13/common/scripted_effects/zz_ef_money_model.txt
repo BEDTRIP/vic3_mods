@@ -41,10 +41,11 @@ REPLACE_OR_CREATE:investement_pool_borrowing = {
 # a save that lost its delayed on_actions). var:zz_ef_week_alive lives 10
 # days and every step renews it.
 zz_ef_money_week_start = {
-	# Business cash at ~0.3 GDP (static_modifiers/zz_ef_business_cash.txt).
+	# Business cash at ~0.3 GDP: now in base_values (static_modifiers/
+	# zz_ef_business_cash.txt); the monthly modifier of 330ba50 goes.
 	if = {
-		limit = { NOT = { has_modifier = zz_ef_business_cash } }
-		add_modifier = { name = zz_ef_business_cash }
+		limit = { has_modifier = zz_ef_business_cash }
+		remove_modifier = zz_ef_business_cash
 	}
 	if = {
 		limit = {
@@ -81,6 +82,14 @@ zz_ef_money_week_probe_step = {
 
 zz_ef_money_model_step = {
 	set_variable = { name = zz_ef_week_alive value = yes days = 10 }
+	if = {
+		limit = { NOT = { has_variable = zz_ef_weeks_run } }
+		set_variable = { name = zz_ef_weeks_run value = 0 }
+	}
+	if = {
+		limit = { var:zz_ef_weeks_run < 100 }
+		change_variable = { name = zz_ef_weeks_run add = 1 }
+	}
 
 	# Gold parity re-anchor, once per change of what the money supply counts.
 	# The money supply is the engine's money now (treasury + businesses' cash +
@@ -274,7 +283,6 @@ zz_ef_money_model_step = {
 	zz_ef_money_window_roll = { F = cc_repay }
 	zz_ef_money_window_roll = { F = cc_int }
 	zz_ef_money_window_roll = { F = cc_net }
-	zz_ef_money_window_roll = { F = sp }
 	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
 	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
 	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
@@ -309,7 +317,6 @@ zz_ef_money_hook_receive = {
 		set_variable = { name = zz_ef_f_abr value = scope:abr }
 		set_variable = { name = zz_ef_f_leak value = zz_ef_leak_week }
 		zz_ef_pop_savings_step = yes
-		zz_ef_savings_spend_step = yes
 		zz_ef_cb_hume_step = yes
 		zz_ef_consumer_credit_step = yes
 		zz_ef_pop_extra_income_step = yes
@@ -320,7 +327,7 @@ zz_ef_money_hook_receive = {
 					gdp > 20000000
 				}
 			}
-			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|tr_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_tr_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]|sp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_sp')|0]|norm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_cash_norm')|0]"
+			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|tr_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_tr_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]|norm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_cash_norm')|0]"
 		}
 	}
 }
@@ -353,6 +360,18 @@ zz_ef_pop_savings_step = {
 	}
 	set_variable = { name = zz_ef_f_inflow value = zz_ef_v_f_leak }
 	change_variable = { name = zz_ef_f_inflow multiply = -1 }
+	# The first weeks of a game are the engine settling (run 14: Britain's
+	# treasury 21 -> 39M in the second week, read as pops spending 20M of
+	# savings they never had): no inflow while zz_ef_weeks_run < 3.
+	if = {
+		limit = {
+			OR = {
+				NOT = { has_variable = zz_ef_weeks_run }
+				var:zz_ef_weeks_run < 3
+			}
+		}
+		set_variable = { name = zz_ef_f_inflow value = 0 }
+	}
 	change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_inflow }
 
 	set_variable = { name = zz_ef_f_dep_in value = zz_ef_dep_in }
@@ -470,23 +489,9 @@ zz_ef_consumer_credit_step = {
 	}
 }
 
-# Pops spend their savings over the norm (1.10 evening; values file,
-# zz_ef_sav_spend): out of the savings now, paid as income next week through
-# the dependents' surcharge (zz_ef_pop_extra_income_step). Every country.
-zz_ef_savings_spend_step = {
-	set_variable = { name = zz_ef_f_sp value = 0 }
-	if = {
-		limit = {
-			has_variable = zz_ef_dependents
-			var:zz_ef_dependents > 0
-		}
-		set_variable = { name = zz_ef_f_sp value = zz_ef_sav_spend }
-		change_variable = { name = zz_ef_pop_savings subtract = var:zz_ef_f_sp }
-	}
-}
-
 # The dependents' surcharge for the coming week: the consumer credit's net
-# flow + the savings spent (zz_ef_cc_wage_add). Every country with dependents.
+# flow (zz_ef_cc_wage_add). Every country with dependents: without a CB it is
+# 0 and clears the surcharge of the savings spending tried in run 14.
 zz_ef_pop_extra_income_step = {
 	if = {
 		limit = {
