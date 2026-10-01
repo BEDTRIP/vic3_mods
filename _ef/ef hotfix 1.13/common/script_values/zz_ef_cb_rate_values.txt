@@ -62,20 +62,47 @@ zz_ef_cb_rate_ceiling = {
 }
 
 # Parts of the rule, as fractions (shown in the rule box tooltip).
-zz_ef_cb_rule_neutral = 0.025
+# 1.10 evening (the user, run 15): the CB reads the money system, not the
+# rating. Metal standards (the Bank of England's practice: the rate set by
+# its reserves): 3% + the cover term + the money growth term. Fiat (the Taylor
+# rule): 2.5% + inflation + 0.5 x (inflation - 2%). The rating and the
+# stability are the premium lenders ask of the GOVERNMENT (its bonds), not the
+# CB's rate: zz_ef_cb_rule_risk stays, outside the rule.
+zz_ef_cb_rule_neutral = {
+	value = 0.025
+	if = {
+		limit = { zz_ef_cb_rate_is_fiat = 0 }
+		value = 0.03
+	}
+}
 # EF.48 item 12 (1.10): the inflation from the money accounting (a year,
 # zz_ef_inflation in zz_ef_money_model_values.txt) replaces E&F's consumer
 # goods inflation x2.
 zz_ef_cb_rule_inflation = {
-	value = zz_ef_inflation
+	value = 0
 	if = {
 		limit = { zz_ef_cb_rate_is_fiat = 1 }
+		value = zz_ef_inflation
+		subtract = 0.02
+		multiply = 0.5
+		add = zz_ef_inflation
 		min = -0.2
-		max = 0.2
+		max = 0.3
 	}
-	else = {
+}
+# Metal standards: +0.5 pp per pp the money in circulation (M2) grows faster
+# than GDP in a year (zz_ef_circ_growth_year - zz_ef_gdp_growth_year),
+# -2..+3 pp. (Until the inflation from prices, the fiat rule's inflation is
+# this same gap -- not added twice.)
+zz_ef_cb_rule_money = {
+	value = 0
+	if = {
+		limit = { zz_ef_cb_rate_is_fiat = 0 }
+		value = zz_ef_circ_growth_year
+		subtract = zz_ef_gdp_growth_year
+		multiply = 0.5
 		min = -0.02
-		max = 0.06
+		max = 0.03
 	}
 }
 zz_ef_cb_rule_rating = {
@@ -134,22 +161,22 @@ zz_ef_cb_rule_risk = {
 	min = 0
 	max = 0.08
 }
+# Metal standards: our cover (the metal at parity against M2, normal 40%):
+# +1 pp per 10 pp under the norm (up to +5), -0.5 pp per 10 pp over it (down
+# to -2).
 zz_ef_cb_rule_cover = {
 	value = 0
 	if = {
 		limit = { zz_ef_cb_rate_is_fiat = 0 }
+		value = zz_ef_cover_normal
+		subtract = zz_ef_cb_cover
+		multiply = 0.1
 		if = {
-			limit = { central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent < 0.5 }
-			value = 0.02
+			limit = { zz_ef_cb_cover > zz_ef_cover_normal }
+			multiply = 0.5
 		}
-		else_if = {
-			limit = { central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent < 0.75 }
-			value = 0.01
-		}
-		else_if = {
-			limit = { central_bank_metal_reserves_state_to_ensure_the_conversion_pourcent > 1.25 }
-			value = -0.005
-		}
+		min = -0.02
+		max = 0.05
 	}
 }
 
@@ -165,7 +192,7 @@ zz_ef_cb_rate_rating_target = {
 		limit = { has_modifier = has_central_bank }
 		value = zz_ef_cb_rule_neutral
 		add = zz_ef_cb_rule_inflation
-		add = zz_ef_cb_rule_risk
+		add = zz_ef_cb_rule_money
 		add = zz_ef_cb_rule_cover
 		min = zz_ef_cb_rate_floor
 		max = zz_ef_cb_rate_ceiling
@@ -289,6 +316,10 @@ zz_ef_cb_rule_risk_pp = {
 }
 zz_ef_cb_rule_cover_pp = {
 	value = zz_ef_cb_rule_cover
+	multiply = 100
+}
+zz_ef_cb_rule_money_pp = {
+	value = zz_ef_cb_rule_money
 	multiply = 100
 }
 

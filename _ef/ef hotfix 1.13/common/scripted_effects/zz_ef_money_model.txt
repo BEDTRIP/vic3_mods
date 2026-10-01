@@ -82,6 +82,10 @@ zz_ef_money_week_probe_step = {
 
 zz_ef_money_model_step = {
 	set_variable = { name = zz_ef_week_alive value = yes days = 10 }
+	# Business cash: the sum over the buildings, once a week (run 15: the
+	# estimate from the credit limit -- credit - base - 1.7 x GDP -- swung by
+	# millions a week, M2 by +-30%).
+	set_variable = { name = zz_ef_bcash value = zz_ef_building_cash_sum }
 	if = {
 		limit = { NOT = { has_variable = zz_ef_weeks_run } }
 		set_variable = { name = zz_ef_weeks_run value = 0 }
@@ -115,21 +119,25 @@ zz_ef_money_model_step = {
 	# circulation at the historical parity (zz_ef_cover_normal); with the
 	# capacity x 2.5 the value starts at the parity. Older saves keep their
 	# re-anchored parity (versions <= 6) -- test with a new game.
-	# Twice: at the first step and 8 weeks later (zz_ef_metal_rescale_due),
-	# when the business cash has shrunk to its new reserve (zz_ef_business_cash)
-	# and pops' starting cash is in -- the money in circulation the 40% is
-	# measured against.
+	# Twice: at the first step against the money expected (at least 0.45 GDP
+	# -- run 15: at the first step the engine had not filled the buildings'
+	# cash yet, Russia's M2 was 2M, France's 0, and the metal was cut to
+	# nothing), and at week 12 against the money itself, if it is over 10% of
+	# GDP by then (else a week later).
 	if = {
 		limit = { NOT = { has_variable = zz_ef_parity_version } }
 		set_variable = { name = zz_ef_parity_version value = 7 }
-		set_variable = { name = zz_ef_metal_rescale_due value = 8 }
+		set_variable = { name = zz_ef_metal_rescale_due value = 11 }
 		zz_ef_metal_rescale_step = yes
 	}
 	else_if = {
 		limit = { has_variable = zz_ef_metal_rescale_due }
 		change_variable = { name = zz_ef_metal_rescale_due subtract = 1 }
 		if = {
-			limit = { var:zz_ef_metal_rescale_due <= 0 }
+			limit = {
+				var:zz_ef_metal_rescale_due <= 0
+				zz_ef_agg_m2_to_gdp > 0.1
+			}
 			remove_variable = zz_ef_metal_rescale_due
 			zz_ef_metal_rescale_step = yes
 		}
@@ -180,6 +188,9 @@ zz_ef_money_model_step = {
 		multiply = -1
 	}
 	add_treasury = var:zz_ef_f_cb_interest
+
+	# EF.48 item 5 (business credit; repayment in money, 1.10 evening).
+	zz_ef_business_credit_step = yes
 
 	# History rings (1.10, the user's M0..M3 -- var:zz_ef_agg0..3): a week ago
 	# (w1..4), 13 blocks of 4 weeks (q1..13, a year), 20 blocks of 13 weeks
@@ -265,7 +276,7 @@ zz_ef_money_model_step = {
 				gdp > 20000000
 			}
 		}
-		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m3')|0]|circ [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circulation')|0]|cbm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_money')|0]|abroad [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_foreign_assets')|0]|eng [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circ_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cbtgt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_credit_target')|0]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|2]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|bcash [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_building_cash')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_credit')|0]"
+		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m3')|0]|circ [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circulation')|0]|cbm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_money')|0]|abroad [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_foreign_assets')|0]|eng [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circ_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cbtgt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_credit_target')|0]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|2]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|bcash [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_building_cash')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_credit')|0]|rate [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_rate')|4]|rule [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|4]|r_cov [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_cover')|4]|r_mon [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_money')|4]|deprate [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_deposit_rate')|4]|normsh [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cash_norm_gdp')|3]|need [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool_need')|0]"
 	}
 
 	# The GUI bridge (gui/zz_ef_money_hook.gui): the budget's lines outside
@@ -327,7 +338,7 @@ zz_ef_money_hook_receive = {
 					gdp > 20000000
 				}
 			}
-			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|tr_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_tr_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]|norm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_cash_norm')|0]"
+			debug_log = "EFR|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ext [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext')|0]|leak [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_leak')|0]|savings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_savings')|0]|deposits [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_deposits')|0]|inflow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_inflow')|0]|dep_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_in')|0]|dep_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_out')|0]|dep_int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_dep_int')|0]|pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool')|0]|abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_abr')|0]|ext_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|metal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_metal')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|pool_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_pool_other')|0]|tr_other [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_tr_other')|0]|bc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bc_debt')|0]|cc_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_debt')|0]|cc_net [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cc_net')|0]|cc_wage [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cc_wage_add')|2]|dependents [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_dependents')|0]|d_tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_tc')|0]|tc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_tc_cash')|0]|norm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pop_cash_norm')|0]|bc_new [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bc_new')|0]|bc_paid [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bc_paid')|0]|svc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_bc_svc')|0]"
 		}
 	}
 }
@@ -613,10 +624,10 @@ zz_ef_metal_rescale_step = {
 				has_law = law_type:law_silver_standard
 				has_law = law_type:law_bimetallism_standard
 			}
-			zz_ef_cb_cover > 0
+			zz_ef_cb_cover_ref > 0
 		}
 		set_variable = { name = zz_ef_metal_rescale value = zz_ef_cover_normal }
-		change_variable = { name = zz_ef_metal_rescale divide = zz_ef_cb_cover }
+		change_variable = { name = zz_ef_metal_rescale divide = zz_ef_cb_cover_ref }
 		# every CB state, as E&F's gold_state_native_for_stockpile sums them
 		every_scope_state = {
 			limit = {
@@ -630,6 +641,62 @@ zz_ef_metal_rescale_step = {
 				limit = { has_variable = silver_state_1 }
 				change_variable = { name = silver_state_1 multiply = owner.var:zz_ef_metal_rescale }
 			}
+		}
+	}
+}
+
+# EF.48 item 5 -- business credit with repayment (the user, 1.10 evening:
+# "repayment in any case, the point is a realistic money turnover"). Until
+# now only values existed and the debt was never kept (always 0). Private
+# construction paid with the banks' borrowed money (the CB's credit and pops'
+# deposits, by their share of the pool) becomes the businesses' debt; due a
+# week: 1/260 of it (5 years) + interest (key + 3 pp). It is paid from the
+# buildings' contributions to the pool -- real money, business cash -> pool,
+# out of M1. When the contributions fall short, zz_ef_debt_service raises the
+# owners' contribution share (profits go to the bank instead of dividends),
+# a step a week up to +0.3; when they cover the due by 20% it steps down.
+# What is still unpaid is added to the debt.
+zz_ef_business_credit_step = {
+	if = {
+		limit = { NOT = { has_variable = zz_ef_bc_debt } }
+		set_variable = { name = zz_ef_bc_debt value = 0 }
+	}
+	if = {
+		limit = { NOT = { has_variable = zz_ef_bc_svc } }
+		set_variable = { name = zz_ef_bc_svc value = 0 }
+	}
+	set_variable = { name = zz_ef_f_bc_new value = zz_ef_bc_new }
+	set_variable = { name = zz_ef_f_bc_int value = zz_ef_bc_interest }
+	set_variable = { name = zz_ef_f_bc_due value = zz_ef_bc_due }
+	set_variable = { name = zz_ef_f_bc_paid value = zz_ef_bc_paid }
+	change_variable = { name = zz_ef_bc_debt add = var:zz_ef_f_bc_new }
+	change_variable = { name = zz_ef_bc_debt add = var:zz_ef_f_bc_int }
+	change_variable = { name = zz_ef_bc_debt subtract = var:zz_ef_f_bc_paid }
+	if = {
+		limit = { var:zz_ef_bc_debt < 0 }
+		set_variable = { name = zz_ef_bc_debt value = 0 }
+	}
+	# the controller of the owners' contribution share
+	if = {
+		limit = {
+			var:zz_ef_f_bc_due > zz_ef_v_f_contrib
+			var:zz_ef_bc_svc < zz_ef_bc_svc_max
+		}
+		change_variable = { name = zz_ef_bc_svc add = 1 }
+	}
+	else_if = {
+		limit = {
+			var:zz_ef_bc_svc > 0
+			zz_ef_bc_contrib_slack > 0
+		}
+		change_variable = { name = zz_ef_bc_svc subtract = 1 }
+	}
+	remove_modifier = zz_ef_debt_service
+	if = {
+		limit = { var:zz_ef_bc_svc > 0 }
+		add_modifier = {
+			name = zz_ef_debt_service
+			multiplier = var:zz_ef_bc_svc
 		}
 	}
 }

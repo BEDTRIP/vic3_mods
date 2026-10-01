@@ -623,13 +623,15 @@ def nested(lang):
         if acc == B:
             L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель {money('zz_ef_cb_credit_target')} = "
                       f"ВВП × {sv('zz_ef_cb_credit_share', '%0')} от 50% при ставке {sv('zz_ef_money_rate', '%1')}; "
-                      f"занимают и гасят 1.15% разрыва в неделю (~5% в месяц). Пул — {sv('zz_ef_pool_months', '1')} мес. "
-                      f"взносов. Вклады — наличные населения сверх нормы (12% ВВП).")
+                      f"1.15% разрыва в неделю (~5% в месяц), но занимают только недостачу пула до потребности "
+                      f"{money('zz_ef_pool_need')} (3 месяца выплат пула), а свободные деньги сверх неё идут на погашение. "
+                      f"Пул — {sv('zz_ef_pool_months', '1')} мес. взносов.")
                      if ru else
                      (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}; target {money('zz_ef_cb_credit_target')} = "
                       f"GDP × {sv('zz_ef_cb_credit_share', '%0')} of 50% at a rate of {sv('zz_ef_money_rate', '%1')}; "
-                      f"they borrow and repay 1.15% of the gap a week (~5% a month). The pool holds "
-                      f"{sv('zz_ef_pool_months', '1')} months of contributions. Deposits are pops' cash over the norm (12% of GDP)."))
+                      f"1.15% of the gap a week (~5% a month), but they borrow only what the pool lacks of its need "
+                      f"{money('zz_ef_pool_need')} (3 months of its payouts), and idle money over it repays the CB. The "
+                      f"pool holds {sv('zz_ef_pool_months', '1')} months of contributions."))
         if acc == C:
             L.append((f"#b Резервы металла: {sv('zz_ef_cb_metal')} {gold}#! (за неделю {sv('zz_ef_v_f_hume', 'D+=')}); "
                       f"чистый поток с заграницей {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; курс {sv('money_value_0', '3')} "
@@ -641,19 +643,23 @@ def nested(lang):
                       f"metal per {cur}; cover at parity {sv('zz_ef_cb_cover', '%0')}. Currency-good stock "
                       f"{sv('money_supply_state')} units."))
         if acc == B:
-            L.append((f"#b Кредит бизнесу (учёт): долг предприятий {money('zz_ef_bc_debt')}#! "
+            L.append((f"#b Кредит бизнесу: долг предприятий {money('zz_ef_bc_debt')}#! "
                       f"({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП). Частная стройка за неделю оплачена заёмными "
                       f"деньгами банков на {sv('zz_ef_bc_borrowed_share', '%0')} (кредит ЦБ и вклады к пулу): новый "
                       f"долг {money('zz_ef_v_f_bc_new')}; проценты {money('zz_ef_v_f_bc_int')} (ключевая + 3 п.п.), "
                       f"срок 5 лет; из взносов зданий в счёт долга {money('zz_ef_v_f_bc_paid')} "
-                      f"({sv('zz_ef_bc_service_share', '%0')} взносов). Деньги не двигаются — только учёт.")
+                      f"({sv('zz_ef_bc_service_share', '%0')} взносов) — деньги из касс в пул. Не хватает взносов — "
+                      f"владельцы отдают больше дохода в пул вместо дивидендов: сейчас +{sv('zz_ef_v_bc_svc', '0')}% "
+                      f"доли взносов (до +30%).")
                      if ru else
-                     (f"#b Business credit (accounting): businesses' debt {money('zz_ef_bc_debt')}#! "
+                     (f"#b Business credit: businesses' debt {money('zz_ef_bc_debt')}#! "
                       f"({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP). This week's private construction was paid with "
                       f"the banks' borrowed money for {sv('zz_ef_bc_borrowed_share', '%0')} (CB credit and deposits "
                       f"to the pool): new debt {money('zz_ef_v_f_bc_new')}; interest {money('zz_ef_v_f_bc_int')} (key "
                       f"+ 3 pp), term 5 years; counted from the buildings' contributions {money('zz_ef_v_f_bc_paid')} "
-                      f"({sv('zz_ef_bc_service_share', '%0')} of them). No money moves — accounting only."))
+                      f"({sv('zz_ef_bc_service_share', '%0')} of them) — money from business cash to the pool. When "
+                      f"they fall short, owners put more income into the pool instead of dividends: now "
+                      f"+{sv('zz_ef_v_bc_svc', '0')}% of the contribution share (up to +30%)."))
         if acc == N:
             L.append((f"#b Потребительский кредит: долг {money('zz_ef_cc_debt')}#! "
                       f"({sv('zz_ef_cc_debt_to_gdp', '%1')} ВВП); предел 4 месяца дохода {money('zz_ef_cc_limit')}, "
@@ -678,17 +684,21 @@ def nested(lang):
                       f"неделю) — во вкладах {money('zz_ef_pop_deposits')}, на руках {money('zz_ef_pop_cash')}. "
                       f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, проценты по вкладам "
                       f"{sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; внесено {money('zz_ef_v_f_dep_in')}, снято "
-                      f"{money('zz_ef_v_f_dep_out')}. Норма наличных на руках — {money('zz_ef_pop_cash_norm')} (12% ВВП, "
-                      f"~1.5 месяца дохода): всё сверх неё сразу идёт во вклады, ниже — население снимает 25% "
-                      f"недостачи в неделю. Ставка по вкладам {sv('zz_ef_deposit_rate', '%1')}.")
+                      f"{money('zz_ef_v_f_dep_out')}. Норма наличных на руках — {money('zz_ef_pop_cash_norm')} "
+                      f"({sv('zz_ef_cash_norm_gdp', '%0')} ВВП: 20% при ставке по вкладам 0%, 12% при 3%, не ниже 6%); "
+                      f"сверх неё население вносит во вклады, ниже — снимает, по 10% разрыва в неделю. Ставка по "
+                      f"вкладам {sv('zz_ef_deposit_rate', '%1')} = ключевая − маржа банков {sv('zz_ef_deposit_margin', '%1')} "
+                      f"(1.5 п.п. + 1 п.п. за каждую потребность пула свободных денег).")
                      if ru else
                      (f"#b Savings: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} this "
                       f"week) — in deposits {money('zz_ef_pop_deposits')}, at hand {money('zz_ef_pop_cash')}. This "
                       f"week: dropped out of the engine's money {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, deposit "
                       f"interest {sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; deposited {money('zz_ef_v_f_dep_in')}, "
-                      f"withdrawn {money('zz_ef_v_f_dep_out')}. Cash norm at hand {money('zz_ef_pop_cash_norm')} (12% of "
-                      f"GDP, ~1.5 months of income): all over it goes to deposits at once, under it pops withdraw "
-                      f"25% of the gap a week. Deposit rate {sv('zz_ef_deposit_rate', '%1')}."))
+                      f"withdrawn {money('zz_ef_v_f_dep_out')}. Cash norm at hand {money('zz_ef_pop_cash_norm')} "
+                      f"({sv('zz_ef_cash_norm_gdp', '%0')} of GDP: 20% at a 0% deposit rate, 12% at 3%, at least 6%); "
+                      f"over it pops deposit, under it they withdraw, 10% of the gap a week. Deposit rate "
+                      f"{sv('zz_ef_deposit_rate', '%1')} = key − the banks' margin {sv('zz_ef_deposit_margin', '%1')} "
+                      f"(1.5 pp + 1 pp per need of idle money in the pool)."))
         d[f"zz_ef_ms_tt_{acc}"] = "\\n".join(L)
     return d
 

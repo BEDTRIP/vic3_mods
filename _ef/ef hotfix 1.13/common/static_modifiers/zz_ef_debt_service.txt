@@ -1,0 +1,20 @@
+#############################################
+# EF.48 item 5 (the user, 1.10 evening): businesses repay their bank credit in
+# money. Applied weekly by zz_ef_business_credit_step
+# (scripted_effects/zz_ef_money_model.txt) with multiplier = var:zz_ef_bc_svc
+# (0..30): +0.01 of the investment pool contribution share of every stratum
+# that contributes in base_values, per step -- profits go to the bank instead
+# of dividends while the buildings' contributions do not cover the week's due.
+#############################################
+
+zz_ef_debt_service = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
+	state_machinists_investment_pool_contribution_add = 0.01
+	state_farmers_investment_pool_contribution_add = 0.01
+	state_engineers_investment_pool_contribution_add = 0.01
+	state_bureaucrats_investment_pool_contribution_add = 0.01
+	state_shopkeepers_investment_pool_contribution_add = 0.01
+	state_clergymen_investment_pool_contribution_add = 0.01
+	state_aristocrats_investment_pool_contribution_add = 0.01
+	state_capitalists_investment_pool_contribution_add = 0.01
+}

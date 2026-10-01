@@ -38,13 +38,17 @@ NEU = f"[{SV}('zz_ef_cb_rule_neutral_pp')|1]"
 PIN = f"[{SV}('zz_ef_cb_rule_inflation_pp')|+1]"
 PRI = f"[{SV}('zz_ef_cb_rule_risk_pp')|+1]"
 PCO = f"[{SV}('zz_ef_cb_rule_cover_pp')|+1]"
+PMO = f"[{SV}('zz_ef_cb_rule_money_pp')|+1]"
+COV = f"[{SV}('zz_ef_cb_cover')|%0]"
 
 RU = {
     "concept_zz_ef_policy_rule_rate": "Ставка по правилу",
     "concept_zz_ef_policy_rule_rate_desc": (
-        f"{RR} — ставка, которую {CB} рассчитывает сам, по правилу: нейтральная реальная ставка 2.5% + "
-        f"{INF} (потребительские товары, за год) + премия за риск от {CR} (0.6 п.п. за балл ниже 10, до 6 п.п.) + "
-        "поправка на металлическое покрытие валюты (ниже 75% — +1 п.п., ниже 50% — +2, выше 125% — −0.5). "
+        f"{RR} — ставка, которую {CB} рассчитывает сам, по денежной системе. Металлический стандарт — как Банк "
+        "Англии XIX века, по резервам: 3% + поправка на покрытие (металл по паритету к M2, норма 40%: +1 п.п. за "
+        "каждые 10 п.п. ниже нормы, до +5; −0.5 п.п. за 10 п.п. выше, до −2) + поправка на рост денег (+0.5 п.п. "
+        f"за каждый п.п., на который M2 за год растёт быстрее ВВП, от −2 до +3). Фиатный — правило Тейлора: 2.5% + {INF} + "
+        f"0.5 × ({INF} − 2%). {CR} в ставку центробанка не входит: это премия, которую требуют с правительства. "
         "Коридор: металлический стандарт — 2–12%, фиатный или без денежной системы — 0.5–25%. "
         "Страна без центрального банка — 6.5%.\\n\\n"
         f"Фактическая {KR} идёт к ставке по правилу с {DA} правительства (до ±2 п.п.). Разница между "
@@ -67,8 +71,8 @@ RU = {
         "До 10 баллов дают показатели экономики и государства (подробно — «Посмотреть кредитный рейтинг» выше), "
         "до +2.5 — институт центрального банка (0.5 за уровень). Взятые кредиты умножают рейтинг на 0.75, "
         "долгая война и большой госдолг снижают его ещё.\\n\\n"
-        f"Рейтинг задаёт премию за риск в {RR}: #v 0.6 п.п.#! за каждый балл ниже 10, до 6 п.п. "
-        "Страна без центробанка держит 6.5%."
+        "Рейтинг — это премия, которую кредиторы требуют с правительства (его облигации и займы): #v 0.6 п.п.#! "
+        f"за каждый балл ниже 10, до 6 п.п., плюс стабильность — всего сейчас {PRI} п.п. В {RR} он не входит."
     ),
     "zz_ef_rate_box_target": "Ставка по правилу",
     "zz_ef_rate_box_target_value": RULE,
@@ -76,10 +80,10 @@ RU = {
     "zz_ef_rate_box_target_value_down": f"#P {RULE}#!",
     "zz_ef_rate_box_target_tt": (
         f"{RR}: #v {RULE}#!\\n"
-        f"  нейтральная реальная ставка: {NEU} п.п.\\n"
-        f"  {INF}: {PIN} п.п.\\n"
-        f"  премия за риск ({CR} {NOTE}): {PRI} п.п.\\n"
-        f"  металлическое покрытие: {PCO} п.п.\\n"
+        f"  базовая ставка: {NEU} п.п.\\n"
+        f"  {INF} (фиат): {PIN} п.п.\\n"
+        f"  покрытие металлом {COV} (норма 40%): {PCO} п.п.\\n"
+        f"  рост M2 быстрее ВВП: {PMO} п.п.\\n"
         "В коридоре стандарта: металл 2–12%, фиат 0.5–25%. Страна без центробанка — 6.5%. "
         f"{DA} на неё не влияет.\\n\\n"
         f"Текущая {KR}: {CUR}. Правило минус ставка: #v {GAP} п.п.#! "
@@ -129,14 +133,23 @@ RU = {
     "zz_ef_business_cash_desc": (
         "Устаревший: потолок кассы зданий теперь в базовых значениях страны. Снимается сам в начале месяца."
     ),
+    "zz_ef_debt_service": "Погашение кредитов бизнеса",
+    "zz_ef_debt_service_desc": (
+        "Взносы зданий в инвестиционный пул не покрывают недельный платёж по банковскому кредиту бизнеса "
+        "(1/260 долга + проценты): владельцы отдают в пул большую долю дохода вместо дивидендов. Растёт на 0.01 "
+        "в неделю, пока не хватает, снижается, когда взносы покрывают платёж с запасом 20%."
+    ),
 }
 
 EN = {
     "concept_zz_ef_policy_rule_rate": "Policy Rule Rate",
     "concept_zz_ef_policy_rule_rate_desc": (
-        f"The {RR} is the rate the {CB} computes on its own, by rule: a neutral real rate of 2.5% + "
-        f"{INF} (consumer goods, per year) + a risk premium from the {CR} (0.6 pp per point below 10, up to 6 pp) + "
-        "a metal cover adjustment (below 75%: +1 pp, below 50%: +2, above 125%: −0.5). "
+        f"The {RR} is the rate the {CB} computes on its own from the money system. Metal standards, like the Bank "
+        "of England in the 19th century, by its reserves: 3% + a cover term (metal at parity against M2, normal 40%: "
+        "+1 pp per 10 pp under the norm, up to +5; −0.5 pp per 10 pp over it, down to −2) + a money growth term "
+        "(+0.5 pp per pp M2 grows faster than GDP in a year, −2 to +3). Fiat, the Taylor rule: 2.5% + "
+        f"{INF} + 0.5 × ({INF} − 2%). The {CR} is not in the central bank's rate: it is the premium lenders ask "
+        "of the government. "
         "Corridor: metal standards 2–12%, fiat or no monetary system 0.5–25%. "
         "A country without a central bank: 6.5%.\\n\\n"
         f"The actual {KR} moves towards the rule rate plus the government's {DA} (up to ±2 pp). The gap "
@@ -159,8 +172,8 @@ EN = {
         "Up to 10 points come from the economy and the state (details under \\\"View credit rating\\\" above), "
         "up to +2.5 from the central bank institution (0.5 per level). Taking loans multiplies the rating by 0.75, "
         "a long war and heavy debt lower it further.\\n\\n"
-        f"The rating sets the risk premium in the {RR}: #v 0.6 pp#! for each point below 10, up to 6 pp. "
-        "A country without a central bank stays at 6.5%."
+        "The rating is the premium lenders ask of the government (its bonds and loans): #v 0.6 pp#! for each "
+        f"point below 10, up to 6 pp, plus stability — {PRI} pp now. It is not in the {RR}."
     ),
     "zz_ef_rate_box_target": "Policy rule rate",
     "zz_ef_rate_box_target_value": RULE,
@@ -168,10 +181,10 @@ EN = {
     "zz_ef_rate_box_target_value_down": f"#P {RULE}#!",
     "zz_ef_rate_box_target_tt": (
         f"{RR}: #v {RULE}#!\\n"
-        f"  neutral real rate: {NEU} pp\\n"
-        f"  {INF}: {PIN} pp\\n"
-        f"  risk premium ({CR} {NOTE}): {PRI} pp\\n"
-        f"  metal cover: {PCO} pp\\n"
+        f"  base rate: {NEU} pp\\n"
+        f"  {INF} (fiat): {PIN} pp\\n"
+        f"  metal cover {COV} (normal 40%): {PCO} pp\\n"
+        f"  M2 growing faster than GDP: {PMO} pp\\n"
         "Within the standard's corridor: metal 2–12%, fiat 0.5–25%. Without a central bank: 6.5%. "
         f"The {DA} does not change it.\\n\\n"
         f"Current {KR}: {CUR}. Rule minus rate: #v {GAP} pp#! "
@@ -220,6 +233,13 @@ EN = {
     "zz_ef_business_cash": "Money supply: business cash",
     "zz_ef_business_cash_desc": (
         "Obsolete: the buildings' cash cap is in the country's base values now. Removed at the start of a month."
+    ),
+    "zz_ef_debt_service": "Business loan repayment",
+    "zz_ef_debt_service_desc": (
+        "The buildings' contributions to the investment pool do not cover the week's payment on the businesses' "
+        "bank credit (1/260 of the debt + interest): owners put a larger share of their income into the pool "
+        "instead of dividends. Grows by 0.01 a week while short, falls when the contributions cover the payment "
+        "with 20% to spare."
     ),
 }
 assert set(RU) == set(EN)

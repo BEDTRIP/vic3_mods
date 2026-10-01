@@ -69,12 +69,30 @@ zz_ef_treasury = {
 # Soft Econ Adjustments, zzz_MoG_SEA_def.txt, sets 10000 / 0.01 in this
 # playset, vanilla 100000 / 0.5). The cash part (the 1838 save: equal to the
 # sum of the buildings' cash_reserves):
-zz_ef_building_cash = {
+zz_ef_building_cash_estimate = {
 	value = credit
 	subtract = define:NEconomy|COUNTRY_MIN_CREDIT_BASE
 	subtract = {
 		value = gdp
 		multiply = define:NEconomy|COUNTRY_MIN_CREDIT_SCALED
+	}
+	min = 0
+}
+# Since run 15 (1.10 evening) the sum over the buildings, kept weekly in
+# var:zz_ef_bcash by the step (the estimate above swung by millions a week
+# once the GDP share of the credit limit became 1.7); the estimate until the
+# first step.
+zz_ef_building_cash_sum = {
+	value = 0
+	every_scope_building = {
+		add = cash_reserves_available
+	}
+}
+zz_ef_building_cash = {
+	value = zz_ef_building_cash_estimate
+	if = {
+		limit = { has_variable = zz_ef_bcash }
+		value = var:zz_ef_bcash
 	}
 	min = 0
 }
@@ -180,19 +198,54 @@ zz_ef_cb_credit_target = {
 	multiply = zz_ef_cb_credit_share
 	multiply = zz_ef_cb_cover_credit_mult
 }
-# Borrowed from the central bank this week (the debt under its target).
+# What the banks need in the pool (1.10 evening, run 15: the pool piled up
+# to 0.9 GDP while the banks kept borrowing from the CB): 3 months of what it
+# pays out -- the transfer for private construction or the contributions,
+# whichever is larger, at least 0.1% of GDP a week.
+zz_ef_pool_need = {
+	value = zz_ef_v_f_transfer
+	min = zz_ef_v_f_contrib
+	min = {
+		value = gdp
+		divide = 1000
+	}
+	multiply = 13
+}
+# Pool over its need, in needs (0 = no idle money).
+zz_ef_pool_idle = {
+	value = 0
+	if = {
+		limit = { zz_ef_pool_need > 0 }
+		value = investment_pool
+		divide = zz_ef_pool_need
+		subtract = 1
+	}
+	min = 0
+}
+# Borrowed from the central bank this week: the debt under its target, and
+# only what the pool lacks of its need -- idle deposits are lent first.
 zz_ef_cb_borrow = {
 	value = zz_ef_cb_credit_target
 	subtract = zz_ef_bank_cb_debt
 	multiply = zz_ef_borrow_speed
+	max = {
+		value = zz_ef_pool_need
+		subtract = investment_pool
+	}
 	min = 0
 }
-# Repaid this week (the debt over its target), not more than the debt and
-# the pool holds.
+# Repaid this week: the debt over its target, or the pool's idle money (the
+# banks give back the CB's credit they do not need), not more than the debt
+# and the pool holds.
 zz_ef_cb_repay = {
 	value = zz_ef_bank_cb_debt
 	subtract = zz_ef_cb_credit_target
 	multiply = zz_ef_repay_speed
+	min = {
+		value = investment_pool
+		subtract = zz_ef_pool_need
+		multiply = zz_ef_repay_speed
+	}
 	min = 0
 	max = zz_ef_bank_cb_debt
 	max = {
@@ -583,25 +636,41 @@ zz_ef_pop_start_savings = {
 	min = 0
 }
 # ---- pops' cash at hand and deposits (the user, 1.10 evening, run 14) -------
-# Cash at hand is held at a norm -- 12% of a year's GDP, ~1.5 months of income
-# (Britain's coin and notes in the 1830s ~11% of GDP); everything over it goes
-# to bank deposits at once, under it pops withdraw 25% of the gap a week.
+# Cash at hand is held at a norm -- by the deposit rate, 12% of a year's GDP
+# at 3% (Britain's coin and notes in the 1830s ~11% of GDP); over it pops
+# deposit, under it they withdraw (zz_ef_dep_in / zz_ef_dep_out).
 # Run 14 tried spending the excess as income (the dependents' surcharge): pops
 # in the engine hold no money, what they did not spend vanished back into the
 # savings -- a perpetual surcharge (Britain ~71M a year at a GDP of 58M), the
 # savings kept growing. Deposits are engine money in the pool, which builds.
-zz_ef_cash_norm_gdp = 0.12
-zz_ef_withdraw_speed = 0.25
+# By the deposit rate (the user, 1.10 evening: not an iron 12%): 20% of GDP
+# at 0%, 12% at 3%, at least 6%; pops move 10% of the gap a week each way.
+zz_ef_cash_norm_gdp = {
+	value = zz_ef_deposit_rate
+	multiply = -2.667
+	add = 0.2
+	min = 0.06
+	max = 0.2
+}
+zz_ef_cash_speed = 0.1
 zz_ef_pop_cash_norm = {
 	value = gdp
 	min = 0
 	multiply = zz_ef_cash_norm_gdp
 }
 # Deposit rate: the key rate - 1.5 pp, at least 0.5% (the banks' margin).
+# The banks' margin (1.10 evening, the user: cash and deposits move with the
+# rates): 1.5 pp, + 1 pp per need of idle money in the pool -- banks with
+# money they cannot lend pay less for more of it.
+zz_ef_deposit_margin = {
+	value = zz_ef_pool_idle
+	multiply = 0.01
+	add = 0.015
+}
 zz_ef_deposit_rate = {
 	value = zz_ef_money_rate
-	subtract = 0.015
-	min = 0.005
+	subtract = zz_ef_deposit_margin
+	min = 0
 }
 zz_ef_pop_savings = {
 	value = 0
@@ -615,18 +684,19 @@ zz_ef_pop_cash = {
 	value = zz_ef_pop_savings
 	subtract = zz_ef_pop_deposits
 }
-# Deposited this week: all the cash over the norm.
+# Deposited this week: 10% of the cash over the norm.
 zz_ef_dep_in = {
 	value = zz_ef_pop_cash
 	subtract = zz_ef_pop_cash_norm
+	multiply = zz_ef_cash_speed
 	min = 0
 }
-# Withdrawn: 25% of the cash under the norm, not more than the deposits and
+# Withdrawn: 10% of the cash under the norm, not more than the deposits and
 # the pool hold.
 zz_ef_dep_out = {
 	value = zz_ef_pop_cash_norm
 	subtract = zz_ef_pop_cash
-	multiply = zz_ef_withdraw_speed
+	multiply = zz_ef_cash_speed
 	min = 0
 	max = {
 		value = zz_ef_pop_deposits
@@ -762,6 +832,33 @@ zz_ef_cb_cover = {
 		value = national_capacity
 		divide = zz_ef_capacity_per_metal
 		divide = money_supply
+		divide = var:money_value_target_1
+	}
+}
+# The cover the first rescale aims at (version 7): against the money in
+# circulation, but at least 0.45 GDP -- the money expected once the buildings'
+# cash is in (0.12 cash at hand + ~0.33 business cash).
+zz_ef_rescale_money = {
+	value = money_supply
+	if = {
+		# the first rescale (the second one comes after the due var is gone)
+		limit = { has_variable = zz_ef_metal_rescale_due }
+		value = gdp
+		multiply = 0.45
+		min = money_supply
+	}
+	min = 1
+}
+zz_ef_cb_cover_ref = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		value = national_capacity
+		divide = zz_ef_capacity_per_metal
+		divide = zz_ef_rescale_money
 		divide = var:money_value_target_1
 	}
 }
@@ -984,7 +1081,8 @@ zz_ef_v_dependents = {
 	if = { limit = { has_variable = zz_ef_dependents } value = var:zz_ef_dependents }
 }
 
-# ---- EF.48 item 5: business credit, accounting only (the user, 1.10) -------
+# ---- EF.48 item 5: business credit (the user, 1.10; repaid in money 1.10
+# evening -- scripted_effects/zz_ef_money_model.txt, zz_ef_business_credit_step)
 # One debt per country (var:zz_ef_bc_debt). Private construction is paid from
 # the pool (the transfer to the treasury); the part of it that was the banks'
 # borrowed money -- the CB's credit and pops' deposits, by their share of the
@@ -1050,6 +1148,22 @@ zz_ef_bc_debt_to_gdp = {
 		value = zz_ef_bc_debt
 		divide = gdp
 	}
+}
+# The controller of zz_ef_debt_service (steps of +0.01 of every stratum's
+# contribution share, at most 30): steps down when the contributions cover
+# the due by 20%.
+zz_ef_bc_svc_max = 30
+zz_ef_bc_contrib_slack = {
+	value = zz_ef_v_f_contrib
+	subtract = {
+		value = 0
+		if = { limit = { has_variable = zz_ef_f_bc_due } value = var:zz_ef_f_bc_due }
+		multiply = 1.2
+	}
+}
+zz_ef_v_bc_svc = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bc_svc } value = var:zz_ef_bc_svc }
 }
 # Share of the contributions that went to debt service this week.
 zz_ef_bc_service_share = {
