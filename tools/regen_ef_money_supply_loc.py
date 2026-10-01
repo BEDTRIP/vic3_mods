@@ -508,7 +508,7 @@ widget = {{
 				}}
 				state = {{
 					trigger_when = "[Scope.IsSet]"
-					on_finish = "[GetScriptedGui('zz_ef_money_hook_sg').Execute( GuiScope.SetRoot( Country.MakeScope ).AddScope( 'ext', MakeScopeValue( {ext} ) ).AddScope( 'abr', MakeScopeValue( {abr} ) ).End )]"
+					on_finish = "[GetScriptedGui('zz_ef_money_hook_sg').Execute( GuiScope.SetRoot( Country.MakeScope ).AddScope( 'ext', MakeScopeValue( {ext} ) ).AddScope( 'abr', MakeScopeValue( {abr} ) ){probes}.End )]"
 				}}
 			}}
 		}}
@@ -517,10 +517,27 @@ widget = {{
 """
 
 
+# Engine values the GUI alone sees (docs/data_types, dump_data_types 1.10 night), handed to the receiver
+# for the weekly log (var:zz_ef_g_<key>): trade, ownership abroad, the pool's change, the government's rate.
+PROBES = [
+    ("imp", "Country.GetTotalImportedAmount"),
+    ("exp", "Country.GetTotalExportedAmount"),
+    ("surplus", "Country.GetMarket.GetTradeSurplus"),
+    ("fown", "Country.GetForeignOwnedGDP"),
+    ("aown", "Country.GetGDPOwnedInForeignCountries"),
+    ("poolchg", "Country.GetInvestmentPoolChange"),
+    ("pcons", "Country.GetPrivateConstructionGoodsExpenses"),
+    ("grate", "Country.GetYearlyInterestRate"),
+    ("maxcred", "Country.GetMaxCredit"),
+    ("wgdp", "Country.GetWeeklyGDP"),
+]
+
+
 def write_hook():
     g = os.path.join(HOTFIX, "gui", "zz_ef_money_hook.gui")
+    probes = "".join(f".AddScope( 'g_{k}', MakeScopeValue( {fn} ) )" for k, fn in PROBES)
     with open(g, "w", encoding="utf-8", newline="\n") as f:
-        f.write(HOOK_GUI.format(ext=ext_expr(), abr=abr_expr()))
+        f.write(HOOK_GUI.format(ext=ext_expr(), abr=abr_expr(), probes=probes))
     w = os.path.join(HOTFIX, "gui", "scripted_widgets", "zz_ef_money_hook.txt")
     os.makedirs(os.path.dirname(w), exist_ok=True)
     with open(w, "w", encoding="utf-8-sig", newline="\n") as f:

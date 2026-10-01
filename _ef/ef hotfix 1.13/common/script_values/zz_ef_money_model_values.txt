@@ -2201,3 +2201,46 @@ zz_ef_gold_per_unit = {
 		multiply = silver_to_gold_rate
 	}
 }
+
+# ---- engine probes from the GUI bridge (dump_data_types, 1.10 night): trade, ownership
+# abroad, the pool's change, the government's rate -- the weekly log only, for now.
+zz_ef_v_g_imp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_imp } value = var:zz_ef_g_imp }
+}
+zz_ef_v_g_exp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_exp } value = var:zz_ef_g_exp }
+}
+zz_ef_v_g_surplus = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_surplus } value = var:zz_ef_g_surplus }
+}
+zz_ef_v_g_fown = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_fown } value = var:zz_ef_g_fown }
+}
+zz_ef_v_g_aown = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_aown } value = var:zz_ef_g_aown }
+}
+zz_ef_v_g_poolchg = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_poolchg } value = var:zz_ef_g_poolchg }
+}
+zz_ef_v_g_pcons = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_pcons } value = var:zz_ef_g_pcons }
+}
+zz_ef_v_g_grate = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_grate } value = var:zz_ef_g_grate }
+}
+zz_ef_v_g_maxcred = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_maxcred } value = var:zz_ef_g_maxcred }
+}
+zz_ef_v_g_wgdp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_g_wgdp } value = var:zz_ef_g_wgdp }
+}
