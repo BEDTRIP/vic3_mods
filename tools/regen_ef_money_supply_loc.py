@@ -85,13 +85,14 @@ def main_text(lang, c):
     cur, sv, money, delta, tt = ctx(c)
     gold = "@gold!"
     ru = lang == "russian"
-    # The user's aggregates (1.10 day): M0 = treasury + CB, M1 = + banks, M2 = + businesses and pops' savings
+    # The user's aggregates (1.10 day): M0 = treasury, M1 = + banks, M2 = + businesses and pops' savings
     # at hand, M3 = + claims on abroad. The currency's value and the inflation read the money in circulation
-    # (M2 - M0).
+    # (M2 - M0). The CB's metal and currency good are reserves -- the cover, not money (1.10 evening, run 10:
+    # in M0 they counted every payment abroad twice); shown on their own line under M3.
     if ru:
         L = dict(title="Денежная масса", total="Всего (M3)", week="за неделю",
-                 m0="M0 = казна + центральный банк", tr="Казна", cb="Центральный банк",
-                 cbf="металл по паритету {0}, товар-валюта {1}; покрытие {2}",
+                 m0="M0 = казна", tr="Казна", cb="Резервы ЦБ — покрытие валюты, не деньги",
+                 cbf="металл по паритету {0}, товар-валюта {1}; покрытие {2}; выпущено ЦБ (долг банков) {3}",
                  m1="M1 = M0 + банки", bank="Средства банков (пул)", dep="в т.ч. вклады населения",
                  m2="M2 = M1 + предприятия и население", bld="Касса предприятий", tc="из них торговые центры",
                  cash="Накопления населения на руках", savall="всего накоплений {0}, во вкладах {1}",
@@ -104,8 +105,8 @@ def main_text(lang, c):
                  dyn="месяц {0}, год {1}, 5 лет {2}")
     else:
         L = dict(title="Money Supply", total="Total (M3)", week="this week",
-                 m0="M0 = treasury + central bank", tr="Treasury", cb="Central bank",
-                 cbf="metal at parity {0}, currency good {1}; cover {2}",
+                 m0="M0 = treasury", tr="Treasury", cb="CB reserves — the currency's cover, not money",
+                 cbf="metal at parity {0}, currency good {1}; cover {2}; issued by the CB (banks' debt) {3}",
                  m1="M1 = M0 + banks", bank="Bank funds (the pool)", dep="of it pops' deposits",
                  m2="M2 = M1 + businesses and pops", bld="Business cash", tc="of it trade centres",
                  cash="Pops' savings at hand", savall="all savings {0}, in deposits {1}",
@@ -129,8 +130,6 @@ def main_text(lang, c):
         f"{L['total']}: #p {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')}",
         f" {L['m0']}: #T {money('zz_ef_agg_m0')}#!{ing('zz_ef_agg_m0_gold')} ({dyn(0)})",
         f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#! ({delta('zz_ef_v_d_treasury')})",
-        f"  -> {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#! ({delta('zz_ef_v_d_cbm')}; "
-        + L["cbf"].format(money("zz_ef_cb_metal_money"), money("money_supply_state"), sv("zz_ef_cb_cover", "%0")) + ")",
         f" {L['m1']}: #T {money('zz_ef_agg_m1')}#!{ing('zz_ef_agg_m1_gold')} ({dyn(1)})",
         f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')}; "
         f"{L['dep']} {money('zz_ef_pop_deposits')})",
@@ -143,6 +142,9 @@ def main_text(lang, c):
         f" {L['m3']}: #T {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')} ({dyn(3)})",
         f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#! ({delta('zz_ef_v_d_abroad')}; "
         + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
+        f"{tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#! ({delta('zz_ef_v_d_cbm')}; "
+        + L["cbf"].format(money("zz_ef_cb_metal_money"), money("money_supply_state"), sv("zz_ef_cb_cover", "%0"),
+                          money("zz_ef_bank_cb_debt")) + ")",
         f"{L['circ']}: #T {money('zz_ef_circulation')}#!",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
             sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%')) + ")",
@@ -192,9 +194,9 @@ def main_text(lang, c):
 # Accounts and flows, all in the engine's money.
 # ---------------------------------------------------------------------------
 
-# The accounts in the order of M0..M3 (the user, 1.10 day): the CB holds its metal and E&F's
-# currency good; abroad is its own account (claims: bonds, E&F's trade account) in M3.
-ACC_ORDER = ["treasury", "cb", "banks", "buildings", "pops", "abroad"]
+# The accounts in the order of M0..M3 (the user, 1.10 day), then the CB: its metal and E&F's currency good
+# are reserves, outside the money (1.10 evening); abroad is its own account (claims: bonds) in M3.
+ACC_ORDER = ["treasury", "banks", "buildings", "pops", "abroad", "cb"]
 TITLES = {
     "treasury": ("Казна", "Treasury"),
     "buildings": ("Касса предприятий", "Business cash"),
@@ -371,14 +373,16 @@ NOTES = {
     "cb": ("ЦБ — расчётный агент страны: все платежи с заграницей идут через него. Кредит банкам — новые деньги, "
            "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (и склад товара-валюты "
            "E&F в штуках): чистый отток за рубеж по курсу списывает металл, приток — добавляет (механизм Юма, "
-           "только металлический стандарт с ЦБ). Металл и деньги убывают в одной доле, поэтому отток сам по себе "
-           "курс не двигает; торговый баланс E&F в резервы больше не входит.",
+           "только металлический стандарт с ЦБ). Резервы — покрытие валюты, а не деньги: в M0–M3 не входят, "
+           "иначе отток за рубеж считался бы дважды (деньги ушли из пула или касс и тот же металл ушёл из ЦБ). "
+           "Отток уменьшает деньги и покрытие на одну сумму; торговый баланс E&F в резервы больше не входит.",
            "The CB is the country's settlement agent: every payment with abroad goes through it. Credit to banks is "
            "new money, repayment withdraws it, interest goes to the treasury. The account's stock is the metal "
            "reserves (and E&F's currency-good stock, in counts): a net outflow abroad pays out metal at the "
-           "currency's value, an inflow brings it in (Hume's mechanism, metal standards with a CB only). Metal and "
-           "money fall by the same fraction, so an outflow alone does not move the value; E&F's trade balance is no "
-           "longer in the reserves."),
+           "currency's value, an inflow brings it in (Hume's mechanism, metal standards with a CB only). The reserves "
+           "are the currency's cover, not money: they are outside M0–M3, else a payment abroad would count twice "
+           "(the money left the pool or business cash and the same metal left the CB). An outflow lowers the money "
+           "and the cover by one sum; E&F's trade balance is no longer in the reserves."),
 }
 
 STATE_PAY = ["GetGovernmentWagesExpenseTrend", "GetMilitaryWagesExpenseTrend", "GetWelfarePaymentsTrend"]

@@ -1281,12 +1281,18 @@ zz_ef_other_treasury_rest = {
 	subtract = zz_ef_v_f_tr_other
 }
 
-# ---- the user's money aggregates (1.10 day) --------------------------------
-# M0 = the treasury + the central bank; M1 = M0 + the banks (the pool);
-# M2 = M1 + businesses' cash + pops' savings at hand; M3 = M2 + claims on
-# abroad (foreign bonds of the private banks and of the treasury, E&F's
-# accumulated trade account). Deposits are part of the pool, so pops' savings
-# count only at hand.
+# ---- the user's money aggregates (1.10 day; the CB out of them 1.10 evening)
+# M0 = the treasury; M1 = M0 + the banks (the pool); M2 = M1 + businesses'
+# cash + pops' savings at hand; M3 = M2 + claims on abroad (foreign bonds of
+# the private banks and of the treasury). Deposits are part of the pool, so
+# pops' savings count only at hand.
+# The CB's metal and currency-good stock are its RESERVES -- the cover of the
+# money, not money (the user, 1.10 evening, run 10): with them in M0 a payment
+# abroad was counted twice -- the money left the pool (or business cash) and
+# Hume's mechanism took the same sum off the CB's metal (Britain 1840.1.2:
+# bonds -7.7M from the pool, metal -7.4M, M2 -4.4% in a month). Now an outflow
+# lowers the money once and the cover by the same sum. The CB issues money
+# only as credit to banks; that money is in the pool (M1).
 
 # The central bank's money: its metal at parity (E&F's central_bank_reserves,
 # in the standard's metal, / var:money_value_target_1, metal per unit) + E&F's
@@ -1312,6 +1318,7 @@ zz_ef_cb_valuation = {
 	max = 1000000
 	min = money_value_0
 }
+# The CB's reserves in money (not money: outside M0-M3, shown as the cover).
 zz_ef_cb_money = {
 	value = zz_ef_cb_metal_money
 	add = money_supply_state
@@ -1433,7 +1440,6 @@ zz_ef_foreign_assets = {
 }
 zz_ef_agg_m0 = {
 	value = zz_ef_treasury
-	add = zz_ef_cb_money
 }
 zz_ef_agg_m1 = {
 	value = zz_ef_agg_m0
