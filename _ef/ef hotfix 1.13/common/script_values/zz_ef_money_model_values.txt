@@ -862,6 +862,110 @@ zz_ef_cb_cover_ref = {
 		divide = var:money_value_target_1
 	}
 }
+# ---- the CB's reserves: interventions and mining (the user, 1.10 night) ---
+# E&F's interventions (scripted_effects/zz_ef_fx_deals.txt, generated): a
+# deal is 2% of the issuer's M2 in its currency (was a random 1-10 million
+# units, E&F's money scale).
+zz_ef_fx_deal_size = {
+	value = zz_ef_agg_m2
+	multiply = 0.02
+	min = 1
+}
+# Mining into the reserves: the CB coins half of the country's weekly gold
+# (and silver on a silver or bimetallic standard) at the market price -- the
+# metal goes to its reserves at parity, the same money to the mines' owners
+# (pops' savings, then deposits). The engine cannot take goods off the
+# market, so the mines still sell all of it: this is extra issue against the
+# metal mined (a gold rush widens the money and the cover).
+zz_ef_mint_share = 0.5
+zz_ef_gold_mined_week = {
+	value = 0
+	every_scope_state = {
+		limit = {
+			any_scope_building = {
+				OR = {
+					is_building_type = building_gold_mine
+					is_building_type = building_gold_field
+				}
+			}
+		}
+		add = sg:gold.state_goods_production
+	}
+}
+zz_ef_silver_mined_week = {
+	value = 0
+	every_scope_state = {
+		limit = {
+			any_scope_building = { is_building_type = building_silver_mine }
+		}
+		add = sg:silver.state_goods_production
+	}
+}
+zz_ef_gold_price = {
+	value = g:gold.base_price
+	multiply = {
+		value = 1
+		add = market.mg:gold.market_goods_pricier
+	}
+}
+zz_ef_silver_price = {
+	value = g:silver.base_price
+	multiply = {
+		value = 1
+		add = market.mg:silver.market_goods_pricier
+	}
+}
+# Money coined this week from gold / silver (metal standards with a CB only).
+zz_ef_mint_gold_money = {
+	value = 0
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		value = zz_ef_gold_mined_week
+		multiply = zz_ef_gold_price
+		multiply = zz_ef_mint_share
+	}
+}
+zz_ef_mint_silver_money = {
+	value = 0
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			OR = {
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		value = zz_ef_silver_mined_week
+		multiply = zz_ef_silver_price
+		multiply = zz_ef_mint_share
+	}
+}
+# Metal for it at parity (var:money_value_target_1, metal per unit; a
+# bimetallic parity is in gold -- silver at the gold-to-silver rate).
+zz_ef_mint_gold_metal = {
+	value = zz_ef_mint_gold_money
+	multiply = var:money_value_target_1
+}
+zz_ef_mint_silver_metal = {
+	value = zz_ef_mint_silver_money
+	multiply = var:money_value_target_1
+	if = {
+		limit = { has_law = law_type:law_bimetallism_standard }
+		multiply = gold_to_silver_rate
+	}
+}
+zz_ef_v_f_mint = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_mint } value = var:zz_ef_f_mint }
+}
 # The cover limits the CB's credit to banks (the user, 1.10 evening): 1 at the
 # normal cover (40%) and above, down to 0 at half of it (20%), linear. Metal
 # standards with a CB only; else 1. A CB lending too much lowers its own cover
