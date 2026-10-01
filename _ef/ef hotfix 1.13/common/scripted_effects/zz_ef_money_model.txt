@@ -239,7 +239,13 @@ zz_ef_money_model_step = {
 		zz_ef_ring_q_push = { M = agg3 }
 		zz_ef_ring_q_push = { M = circ }
 		zz_ef_ring_q_push = { M = gdp }
-		zz_ef_ring_q_push = { M = price }
+		# prices settle in the first two months of a game (run 17: the USA's index
+		# 144 -> 99 by spring 1836, read as -37% a year): the year ring of prices
+		# starts with week 9
+		if = {
+			limit = { var:zz_ef_weeks_run >= 9 }
+			zz_ef_ring_q_push = { M = price }
+		}
 	}
 	change_variable = { name = zz_ef_ring_r add = 1 }
 	if = {
