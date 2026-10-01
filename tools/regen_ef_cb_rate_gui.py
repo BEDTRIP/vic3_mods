@@ -143,6 +143,8 @@ def cb_row(ind: str) -> str:
             ], "zz_ef_rate_box_target_tt"),
             ("zz_ef_rate_box_step", "zz_ef_rate_box_step_value", "zz_ef_rate_box_step_tt"),
             ("zz_ef_rate_box_policy", "zz_ef_rate_box_policy_value", "zz_ef_rate_box_policy_tt"),
+            # EF.48, night 2 item 5 (2.10): the government's rate = key + risk premium
+            ("zz_ef_rate_box_gov", "zz_ef_rate_box_gov_value", "zz_ef_rate_box_gov_tt"),
         )
     )
     return (

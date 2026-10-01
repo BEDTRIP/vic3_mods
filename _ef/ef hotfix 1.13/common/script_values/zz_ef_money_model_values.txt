@@ -578,9 +578,6 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_v_w_cc_net
 	subtract = zz_ef_tr_other_net
-	# night 2, item 4: dividends to foreign owners left the country's money,
-	# dividends from abroad came in -- not pops' savings
-	subtract = zz_ef_v_f_div
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
 # scripted moves on the treasury -- ai_refund_central_bank (the government
@@ -810,14 +807,15 @@ zz_ef_cb_metal = {
 # privatization price; the money reaches no treasury, so it is a sink, not a
 # payment abroad (1.10, check).
 # Night 2, item 4 (2.10): the trade by the market's own trade balance in money
-# (zz_ef_trade_net_week: exports - imports x price) and the dividends to and
-# from foreign owners (zz_ef_div_net_week), instead of the trade centres' cash
-# (their cash is their profit and cash flow, not what the country paid abroad).
+# (zz_ef_trade_net_week: exports - imports x price) instead of the trade
+# centres' cash (their cash is their profit and cash flow, not what the
+# country paid abroad). Not the dividends estimate (zz_ef_div_net_week, log
+# only): run 21 read the buildings' profit a year at ~1 GDP -- Britain
+# +220K a week from abroad, its metal 59 -> 458M in three years.
 zz_ef_ext_net_week = {
 	value = zz_ef_v_f_abr
 	subtract = zz_ef_tr_abr_overlap
 	add = zz_ef_v_f_trade
-	add = zz_ef_v_f_div
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
 }
@@ -2494,7 +2492,11 @@ zz_ef_ir_mult = {
 zz_ef_gov_levels = {
 	value = 0
 	every_scope_building = {
-		limit = { country_ownership_fraction > 0 }
+		limit = {
+			level > 0
+			NOT = { is_under_construction = yes }
+			country_ownership_fraction > 0
+		}
 		add = {
 			value = level
 			multiply = country_ownership_fraction
@@ -2504,4 +2506,65 @@ zz_ef_gov_levels = {
 zz_ef_v_d_govlv = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_d_govlv } value = var:zz_ef_d_govlv }
+}
+
+# Item 5 (the user, 1.10 night): the government's rate = the key rate + the
+# risk premium, the engine's corrections scaling the premium only (static_
+# modifiers/zz_ef_gov_rate.txt). The other multipliers: the engine's sum minus
+# ours (var:zz_ef_gr_mult, a fraction); the other adds likewise.
+zz_ef_gov_rate_mult_other = {
+	value = modifier:country_loan_interest_rate_mult
+	if = { limit = { has_variable = zz_ef_gr_mult } subtract = var:zz_ef_gr_mult }
+}
+zz_ef_gov_rate_add_other = {
+	value = modifier:country_loan_interest_rate_add
+	if = { limit = { has_variable = zz_ef_gr_add } subtract = var:zz_ef_gr_add }
+}
+# The corrections: the others' multipliers, from -0.5 to +1 (the premium x
+# 0.5 .. x 2).
+zz_ef_gov_rate_corr = {
+	value = zz_ef_gov_rate_mult_other
+	min = -0.5
+	max = 1
+}
+zz_ef_gov_rate_premium = {
+	value = zz_ef_cb_rule_risk
+	multiply = {
+		value = 1
+		add = zz_ef_gov_rate_corr
+	}
+	min = 0
+}
+zz_ef_gov_rate_target = {
+	value = zz_ef_money_rate
+	add = zz_ef_gov_rate_premium
+}
+zz_ef_gov_rate_target_pp = {
+	value = zz_ef_gov_rate_target
+	multiply = 100
+}
+zz_ef_gov_rate_premium_pp = {
+	value = zz_ef_gov_rate_premium
+	multiply = 100
+}
+zz_ef_gov_rate_corr_pct = {
+	value = zz_ef_gov_rate_corr
+	multiply = 100
+}
+# Item 6, run 21: the pool's drops (multiples of 15 000) do not come with the
+# government's levels falling -- not a privatization from the state. Next
+# probe: the privately owned levels.
+zz_ef_priv_levels = {
+	value = 0
+	every_scope_building = {
+		limit = {
+			level > 0
+			NOT = { is_under_construction = yes }
+			private_ownership_fraction > 0
+		}
+		add = {
+			value = level
+			multiply = private_ownership_fraction
+		}
+	}
 }

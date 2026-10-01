@@ -40,6 +40,9 @@ PRI = f"[{SV}('zz_ef_cb_rule_risk_pp')|+1]"
 PCO = f"[{SV}('zz_ef_cb_rule_cover_pp')|+1]"
 PMO = f"[{SV}('zz_ef_cb_rule_money_pp')|+1]"
 COV = f"[{SV}('zz_ef_cb_cover')|%0]"
+GRT = f"[{SV}('zz_ef_gov_rate_target')|%2]"
+GPR = f"[{SV}('zz_ef_gov_rate_premium_pp')|+2]"
+GCO = f"[{SV}('zz_ef_gov_rate_corr_pct')|+0]"
 
 RU = {
     "concept_zz_ef_policy_rule_rate": "Ставка по правилу",
@@ -96,6 +99,13 @@ RU = {
         f"Раз в квартал {CB} сдвигает {KR} к {RR} с {DA} (сейчас к #v {TARGET}#!): не больше чем на #v 0.5 п.п.#!, "
         "или на #v 1 п.п.#!, если до цели больше 5 п.п.\\n\\n"
         f"Следующий шаг: #v {STEP} п.п.#! через {MONTHS} мес."
+    ),
+    "zz_ef_rate_box_gov": "Ставка правительства",
+    "zz_ef_rate_box_gov_value": f"{GRT}",
+    "zz_ef_rate_box_gov_tt": (
+        f"Под сколько занимает правительство: {KR} + премия за риск = #v {GRT}#!\\n\\n"
+        f"Премия #v {GPR} п.п.#! — {PRI} п.п. по рейтингу и стабильности (как в {RR}), с поправкой #v {GCO}%#! от статуса "
+        "державы, компаний и технологий (не больше чем вдвое меньше или вдвое больше). Ниже ключевой ставка не бывает."
     ),
     "zz_ef_rate_box_policy": "Дискреционная поправка",
     "zz_ef_rate_box_policy_value": f"{BIAS} п.п.",
@@ -197,6 +207,13 @@ EN = {
         f"Every quarter the {CB} moves the {KR} towards the {RR} plus the {DA} (now to #v {TARGET}#!): by at most #v 0.5 pp#!, "
         "or #v 1 pp#! when that is more than 5 pp away.\\n\\n"
         f"Next step: #v {STEP} pp#! in {MONTHS} months."
+    ),
+    "zz_ef_rate_box_gov": "Government rate",
+    "zz_ef_rate_box_gov_value": f"{GRT}",
+    "zz_ef_rate_box_gov_tt": (
+        f"What the government borrows at: the {KR} + the risk premium = #v {GRT}#!\\n\\n"
+        f"Premium #v {GPR} pp#!: {PRI} pp from the rating and stability (as in the {RR}), scaled by #v {GCO}%#! for the "
+        "country's rank, companies and technologies (at most halved or doubled). Never under the key rate."
     ),
     "zz_ef_rate_box_policy": "Discretionary adjustment",
     "zz_ef_rate_box_policy_value": f"{BIAS} pp",

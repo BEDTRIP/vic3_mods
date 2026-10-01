@@ -1,0 +1,22 @@
+#############################################
+# EF.48, night 2 item 5 (2.10, the user): the government's interest rate =
+# the key rate + the risk premium (zz_ef_cb_rule_risk); the engine's own
+# corrections (country ranks, companies, E&F's technologies and central bank
+# institution) only scale the premium, by at most half down or double up,
+# never under the key rate. Run 21: the engine's sums were add -0.06, mult
+# -0.95..-0.85 -- loans at ~0.2% a year. Two modifiers, set monthly by
+# zz_ef_gov_rate_step (scripted_effects/zz_ef_money_model.txt):
+#   zz_ef_gov_rate_mult cancels every other rate multiplier (0.01 a unit),
+#   zz_ef_gov_rate_add brings the sum of the adds to the target (0.001 a
+#   unit = 0.1 pp).
+#############################################
+
+zz_ef_gov_rate_mult = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
+	country_loan_interest_rate_mult = 0.01
+}
+
+zz_ef_gov_rate_add = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
+	country_loan_interest_rate_add = 0.001
+}

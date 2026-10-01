@@ -9404,6 +9404,42 @@ types zz_ef_cb_rate_panel
 										minimumsize = { 100 100 }
 										maximumsize = { 100 100 }
 									}
+									flowcontainer = {
+										spacing = 5
+										direction = vertical
+										tooltip = "zz_ef_rate_box_gov_tt"
+										using = tooltip_below
+
+										textbox = {
+											autoresize = yes
+											text = "zz_ef_rate_box_gov"
+											fontsize = 15
+											align = hcenter
+											parentanchor = hcenter
+											multiline = yes
+											minimumsize = { 115 40 }
+											maximumsize = { 115 -1 }
+										}
+
+										textbox = {
+											autoresize = yes
+											text = "zz_ef_rate_box_gov_value"
+											align = hcenter|nobaseline
+											parentanchor = hcenter
+											fontsize = 18
+											multiline = yes
+											minimumsize = { 115 40 }
+											maximumsize = { 115 -1 }
+										}
+
+										background = {
+											using = entry_bg_simple
+											margin = { 10 10 }
+										}
+
+										minimumsize = { 100 100 }
+										maximumsize = { 100 100 }
+									}
 								}
 								flowcontainer  = {
 									margin_top = 0
