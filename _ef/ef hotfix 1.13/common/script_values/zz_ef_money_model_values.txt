@@ -83,13 +83,16 @@ zz_ef_building_cash = {
 # money_supply (script_values/00_economic_scripted_value.txt). E&F's
 # money_supply = money_supply_state (goods) + money_circulating (pop savings
 # counter + pool + credit limit + government_loan counter).
-# EF.48 item 11 (1.10): the treasury is out of circulation -- the currency's
-# value and the inflation read businesses' cash + the pool; M0..M2 still
-# show it.
+# The money in circulation (the user, 1.10 day: M2 - M0): businesses' cash +
+# the pool + pops' savings at hand. The treasury and the CB are out of it
+# (EF.48 item 11: hoarding deflates, spending inflates). The currency's value
+# (E&F money_value_0 = national capacity / money_supply) and the inflation
+# read it.
 REPLACE_OR_CREATE:money_circulating = {
 	value = 0
 	add = zz_ef_building_cash
 	add = investment_pool
+	add = zz_ef_pop_cash_held
 	min = 1
 }
 REPLACE_OR_CREATE:money_supply = {
@@ -97,13 +100,9 @@ REPLACE_OR_CREATE:money_supply = {
 	min = 1
 }
 
-zz_ef_m0 = {
-	value = zz_ef_treasury
-}
-zz_ef_m1 = {
-	value = zz_ef_treasury
-	add = zz_ef_building_cash
-}
+# The engine's own money (treasury + businesses' cash + the pool): what the
+# leak to pops' savings is measured against. Internal; the aggregates the
+# player sees are zz_ef_agg_m0..m3 below.
 zz_ef_m2 = {
 	value = zz_ef_treasury
 	add = zz_ef_building_cash
@@ -426,126 +425,6 @@ zz_ef_v_d_bonds = {
 # M0/M1/M2: the week's change, and the change in % (a fraction) against
 # the value 4 weeks ago (month), 49-52 weeks ago (year) and 248-260 weeks ago
 # (5 years; the history rings in zz_ef_money_model_step). 0 until filled.
-zz_ef_v_d_m0 = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_d_m0 } value = var:zz_ef_d_m0 }
-}
-zz_ef_m0_pct_month = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m0_w4
-			var:zz_ef_m0_w4 > 0
-		}
-		value = zz_ef_m0
-		subtract = var:zz_ef_m0_w4
-		divide = var:zz_ef_m0_w4
-	}
-}
-zz_ef_m0_pct_year = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m0_q13
-			var:zz_ef_m0_q13 > 0
-		}
-		value = zz_ef_m0
-		subtract = var:zz_ef_m0_q13
-		divide = var:zz_ef_m0_q13
-	}
-}
-zz_ef_m0_pct_5y = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m0_r20
-			var:zz_ef_m0_r20 > 0
-		}
-		value = zz_ef_m0
-		subtract = var:zz_ef_m0_r20
-		divide = var:zz_ef_m0_r20
-	}
-}
-zz_ef_v_d_m1 = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_d_m1 } value = var:zz_ef_d_m1 }
-}
-zz_ef_m1_pct_month = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m1_w4
-			var:zz_ef_m1_w4 > 0
-		}
-		value = zz_ef_m1
-		subtract = var:zz_ef_m1_w4
-		divide = var:zz_ef_m1_w4
-	}
-}
-zz_ef_m1_pct_year = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m1_q13
-			var:zz_ef_m1_q13 > 0
-		}
-		value = zz_ef_m1
-		subtract = var:zz_ef_m1_q13
-		divide = var:zz_ef_m1_q13
-	}
-}
-zz_ef_m1_pct_5y = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m1_r20
-			var:zz_ef_m1_r20 > 0
-		}
-		value = zz_ef_m1
-		subtract = var:zz_ef_m1_r20
-		divide = var:zz_ef_m1_r20
-	}
-}
-zz_ef_v_d_m2 = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_d_m2 } value = var:zz_ef_d_m2 }
-}
-zz_ef_m2_pct_month = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m2_w4
-			var:zz_ef_m2_w4 > 0
-		}
-		value = zz_ef_m2
-		subtract = var:zz_ef_m2_w4
-		divide = var:zz_ef_m2_w4
-	}
-}
-zz_ef_m2_pct_year = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m2_q13
-			var:zz_ef_m2_q13 > 0
-		}
-		value = zz_ef_m2
-		subtract = var:zz_ef_m2_q13
-		divide = var:zz_ef_m2_q13
-	}
-}
-zz_ef_m2_pct_5y = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = zz_ef_m2_r20
-			var:zz_ef_m2_r20 > 0
-		}
-		value = zz_ef_m2
-		subtract = var:zz_ef_m2_r20
-		divide = var:zz_ef_m2_r20
-	}
-}
 # ---- the GUI bridge: the leak ----------------------------------------------
 
 zz_ef_v_f_ext = {
@@ -771,6 +650,7 @@ zz_ef_ext_net_week = {
 	value = zz_ef_v_f_abr
 	add = zz_ef_v_d_tc
 	subtract = zz_ef_v_d_bonds
+	subtract = zz_ef_v_d_tbonds
 }
 # Metal moved by it: the flow x the currency's value (metal per unit of
 # money, E&F money_value_0), never more than the CB holds.
@@ -813,16 +693,20 @@ zz_ef_zero = 0
 
 # ---- EF.48 item 7: the top sums in gold (E&F money_value_in_gold, gold per
 # unit of money; 0 for a subject or without a standard) ----------------------
-zz_ef_m0_gold = {
-	value = zz_ef_m0
+zz_ef_agg_m0_gold = {
+	value = zz_ef_agg_m0
 	multiply = money_value_in_gold
 }
-zz_ef_m1_gold = {
-	value = zz_ef_m1
+zz_ef_agg_m1_gold = {
+	value = zz_ef_agg_m1
 	multiply = money_value_in_gold
 }
-zz_ef_m2_gold = {
-	value = zz_ef_m2
+zz_ef_agg_m2_gold = {
+	value = zz_ef_agg_m2
+	multiply = money_value_in_gold
+}
+zz_ef_agg_m3_gold = {
+	value = zz_ef_agg_m3
 	multiply = money_value_in_gold
 }
 zz_ef_savings_gold = {
@@ -1058,15 +942,11 @@ zz_ef_bc_service_share = {
 }
 
 # ---- EF.48 items 11-12: money in circulation, M3, inflation (the user, 1.10)
-# M3 = the money in circulation (businesses' cash + the pool -- the treasury
-# is out, item 11) + pops' savings at hand (deposits are in the pool already).
-zz_ef_m3 = {
+zz_ef_circulation = {
 	value = money_supply
-	add = zz_ef_pop_cash
-	min = 1
 }
-zz_ef_m3_now = {
-	value = zz_ef_m3
+zz_ef_circ_now = {
+	value = zz_ef_circulation
 }
 zz_ef_gdp_now = {
 	value = gdp
@@ -1074,135 +954,135 @@ zz_ef_gdp_now = {
 }
 # Growth a year, annualised from the oldest slot of the year ring (4-week
 # blocks, var:zz_ef_<m>_q1..13; 13 = a year ago). 0 before the first block.
-zz_ef_m3_growth_year = {
+zz_ef_circ_growth_year = {
 	value = 0
 	if = {
 		limit = {
-			has_variable = zz_ef_m3_q13
-			var:zz_ef_m3_q13 > 0
+			has_variable = zz_ef_circ_q13
+			var:zz_ef_circ_q13 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q13
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q13
 		subtract = 1
 		multiply = 1.00000
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q12
-			var:zz_ef_m3_q12 > 0
+			has_variable = zz_ef_circ_q12
+			var:zz_ef_circ_q12 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q12
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q12
 		subtract = 1
 		multiply = 1.08333
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q11
-			var:zz_ef_m3_q11 > 0
+			has_variable = zz_ef_circ_q11
+			var:zz_ef_circ_q11 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q11
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q11
 		subtract = 1
 		multiply = 1.18182
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q10
-			var:zz_ef_m3_q10 > 0
+			has_variable = zz_ef_circ_q10
+			var:zz_ef_circ_q10 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q10
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q10
 		subtract = 1
 		multiply = 1.30000
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q9
-			var:zz_ef_m3_q9 > 0
+			has_variable = zz_ef_circ_q9
+			var:zz_ef_circ_q9 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q9
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q9
 		subtract = 1
 		multiply = 1.44444
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q8
-			var:zz_ef_m3_q8 > 0
+			has_variable = zz_ef_circ_q8
+			var:zz_ef_circ_q8 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q8
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q8
 		subtract = 1
 		multiply = 1.62500
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q7
-			var:zz_ef_m3_q7 > 0
+			has_variable = zz_ef_circ_q7
+			var:zz_ef_circ_q7 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q7
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q7
 		subtract = 1
 		multiply = 1.85714
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q6
-			var:zz_ef_m3_q6 > 0
+			has_variable = zz_ef_circ_q6
+			var:zz_ef_circ_q6 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q6
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q6
 		subtract = 1
 		multiply = 2.16667
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q5
-			var:zz_ef_m3_q5 > 0
+			has_variable = zz_ef_circ_q5
+			var:zz_ef_circ_q5 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q5
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q5
 		subtract = 1
 		multiply = 2.60000
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q4
-			var:zz_ef_m3_q4 > 0
+			has_variable = zz_ef_circ_q4
+			var:zz_ef_circ_q4 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q4
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q4
 		subtract = 1
 		multiply = 3.25000
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q3
-			var:zz_ef_m3_q3 > 0
+			has_variable = zz_ef_circ_q3
+			var:zz_ef_circ_q3 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q3
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q3
 		subtract = 1
 		multiply = 4.33333
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q2
-			var:zz_ef_m3_q2 > 0
+			has_variable = zz_ef_circ_q2
+			var:zz_ef_circ_q2 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q2
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q2
 		subtract = 1
 		multiply = 6.50000
 	}
 	else_if = {
 		limit = {
-			has_variable = zz_ef_m3_q1
-			var:zz_ef_m3_q1 > 0
+			has_variable = zz_ef_circ_q1
+			var:zz_ef_circ_q1 > 0
 		}
-		value = zz_ef_m3_now
-		divide = var:zz_ef_m3_q1
+		value = zz_ef_circ_now
+		divide = var:zz_ef_circ_q1
 		subtract = 1
 		multiply = 13.00000
 	}
@@ -1341,10 +1221,11 @@ zz_ef_gdp_growth_year = {
 	}
 }
 # Inflation a year (equation of exchange): money grows faster than the
-# economy -> prices rise. The game's GDP is nominal (no real GDP in script):
-# so this is the growth of M3 against GDP -- decided at night, check.
+# economy -> prices rise; money = the money in circulation (M2 - M0). The
+# game's GDP is nominal (no real GDP in script): so this is the growth of
+# money against GDP -- check.
 zz_ef_inflation = {
-	value = zz_ef_m3_growth_year
+	value = zz_ef_circ_growth_year
 	subtract = zz_ef_gdp_growth_year
 	min = -0.5
 	max = 1
@@ -1398,4 +1279,336 @@ zz_ef_savings_to_gdp = {
 zz_ef_other_treasury_rest = {
 	value = zz_ef_other_treasury_budget
 	subtract = zz_ef_v_f_tr_other
+}
+
+# ---- the user's money aggregates (1.10 day) --------------------------------
+# M0 = the treasury + the central bank; M1 = M0 + the banks (the pool);
+# M2 = M1 + businesses' cash + pops' savings at hand; M3 = M2 + claims on
+# abroad (foreign bonds of the private banks and of the treasury, E&F's
+# accumulated trade account). Deposits are part of the pool, so pops' savings
+# count only at hand.
+
+# The central bank's money: its metal at parity (E&F's central_bank_reserves,
+# in the standard's metal, / var:money_value_target_1, metal per unit) + E&F's
+# currency-good stock (money_supply_state, drawn by E&F as money).
+zz_ef_cb_metal_money = {
+	value = 0
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		value = central_bank_reserves
+		divide = var:money_value_target_1
+	}
+}
+zz_ef_cb_money = {
+	value = zz_ef_cb_metal_money
+	add = money_supply_state
+	min = 0
+}
+zz_ef_pop_cash_held = {
+	value = zz_ef_pop_cash
+	min = 0
+}
+# The treasury's foreign bonds (E&F ai_buy_bond_1..10: bought with
+# add_treasury = -ai_total_bond_value_N, live while ai_buy_bond_N_on = 1).
+zz_ef_treasury_bonds = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_1_on
+			var:ai_buy_bond_1_on = 1
+			has_variable = ai_total_bond_value_1
+		}
+		add = var:ai_total_bond_value_1
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_2_on
+			var:ai_buy_bond_2_on = 1
+			has_variable = ai_total_bond_value_2
+		}
+		add = var:ai_total_bond_value_2
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_3_on
+			var:ai_buy_bond_3_on = 1
+			has_variable = ai_total_bond_value_3
+		}
+		add = var:ai_total_bond_value_3
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_4_on
+			var:ai_buy_bond_4_on = 1
+			has_variable = ai_total_bond_value_4
+		}
+		add = var:ai_total_bond_value_4
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_5_on
+			var:ai_buy_bond_5_on = 1
+			has_variable = ai_total_bond_value_5
+		}
+		add = var:ai_total_bond_value_5
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_6_on
+			var:ai_buy_bond_6_on = 1
+			has_variable = ai_total_bond_value_6
+		}
+		add = var:ai_total_bond_value_6
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_7_on
+			var:ai_buy_bond_7_on = 1
+			has_variable = ai_total_bond_value_7
+		}
+		add = var:ai_total_bond_value_7
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_8_on
+			var:ai_buy_bond_8_on = 1
+			has_variable = ai_total_bond_value_8
+		}
+		add = var:ai_total_bond_value_8
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_9_on
+			var:ai_buy_bond_9_on = 1
+			has_variable = ai_total_bond_value_9
+		}
+		add = var:ai_total_bond_value_9
+	}
+	if = {
+		limit = {
+			has_variable = ai_buy_bond_10_on
+			var:ai_buy_bond_10_on = 1
+			has_variable = ai_total_bond_value_10
+		}
+		add = var:ai_total_bond_value_10
+	}
+}
+# E&F's trade account: its accumulated trade balance in gold
+# (var:trade_balance_in_gold_fixe; no longer in the national capacity, item
+# 6) at today's value of the currency. Kept as a claim on abroad, as the user
+# asked (1.10 day).
+zz_ef_trade_account = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = trade_balance_in_gold_fixe
+			money_value_in_gold > 0
+		}
+		value = var:trade_balance_in_gold_fixe
+		divide = money_value_in_gold
+	}
+}
+zz_ef_foreign_assets = {
+	value = zz_ef_bank_bonds
+	add = zz_ef_treasury_bonds
+	add = zz_ef_trade_account
+}
+zz_ef_agg_m0 = {
+	value = zz_ef_treasury
+	add = zz_ef_cb_money
+}
+zz_ef_agg_m1 = {
+	value = zz_ef_agg_m0
+	add = investment_pool
+}
+zz_ef_agg_m2 = {
+	value = zz_ef_agg_m1
+	add = zz_ef_building_cash
+	add = zz_ef_pop_cash_held
+}
+zz_ef_agg_m3 = {
+	value = zz_ef_agg_m2
+	add = zz_ef_foreign_assets
+}
+zz_ef_v_d_tbonds = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_tbonds } value = var:zz_ef_d_tbonds }
+}
+# The E&F treasury moves beyond the budget minus the treasury's bond
+# purchases: the government repaying the CB (ai_refund_central_bank).
+zz_ef_tr_to_cb = {
+	value = zz_ef_v_f_tr_other
+	add = zz_ef_v_d_tbonds
+}
+zz_ef_v_d_agg0 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_agg0 } value = var:zz_ef_d_agg0 }
+}
+zz_ef_agg0_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg0_w4
+			var:zz_ef_agg0_w4 > 0
+		}
+		value = zz_ef_agg_m0
+		subtract = var:zz_ef_agg0_w4
+		divide = var:zz_ef_agg0_w4
+	}
+}
+zz_ef_agg0_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg0_q13
+			var:zz_ef_agg0_q13 > 0
+		}
+		value = zz_ef_agg_m0
+		subtract = var:zz_ef_agg0_q13
+		divide = var:zz_ef_agg0_q13
+	}
+}
+zz_ef_agg0_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg0_r20
+			var:zz_ef_agg0_r20 > 0
+		}
+		value = zz_ef_agg_m0
+		subtract = var:zz_ef_agg0_r20
+		divide = var:zz_ef_agg0_r20
+	}
+}
+zz_ef_v_d_agg1 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_agg1 } value = var:zz_ef_d_agg1 }
+}
+zz_ef_agg1_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg1_w4
+			var:zz_ef_agg1_w4 > 0
+		}
+		value = zz_ef_agg_m1
+		subtract = var:zz_ef_agg1_w4
+		divide = var:zz_ef_agg1_w4
+	}
+}
+zz_ef_agg1_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg1_q13
+			var:zz_ef_agg1_q13 > 0
+		}
+		value = zz_ef_agg_m1
+		subtract = var:zz_ef_agg1_q13
+		divide = var:zz_ef_agg1_q13
+	}
+}
+zz_ef_agg1_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg1_r20
+			var:zz_ef_agg1_r20 > 0
+		}
+		value = zz_ef_agg_m1
+		subtract = var:zz_ef_agg1_r20
+		divide = var:zz_ef_agg1_r20
+	}
+}
+zz_ef_v_d_agg2 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_agg2 } value = var:zz_ef_d_agg2 }
+}
+zz_ef_agg2_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg2_w4
+			var:zz_ef_agg2_w4 > 0
+		}
+		value = zz_ef_agg_m2
+		subtract = var:zz_ef_agg2_w4
+		divide = var:zz_ef_agg2_w4
+	}
+}
+zz_ef_agg2_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg2_q13
+			var:zz_ef_agg2_q13 > 0
+		}
+		value = zz_ef_agg_m2
+		subtract = var:zz_ef_agg2_q13
+		divide = var:zz_ef_agg2_q13
+	}
+}
+zz_ef_agg2_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg2_r20
+			var:zz_ef_agg2_r20 > 0
+		}
+		value = zz_ef_agg_m2
+		subtract = var:zz_ef_agg2_r20
+		divide = var:zz_ef_agg2_r20
+	}
+}
+zz_ef_v_d_agg3 = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_agg3 } value = var:zz_ef_d_agg3 }
+}
+zz_ef_agg3_pct_month = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg3_w4
+			var:zz_ef_agg3_w4 > 0
+		}
+		value = zz_ef_agg_m3
+		subtract = var:zz_ef_agg3_w4
+		divide = var:zz_ef_agg3_w4
+	}
+}
+zz_ef_agg3_pct_year = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg3_q13
+			var:zz_ef_agg3_q13 > 0
+		}
+		value = zz_ef_agg_m3
+		subtract = var:zz_ef_agg3_q13
+		divide = var:zz_ef_agg3_q13
+	}
+}
+zz_ef_agg3_pct_5y = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_agg3_r20
+			var:zz_ef_agg3_r20 > 0
+		}
+		value = zz_ef_agg_m3
+		subtract = var:zz_ef_agg3_r20
+		divide = var:zz_ef_agg3_r20
+	}
+}
+zz_ef_v_d_cbm = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_cbm } value = var:zz_ef_d_cbm }
+}
+zz_ef_v_d_abroad = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_abroad } value = var:zz_ef_d_abroad }
 }
