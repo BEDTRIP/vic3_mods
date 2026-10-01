@@ -27,6 +27,10 @@ Parameters:
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
     -AiTag        console "enable_ai <tag>" after loading, so the AI plays the player's country
                   too (default "all"; "" to skip)
+    -StartSave    start from this save instead of the last one: a file name in "save games" (e.g.
+                  sandbox_1836.v3). It is copied to sandbox_start.v3 and continue_game.json is pointed at
+                  the copy, so the original is never written to; later runs without -StartSave go on
+                  from the run's own autosaves.
     -NoDumps      skip the console dumps at the end (debugcountrybudgets, debugmarkets: budgets of
                   every country by line and markets, as log files in logs/)
     -OutDir       where to put logs and screenshots (default: %TEMP%\vic3_sandbox\<timestamp>)
@@ -36,6 +40,7 @@ param(
     [int]$LoadWaitSec = 150,
     [int]$Autosaves = 0,
     [string]$AiTag = "all",
+    [string]$StartSave = "",
     [switch]$NoDumps,
     [string]$OutDir = ""
 )
@@ -183,6 +188,19 @@ function Is-Advancing($p, $sec) {
 }
 
 if (Get-Game) { throw "Victoria 3 is already running - close it first." }
+
+# -continuelastsave loads the save named by "title" in continue_game.json.
+if ($StartSave) {
+    $Saves = Join-Path $Docs "save games"
+    $src = Join-Path $Saves $StartSave
+    if (-not (Test-Path $src)) { throw "no save $src" }
+    Copy-Item $src (Join-Path $Saves "sandbox_start.v3") -Force
+    $cg = Join-Path $Docs "continue_game.json"
+    $j = Get-Content $cg -Raw -Encoding UTF8 | ConvertFrom-Json
+    $j.title = "sandbox_start"
+    [IO.File]::WriteAllText($cg, ($j | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+    Log "start save: $StartSave (copied to sandbox_start.v3)"
+}
 
 Log "launching $Exe -continuelastsave -debug_mode"
 Start-Process -FilePath $Exe -ArgumentList "-continuelastsave", "-debug_mode" -WorkingDirectory (Split-Path $Exe)
