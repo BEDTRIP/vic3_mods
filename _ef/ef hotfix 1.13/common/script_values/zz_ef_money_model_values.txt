@@ -521,7 +521,7 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_v_w_cc_net
-	subtract = zz_ef_v_f_tr_other
+	subtract = zz_ef_tr_other_net
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
 # scripted moves on the treasury -- ai_refund_central_bank (the government
@@ -533,6 +533,38 @@ zz_ef_leak_week = {
 zz_ef_v_f_tr_other = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_tr_other } value = var:zz_ef_f_tr_other }
+}
+# Part of the treasury's E&F move the budget's lines with abroad already show
+# (scope:abr). Runs 10-11 (1.10 evening): every treasury bond purchase
+# (ai_buy_bond_N, a plain add_treasury) also came in abr at the same sum --
+# Russia 1837.12.28 -9.62M / -9.61M, Ottomans 1837.8.3 -27.8M both -- so it was
+# taken out of the leak twice (pops' savings -9.5M) and paid out of the CB's
+# metal twice. Which budget line shows it is not found yet (check in the game,
+# the budget tooltip in the bond week). The overlap: the same sign, the
+# smaller magnitude.
+zz_ef_tr_abr_overlap = {
+	value = 0
+	if = {
+		limit = {
+			zz_ef_v_f_tr_other < 0
+			zz_ef_v_f_abr < 0
+		}
+		value = zz_ef_v_f_tr_other
+		min = zz_ef_v_f_abr
+	}
+	else_if = {
+		limit = {
+			zz_ef_v_f_tr_other > 0
+			zz_ef_v_f_abr > 0
+		}
+		value = zz_ef_v_f_tr_other
+		max = zz_ef_v_f_abr
+	}
+}
+# The treasury's E&F move not in the budget's lines.
+zz_ef_tr_other_net = {
+	value = zz_ef_v_f_tr_other
+	subtract = zz_ef_tr_abr_overlap
 }
 
 # ---- pops' savings and deposits (the receiver, zz_ef_pop_savings_step) --------
@@ -675,6 +707,7 @@ zz_ef_cb_metal = {
 # payment abroad (1.10, check).
 zz_ef_ext_net_week = {
 	value = zz_ef_v_f_abr
+	subtract = zz_ef_tr_abr_overlap
 	add = zz_ef_v_d_tc
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
