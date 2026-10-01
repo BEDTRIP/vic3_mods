@@ -1,0 +1,9 @@
+﻿# EF.48 (1.10 evening): with business cash cut to ~0.3 GDP
+# (static_modifiers/zz_ef_business_cash.txt) the credit limit -- cash reserves
+# + COUNTRY_MIN_CREDIT_BASE + COUNTRY_MIN_CREDIT_SCALED x GDP -- would fall from
+# ~2 GDPs to ~0.3. Grey's Soft Econ Adjustments set SCALED to 0.01
+# (zzz_MoG_SEA_def.txt, vanilla 0.5); 1.7 keeps the limit at ~2 GDPs. The file
+# name sorts after Grey's so this value wins. Check: debt capacity in runs.
+NEconomy = {
+	COUNTRY_MIN_CREDIT_SCALED = 1.7
+}

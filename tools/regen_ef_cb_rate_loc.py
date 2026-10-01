@@ -125,6 +125,11 @@ RU = {
         f"{KR} ниже 6.5% увеличивает долю очков строительства частного сектора, выше — уменьшает: "
         "5 п.п. доли за каждый процент ставки, не больше ±30."
     ),
+    "zz_ef_business_cash": "Денежная масса: касса предприятий",
+    "zz_ef_business_cash_desc": (
+        "Запас денег у зданий — около трети годового ВВП, как деньги предприятий на счетах в 1830-х "
+        "(без модификатора — около двух ВВП). Кредитный лимит страны поднят долей ВВП взамен."
+    ),
 }
 
 EN = {
@@ -212,6 +217,11 @@ EN = {
     "zz_ef_rate_private_construction_desc": (
         f"A {KR} below 6.5% raises the private sector's share of construction points, above it lowers it: "
         "5 pp of share per percent of rate, at most ±30."
+    ),
+    "zz_ef_business_cash": "Money supply: business cash",
+    "zz_ef_business_cash_desc": (
+        "Buildings' cash reserves at about a third of a year's GDP, like businesses' bank balances in the 1830s "
+        "(without the modifier about two GDPs). The country's credit limit takes a share of GDP instead."
     ),
 }
 assert set(RU) == set(EN)

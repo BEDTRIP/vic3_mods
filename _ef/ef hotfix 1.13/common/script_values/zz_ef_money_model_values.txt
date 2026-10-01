@@ -88,11 +88,12 @@ zz_ef_building_cash = {
 # (EF.48 item 11: hoarding deflates, spending inflates). The currency's value
 # (E&F money_value_0 = national capacity / money_supply) and the inflation
 # read it.
+# 1.10 evening (the user, run 12): the money in circulation is M2 -- pops'
+# cash, business cash and pops' deposits (zz_ef_agg_m2). The pool beyond the
+# deposits (the CB's credit, contributions not yet spent) becomes money when
+# the banks spend it.
 REPLACE_OR_CREATE:money_circulating = {
-	value = 0
-	add = zz_ef_building_cash
-	add = investment_pool
-	add = zz_ef_pop_cash_held
+	value = zz_ef_agg_m2
 	min = 1
 }
 REPLACE_OR_CREATE:money_supply = {
@@ -391,6 +392,7 @@ zz_ef_raw_minting_week = {
 zz_ef_raw_pool_gross = { value = investment_pool_gross_income }
 zz_ef_raw_pool_net = { value = investment_pool_net_income }
 zz_ef_raw_gdp = { value = gdp }
+zz_ef_raw_credit = { value = credit }
 
 # ---- guarded reads of the ledger variables (0 before the first step) ------
 
@@ -570,6 +572,16 @@ zz_ef_tr_other_net = {
 
 # ---- pops' savings and deposits (the receiver, zz_ef_pop_savings_step) --------
 
+# Pops' savings at the first step (1.10 evening, the user's M0 = cash at
+# hand): 15% of a year's GDP -- coin and notes in Britain in the 1830s were
+# ~11% of GDP, and part of the savings goes to deposits. Not engine money
+# (pops hold none): the share deposited enters the pool as new money --
+# check.
+zz_ef_pop_start_savings = {
+	value = gdp
+	multiply = 0.15
+	min = 0
+}
 # 5% of the gap a week (the user, 1.10; was 2%).
 zz_ef_deposit_speed = 0.05
 # Share of savings pops keep in banks: 30% at a 4% key rate, +5 pp per pp of
@@ -1321,7 +1333,7 @@ zz_ef_gdp_growth_year = {
 	}
 }
 # Inflation a year (equation of exchange): money grows faster than the
-# economy -> prices rise; money = the money in circulation (M2 - M0). The
+# economy -> prices rise; money = the money in circulation (M2). The
 # game's GDP is nominal (no real GDP in script): so this is the growth of
 # money against GDP -- check.
 zz_ef_inflation = {
@@ -1410,14 +1422,15 @@ zz_ef_cb_metal_money = {
 		divide = zz_ef_cb_valuation
 	}
 }
-# Metal per unit the CB's metal is valued at: the parity, but never under
-# today's value -- after a collapse the parity can be re-anchored at a tiny
-# value (run 8: Spain, Ottomans, Belgium -- the CB's money jumped to billions).
-# So the CB's metal is worth at most the money in circulation.
+# Metal per unit the CB's metal is valued at: the parity. Until version 7 it
+# was never under today's value (run 8: re-anchors after a collapse put the
+# parity at a tiny value -- Spain, Ottomans, Belgium -- the CB's money jumped
+# to billions); with the historical parity and 40% cover (1.10 evening) the
+# reserves at parity are the cover itself, so the floor is gone.
 zz_ef_cb_valuation = {
 	value = var:money_value_target_1
 	max = 1000000
-	min = money_value_0
+	min = 0.000001
 }
 # The CB's reserves in money (not money: outside M0-M3, shown as the cover).
 zz_ef_cb_money = {
@@ -1538,17 +1551,50 @@ zz_ef_foreign_assets = {
 	value = zz_ef_bank_bonds
 	add = zz_ef_treasury_bonds
 }
+# As in real statistics (the user, 1.10 evening, run 12): M0 = cash at
+# hand, M1 = + business cash (current accounts), M2 = + pops' deposits. The
+# treasury (the government's account), the CB's reserves and the banks' own
+# funds (the pool beyond deposits) are outside the money supply. Deposits are
+# the banks' debt to pops: the pool may have lent them on -- then the same
+# money is also in business cash (the banks created it).
 zz_ef_agg_m0 = {
-	value = zz_ef_treasury
+	value = zz_ef_pop_cash_held
 }
 zz_ef_agg_m1 = {
 	value = zz_ef_agg_m0
-	add = investment_pool
+	add = zz_ef_building_cash
 }
 zz_ef_agg_m2 = {
 	value = zz_ef_agg_m1
-	add = zz_ef_building_cash
-	add = zz_ef_pop_cash_held
+	add = {
+		value = zz_ef_pop_deposits
+		min = 0
+	}
+}
+# Shares of a year's GDP, for the tooltip (the norm: Britain 1830s M2 ~45%).
+zz_ef_agg_m0_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_agg_m0
+		divide = gdp
+	}
+}
+zz_ef_agg_m1_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_agg_m1
+		divide = gdp
+	}
+}
+zz_ef_agg_m2_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_agg_m2
+		divide = gdp
+	}
 }
 zz_ef_agg_m3 = {
 	value = zz_ef_agg_m2

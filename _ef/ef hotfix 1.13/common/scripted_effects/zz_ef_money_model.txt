@@ -41,6 +41,11 @@ REPLACE_OR_CREATE:investement_pool_borrowing = {
 # a save that lost its delayed on_actions). var:zz_ef_week_alive lives 10
 # days and every step renews it.
 zz_ef_money_week_start = {
+	# Business cash at ~0.3 GDP (static_modifiers/zz_ef_business_cash.txt).
+	if = {
+		limit = { NOT = { has_modifier = zz_ef_business_cash } }
+		add_modifier = { name = zz_ef_business_cash }
+	}
 	if = {
 		limit = {
 			NOT = { has_variable = zz_ef_week_alive }
@@ -92,9 +97,33 @@ zz_ef_money_model_step = {
 	# 7.32). E&F sets the parity itself from the value when a standard is
 	# adopted (money_value_target_valided); the same here: parity = today's
 	# value, cover back to ~100%. Metal standards with a central bank only.
+	# Version 7 (1.10 evening, the user): a NEW game keeps E&F's historical
+	# parity (history/global/99_ef_history_global_variable.txt: the pound 7.32
+	# -- grams of gold in a sovereign, the franc 0.75, ...); our re-anchors put
+	# the pound at 60-80. E&F gives the CB metal = parity x its own money (a
+	# counter ~10 times our money in circulation), i.e. ~1000% cover of ours.
+	# So the CB's metal is rescaled once: 40% cover of the money in
+	# circulation at the historical parity (zz_ef_cover_normal); with the
+	# capacity x 2.5 the value starts at the parity. Older saves keep their
+	# re-anchored parity (versions <= 6) -- test with a new game.
+	# Twice: at the first step and 8 weeks later (zz_ef_metal_rescale_due),
+	# when the business cash has shrunk to its new reserve (zz_ef_business_cash)
+	# and pops' starting cash is in -- the money in circulation the 40% is
+	# measured against.
 	if = {
 		limit = { NOT = { has_variable = zz_ef_parity_version } }
-		set_variable = { name = zz_ef_parity_version value = 0 }
+		set_variable = { name = zz_ef_parity_version value = 7 }
+		set_variable = { name = zz_ef_metal_rescale_due value = 8 }
+		zz_ef_metal_rescale_step = yes
+	}
+	else_if = {
+		limit = { has_variable = zz_ef_metal_rescale_due }
+		change_variable = { name = zz_ef_metal_rescale_due subtract = 1 }
+		if = {
+			limit = { var:zz_ef_metal_rescale_due <= 0 }
+			remove_variable = zz_ef_metal_rescale_due
+			zz_ef_metal_rescale_step = yes
+		}
 	}
 	if = {
 		limit = { var:zz_ef_parity_version < 6 }
@@ -227,7 +256,7 @@ zz_ef_money_model_step = {
 				gdp > 20000000
 			}
 		}
-		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m3')|0]|circ [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circulation')|0]|cbm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_money')|0]|abroad [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_foreign_assets')|0]|eng [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circ_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cbtgt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_credit_target')|0]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|2]"
+		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m3')|0]|circ [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circulation')|0]|cbm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_money')|0]|abroad [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_foreign_assets')|0]|eng [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circ_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cbtgt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_credit_target')|0]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|2]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|bcash [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_building_cash')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_credit')|0]"
 	}
 
 	# The GUI bridge (gui/zz_ef_money_hook.gui): the budget's lines outside
@@ -314,7 +343,9 @@ zz_ef_money_window_roll = {
 zz_ef_pop_savings_step = {
 	if = {
 		limit = { NOT = { has_variable = zz_ef_pop_savings } }
-		set_variable = { name = zz_ef_pop_savings value = 0 }
+		# pops' starting cash (1.10 evening): M0 is cash at hand, it cannot
+		# start at zero; zz_ef_pop_start_savings
+		set_variable = { name = zz_ef_pop_savings value = zz_ef_pop_start_savings }
 		set_variable = { name = zz_ef_pop_deposits value = 0 }
 	}
 	set_variable = { name = zz_ef_f_inflow value = zz_ef_v_f_leak }
@@ -535,4 +566,39 @@ zz_ef_money_ledger_delta = {
 		set_variable = { name = zz_ef_d_$ACC$ value = 0 }
 	}
 	set_variable = { name = zz_ef_prev_$ACC$ value = $VALUE$ }
+}
+
+# EF.48 version 7 (1.10 evening): the CB's metal rescaled to cover
+# zz_ef_cover_normal (40%) of the money in circulation at the historical
+# parity. Metal standards with a CB only.
+zz_ef_metal_rescale_step = {
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+			zz_ef_cb_cover > 0
+		}
+		set_variable = { name = zz_ef_metal_rescale value = zz_ef_cover_normal }
+		change_variable = { name = zz_ef_metal_rescale divide = zz_ef_cb_cover }
+		# every CB state, as E&F's gold_state_native_for_stockpile sums them
+		every_scope_state = {
+			limit = {
+				has_modifier = central_bank_historic_place
+			}
+			if = {
+				limit = { has_variable = gold_state_1 }
+				change_variable = { name = gold_state_1 multiply = owner.var:zz_ef_metal_rescale }
+			}
+			if = {
+				limit = { has_variable = silver_state_1 }
+				change_variable = { name = silver_state_1 multiply = owner.var:zz_ef_metal_rescale }
+			}
+		}
+	}
 }

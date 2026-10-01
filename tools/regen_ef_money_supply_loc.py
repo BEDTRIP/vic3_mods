@@ -85,38 +85,41 @@ def main_text(lang, c):
     cur, sv, money, delta, tt = ctx(c)
     gold = "@gold!"
     ru = lang == "russian"
-    # The user's aggregates (1.10 day): M0 = treasury, M1 = + banks, M2 = + businesses and pops' savings
-    # at hand, M3 = + claims on abroad. The currency's value and the inflation read the money in circulation
-    # (M2 - M0). The CB's metal and currency good are reserves -- the cover, not money (1.10 evening, run 10:
-    # in M0 they counted every payment abroad twice); shown on their own line under M3.
+    # The user's aggregates (1.10 evening, run 12 -- as in real statistics): M0 = pops' cash at hand, M1 = +
+    # business cash, M2 = + pops' deposits, M3 = + claims on abroad. The treasury, the banks' own funds (the pool)
+    # and the CB's reserves are accounts outside the money supply. The currency's value and the inflation read M2.
     if ru:
         L = dict(title="Денежная масса", total="Всего (M3)", week="за неделю",
-                 m0="M0 = казна", tr="Казна", cb="Резервы ЦБ — покрытие валюты, не деньги",
-                 cbf="металл по паритету; покрытие денег в обращении {1} (норма 40%; ниже — кредит ЦБ сжимается, при 20% — ноль, сейчас {2} цели); выпущено ЦБ (долг банков) {3}",
-                 m1="M1 = M0 + банки", bank="Средства банков (пул)", dep="в т.ч. вклады населения",
-                 m2="M2 = M1 + предприятия и население", bld="Касса предприятий", tc="из них торговые центры",
-                 cash="Накопления населения на руках", savall="всего накоплений {0}, во вкладах {1}",
+                 m0="M0 = наличные у населения", cash="Наличные на руках", savall="всего накоплений {0}, во вкладах {1}",
+                 m1="M1 = M0 + счета предприятий", bld="Касса предприятий", tc="из них торговые центры",
+                 m2="M2 = M1 + вклады населения", dep="Вклады в банках",
                  m3="M3 = M2 + заграница", abroad="Заграница",
                  abf="облигации банков {0}, облигации казны {1}",
-                 circ="В обращении (курс и инфляция): M2 − M0",
-                 infl="Инфляция за год", inflf="рост денег в обращении {0} − рост ВВП {1}",
+                 out="Вне денежной массы:", tr="Казна (счёт правительства)",
+                 bank="Средства банков (пул)", bankf="из них вклады {0}, долг перед ЦБ {1}",
+                 cb="Резервы ЦБ — покрытие валюты, не деньги",
+                 cbf="металл по паритету; покрытие M2 {1} (норма 40%; ниже — кредит ЦБ сжимается, при 20% — ноль, сейчас {2} цели); выпущено ЦБ (долг банков) {3}",
+                 circ="Курс и инфляция считаются по M2",
+                 infl="Инфляция за год", inflf="рост M2 {0} − рост ВВП {1}",
                  debt="Долги (не деньги)", debtf="бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}",
                  hint="Наведите на счёт — все переводы за неделю.",
-                 dyn="месяц {0}, год {1}, 5 лет {2}")
+                 dyn="месяц {0}, год {1}, 5 лет {2}", gdp="к ВВП")
     else:
         L = dict(title="Money Supply", total="Total (M3)", week="this week",
-                 m0="M0 = treasury", tr="Treasury", cb="CB reserves — the currency's cover, not money",
-                 cbf="metal at parity; cover of the money in circulation {1} (normal 40%; under it the CB's credit shrinks, zero at 20%, now {2} of the target); issued by the CB (banks' debt) {3}",
-                 m1="M1 = M0 + banks", bank="Bank funds (the pool)", dep="of it pops' deposits",
-                 m2="M2 = M1 + businesses and pops", bld="Business cash", tc="of it trade centres",
-                 cash="Pops' savings at hand", savall="all savings {0}, in deposits {1}",
+                 m0="M0 = pops' cash", cash="Cash at hand", savall="all savings {0}, in deposits {1}",
+                 m1="M1 = M0 + business accounts", bld="Business cash", tc="of it trade centres",
+                 m2="M2 = M1 + pops' deposits", dep="Bank deposits",
                  m3="M3 = M2 + abroad", abroad="Abroad",
                  abf="banks' bonds {0}, treasury's bonds {1}",
-                 circ="In circulation (value and inflation): M2 − M0",
-                 infl="Inflation, a year", inflf="money in circulation growth {0} − GDP growth {1}",
+                 out="Outside the money supply:", tr="Treasury (the government's account)",
+                 bank="Bank funds (the pool)", bankf="of it deposits {0}, debt to the CB {1}",
+                 cb="CB reserves — the currency's cover, not money",
+                 cbf="metal at parity; cover of M2 {1} (normal 40%; under it the CB's credit shrinks, zero at 20%, now {2} of the target); issued by the CB (banks' debt) {3}",
+                 circ="The value and the inflation read M2",
+                 infl="Inflation, a year", inflf="M2 growth {0} − GDP growth {1}",
                  debt="Debts (not money)", debtf="budget {0}, banks to the CB {1}, consumer credit {2}, business {3}",
                  hint="Hover an account for all its transfers this week.",
-                 dyn="month {0}, year {1}, 5 years {2}")
+                 dyn="month {0}, year {1}, 5 years {2}", gdp="of GDP")
 
     def ing(name):
         return f" ≈ {sv(name)} {gold}"
@@ -125,27 +128,32 @@ def main_text(lang, c):
         pc = [sv(f"zz_ef_agg{k}_pct_{p}", "+=1%") for p in ("month", "year", "5y")]
         return f"{delta(f'zz_ef_v_d_agg{k}')} {L['week']}; " + L["dyn"].format(*pc)
 
+    def ratio(k):
+        return f"{sv(f'zz_ef_agg_m{k}_to_gdp', '%0')} {L['gdp']}"
+
     lines = [
         f"{L['title']}:",
         f"{L['total']}: #p {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')}",
-        f" {L['m0']}: #T {money('zz_ef_agg_m0')}#!{ing('zz_ef_agg_m0_gold')} ({dyn(0)})",
-        f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#! ({delta('zz_ef_v_d_treasury')})",
-        f" {L['m1']}: #T {money('zz_ef_agg_m1')}#!{ing('zz_ef_agg_m1_gold')} ({dyn(1)})",
-        f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')}; "
-        f"{L['dep']} {money('zz_ef_pop_deposits')})",
-        f" {L['m2']}: #T {money('zz_ef_agg_m2')}#!{ing('zz_ef_agg_m2_gold')} ({dyn(2)})",
-        f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')}; "
-        f"{L['tc']} {money('zz_ef_tc_cash')})",
+        f" {L['m0']}: #T {money('zz_ef_agg_m0')}#! — {ratio(0)} ({dyn(0)})",
         f"  -> {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#! "
         f"({sv('zz_ef_pop_savings_week', 'D+=')}{cur}; "
         + L["savall"].format(money("zz_ef_pop_savings"), money("zz_ef_pop_deposits")) + ")",
-        f" {L['m3']}: #T {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')} ({dyn(3)})",
+        f" {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} ({dyn(1)})",
+        f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')}; "
+        f"{L['tc']} {money('zz_ef_tc_cash')})",
+        f" {L['m2']}: #T {money('zz_ef_agg_m2')}#!{ing('zz_ef_agg_m2_gold')} — {ratio(2)} ({dyn(2)})",
+        f"  -> {tt('zz_ef_ms_tt_banks', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!",
+        f" {L['m3']}: #T {money('zz_ef_agg_m3')}#! ({dyn(3)})",
         f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#! ({delta('zz_ef_v_d_abroad')}; "
         + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
-        f"{tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#! ({delta('zz_ef_v_d_cbm')}; "
+        f"{L['out']}",
+        f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#! ({delta('zz_ef_v_d_treasury')})",
+        f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')}; "
+        + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt")) + ")",
+        f"  -> {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#! ({delta('zz_ef_v_d_cbm')}; "
         + L["cbf"].format("", sv("zz_ef_cb_cover", "%0"), sv("zz_ef_cb_cover_credit_mult", "%0"),
                           money("zz_ef_bank_cb_debt")) + ")",
-        f"{L['circ']}: #T {money('zz_ef_circulation')}#!",
+        f"{L['circ']}.",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
             sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%')) + ")",
         (f"Признаки пузыря: кредит {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} ВВП; пул — "
@@ -196,7 +204,7 @@ def main_text(lang, c):
 
 # The accounts in the order of M0..M3 (the user, 1.10 day), then the CB: its metal and E&F's currency good
 # are reserves, outside the money (1.10 evening); abroad is its own account (claims: bonds) in M3.
-ACC_ORDER = ["treasury", "banks", "buildings", "pops", "abroad", "cb"]
+ACC_ORDER = ["pops", "buildings", "banks", "abroad", "treasury", "cb"]
 TITLES = {
     "treasury": ("Казна", "Treasury"),
     "buildings": ("Касса предприятий", "Business cash"),

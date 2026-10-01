@@ -1,0 +1,16 @@
+#############################################
+# EF.48 (the user, 1.10 evening, run 12): the money supply close to the
+# historical norm. The engine keeps a fixed cash reserve per building level --
+# Britain 1836 held 94M of business cash at a GDP of 46M a year (2 GDPs; the
+# whole M2 was 2.5 GDPs, Britain's real broad money ~45% of GDP). x 0.15 puts
+# it at ~0.3 GDP. Added monthly to every country by zz_ef_money_week_start
+# (scripted_effects/zz_ef_money_model.txt). The credit limit (vanilla: cash
+# reserves + base + GDP share) is kept by COUNTRY_MIN_CREDIT_SCALED
+# (defines/zzzz_ef_credit_def.txt). Side effect: buildings have a smaller
+# buffer against losses -- check in runs.
+#############################################
+
+zz_ef_business_cash = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
+	building_cash_reserves_mult = -0.85
+}
