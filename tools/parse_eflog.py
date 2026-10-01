@@ -1,7 +1,8 @@
 """EF.48 sandbox runs: eflog.txt (EFW/EFR lines of the weekly money model) -> JSON.
 
 Usage: py tools/parse_eflog.py <run>/eflog.txt [more eflog.txt ...] <out.json>
-Output: {country: {"EFW": [{"date": "1837-01-05", key: value, ...}], "EFR": [...]}}.
+Output: {country: {"EFW": [{"date": "1837-01-05", key: value, ...}], "EFR": [...], "EFX": [...], "EFC": [...]}}
+(EFX: the monthly currency line of every country; EFC: a currency-crisis redemption, night 2).
 Dates are written by the game in Russian month names (the user's language).
 """
 import json, re, sys
@@ -20,11 +21,13 @@ out = {}
 for path in sys.argv[1:-1]:
     for line in open(path, encoding="utf-8-sig", errors="replace"):
         parts = line.strip().split("|")
-        if len(parts) < 4 or parts[0] not in ("EFW", "EFR"): continue
+        if len(parts) < 4 or parts[0] not in ("EFW", "EFR", "EFX", "EFC"): continue
         rec = {"date": date(parts[1])}
         for p in parts[3:]:
             if " " in p:
                 k, v = p.split(" ", 1); rec[k] = num(v)
+            else:
+                rec["tag"] = p
         out.setdefault(parts[2], {}).setdefault(parts[0], []).append(rec)
 json.dump(out, open(sys.argv[-1], "w", encoding="utf-8"), ensure_ascii=False)
 for c, d in out.items():

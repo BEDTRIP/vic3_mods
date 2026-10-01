@@ -5,7 +5,8 @@ Launches the game with the last save (-continuelastsave -debug_mode), waits for
 it to load, sets speed 5 and unpauses, lets it run, pauses, takes a screenshot
 of the game window, closes the game and collects the logs. The weekly money
 model writes one line a week per big economy into debug.log (EFW = the step,
-EFR = the GUI bridge's receiver, scripted_effects/zz_ef_money_model.txt);
+EFR = the GUI bridge's receiver, scripted_effects/zz_ef_money_model.txt;
+EFX = every currency once a month, EFC = a currency-crisis redemption);
 they are extracted into <OutDir>/eflog.txt.
 
 Progress is checked by the date on screen (debug.log is buffered until the
@@ -366,8 +367,8 @@ $parts = @(Get-ChildItem (Join-Path $OutDir "dbgparts") -Filter "*.log" -ErrorAc
     @(Get-ChildItem $OutDir -Filter "debug.log")
 if ($parts) {
     $seen = New-Object 'System.Collections.Generic.HashSet[string]'
-    Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|" -SimpleMatch |
-        ForEach-Object { $_.Line -replace "^.*?(EF[WR]\|)", '$1' } |
+    Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|", "EFX|", "EFC|" -SimpleMatch |
+        ForEach-Object { $_.Line -replace "^.*?(EF[WRXC]\|)", '$1' } |
         Where-Object { $seen.Add($_) } |
         Set-Content -Encoding utf8 (Join-Path $OutDir "eflog.txt")
 }
