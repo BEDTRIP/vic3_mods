@@ -314,8 +314,9 @@ else {
     $since = Get-Date
     $end = (Get-Date).AddMinutes($RunMinutes)
     while ((Get-Date) -lt $end) {
-        Start-Sleep 60
-        Save-DebugParts
+        # every 15 s: in run 12 several parts rotated within one minute and a
+        # game year was lost
+        for ($k = 0; $k -lt 4; $k++) { Start-Sleep 15; Save-DebugParts }
         if ($Autosaves -gt 0) {
             $n = @(Get-ChildItem (Join-Path $Docs "save games") -Filter "autosave*.v3" | Where-Object { $_.LastWriteTime -gt $since }).Count
             Log "new autosaves: $n"
