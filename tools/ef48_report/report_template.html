@@ -1,0 +1,209 @@
+<title>Блок В: денежная система</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=PT+Sans:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column of a ledger report; charts as small multiples in a wrapping grid. */
+:root {
+  --bg: #f3f5f4;
+  --panel: #ffffff;
+  --ink: #1d2623;
+  --muted: #5d6b66;
+  --rule: #d5ddd9;
+  --accent: #1f6b57;      /* banknote green */
+  --accent2: #a4572a;     /* copper */
+  --accent3: #3f5aa8;     /* ink blue */
+  --accent4: #8a6d1a;     /* gold */
+  --warn: #b0452f;
+  --ok: #2f7d4f;
+  --chip: #e6ece9;
+  --f-display: "PT Serif", Georgia, "Times New Roman", serif;
+  --f-body: "PT Sans", "Segoe UI", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a18; --panel: #1b2321; --ink: #e3ebe7; --muted: #9aaaa4; --rule: #2e3a36;
+    --accent: #5cc0a0; --accent2: #e08a55; --accent3: #8ea6ff; --accent4: #d8b44a;
+    --warn: #ef7a62; --ok: #6cc98f; --chip: #24302c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a18; --panel: #1b2321; --ink: #e3ebe7; --muted: #9aaaa4; --rule: #2e3a36;
+  --accent: #5cc0a0; --accent2: #e08a55; --accent3: #8ea6ff; --accent4: #d8b44a;
+  --warn: #ef7a62; --ok: #6cc98f; --chip: #24302c; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 36px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 4.5vw, 40px); line-height: 1.15; }
+h2 { font-size: 24px; border-bottom: 1px solid var(--rule); padding-bottom: 6px; }
+h3 { font-size: 17px; }
+p { margin: 0; max-width: 72ch; }
+.lede { color: var(--muted); font-size: 17px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+section { display: grid; gap: 14px; min-width: 0; }
+.items { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.items li { display: grid; grid-template-columns: 3.2em 1fr; gap: 10px; align-items: baseline; }
+.items .n { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.chip { display: inline-block; font-family: var(--f-mono); font-size: 12px; padding: 1px 8px; border-radius: 3px; background: var(--chip); color: var(--muted); }
+.chip.check { color: var(--warn); }
+.chip.ok { color: var(--ok); }
+code { font-family: var(--f-mono); font-size: .88em; background: var(--chip); padding: 0 4px; border-radius: 3px; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.controls label { font-size: 14px; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+select { font: inherit; font-size: 14px; padding: 4px 8px; background: var(--panel); color: var(--ink); border: 1px solid var(--rule); border-radius: 4px; }
+select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 14px 14px 10px; display: grid; gap: 6px; min-width: 0; }
+.card .cap { font-size: 13px; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 3px; margin-right: 4px; vertical-align: middle; }
+svg { display: block; width: 100%; height: auto; }
+svg text { font-family: var(--f-mono); font-size: 10px; fill: var(--muted); }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 14px; min-width: 560px; width: 100%; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 700; font-size: 13px; color: var(--muted); }
+td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.note { font-size: 14px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <div class="eyebrow">E&amp;F Hotfix · EF.48 · 1 октября 2026</div>
+    <h1>Блок В: живая денежная система</h1>
+    <p class="lede">Отчёт о ночной и утренней работе: все 14 решений из «Решений 1.10» написаны в коде,
+    прогоны песочницы — ниже по странам. Что принято без вас, помечено <span class="chip check">проверить</span>.</p>
+  </header>
+
+  <section>
+    <h2>Что сделано</h2>
+    <ul class="items" id="done"></ul>
+  </section>
+
+  <section>
+    <h2>Прогоны</h2>
+    <div class="controls">
+      <label for="run">Прогон <select id="run"></select></label>
+      <label for="country">Страна <select id="country"></select></label>
+    </div>
+    <p class="note" id="runnote"></p>
+    <div class="grid" id="charts"></div>
+  </section>
+
+  <section>
+    <h2>Принято без вас — проверить</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Пункт</th><th>Что решено</th><th>Почему</th></tr></thead>
+      <tbody id="decisions"></tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Открытые вопросы</h2>
+    <ul class="items" id="open"></ul>
+  </section>
+
+  <section>
+    <h2>Что посмотреть в игре</h2>
+    <ul class="items" id="ingame"></ul>
+  </section>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const META = /*__META__*/null;
+
+function fill(id, rows, fmt) {
+  const el = document.getElementById(id);
+  el.innerHTML = rows.map(fmt).join("");
+}
+fill("done", META.done, r => `<li><span class="n">${r[0]}</span><span>${r[1]} ${r[2] ? `<span class="chip ${r[2]}">${r[2] === "ok" ? "проверено в игре" : r[2] === "check" ? "проверить" : "без прогона"}</span>` : ""}</span></li>`);
+fill("decisions", META.decisions, r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`);
+fill("open", META.open, (r, i) => `<li><span class="n">${i + 1}</span><span>${r}</span></li>`);
+fill("ingame", META.ingame, (r, i) => `<li><span class="n">${i + 1}</span><span>${r}</span></li>`);
+
+const CHARTS = [
+  { title: "Денежная масса", cap: "M0 казна, M1 + касса предприятий, M2 + пул, M3 в обращении", kind: "EFW",
+    series: [["m0", "M0", "--accent4"], ["m1", "M1", "--accent3"], ["m2", "M2", "--accent"], ["m3", "M3", "--accent2"]] },
+  { title: "Накопления и вклады", cap: "накопления населения (счёт мода) и их часть во вкладах", kind: "EFR",
+    series: [["savings", "накопления", "--accent"], ["deposits", "вклады", "--accent3"]] },
+  { title: "Кредит", cap: "долг банков перед ЦБ, потребкредит, кредит бизнесу (учёт)", kind: "EFR",
+    series: [["cc_debt", "потребкредит", "--accent2"], ["bc_debt", "бизнесу", "--accent3"]],
+    extra: [["EFW", "cb_debt", "банки → ЦБ", "--accent"]] },
+  { title: "Резервы металла ЦБ", cap: "золото (серебро) ЦБ: по механизму Юма движется с потоком за рубеж", kind: "EFR",
+    series: [["metal", "металл", "--accent4"]] },
+  { title: "Курс", cap: "металла за единицу денег (E&F money_value_0)", kind: "EFR",
+    series: [["mv0", "курс", "--accent3"]] },
+  { title: "Инфляция за год", cap: "рост M3 − рост ВВП, доли года", kind: "EFW",
+    series: [["infl", "инфляция", "--warn"], ["g_m3", "рост M3", "--accent2"], ["g_gdp", "рост ВВП", "--accent"]] },
+  { title: "Потоки недели", cap: "утечка в накопления (−) и остаток пула (выкуп уровней)", kind: "EFR",
+    series: [["leak", "утечка", "--accent3"], ["pool_other", "остаток пула", "--warn"], ["ext_net", "поток за рубеж", "--accent2"]] },
+];
+
+function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function fmt(v) {
+  const a = Math.abs(v);
+  if (a >= 1e9) return (v / 1e9).toFixed(1) + "B";
+  if (a >= 1e6) return (v / 1e6).toFixed(1) + "M";
+  if (a >= 1e3) return (v / 1e3).toFixed(0) + "K";
+  if (a > 0 && a < 1) return v.toFixed(2);
+  return v.toFixed(a < 10 ? 1 : 0);
+}
+function chart(card, lines) {
+  const W = 320, H = 170, L = 46, R = 8, T = 8, B = 22;
+  const all = lines.flatMap(l => l.pts);
+  if (!all.length) { card.insertAdjacentHTML("beforeend", `<p class="note">нет данных в этом прогоне</p>`); return; }
+  const dates = [...new Set(all.map(p => p[0]))].sort();
+  const xi = d => dates.indexOf(d);
+  let lo = Math.min(...all.map(p => p[1])), hi = Math.max(...all.map(p => p[1]));
+  if (lo > 0 && lo < hi * 0.5) lo = 0;
+  if (hi === lo) { hi += Math.abs(hi) * 0.1 || 1; lo -= Math.abs(lo) * 0.1 || 1; }
+  const x = i => L + (dates.length > 1 ? i / (dates.length - 1) : 0.5) * (W - L - R);
+  const y = v => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+  const ticks = [lo, (lo + hi) / 2, hi];
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img">`;
+  for (const t of ticks) s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="${css("--rule")}" stroke-width="1"/><text x="${L - 4}" y="${y(t) + 3}" text-anchor="end">${fmt(t)}</text>`;
+  if (lo < 0 && hi > 0) s += `<line x1="${L}" x2="${W - R}" y1="${y(0)}" y2="${y(0)}" stroke="${css("--muted")}" stroke-width="1" stroke-dasharray="3 3"/>`;
+  s += `<text x="${L}" y="${H - 6}">${dates[0]}</text><text x="${W - R}" y="${H - 6}" text-anchor="end">${dates[dates.length - 1]}</text>`;
+  for (const l of lines) {
+    if (!l.pts.length) continue;
+    const d = l.pts.map((p, i) => `${i ? "L" : "M"}${x(xi(p[0])).toFixed(1)},${y(p[1]).toFixed(1)}`).join("");
+    s += `<path d="${d}" fill="none" stroke="${css(l.color)}" stroke-width="1.8"/>`;
+    const last = l.pts[l.pts.length - 1];
+    s += `<circle cx="${x(xi(last[0]))}" cy="${y(last[1])}" r="2.6" fill="${css(l.color)}"/>`;
+  }
+  s += `</svg>`;
+  card.insertAdjacentHTML("beforeend", s);
+  card.insertAdjacentHTML("beforeend", `<div class="legend">${lines.map(l => `<span><i style="background:${css(l.color)}"></i>${l.name}${l.pts.length ? ": " + fmt(l.pts[l.pts.length - 1][1]) : ""}</span>`).join("")}</div>`);
+}
+function pts(run, country, kind, field) {
+  const rows = ((DATA[run] || {})[country] || {})[kind] || [];
+  return rows.filter(r => r[field] !== undefined && r[field] !== null).map(r => [r.date, r[field]]);
+}
+const runSel = document.getElementById("run"), cSel = document.getElementById("country");
+runSel.innerHTML = Object.keys(DATA).map(r => `<option value="${r}">${r}</option>`).join("");
+function countries() {
+  const c = Object.keys(DATA[runSel.value] || {});
+  const pref = ["Великобритания", "Франция", "Россия", "Пруссия", "США", "Австрия"];
+  c.sort((a, b) => (pref.indexOf(a) + 1 || 99) - (pref.indexOf(b) + 1 || 99) || a.localeCompare(b));
+  const keep = cSel.value;
+  cSel.innerHTML = c.map(x => `<option>${x}</option>`).join("");
+  if (c.includes(keep)) cSel.value = keep;
+}
+function draw() {
+  document.getElementById("runnote").textContent = (META.runs[runSel.value] || "");
+  const box = document.getElementById("charts"); box.innerHTML = "";
+  for (const ch of CHARTS) {
+    const card = document.createElement("div"); card.className = "card";
+    card.innerHTML = `<h3>${ch.title}</h3><div class="cap">${ch.cap}</div>`;
+    const lines = ch.series.map(s => ({ name: s[1], color: s[2], pts: pts(runSel.value, cSel.value, ch.kind, s[0]) }));
+    for (const e of ch.extra || []) lines.push({ name: e[2], color: e[3], pts: pts(runSel.value, cSel.value, e[0], e[1]) });
+    box.appendChild(card); chart(card, lines);
+  }
+}
+runSel.addEventListener("change", () => { countries(); draw(); });
+cSel.addEventListener("change", draw);
+countries(); draw();
+</script>
