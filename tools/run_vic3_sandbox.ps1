@@ -90,6 +90,18 @@ public static class W {
 
 function Log($m) { $l = "[{0}] {1}" -f (Get-Date -Format "HH:mm:ss"), $m; Write-Host $l; Add-Content (Join-Path $OutDir "run.log") $l }
 
+# The engine keeps only debug.1..5.log (~2.5 MB, about 2 game years of the
+# weekly lines): a run of 33 min lost 1836-1837 (run 10, 1.10). A rotated part
+# keeps its write time when renamed, so it is saved once under that time.
+function Save-DebugParts {
+    $dir = Join-Path $OutDir "dbgparts"
+    New-Item -ItemType Directory -Force $dir | Out-Null
+    Get-ChildItem $Logs -Filter "debug.*.log" -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -gt $t0 } | ForEach-Object {
+        $dst = Join-Path $dir ("{0}.log" -f $_.LastWriteTime.Ticks)
+        if (-not (Test-Path $dst)) { Copy-Item $_.FullName $dst -ErrorAction SilentlyContinue }
+    }
+}
+
 function Get-Game { Get-Process -Name "victoria3" -ErrorAction SilentlyContinue | Select-Object -First 1 }
 
 # Keys and clicks go to whatever window has the focus. Windows may refuse to
@@ -303,6 +315,7 @@ else {
     $end = (Get-Date).AddMinutes($RunMinutes)
     while ((Get-Date) -lt $end) {
         Start-Sleep 60
+        Save-DebugParts
         if ($Autosaves -gt 0) {
             $n = @(Get-ChildItem (Join-Path $Docs "save games") -Filter "autosave*.v3" | Where-Object { $_.LastWriteTime -gt $since }).Count
             Log "new autosaves: $n"
@@ -333,12 +346,16 @@ if ($p) {
 Start-Sleep 2
 # every log written during the run (debug/error/game.log, the console dumps)
 Get-ChildItem $Logs -File | Where-Object { $_.LastWriteTime -gt $t0 } | ForEach-Object { Copy-Item $_.FullName (Join-Path $OutDir $_.Name) }
-# debug.log rotates at ~512 KB (debug.1.log .. debug.5.log): read the ones of
-# this run, oldest first.
-$parts = Get-ChildItem $OutDir -Filter "debug*.log" | Sort-Object LastWriteTime
+# debug.log rotates at ~512 KB and keeps only debug.1..5.log: the parts saved
+# during the run (dbgparts) + the last ones, oldest first, each line once.
+Save-DebugParts
+$parts = @(Get-ChildItem (Join-Path $OutDir "dbgparts") -Filter "*.log" -ErrorAction SilentlyContinue | Sort-Object Name) +
+    @(Get-ChildItem $OutDir -Filter "debug.log")
 if ($parts) {
+    $seen = New-Object 'System.Collections.Generic.HashSet[string]'
     Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|" -SimpleMatch |
         ForEach-Object { $_.Line -replace "^.*?(EF[WR]\|)", '$1' } |
+        Where-Object { $seen.Add($_) } |
         Set-Content -Encoding utf8 (Join-Path $OutDir "eflog.txt")
 }
 Log "done: $OutDir"
