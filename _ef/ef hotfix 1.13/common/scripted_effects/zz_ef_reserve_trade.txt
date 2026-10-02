@@ -390,10 +390,8 @@ REPLACE_OR_CREATE:trade_balance = {
 		set_variable = { name = import_from_thaler_saxon_thaler_fix value = 0 }
 		set_variable = { name = import_in_thaler_saxon_thaler_fix value = 0 }
 	}
-	if = {
-		limit = { has_variable = trade_balance_in_gold_fixe }
-		remove_variable = trade_balance_in_gold_fixe
-	}
+	# held at 0, not removed: E&F's central_bank_reserves_* read the var (~10 places)
+	set_variable = { name = trade_balance_in_gold_fixe value = 0 }
 }
 
 # Monthly, from zz_ef_money_model_monthly_step. COUNTRY scope (the exporter).

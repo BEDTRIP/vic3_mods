@@ -12,7 +12,8 @@ from nowhere (run 20: 10-65 million a state, in E&F's scale).
 Here:
   * trade_balance is replaced: once per country it zeroes E&F's export/import counters (so the
     accumulation and the import "debt" stop; the old reserve stays in old saves) and the
-    accumulated trade account var:trade_balance_in_gold_fixe goes;
+    accumulated trade account var:trade_balance_in_gold_fixe is held at 0 (removing it made E&F's
+    central_bank_reserves_* 'none': ~1700 errors in is_weak_currency per 3 minutes, runs 23-28);
   * zz_ef_rc_step (our monthly step, every metal-standard market owner with a CB): for every other
     market owner with a CB and a currency, the week's exports both ways (market_exports, units, by a
     binary search -- 19 checks instead of up to 5000) x the average export price per unit of each
@@ -267,8 +268,8 @@ def effects(cur):
                "\t\tset_variable = { name = zz_ef_rc_v1 value = yes }\n"
                + zero +
                "\t}\n"
-               "\tif = {\n\t\tlimit = { has_variable = trade_balance_in_gold_fixe }\n"
-               "\t\tremove_variable = trade_balance_in_gold_fixe\n\t}\n"
+               "\t# held at 0, not removed: E&F's central_bank_reserves_* read the var (~10 places)\n"
+               "\tset_variable = { name = trade_balance_in_gold_fixe value = 0 }\n"
                "}\n\n")
     out.append(STEP)
     out.append(search_effect())
