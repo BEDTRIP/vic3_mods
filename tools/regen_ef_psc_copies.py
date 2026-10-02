@@ -200,6 +200,48 @@ def extract_block(text: str, key: str) -> str:
     raise KeyError(f"top-level key {key!r} not found")
 
 
+# СТР.5 (2026-10-02, decided by the user): E&F's ~100 bank companies list
+# railways, trade centres, mines and construction in building_types, so there is
+# a bank company for almost any building and banks took ~30% of all company
+# construction (run 1836.7 -> 1841.1: +2011 levels). Banks keep only banking:
+# the bank (the hotfix INJECTs building_bank in zz_ef_cm_companies.txt), the
+# national exchanges, the financial district. Everything else in their
+# building_types is commented out, marked `### СТР.5`. Start buildings E&F's
+# history gives them stay theirs -- only new investment follows building_types.
+# Bank companies = the keys zz_ef_cm_companies.txt INJECTs into.
+BANK_TYPES_FILE = "common/company_types/00_ef_companies.txt"
+BANK_KEEP_RE = re.compile(r"^building_(bank|financial_centre\w*|financial_district)$")
+
+
+def bank_companies(hotfix: Path) -> set[str]:
+    return set(re.findall(r"(?m)^INJECT:(\w+)\s*=",
+                          read(hotfix / "common/company_types/zz_ef_cm_companies.txt")))
+
+
+def trim_bank_building_types(body: str, banks: set[str]) -> tuple[str, int]:
+    out, cut = [], 0
+    depth, company, in_types, types_depth = 0, None, False, 0
+    for raw in body.split("\n"):
+        line = raw.split("#", 1)[0]
+        if depth == 0:
+            m = TOP_KEY_RE.match(line)
+            company = m.group(1).split(":")[-1] if m else None
+        if company in banks and depth == 1 and re.match(r"^\s*building_types\s*=\s*\{", line):
+            in_types, types_depth = True, depth + 1
+        elif in_types and depth == types_depth:
+            tok = line.strip()
+            if tok and tok != "}" and not BANK_KEEP_RE.match(tok):
+                indent = raw[:len(raw) - len(raw.lstrip())]
+                raw = f"{indent}#{raw.lstrip()} ### СТР.5: banks keep only banking"
+                line = ""
+                cut += 1
+        depth += line.count("{") - line.count("}")
+        if in_types and depth < types_depth:
+            in_types = False
+        out.append(raw)
+    return "\n".join(out), cut
+
+
 def strip_note(text: str) -> str:
     """Drop our own header (generated banner or in-place note) from the top."""
     text = text.lstrip("﻿")
@@ -264,6 +306,9 @@ def main() -> int:
             rc = 1
             continue
         body, n = BUILDING_RE.subn(NEW_NAME, read(src))
+        if rel == BANK_TYPES_FILE:
+            body, cut = trim_bank_building_types(body, bank_companies(hotfix))
+            print(f"[banks] {rel}: {cut} building_types line(s) commented out (СТР.5)")
         text = BANNER.format(origin="E&F", src=src.name, old=OLD_NAME, new=NEW_NAME) + "\n" + body
         jobs.append((rel, src, "E&F", text, n, False))
 

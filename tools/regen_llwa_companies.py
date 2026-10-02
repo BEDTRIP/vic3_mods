@@ -173,12 +173,14 @@ PORT = [
 # state utility, not a company holding" choice). That restraint is still
 # honoured for the transport companies in RAIL/PORT; it is overridden here,
 # for E&F's banks only, on purpose.
+#
+# NARROWED BACK to the exchange on 2026-10-02 (СТР.5, user decision): banks keep
+# only banking. The E&F hotfix now comments railways, trade centres, mines and
+# construction out of the banks' building_types (regen_ef_psc_copies.py,
+# trim_bank_building_types) -- with ~100 bank companies there was a company for
+# almost every building and banks took ~30% of all company construction. The
+# argument above ("it already carries railway") no longer holds.
 EF_BANK_BUILDINGS = [
-    "LLWA_building_roadway",
-    "LLWA_building_waterway",
-    "LLWA_building_riverway",
-    "LLWA_building_airway",
-    "llwa_building_freight_depot",
     "llwa_building_exchange",
 ]
 

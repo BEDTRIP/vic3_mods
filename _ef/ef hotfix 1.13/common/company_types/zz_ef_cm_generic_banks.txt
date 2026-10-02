@@ -20,12 +20,14 @@ zz_ef_cm_central_bank = {
 
 	building_types = {
 		building_bank
-		building_ef_private_construction
-		building_railway
+		### СТР.5 (2026-10-02): banks keep only banking -- like the flavoured bank
+		### companies (tools/regen_ef_psc_copies.py, trim_bank_building_types).
+		#building_ef_private_construction
+		#building_railway
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center
+		#building_gold_mine
+		#building_silver_mine
 
 		building_financial_centre
 	}

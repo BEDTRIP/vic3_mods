@@ -163,12 +163,12 @@ company_BankJPMorgan = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_usa
 		building_financial_centre_usa_2
@@ -232,12 +232,12 @@ company_BankGoldmanSachs = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_usa
 		building_financial_centre_usa_2
@@ -297,12 +297,12 @@ company_ChaseBank = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_usa
 		building_financial_centre_usa_2
@@ -362,12 +362,12 @@ company_BankWellsFargo = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_usa
 		building_financial_centre_usa_2
@@ -431,12 +431,12 @@ company_BankAmericanExpress = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_usa
 		building_financial_centre_usa_2
@@ -496,12 +496,12 @@ company_DeNederlandscheBank = { #De Nederlandsche Bank
 	preferred_headquarters = { STATE_HOLLAND }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_net
 	}
@@ -559,12 +559,12 @@ company_amsterdamschebank = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_net
 	}
@@ -621,12 +621,12 @@ company_RotterdamscheBankvereeniging = { #Rotterdamsche Bankvereeniging
 	preferred_headquarters = { STATE_HOLLAND }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_net
 	}
@@ -687,12 +687,12 @@ company_BanqueNationaleDeBelgique = { #Banque Nationale de Belgique
 	preferred_headquarters = { STATE_FLANDERS }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bel
 	}
@@ -757,12 +757,12 @@ company_SocieteGeneraledeBelgique = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bel
 	}
@@ -825,12 +825,12 @@ company_BanqueDeBruxelles = { #Banque de Bruxelles
 	preferred_headquarters = {STATE_FLANDERS }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bel
 	}
@@ -896,12 +896,12 @@ company_Bankenverein = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_swi
 	}
@@ -963,12 +963,12 @@ company_HandelsBanken = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_swe
 	}
@@ -1028,12 +1028,12 @@ company_LandmandsBanken = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_den
 	}
@@ -1095,12 +1095,12 @@ company_ChristianiaBank = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -1160,12 +1160,12 @@ company_BankofSpain = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_spa
 	}
@@ -1218,12 +1218,12 @@ company_BancoDeBilbao = { #Banco de Bilbao
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_spa
 	}
@@ -1276,12 +1276,12 @@ company_BancoHispanoColonial = { #Banco Hispano Colonial
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_spa
 	}
@@ -1338,12 +1338,12 @@ company_BancoDePortugal = { #Banco de Portugal
 	preferred_headquarters = { STATE_ESTREMADURA } # Rien ici comme demandé
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_por
 	}
@@ -1402,12 +1402,12 @@ company_BancoCommercialPortugues = { #Banco Commercial Português
 	preferred_headquarters = { STATE_ESTREMADURA } # Rien ici comme demandé
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_por
 	}
@@ -1464,12 +1464,12 @@ company_Bank_Ultramarino = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_por
 	}
@@ -1594,12 +1594,12 @@ company_BancaDItalia = { #Banca d'Italia
 	preferred_headquarters = { STATE_LAZIO } # Rien ici comme demandé
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_ita
 	}
@@ -1661,12 +1661,12 @@ company_BancaCommercialeItaliana = { #Banca Commerciale Italiana
 	preferred_headquarters = { STATE_LOMBARDY } # Rien ici comme demandé
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_ita
 	}
@@ -1728,12 +1728,12 @@ company_CassaDiRisparmioDiTorino = { #Cassa di Risparmio di Torino
 	preferred_headquarters = { STATE_PIEDMONT } # Rien ici comme demandé
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_sar
 	}
@@ -1795,12 +1795,12 @@ company_BankofEngland = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_gbr
 		building_financial_centre_gbr_2
@@ -1865,12 +1865,12 @@ company_LloydsBank = { #Lloyds Bank
 	preferred_headquarters = { STATE_HOME_COUNTIES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_gbr
 		building_financial_centre_gbr_2
@@ -1935,12 +1935,12 @@ company_barclaysBank = {
 	preferred_headquarters = { STATE_HOME_COUNTIES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_gbr
 		building_financial_centre_gbr_2
@@ -2004,12 +2004,12 @@ company_NationalWestminsterBank = { #National Westminster Bank
 	preferred_headquarters = { STATE_HOME_COUNTIES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_gbr
 		building_financial_centre_gbr_2
@@ -2073,12 +2073,12 @@ company_RoyalBankOfScotland = { #Royal Bank of Scotland
 	preferred_headquarters = { STATE_LOWLANDS }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_gbr
 	}
@@ -2138,9 +2138,9 @@ company_Rothschild_Bank_gbr = {
 	replaces_company = company_Rothschild_Bank_Europe
 
 	building_types = {
-		building_construction_sector
+		#building_construction_sector ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
+		#building_trade_center ### СТР.5: banks keep only banking
 
 		building_financial_centre_gbr
 		building_financial_centre_gbr_2
@@ -2206,12 +2206,12 @@ company_BanqueDeFrance = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_fra
 	}
@@ -2267,12 +2267,12 @@ company_BankCreditLyonnais = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_fra
 	}
@@ -2328,12 +2328,12 @@ company_SocieteGenerale = { #Société Générale
 	preferred_headquarters = {STATE_ILE_DE_FRANCE }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_fra
 	}
@@ -2392,12 +2392,12 @@ company_BanqueDeParisEtDesPaysBas = { #Banque de Paris et des Pays-Bas
 	preferred_headquarters = {STATE_ILE_DE_FRANCE }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_fra
 	}
@@ -2463,12 +2463,12 @@ company_Rothschild_Bank_fra = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_fra
 	}
@@ -2539,13 +2539,13 @@ company_StateBankRussianEmpire = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_rye_farm
-		building_wheat_farm
-		building_livestock_ranch
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_rye_farm ### СТР.5: banks keep only banking
+		#building_wheat_farm ### СТР.5: banks keep only banking
+		#building_livestock_ranch ### СТР.5: banks keep only banking
 
 		building_financial_centre_rus
 	}
@@ -2601,12 +2601,12 @@ saint_petersburg_international_commercial_bank = { #Санкт-Петербур�
 	preferred_headquarters = { STATE_INGRIA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_rus
 	}
@@ -2682,12 +2682,12 @@ russo_chinese_bank = { #Русско-Китайский банк
 	}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_rus
 	}
@@ -2749,12 +2749,12 @@ company_DeutscheBank = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_pru
 	}
@@ -2805,12 +2805,12 @@ company_Reichsbank = { #Reichsbank
 	preferred_headquarters = { STATE_BRANDENBURG }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_pru
 		building_financial_centre_frm
@@ -2873,12 +2873,12 @@ company_PreussischeSeehandlung = { #Preußische Seehandlung
 	preferred_headquarters = { STATE_BRANDENBURG }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_pru
 	}
@@ -2947,12 +2947,12 @@ company_Rothschild_Bank_ger = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_frm
 		building_financial_centre_pru
@@ -3016,12 +3016,12 @@ company_BayerischeHypothekenUndWechselBank = { #Bayerische Hypotheken- und Wechs
 	preferred_headquarters = {STATE_BAVARIA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bav
 	}
@@ -3082,12 +3082,12 @@ company_OesterreichischeNationalbank = { #Österreichische Nationalbank
 	preferred_headquarters = { STATE_AUSTRIA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_aus
 	}
@@ -3146,13 +3146,13 @@ company_OesterreichischeCreditAnstalt = { #Österreichische Creditanstalt
 	preferred_headquarters = { STATE_AUSTRIA }
 
 	building_types = {
-		building_construction_sector
-		building_coal_mine
-		building_iron_mine
-		building_lead_mine
-		building_sulfur_mine
-		building_gold_mine
-		building_silver_mine
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_coal_mine ### СТР.5: banks keep only banking
+		#building_iron_mine ### СТР.5: banks keep only banking
+		#building_lead_mine ### СТР.5: banks keep only banking
+		#building_sulfur_mine ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_aus
 	}
@@ -3215,12 +3215,12 @@ company_WienerBankverein = { #Wiener Bankverein
 	preferred_headquarters = { STATE_AUSTRIA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_aus
 	}
@@ -3281,12 +3281,12 @@ company_Rothschild_Bank_aus = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_aus
 	}
@@ -3351,12 +3351,12 @@ company_bankofgreec = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_gre
 	}
@@ -3418,12 +3418,12 @@ company_OttomanBank = { #Osmanlı Bankası
 	preferred_headquarters = {STATE_EASTERN_THRACE}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_tur
 	}
@@ -3482,12 +3482,12 @@ company_TurkishZiraatBankasi = { #Türkiye Ziraat Bankası
 	preferred_headquarters = {STATE_EASTERN_THRACE}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_tur
 	}
@@ -3546,12 +3546,12 @@ company_BanqueImperialeOttomane = { #Banque Impériale Ottomane
 	preferred_headquarters = {STATE_EASTERN_THRACE}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_tur
 	}
@@ -3613,12 +3613,12 @@ company_ImperialBankofPersia = {
 	preferred_headquarters = { STATE_IRAKAJEMI }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -3677,12 +3677,12 @@ company_BankMelliIran = { #بانک ملی ایران
 	preferred_headquarters = { STATE_IRAKAJEMI }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -3741,12 +3741,12 @@ company_BankTejaratPersia = { #بانک تجارت ایران
 	preferred_headquarters = { STATE_IRAKAJEMI }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -3805,12 +3805,12 @@ company_BankAngloPersian = { #بانک انگلیسی-ایرانی
 	preferred_headquarters = { STATE_IRAKAJEMI }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -3871,12 +3871,12 @@ company_BanqueEgyptienne = { #البنك المصري
 	preferred_headquarters = {STATE_LOWER_EGYPT}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_egy
 	}
@@ -3937,12 +3937,12 @@ company_ChohungBank = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -3997,12 +3997,12 @@ company_BankHSBC = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_hkh
 	}
@@ -4067,12 +4067,12 @@ company_BankIBC = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_chi
 	}
@@ -4127,12 +4127,12 @@ company_BankBOCOM = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_chi
 	}
@@ -4188,12 +4188,12 @@ company_DaQingBank = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_chi
 	}
@@ -4251,12 +4251,12 @@ company_Mitsubishiexchangehousebank = {
 	preferred_headquarters = { STATE_KANTO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_jap
 	}
@@ -4327,12 +4327,12 @@ company_BankOfJapan = { #日本銀行
 	preferred_headquarters = { STATE_KANTO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_jap
 	}
@@ -4403,12 +4403,12 @@ company_SumitomoBank = { #住友銀行
 	preferred_headquarters = { STATE_KANTO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_jap
 	}
@@ -4482,12 +4482,12 @@ company_ImperialBankofIndia = {
 	preferred_headquarters = { STATE_WEST_BENGAL }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bic
 	}
@@ -4546,12 +4546,12 @@ company_BankOfIndiaCompany = { #बैंक ऑफ इंडिया कंप
 	preferred_headquarters = { STATE_WEST_BENGAL }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bic
 	}
@@ -4610,12 +4610,12 @@ company_BankOfBombay = { #बैंक ऑफ बॉम्बे
 	preferred_headquarters = { STATE_DELHI }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_bic
 	}
@@ -4677,12 +4677,12 @@ company_RoyalBankofCanada = {
 	preferred_headquarters = { STATE_ONTARIO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_ont
 	}
@@ -4742,12 +4742,12 @@ company_BankOfMontreal = { #Banque de Montréal
 	preferred_headquarters = { STATE_QUEBEC }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_que
 	}
@@ -4806,12 +4806,12 @@ company_CanadianImperialBankOfCommerce = { #Banque Canadienne Impériale de Comm
 	preferred_headquarters = { STATE_ONTARIO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_ont
 		building_financial_centre_que
@@ -4873,12 +4873,12 @@ company_BankDesjardins = {
 	preferred_headquarters = { STATE_QUEBEC }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_que
 	}
@@ -4939,12 +4939,12 @@ company_ColonialBankOfAustralia = { #Colonial Bank of Australia
 	preferred_headquarters = {STATE_NEW_SOUTH_WALES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_nsw
 	}
@@ -5003,12 +5003,12 @@ company_NationalBankOfAustralia = { #National Bank of Australia
 	preferred_headquarters = {STATE_NEW_SOUTH_WALES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_nsw
 	}
@@ -5067,12 +5067,12 @@ company_SouthAustralianBank = { #South Australian Bank
 	preferred_headquarters = {STATE_NEW_SOUTH_WALES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_nsw
 	}
@@ -5134,12 +5134,12 @@ company_BancoDeMexico = { #Banco de México
 	replaces_company = company_Bank_of_Mexico
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_mex
 	}
@@ -5198,12 +5198,12 @@ company_bancodelondresmexico = {
 	preferred_headquarters = { STATE_MEXICO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_mex
 	}
@@ -5262,12 +5262,12 @@ company_BancoMercantilMexicano = { #Banco Mercantil Mexicano
 	preferred_headquarters = { STATE_MEXICO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_mex
 	}
@@ -5328,12 +5328,12 @@ company_BancoCentralDeCostaRica = { #Banco Central de Costa Rica
 	preferred_headquarters = { STATE_COSTA_RICA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -5393,12 +5393,12 @@ company_BancoCentralDeGuatemala = { #Banco Central de Guatemala
 	preferred_headquarters = { STATE_GUATEMALA}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -5458,12 +5458,12 @@ company_BancoCentralDeHonduras = { #Banco Central de Honduras
 	preferred_headquarters = { STATE_HONDURAS }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -5523,12 +5523,12 @@ company_BancoNacionalDePanama = { #Banco Nacional de Panamá
 	preferred_headquarters = { STATE_PANAMA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -5590,12 +5590,12 @@ company_BancoDoBrasil = { #Banco do Brasil
 	preferred_headquarters = { STATE_RIO_DE_JANEIRO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_brz
 	}
@@ -5654,12 +5654,12 @@ company_BancoMercantil = { #Banco Mercantil
 	preferred_headquarters = { STATE_RIO_DE_JANEIRO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_brz
 	}
@@ -5718,12 +5718,12 @@ company_BancoCommercialDoBrasil = { #Banco Commercial do Brasil
 	preferred_headquarters = { STATE_RIO_DE_JANEIRO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_brz
 	}
@@ -5784,12 +5784,12 @@ company_BancoNacionArgentina = { #Banco de la Nación Argentina
 	preferred_headquarters = { STATE_BUENOS_AIRES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_arg
 	}
@@ -5848,12 +5848,12 @@ company_BancoHipotecarioNacional = { #Banco Hipotecario Nacional
 	preferred_headquarters = { STATE_BUENOS_AIRES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_arg
 	}
@@ -5912,12 +5912,12 @@ company_BancoProvincia = { #Banco de la Provincia de Buenos Aires
 	preferred_headquarters = { STATE_BUENOS_AIRES }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_arg
 	}
@@ -5978,12 +5978,12 @@ company_BancoDeChile = { #Banco de Chile
 	preferred_headquarters = {STATE_SANTIAGO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_chl
 	}
@@ -6042,12 +6042,12 @@ company_BancoEstado = { #Banco Estado
 	preferred_headquarters = {STATE_SANTIAGO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_chl
 	}
@@ -6106,12 +6106,12 @@ company_BancoDeValparaiso = { #Banco de Valparaíso
 	preferred_headquarters = {STATE_SANTIAGO }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_chl
 	}
@@ -6172,12 +6172,12 @@ company_BancoNacionalDeBolivia = { #Banco Nacional de Bolivia
 	preferred_headquarters = { STATE_LA_PAZ }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -6238,12 +6238,12 @@ company_BancoRepublicaColombia = { #Banco de la República
 	preferred_headquarters = { STATE_CUNDINAMARCA}
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_col
 	}
@@ -6304,12 +6304,12 @@ company_BancoCentralDeVenezuela = { #Banco Central de Venezuela
 	preferred_headquarters = { STATE_MIRANDA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -6370,12 +6370,12 @@ company_BancoEspanolDeLaHabana = { #Banco Español de la Habana
 	preferred_headquarters = { STATE_WESTERN_CUBA }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -6436,12 +6436,12 @@ company_BancoCentralDelUruguay = { #Banco Central del Uruguay
 	preferred_headquarters = { STATE_URUGUAY }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_uru
 	}
@@ -6502,12 +6502,12 @@ company_BancoNacionalDelParaguay = { #Banco Nacional del Paraguay
 	preferred_headquarters = {STATE_BAJO_PARAGUAY }
 
 	building_types = {
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre
 	}
@@ -6567,12 +6567,12 @@ company_BankSBoBSA = {
 	building_types = {
 		#building_bank
 		#building_financial_district
-		building_construction_sector
-		building_railway
+		#building_construction_sector ### СТР.5: banks keep only banking
+		#building_railway ### СТР.5: banks keep only banking
 		#building_port
-		building_trade_center
-		building_gold_mine
-		building_silver_mine
+		#building_trade_center ### СТР.5: banks keep only banking
+		#building_gold_mine ### СТР.5: banks keep only banking
+		#building_silver_mine ### СТР.5: banks keep only banking
 
 		building_financial_centre_saf
 	}
