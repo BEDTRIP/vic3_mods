@@ -820,11 +820,24 @@ zz_ef_ext_net_week = {
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
 }
-# Metal moved by it: the flow x the currency's value (metal per unit of
-# money, E&F money_value_0), never more than the CB holds.
+# Metal moved by it: the flow x the currency's PARITY (metal per unit of
+# money at the mint par, var:money_value_target_1), never more than the CB
+# holds. Was today's value (money_value_0 = capacity / money): the value grows
+# with the metal, so a surplus fed on itself -- Russia's metal 187 -> 1644M
+# (run 22), Prussia's value 31 -> 186 in two years (run 24). Payments abroad
+# under a metal standard settle at the mint par (2.10).
 zz_ef_hume_metal_week = {
 	value = zz_ef_ext_net_week
-	multiply = money_value_0
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		multiply = var:money_value_target_1
+	}
+	else = {
+		multiply = money_value_0
+	}
 	min = {
 		value = zz_ef_cb_metal
 		multiply = -1
