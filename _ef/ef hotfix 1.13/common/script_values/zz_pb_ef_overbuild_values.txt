@@ -174,3 +174,12 @@ zz_pb_ef_ob_band_old = {
 	floor = yes
 }
 
+# STR.2 (night G, 2026-10-03): STATE scope -- levels of the state's construction
+# sector, the order of on_actions/zz_pb_ef_ai_sector_downsize.txt (biggest first).
+zz_pb_ef_state_css_level = {
+	value = 0
+	if = {
+		limit = { has_building = building_construction_sector }
+		value = b:building_construction_sector.level
+	}
+}

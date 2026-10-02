@@ -1,0 +1,65 @@
+#############################################
+# STR.2 (night G, 2026-10-03): take one level off the construction sector of the
+# scoped STATE -- remove the building and create it again one level lower, with
+# its construction and liquidity methods put back. Called from
+# on_actions/zz_pb_ef_ai_sector_downsize.txt (AI countries over the limit).
+# The methods are remembered in a state variable across the remove/create pair.
+#############################################
+
+zz_pb_ef_css_downsize_one = {
+	if = {
+		limit = { b:building_construction_sector.level <= 1 }
+		remove_building = building_construction_sector
+	}
+	else = {
+		save_temporary_scope_value_as = {
+			name = zz_css_new_level
+			value = {
+				value = b:building_construction_sector.level
+				subtract = 1
+			}
+		}
+		# which construction method: 1 wood, 2 iron, 3 steel, 4 arc-welded
+		set_variable = { name = zz_css_pm value = 1 }
+		if = {
+			limit = { b:building_construction_sector = { has_active_production_method = pm_iron_frame_buildings } }
+			set_variable = { name = zz_css_pm value = 2 }
+		}
+		else_if = {
+			limit = { b:building_construction_sector = { has_active_production_method = pm_steel_frame_buildings } }
+			set_variable = { name = zz_css_pm value = 3 }
+		}
+		else_if = {
+			limit = { b:building_construction_sector = { has_active_production_method = pm_arc_welded_buildings } }
+			set_variable = { name = zz_css_pm value = 4 }
+		}
+		if = {
+			limit = { b:building_construction_sector = { has_active_production_method = pm_market_liquidity_currency } }
+			set_variable = zz_css_liquidity
+		}
+		remove_building = building_construction_sector
+		create_building = {
+			building = building_construction_sector
+			level = scope:zz_css_new_level
+			reserves = 0.5
+		}
+		if = {
+			limit = { var:zz_css_pm = 2 }
+			activate_production_method = { building_type = building_construction_sector production_method = pm_iron_frame_buildings }
+		}
+		else_if = {
+			limit = { var:zz_css_pm = 3 }
+			activate_production_method = { building_type = building_construction_sector production_method = pm_steel_frame_buildings }
+		}
+		else_if = {
+			limit = { var:zz_css_pm = 4 }
+			activate_production_method = { building_type = building_construction_sector production_method = pm_arc_welded_buildings }
+		}
+		if = {
+			limit = { has_variable = zz_css_liquidity }
+			activate_production_method = { building_type = building_construction_sector production_method = pm_market_liquidity_currency }
+			remove_variable = zz_css_liquidity
+		}
+		remove_variable = zz_css_pm
+	}
+}

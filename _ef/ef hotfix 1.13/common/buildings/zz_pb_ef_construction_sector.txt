@@ -104,13 +104,16 @@ REPLACE:building_construction_sector = {
 		# ceiling comes back none and this line logged
 		#   Value of wrong type in 'zz_pb_ef_construction_sector.txt:90'. Got value of type 'none'
 		# Such a country simply gets no AI penalty until it is backfilled.
+		# STR.2 (night G, 2026-10-03, D.12): at or over the limit the AI does not
+		# build sectors at all (was: ai_value / 2 over it); it also takes the
+		# excess down (on_actions/zz_pb_ef_ai_sector_downsize.txt).
 		if = {
 			limit = {
 				exists = owner
 				owner = { has_variable = base_rate_percentage }
-				owner.building_ef_private_construction_lvl > owner.building_urban_center_lvl_by_base_rate
+				owner.building_ef_private_construction_lvl >= owner.building_urban_center_lvl_by_base_rate
 			}
-			divide = 2
+			value = 0
 		}
 	}
 
