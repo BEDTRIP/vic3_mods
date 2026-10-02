@@ -8,7 +8,7 @@ third-party `usu_llwa` compatch) which turned out to close entirely inside this
 same file -- see "4." below.
 
   1. Eight railway companies: grey_usu's TRY_REPLACE: on each is a full body
-     that pre-dates LLWA and has its own extension_building_types list, so
+     that pre-dates LLWA and has its own building_types list, so
      addon-LLWA's earlier TRY_INJECT: of LLWA_building_roadway is silently gone
      (classic full-body-after-additive-inject loss). Re-issued as a plain
      TRY_INJECT: after the whole Grey's pack -- additive, so it does not matter
@@ -180,8 +180,8 @@ def build_companies():
     for k in COMPANIES_ROADWAY:
         # 1. addon-LLWA really does inject exactly LLWA_building_roadway here.
         _decl, ext_body = V.entry(ext_text, k, prefix="TRY_INJECT:")
-        ext_list = V.sub(ext_body, "extension_building_types")
-        assert ext_list is not None, f"{k}: addon-LLWA no longer injects extension_building_types"
+        ext_list = V.sub(ext_body, "building_types")  # LLWA.9 (3.10): was extension_building_types
+        assert ext_list is not None, f"{k}: addon-LLWA no longer injects building_types"
         assert "LLWA_building_roadway" in ext_list, \
             f"{k}: addon-LLWA's inject changed, no longer LLWA_building_roadway: {ext_list}"
 
@@ -189,24 +189,24 @@ def build_companies():
         #    and that list really does not carry LLWA_building_roadway (else
         #    there is nothing to restore -- fail loudly instead of duplicating).
         _decl, usu_body = V.entry(usu_text, k, prefix="TRY_REPLACE:")
-        usu_ext = V.sub(usu_body, "extension_building_types")
-        assert usu_ext is not None, f"{k}: grey_usu no longer has extension_building_types at all"
+        usu_ext = V.sub(usu_body, "building_types")
+        assert usu_ext is not None, f"{k}: grey_usu no longer has building_types at all"
         assert "LLWA_building_roadway" not in usu_ext, \
             f"{k}: grey_usu's own body already carries LLWA_building_roadway -- nothing to restore"
 
         blocks.append(
-            f"# {k} -- grey_usu's TRY_REPLACE: (own extension_building_types list, "
+            f"# {k} -- grey_usu's TRY_REPLACE: (own building_types list, "
             f"no LLWA_building_roadway) silently drops addon-LLWA's earlier TRY_INJECT:.\n"
             f"# Re-issued additively: does not touch any of grey_usu's own list items.\n"
-            f"TRY_INJECT:{k} = {{\n\textension_building_types = {{ LLWA_building_roadway }}\n}}"
+            f"TRY_INJECT:{k} = {{\n\tbuilding_types = {{ LLWA_building_roadway }}\n}}"
         )
 
     write("common/company_types/zz_greys_llwa_companies.txt", "\n\n".join(blocks),
-          "8 railway companies, addon-LLWA's extension_building_types restored",
+          "8 railway companies, addon-LLWA's building_types item restored",
           "### grey_usu's TRY_REPLACE: on each of these eight companies is a full body\n"
           "### written before addon-LLWA existed. Re-issuing addon-LLWA's own\n"
           "### TRY_INJECT: after the whole Grey's pack restores it additively -- grey_usu's\n"
-          "### own extension_building_types items are untouched either way.\n"
+          "### own building_types items are untouched either way (LLWA.9, 3.10: was extension_building_types).\n"
           "### The other six railway companies that also collide with Victorian Century\n"
           "### (company_great_indian_railway, company_mantetsu, company_orient_express,\n"
           "### company_panama_company, company_prussian_state_railways,\n"

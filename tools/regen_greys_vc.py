@@ -141,11 +141,11 @@ BANNER = """### === VC-ONLY FILE === delete "{fname}" to play without
 
 # zz_gvc_companies.txt is the one file in this folder that ISN'T VC-only any
 # more (added 2026-08-27, GR.16): six of its records also restore addon-LLWA's
-# extension_building_types, which every addon-LLWA player needs regardless of
+# building_types, which every addon-LLWA player needs regardless of
 # VC. Decision #9 in the project plan: base body carries the mandatory
 # grey_usu+LLWA fix, VC's own contribution is folded in as the optional layer.
 BANNER_CARRIES_VC = """### === CARRIES A VC LAYER === this file's base content (addon-LLWA's
-### extension_building_types on six railway companies, see GR.16) is needed by
+### building_types on six railway companies, see GR.16) is needed by
 ### every addon-LLWA player, whether or not Victorian Century is installed.
 ### Victorian Century's own contribution to these same six companies is folded
 ### in as an additional, optional layer. Playing with addon-LLWA but WITHOUT
@@ -157,7 +157,7 @@ BANNER_CARRIES_VC = """### === CARRIES A VC LAYER === this file's base content (
 BANNER_OFF_TWIN = """### === INACTIVE -- NO-VC VARIANT (.off) === Victoria 3 does not load
 ### unrecognized file extensions, so this file does nothing while named
 ### "{fname}.off". It has the same six railway companies with addon-LLWA's
-### extension_building_types restored (see GR.16), but WITHOUT Victorian
+### building_types restored (see GR.16), but WITHOUT Victorian
 ### Century's contribution folded in. Rename it to "{fname}" (replacing the
 ### active file) if you use addon-LLWA WITHOUT Victorian Century. If you use
 ### neither, delete this whole compatch folder instead -- do not use this file.
@@ -590,7 +590,7 @@ COMPANIES = [
 
 
 # Six of these also collide with addon-LLWA (GR.16): grey_usu's full body here
-# pre-dates addon-LLWA and does not carry its extension_building_types
+# pre-dates addon-LLWA and does not carry its building_types
 # contribution either, same class of loss as VC's. Read live, not hardcoded --
 # a future addon-LLWA update that changes what it injects on these six should
 # make this fail loudly, not silently keep an old building type.
@@ -607,8 +607,8 @@ LLWA_EXTRA_EXPECTED = {
 def llwa_extra_for(k: str) -> list[str]:
     ext_text = V.read(LLWA_EXT_FILE)
     _decl, ext_body = V.entry(ext_text, k, prefix="TRY_INJECT:")
-    ext_list = V.sub(ext_body, "extension_building_types")
-    assert ext_list is not None, f"{k}: addon-LLWA no longer injects extension_building_types"
+    ext_list = V.sub(ext_body, "building_types")  # LLWA.9 (3.10): was extension_building_types
+    assert ext_list is not None, f"{k}: addon-LLWA no longer injects building_types"
     want = LLWA_EXTRA_EXPECTED[k]
     for t in want:
         assert t in ext_list, f"{k}: addon-LLWA's inject changed, {t} not found: {ext_list}"
@@ -616,10 +616,10 @@ def llwa_extra_for(k: str) -> list[str]:
 
 
 def with_llwa_extension(body: str, tokens: list[str]) -> str:
-    """Append LLWA building type(s) to body's extension_building_types list, additively."""
-    span = V.sub_span(body, "extension_building_types")
-    assert span, "no extension_building_types sub-block to extend"
-    cur = V.sub(body, "extension_building_types")
+    """Append LLWA building type(s) to body's building_types list, additively."""
+    span = V.sub_span(body, "building_types")
+    assert span, "no building_types sub-block to extend"
+    cur = V.sub(body, "building_types")
     cur_tokens = _tokens(cur)
     missing = [t for t in tokens if t not in cur_tokens]
     assert missing, "LLWA tokens already present -- nothing to add, check by hand"
@@ -649,7 +649,7 @@ def build_companies():
         llwa_tokens = llwa_extra_for(k)
         body = with_llwa_extension(body, llwa_tokens)
         off_body = with_llwa_extension(base, llwa_tokens)
-        llwa_note = f"extension_building_types: addon-LLWA's {llwa_tokens} restored (GR.16)"
+        llwa_note = f"building_types: addon-LLWA's {llwa_tokens} restored (GR.16)"
         NOTES.append(f"{k}: {llwa_note}")
 
         head = "\n".join("# " + n for n in notes + [llwa_note])
@@ -669,7 +669,7 @@ def build_companies():
           "### The other 27 shared companies need no file: grey_usu reaches them with\n"
           "### TRY_INJECT:, which adds to a list and accumulates in a modifier block.\n"
           "### Since 2026-08-27 (GR.16) these same six records also silently drop\n"
-          "### addon-LLWA's extension_building_types the same way -- restored here too,\n"
+          "### addon-LLWA's building_types the same way -- restored here too,\n"
           "### see the CARRIES A VC LAYER banner above for the .off twin.\n")
     write("common/company_types/zz_gvc_companies.txt", "\n\n".join(records),
           what, why, banner=BANNER_CARRIES_VC)

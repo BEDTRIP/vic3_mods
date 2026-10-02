@@ -1,7 +1,9 @@
 """
 regen_llwa_companies.py -- builds `_llwa/llwa+companies done`: gives LLWA's
 transport buildings to the natural-candidate historical companies across the
-set, as extension_building_types.
+set, in building_types (LLWA.9, 2026-10-03: was extension_building_types --
+the company only got them after an extension, i.e. late; the user wanted
+logistics on these companies from the start).
 
 Not a two-mod pair. LLWA closes its own four companies over its own seven
 buildings (LLWA_companies.txt) -- turnpike (roadway/waterway/riverway),
@@ -34,11 +36,12 @@ companies stay excluded: addon-Grey's own territory (GR.9).
 
 Rule, applied uniformly, not by hand-picking companies:
   * company_types with building_railway in building_types
-      -> extension_building_types += LLWA_building_roadway
+      -> building_types += LLWA_building_roadway
   * company_types with building_port in building_types
-      -> extension_building_types += LLWA_building_waterway, LLWA_building_riverway
-  * E&F company_types with a building_financial_centre_* building
-      -> extension_building_types += all six of EF_BANK_BUILDINGS
+      -> building_types += LLWA_building_waterway, LLWA_building_riverway
+  * E&F company_types with a building_financial_centre* building (incl. the
+    hotfix's generic zz_ef_cm_central_bank)
+      -> building_types += EF_BANK_BUILDINGS (the exchange only, since 2026-10-02)
 Two companies (company_hbc, company_yasuda) have both building_railway and
 building_port and get all three transport additions; the bank rule is a
 disjoint set (E&F's own company names, CamelCase, don't collide with the
@@ -46,9 +49,9 @@ snake_case historical-company keys above -- checked, zero overlap), so no
 company ends up with a mix of the narrow transport rule and the wide bank
 rule.
 
-extension_building_types is confirmed present (declared, possibly empty) on
-every single company record checked across all six source mods -- this is
-TRY_INJECT: adding list items to an existing field, not creating a new one.
+building_types is present on every company record -- this is TRY_INJECT:
+adding list items to an existing field (INJECT: appends to lists; the E&F
+hotfix relies on the same for building_bank, zz_ef_cm_companies.txt).
 
 TRY_ and not bare INJECT: since 2026-08-26 the HC block is an ALTERNATIVE to
 Victorian Century rather than a layer on top of it, so neither mod is
@@ -97,9 +100,10 @@ SOURCES = {
     "VANILLA": res("../../vic3_mods_out/.vanillaVIC3/common/company_types"),
     "TGR": res("../../vic3_mods_out/TheGreatRevision/common/company_types"),
     "EF": res("../../vic3_mods_out/E&F/common/company_types"),
+    "EF_HOTFIX": res("../_ef/ef hotfix 1.13/common/company_types"),
     "VC": res("../../vic3_mods_out/VC/common/company_types"),
-    "HC": res("../../vic3_mods_out/for addon/hailcolumbia/common/company_types"),
-    "MoH": res("../../vic3_mods_out/for addon/mandateofheaven/common/company_types"),
+    "HC": res("../../vic3_mods_out/for addon/Hail Columbia/common/company_types"),
+    "MoH": res("../../vic3_mods_out/for addon/Mandate of Heaven/common/company_types"),
 }
 
 # LLWA's own building definitions -- read only to verify the keys this
@@ -115,7 +119,7 @@ HEADER = """# LLWA x historical companies -- {what}
 # Why this file exists: {why}
 """
 
-DATE = "2026-09-09"
+DATE = "2026-10-03"
 CHECK_ONLY = False
 WRITTEN: dict[str, bytes] = {}
 
@@ -231,7 +235,8 @@ EF_BANKS = [
     "company_BancoEstado", "company_BancoDeValparaiso", "company_BancoNacionalDeBolivia",
     "company_BancoRepublicaColombia", "company_BancoCentralDeVenezuela",
     "company_BancoEspanolDeLaHabana", "company_BancoCentralDelUruguay",
-    "company_BancoNacionalDelParaguay", "company_BankSBoBSA"
+    "company_BancoNacionalDelParaguay", "company_BankSBoBSA",
+    "zz_ef_cm_central_bank",  # the hotfix's generic central bank (EF.4), building_financial_centre
 ]
 
 
@@ -247,7 +252,7 @@ def find_company(key: str) -> tuple[str, list[str]] | None:
             if not f.endswith(".txt"):
                 continue
             text = "\n".join(read_lines(os.path.join(base, f)))
-            m = re.search(r"(?m)^(?:[A-Z_]+:)?" + re.escape(key) + r"\s*=\s*\{", text)
+            m = re.search(r"(?m)^([A-Z_]+:)?" + re.escape(key) + r"\s*=\s*\{", text)
             if not m:
                 continue
             i = text.index("{", m.start())
@@ -261,7 +266,13 @@ def find_company(key: str) -> tuple[str, list[str]] | None:
                         break
             body = text[i + 1:j]
             bt = re.search(r"building_types\s*=\s*\{([^}]*)\}", body)
-            found = (label, bt.group(1).split() if bt else [])
+            items = [l.split("#")[0].strip() for l in (bt.group(1).splitlines() if bt else [])]
+            items = [i for i in items if i]
+            if m.group(1) in ("INJECT:", "TRY_INJECT:") and found:
+                # partial record: appends to the list it lands on (hotfix: building_bank on 98 banks)
+                found = (found[0] + "+" + label, found[1] + [i for i in items if i not in found[1]])
+            else:
+                found = (label, items)
     return found
 
 
@@ -372,19 +383,18 @@ def build():
     for key in sorted(additions):
         items = "\n".join(f"\t\t{it}" for it in additions[key])
         out_records.append(
-            f"TRY_INJECT:{key} = {{\n\textension_building_types = {{\n{items}\n\t}}\n}}"
+            f"TRY_INJECT:{key} = {{\n\tbuilding_types = {{\n{items}\n\t}}\n}}"
         )
     write("common/company_types/zz_llwa_companies_extensions.txt",
           "\n\n".join(out_records),
           f"add LLWA buildings to {len(additions)} companies "
-          f"as extension buildings",
+          f"in building_types",
           "Every historical railway/port company across vanilla, TGR, VC, HC, and "
           "MoH predates LLWA and knows nothing about its roads/canals/rivers -- same "
-          "for E&F's diversified banks, which get LLWA's whole company-ownable "
-          "infrastructure set (everything except LLWA_building_logistics_hub, which "
-          "is no_ownership and cannot be held by any company). "
-          "extension_building_types is additive and declared (even if empty) on "
-          "every company record checked, so this is a pure TRY_INJECT: -- nothing "
+          "for E&F's banks, which get LLWA's exchange (banks keep only banking, "
+          "2026-10-02). "
+          "In building_types, not extension_building_types, so the companies hold "
+          "them from the start (LLWA.9). INJECT: appends to the list -- nothing "
           "overwritten, no company's own design touched. Grey's/USU's ~70 railway "
           "companies are deliberately not here -- see the generator's module docstring.")
     banks = sum(1 for v in additions.values() if set(EF_BANK_BUILDINGS) <= set(v))

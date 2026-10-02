@@ -28,9 +28,9 @@ GR.16 covers 41 shared keys total, GR.9 covers 11 more against bare LLWA (see th
 
 **Game 1.13 (exe 1.13.11). Addon: LLWA x MegaComPatch 1.13.11.3; Grey's Urban Synergy Unleashed (declares no version).**
 
-## 1. Eight railway companies (extension_building_types)
+## 1. Eight railway companies (building_types; was extension_building_types until LLWA.9, 3.10)
 
-grey_usu's `TRY_REPLACE:` on `company_cfr`, `company_cordoba_railway`, `company_egyptian_rail`, `company_gwr`, `company_imperial_ethiopian_railways`, `company_iranian_state_railway`, `company_sao_paulo_railway`, and `company_tashkent_railroad` is a full body written before addon-LLWA existed. Each carries its own `extension_building_types` list (`building_motor_industry`, `building_coal_mine`, etc. -- checked per company) that does not include `LLWA_building_roadway`, so addon-LLWA's earlier `TRY_INJECT:` of that building type is silently gone. Re-issued here as a plain `TRY_INJECT:` after the whole Grey's pack -- additive, so it does not matter that grey_usu's REPLACE already ran.
+grey_usu's `TRY_REPLACE:` on `company_cfr`, `company_cordoba_railway`, `company_egyptian_rail`, `company_gwr`, `company_imperial_ethiopian_railways`, `company_iranian_state_railway`, `company_sao_paulo_railway`, and `company_tashkent_railroad` is a full body written before addon-LLWA existed. Each carries its own `building_types` list that does not include `LLWA_building_roadway`, so addon-LLWA's earlier `TRY_INJECT:` of that building type is silently gone. Re-issued here as a plain `TRY_INJECT:` after the whole Grey's pack -- additive, so it does not matter that grey_usu's REPLACE already ran.
 
 **Not included: the other six railway companies** (`company_great_indian_railway`, `company_mantetsu`, `company_orient_express`, `company_panama_company`, `company_prussian_state_railways`, `company_suez_company`). These also collide with Victorian Century, which already writes a full-body `REPLACE_OR_CREATE:` for them in `_greys/greys+vc done/common/company_types/zz_gvc_companies.txt`. A second, separate `TRY_INJECT:` here would do nothing -- that file's full body loads at the same position (after the whole Grey's pack) and always wins over an earlier additive inject. The LLWA fix for those six is folded directly into that file instead; see its own generator and README section.
 
