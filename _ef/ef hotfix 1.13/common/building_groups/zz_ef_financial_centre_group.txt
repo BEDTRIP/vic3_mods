@@ -1,4 +1,4 @@
-﻿#############################################
+#############################################
 # EF.17 (1) (2026-09-24) -- exchanges no longer urbanize
 #
 # E&F's bg_financial_centre (building_groups/00_ef_building_groups.txt:52,

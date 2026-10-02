@@ -1,4 +1,4 @@
-﻿#############################################
+#############################################
 # EF.27 (2026-09-25) -- central banks no longer urbanize
 #
 # E&F's bg_bank (building_groups/00_ef_building_groups.txt:18, 4.1.7) has

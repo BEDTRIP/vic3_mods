@@ -1,4 +1,4 @@
-﻿# Compatibility patch for using these big mods together:
+# Compatibility patch for using these big mods together:
 
 <!-- meta
 сборка: мегапак без T&R — рабочий
