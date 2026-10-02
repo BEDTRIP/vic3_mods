@@ -60,7 +60,7 @@ from vic3merge3 import brace_balance, needs_bom, read_lines  # noqa: E402
 HERE = os.path.dirname(os.path.abspath(__file__))
 res = lambda p: os.path.normpath(os.path.join(HERE, p))
 
-HC = res("../../vic3_mods_out/for addon/hailcolumbia")
+HC = res("../../vic3_mods_out/for addon/Hail Columbia")
 GOB = res("../../vic3_mods_out/for addon/gatesofbosphorus")
 EF = res("../../vic3_mods_out/E&F")
 OUT = res("../_HC+GoB+MoH/hc+ef done")

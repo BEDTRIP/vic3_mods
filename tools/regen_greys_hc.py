@@ -68,9 +68,9 @@ SOFT_POP = os.path.join(GREYS, "_grey_soft_pop")
 SOFT_ECON = os.path.join(GREYS, "_grey_soft_econ")
 USU = os.path.join(GREYS, "grey_usu")
 CINO = os.path.join(GREYS, "grey_deeper_cinosphere")
-HC = res("../../vic3_mods_out/for addon/hailcolumbia")
+HC = res("../../vic3_mods_out/for addon/Hail Columbia")
 GOB = res("../../vic3_mods_out/for addon/gatesofbosphorus")
-MOH = res("../../vic3_mods_out/for addon/mandateofheaven")
+MOH = res("../../vic3_mods_out/for addon/Mandate of Heaven")
 OUT = res("../_greys/greys+hc done")
 
 DATE = "2026-08-27"

@@ -38,8 +38,8 @@ CHAIN = [
     ])),
     ("Morgenrote", ["Morgenrote/common/prestige_goods/mr_prestige_goods.txt"]),
     ("VC", ["VC/common/prestige_goods/joi_prestige_goods.txt"]),
-    ("HC", ["for addon/hailcolumbia/common/prestige_goods/usfp_prestige_goods.txt"]),
-    ("MoH", ["for addon/mandateofheaven/common/prestige_goods/moh_prestige_goods.txt"]),
+    ("HC", ["for addon/Hail Columbia/common/prestige_goods/usfp_prestige_goods.txt"]),
+    ("MoH", ["for addon/Mandate of Heaven/common/prestige_goods/moh_prestige_goods.txt"]),
     ("LLWA", ["llwa/common/prestige_goods/LLWA_prestige_goods.txt"]),
 ]
 

@@ -28,9 +28,9 @@
       "../../vic3_mods_out/llwa"
     ],
     "HC+GoB+MoH": [
-      "../../vic3_mods_out/for addon/hailcolumbia",
+      "../../vic3_mods_out/for addon/Hail Columbia",
       "../../vic3_mods_out/for addon/gatesofbosphorus",
-      "../../vic3_mods_out/for addon/mandateofheaven"
+      "../../vic3_mods_out/for addon/Mandate of Heaven"
     ],
     "E&F+hotfix": [
       "../../vic3_mods_out/E&F",
@@ -90,9 +90,9 @@
     "../__megapacks/megapack no t&r",
     "../../vic3_mods_out/VC",
     "../__addon/addon vc",
-    "../../vic3_mods_out/for addon/hailcolumbia",
+    "../../vic3_mods_out/for addon/Hail Columbia",
     "../../vic3_mods_out/for addon/gatesofbosphorus",
-    "../../vic3_mods_out/for addon/mandateofheaven",
+    "../../vic3_mods_out/for addon/Mandate of Heaven",
     "../__addon/addon hc+gob+moh",
     "../../vic3_mods_out/llwa",
     "../_llwa/llwa+morg out",
@@ -121,9 +121,9 @@
     "../__megapacks/megapack no t&r": "МЕГАПАК",
     "../../vic3_mods_out/VC": "VC",
     "../__addon/addon vc": "АДДОН-VC",
-    "../../vic3_mods_out/for addon/hailcolumbia": "HC",
+    "../../vic3_mods_out/for addon/Hail Columbia": "HC",
     "../../vic3_mods_out/for addon/gatesofbosphorus": "GoB",
-    "../../vic3_mods_out/for addon/mandateofheaven": "MoH",
+    "../../vic3_mods_out/for addon/Mandate of Heaven": "MoH",
     "../__addon/addon hc+gob+moh": "АДДОН-HC",
     "../../vic3_mods_out/llwa": "LLWA",
     "../_llwa/llwa+morg out": "llwa+morg out",

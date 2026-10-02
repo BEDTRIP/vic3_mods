@@ -59,8 +59,8 @@ import regen_addon1 as ra1
 HERE = os.path.dirname(os.path.abspath(__file__))
 res = lambda p: os.path.normpath(os.path.join(HERE, p))
 
-HC = res("../../vic3_mods_out/for addon/hailcolumbia")
-MOH = res("../../vic3_mods_out/for addon/mandateofheaven")
+HC = res("../../vic3_mods_out/for addon/Hail Columbia")
+MOH = res("../../vic3_mods_out/for addon/Mandate of Heaven")
 VC = res("../../vic3_mods_out/VC")
 OUT = res("../_HC+GoB+MoH/hc+vc done")
 GRID = res("../_HC+GoB+MoH/hc+vc done/hc_vc_character_traits.xlsx")

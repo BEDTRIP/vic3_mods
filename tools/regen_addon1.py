@@ -58,9 +58,9 @@ class P(object):
         self.tgr  = os.path.join(root, 'TheGreatRevision')
         self.kai  = os.path.join(root, 'TechRes+Kuromi', 'kai')
         self.morg = os.path.join(root, 'Morgenrote')
-        self.hc   = os.path.join(root, 'for addon', 'hailcolumbia')
+        self.hc   = os.path.join(root, 'for addon', 'Hail Columbia')
         self.gob  = os.path.join(root, 'for addon', 'gatesofbosphorus')
-        self.moh  = os.path.join(root, 'for addon', 'mandateofheaven')
+        self.moh  = os.path.join(root, 'for addon', 'Mandate of Heaven')
 
 
 # =============================================================================
@@ -332,7 +332,7 @@ def merge3(base, ours, theirs, label, resolve=None):
             open(path, 'w', encoding='utf-8', newline='\n').write(txt)
         r = subprocess.run(['git', 'merge-file', '-p', '--diff3',
                             '-L', 'ours', '-L', 'base', '-L', 'theirs', fo, fb, ft],
-                           capture_output=True, text=True)
+                           capture_output=True, text=True, encoding='utf-8')
         out = r.stdout
     if '<<<<<<<' not in out:
         return out
@@ -468,7 +468,17 @@ def _ig_resolve(ours, base, theirs, n):
         return theirs
     if _ws(ours) == _ws(theirs):
         return ours
+    # a side whose only change is the `?=` -> `=` scope downgrade changed nothing we carry
+    # (_safe_scope restores `?=`): TGR commenting IN_GOVERNMENT_ATTRACTION out vs VC (HC.13, 3.10)
+    if _ws(_unsafe(theirs)) == _ws(_unsafe(base)):
+        return ours
+    if _ws(_unsafe(ours)) == _ws(_unsafe(base)):
+        return theirs
     return None
+
+
+def _unsafe(lines):
+    return [l.replace('scope:interest_group ?= {', 'scope:interest_group = {') for l in lines]
 
 
 def _safe_scope(text, label):
