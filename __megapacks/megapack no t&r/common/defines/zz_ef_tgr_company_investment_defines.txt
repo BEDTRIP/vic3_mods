@@ -1,0 +1,31 @@
+﻿########################################
+# СТР.5 (2026-10-02, decided by the user) -- private construction is no longer
+# handed to companies: TGR's company weights back to vanilla 1.13.
+#
+# TGR_TRADE_ai.txt rewrites how the investment pool picks what to build and
+# who owns it. With E&F's ~100 bank companies (building_types cover railways,
+# trade centres, mines, construction) there is a company for almost every
+# building type, so in the 2.10 run (new game 1836.7 -> 1839.7, 13 large
+# countries) new productive levels went: companies +1443 (+238 regional),
+# foreign (mostly companies) +420, government +389, pops (manors, financial
+# districts) -346. Pops took no part in private construction at all.
+#
+# Only the autonomous-investment (private) company keys go back; TGR's
+# GOVERNMENT_COMPANY_TARGET_* (government construction) and its randomness
+# (PRODUCTION_BUILDING_*_RANDOM_FACTOR_MULT 0.1) stay. Defines merge key by key
+# and the last mod wins; this compatch loads after TGR (inside the megapack).
+# Without TGR these are the game's values anyway.
+# !! MAINTENANCE !! After a TGR update re-check TGR_TRADE_ai.txt for new
+# company keys; vanilla values from common/defines/00_ai.txt (1.13).
+########################################
+
+NAI = {
+	PRODUCTION_BUILDING_AUTONOMOUS_INVESTMENT_COMPANY_MULT = 2.0					# TGR 15
+	PRODUCTION_BUILDING_AUTONOMOUS_INVESTMENT_COMPANY_MONOPOLY_MULT = 3.0			# TGR 10
+	PRODUCTION_BUILDING_AUTONOMOUS_INVESTMENT_COMPANY_CHARTERED_COUNTRY_MULT = 2.0	# TGR 5
+	OWNER_COMPANY_EXPANSION_CHANCE_MULTIPLIER = 0.5									# TGR 1000
+	OWNER_COMPANY_OWN_STATE_MULT = 100.0											# TGR 1000
+	AUTONOMOUS_INVESTMENT_COMPANY_TARGET_BUILDING_TYPE_CONSTRUCTION_FACTOR = 5		# TGR 9999
+	AUTONOMOUS_INVESTMENT_COMPANY_TARGET_STATE_NO_BUILDING_CONSTRUCTION_FACTOR = 20	# TGR 200
+	AUTONOMOUS_INVESTMENT_COMPANY_TARGET_STATE_WITH_BUILDING_CONSTRUCTION_FACTOR = 50	# TGR 500
+}
