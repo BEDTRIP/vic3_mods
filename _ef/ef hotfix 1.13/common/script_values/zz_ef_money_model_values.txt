@@ -2409,6 +2409,14 @@ zz_ef_trade_net_week = {
 				}
 			}
 		}
+		# В3.3 (2.10): customs union members with their own currency settle
+		# their sales inside the market with the owner (generated,
+		# zz_ef_customs_union_values.txt)
+		subtract = zz_ef_members_trade_sum
+	}
+	else_if = {
+		limit = { zz_ef_cu_member = yes }
+		value = zz_ef_member_goods_net
 	}
 }
 zz_ef_trade_fin_week = {
