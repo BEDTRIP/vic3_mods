@@ -33,7 +33,7 @@ REPLACE_OR_CREATE:wealth_1 = {
 		popneed_heating = 15
 		popneed_intoxicants = 23
 		popneed_currency = 21	# E&F
-		popneed_household_construction = 5	# E&F hotfix, STR.3
+		popneed_household_construction = 7	# E&F hotfix, STR.3
 	}
 }
 
@@ -45,7 +45,7 @@ REPLACE_OR_CREATE:wealth_2 = {
 		popneed_heating = 16
 		popneed_intoxicants = 27
 		popneed_currency = 23	# E&F
-		popneed_household_construction = 5	# E&F hotfix, STR.3
+		popneed_household_construction = 7	# E&F hotfix, STR.3
 	}
 }
 
@@ -57,7 +57,7 @@ REPLACE_OR_CREATE:wealth_3 = {
 		popneed_heating = 17
 		popneed_intoxicants = 31
 		popneed_currency = 25	# E&F
-		popneed_household_construction = 5	# E&F hotfix, STR.3
+		popneed_household_construction = 8	# E&F hotfix, STR.3
 	}
 }
 
@@ -69,7 +69,7 @@ REPLACE_OR_CREATE:wealth_4 = {
 		popneed_heating = 18
 		popneed_intoxicants = 37
 		popneed_currency = 28	# E&F
-		popneed_household_construction = 6	# E&F hotfix, STR.3
+		popneed_household_construction = 9	# E&F hotfix, STR.3
 	}
 }
 
@@ -82,7 +82,7 @@ REPLACE_OR_CREATE:wealth_5 = {
 		popneed_heating = 19
 		popneed_intoxicants = 41
 		popneed_currency = 28	# E&F
-		popneed_household_construction = 6	# E&F hotfix, STR.3
+		popneed_household_construction = 10	# E&F hotfix, STR.3
 	}
 }
 
@@ -96,7 +96,7 @@ REPLACE_OR_CREATE:wealth_6 = {
 		popneed_intoxicants = 47	# TGR (41 vanilla)
 		popneed_stimulants = 7
 		popneed_currency = 31	# E&F
-		popneed_household_construction = 7	# E&F hotfix, STR.3
+		popneed_household_construction = 10	# E&F hotfix, STR.3
 	}
 }
 
@@ -110,7 +110,7 @@ REPLACE_OR_CREATE:wealth_7 = {
 		popneed_intoxicants = 45
 		popneed_stimulants = 14
 		popneed_currency = 34	# E&F
-		popneed_household_construction = 7	# E&F hotfix, STR.3
+		popneed_household_construction = 11	# E&F hotfix, STR.3
 	}
 }
 
@@ -124,7 +124,7 @@ REPLACE_OR_CREATE:wealth_8 = {
 		popneed_intoxicants = 52
 		popneed_stimulants = 19
 		popneed_currency = 37	# E&F
-		popneed_household_construction = 8	# E&F hotfix, STR.3
+		popneed_household_construction = 12	# E&F hotfix, STR.3
 	}
 }
 
@@ -138,7 +138,7 @@ REPLACE_OR_CREATE:wealth_9 = {
 		popneed_intoxicants = 56
 		popneed_stimulants = 23
 		popneed_currency = 40	# E&F
-		popneed_household_construction = 9	# E&F hotfix, STR.3
+		popneed_household_construction = 13	# E&F hotfix, STR.3
 	}
 }
 
@@ -157,7 +157,7 @@ REPLACE_OR_CREATE:wealth_10 = {
 		popneed_stimulants = 26
 		popneed_currency = 37	# E&F
 		popneed_entertainment = 1	# Morgenrote
-		popneed_household_construction = 10	# E&F hotfix, STR.3
+		popneed_household_construction = 15	# E&F hotfix, STR.3
 	}
 }
 
@@ -176,7 +176,7 @@ REPLACE_OR_CREATE:wealth_11 = {
 		popneed_stimulants = 30
 		popneed_currency = 38	# E&F
 		popneed_entertainment = 5	# Morgenrote
-		popneed_household_construction = 11	# E&F hotfix, STR.3
+		popneed_household_construction = 16	# E&F hotfix, STR.3
 	}
 }
 
@@ -195,7 +195,7 @@ REPLACE_OR_CREATE:wealth_12 = {
 		popneed_stimulants = 33
 		popneed_currency = 42	# E&F
 		popneed_entertainment = 9	# Morgenrote
-		popneed_household_construction = 11	# E&F hotfix, STR.3
+		popneed_household_construction = 17	# E&F hotfix, STR.3
 	}
 }
 
@@ -214,7 +214,7 @@ REPLACE_OR_CREATE:wealth_13 = {
 		popneed_stimulants = 35
 		popneed_currency = 44	# E&F
 		popneed_entertainment = 13	# Morgenrote
-		popneed_household_construction = 12	# E&F hotfix, STR.3
+		popneed_household_construction = 19	# E&F hotfix, STR.3
 	}
 }
 
@@ -233,7 +233,7 @@ REPLACE_OR_CREATE:wealth_14 = {
 		popneed_stimulants = 39
 		popneed_currency = 47	# E&F
 		popneed_entertainment = 18	# Morgenrote
-		popneed_household_construction = 14	# E&F hotfix, STR.3
+		popneed_household_construction = 20	# E&F hotfix, STR.3
 	}
 }
 
@@ -253,7 +253,7 @@ REPLACE_OR_CREATE:wealth_15 = {
 		popneed_currency = 41	# E&F
 		popneed_financial_products = 40	# E&F
 		popneed_entertainment = 22	# Morgenrote
-		popneed_household_construction = 15	# E&F hotfix, STR.3
+		popneed_household_construction = 22	# E&F hotfix, STR.3
 	}
 }
 
@@ -273,7 +273,7 @@ REPLACE_OR_CREATE:wealth_16 = {
 		popneed_currency = 40	# E&F
 		popneed_financial_products = 60	# E&F
 		popneed_entertainment = 26	# Morgenrote
-		popneed_household_construction = 16	# E&F hotfix, STR.3
+		popneed_household_construction = 24	# E&F hotfix, STR.3
 	}
 }
 
@@ -293,7 +293,7 @@ REPLACE_OR_CREATE:wealth_17 = {
 		popneed_currency = 41	# E&F
 		popneed_financial_products = 82	# E&F
 		popneed_entertainment = 29	# Morgenrote
-		popneed_household_construction = 17	# E&F hotfix, STR.3
+		popneed_household_construction = 26	# E&F hotfix, STR.3
 	}
 }
 
@@ -313,7 +313,7 @@ REPLACE_OR_CREATE:wealth_18 = {
 		popneed_currency = 41	# E&F
 		popneed_financial_products = 103	# E&F
 		popneed_entertainment = 33	# Morgenrote
-		popneed_household_construction = 19	# E&F hotfix, STR.3
+		popneed_household_construction = 28	# E&F hotfix, STR.3
 	}
 }
 
@@ -333,7 +333,7 @@ REPLACE_OR_CREATE:wealth_19 = {
 		popneed_currency = 42	# E&F
 		popneed_financial_products = 125	# E&F
 		popneed_entertainment = 42	# Morgenrote
-		popneed_household_construction = 20	# E&F hotfix, STR.3
+		popneed_household_construction = 31	# E&F hotfix, STR.3
 	}
 }
 
@@ -356,7 +356,7 @@ REPLACE_OR_CREATE:wealth_20 = {
 		popneed_currency = 40	# E&F
 		popneed_financial_products = 141	# E&F
 		popneed_entertainment = 52	# Morgenrote
-		popneed_household_construction = 22	# E&F hotfix, STR.3
+		popneed_household_construction = 33	# E&F hotfix, STR.3
 	}
 }
 
@@ -379,7 +379,7 @@ REPLACE_OR_CREATE:wealth_21 = {
 		popneed_currency = 41	# E&F
 		popneed_financial_products = 164	# E&F
 		popneed_entertainment = 61	# Morgenrote
-		popneed_household_construction = 24	# E&F hotfix, STR.3
+		popneed_household_construction = 36	# E&F hotfix, STR.3
 	}
 }
 
@@ -402,7 +402,7 @@ REPLACE_OR_CREATE:wealth_22 = {
 		popneed_currency = 42	# E&F
 		popneed_financial_products = 190	# E&F
 		popneed_entertainment = 71	# Morgenrote
-		popneed_household_construction = 26	# E&F hotfix, STR.3
+		popneed_household_construction = 39	# E&F hotfix, STR.3
 	}
 }
 
@@ -425,7 +425,7 @@ REPLACE_OR_CREATE:wealth_23 = {
 		popneed_currency = 43	# E&F
 		popneed_financial_products = 217	# E&F
 		popneed_entertainment = 82	# Morgenrote
-		popneed_household_construction = 28	# E&F hotfix, STR.3
+		popneed_household_construction = 43	# E&F hotfix, STR.3
 	}
 }
 
@@ -448,7 +448,7 @@ REPLACE_OR_CREATE:wealth_24 = {
 		popneed_currency = 44	# E&F
 		popneed_financial_products = 247	# E&F
 		popneed_entertainment = 94	# Morgenrote
-		popneed_household_construction = 31	# E&F hotfix, STR.3
+		popneed_household_construction = 46	# E&F hotfix, STR.3
 	}
 }
 
@@ -471,7 +471,7 @@ REPLACE_OR_CREATE:wealth_25 = {
 		popneed_currency = 46	# E&F
 		popneed_financial_products = 281	# E&F
 		popneed_entertainment = 107	# Morgenrote
-		popneed_household_construction = 34	# E&F hotfix, STR.3
+		popneed_household_construction = 51	# E&F hotfix, STR.3
 	}
 }
 
@@ -494,7 +494,7 @@ REPLACE_OR_CREATE:wealth_26 = {
 		popneed_currency = 51	# E&F
 		popneed_financial_products = 335	# E&F
 		popneed_entertainment = 122	# Morgenrote
-		popneed_household_construction = 37	# E&F hotfix, STR.3
+		popneed_household_construction = 55	# E&F hotfix, STR.3
 	}
 }
 
@@ -517,7 +517,7 @@ REPLACE_OR_CREATE:wealth_27 = {
 		popneed_currency = 56	# E&F
 		popneed_financial_products = 399	# E&F
 		popneed_entertainment = 138	# Morgenrote
-		popneed_household_construction = 40	# E&F hotfix, STR.3
+		popneed_household_construction = 60	# E&F hotfix, STR.3
 	}
 }
 
@@ -540,7 +540,7 @@ REPLACE_OR_CREATE:wealth_28 = {
 		popneed_currency = 58	# E&F
 		popneed_financial_products = 448	# E&F
 		popneed_entertainment = 155	# Morgenrote
-		popneed_household_construction = 43	# E&F hotfix, STR.3
+		popneed_household_construction = 65	# E&F hotfix, STR.3
 	}
 }
 
@@ -563,7 +563,7 @@ REPLACE_OR_CREATE:wealth_29 = {
 		popneed_currency = 61	# E&F
 		popneed_financial_products = 501	# E&F
 		popneed_entertainment = 167	# Morgenrote
-		popneed_household_construction = 47	# E&F hotfix, STR.3
+		popneed_household_construction = 71	# E&F hotfix, STR.3
 	}
 }
 
@@ -585,7 +585,7 @@ REPLACE_OR_CREATE:wealth_30 = {
 		popneed_currency = 62	# E&F
 		popneed_financial_products = 542	# E&F
 		popneed_entertainment = 200	# Morgenrote
-		popneed_household_construction = 51	# E&F hotfix, STR.3
+		popneed_household_construction = 77	# E&F hotfix, STR.3
 	}
 }
 
@@ -606,7 +606,7 @@ REPLACE_OR_CREATE:wealth_31 = {
 		popneed_currency = 64	# E&F
 		popneed_financial_products = 595	# E&F
 		popneed_entertainment = 225	# Morgenrote
-		popneed_household_construction = 56	# E&F hotfix, STR.3
+		popneed_household_construction = 84	# E&F hotfix, STR.3
 	}
 }
 
@@ -627,7 +627,7 @@ REPLACE_OR_CREATE:wealth_32 = {
 		popneed_currency = 66	# E&F
 		popneed_financial_products = 654	# E&F
 		popneed_entertainment = 251	# Morgenrote
-		popneed_household_construction = 61	# E&F hotfix, STR.3
+		popneed_household_construction = 91	# E&F hotfix, STR.3
 	}
 }
 
@@ -648,7 +648,7 @@ REPLACE_OR_CREATE:wealth_33 = {
 		popneed_currency = 69	# E&F
 		popneed_financial_products = 718	# E&F
 		popneed_entertainment = 279	# Morgenrote
-		popneed_household_construction = 66	# E&F hotfix, STR.3
+		popneed_household_construction = 99	# E&F hotfix, STR.3
 	}
 }
 
@@ -669,7 +669,7 @@ REPLACE_OR_CREATE:wealth_34 = {
 		popneed_currency = 72	# E&F
 		popneed_financial_products = 789	# E&F
 		popneed_entertainment = 310	# Morgenrote
-		popneed_household_construction = 71	# E&F hotfix, STR.3
+		popneed_household_construction = 106	# E&F hotfix, STR.3
 	}
 }
 
@@ -690,7 +690,7 @@ REPLACE_OR_CREATE:wealth_35 = {
 		popneed_currency = 76	# E&F
 		popneed_financial_products = 876	# E&F
 		popneed_entertainment = 365	# Morgenrote
-		popneed_household_construction = 77	# E&F hotfix, STR.3
+		popneed_household_construction = 115	# E&F hotfix, STR.3
 	}
 }
 
@@ -711,7 +711,7 @@ REPLACE_OR_CREATE:wealth_36 = {
 		popneed_currency = 79	# E&F
 		popneed_financial_products = 959	# E&F
 		popneed_entertainment = 417	# Morgenrote
-		popneed_household_construction = 83	# E&F hotfix, STR.3
+		popneed_household_construction = 124	# E&F hotfix, STR.3
 	}
 }
 
@@ -732,7 +732,7 @@ REPLACE_OR_CREATE:wealth_37 = {
 		popneed_currency = 83	# E&F
 		popneed_financial_products = 1051	# E&F
 		popneed_entertainment = 467	# Morgenrote
-		popneed_household_construction = 89	# E&F hotfix, STR.3
+		popneed_household_construction = 134	# E&F hotfix, STR.3
 	}
 }
 
@@ -753,7 +753,7 @@ REPLACE_OR_CREATE:wealth_38 = {
 		popneed_currency = 87	# E&F
 		popneed_financial_products = 1151	# E&F
 		popneed_entertainment = 528	# Morgenrote
-		popneed_household_construction = 97	# E&F hotfix, STR.3
+		popneed_household_construction = 145	# E&F hotfix, STR.3
 	}
 }
 
@@ -774,7 +774,7 @@ REPLACE_OR_CREATE:wealth_39 = {
 		popneed_currency = 91	# E&F
 		popneed_financial_products = 1261	# E&F
 		popneed_entertainment = 559	# Morgenrote
-		popneed_household_construction = 104	# E&F hotfix, STR.3
+		popneed_household_construction = 157	# E&F hotfix, STR.3
 	}
 }
 
@@ -794,7 +794,7 @@ REPLACE_OR_CREATE:wealth_40 = {
 		popneed_currency = 96	# E&F
 		popneed_financial_products = 1383	# E&F
 		popneed_entertainment = 610	# Morgenrote
-		popneed_household_construction = 112	# E&F hotfix, STR.3
+		popneed_household_construction = 168	# E&F hotfix, STR.3
 	}
 }
 
@@ -814,7 +814,7 @@ REPLACE_OR_CREATE:wealth_41 = {
 		popneed_currency = 101	# E&F
 		popneed_financial_products = 1516	# E&F
 		popneed_entertainment = 666	# Morgenrote
-		popneed_household_construction = 121	# E&F hotfix, STR.3
+		popneed_household_construction = 182	# E&F hotfix, STR.3
 	}
 }
 
@@ -834,7 +834,7 @@ REPLACE_OR_CREATE:wealth_42 = {
 		popneed_currency = 106	# E&F
 		popneed_financial_products = 1663	# E&F
 		popneed_entertainment = 689	# Morgenrote
-		popneed_household_construction = 131	# E&F hotfix, STR.3
+		popneed_household_construction = 196	# E&F hotfix, STR.3
 	}
 }
 
@@ -854,7 +854,7 @@ REPLACE_OR_CREATE:wealth_43 = {
 		popneed_currency = 112	# E&F
 		popneed_financial_products = 1824	# E&F
 		popneed_entertainment = 776	# Morgenrote
-		popneed_household_construction = 141	# E&F hotfix, STR.3
+		popneed_household_construction = 212	# E&F hotfix, STR.3
 	}
 }
 
@@ -874,7 +874,7 @@ REPLACE_OR_CREATE:wealth_44 = {
 		popneed_currency = 119	# E&F
 		popneed_financial_products = 2001	# E&F
 		popneed_entertainment = 850	# Morgenrote
-		popneed_household_construction = 153	# E&F hotfix, STR.3
+		popneed_household_construction = 229	# E&F hotfix, STR.3
 	}
 }
 
@@ -893,7 +893,7 @@ REPLACE_OR_CREATE:wealth_45 = {
 		popneed_currency = 126	# E&F
 		popneed_financial_products = 2196	# E&F
 		popneed_entertainment = 980	# Morgenrote
-		popneed_household_construction = 164	# E&F hotfix, STR.3
+		popneed_household_construction = 247	# E&F hotfix, STR.3
 	}
 }
 
@@ -912,7 +912,7 @@ REPLACE_OR_CREATE:wealth_46 = {
 		popneed_currency = 133	# E&F
 		popneed_financial_products = 2410	# E&F
 		popneed_entertainment = 1070	# Morgenrote
-		popneed_household_construction = 177	# E&F hotfix, STR.3
+		popneed_household_construction = 266	# E&F hotfix, STR.3
 	}
 }
 
@@ -931,7 +931,7 @@ REPLACE_OR_CREATE:wealth_47 = {
 		popneed_currency = 142	# E&F
 		popneed_financial_products = 2646	# E&F
 		popneed_entertainment = 1179	# Morgenrote
-		popneed_household_construction = 192	# E&F hotfix, STR.3
+		popneed_household_construction = 287	# E&F hotfix, STR.3
 	}
 }
 
@@ -950,7 +950,7 @@ REPLACE_OR_CREATE:wealth_48 = {
 		popneed_currency = 150	# E&F
 		popneed_financial_products = 2904	# E&F
 		popneed_entertainment = 1299	# Morgenrote
-		popneed_household_construction = 207	# E&F hotfix, STR.3
+		popneed_household_construction = 310	# E&F hotfix, STR.3
 	}
 }
 
@@ -969,7 +969,7 @@ REPLACE_OR_CREATE:wealth_49 = {
 		popneed_currency = 160	# E&F
 		popneed_financial_products = 3189	# E&F
 		popneed_entertainment = 1446	# Morgenrote
-		popneed_household_construction = 223	# E&F hotfix, STR.3
+		popneed_household_construction = 334	# E&F hotfix, STR.3
 	}
 }
 
@@ -988,7 +988,7 @@ REPLACE_OR_CREATE:wealth_50 = {
 		popneed_currency = 170	# E&F
 		popneed_financial_products = 3502	# E&F
 		popneed_entertainment = 1593	# Morgenrote
-		popneed_household_construction = 240	# E&F hotfix, STR.3
+		popneed_household_construction = 360	# E&F hotfix, STR.3
 	}
 }
 
@@ -1007,7 +1007,7 @@ REPLACE_OR_CREATE:wealth_51 = {
 		popneed_currency = 181	# E&F
 		popneed_financial_products = 3845	# E&F
 		popneed_entertainment = 1772	# Morgenrote
-		popneed_household_construction = 264	# E&F hotfix, STR.3
+		popneed_household_construction = 396	# E&F hotfix, STR.3
 	}
 }
 
@@ -1026,7 +1026,7 @@ REPLACE_OR_CREATE:wealth_52 = {
 		popneed_currency = 193	# E&F
 		popneed_financial_products = 4223	# E&F
 		popneed_entertainment = 1932	# Morgenrote
-		popneed_household_construction = 291	# E&F hotfix, STR.3
+		popneed_household_construction = 436	# E&F hotfix, STR.3
 	}
 }
 
@@ -1045,7 +1045,7 @@ REPLACE_OR_CREATE:wealth_53 = {
 		popneed_currency = 206	# E&F
 		popneed_financial_products = 4638	# E&F
 		popneed_entertainment = 2107	# Morgenrote
-		popneed_household_construction = 320	# E&F hotfix, STR.3
+		popneed_household_construction = 479	# E&F hotfix, STR.3
 	}
 }
 
@@ -1064,7 +1064,7 @@ REPLACE_OR_CREATE:wealth_54 = {
 		popneed_currency = 220	# E&F
 		popneed_financial_products = 5095	# E&F
 		popneed_entertainment = 2275	# Morgenrote
-		popneed_household_construction = 352	# E&F hotfix, STR.3
+		popneed_household_construction = 528	# E&F hotfix, STR.3
 	}
 }
 
@@ -1083,7 +1083,7 @@ REPLACE_OR_CREATE:wealth_55 = {
 		popneed_currency = 235	# E&F
 		popneed_financial_products = 5597	# E&F
 		popneed_entertainment = 2504	# Morgenrote
-		popneed_household_construction = 387	# E&F hotfix, STR.3
+		popneed_household_construction = 580	# E&F hotfix, STR.3
 	}
 }
 
@@ -1102,7 +1102,7 @@ REPLACE_OR_CREATE:wealth_56 = {
 		popneed_currency = 252	# E&F
 		popneed_financial_products = 6148	# E&F
 		popneed_entertainment = 2705	# Morgenrote
-		popneed_household_construction = 426	# E&F hotfix, STR.3
+		popneed_household_construction = 638	# E&F hotfix, STR.3
 	}
 }
 
@@ -1121,7 +1121,7 @@ REPLACE_OR_CREATE:wealth_57 = {
 		popneed_currency = 269	# E&F
 		popneed_financial_products = 6755	# E&F
 		popneed_entertainment = 2949	# Morgenrote
-		popneed_household_construction = 468	# E&F hotfix, STR.3
+		popneed_household_construction = 702	# E&F hotfix, STR.3
 	}
 }
 
@@ -1140,7 +1140,7 @@ REPLACE_OR_CREATE:wealth_58 = {
 		popneed_currency = 288	# E&F
 		popneed_financial_products = 7421	# E&F
 		popneed_entertainment = 3186	# Morgenrote
-		popneed_household_construction = 515	# E&F hotfix, STR.3
+		popneed_household_construction = 772	# E&F hotfix, STR.3
 	}
 }
 
@@ -1159,7 +1159,7 @@ REPLACE_OR_CREATE:wealth_59 = {
 		popneed_currency = 308	# E&F
 		popneed_financial_products = 8154	# E&F
 		popneed_entertainment = 3507	# Morgenrote
-		popneed_household_construction = 566	# E&F hotfix, STR.3
+		popneed_household_construction = 850	# E&F hotfix, STR.3
 	}
 }
 
@@ -1178,7 +1178,7 @@ REPLACE_OR_CREATE:wealth_60 = {
 		popneed_currency = 330	# E&F
 		popneed_financial_products = 8960	# E&F
 		popneed_entertainment = 3859	# Morgenrote
-		popneed_household_construction = 623	# E&F hotfix, STR.3
+		popneed_household_construction = 935	# E&F hotfix, STR.3
 	}
 }
 
@@ -1197,7 +1197,7 @@ REPLACE_OR_CREATE:wealth_61 = {
 		popneed_currency = 354	# E&F
 		popneed_financial_products = 9846	# E&F
 		popneed_entertainment = 4287	# Morgenrote
-		popneed_household_construction = 685	# E&F hotfix, STR.3
+		popneed_household_construction = 1028	# E&F hotfix, STR.3
 	}
 }
 
@@ -1216,7 +1216,7 @@ REPLACE_OR_CREATE:wealth_62 = {
 		popneed_currency = 380	# E&F
 		popneed_financial_products = 10820	# E&F
 		popneed_entertainment = 4718	# Morgenrote
-		popneed_household_construction = 754	# E&F hotfix, STR.3
+		popneed_household_construction = 1131	# E&F hotfix, STR.3
 	}
 }
 
@@ -1235,7 +1235,7 @@ REPLACE_OR_CREATE:wealth_63 = {
 		popneed_currency = 407	# E&F
 		popneed_financial_products = 11891	# E&F
 		popneed_entertainment = 5241	# Morgenrote
-		popneed_household_construction = 829	# E&F hotfix, STR.3
+		popneed_household_construction = 1244	# E&F hotfix, STR.3
 	}
 }
 
@@ -1254,7 +1254,7 @@ REPLACE_OR_CREATE:wealth_64 = {
 		popneed_currency = 437	# E&F
 		popneed_financial_products = 13068	# E&F
 		popneed_entertainment = 5768	# Morgenrote
-		popneed_household_construction = 912	# E&F hotfix, STR.3
+		popneed_household_construction = 1368	# E&F hotfix, STR.3
 	}
 }
 
@@ -1273,7 +1273,7 @@ REPLACE_OR_CREATE:wealth_65 = {
 		popneed_currency = 470	# E&F
 		popneed_financial_products = 14362	# E&F
 		popneed_entertainment = 6347	# Morgenrote
-		popneed_household_construction = 1003	# E&F hotfix, STR.3
+		popneed_household_construction = 1505	# E&F hotfix, STR.3
 	}
 }
 
@@ -1292,7 +1292,7 @@ REPLACE_OR_CREATE:wealth_66 = {
 		popneed_currency = 504	# E&F
 		popneed_financial_products = 15785	# E&F
 		popneed_entertainment = 6983	# Morgenrote
-		popneed_household_construction = 1104	# E&F hotfix, STR.3
+		popneed_household_construction = 1655	# E&F hotfix, STR.3
 	}
 }
 
@@ -1311,7 +1311,7 @@ REPLACE_OR_CREATE:wealth_67 = {
 		popneed_currency = 542	# E&F
 		popneed_financial_products = 17349	# E&F
 		popneed_entertainment = 7684	# Morgenrote
-		popneed_household_construction = 1214	# E&F hotfix, STR.3
+		popneed_household_construction = 1821	# E&F hotfix, STR.3
 	}
 }
 
@@ -1330,7 +1330,7 @@ REPLACE_OR_CREATE:wealth_68 = {
 		popneed_currency = 582	# E&F
 		popneed_financial_products = 19069	# E&F
 		popneed_entertainment = 8455	# Morgenrote
-		popneed_household_construction = 1335	# E&F hotfix, STR.3
+		popneed_household_construction = 2003	# E&F hotfix, STR.3
 	}
 }
 
@@ -1349,7 +1349,7 @@ REPLACE_OR_CREATE:wealth_69 = {
 		popneed_currency = 626	# E&F
 		popneed_financial_products = 20960	# E&F
 		popneed_entertainment = 9302	# Morgenrote
-		popneed_household_construction = 1469	# E&F hotfix, STR.3
+		popneed_household_construction = 2203	# E&F hotfix, STR.3
 	}
 }
 
@@ -1368,7 +1368,7 @@ REPLACE_OR_CREATE:wealth_70 = {
 		popneed_currency = 674	# E&F
 		popneed_financial_products = 23040	# E&F
 		popneed_entertainment = 10235	# Morgenrote
-		popneed_household_construction = 1616	# E&F hotfix, STR.3
+		popneed_household_construction = 2423	# E&F hotfix, STR.3
 	}
 }
 
@@ -1387,7 +1387,7 @@ REPLACE_OR_CREATE:wealth_71 = {
 		popneed_currency = 725	# E&F
 		popneed_financial_products = 25326	# E&F
 		popneed_entertainment = 11260	# Morgenrote
-		popneed_household_construction = 1777	# E&F hotfix, STR.3
+		popneed_household_construction = 2666	# E&F hotfix, STR.3
 	}
 }
 
@@ -1406,7 +1406,7 @@ REPLACE_OR_CREATE:wealth_72 = {
 		popneed_currency = 780	# E&F
 		popneed_financial_products = 27840	# E&F
 		popneed_entertainment = 12388	# Morgenrote
-		popneed_household_construction = 1955	# E&F hotfix, STR.3
+		popneed_household_construction = 2932	# E&F hotfix, STR.3
 	}
 }
 
@@ -1425,7 +1425,7 @@ REPLACE_OR_CREATE:wealth_73 = {
 		popneed_currency = 840	# E&F
 		popneed_financial_products = 30604	# E&F
 		popneed_entertainment = 13629	# Morgenrote
-		popneed_household_construction = 2150	# E&F hotfix, STR.3
+		popneed_household_construction = 3225	# E&F hotfix, STR.3
 	}
 }
 
@@ -1444,7 +1444,7 @@ REPLACE_OR_CREATE:wealth_74 = {
 		popneed_currency = 905	# E&F
 		popneed_financial_products = 33643	# E&F
 		popneed_entertainment = 14995	# Morgenrote
-		popneed_household_construction = 2365	# E&F hotfix, STR.3
+		popneed_household_construction = 3548	# E&F hotfix, STR.3
 	}
 }
 
@@ -1463,7 +1463,7 @@ REPLACE_OR_CREATE:wealth_75 = {
 		popneed_currency = 974	# E&F
 		popneed_financial_products = 36985	# E&F
 		popneed_entertainment = 16496	# Morgenrote
-		popneed_household_construction = 2602	# E&F hotfix, STR.3
+		popneed_household_construction = 3903	# E&F hotfix, STR.3
 	}
 }
 
@@ -1482,7 +1482,7 @@ REPLACE_OR_CREATE:wealth_76 = {
 		popneed_currency = 1050	# E&F
 		popneed_financial_products = 40660	# E&F
 		popneed_entertainment = 18148	# Morgenrote
-		popneed_household_construction = 2862	# E&F hotfix, STR.3
+		popneed_household_construction = 4293	# E&F hotfix, STR.3
 	}
 }
 
@@ -1501,7 +1501,7 @@ REPLACE_OR_CREATE:wealth_77 = {
 		popneed_currency = 1131	# E&F
 		popneed_financial_products = 44700	# E&F
 		popneed_entertainment = 19965	# Morgenrote
-		popneed_household_construction = 3148	# E&F hotfix, STR.3
+		popneed_household_construction = 4722	# E&F hotfix, STR.3
 	}
 }
 
@@ -1520,7 +1520,7 @@ REPLACE_OR_CREATE:wealth_78 = {
 		popneed_currency = 1220	# E&F
 		popneed_financial_products = 49143	# E&F
 		popneed_entertainment = 21964	# Morgenrote
-		popneed_household_construction = 3463	# E&F hotfix, STR.3
+		popneed_household_construction = 5194	# E&F hotfix, STR.3
 	}
 }
 
@@ -1539,7 +1539,7 @@ REPLACE_OR_CREATE:wealth_79 = {
 		popneed_currency = 1315	# E&F
 		popneed_financial_products = 54028	# E&F
 		popneed_entertainment = 24162	# Morgenrote
-		popneed_household_construction = 3809	# E&F hotfix, STR.3
+		popneed_household_construction = 5714	# E&F hotfix, STR.3
 	}
 }
 
@@ -1558,7 +1558,7 @@ REPLACE_OR_CREATE:wealth_80 = {
 		popneed_currency = 1419	# E&F
 		popneed_financial_products = 59400	# E&F
 		popneed_entertainment = 26581	# Morgenrote
-		popneed_household_construction = 4190	# E&F hotfix, STR.3
+		popneed_household_construction = 6285	# E&F hotfix, STR.3
 	}
 }
 
@@ -1577,7 +1577,7 @@ REPLACE_OR_CREATE:wealth_81 = {
 		popneed_currency = 1530	# E&F
 		popneed_financial_products = 65307	# E&F
 		popneed_entertainment = 29241	# Morgenrote
-		popneed_household_construction = 4609	# E&F hotfix, STR.3
+		popneed_household_construction = 6914	# E&F hotfix, STR.3
 	}
 }
 
@@ -1596,7 +1596,7 @@ REPLACE_OR_CREATE:wealth_82 = {
 		popneed_currency = 1651	# E&F
 		popneed_financial_products = 71803	# E&F
 		popneed_entertainment = 32167	# Morgenrote
-		popneed_household_construction = 5070	# E&F hotfix, STR.3
+		popneed_household_construction = 7605	# E&F hotfix, STR.3
 	}
 }
 
@@ -1615,7 +1615,7 @@ REPLACE_OR_CREATE:wealth_83 = {
 		popneed_currency = 1782	# E&F
 		popneed_financial_products = 78946	# E&F
 		popneed_entertainment = 35386	# Morgenrote
-		popneed_household_construction = 5577	# E&F hotfix, STR.3
+		popneed_household_construction = 8365	# E&F hotfix, STR.3
 	}
 }
 
@@ -1634,7 +1634,7 @@ REPLACE_OR_CREATE:wealth_84 = {
 		popneed_currency = 1923	# E&F
 		popneed_financial_products = 86800	# E&F
 		popneed_entertainment = 38927	# Morgenrote
-		popneed_household_construction = 6135	# E&F hotfix, STR.3
+		popneed_household_construction = 9202	# E&F hotfix, STR.3
 	}
 }
 
@@ -1653,7 +1653,7 @@ REPLACE_OR_CREATE:wealth_85 = {
 		popneed_currency = 2077	# E&F
 		popneed_financial_products = 95438	# E&F
 		popneed_entertainment = 42822	# Morgenrote
-		popneed_household_construction = 6748	# E&F hotfix, STR.3
+		popneed_household_construction = 10122	# E&F hotfix, STR.3
 	}
 }
 
@@ -1672,7 +1672,7 @@ REPLACE_OR_CREATE:wealth_86 = {
 		popneed_currency = 2242	# E&F
 		popneed_financial_products = 104935	# E&F
 		popneed_entertainment = 47106	# Morgenrote
-		popneed_household_construction = 7423	# E&F hotfix, STR.3
+		popneed_household_construction = 11134	# E&F hotfix, STR.3
 	}
 }
 
@@ -1691,7 +1691,7 @@ REPLACE_OR_CREATE:wealth_87 = {
 		popneed_currency = 2422	# E&F
 		popneed_financial_products = 115380	# E&F
 		popneed_entertainment = 51819	# Morgenrote
-		popneed_household_construction = 8165	# E&F hotfix, STR.3
+		popneed_household_construction = 12248	# E&F hotfix, STR.3
 	}
 }
 
@@ -1710,7 +1710,7 @@ REPLACE_OR_CREATE:wealth_88 = {
 		popneed_currency = 2616	# E&F
 		popneed_financial_products = 126866	# E&F
 		popneed_entertainment = 57003	# Morgenrote
-		popneed_household_construction = 8982	# E&F hotfix, STR.3
+		popneed_household_construction = 13472	# E&F hotfix, STR.3
 	}
 }
 
@@ -1729,7 +1729,7 @@ REPLACE_OR_CREATE:wealth_89 = {
 		popneed_currency = 2827	# E&F
 		popneed_financial_products = 139496	# E&F
 		popneed_entertainment = 62706	# Morgenrote
-		popneed_household_construction = 9880	# E&F hotfix, STR.3
+		popneed_household_construction = 14820	# E&F hotfix, STR.3
 	}
 }
 
@@ -1748,7 +1748,7 @@ REPLACE_OR_CREATE:wealth_90 = {
 		popneed_currency = 3054	# E&F
 		popneed_financial_products = 153386	# E&F
 		popneed_entertainment = 68978	# Morgenrote
-		popneed_household_construction = 10868	# E&F hotfix, STR.3
+		popneed_household_construction = 16302	# E&F hotfix, STR.3
 	}
 }
 
@@ -1767,7 +1767,7 @@ REPLACE_OR_CREATE:wealth_91 = {
 		popneed_currency = 3301	# E&F
 		popneed_financial_products = 168660	# E&F
 		popneed_entertainment = 75878	# Morgenrote
-		popneed_household_construction = 11954	# E&F hotfix, STR.3
+		popneed_household_construction = 17932	# E&F hotfix, STR.3
 	}
 }
 
@@ -1786,7 +1786,7 @@ REPLACE_OR_CREATE:wealth_92 = {
 		popneed_currency = 3568	# E&F
 		popneed_financial_products = 185458	# E&F
 		popneed_entertainment = 83468	# Morgenrote
-		popneed_household_construction = 13150	# E&F hotfix, STR.3
+		popneed_household_construction = 19725	# E&F hotfix, STR.3
 	}
 }
 
@@ -1805,7 +1805,7 @@ REPLACE_OR_CREATE:wealth_93 = {
 		popneed_currency = 3858	# E&F
 		popneed_financial_products = 203930	# E&F
 		popneed_entertainment = 91817	# Morgenrote
-		popneed_household_construction = 14465	# E&F hotfix, STR.3
+		popneed_household_construction = 21697	# E&F hotfix, STR.3
 	}
 }
 
@@ -1824,7 +1824,7 @@ REPLACE_OR_CREATE:wealth_94 = {
 		popneed_currency = 4171	# E&F
 		popneed_financial_products = 224244	# E&F
 		popneed_entertainment = 101001	# Morgenrote
-		popneed_household_construction = 15911	# E&F hotfix, STR.3
+		popneed_household_construction = 23867	# E&F hotfix, STR.3
 	}
 }
 
@@ -1843,7 +1843,7 @@ REPLACE_OR_CREATE:wealth_95 = {
 		popneed_currency = 4511	# E&F
 		popneed_financial_products = 246584	# E&F
 		popneed_entertainment = 111104	# Morgenrote
-		popneed_household_construction = 17502	# E&F hotfix, STR.3
+		popneed_household_construction = 26254	# E&F hotfix, STR.3
 	}
 }
 
@@ -1862,7 +1862,7 @@ REPLACE_OR_CREATE:wealth_96 = {
 		popneed_currency = 4879	# E&F
 		popneed_financial_products = 271151	# E&F
 		popneed_entertainment = 122216	# Morgenrote
-		popneed_household_construction = 19253	# E&F hotfix, STR.3
+		popneed_household_construction = 28879	# E&F hotfix, STR.3
 	}
 }
 
@@ -1881,7 +1881,7 @@ REPLACE_OR_CREATE:wealth_97 = {
 		popneed_currency = 5277	# E&F
 		popneed_financial_products = 298168	# E&F
 		popneed_entertainment = 134440	# Morgenrote
-		popneed_household_construction = 21178	# E&F hotfix, STR.3
+		popneed_household_construction = 31767	# E&F hotfix, STR.3
 	}
 }
 
@@ -1900,7 +1900,7 @@ REPLACE_OR_CREATE:wealth_98 = {
 		popneed_currency = 5709	# E&F
 		popneed_financial_products = 327881	# E&F
 		popneed_entertainment = 147886	# Morgenrote
-		popneed_household_construction = 23296	# E&F hotfix, STR.3
+		popneed_household_construction = 34944	# E&F hotfix, STR.3
 	}
 }
 
@@ -1919,6 +1919,6 @@ REPLACE_OR_CREATE:wealth_99 = {
 		popneed_currency = 6177	# E&F
 		popneed_financial_products = 360556	# E&F
 		popneed_entertainment = 162677	# Morgenrote
-		popneed_household_construction = 25625	# E&F hotfix, STR.3
+		popneed_household_construction = 38438	# E&F hotfix, STR.3
 	}
 }

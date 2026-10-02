@@ -8,7 +8,7 @@
 INJECT:pm_home_workshops_building_subsistence_farm = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -16,7 +16,7 @@ INJECT:pm_home_workshops_building_subsistence_farm = {
 INJECT:pm_home_workshops_no_building_subsistence_farm = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -24,7 +24,7 @@ INJECT:pm_home_workshops_no_building_subsistence_farm = {
 INJECT:pm_home_workshops_building_subsistence_orchard = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -32,7 +32,7 @@ INJECT:pm_home_workshops_building_subsistence_orchard = {
 INJECT:pm_home_workshops_no_building_subsistence_orchard = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -40,7 +40,7 @@ INJECT:pm_home_workshops_no_building_subsistence_orchard = {
 INJECT:pm_home_workshops_building_subsistence_pasture = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -48,7 +48,7 @@ INJECT:pm_home_workshops_building_subsistence_pasture = {
 INJECT:pm_home_workshops_no_building_subsistence_pasture = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -56,7 +56,7 @@ INJECT:pm_home_workshops_no_building_subsistence_pasture = {
 INJECT:pm_home_workshops_building_subsistence_fishing_village = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -64,7 +64,7 @@ INJECT:pm_home_workshops_building_subsistence_fishing_village = {
 INJECT:pm_home_workshops_no_building_subsistence_fishing_village = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.1
+			goods_output_wood_construction_add = 0.15
 		}
 	}
 }
@@ -72,7 +72,7 @@ INJECT:pm_home_workshops_no_building_subsistence_fishing_village = {
 INJECT:pm_home_workshops_building_subsistence_rice_farm = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.2
+			goods_output_wood_construction_add = 0.3
 		}
 	}
 }
@@ -80,7 +80,7 @@ INJECT:pm_home_workshops_building_subsistence_rice_farm = {
 INJECT:pm_home_workshops_no_building_subsistence_rice_farm = {
 	building_modifiers = {
 		workforce_scaled = {
-			goods_output_wood_construction_add = 0.2
+			goods_output_wood_construction_add = 0.3
 		}
 	}
 }

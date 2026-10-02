@@ -43,6 +43,9 @@ x SUBSISTENCE_WOOD a week. ЖКХ is held to ~15% of an urban centre's output va
 third of the households' figure it would cost urban centres more than they make in 1836
 (world urban centres make ~5 800 services a week); it grows with the cities instead.
 !! TUNING !! SHARE_LOW / SHARE_HIGH, SUBSISTENCE_WOOD, URBAN -- check against runs (Д.7, Д.8).
+Run 2 (3.10, 1836 -> 1841.1, with 3% / 1.5% and 0.1): households took ~4 000 a week in 1837
+(~18% of construction goods with ЖКХ, under Д.5's 25-35%) and ~3 100 in 1841, when sectors had
+doubled (~9%); prices stayed near base (world 110). Raised x1.5: 4.5% / 2.25% and 0.15.
 
 Usage:  python3 tools/regen_ef_household_construction.py [--check]
 """
@@ -59,8 +62,8 @@ HOTFIX = REPO / "_ef" / "ef hotfix 1.13"
 TGR_PACKAGES = REPO.parent / "vic3_mods_out/TheGreatRevision/common/buy_packages/TGR_TRADE_buy_packages_aggressive.txt"
 
 NEED = "popneed_household_construction"
-SHARE_LOW, SHARE_HIGH = 0.03, 0.015       # share of the basket spent on building, wealth 1 / 50+
-SUBSISTENCE_WOOD = 0.1                    # wood_construction per workforce unit of a subsistence building
+SHARE_LOW, SHARE_HIGH = 0.045, 0.0225      # share of the basket spent on building, wealth 1 / 50+
+SUBSISTENCE_WOOD = 0.15                   # wood_construction per workforce unit of a subsistence building
 SUBSISTENCE = ["farm", "orchard", "pasture", "fishing_village", "rice_farm"]
 URBAN = [  # amenity method, construction good, amount per workforce unit
     ("pm_market_stalls", "wood_construction", 0.5),
