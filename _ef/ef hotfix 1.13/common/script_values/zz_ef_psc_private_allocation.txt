@@ -1,0 +1,96 @@
+﻿#############################################
+# СТР.5 / EF.31 / В1.1 (2026-10-02) -- the private share of construction
+# points: income + idle pool + the key rate.
+#
+# PSC (scripted_effects/PSC_scripted_effects.txt, set_construction_point_demand,
+# weekly) sets the country's private share of construction points to
+#     private income / (private income + government construction spending)
+# where private income = investment_pool_gross_income x (1 - privatisation
+# share), and SUBTRACTS everything else that moves the share
+# (private_construction_increase - corrected_private_allocation). So the
+# economy laws (0.1..0.75), E&F's +0.05 per prosperous bank and our EF.31
+# rate modifier were all cancelled within a week (2.10 run: our -4.48% with
+# PSC's compensating line next to it). And the money our model puts into the
+# pool with add_investment_pool (deposits, the CB's credit to banks, bank
+# interest) is not gross income: it got no points and piled up (Britain
+# 1837-39: contributions 338k a week, private construction spending falling
+# 248k -> 85k a week, the pool growing 110-310k a week).
+#
+# This file keeps PSC's ratio and changes two inputs (decided by the user
+# 2.10, "income + stock + rate"):
+#   1. private income also gets the pool's IDLE money -- what the pool holds
+#      above the banks' working need (zz_ef_pool_need: 13 weeks of payouts,
+#      script_values/zz_ef_money_model_values.txt) -- spread over
+#      zz_ef_psc_idle_release_weeks. The model's own inflows land in the pool
+#      and reach construction through this term;
+#   2. the EF.31 rate line survives: the share PSC aims at is its ratio PLUS
+#      the rate term our monthly step applies (var:zz_ef_rate_constr_applied,
+#      x 0.01 like the modifier: +0.30 at 0.5%, 0 at 6.5%, -0.275 at 12%),
+#      held to 0..1.
+# The economy laws and E&F's bank bonus stay cancelled, as under PSC alone:
+# with PSC the share follows money, the laws act through the pool's income.
+#
+# Key-level REPLACE of PSC's private_construction_increase
+# (PSC/common/script_values/PSC_construction_values.txt). PSC subtracts
+# var:corrected_private_allocation (all other modifiers, ours included), so
+# the total share ends up exactly at zz_ef_psc_private_target.
+# !! MAINTENANCE !! Re-diff against PSC's private_construction_increase after
+# every PSC update.
+#############################################
+
+# Weeks over which the pool's idle money is offered to construction.
+zz_ef_psc_idle_release_weeks = 26
+
+# The pool's money above the banks' working need, a week.
+zz_ef_psc_idle_release = {
+	value = investment_pool
+	subtract = zz_ef_pool_need
+	min = 0
+	divide = zz_ef_psc_idle_release_weeks
+}
+
+# Private income PSC weighs against the government's spending: PSC's term
+# (contributions net of privatisation) + the idle pool's release.
+zz_ef_psc_private_income = {
+	value = investment_pool_gross_income
+	multiply = {
+		value = 1
+		subtract = var:privatisation_percent_estimate
+	}
+	add = zz_ef_psc_idle_release
+	min = 0
+}
+
+# EF.31's rate term, as applied this month (0 before the first step).
+zz_ef_psc_rate_share = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_rate_constr_applied }
+		value = var:zz_ef_rate_constr_applied
+		multiply = 0.01
+	}
+}
+
+# The private share the country ends up with.
+zz_ef_psc_private_target = {
+	value = zz_ef_psc_private_income
+	divide = {
+		value = zz_ef_psc_private_income
+		add = {
+			value = var:limited_government_construction_spending
+			multiply = {
+				value = 1
+				subtract = modifier:country_construction_goods_cost_mult
+			}
+		}
+		min = 0.01
+	}
+	add = zz_ef_psc_rate_share
+	min = 0
+	max = 1
+}
+
+REPLACE:private_construction_increase = {
+	value = zz_ef_psc_private_target
+	subtract = var:corrected_private_allocation
+}

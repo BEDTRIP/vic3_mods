@@ -598,11 +598,15 @@ zz_ef_money_model_monthly_step = {
 	# (generated, scripted_effects/zz_ef_monetary_policy.txt)
 	zz_ef_mp_step = yes
 
-	# EF.31: the rate's share of private construction.
+	# EF.31: the rate's share of private construction. PSC rewrites the whole
+	# private share every week; it keeps this line only because our
+	# REPLACE of private_construction_increase adds it back from the variable
+	# (СТР.5, script_values/zz_ef_psc_private_allocation.txt).
+	set_variable = { name = zz_ef_rate_constr_applied value = zz_ef_rate_construction_mult }
 	remove_modifier = zz_ef_rate_private_construction
 	add_modifier = {
 		name = zz_ef_rate_private_construction
-		multiplier = zz_ef_rate_construction_mult
+		multiplier = var:zz_ef_rate_constr_applied
 	}
 }
 
