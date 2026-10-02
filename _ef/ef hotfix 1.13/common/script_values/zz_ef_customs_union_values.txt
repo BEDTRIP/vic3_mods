@@ -3,6 +3,65 @@
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's money_value and money_value_in_gold:
 # regenerate after an E&F update.
 
+# E&F's money_value_in_gold: the owner's branches as E&F has them; a customs union member converts its own
+# money_value by its own standard (silver at the silver-to-gold rate; bimetallism and gold as they are, as
+# E&F's money_value_target_real_in_gold); the rest -- E&F's subject branch.
+REPLACE_OR_CREATE:money_value_in_gold = {
+	value = 0
+	if = {
+		limit = {
+			market_owner_is_root_4 = yes
+			or = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_gold_exchange_standard
+			}
+		}
+		add = money_value
+	}
+	if = {
+		limit = {
+			market_owner_is_root_4 = yes
+			has_law = law_type:law_silver_standard
+		}
+		add = money_value_silver_standard_in_gold
+	}
+	if = {
+		limit = {
+			market_owner_is_root_4 = yes
+			has_law = law_type:law_bimetallism_standard
+		}
+		add = money_value_bimetallism_standard_in_gold
+	}
+	if = {
+		limit = {
+			zz_ef_cu_member = yes
+			is_subject = no
+		}
+		add = money_value
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			multiply = silver_to_gold_rate
+		}
+	}
+	if = { #subject
+		limit = {
+			zz_ef_currency_own = no
+		}
+		add = money_value
+		multiply = rate_by_law_metal_type_2
+	}
+	if = { #subject owning its market
+		limit = {
+			zz_ef_currency_own = yes
+			is_subject = yes
+		}
+		add = money_value
+		multiply = rate_by_law_metal_type_2
+	}
+
+	min = 0.0001
+}
+
 REPLACE_OR_CREATE:money_value = {
 
 	if = {
@@ -90,46 +149,6 @@ REPLACE_OR_CREATE:money_value = {
 
 	#max = revaluation_money_value_max
 	max = 100
-	min = 0.0001
-}
-
-REPLACE_OR_CREATE:money_value_in_gold = {
-	value = 0
-	if = {
-		limit = {
-			zz_ef_currency_own = yes
-			or = {
-				has_law = law_type:law_gold_standard
-				has_law = law_type:law_gold_exchange_standard
-			}
-		}
-		add = money_value
-	}
-	if = {
-		limit = {
-			zz_ef_currency_own  = yes
-			has_law = law_type:law_silver_standard
-		}
-		add = money_value_silver_standard_in_gold
-	}
-	if = {
-		limit = {
-			zz_ef_currency_own  = yes
-			has_law = law_type:law_bimetallism_standard
-		}
-		add = money_value_bimetallism_standard_in_gold
-	}
-	if = { #subject
-		limit = {
-			or  = {
-			    zz_ef_currency_own = no
-			    is_subject = yes
-		    }
-		}
-		add = money_value
-		multiply = rate_by_law_metal_type_2
-	}
-
 	min = 0.0001
 }
 

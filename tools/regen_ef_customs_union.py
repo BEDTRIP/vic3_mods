@@ -62,7 +62,13 @@ def values():
     ef = open(EF_SV, encoding="utf-8-sig").read()
     out = [HEAD, "# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's money_value and money_value_in_gold:\n"
                  "# regenerate after an E&F update.\n\n"]
-    for name, n_expected in (("money_value", 1), ("money_value_in_gold", 4)):
+    # money_value_in_gold: E&F's body checked, then written out by hand (MVIG below) -- run 24 (2.10): the
+    # owner's branches read central_bank_reserves_*_standard, which E&F keeps for market owners only, so for
+    # a member they gave 'none' (~3900 errors in is_weak_currency / is_strong_currency per 3 minutes)
+    body = re.sub(r"\s+", " ", block(ef, "money_value_in_gold"))
+    assert body == MVIG_EF, "E&F's money_value_in_gold changed: re-check MVIG"
+    out.append(MVIG)
+    for name, n_expected in (("money_value", 1),):
         body = block(ef, name)
         # the live checks only (the commented-out ones stay as they are)
         live = re.findall(r"^(?![ \t]*#).*market_owner_is_root_4\s*=\s*(?:yes|no)", body, re.M)
@@ -87,6 +93,69 @@ def values():
                "\t\tadd = var:zz_ef_member_trade\n\t}\n}\n")
     return "".join(out)
 
+
+MVIG_EF = '{ value = 0 if = { limit = { market_owner_is_root_4 = yes or = { has_law = law_type:law_gold_standard has_law = law_type:law_gold_exchange_standard } } add = money_value } if = { limit = { market_owner_is_root_4 = yes has_law = law_type:law_silver_standard } add = money_value_silver_standard_in_gold } if = { limit = { market_owner_is_root_4 = yes has_law = law_type:law_bimetallism_standard } add = money_value_bimetallism_standard_in_gold } if = { #subject limit = { or = { market_owner_is_root_4 = no is_subject = yes } } add = money_value multiply = rate_by_law_metal_type_2 } min = 0.0001 }'
+
+MVIG = """# E&F's money_value_in_gold: the owner's branches as E&F has them; a customs union member converts its own
+# money_value by its own standard (silver at the silver-to-gold rate; bimetallism and gold as they are, as
+# E&F's money_value_target_real_in_gold); the rest -- E&F's subject branch.
+REPLACE_OR_CREATE:money_value_in_gold = {
+	value = 0
+	if = {
+		limit = {
+			market_owner_is_root_4 = yes
+			or = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_gold_exchange_standard
+			}
+		}
+		add = money_value
+	}
+	if = {
+		limit = {
+			market_owner_is_root_4 = yes
+			has_law = law_type:law_silver_standard
+		}
+		add = money_value_silver_standard_in_gold
+	}
+	if = {
+		limit = {
+			market_owner_is_root_4 = yes
+			has_law = law_type:law_bimetallism_standard
+		}
+		add = money_value_bimetallism_standard_in_gold
+	}
+	if = {
+		limit = {
+			zz_ef_cu_member = yes
+			is_subject = no
+		}
+		add = money_value
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			multiply = silver_to_gold_rate
+		}
+	}
+	if = { #subject
+		limit = {
+			zz_ef_currency_own = no
+		}
+		add = money_value
+		multiply = rate_by_law_metal_type_2
+	}
+	if = { #subject owning its market
+		limit = {
+			zz_ef_currency_own = yes
+			is_subject = yes
+		}
+		add = money_value
+		multiply = rate_by_law_metal_type_2
+	}
+
+	min = 0.0001
+}
+
+"""
 
 TRIGGERS = HEAD + """
 # A customs union member with a currency of its own: in a market it does not own, with a central bank,

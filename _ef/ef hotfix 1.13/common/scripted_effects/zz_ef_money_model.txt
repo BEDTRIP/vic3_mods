@@ -569,16 +569,10 @@ zz_ef_money_model_monthly_step = {
 	# В2.1 (2.10): part of the net exports paid in the importer's currency
 	# (generated, scripted_effects/zz_ef_reserve_trade.txt)
 	zz_ef_rc_step = yes
-	# В2.1: AI central banks on the forex monthly (E&F: once a year, in
-	# central_bank_ef_on_yearly_pulse_country -- kept, one more a year)
-	if = {
-		limit = {
-			is_ai = yes
-			market.owner = this
-			has_central_bank_SS_BS_GS_NISO = yes
-		}
-		ai_buy_sell_currency = yes
-	}
+	# В2.1: AI central banks on the forex monthly was tried and taken back
+	# (run 24, 2.10): every E&F purchase is at parity, twelve a year blew the
+	# reserves up (France's cover 64% -> 436%, Russia's currency 1.2 billion
+	# silver in 2.5 years). E&F's yearly ai_buy_sell_currency stays.
 	# night 2: every currency once a month (Hanover's thaler, silver rates)
 	if = {
 		limit = {
