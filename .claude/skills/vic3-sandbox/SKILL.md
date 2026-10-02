@@ -29,7 +29,7 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 
 ```bash
 # 1) новая игра с 1 января 1836 — нужна, когда менялись условия старта (история, законы, здания):
-powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -NewGame -Tag GBR -RunMinutes 10 -OutDir "<scratch>\runN"
+powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -NewGame -Tag BUG -RunMinutes 10 -OutDir "<scratch>\runN"
 
 # 2) продолжение последнего сейва (continue_game.json; кампания идёт дальше от прогона к прогону):
 powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -RunMinutes 10 -OutDir "<scratch>\runN"
@@ -41,7 +41,8 @@ powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -StartSave "
 Окончание ждать фоновым `until grep -q "done:\|stopping\|not in front" <OutDir>/run.log; do sleep 10; done`.
 
 Параметры: `-RunMinutes N` (реальные минуты на скорости 5), `-Autosaves N` (остановиться после N новых
-автосейвов; автосейв раз в полгода), `-Tag` (страна новой игры, по умолчанию GBR), `-AiTag` (консоль
+автосейвов; автосейв раз в полгода), `-Tag` (страна новой игры, по умолчанию BUG — Буганда: 2.10 пользователь заметил, что страна игрока под
+`enable_ai all` ведёт себя пассивно — Британия ничего не делала с казной; играть за страну, которая на мир не влияет), `-AiTag` (консоль
 `enable_ai <tag>`, по умолчанию `all`; `""` — не включать), `-LoadWaitSec` (предел ожидания загрузки, по
 умолчанию 400). `-NoDumps` оставлен для старых команд и ничего не делает: `debugcountrybudgets` /
 `debugmarkets` есть строками в `victoria3.exe`, но консоль релизной сборки отвечает «Unknown command».

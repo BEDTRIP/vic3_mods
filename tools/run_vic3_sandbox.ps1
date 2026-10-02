@@ -52,7 +52,7 @@ param(
     [string]$Commands = "",
     [string]$StartSave = "",
     [switch]$NewGame,
-    [string]$Tag = "GBR",
+    [string]$Tag = "BUG",
     [switch]$NoDumps,
     [string]$OutDir = ""
 )
