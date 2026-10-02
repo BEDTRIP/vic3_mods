@@ -1,0 +1,12 @@
+#############################################
+# EF.48 (2.10, the user): E&F's devaluation / revaluation is a law in
+# lawgroup_monetary_policy (laws/01_ef_monetary_policy.txt) enacted by the
+# vanilla mechanic -- 100 days a checkpoint (LAW_ENACTMENT_DEFAULT_BASE_DAYS),
+# so a devaluation took the better part of a year. +200% speed: 33 days a
+# checkpoint (the vanilla base_enactment_days of a law group overrides the
+# define, law_groups/00_laws.txt).
+#############################################
+
+INJECT:lawgroup_monetary_policy = {
+	base_enactment_days = 33
+}

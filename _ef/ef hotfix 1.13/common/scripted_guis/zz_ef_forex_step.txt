@@ -1,0 +1,36 @@
+#############################################
+# EF.48 (2.10, the user): the forex panel's quantity (E&F's
+# scripted_guis/00_economic_scripted_guis.txt) moved in steps of 5 000 000
+# units, from 5M to 20M -- the scale of E&F's own money. Our money is the
+# engine's (Britain's M2 30-60M): steps of 500 000, from 500K.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's two buttons.
+#############################################
+
+REPLACE_OR_CREATE:currency_quantity_increase = {
+	effect = {
+		if = {
+			limit = {
+				has_variable = currency_quantity
+				var:currency_quantity < 20000000
+			}
+			change_variable = {
+				name = currency_quantity
+				add = 500000
+			}
+		}
+	}
+}
+REPLACE_OR_CREATE:currency_quantity_reduce = {
+	effect = {
+		if = {
+			limit = {
+				has_variable = currency_quantity
+				var:currency_quantity > 500000
+			}
+			change_variable = {
+				name = currency_quantity
+				subtract = 500000
+			}
+		}
+	}
+}
