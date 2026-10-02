@@ -1,0 +1,12 @@
+# STR.5 / D.1 (night G, 2026-10-03): pops reinvest from their ownership buildings
+# without the cut for subsistence levels. Vanilla multiplies the reinvestment of
+# manor houses and financial districts by (1 - 0.5 x share of their levels that are
+# subsistence), so aristocrats, whose levels are mostly farms, put in about half --
+# and the engine picks the owner of new private construction by where the pool's
+# money came from. Run 1 of night G (1836.7 -> 1841.1, with the bank and slot fixes
+# 2c387fd / 3b41971): pops got 18% of the world's gross private construction and
+# 4-6% in Britain, France, Prussia and the USA -- under the 20% of D.1, so the cut
+# goes. Nobody else in the set sets this define.
+NEconomy = {
+	REINVESTMENT_SUBSISTENCE_FRACTION_REDUCTION = 0
+}
