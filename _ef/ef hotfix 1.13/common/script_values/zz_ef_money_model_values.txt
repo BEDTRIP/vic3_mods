@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.39 / EF.44 / EF.48 (2026-09-30) -- the money model as a flow matrix
 # between accounts, all in the ENGINE'S money. COUNTRY scope. Per WEEK, as
 # the engine's budget counts (the user, 2026-09-30: a monthly step against
@@ -1929,27 +1929,12 @@ zz_ef_treasury_bonds = {
 		add = var:ai_total_bond_value_10
 	}
 }
-# E&F's trade account: its accumulated trade balance in gold
-# (var:trade_balance_in_gold_fixe; no longer in the national capacity, item
-# 6) at today's value of the currency. Kept as a claim on abroad, as the user
-# asked (1.10 day).
-zz_ef_trade_account = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = trade_balance_in_gold_fixe
-			zz_ef_gold_per_unit > 0
-		}
-		value = var:trade_balance_in_gold_fixe
-		divide = zz_ef_gold_per_unit
-	}
-}
-# Claims on abroad in M3: the banks' and the treasury's foreign bonds. Not
-# E&F's trade account (zz_ef_trade_account, kept for the log only): it is a
-# counter of cumulative trade in gold that E&F added to the reserves; since
-# EF.48 item 6 the trade moves the CB's metal itself (Hume), so the counter
-# only duplicates it (the user, 1.10 day). Runs 8-9 read it at 12.6 billion
-# for Belgium (M2 182M).
+# Claims on abroad in M3: the banks' and the treasury's foreign bonds. E&F's
+# trade account (var:trade_balance_in_gold_fixe, a counter of cumulative trade
+# in gold -- 12.6 billion for Belgium at M2 182M, runs 8-9) is gone with В2.1
+# (2.10): the trade moves the CB's metal (Hume) and, for a share, the
+# importer's currency (zz_ef_rc_step); the currency held abroad is
+# zz_ef_fx_liab (the log's liab).
 zz_ef_foreign_assets = {
 	value = zz_ef_bank_bonds
 	add = zz_ef_treasury_bonds

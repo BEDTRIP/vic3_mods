@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.39 / EF.48 (2026-09-30) -- the money model, in the engine's money, on
 # the budget's own rhythm: a WEEKLY step (bank credit from the central bank
 # at the key rate, its interest to the treasury, the ledger of each account's
@@ -556,13 +556,26 @@ zz_ef_pop_extra_income_step = {
 zz_ef_money_model_monthly_step = {
 	# night 2, item 1: the silver-to-gold rate from market prices
 	zz_ef_silver_rate_update = yes
+	# В2.1 (2.10): part of the net exports paid in the importer's currency
+	# (generated, scripted_effects/zz_ef_reserve_trade.txt)
+	zz_ef_rc_step = yes
+	# В2.1: AI central banks on the forex monthly (E&F: once a year, in
+	# central_bank_ef_on_yearly_pulse_country -- kept, one more a year)
+	if = {
+		limit = {
+			is_ai = yes
+			market.owner = this
+			has_central_bank_SS_BS_GS_NISO = yes
+		}
+		ai_buy_sell_currency = yes
+	}
 	# night 2: every currency once a month (Hanover's thaler, silver rates)
 	if = {
 		limit = {
 			has_variable = money_value_target_1
 			gdp > 1000000
 		}
-		debug_log = "EFX|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|std [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_std_code')|0]|cb [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_has_cb')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|3]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|3]|gpu [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_unit')|4]|subj [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_subject')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|gold [THIS.GetCountry.MakeScope.ScriptValue('gold_state_native_for_stockpile')|0]|silver [THIS.GetCountry.MakeScope.ScriptValue('silver_state_native_for_stockpile')|0]|fxm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_fx_metal')|0]|own [THIS.GetCountry.MakeScope.ScriptValue('money_supply_state')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|crisis [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_crisis_flag')|0]|s2g [THIS.GetCountry.MakeScope.ScriptValue('silver_to_gold_rate')|5]|median [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_median')|3]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]"
+		debug_log = "EFX|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|std [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_std_code')|0]|cb [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_has_cb')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|3]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|3]|gpu [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_unit')|4]|subj [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_subject')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|gold [THIS.GetCountry.MakeScope.ScriptValue('gold_state_native_for_stockpile')|0]|silver [THIS.GetCountry.MakeScope.ScriptValue('silver_state_native_for_stockpile')|0]|fxm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_fx_metal')|0]|own [THIS.GetCountry.MakeScope.ScriptValue('money_supply_state')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|crisis [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_crisis_flag')|0]|s2g [THIS.GetCountry.MakeScope.ScriptValue('silver_to_gold_rate')|5]|median [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_median')|3]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|rcin [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_fx_in')|0]|rcback [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_back')|0]|rcmetal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_metal_out')|0]|liab [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_fx_liab')|0]"
 	}
 	# EF.48 item 4: dependents for the surcharge (consumer credit; since 1.10
 	# evening also the savings spent -- every country).
