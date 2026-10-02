@@ -429,6 +429,7 @@ zz_ef_other_treasury_budget = {
 	value = zz_ef_v_d_treasury
 	subtract = zz_ef_v_f_budget
 	subtract = zz_ef_v_f_cb_interest
+	subtract = zz_ef_v_f_mint_tr
 }
 
 # ---- reconciliation block (raw engine numbers, weekly) --------------------
@@ -887,6 +888,11 @@ zz_ef_fx_deal_size = {
 # market, so the mines still sell all of it: this is extra issue against the
 # metal mined (a gold rush widens the money and the cover).
 zz_ef_mint_share = 0.5
+# В2.3 (2.10): the treasury's share of the coined money (0.01 = a 1% brassage,
+# the rest to the owners -- variant a; 1 = all to the treasury -- variant b).
+# A parameter until a run shows how much is coined (EFR mint / mint_tr);
+# later perhaps a law group (free coinage / state monopoly, block И).
+zz_ef_mint_treasury_share = 0.01
 zz_ef_gold_mined_week = {
 	value = 0
 	every_scope_state = {
@@ -970,6 +976,15 @@ zz_ef_mint_silver_metal = {
 		limit = { has_law = law_type:law_bimetallism_standard }
 		multiply = gold_to_silver_rate
 	}
+}
+zz_ef_v_f_mint_tr = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_mint_tr } value = var:zz_ef_f_mint_tr }
+}
+# В2.3: the coined money that goes to the owners (pops' savings)
+zz_ef_v_f_mint_own = {
+	value = zz_ef_v_f_mint
+	subtract = zz_ef_v_f_mint_tr
 }
 zz_ef_v_f_mint = {
 	value = 0

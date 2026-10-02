@@ -1,0 +1,73 @@
+﻿#############################################
+# EF.48, В2.3 (decided 2.10): gold mines and fields mint nothing into the
+# treasury. Vanilla gives country_minting_add per workforce to every gold
+# method (production_methods/03_mines.txt); on top of it our central bank
+# coins half of the gold mined (zz_ef_mint_step: metal to the reserve, money
+# to its owners, a share to the treasury -- zz_ef_mint_treasury_share) and
+# the gold is sold on the market in full -- the same ounce counted three
+# times. Issue goes through the central bank now.
+#
+# Counterweights, not REPLACE: repeated keys in a modifier block add up
+# (rules, section «Префиксы БД»), so -N cancels vanilla's N and the rest of
+# each method stays as vanilla / other mods have it.
+# !! MAINTENANCE !! The numbers are vanilla's (1.13): re-check against
+# 03_mines.txt after a game patch. A later mod restating one of these methods
+# in full (T&R's compatch did so for the diesel pump) drops the counterweight
+# and brings its own minting -- T&R is out of the set since 25.08.2026.
+#############################################
+
+INJECT:pm_picks_and_shovels_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -250
+		}
+	}
+}
+
+INJECT:pm_atmospheric_engine_pump_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -500
+		}
+	}
+}
+
+INJECT:pm_condensing_engine_pump_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -750
+		}
+	}
+}
+
+INJECT:pm_diesel_pump_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -1000
+		}
+	}
+}
+
+INJECT:pm_nitroglycerin_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -125
+		}
+	}
+}
+
+INJECT:pm_dynamite_building_gold_mine = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -250
+		}
+	}
+}
+
+INJECT:default_building_gold_field = {
+	country_modifiers = {
+		workforce_scaled = {
+			country_minting_add = -500
+		}
+	}
+}

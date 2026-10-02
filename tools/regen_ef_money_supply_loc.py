@@ -327,6 +327,11 @@ FLOWS = [
     (C, X, "погашено — деньги изъяты", "repaid — money withdrawn", sv_("zz_ef_v_f_cb_repay"), None),
     (B, C, "проценты по кредиту ЦБ", "interest on the CB's credit", sv_("zz_ef_v_f_cb_interest"), None),
     (C, K, "прибыль ЦБ: проценты банков", "the CB's profit: banks' interest", sv_("zz_ef_v_f_cb_interest"), None),
+    # the CB coins mined metal (В2.3, 2.10): the owners' part and the treasury's brassage
+    (X, N, "чеканка ЦБ из добытого металла — владельцам", "the CB coins mined metal — to the owners",
+     sv_("zz_ef_v_f_mint_own"), None),
+    (X, K, "чеканка ЦБ: брассаж в казну", "the CB coins mined metal: brassage to the treasury",
+     sv_("zz_ef_v_f_mint_tr"), None),
     # --- abroad ---
     # trade centres: their cash change is the country's payments abroad (EF.48 item 1)
     (P, Z, "торговые центры: оплата импорта — убыль их кассы", "trade centres: paying for imports — their cash fell",
