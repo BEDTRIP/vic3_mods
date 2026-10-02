@@ -14,7 +14,17 @@
 # 1% -> 95% of urban centres, 6.57% (Britain 1840) -> 67%, 12% (E&F's
 # ceiling) -> 40%, 20% -> 0. E&F's own factor was 1 - (rate - 1%) / 11%,
 # i.e. 49% at 6.57%.
-zz_pb_ef_css_rate_mult = 5
+# STR.4 (night G, 2026-10-03): the stimulus buttons 9-12 lower the 5 to 4 / 3.5 /
+# 3 / 2.5 for 36 months (var:zz_pb_ef_stimulus_mult, timed; scripted_guis/
+# zz_pb_ef_speculative_pcs_sguis.txt). Without it -- 5.
+zz_pb_ef_css_rate_mult_base = 5
+zz_pb_ef_css_rate_mult = {
+	value = zz_pb_ef_css_rate_mult_base
+	if = {
+		limit = { has_variable = zz_pb_ef_stimulus_mult }
+		value = var:zz_pb_ef_stimulus_mult
+	}
+}
 
 # STR.3 / D.9 (night G, 2026-10-03): households and urban centres now buy
 # construction goods too (tools/regen_ef_household_construction.py), so the limit
