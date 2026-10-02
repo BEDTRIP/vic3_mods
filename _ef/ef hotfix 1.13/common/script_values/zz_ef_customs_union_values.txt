@@ -465,8 +465,8 @@ zz_ef_members_trade_sum = {
 	every_country = {
 		limit = {
 			NOT = { this = root }
-			market.owner = root
 			zz_ef_cu_member = yes
+			market.owner = root
 			has_variable = zz_ef_member_trade
 		}
 		add = var:zz_ef_member_trade

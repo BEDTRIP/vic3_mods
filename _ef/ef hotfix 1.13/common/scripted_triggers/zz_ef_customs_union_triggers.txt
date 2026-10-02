@@ -4,6 +4,7 @@
 # A customs union member with a currency of its own: in a market it does not own, with a central bank,
 # not a subject (subjects: the suzerain's currency, В3.2).
 zz_ef_cu_member = {
+	exists = market
 	NOT = { market.owner = this }
 	has_modifier = has_central_bank
 	is_subject_custom_trigger = no
@@ -11,6 +12,7 @@ zz_ef_cu_member = {
 # The country's money is its own (E&F's money_value / money_value_in_gold): it owns its market or is
 # such a member.
 zz_ef_currency_own = {
+	exists = market
 	OR = {
 		market.owner = this
 		zz_ef_cu_member = yes

@@ -57,11 +57,6 @@ zz_ef_rc_pair_net = {
 		}
 	}
 }
-# gold of the swap in silver (the importer on silver)
-zz_ef_rc_gold_as_silver = {
-	value = var:zz_ef_rc_gold
-	multiply = gold_to_silver_rate
-}
 # Log helpers (0 if unset).
 zz_ef_v_rc_fx_in = {
 	value = 0

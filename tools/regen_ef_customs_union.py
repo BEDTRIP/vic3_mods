@@ -82,8 +82,8 @@ def values():
     out.append("\t}\n}\n")
     out.append("# The market owner's side: the members' accounts of the week (stored by each member's receiver).\n"
                "zz_ef_members_trade_sum = {\n\tvalue = 0\n"
-               "\tevery_country = {\n\t\tlimit = {\n\t\t\tNOT = { this = root }\n\t\t\tmarket.owner = root\n"
-               "\t\t\tzz_ef_cu_member = yes\n\t\t\thas_variable = zz_ef_member_trade\n\t\t}\n"
+               "\tevery_country = {\n\t\tlimit = {\n\t\t\tNOT = { this = root }\n\t\t\tzz_ef_cu_member = yes\n"
+               "\t\t\tmarket.owner = root\n\t\t\thas_variable = zz_ef_member_trade\n\t\t}\n"
                "\t\tadd = var:zz_ef_member_trade\n\t}\n}\n")
     return "".join(out)
 
@@ -92,6 +92,7 @@ TRIGGERS = HEAD + """
 # A customs union member with a currency of its own: in a market it does not own, with a central bank,
 # not a subject (subjects: the suzerain's currency, В3.2).
 zz_ef_cu_member = {
+	exists = market
 	NOT = { market.owner = this }
 	has_modifier = has_central_bank
 	is_subject_custom_trigger = no
@@ -99,6 +100,7 @@ zz_ef_cu_member = {
 # The country's money is its own (E&F's money_value / money_value_in_gold): it owns its market or is
 # such a member.
 zz_ef_currency_own = {
+	exists = market
 	OR = {
 		market.owner = this
 		zz_ef_cu_member = yes

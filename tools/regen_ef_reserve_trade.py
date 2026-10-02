@@ -19,8 +19,10 @@ Here:
     market; if the exporter's side is bigger, the importer pays zz_ef_rc_share (25% for the test,
     the user 2.10) of the net in its currency instead of metal: first it hands back the exporter's
     own currency it holds, the rest the exporter's CB takes in the importer's currency. Metal: the
-    exporter's CB gives up what Hume brought in for that part, the importer's gets it back (metal
-    standards only).
+    exporter's CB gives up what Hume brought in for that part, valued at its parity (not today's value:
+    a value that grows with the metal fed back on itself). The importer gets no metal back (run 23: it
+    made reserves out of nothing, Prussia's value 24 -> 1401 in five years) -- its currency held
+    abroad is its debt (zz_ef_fx_liab).
   * zz_ef_fx_liab: the country's currency held by other CBs (its debt abroad), for the log and M3.
 
 Writes (_ef/ef hotfix 1.13/common/):
@@ -98,7 +100,8 @@ zz_ef_rc_step = {
 			}
 			NOT = { has_modifier = currency_crisis_country }
 			NOT = { has_modifier = central_bank_bankruptcy_country }
-			money_value_0 > 0
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
 			zz_ef_rc_unit_price > 0
 			any_scope_state = {
 				has_modifier = central_bank_historic_place
@@ -179,7 +182,7 @@ zz_ef_rc_pair = {
 			value = {
 				value = var:zz_ef_rc_due
 				multiply = zz_ef_rc_share_month
-				multiply = money_value_0
+				multiply = var:money_value_target_1
 				max = var:zz_ef_rc_metal_left
 				min = 0
 			}
@@ -192,7 +195,7 @@ zz_ef_rc_pair = {
 		limit = { var:zz_ef_rc_metal > 0 }
 		# in the exporter's money and in gold
 		set_variable = { name = zz_ef_rc_money value = var:zz_ef_rc_metal }
-		change_variable = { name = zz_ef_rc_money divide = money_value_0 }
+		change_variable = { name = zz_ef_rc_money divide = var:money_value_target_1 }
 		set_variable = { name = zz_ef_rc_gold value = var:zz_ef_rc_metal }
 		if = {
 			limit = { has_law = law_type:law_silver_standard }
@@ -218,7 +221,9 @@ zz_ef_rc_pair = {
 		set_variable = { name = zz_ef_rc_units value = var:zz_ef_rc_rest_gold }
 		change_variable = { name = zz_ef_rc_units divide = scope:rc_imp.zz_ef_rc_currency_value }
 		scope:rc_imp = { zz_ef_rc_add_units = yes }
-		# metal: out of the exporter's CB, into the importer's (metal standards)
+		# metal: out of the exporter's CB. Not into the importer's (run 23, 2.10: that made reserves out
+		# of nothing -- the importer kept the metal and owed only currency nobody counted against it;
+		# Prussia's value 24 -> 1401 in five years): the importer's currency abroad is its debt.
 		scope:rc_exp_cb = {
 			if = {
 				limit = { owner = { has_law = law_type:law_silver_standard } }
@@ -229,31 +234,6 @@ zz_ef_rc_pair = {
 			}
 		}
 		change_variable = { name = zz_ef_rc_metal_left subtract = var:zz_ef_rc_metal }
-		scope:rc_imp_cb = {
-			if = {
-				limit = { owner = { has_law = law_type:law_silver_standard } }
-				if = {
-					limit = { NOT = { has_variable = silver_state_1 } }
-					set_variable = { name = silver_state_1 value = 0 }
-				}
-				change_variable = { name = silver_state_1 add = scope:rc_exp.zz_ef_rc_gold_as_silver }
-			}
-			else_if = {
-				limit = {
-					owner = {
-						OR = {
-							has_law = law_type:law_gold_standard
-							has_law = law_type:law_bimetallism_standard
-						}
-					}
-				}
-				if = {
-					limit = { NOT = { has_variable = gold_state_1 } }
-					set_variable = { name = gold_state_1 value = 0 }
-				}
-				change_variable = { name = gold_state_1 add = scope:rc_exp.var:zz_ef_rc_gold }
-			}
-		}
 		# the month, for the log
 		change_variable = { name = zz_ef_rc_fx_in add = var:zz_ef_rc_rest_gold }
 		change_variable = { name = zz_ef_rc_back add = var:zz_ef_rc_back_now }
@@ -371,11 +351,6 @@ zz_ef_rc_pair_net = {
 			multiply = scope:rc_imp.zz_ef_rc_unit_price
 		}
 	}
-}
-# gold of the swap in silver (the importer on silver)
-zz_ef_rc_gold_as_silver = {
-	value = var:zz_ef_rc_gold
-	multiply = gold_to_silver_rate
 }
 # Log helpers (0 if unset).
 zz_ef_v_rc_fx_in = {
