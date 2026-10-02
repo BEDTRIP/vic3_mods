@@ -1,7 +1,7 @@
-#############################################
+﻿#############################################
 # EF.18 v2 (2026-09-24) -- the two sections of E&F's Financial Stability Office
-# journal (financial_center_je_2), rebuilt. This file is in no mod but the
-# E&F x PSC compatch and the megapacks that carry it.
+# journal (financial_center_je_2), rebuilt. Came from the E&F x PSC compatch,
+# which lives inside this hotfix since 2026-10-02 (СТР.6).
 #
 # Built from E&F's widget_je_ef_fc_fso_situation / widget_je_ef_pcs_fso_situation
 # (gui/scripted_widgets/00_ef_custom_widgets.gui, 4.1.7) -- headers and E&F's

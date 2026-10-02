@@ -8,10 +8,34 @@
   09.09.2026 — меню компаний переделано (EF.11), см. «The companies panel»
 версии: —
 позиция: —
-файлов: 117
-генератор: — (списан 02.09.2026, tools/_to_delete/regen_ef_currency_merge_retired_2026-09-02.py)
-зависит от: —
+файлов: 290 (из них 132 локализации)
+генератор: tools/regen_ef_psc_copies.py (стройка PSC, с 02.10.2026); regen_ef_* по разделам;
+  валютный — списан 02.09.2026 (tools/_to_delete/regen_ef_currency_merge_retired_2026-09-02.py)
+зависит от: E&F, PSC (3420714166) — с 02.10.2026
 -->
+
+## Обновление 02.10.2026 — компач E&F × PSC вошёл в хотфикс (СТР.6)
+
+Решено пользователем 30.09: почти вся переделка E&F (стройка, ставка, деньги) опирается на PSC,
+держать два мода смысла мало. Компач `ef+psc` (мод 3640702353) целиком переехал сюда; хотфикс
+теперь **зависит от PSC**. Папка, id в Мастерской (3786286962) и порядок запуска прежние:
+**PSC → E&F → хотфикс**. Будущее имя «E&F: Rebalance» и редизайн страницы — вместе с UI (блок З).
+
+* Файлы компача лежат здесь под теми же именами (`zz_pb_ef_*`, `00_ef_companies.txt`,
+  `zz_financial_scripted_effects.txt`, `zz_ef_buttons.txt`, локали в `replace/`). Что они делают
+  и история — раздел «Стройка: PSC (бывший компач E&F × PSC)» ниже.
+* `common/history/buildings/00_ef_building.txt` — одна версия: ручные правки хотфикса +
+  замена `building_ef_private_construction` → `building_construction_sector`, которую
+  `tools/regen_ef_psc_copies.py` делает **прямо в файле** (ручные правки не затираются).
+  `00_ef_companies.txt`, `establish_bank_and_ef_compagnie` и строки журнала УФС генератор
+  копирует из E&F в хотфикс.
+* Журнал УФС (`financial_center_je_2`) переиздаёт один файл —
+  `journal_entries/zz_pb_ef_financial_center_je.txt` (из компача); хотфиксовый
+  `zz_ef_financial_center_je.txt` удалён — он и раньше проигрывал компачу по порядку.
+* Поведение в игре не меняется: внутри хотфикса и в мегапаках побеждают те же тела, что и
+  раньше (разбор порядка — `План проекта.md`, СТР.6). Мегапаки больше не несут файлов `ef+psc`,
+  кроме слитой с T&R `script_values/zz_pb_ef_psc_scope_fix.txt` (`megapack`, `megapack no tgr`)
+  и TGR-локали групп акций, которую несёт и `ef+tgr`.
 
 ## Обновление 02.09.2026 — E&F слил валюты сам
 
@@ -62,12 +86,13 @@ Paste as is into the workshop page.
 ```
 [h1]E&F Hotfix [1.13][/h1]
 Fixes for [b]Economic and Financial[/b] (repo version 04.07.2026) on Victoria 3 [b]1.13[/b].
-Load [b]after E&F[/b]. Works with or without any of the compatches.
+Load [b]after E&F[/b]. [b]Requires Private Sector Construction (PSC)[/b] since 02.10.2026: the former PSC + E&F ComPatch is now part of this mod.
 
 [h2]Load order[/h2]
 [list]
 [*]Community Mod Framework (CMF)
 [*]Expanded Topbar Framework (or Dense UI)
+[*]Private Sector Construction (PSC)
 [*]Economic and Financial (E&F)
 [*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3520140574]my E&F RU Localization (if u need)[/url]
 [*][b]E&F Hotfix (this mod)[/b]
@@ -98,6 +123,16 @@ Each with its own name and icon, a prestige bonus, and the engine's +20% through
 To produce a prestige good a company has to own the building, so [b]the central bank is now owned by a bank company[/b] — the country's own historical one where E&F ships it (Bank of England, Banque de France, the State Bank), a generated "Central Bank" company otherwise. It is granted free of a company slot, it cannot be deleted, and it holds the monopoly on banks so no rival buys it out.
 
 The treasury still funds the central bank, so the company collects no dividends from it and the building panel still calls it a government building. That is deliberate: the company holds the bank to mint the currency, not to profit from it.
+
+[h2]Construction runs on PSC[/h2]
+E&F's own "private construction sector" sits in a building group that is not government funded, so nothing it consumes reaches your budget, yet it hands out construction points — at double the vanilla rate for a quarter of the goods. This mod hands construction over to PSC instead: sectors produce construction goods, a regulator turns them into points, and the treasury and the investment pool pay for every unit. E&F's money and finance layer is rewired onto PSC's sector:
+[list]
+[*]E&F's private construction building is disabled; its history, companies and bank-founding effect point at PSC's sector
+[*]Sector limit = urban centres × (1 − 5 × central bank rate). Above it an excess-capacity penalty grows month by month and cuts sector throughput; the Financial Stability Office journal shows it in its own section
+[*]Buttons to ban or allow private construction sectors; the AI uses them too
+[*]The speculative bubble no longer slows construction
+[*]PSC's per-state construction price lookup no longer reads a regulator that does not exist yet (startup error spam)
+[/list]
 
 [h2]What else it fixes[/h2]
 [list]
@@ -1173,6 +1208,61 @@ Names in all 11 `zz_ef_cm_goods_l_*.yml`.
 - **`zz_ef_new_country_immediate_init.txt` is additive now.** It put `effect = { }` straight into six vanilla on_actions; an on_action holds one effect and ours, loading last, replaced vanilla's, Morgenröte's, Grey's and ETF's. Each vanilla on_action now only lists our own on_action. BOM added to it and to its events file.
 - 7a–7e: `has_variable` before the `base_*_fix > 0` checks (a country E&F never initialized logged `none`, 19 × 6).
 
+## Стройка: PSC (бывший компач E&F × PSC)
+
+С 02.10.2026 здесь (СТР.6). E&F держит отдельное здание частной стройки
+`building_ef_private_construction` в группе без госфинансирования: его потребление не попадает
+в бюджет, а очки стройки оно даёт — вдвое больше ванильного сектора за четверть товаров. Хотфикс
+отключает его и переводит E&F на сектор PSC `building_construction_sector`.
+
+| файл | что делает |
+| --- | --- |
+| `buildings/zz_pb_ef_disable_ef_private_construction.txt` | здание E&F не строится |
+| `buildings/zz_pb_ef_construction_sector.txt` | сектор PSC: `pmg_market_liquidity` E&F, флаг запрета в `can_build_private`, `ai_value` сверх лимита ÷ 2 |
+| `buildings/zz_pb_ef_investment_score_patch.txt` | цель финансового квартала для `bg_construction` |
+| `company_types/00_ef_companies.txt`, `scripted_effects/zz_financial_scripted_effects.txt`, `history/buildings/00_ef_building.txt`, `localization/*/replace/zz_pb_ef_psc_je_l_*` | замена здания E&F на сектор PSC — `tools/regen_ef_psc_copies.py` |
+| `script_values/zz_pb_ef_overbuild_values.txt`, `on_actions/zz_pb_ef_overbuild_counter.txt`, `static_modifiers/zz_pb_ef_overbuild_modifiers.txt`, `messages/zz_pb_ef_overbuild_messages.txt` | EF.18 v2: лимит секторов = городские центры × (1 − 5 × ставка), индекс избыточных мощностей идёт к цели `100 × (1 − лимит / секторы)`, штраф −1% выработки секторов за пункт, уведомления |
+| `script_values/zz_pb_ef_remap_pcs_values.txt` | `building_ef_private_construction_lvl` E&F считает секторы PSC |
+| `script_values/zz_pb_ef_ai_construction_values.txt` | подталкивание ИИ строить секторы при дорогих стройматериалах |
+| `script_values/zz_pb_ef_psc_scope_fix.txt` | ошибка PSC: цена стройки в области читала регулятор, которого там нет (в мегапаках с T&R — слитая версия с бетоном) |
+| `production_methods/zz_pb_ef_construction_pm.txt`, `zz_pb_ef_point_conversion_ui.txt` | методы стройки PSC без акций E&F; подписи пересчёта очков |
+| `journal_entries/zz_pb_ef_financial_center_je.txt`, `gui/scripted_widgets/zz_pb_ef_fso_widgets.gui`, `scripted_guis/zz_pb_ef_fso_sguis.txt` | журнал УФС: секции пузыря и избыточных мощностей, без кнопки 13 |
+| `scripted_buttons/zz_pb_ef_css_private_ban_buttons.txt`, `scripted_buttons/zz_ef_buttons.txt`, `scripted_guis/zz_pb_ef_speculative_pcs_sguis.txt` | запрет/разрешение частных секторов; кнопки стимула 9-12 (выключены 30.09, СТР.4) |
+| `localization/*/replace/zz_pb_ef_psc_l_*`, `zz_ef_psc_modifiers_l_*`, `zz_ef_tgr_private_ownership_stock_l_*`, `localization/*/zz_pb_ef_overbuild_l_*` | тексты (en + ru, прочие — английский) |
+
+Открытые задачи по стройке — `План проекта.md`, блок Г.
+
+### История (из README компача)
+
+> **25.09.2026, поздняя ночь — кнопки стимула 9-12 (по прогону 1850, решение пользователя).**
+> Кнопки больше не строят секторы (частная очередь их не брала) и не требуют нулевого штрафа:
+> снижение ставки на 1-4% с ценой +10 пунктов штрафа мощностей за 1%, доступно при штрафе
+> < 90 / 80 / 70 / 60, откат 12 месяцев. ИИ-ветка (`zz_ef_buttons.txt`) выключена. ИИ снимает
+> запрет частных секторов при штрафе < 10 (было «= 0», запрет залипал). 30.09 кнопки выключены (СТР.4).
+
+> **25.09.2026, ночь — шкалы в панели через CMF.** Убрана копия `gui/journal_entry.gui`; запись
+> журнала кладёт пустой виджет `zz_pb_ef_fso_hide_bars_widget` в
+> `com_custom_widget_container_scripted_progress_bars` — CMF не рисует стандартные шкалы этой
+> записи. Без CMF шкалы в панели задвоятся, и только.
+
+> **25.09.2026, поздний вечер — пузырь ушёл в хотфикс (EF.29).** Месячный пересчёт пузыря,
+> уведомление, значения шага и модификатор без штрафа стройки — в хотфиксе; у стройки остался вид
+> секции в журнале.
+
+> **25.09.2026 — избыточные мощности v3–v5** (по прогону 1837: при −85% эффективности стройки
+> Британия нарастила стройку 400 → 750). Штраф — на выработку секторов
+> (`building_construction_sector_throughput_add` −1% за пункт). Индекс идёт к цели по 2 в месяц
+> при разрыве > 10, иначе по 1. Секция стройки — таблица 2 × 4 в стиле бюджета E&F (секторы,
+> городские центры, ставка, лимит / соотношение, цель, динамика, текущий штраф), кнопка запрета.
+
+> **24.09.2026 — EF.18 v2, журнал УФС, локализация в `replace/`.** Лимит секторов от городских
+> центров и ставки (`building_urban_center_lvl_by_base_rate`, ручка `zz_pb_ef_css_rate_mult`);
+> счётчик `speculative_share_2` ведёт наш on_action; журнал `financial_center_je_2` переиздан без
+> кнопки 13 (она сносила `building_ef_private_construction`, которого под PSC нет); все
+> перекрытия чужих строк — в `localization/<язык>/replace/` (локализация — «кто первый»).
+
+---
+
 ## Left undone
 
 - `pm_fiat_standard_bank_money_currency` (E&F, `15_ef_bank.txt`) has its `country_modifiers`
@@ -1217,6 +1307,19 @@ python3 tools/regen_ef_currency_merge.py --private-bank   # ...with a privately 
 Hand-written originals of the two path-overridden data files live in `_gen_source/` — the game
 does not read that folder, and those are the ones to edit. `common/goods/ef_00_goods.txt` and
 `common/pop_needs/00_ef_pop_needs.txt` in the mod are generator output and get overwritten.
+
+**Construction (PSC part).** After every E&F update: re-merge E&F's
+`common/history/buildings/00_ef_building.txt` into the hotfix's copy by hand (it carries the
+hotfix's own edits), then
+
+```
+python3 tools/regen_ef_psc_copies.py --check    # drift (exit 1 if anything would change)
+python3 tools/regen_ef_psc_copies.py            # rebuild the copies, rename in place
+```
+
+It copies `00_ef_companies.txt`, `establish_bank_and_ef_compagnie` and the journal strings from
+E&F with the building renamed, renames inside `00_ef_building.txt`, and fails if another hotfix
+file touches a generated key from the wrong side of it in filename order.
 
 Every run prints what it changed and self-checks the result: top-level key names, duplicate
 keys, brace balance with comments stripped, and that what was read is what was written. Two

@@ -1,4 +1,11 @@
-﻿BUILDINGS = {
+﻿# PSC RENAME APPLIED IN PLACE by tools/regen_ef_psc_copies.py:
+# building_ef_private_construction -> building_construction_sector (28 occurrence(s)).
+# This is the hotfix's own, hand-maintained override of E&F's 00_ef_building.txt
+# (STATE_LOWER_ANDALUSIA, the GRE block that built in a NULL state, the
+# companies pulled up before the central banks). Edit it by hand; after an
+# E&F update re-merge E&F's file first, then re-run the script.
+
+BUILDINGS = {
 	every_country = {
 
 		### HOTFIX: pulled up from further down this same file (it still runs there,
@@ -847,7 +854,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_aus
@@ -879,7 +886,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_aus
@@ -907,7 +914,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_ger
@@ -1039,7 +1046,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_ger
@@ -1171,7 +1178,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_ger
@@ -1311,7 +1318,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_PreussischeSeehandlung
@@ -1345,7 +1352,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_PreussischeSeehandlung
@@ -1419,7 +1426,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_PreussischeSeehandlung
@@ -1496,7 +1503,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_ita
@@ -1523,7 +1530,7 @@
 				reserves=1
 			} 
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_BancaDItalia
@@ -1551,7 +1558,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_aus
@@ -1600,7 +1607,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_aus
@@ -1684,7 +1691,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_gbr
@@ -1727,7 +1734,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_gbr
@@ -1782,7 +1789,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_barclaysBank
@@ -1825,7 +1832,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_barclaysBank
@@ -1871,7 +1878,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_gbr
@@ -1919,7 +1926,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_gbr
@@ -2016,7 +2023,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_OesterreichischeCreditAnstalt
@@ -2096,7 +2103,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_SocieteGeneraledeBelgique
@@ -2124,7 +2131,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_gbr
@@ -2157,7 +2164,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_fra
@@ -2210,7 +2217,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Rothschild_Bank_gbr
@@ -2238,7 +2245,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_DeNederlandscheBank
@@ -2266,7 +2273,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_Bank_Ultramarino
@@ -2294,7 +2301,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_StateBankRussianEmpire
@@ -2348,7 +2355,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_BankofSpain
@@ -2383,7 +2390,7 @@
 				reserves=1
 			}
 			create_building={
-				building="building_ef_private_construction"
+				building="building_construction_sector"
 				add_ownership={
 					company={
 						type=company_BankWellsFargo

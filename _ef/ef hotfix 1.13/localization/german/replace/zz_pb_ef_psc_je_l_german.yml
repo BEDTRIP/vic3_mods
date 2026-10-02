@@ -3,7 +3,7 @@
 # keeping only the lines that name building_ef_private_construction, renamed to building_construction_sector.
 # Hand-written strings live in zz_pb_ef_psc_l_german.yml and are skipped here.
 # ScriptValue('building_ef_private_construction_lvl') is left alone on purpose: that key name stays,
-# the compatch remaps its value to sum building_construction_sector instead.
+# the hotfix remaps its value to sum building_construction_sector instead.
 
 l_german:
   economic_sentiment_index_base_1_button:1 "#b 5 [GetBuildingType('building_construction_sector').GetName]#!"

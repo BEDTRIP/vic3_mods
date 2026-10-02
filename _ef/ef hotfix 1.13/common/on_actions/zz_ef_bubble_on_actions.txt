@@ -8,9 +8,10 @@
 # capitalization, EF.28 issuance), so the hotfix owns the bubble too:
 #   - this on_action runs E&F's code line for line, for countries whose
 #     journal is active (the same condition the journal's pulse had);
-#   - journal_entries/zz_ef_financial_center_je.txt re-issues E&F's journal
-#     without that part (the E&F x PSC compatch re-issues it again, also
-#     without it);
+#   - journal_entries/zz_pb_ef_financial_center_je.txt re-issues E&F's journal
+#     without that part (since 2026-10-02 the only copy: the hotfix's own
+#     zz_ef_financial_center_je.txt was dropped when the E&F x PSC compatch
+#     moved in, СТР.6);
 #   - changes to E&F's code, marked ###: `has_role = executive` ->
 #     `character_role_executive` (the 1.13 key; E&F's line fails PostValidate
 #     and the executives' malus misfires), a feed notification when the bubble

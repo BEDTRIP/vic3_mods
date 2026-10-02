@@ -1,8 +1,10 @@
 ﻿#############################################
 # EF.18 v2 (2026-09-24) -- E&F's financial centre journal, re-issued
 #
-# This file is in no compatch but ef+psc (E&F x PSC) and the megapacks that
-# carry it. Full body: journal entries are database records, and REPLACE:
+# Came from the E&F x PSC compatch; since 2026-10-02 (СТР.6) it lives in the
+# hotfix and is the only re-issue of this journal here (the hotfix's own
+# zz_ef_financial_center_je.txt, E&F's journal minus the bubble pulse, was
+# superseded by this one -- it already won by load order). Full body: journal entries are database records, and REPLACE:
 # replaces the whole record (rules, section 1). Everything is E&F's
 # (journal_entries/00_ef_financial_center_je.txt:115, 4.1.7) line for line;
 # edits are marked `###`:

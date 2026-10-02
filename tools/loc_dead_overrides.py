@@ -35,7 +35,7 @@ def keys_in(path, lang):
 
 OURS = {
     'hotfix': r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef hotfix 1.13',
-    'ef+psc': r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef+psc done',
+    # ef+psc lives inside the hotfix since 2026-10-02 (STR.6)
     'ef+tgr': r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef+tgr done',
 }
 for lang in ('english', 'russian'):

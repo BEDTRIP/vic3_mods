@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.17 (1) (2026-09-24) -- exchanges no longer urbanize
 #
 # E&F's bg_financial_centre (building_groups/00_ef_building_groups.txt:52,
@@ -6,7 +6,7 @@
 # levels in the capital (its ceiling follows GDP, and its output is GDP -- the
 # loop EF.17 is about), so it alone added >10000 urbanization to one state:
 # urban centres, migration and the private construction ceiling
-# (zz_pb_ef_remap_pcs_values.txt in the megapack reads urban centre levels)
+# (zz_pb_ef_remap_pcs_values.txt in this hotfix reads urban centre levels)
 # all followed.
 #
 # One field changed: urbanization 5 -> 0. The rest is E&F's line for line.

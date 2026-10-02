@@ -5,7 +5,7 @@ Usage:  py tools/save_measure_ef.py [save]   (name in "save games" or a full pat
 Columns: gdp, treasury (budget money), credit (credit limit), principal (debt), cap = sum of the four
 stock averages zz_ef_cap_avg_* (hotfix EF.24), cap/gdp, index base_index_value, dif = yearly change
 country_indice_value_dif_01, litR = zz_ef_literate_rich_share (EF.28), rate, ob = overcapacity penalty
-speculative_share_2, msh = mass shareholding points, infamy, ban = private sectors banned (ef+psc).
+speculative_share_2, msh = mass shareholding points, infamy, ban = private sectors banned (hotfix, ex ef+psc).
 Values in currency of the country, M. Negative variables are stored as unsigned 64-bit in the save
 and print as ~1.8e14: read them as (value - 184467440737095.5).
 Written for the 1850 run (2026-09-25), see the research archive, "Прогон 1850".

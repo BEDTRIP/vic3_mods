@@ -1,15 +1,22 @@
 {
   "name": "E&F Hotfix",
   "id": "3786286962",
-  "version": "4.1.7.4",
+  "version": "4.1.7.5",
   "supported_game_version": "1.13.*",
-  "short_description": "Fixes for Economic and Financial, plus the currency merge: E&F's 57 currency goods collapse into one, freeing 56 of the game's 128 goods slots so E&F can share a build with Tech & Res. The currencies come back as prestige goods produced by the central bank's company.",
+  "short_description": "Fixes for Economic and Financial, plus the currency merge: E&F's 57 currency goods collapse into one, freeing 56 of the game's 128 goods slots so E&F can share a build with Tech & Res. The currencies come back as prestige goods produced by the central bank's company. Includes the former PSC + E&F ComPatch: requires Private Sector Construction.",
   "picture": "thumbnail.png",
   "tags": [
     "Fixes",
     "1.13"
   ],
   "relationships": [
+    {
+      "rel_type": "dependency",
+      "id": "3420714166",
+      "display_name": "[1.13] Private Sector Construction",
+      "resource_type": "mod",
+      "version": "*"
+    },
     {
       "rel_type": "dependency",
       "id": "3143591632",
@@ -21,6 +28,12 @@
   "game_custom_data": {
     "multiplayer_synchronized": true,
     "tested_with": [
+      {
+        "id": "3420714166",
+        "display_name": "[1.13] Private Sector Construction",
+        "version": "1.3.7",
+        "date": "2026-08-21"
+      },
       {
         "id": "3143591632",
         "display_name": "Economic and Financial Mod (E&F) - V4",
