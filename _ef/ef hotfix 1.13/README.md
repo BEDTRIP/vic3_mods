@@ -14,6 +14,29 @@
 зависит от: E&F, PSC (3420714166) — с 02.10.2026
 -->
 
+## Обновление 03.10.2026 — стройка: домохозяйства и ЖКХ, ИИ и лимит, кнопки стимула (ночь Г)
+
+Решения пользователя Д.1–Д.14 (план, блок Г). Всё — «проверить в игре» по прогонам ночи Г.
+
+* **СТР.3 — строительство домохозяйств и ЖКХ** (`tools/regen_ef_household_construction.py`):
+  потребность `popneed_household_construction` (четыре стройматериала PSC, дерево по умолчанию;
+  `common/pop_needs/zz_ef_household_construction.txt`), корзины всех 99 уровней — 3% корзины на
+  уровне 1 → 1.5% с уровня 50 (`common/buy_packages/zz_ef_household_construction_packages.txt`,
+  INJECT; ветка VC — те же числа в слитом файле аддона-VC), натуральные хозяйства дают 0.1
+  `wood_construction` на единицу рабочей силы (рисовые 0.2), рынки городских центров (ЖКХ) берут
+  материал: дерево / железо / сталь / сталь
+  (`common/production_methods/zz_ef_household_construction_pms.txt`; в ветке Grey's переиздаёт
+  `greys+psc`). Лимит секторов + городские центры × 0.25 (`zz_pb_ef_css_household_mult`).
+* **СТР.2 — ИИ и лимит:** `ai_value` сектора = 0 на лимите и сверх него
+  (`buildings/zz_pb_ef_construction_sector.txt`); ИИ-страна раз в квартал снимает уровень с самого
+  большого сектора, пока секторов больше лимита и штраф ≥ 10
+  (`on_actions/zz_pb_ef_ai_sector_downsize.txt`, `scripted_effects/zz_pb_ef_ai_sector_downsize_effects.txt`).
+* **СТР.4 — кнопки стимула 9–12** (`tools/regen_ef_stimulus_buttons.py`): множитель ставки в лимите
+  секторов 5 → 4 / 3.5 / 3 / 2.5 на 36 месяцев (`var:zz_pb_ef_stimulus_mult`), штраф +10..40, откат
+  12 месяцев; ставку и деньги кнопки больше не трогают.
+* **Д.1 — взнос населения в пул:** `REINVESTMENT_SUBSISTENCE_FRACTION_REDUCTION` 0.5 → 0
+  (`common/defines/zz_ef_reinvestment_defines.txt`).
+
 ## Обновление 02.10.2026 — компач E&F × PSC вошёл в хотфикс (СТР.6)
 
 Решено пользователем 30.09: почти вся переделка E&F (стройка, ставка, деньги) опирается на PSC,
