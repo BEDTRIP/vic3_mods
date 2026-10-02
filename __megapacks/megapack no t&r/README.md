@@ -1,14 +1,18 @@
-# Compatibility patch for using these big mods together:
+﻿# Compatibility patch for using these big mods together:
 
 <!-- meta
 сборка: мегапак без T&R — рабочий
 статус: собран
 версии: —
 позиция: —
-файлов: 111
+файлов: 63
 генератор: —
 зависит от: —
 -->
+
+> **02.10.2026 (СТР.6):** компач `ef+psc` вошёл в E&F Hotfix — его 66 файлов убраны из мегапака
+> (`zz_ef_tgr_private_ownership_stock_l_*` остались — их несёт и `ef+tgr`). Порядок побед не
+> изменился: пересечения по путям и ключам с остальным мегапаком проверены. Хотфикс теперь требует PSC.
 
 > **25.09.2026:** новые компачи внутри мегапака — `_ef/ef+cmf done` (GR.21, GUI-мердж E&F × CMF/MPM,
 > `gui/zz_ef_cmf_*.gui`, генератор `regen_ef_cmf_gui.py`) и `_tgr/tgr 1.13 fix done` (TGR.1/TGR.3, ранги

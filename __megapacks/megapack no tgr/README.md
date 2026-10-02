@@ -1,14 +1,18 @@
-# Compatibility patch for using these big mods together:
+﻿# Compatibility patch for using these big mods together:
 
 <!-- meta
 сборка: мегапак без TGR
 статус: собран
 версии: —
 позиция: —
-файлов: 170
+файлов: 102
 генератор: —
 зависит от: —
 -->
+
+> **02.10.2026 (СТР.6):** компач `ef+psc` вошёл в E&F Hotfix — его файлы убраны из мегапака.
+> Осталась слитая с T&R `common/script_values/zz_pb_ef_psc_scope_fix.txt` (тот же путь, что в
+> хотфиксе, перекрывает его копию). Хотфикс теперь требует PSC.
 
 > **24.09.2026:** обновлены файлы компачей `ef+tgr` (TGR.2 (1), `currency_standards`) и `ef+psc`
 > (EF.18, тормоз стройки: 3 новых файла + 11 локализаций). Подробности — в README этих компачей.

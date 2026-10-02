@@ -1,22 +1,26 @@
-﻿# MEGAPACK ONLY VERSION of the E&F + PSC patch's file of the same name.
-# The patch's own copy has four tiers and no concrete; this one has five.
-# Re-apply this merge whenever either patch is re-synced into the megapack.
+﻿# MEGAPACK ONLY VERSION of the E&F hotfix's file of the same name
+# (common/script_values/zz_pb_ef_psc_scope_fix.txt; it came from the E&F + PSC
+# patch, which lives inside the hotfix since 2026-10-02, STR.6).
+# The hotfix's copy has four tiers and no concrete; this one has five.
+# Re-apply this merge whenever the hotfix's file or the PSC + T&R patch changes.
 #
-# Two patches define calculate_state_construction_base_price:
+# Two files define calculate_state_construction_base_price:
 #
-#   z_PSC_TR_construction_values.txt   (PSC + T&R)  REPLACE:
+#   z_PSC_TR_construction_values.txt   (PSC + T&R, this megapack)  REPLACE:
 #       five tiers -- wood / iron / steel / arc welded / concrete -- but reads
 #       b:building_construction_regulator in every state, including states that
 #       have no regulator. That is the startup spam
 #       `has_active_production_method [ Wrong scope for trigger: none, expected building ]`
 #
-#   zz_pb_ef_psc_scope_fix.txt         (E&F + PSC)  REPLACE_OR_CREATE:
+#   zz_pb_ef_psc_scope_fix.txt         (E&F hotfix)  REPLACE_OR_CREATE:
 #       guards the lookup with has_building, but only knows PSC's four tiers.
 #
-# z_ sorts before zz_, so inside the megapack this file is the one the game
-# keeps -- and on its own it would drop the concrete tier back to arc welded
-# prices for the entire late game, silently. Hence the merge: T&R's ladder,
-# E&F+PSC's guard.
+# Same path as the hotfix's file, and the megapack loads after the hotfix: the
+# hotfix's copy is not read at all. Inside the megapack z_ sorts before zz_, so
+# this body is the one the game keeps. Without the merge the hotfix's guard
+# would lose to T&R's unguarded REPLACE (the spam is back), or -- before
+# 2026-10-02 -- the concrete tier fell back to arc welded prices. Hence the
+# merge: T&R's ladder, the hotfix's guard.
 
 REPLACE_OR_CREATE:calculate_state_construction_base_price = {
 	# Default to the regulator's default PM (pm_wood_point_conversion) when the

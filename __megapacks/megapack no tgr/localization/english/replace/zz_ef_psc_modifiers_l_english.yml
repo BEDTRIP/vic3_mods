@@ -1,6 +1,0 @@
-﻿# In replace/ since 2026-09-24: these keys already exist in an earlier mod
-# or in vanilla, and localization is first-come -- outside replace/ this file
-# never showed.
-l_english:
- state_building_construction_sector_max_level_add:1 "$building_construction_sector$ $state_construction_mult$ Cap"
- state_building_construction_sector_max_level_add_desc:1 "A bonus or penalty to the $state_construction_mult$ Cap of $building_construction_sector$ buildings."

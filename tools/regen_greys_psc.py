@@ -51,7 +51,10 @@ res = lambda p: os.path.normpath(os.path.join(HERE, p))
 PSC = res("../../vic3_mods_out/PSC")
 VC = res("../../vic3_mods_out/VC")
 GREYS = res("../../vic3_mods_out/grey_add_alot_of_things")
-MEGA = res("../__megapacks/megapack no t&r")
+# The E&F x PSC bodies used to sit in the megapack; since 2026-10-02 (STR.6) the
+# compatch lives in the E&F hotfix, and no megapack file touches these two keys,
+# so the hotfix's files are still the winning bodies. Names kept as MEGA_*.
+MEGA = res("../_ef/ef hotfix 1.13")
 OUT = res("../_greys/greys+psc done")
 
 MEGA_SECTOR = os.path.join(MEGA, "common/buildings/zz_pb_ef_construction_sector.txt")

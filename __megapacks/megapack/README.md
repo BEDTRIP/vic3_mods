@@ -1,14 +1,19 @@
-# Compatibility patch for using these big mods together:
+﻿# Compatibility patch for using these big mods together:
 
 <!-- meta
 сборка: мегапак полный
 статус: собран
 версии: Updated for game 1.13 -- TGR 2.0, PSC 1.3.7, E&F 4.1.7 + Hotfix 4.1.7.4, Morgenröte 2.8.3e, Tech & Res 1.6', KAI 7.5, PBE 1.13.
 позиция: —
-файлов: 190
+файлов: 143
 генератор: —
 зависит от: —
 -->
+
+> **02.10.2026 (СТР.6):** компач `ef+psc` вошёл в E&F Hotfix — его файлы убраны из мегапака.
+> Остались: слитая с T&R `common/script_values/zz_pb_ef_psc_scope_fix.txt` (тот же путь, что в
+> хотфиксе, перекрывает его копию) и `zz_ef_tgr_private_ownership_stock_l_*` от `ef+tgr`.
+> Хотфикс теперь требует PSC.
 
 > **24.09.2026:** обновлены файлы компачей `ef+tgr` (TGR.2 (1), `currency_standards`) и `ef+psc`
 > (EF.18, тормоз стройки: 3 новых файла + 11 локализаций). Подробности — в README этих компачей.
@@ -54,7 +59,7 @@ The hotfix also carries E&F's own bug fixes (the divide-by-zero in the stock dem
 [*][b]MegaComPatch TGR + PSC + E&F + MR + T&R + PBE (this mod)[/b]
 [/olist]
 
-[b]This mod must load after the E&F Hotfix.[/b] It carries its own copy of E&F's company list (with the construction sector renamed for PSC), and it re-applies on top of that copy the two things the hotfix adds to the 98 bank companies -- the bank building and the three regime currencies. In the other order that copy would be the one the hotfix injects into, and the megapack would put E&F's untouched list back on top.
+[b]This mod must load after the E&F Hotfix.[/b] Since 02.10.2026 the PSC + E&F ComPatch is part of the hotfix (which now requires PSC); this megapack overrides one of its files, the PSC construction price lookup, with a version merged with Tech & Res's concrete tier.
 
 Also works with [url=https://steamcommunity.com/workshop/filedetails/?id=3110785319]MMRPA[/url] if you add it after the megacompatch:
 --- all mods above ---
