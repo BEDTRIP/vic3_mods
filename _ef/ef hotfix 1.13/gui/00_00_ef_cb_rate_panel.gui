@@ -9441,6 +9441,124 @@ types zz_ef_cb_rate_panel
 										maximumsize = { 100 100 }
 									}
 								}
+								### EF.48 V4.1 (plan: B4.1): the monetary policy scale (tools/regen_ef_cb_rate_gui.py, mp_row)
+								flowcontainer = {
+									visible = "[GetScriptedGui('zz_ef_mp_visible').IsShown( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+									spacing = 6
+									direction = vertical
+									parentanchor = hcenter
+									margin_top = 10
+									tooltip = "zz_ef_mp_tt"
+									using = tooltip_below
+
+									textbox = {
+										autoresize = yes
+										text = "zz_ef_mp_title"
+										fontsize = 16
+										align = hcenter|nobaseline
+										parentanchor = hcenter
+										multiline = yes
+										maximumsize = { 500 -1 }
+									}
+									default_progressbar_horizontal = {
+										size = { 400 16 }
+										parentanchor = hcenter
+										blockoverride "values" {
+											min = 0
+											max = 1
+											value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue('zz_ef_mp_progress') )]"
+										}
+									}
+									textbox = {
+										autoresize = yes
+										text = "zz_ef_mp_line2"
+										fontsize = 14
+										align = hcenter|nobaseline
+										parentanchor = hcenter
+										multiline = yes
+										maximumsize = { 500 -1 }
+									}
+									flowcontainer = {
+										spacing = 5
+										direction = horizontal
+										parentanchor = hcenter
+										textbox = {
+											autoresize = yes
+											text = "zz_ef_mp_target_label"
+											align = nobaseline
+											parentanchor = vcenter
+										}
+										button = {
+											using = default_button
+											size = { 45 30 }
+											text = "zz_ef_mp_btn_m5"
+											using = tooltip_below
+											tooltip = "[GetScriptedGui('zz_ef_mp_target_m5').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											onclick = "[GetScriptedGui('zz_ef_mp_target_m5').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											enabled = "[GetScriptedGui('zz_ef_mp_target_m5').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+										}
+										button = {
+											using = default_button
+											size = { 45 30 }
+											text = "zz_ef_mp_btn_m1"
+											using = tooltip_below
+											tooltip = "[GetScriptedGui('zz_ef_mp_target_m1').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											onclick = "[GetScriptedGui('zz_ef_mp_target_m1').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											enabled = "[GetScriptedGui('zz_ef_mp_target_m1').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+										}
+										button = {
+											using = default_button
+											size = { 45 30 }
+											text = "zz_ef_mp_btn_p1"
+											using = tooltip_below
+											tooltip = "[GetScriptedGui('zz_ef_mp_target_p1').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											onclick = "[GetScriptedGui('zz_ef_mp_target_p1').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											enabled = "[GetScriptedGui('zz_ef_mp_target_p1').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+										}
+										button = {
+											using = default_button
+											size = { 45 30 }
+											text = "zz_ef_mp_btn_p5"
+											using = tooltip_below
+											tooltip = "[GetScriptedGui('zz_ef_mp_target_p5').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											onclick = "[GetScriptedGui('zz_ef_mp_target_p5').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											enabled = "[GetScriptedGui('zz_ef_mp_target_p5').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+										}
+									}
+									flowcontainer = {
+										spacing = 5
+										direction = horizontal
+										parentanchor = hcenter
+										textbox = {
+											autoresize = yes
+											text = "zz_ef_mp_pace_label"
+											align = nobaseline
+											parentanchor = vcenter
+										}
+										button_icon_minus_action = {
+											size = { 30 30 }
+											parentanchor = vcenter
+											using = tooltip_below
+											tooltip = "[GetScriptedGui('zz_ef_mp_pace_minus').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											onclick = "[GetScriptedGui('zz_ef_mp_pace_minus').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											enabled = "[GetScriptedGui('zz_ef_mp_pace_minus').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+										}
+										textbox = {
+											autoresize = yes
+											text = "zz_ef_mp_pace_value"
+											align = nobaseline
+											parentanchor = vcenter
+										}
+										button_icon_plus_action = {
+											size = { 30 30 }
+											parentanchor = vcenter
+											using = tooltip_below
+											tooltip = "[GetScriptedGui('zz_ef_mp_pace_plus').BuildTooltip( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											onclick = "[GetScriptedGui('zz_ef_mp_pace_plus').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+											enabled = "[GetScriptedGui('zz_ef_mp_pace_plus').IsValid( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+										}
+									}
+								}
 								flowcontainer  = {
 									margin_top = 0
 									margin_right = 0

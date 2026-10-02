@@ -158,6 +158,112 @@ def cb_row(ind: str) -> str:
     )
 
 
+SG = "GuiScope.SetRoot(GetPlayer.MakeScope).End"
+
+
+def sg_button(sgui: str, text_key: str, ind: str) -> str:
+    return f"""{ind}button = {{
+{ind}	using = default_button
+{ind}	size = {{ 45 30 }}
+{ind}	text = "{text_key}"
+{ind}	using = tooltip_below
+{ind}	tooltip = "[GetScriptedGui('{sgui}').BuildTooltip( {SG} )]"
+{ind}	onclick = "[GetScriptedGui('{sgui}').Execute( {SG} )]"
+{ind}	enabled = "[GetScriptedGui('{sgui}').IsValid( {SG} )]"
+{ind}}}
+"""
+
+
+def mp_row(ind: str) -> str:
+    """EF.48, В4.1 (2.10): devaluation / revaluation towards a cover target -- shown while one of the
+    two laws is in force (tools/regen_ef_monetary_policy.py writes the scripted guis and texts)."""
+    i1, i2, i3 = ind + "	", ind + "		", ind + "			"
+    targets = "".join(sg_button(f"zz_ef_mp_target_{k}", f"zz_ef_mp_btn_{k}", i2) for k in ("m5", "m1", "p1", "p5"))
+    return f"""{ind}### EF.48 V4.1 (plan: B4.1): the monetary policy scale (tools/regen_ef_cb_rate_gui.py, mp_row)
+{ind}flowcontainer = {{
+{i1}visible = "[GetScriptedGui('zz_ef_mp_visible').IsShown( {SG} )]"
+{i1}spacing = 6
+{i1}direction = vertical
+{i1}parentanchor = hcenter
+{i1}margin_top = 10
+{i1}tooltip = "zz_ef_mp_tt"
+{i1}using = tooltip_below
+
+{i1}textbox = {{
+{i2}autoresize = yes
+{i2}text = "zz_ef_mp_title"
+{i2}fontsize = 16
+{i2}align = hcenter|nobaseline
+{i2}parentanchor = hcenter
+{i2}multiline = yes
+{i2}maximumsize = {{ 500 -1 }}
+{i1}}}
+{i1}default_progressbar_horizontal = {{
+{i2}size = {{ 400 16 }}
+{i2}parentanchor = hcenter
+{i2}blockoverride "values" {{
+{i3}min = 0
+{i3}max = 1
+{i3}value = "[FixedPointToFloat( GetPlayer.MakeScope.ScriptValue('zz_ef_mp_progress') )]"
+{i2}}}
+{i1}}}
+{i1}textbox = {{
+{i2}autoresize = yes
+{i2}text = "zz_ef_mp_line2"
+{i2}fontsize = 14
+{i2}align = hcenter|nobaseline
+{i2}parentanchor = hcenter
+{i2}multiline = yes
+{i2}maximumsize = {{ 500 -1 }}
+{i1}}}
+{i1}flowcontainer = {{
+{i2}spacing = 5
+{i2}direction = horizontal
+{i2}parentanchor = hcenter
+{i2}textbox = {{
+{i3}autoresize = yes
+{i3}text = "zz_ef_mp_target_label"
+{i3}align = nobaseline
+{i3}parentanchor = vcenter
+{i2}}}
+{targets}{i1}}}
+{i1}flowcontainer = {{
+{i2}spacing = 5
+{i2}direction = horizontal
+{i2}parentanchor = hcenter
+{i2}textbox = {{
+{i3}autoresize = yes
+{i3}text = "zz_ef_mp_pace_label"
+{i3}align = nobaseline
+{i3}parentanchor = vcenter
+{i2}}}
+{i2}button_icon_minus_action = {{
+{i3}size = {{ 30 30 }}
+{i3}parentanchor = vcenter
+{i3}using = tooltip_below
+{i3}tooltip = "[GetScriptedGui('zz_ef_mp_pace_minus').BuildTooltip( {SG} )]"
+{i3}onclick = "[GetScriptedGui('zz_ef_mp_pace_minus').Execute( {SG} )]"
+{i3}enabled = "[GetScriptedGui('zz_ef_mp_pace_minus').IsValid( {SG} )]"
+{i2}}}
+{i2}textbox = {{
+{i3}autoresize = yes
+{i3}text = "zz_ef_mp_pace_value"
+{i3}align = nobaseline
+{i3}parentanchor = vcenter
+{i2}}}
+{i2}button_icon_plus_action = {{
+{i3}size = {{ 30 30 }}
+{i3}parentanchor = vcenter
+{i3}using = tooltip_below
+{i3}tooltip = "[GetScriptedGui('zz_ef_mp_pace_plus').BuildTooltip( {SG} )]"
+{i3}onclick = "[GetScriptedGui('zz_ef_mp_pace_plus').Execute( {SG} )]"
+{i3}enabled = "[GetScriptedGui('zz_ef_mp_pace_plus').IsValid( {SG} )]"
+{i2}}}
+{i1}}}
+{ind}}}
+"""
+
+
 OPEN = re.compile(r"^\s*([A-Za-z_][\w]*)\s*=\s*\{")
 PROP = re.compile(r"^\s*([A-Za-z_][\w]*)\s*=\s*[^{]")
 
@@ -263,7 +369,7 @@ def build(src: str) -> tuple[str, str]:
     line_start = body.rfind("\n", 0, fc) + 1
     ind = body[line_start:fc]
     assert ind.strip() == "", repr(ind)
-    body = body[:line_start] + cb_row(ind) + body[line_start:]
+    body = body[:line_start] + cb_row(ind) + mp_row(ind) + body[line_start:]
 
     return body, orig_sha
 

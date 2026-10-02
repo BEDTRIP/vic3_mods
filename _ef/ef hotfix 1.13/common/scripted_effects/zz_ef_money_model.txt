@@ -590,6 +590,10 @@ zz_ef_money_model_monthly_step = {
 	# night 2, item 5: the government's rate
 	zz_ef_gov_rate_step = yes
 
+	# В4.1 (2.10): devaluation / revaluation towards a cover target
+	# (generated, scripted_effects/zz_ef_monetary_policy.txt)
+	zz_ef_mp_step = yes
+
 	# EF.31: the rate's share of private construction.
 	remove_modifier = zz_ef_rate_private_construction
 	add_modifier = {
