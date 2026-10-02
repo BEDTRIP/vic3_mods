@@ -37,6 +37,15 @@ zz_pb_ef_ai_sector_downsize = {
 		has_variable = base_rate_percentage
 	}
 	effect = {
+		# change_variable on an unset variable logs an error and sets nothing (run 2,
+		# 3.10: the timer never started and nothing was taken down)
+		if = {
+			limit = { NOT = { has_variable = zz_pb_ef_ai_downsize_timer } }
+			set_variable = {
+				name = zz_pb_ef_ai_downsize_timer
+				value = 0
+			}
+		}
 		change_variable = {
 			name = zz_pb_ef_ai_downsize_timer
 			add = 1
