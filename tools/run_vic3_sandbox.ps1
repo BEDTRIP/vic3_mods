@@ -326,13 +326,17 @@ if (-not $ok) { Shot $p "02_not_running.png"; Log "the game does not advance - s
 else {
     Log "running for $RunMinutes min (autosaves wanted: $Autosaves)"
     $since = Get-Date
+    $autoSeen = New-Object 'System.Collections.Generic.HashSet[long]'
     $end = (Get-Date).AddMinutes($RunMinutes)
     while ((Get-Date) -lt $end) {
         # every 15 s: in run 12 several parts rotated within one minute and a
         # game year was lost
         for ($k = 0; $k -lt 4; $k++) { Start-Sleep 15; Save-DebugParts }
         if ($Autosaves -gt 0) {
-            $n = @(Get-ChildItem (Join-Path $Docs "save games") -Filter "autosave*.v3" | Where-Object { $_.LastWriteTime -gt $since }).Count
+            # Count distinct write times, not files: the game keeps five rotating
+            # autosave files, so a file count never got past 5 (3.10, night G).
+            Get-ChildItem (Join-Path $Docs "save games") -Filter "autosave*.v3" | Where-Object { $_.LastWriteTime -gt $since -and $_.Name -ne "autosave_exit.v3" } | ForEach-Object { [void]$autoSeen.Add($_.LastWriteTime.Ticks) }
+            $n = $autoSeen.Count
             Log "new autosaves: $n"
             if ($n -ge $Autosaves) { Start-Sleep 20; break }
         }
