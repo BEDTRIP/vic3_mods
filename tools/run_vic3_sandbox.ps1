@@ -367,7 +367,7 @@ $parts = @(Get-ChildItem (Join-Path $OutDir "dbgparts") -Filter "*.log" -ErrorAc
     @(Get-ChildItem $OutDir -Filter "debug.log")
 if ($parts) {
     $seen = New-Object 'System.Collections.Generic.HashSet[string]'
-    Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|", "EFX|", "EFC|" -SimpleMatch |
+    Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|", "EFX|", "EFC|", "EFM|" -SimpleMatch |
         ForEach-Object { $_.Line -replace "^.*?(EF[WRXC]\|)", '$1' } |
         Where-Object { $seen.Add($_) } |
         Set-Content -Encoding utf8 (Join-Path $OutDir "eflog.txt")
