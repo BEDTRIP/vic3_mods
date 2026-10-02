@@ -1,0 +1,63 @@
+﻿#############################################
+# EF.41 (2026-10-02, decided by the user 30.09) -- company slots from the
+# financial centre: two sources of up to +10 each instead of E&F's exchange
+# levels.
+#
+# E&F: has_financial_center (country_max_companies_add = 1) is applied with
+# multiplier = value_for_has_financial_center
+# (scripted_effects/09_introduction_building_lvl.txt:22411) = levels of the 42
+# national exchanges (bg_financial_centre) x base_rate_to_pcs_factor
+# (script_values/00_economic_scripted_value.txt:4617). 1850 run: Britain 39
+# levels, France 36, USA 15 -- +36 slots for Britain at 2%. "I can carpet
+# everything with companies", choosing a company stopped mattering.
+#
+# Now (same modifier, new multiplier):
+#   - central bank policy, up to +10: round(10 x (12% - key rate) / 10%) --
+#     0 at 12%, +5 at 7%, +10 at 2% and below. Cheap credit, more companies;
+#     the price of a cheap rate is EF.31's;
+#   - capitalization, up to +10: +1 per full 10% of GDP of stock market
+#     capitalization (the four yearly averages zz_ef_cap_avg_*, EF.24). 1913:
+#     Britain ~1.09 GDP -> +10, France 0.78 -> +7, USA 0.39 -> +3, Russia 0.18
+#     -> +1.
+# Strong countries end up at vanilla ~7-9 + mod technologies ~6 + up to 20.
+# Only countries with a financial centre get the modifier at all (E&F's own
+# condition, unchanged). value_for_has_financial_center is read nowhere else.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's
+# value_for_has_financial_center; re-check its callers after an E&F update.
+#############################################
+
+zz_ef_slots_cb = {
+	value = 0.12
+	subtract = zz_ef_money_rate
+	divide = 0.10
+	multiply = 10
+	round = yes
+	min = 0
+	max = 10
+}
+
+zz_ef_cap_total = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_cap_avg_ms } add = var:zz_ef_cap_avg_ms }
+	if = { limit = { has_variable = zz_ef_cap_avg_as } add = var:zz_ef_cap_avg_as }
+	if = { limit = { has_variable = zz_ef_cap_avg_mn } add = var:zz_ef_cap_avg_mn }
+	if = { limit = { has_variable = zz_ef_cap_avg_rr } add = var:zz_ef_cap_avg_rr }
+	min = 0
+}
+
+zz_ef_slots_cap = {
+	value = zz_ef_cap_total
+	divide = {
+		value = gdp
+		min = 1
+	}
+	multiply = 10
+	floor = yes
+	min = 0
+	max = 10
+}
+
+REPLACE_OR_CREATE:value_for_has_financial_center = {
+	value = zz_ef_slots_cb
+	add = zz_ef_slots_cap
+}

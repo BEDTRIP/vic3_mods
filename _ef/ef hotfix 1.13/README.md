@@ -1208,6 +1208,15 @@ Names in all 11 `zz_ef_cm_goods_l_*.yml`.
 - **`zz_ef_new_country_immediate_init.txt` is additive now.** It put `effect = { }` straight into six vanilla on_actions; an on_action holds one effect and ours, loading last, replaced vanilla's, Morgenröte's, Grey's and ETF's. Each vanilla on_action now only lists our own on_action. BOM added to it and to its events file.
 - 7a–7e: `has_variable` before the `base_*_fix > 0` checks (a country E&F never initialized logged `none`, 19 × 6).
 
+## Слоты компаний от биржи (EF.41, 2.10.2026) — не проверено в игре
+
+`common/script_values/zz_ef_company_slots.txt`: E&F давал стране с финансовым центром
+`country_max_companies_add` = уровни 42 национальных бирж × поправка ставки (1850: Британия +36).
+Теперь множитель того же модификатора `has_financial_center` = **ЦБ** до +10 (round(10 × (12% −
+ставка) / 10%): 0 при 12%, +10 при 2% и ниже) + **капитализация** до +10 (+1 за каждые полные 10% ВВП
+средней капитализации, `zz_ef_cap_avg_*`, EF.24). До правки, прогон 1836.7 → 1841.1: Британия +23
+слота от биржи, 27 компаний.
+
 ## Стройка: PSC (бывший компач E&F × PSC)
 
 С 02.10.2026 здесь (СТР.6). E&F держит отдельное здание частной стройки
