@@ -1,4 +1,4 @@
-﻿#############################################
+#############################################
 # EF.39 / EF.48 (2026-09-30) -- the money model, in the engine's money, on
 # the budget's own rhythm: a WEEKLY step (bank credit from the central bank
 # at the key rate, its interest to the treasury, the ledger of each account's
@@ -971,31 +971,33 @@ zz_ef_gov_rate_step = {
 	remove_variable = zz_ef_gr_add_new
 }
 
-# В1.3 probe (3.10, stage 0): the businesses' cash jumps +5..11M on 1 January
-# (Britain 1837.1, 1841.1) and eats the pops' savings through the leak; no
-# script effect touches a building's cash, so it is the engine or a yearly
-# script's side effect. November-January, a mark of each building's cash a
-# week; December-January, a building whose cash moved over 100K in the week ->
-# EFJ line (country, building, state, change, cash). Off: zz_ef_probe_on = 0.
+# В1.3 probe (3.10, stage 0): the businesses' cash jumps on 1 January (Britain
+# only: +2.1M 1837.1, +0.7M 1838.1, run e0_1) and eats the pops' savings
+# through the leak; no script effect touches a building's cash. Buildings hold
+# no variables ("This scope doesn't support variables", run e0_1), so no delta
+# here: every December week and the first January week, each building with
+# over 10K cash -> EFJ line (country, building, state, cash, level); the jump
+# is the difference between the last December and the first January line,
+# taken offline. Off: zz_ef_probe_on = 0.
 zz_ef_probe_newyear_cash = {
 	if = {
 		limit = {
 			zz_ef_probe_on > 0
-			OR = { month = 10 month = 11 month = 0 }
+			OR = {
+				month = 11
+				AND = {
+					month = 0
+					NOT = { has_variable = zz_ef_probe_jan }
+				}
+			}
+		}
+		if = {
+			limit = { month = 0 }
+			set_variable = { name = zz_ef_probe_jan days = 60 }
 		}
 		every_scope_building = {
-			if = {
-				limit = {
-					has_variable = zz_ef_probe_cash
-					NOT = { month = 10 }
-					OR = {
-						zz_ef_probe_cash_delta > 100000
-						zz_ef_probe_cash_delta < -100000
-					}
-				}
-				debug_log = "EFJ|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetBuilding.GetOwner.GetNameNoFormatting]|[THIS.GetBuilding.GetBuildingType.GetNameNoFormatting]|[THIS.GetBuilding.GetState.GetNameNoFormatting]|d [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_cash_delta')|0]|cash [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_cash_now')|0]|lv [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_level')|0]"
-			}
-			set_variable = { name = zz_ef_probe_cash value = cash_reserves_available days = 40 }
+			limit = { cash_reserves_available > 10000 }
+			debug_log = "EFJ|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetBuilding.GetOwner.GetNameNoFormatting]|[THIS.GetBuilding.GetBuildingType.GetNameNoFormatting]|[THIS.GetBuilding.GetState.GetNameNoFormatting]|cash [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_cash_now')|0]|lv [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_level')|0]"
 		}
 	}
 }
