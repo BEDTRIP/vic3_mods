@@ -373,7 +373,7 @@ zz_ef_market_gdp_share = {
 zz_ef_cb_issue_month = {
 	value = 0
 	if = {
-		limit = { market.owner = this }
+		limit = { exists = market market.owner = this }
 		value = market.mg:liquidity_currency.market_goods_sell_orders
 		multiply = 4
 	}
@@ -381,7 +381,7 @@ zz_ef_cb_issue_month = {
 zz_ef_cb_demand_month = {
 	value = 0
 	if = {
-		limit = { market.owner = this }
+		limit = { exists = market market.owner = this }
 		value = market.mg:liquidity_currency.market_goods_buy_orders
 		multiply = 4
 	}
@@ -2425,7 +2425,7 @@ zz_ef_money_median = {
 zz_ef_trade_net_week = {
 	value = 0
 	if = {
-		limit = { market.owner = this }
+		limit = { exists = market market.owner = this }
 		market = {
 			every_market_goods = {
 				add = {
@@ -2452,7 +2452,7 @@ zz_ef_trade_net_week = {
 zz_ef_trade_fin_week = {
 	value = 0
 	if = {
-		limit = { market.owner = this }
+		limit = { exists = market market.owner = this }
 		market = {
 			mg:bond = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:bond.base_price } }
 			mg:manufacture_stock = { add = { value = market_goods_exports subtract = market_goods_imports multiply = { value = market_goods_pricier add = 1 } multiply = g:manufacture_stock.base_price } }
