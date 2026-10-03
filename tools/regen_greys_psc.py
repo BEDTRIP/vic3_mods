@@ -66,9 +66,8 @@ USU_PM = os.path.join(GREYS, "grey_usu/common/production_methods/yMoG_USU_constr
 USU_BG = os.path.join(GREYS, "grey_usu/common/building_groups/yMoG_USU_building_groups.txt")
 USU_BALANCER = "common/history/buildings/MoG_consec_balancer.txt"
 GVC_PM = res("../_greys/greys+vc done/common/production_methods/zz_gvc_methods.txt")
-# STR.3 (2026-10-03): the hotfix's ЖКХ inputs on the urban-centre amenity methods; grey_usu
-# re-issues those methods with REPLACE_OR_CREATE after the hotfix and drops them.
-MEGA_HC_PM = os.path.join(MEGA, "common/production_methods/zz_ef_household_construction_pms.txt")
+# STR.3 (2026-10-03): ЖКХ on the urban-centre amenity methods; grey_usu re-issues those methods
+# with REPLACE_OR_CREATE after the hotfix -- rebuilt from USU's bodies here.
 USU_URBAN_PM = os.path.join(GREYS, "grey_usu/common/production_methods/yMoG_USU_urban_base_pms.txt")
 
 GUARD = """	# Guard, not PSC's line. grey_usu's body puts vanilla's country_construction_add
@@ -252,25 +251,25 @@ def build_balancer_override():
 
 
 def build_household_construction():
-    """STR.3: re-issue the hotfix's ЖКХ block (urban-centre amenity inputs) after USU."""
+    """STR.3 ЖКХ: grey_usu's own amenity bodies, the tier's sector inputs swapped for the construction good.
+
+    Same rule as the hotfix (tools/regen_ef_household_construction.py, urban_body) applied to USU's bodies,
+    which load after the hotfix with REPLACE_OR_CREATE and would drop its vanilla-based ones.
+    """
     sys.path.insert(0, HERE)
     import regen_ef_household_construction as hc
-    src = V.read(MEGA_HC_PM)
-    a, b = src.index(hc.URBAN_BEGIN), src.index(hc.URBAN_END)
-    block = src[a + len(hc.URBAN_BEGIN):b].strip("\n")
     usu = V.read(USU_URBAN_PM)
-    for pm, _good, _amount in hc.URBAN + [hc.URBAN_USU]:
+    for pm, _good, _base in hc.URBAN + [hc.URBAN_USU]:
         assert re.search(r"(?m)^REPLACE_OR_CREATE:" + pm + r"\s*=", usu), (
-            f"grey_usu no longer re-issues {pm} with REPLACE_OR_CREATE -- the re-issue may double the input")
-        if pm != hc.URBAN_USU[0]:
-            assert "INJECT:" + pm in block, f"{pm} missing from the hotfix's ЖКХ block"
-    text = block + "\n\n" + hc.urban_block([hc.URBAN_USU])
+            f"grey_usu no longer re-issues {pm} with REPLACE_OR_CREATE -- re-read STR.3")
+    text = hc.urban_block(hc.URBAN + [hc.URBAN_USU], usu, "REPLACE_OR_CREATE:")
     write("common/production_methods/zz_greys_psc_household_construction_pm.txt", text,
-          "ЖКХ inputs on the urban-centre amenity methods re-issued after grey_usu (STR.3)",
-          "the E&F hotfix INJECTs a construction good into the four urban-centre amenity "
-          "methods (tools/regen_ef_household_construction.py); grey_usu's REPLACE_OR_CREATE "
-          "of the same methods loads later and drops it. Same INJECT again, plus USU's own "
-          "fifth method usu_pm_hv_arcades.", bom=True)
+          "ЖКХ: grey_usu's urban-centre amenity methods with the construction good (STR.3)",
+          "the E&F hotfix swaps the raw materials of the four urban-centre amenity methods that the "
+          "construction sector of the same tier processes for that construction good "
+          "(tools/regen_ef_household_construction.py); grey_usu re-issues the methods with its own "
+          "bodies after the hotfix. Here: USU's bodies, same swap, plus USU's fifth method "
+          "usu_pm_hv_arcades.", bom=True)
 
 
 def self_check() -> int:
