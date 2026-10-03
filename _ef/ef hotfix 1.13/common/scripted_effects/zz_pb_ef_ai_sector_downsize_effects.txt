@@ -4,9 +4,30 @@
 # its construction and liquidity methods put back. Called from
 # on_actions/zz_pb_ef_ai_sector_downsize.txt (AI countries over the limit).
 # The methods are remembered in a state variable across the remove/create pair.
+#
+# Nationalisation first (the user, 2026-10-03): the recreated building belongs to
+# the state, so before it goes the state buys out the private levels -- the
+# treasury pays zz_pb_ef_css_buyout_price per private level (levels x private
+# share, in steps of 10%) and the money goes to the investment pool, where the
+# owners' reinvestment lives (the engine names no owner a script could pay).
+# A sector the state already owns costs nothing; the on_action takes those first.
 #############################################
 
 zz_pb_ef_css_downsize_one = {
+	save_temporary_scope_value_as = {
+		name = zz_css_buyout
+		value = zz_pb_ef_state_css_buyout
+	}
+	if = {
+		limit = { scope:zz_css_buyout > 0 }
+		owner = {
+			add_treasury = {
+				value = 0
+				subtract = scope:zz_css_buyout
+			}
+			add_investment_pool = scope:zz_css_buyout
+		}
+	}
 	if = {
 		limit = { b:building_construction_sector.level <= 1 }
 		remove_building = building_construction_sector

@@ -183,3 +183,77 @@ zz_pb_ef_state_css_level = {
 		value = b:building_construction_sector.level
 	}
 }
+
+# STR.2 (2026-10-03, the user: the state buys out before it pulls down): price of
+# one private level of a construction sector. The engine's own buyout in this set
+# is PRIVATIZATION_PER_LEVEL_COST 150 (VC) x MIN_FAKE_CONSTRUCTION_COST 100 = 15 000
+# a level (В1.2: the pool loses multiples of 15 000). !! TUNING !!
+zz_pb_ef_css_buyout_price = 15000
+
+# STATE scope: what nationalising the state's construction sector costs -- its
+# levels x the privately owned share (private_ownership_fraction is a comparison
+# only: steps of 10%) x the price. 0 when the state owns it all.
+zz_pb_ef_state_css_buyout = {
+	value = 0
+	if = {
+		limit = { has_building = building_construction_sector }
+		b:building_construction_sector = {
+			value = 0
+			if = {
+				limit = { private_ownership_fraction > 0.05 }
+				value = 0.1
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.15 }
+				value = 0.2
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.25 }
+				value = 0.3
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.35 }
+				value = 0.4
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.45 }
+				value = 0.5
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.55 }
+				value = 0.6
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.65 }
+				value = 0.7
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.75 }
+				value = 0.8
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.85 }
+				value = 0.9
+			}
+			if = {
+				limit = { private_ownership_fraction > 0.95 }
+				value = 1.0
+			}
+		}
+		multiply = b:building_construction_sector.level
+		multiply = zz_pb_ef_css_buyout_price
+	}
+}
+
+# STATE scope: order of the AI's downsizing -- sectors the state already owns
+# first (nothing to pay), then the biggest.
+zz_pb_ef_state_css_downsize_order = {
+	value = zz_pb_ef_state_css_level
+	if = {
+		limit = {
+			has_building = building_construction_sector
+			b:building_construction_sector = { private_ownership_fraction < 0.05 }
+		}
+		add = 1000
+	}
+}

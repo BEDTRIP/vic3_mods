@@ -13,7 +13,8 @@
 # month). The penalty cuts throughput to what the limit would make; the AI then
 # trims one level per quarter until the sectors fit.
 #
-# Which level: the biggest sector of the country (most levels). The engine has no
+# Which level: a sector the state already owns, else the biggest (most levels);
+# private levels are bought out first (zz_pb_ef_css_downsize_one, 2026-10-03). The engine has no
 # effect that lowers a building's level, so the building is removed and created
 # again one level lower (create_building, level = old - 1), with its construction
 # and liquidity methods put back. Cash reserves: half. Ownership of the new
@@ -66,7 +67,7 @@ zz_pb_ef_ai_sector_downsize = {
 				}
 				ordered_scope_state = {
 					limit = { has_building = building_construction_sector }
-					order_by = zz_pb_ef_state_css_level
+					order_by = zz_pb_ef_state_css_downsize_order
 					zz_pb_ef_css_downsize_one = yes
 				}
 			}
