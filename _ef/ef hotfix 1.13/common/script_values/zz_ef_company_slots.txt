@@ -1,7 +1,7 @@
 ﻿#############################################
 # EF.41 (2026-10-02, decided by the user 30.09) -- company slots from the
-# financial centre: the credit rating (up to +5) and capitalization (up to +15) instead of E&F's exchange
-# levels.
+# financial centre: the credit rating (up to +5), the central bank's rate (up
+# to +5) and capitalization (up to +10) instead of E&F's exchange levels.
 #
 # E&F: has_financial_center (country_max_companies_add = 1) is applied with
 # multiplier = value_for_has_financial_center
@@ -11,17 +11,22 @@
 # levels, France 36, USA 15 -- +36 slots for Britain at 2%. "I can carpet
 # everything with companies", choosing a company stopped mattering.
 #
-# Now (same modifier, new multiplier; re-weighed by the user 3.10 after run
-# e0_1, where capitalization already hit its +10 in 1843 -- Britain 1.76 GDP):
+# Now (same modifier, new multiplier; weights by the user 3.10: 5 / 5 / 10 --
+# run e0_1 had capitalization at its cap already in 1843, Britain 1.76 GDP):
 #   - credit rating, up to +5: round(E&F's note country_credit_note_fixe / 2)
-#     -- note 10 -> +5, 6.4 -> +3, no note -> 0. (Was: the key rate, up to
-#     +10 -- "not clear what it is for", the user 3.10.)
-#   - capitalization, up to +15: +1 per full 10% of GDP of stock market
+#     -- note 10 -> +5, 6.4 -> +3, no note -> 0;
+#   - central bank policy, up to +5: round(5 x (12% - key rate) / 10%) -- 0
+#     at 12%, +3 at 7%, +5 at 2% and below. Cheap credit, more companies; the
+#     price of a cheap rate is EF.31's;
+#   - capitalization, up to +10: +1 per full 10% of GDP of stock market
 #     capitalization (the four yearly averages zz_ef_cap_avg_*, EF.24). 1913:
 #     Britain ~1.09 GDP -> +10, France 0.78 -> +7, USA 0.39 -> +3, Russia 0.18
 #     -> +1. In the game capitalization runs well above history (EF.35) --
 #     the scale waits for that.
 # Strong countries end up at vanilla ~7-9 + mod technologies ~6 + up to 20.
+# History: 2.10 rate +10 / capitalization +10; 3.10 rating +5 / capitalization
+# +15 (run e0_3, 1841.7: Britain 19, Belgium 19, France 8); 3.10 evening
+# 5 / 5 / 10.
 # Only countries with a financial centre get the modifier at all (E&F's own
 # condition, unchanged). value_for_has_financial_center is read nowhere else.
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's
@@ -58,10 +63,21 @@ zz_ef_slots_cap = {
 	multiply = 10
 	floor = yes
 	min = 0
-	max = 15
+	max = 10
+}
+
+zz_ef_slots_cb = {
+	value = 0.12
+	subtract = zz_ef_money_rate
+	divide = 0.10
+	multiply = 5
+	round = yes
+	min = 0
+	max = 5
 }
 
 REPLACE_OR_CREATE:value_for_has_financial_center = {
 	value = zz_ef_slots_rating
+	add = zz_ef_slots_cb
 	add = zz_ef_slots_cap
 }

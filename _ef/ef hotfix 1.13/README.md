@@ -1231,13 +1231,15 @@ Names in all 11 `zz_ef_cm_goods_l_*.yml`.
 - **`zz_ef_new_country_immediate_init.txt` is additive now.** It put `effect = { }` straight into six vanilla on_actions; an on_action holds one effect and ours, loading last, replaced vanilla's, Morgenröte's, Grey's and ETF's. Each vanilla on_action now only lists our own on_action. BOM added to it and to its events file.
 - 7a–7e: `has_variable` before the `base_*_fix > 0` checks (a country E&F never initialized logged `none`, 19 × 6).
 
-## Слоты компаний от биржи (EF.41, 2.10.2026, перевзвешено 3.10)
+## Слоты компаний от биржи (EF.41, 2.10.2026, веса 5 / 5 / 10 — 3.10)
 
 `common/script_values/zz_ef_company_slots.txt`: E&F давал стране с финансовым центром
 `country_max_companies_add` = уровни 42 национальных бирж × поправка ставки (1850: Британия +36).
 Теперь множитель того же модификатора `has_financial_center` = **кредитный рейтинг** до +5
-(round(оценка E&F `country_credit_note_fixe` / 2): 10 → +5, 6.4 → +3) + **капитализация** до +15 (+1 за
-каждые полные 10% ВВП средней капитализации, `zz_ef_cap_avg_*`, EF.24). До правки, прогон 1836.7 → 1841.1:
+(round(оценка E&F `country_credit_note_fixe` / 2): 10 → +5, 6.4 → +3) + **ставка ЦБ** до +5 (round(5 × (12% −
+ставка) / 10%): 0 при 12%, +5 при 2% и ниже) + **капитализация** до +10 (+1 за каждые полные 10% ВВП средней
+капитализации, `zz_ef_cap_avg_*`, EF.24). Промежуточная версия 3.10 (рейтинг +5, капитализация +15), прогон
+e0_3, 1841.7: Британия +19, Бельгия +19, Франция +8. До правки, прогон 1836.7 → 1841.1:
 Британия +23 слота от биржи, 27 компаний. Версия 2.10 (ставка ЦБ до +10 + капитализация до +10), прогон
 e0_1, 1843.1: Британия +17, Бельгия +20, США +16 — капитализация в игре выше исторической (EF.35).
 
