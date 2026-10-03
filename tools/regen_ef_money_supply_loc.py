@@ -272,7 +272,10 @@ FLOWS = [
     (K, P, "содержание кораблей снабжения", "supply ship upkeep", gv("GetSupplyShipMaintenanceExpenses"), None),
     (K, P, "постройка военных кораблей", "warship construction", gv("GetMilitaryShipConstructionGoodsExpenses"), None),
     (K, P, "содержание военных кораблей", "warship upkeep", gv("GetMilitaryShipMaintenanceExpenses"), None),
-    (K, P, "маршруты поставок", "supply routes", gv("GetPortConnectionExpenses"), None),
+    # UI.7 (3.10, user + run e0_4): the engine pays nobody for supply routes -- the business card's residual
+    # went against this line (r -0.46); as K -> P the money counted as dropped out -> pops' savings
+    (K, X, "маршруты поставок — движок никому не платит", "supply routes — the engine pays nobody",
+     gv("GetPortConnectionExpenses"), None),
     # the pool's transfer to the budget for construction: pool gross - net income at the step (the budget's
     # GetInvestmentIncomeTrend is a smoothed trend and did not match the pool; GetInvestmentFundTrend is the STOCK)
     (B, K, "[concept_budget_investment_income]: на стройку", "[concept_budget_investment_income]: for construction",
@@ -308,12 +311,6 @@ FLOWS = [
      "conservation)", svp("zz_ef_v_f_inflow"), None),
     (X, N, "из накоплений: вернулось в деньги движка больше, чем выпало",
      "from savings: more came back into the engine's money than dropped out", svn("zz_ef_v_f_inflow"), None),
-    # UI.7 (3.10): the consumer credit reaches pops as the dependents' surcharge, paid by the engine
-    # from nothing during the week (the pool's side is in the banks' card) -- pops spend it
-    (X, N, "надбавка на иждивенцев — потребкредит, выплаченный за неделю (движок)",
-     "dependents' surcharge — the consumer credit paid during the week (engine)", svp("zz_ef_v_f_cc_paid"), N),
-    (N, X, "надбавка на иждивенцев снижена — погашение потребкредита",
-     "dependents' surcharge cut — consumer credit repayment", svn("zz_ef_v_f_cc_paid"), N),
     # the coined money goes straight into the owners' savings, not into purchases
     (N, X, "в накопления: чеканка — владельцам металла", "into savings: coinage — to the metal's owners",
      sv_("zz_ef_v_f_mint_own"), N),
@@ -324,13 +321,22 @@ FLOWS = [
      svp("zz_ef_v_d_bonds"), None),
     (Z, B, "погашение облигаций других стран (E&F)", "foreign bonds run off (E&F)", svn("zz_ef_v_d_bonds"), None),
     # deposits: from the savings, not from the week's income -- banks' card only (window values)
-    (N, B, "вклады населения из накоплений", "pops' deposits from their savings", sv_("zz_ef_v_w_dep_in"), B),
-    (B, N, "снятие вкладов", "deposits withdrawn", sv_("zz_ef_v_w_dep_out"), B),
-    (B, N, "проценты по вкладам", "interest on deposits", sv_("zz_ef_v_w_dep_int"), B),
+    (N, B, "вклады населения из накоплений (прошедшая неделя: пул отражает их неделей позже)",
+     "pops' deposits from their savings (the week just ended: the pool shows them a week later)",
+     sv_("zz_ef_v_w_dep_in"), B),
+    (B, N, "снятие вкладов (прошедшая неделя)", "deposits withdrawn (the week just ended)", sv_("zz_ef_v_w_dep_out"), B),
+    (B, N, "проценты по вкладам (прошедшая неделя)", "interest on deposits (the week just ended)",
+     sv_("zz_ef_v_w_dep_int"), B),
     # consumer credit (EF.48 item 4): pool <-> pops through the dependents' surcharge
-    (B, N, "потребительский кредит: выдано", "consumer credit: lent", sv_("zz_ef_v_w_cc_issue"), B),
-    (N, B, "потребительский кредит: погашено", "consumer credit: repaid", sv_("zz_ef_v_w_cc_repay"), B),
-    (N, B, "потребительский кредит: проценты", "consumer credit: interest", sv_("zz_ef_v_w_cc_int"), B),
+    # UI.7 (3.10, user): in the pops' card too -- the engine pays the net as the dependents' surcharge, but
+    # the three lines read as what they are. Window values = the week just ended in both cards.
+    (B, N, "потребительский кредит: выдано (за прошедшую неделю; доходит надбавкой на иждивенцев)",
+     "consumer credit: lent (the week just ended; reaches pops as the dependents' surcharge)",
+     sv_("zz_ef_v_w_cc_issue"), None),
+    (N, B, "потребительский кредит: погашено (за прошедшую неделю)", "consumer credit: repaid (the week just ended)",
+     sv_("zz_ef_v_w_cc_repay"), None),
+    (N, B, "потребительский кредит: проценты (за прошедшую неделю)", "consumer credit: interest (the week just ended)",
+     sv_("zz_ef_v_w_cc_int"), None),
     # --- central bank, in money (a transit account) ---
     (X, C, "выпуск: кредит банкам — новые деньги", "issue: credit to banks — new money", sv_("zz_ef_v_f_cb_borrow"), None),
     (C, B, "кредит банкам под ключевую ставку", "credit to banks at the key rate", sv_("zz_ef_v_f_cb_borrow"), None),
@@ -805,7 +811,7 @@ def nested(lang):
                       f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, продажа уровней компаниям "
                       f"{sv('zz_ef_v_f_buyout', 'D+=')}{cur}, проценты по вкладам "
                       f"{sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; внесено {money('zz_ef_v_f_dep_in')}, снято "
-                      f"{money('zz_ef_v_f_dep_out')}. Норма наличных на руках — {money('zz_ef_pop_cash_norm')} "
+                      f"{money('zz_ef_v_f_dep_out')} (в средствах банков — в изменении следующей недели). Норма наличных на руках — {money('zz_ef_pop_cash_norm')} "
                       f"({sv('zz_ef_cash_norm_gdp', '%0')} ВВП: 20% при ставке по вкладам 0%, 12% при 3%, не ниже 6%); "
                       f"сверх неё население вносит во вклады, ниже — снимает, по 10% разрыва в неделю. Ставка по "
                       f"вкладам {sv('zz_ef_deposit_rate', '%1')} = ключевая − маржа банков {sv('zz_ef_deposit_margin', '%1')} "

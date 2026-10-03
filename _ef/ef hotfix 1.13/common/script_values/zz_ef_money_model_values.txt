@@ -1226,11 +1226,6 @@ zz_ef_v_f_cc_net = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_cc_net } value = var:zz_ef_f_cc_net }
 }
-# UI.7 (3.10): the surcharge paid during the week just ended (zz_ef_money_model_step)
-zz_ef_v_f_cc_paid = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_f_cc_paid } value = var:zz_ef_f_cc_paid }
-}
 zz_ef_v_w_cc_issue = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_w_cc_issue } value = var:zz_ef_w_cc_issue }

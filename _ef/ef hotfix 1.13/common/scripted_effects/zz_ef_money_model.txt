@@ -304,14 +304,6 @@ zz_ef_money_model_step = {
 		limit = { has_variable = zz_ef_prev_cbval }
 		remove_variable = zz_ef_prev_cbval
 	}
-	# UI.7 (3.10): the dependents' surcharge the engine paid pops during the week
-	# just ended (state_dependent_wage_add, from nothing) = the consumer credit's
-	# net flow set by the last receiver; pops spend it -- business cash.
-	set_variable = { name = zz_ef_f_cc_paid value = 0 }
-	if = {
-		limit = { has_variable = zz_ef_f_cc_net }
-		set_variable = { name = zz_ef_f_cc_paid value = var:zz_ef_f_cc_net }
-	}
 	# Week-on-week change of each account (0 in the first week).
 	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
 	zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
