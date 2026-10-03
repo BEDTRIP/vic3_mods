@@ -86,6 +86,8 @@ zz_ef_money_model_step = {
 	# estimate from the credit limit -- credit - base - 1.7 x GDP -- swung by
 	# millions a week, M2 by +-30%).
 	set_variable = { name = zz_ef_bcash value = zz_ef_building_cash_sum }
+	# В1.3 probe (3.10): who gets the business cash jump of 1 January
+	zz_ef_probe_newyear_cash = yes
 	# foreign currency in the reserves (night 2, item 2), before the rescale
 	zz_ef_fx_metal_update = yes
 	if = {
@@ -967,4 +969,33 @@ zz_ef_gov_rate_step = {
 	}
 	remove_variable = zz_ef_gr_mult_new
 	remove_variable = zz_ef_gr_add_new
+}
+
+# В1.3 probe (3.10, stage 0): the businesses' cash jumps +5..11M on 1 January
+# (Britain 1837.1, 1841.1) and eats the pops' savings through the leak; no
+# script effect touches a building's cash, so it is the engine or a yearly
+# script's side effect. November-January, a mark of each building's cash a
+# week; December-January, a building whose cash moved over 100K in the week ->
+# EFJ line (country, building, state, change, cash). Off: zz_ef_probe_on = 0.
+zz_ef_probe_newyear_cash = {
+	if = {
+		limit = {
+			zz_ef_probe_on > 0
+			OR = { month = 10 month = 11 month = 0 }
+		}
+		every_scope_building = {
+			if = {
+				limit = {
+					has_variable = zz_ef_probe_cash
+					NOT = { month = 10 }
+					OR = {
+						zz_ef_probe_cash_delta > 100000
+						zz_ef_probe_cash_delta < -100000
+					}
+				}
+				debug_log = "EFJ|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetBuilding.GetOwner.GetNameNoFormatting]|[THIS.GetBuilding.GetBuildingType.GetNameNoFormatting]|[THIS.GetBuilding.GetState.GetNameNoFormatting]|d [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_cash_delta')|0]|cash [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_cash_now')|0]|lv [THIS.GetBuilding.MakeScope.ScriptValue('zz_ef_probe_level')|0]"
+			}
+			set_variable = { name = zz_ef_probe_cash value = cash_reserves_available days = 40 }
+		}
+	}
 }

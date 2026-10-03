@@ -2606,3 +2606,20 @@ zz_ef_priv_levels = {
 		}
 	}
 }
+
+# В1.3 probe (3.10): 1 = on (zz_ef_probe_newyear_cash, the EFJ log lines).
+zz_ef_probe_on = 1
+# building scope: the cash now, its change since the last week's mark, level
+zz_ef_probe_cash_now = {
+	value = cash_reserves_available
+}
+zz_ef_probe_cash_delta = {
+	value = cash_reserves_available
+	if = {
+		limit = { has_variable = zz_ef_probe_cash }
+		subtract = var:zz_ef_probe_cash
+	}
+}
+zz_ef_probe_level = {
+	value = level
+}
