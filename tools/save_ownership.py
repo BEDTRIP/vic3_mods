@@ -61,6 +61,8 @@ def parse(path):
                   re.finditer(r'\n(\d+)=\{\n\tcapital=\d+\n\n?\tcountry=(\d+)', section(s, 'states'))}
     bld = {}
     for m in re.finditer(r'\n(\d+)=\{\n\tbuilding=(\w+)\n(?:\t[^\n]*\n)*?\tstate=(\d+)', section(s, 'building_manager')):
+        if m.group(3) == '4294967295':  # dead=yes: removed building, its record and old values stay
+            continue
         bld[m.group(1)] = (m.group(2), st_country.get(m.group(3)))
     comp = {}
     for m in re.finditer(r'\n(\d+)=\{\n\tcountry=\d+\n\tbuilding=(\d+)\n\tcompany_type=(\w+)', section(s, 'companies')):

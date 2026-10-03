@@ -50,7 +50,9 @@ def main():
         if bt not in ('building_construction_sector', 'building_construction_regulator', 'building_urban_center') + SUBSIST:
             continue
         body = m.group(3)
-        stt = re.search(r'\n\tstate=(\d+)', body)
+        if '\n\tdead=yes' in body:  # removed building: the record and its last values stay in the save
+            continue
+        stt =re.search(r'\n\tstate=(\d+)', body)
         lv = re.search(r'\n\tlevels=(\d+)', '\n' + body)
         pms = re.search(r'production_methods=\{([^}]*)\}', body)
         gc = re.search(r'\n\tgoods_cost=([\d.]+)', body)
