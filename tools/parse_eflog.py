@@ -21,7 +21,7 @@ out = {}
 for path in sys.argv[1:-1]:
     for line in open(path, encoding="utf-8-sig", errors="replace"):
         parts = line.strip().split("|")
-        if len(parts) < 4 or parts[0] not in ("EFW", "EFR", "EFX", "EFC", "EFM", "EFJ"): continue
+        if len(parts) < 4 or parts[0] not in ("EFW", "EFR", "EFX", "EFC", "EFM", "EFJ", "EFO"): continue
         rec = {"date": date(parts[1])}
         for p in parts[3:]:
             if " " in p:
