@@ -1057,6 +1057,19 @@ zz_ef_v_f_hume = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_hume } value = var:zz_ef_f_hume }
 }
+# UI.7 (3.10): the CB card's flows, in money a week (zz_ef_money_model_step)
+zz_ef_v_f_cb_reval = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_reval } value = var:zz_ef_f_cb_reval }
+}
+zz_ef_v_f_cb_hume_m = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_hume_m } value = var:zz_ef_f_cb_hume_m }
+}
+zz_ef_v_f_cb_rescale = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_rescale } value = var:zz_ef_f_cb_rescale }
+}
 
 # Accounts without a stock (pops, CB in money, abroad): change 0.
 zz_ef_zero = 0

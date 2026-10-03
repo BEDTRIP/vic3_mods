@@ -329,6 +329,22 @@ FLOWS = [
     (C, X, "погашено — деньги изъяты", "repaid — money withdrawn", sv_("zz_ef_v_f_cb_repay"), None),
     (B, C, "проценты по кредиту ЦБ", "interest on the CB's credit", sv_("zz_ef_v_f_cb_interest"), None),
     (C, K, "прибыль ЦБ: проценты банков", "the CB's profit: banks' interest", sv_("zz_ef_v_f_cb_interest"), None),
+    # UI.7 (3.10): what actually moves the CB's account (its metal at parity) -- model flows
+    # (zz_ef_money_model_step), CB card only; the residual left is E&F's own metal operations
+    (Z, C, "Юм: металл за чистый приход из-за рубежа (прошлая неделя)",
+     "Hume: metal for the net inflow from abroad (last week)", svp("zz_ef_v_f_cb_hume_m"), C),
+    (C, Z, "Юм: металл за чистый отток за рубеж (прошлая неделя)",
+     "Hume: metal for the net outflow abroad (last week)", svn("zz_ef_v_f_cb_hume_m"), C),
+    (X, C, "добытый металл, отчеканенный ЦБ, — в резервы", "mined metal coined by the CB — into the reserves",
+     sv_("zz_ef_v_f_mint"), C),
+    (X, C, "переоценка резервов: паритет снижен (девальвация, перепривязка)",
+     "revaluation of the reserves: parity lowered (devaluation, re-anchor)", svp("zz_ef_v_f_cb_reval"), C),
+    (C, X, "переоценка резервов: паритет повышен", "revaluation of the reserves: parity raised",
+     svn("zz_ef_v_f_cb_reval"), C),
+    (X, C, "пересчёт металла до 40% покрытия (начало игры)", "metal rescaled to 40% cover (game start)",
+     svp("zz_ef_v_f_cb_rescale"), C),
+    (C, X, "пересчёт металла до 40% покрытия (начало игры)", "metal rescaled to 40% cover (game start)",
+     svn("zz_ef_v_f_cb_rescale"), C),
     # the CB coins mined metal (В2.3, 2.10): the owners' part and the treasury's brassage
     (X, N, "чеканка ЦБ из добытого металла — владельцам", "the CB coins mined metal — to the owners",
      sv_("zz_ef_v_f_mint_own"), None),
@@ -386,9 +402,11 @@ NOTES = {
              "and the pool's unexplained change (levels bought) are not in it. Part of the savings is "
              "in deposits — engine money again (the pool)."),
     "abroad": ("Заграница — требования страны к другим странам: облигации частных банков и казны (E&F). Все платежи с заграницей идут через ЦБ: чистый отток "
-               "списывает его металл (механизм Юма).",
+               "списывает его металл (механизм Юма). Платежи требований не меняют — они в «прочее» не входят; "
+               "«прочее» — изменение облигаций, не объяснённое покупками и погашениями.",
                "Abroad — the country's claims on other countries: the private banks' and the treasury's bonds (E&F). Every payment with abroad goes through "
-               "the CB: a net outflow pays out its metal (Hume's mechanism)."),
+               "the CB: a net outflow pays out its metal (Hume's mechanism). Payments do not change the claims and "
+               "are not in 'other'; 'other' is the bonds' change not explained by purchases and redemptions."),
     "cb": ("ЦБ — расчётный агент страны: все платежи с заграницей идут через него. Кредит банкам — новые деньги, "
            "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (склад товара-валюты "
            "E&F — штуки товара, в резервы не входит): чистый отток за рубеж по курсу списывает металл, приток — добавляет (механизм Юма, "
@@ -552,6 +570,33 @@ PROBES = [
 # UI.7 (3.10): the "прочее" of each card, as the tooltip computes it -> the
 # weekly log line EFO, so a run shows how big each residual is and when.
 RESID = {}
+CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
+
+
+def flow_key(v):
+    if v[0] == "expr":
+        return "wages"
+    if v[0] == "closing":
+        return "closing"
+    kind, name = v
+    name = name.replace("zz_ef_v_", "").replace("Get", "").replace("ExpenseTrend", "_x").replace("IncomeTrend", "_i")
+    name = name.replace("Trend", "").replace("Expenses", "_x")
+    return name + {"svp": "+", "svn": "-"}.get(kind, "")
+
+
+def eff_lines():
+    """UI.7: one EFF line per card -- the account's change and every flow shown, signed (+ in, - out)."""
+    out = []
+    for acc in ACC_ORDER:
+        if acc not in DELTA:
+            continue
+        parts = f"|{acc}|d [Country.MakeScope.ScriptValue('{DELTA[acc]}')|0]"
+        for other, dr, f in card_flows(acc):
+            sign = "" if dr == "in" else "-"
+            parts += f"|{sign}{flow_key(f[4])}@{other} [{expr(f[4])}|0]"
+        out.append("EFF|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]"
+                   + parts.replace("Country.", "THIS.GetCountry."))
+    return out
 LOG_KEYS = {"buildings": "b_rest", "banks": "pool_rest", "abroad": "abr_rest", "treasury": "tr_rest", "cb": "cbm_rest"}
 
 
@@ -565,7 +610,8 @@ def write_log_effect():
                 "# tooltip, the same expressions, as a weekly log line EFO. Country scope.\n"
                 "zz_ef_money_log_rest = {\n"
                 f"\tdebug_log = \"EFO|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]{parts}\"\n"
-                "}\n")
+                + "".join(f"\tdebug_log = \"{ln}\"\n" for ln in eff_lines())
+                + "}\n")
 
 
 def write_hook():
@@ -647,13 +693,17 @@ def nested(lang):
             for dr, f in rows:
                 e = expr(f[4])
                 lab = f[2] if ru else f[3]
+                # UI.7 (3.10): abroad = the country's claims (bonds); payments with abroad do not
+                # change them -- the CB settles them in metal (Hume) -- so they stay out of its residual
+                # the same for the CB: E&F's treasury moves with the CB do not touch its metal
+                counts = (acc != Z or f[4][1] in CLAIM_VALUES) and not (acc == C and f[4][1] == "zz_ef_tr_to_cb")
                 if dr == "in":
                     L.append(f"  ← #P +[{e}|D] {cur}#! {lab}")
-                    if resid:
+                    if resid and counts:
                         resid = f"Subtract_CFixedPoint({resid}, {e})"
                 else:
                     L.append(f"  → #N −[{e}|D] {cur}#! {lab}")
-                    if resid:
+                    if resid and counts:
                         resid = f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({e}))"
             if other == X and resid:
                 L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur} {other_lab}")

@@ -88,6 +88,8 @@ zz_ef_money_model_step = {
 	set_variable = { name = zz_ef_bcash value = zz_ef_building_cash_sum }
 	# В1.3 probe (3.10): who gets the business cash jump of 1 January
 	zz_ef_probe_newyear_cash = yes
+	# UI.7 (3.10): the CB's metal rescaled this step, in money (zz_ef_metal_rescale_step)
+	set_variable = { name = zz_ef_f_cb_rescale value = 0 }
 	# foreign currency in the reserves (night 2, item 2), before the rescale
 	zz_ef_fx_metal_update = yes
 	if = {
@@ -264,6 +266,44 @@ zz_ef_money_model_step = {
 		zz_ef_ring_r_push = { M = agg3 }
 	}
 
+	# UI.7 (3.10): what moves the CB's account (its metal at parity), for the
+	# CB card -- each a week, in money; the rest is E&F's own metal operations.
+	# Revaluation: the reserves of last step at the new parity minus at the old
+	# one = cbm_prev x (parity_prev / parity_now - 1) -- devaluation laws and
+	# re-anchors (run e0_3: the USA 2.06 -> 11.8 -> 29.9, cbm +99M / -86M).
+	# Hume: the metal zz_ef_cb_hume_step added last week (after last week's
+	# ledger, so it is in this week's change), at the parity.
+	set_variable = { name = zz_ef_f_cb_reval value = 0 }
+	set_variable = { name = zz_ef_f_cb_hume_m value = 0 }
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		if = {
+			limit = {
+				has_variable = zz_ef_prev_cbm
+				has_variable = zz_ef_prev_cbval
+			}
+			set_variable = { name = zz_ef_f_cb_reval value = var:zz_ef_prev_cbval }
+			change_variable = { name = zz_ef_f_cb_reval divide = zz_ef_cb_valuation }
+			change_variable = { name = zz_ef_f_cb_reval subtract = 1 }
+			change_variable = { name = zz_ef_f_cb_reval multiply = var:zz_ef_prev_cbm }
+		}
+		if = {
+			limit = {
+				has_variable = zz_ef_f_hume
+				zz_ef_cb_metal_money > 0
+			}
+			set_variable = { name = zz_ef_f_cb_hume_m value = var:zz_ef_f_hume }
+			change_variable = { name = zz_ef_f_cb_hume_m divide = zz_ef_cb_valuation }
+		}
+		set_variable = { name = zz_ef_prev_cbval value = zz_ef_cb_valuation }
+	}
+	else_if = {
+		limit = { has_variable = zz_ef_prev_cbval }
+		remove_variable = zz_ef_prev_cbval
+	}
 	# Week-on-week change of each account (0 in the first week).
 	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
 	zz_ef_money_ledger_delta = { ACC = buildings VALUE = zz_ef_building_cash }
@@ -717,6 +757,10 @@ zz_ef_metal_rescale_step = {
 		}
 		set_variable = { name = zz_ef_metal_rescale value = zz_ef_cover_normal }
 		change_variable = { name = zz_ef_metal_rescale divide = zz_ef_cb_cover_ref }
+		# UI.7 (3.10): the CB card shows the rescale as a flow
+		set_variable = { name = zz_ef_f_cb_rescale value = var:zz_ef_metal_rescale }
+		change_variable = { name = zz_ef_f_cb_rescale subtract = 1 }
+		change_variable = { name = zz_ef_f_cb_rescale multiply = zz_ef_cb_money }
 		# every CB state, as E&F's gold_state_native_for_stockpile sums them
 		every_scope_state = {
 			limit = {
