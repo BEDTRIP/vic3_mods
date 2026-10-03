@@ -308,6 +308,15 @@ FLOWS = [
      "conservation)", svp("zz_ef_v_f_inflow"), None),
     (X, N, "из накоплений: вернулось в деньги движка больше, чем выпало",
      "from savings: more came back into the engine's money than dropped out", svn("zz_ef_v_f_inflow"), None),
+    # UI.7 (3.10): the consumer credit reaches pops as the dependents' surcharge, paid by the engine
+    # from nothing during the week (the pool's side is in the banks' card) -- pops spend it
+    (X, N, "надбавка на иждивенцев — потребкредит, выплаченный за неделю (движок)",
+     "dependents' surcharge — the consumer credit paid during the week (engine)", svp("zz_ef_v_f_cc_paid"), N),
+    (N, X, "надбавка на иждивенцев снижена — погашение потребкредита",
+     "dependents' surcharge cut — consumer credit repayment", svn("zz_ef_v_f_cc_paid"), N),
+    # the coined money goes straight into the owners' savings, not into purchases
+    (N, X, "в накопления: чеканка — владельцам металла", "into savings: coinage — to the metal's owners",
+     sv_("zz_ef_v_f_mint_own"), N),
     # --- banks ---
     (P, B, "взносы в пул — инвестиции зданий и сбережения богатых (ваниль)",
      "pool contributions — buildings' investment and the rich's saving (vanilla)", sv_("zz_ef_v_f_contrib"), None),
