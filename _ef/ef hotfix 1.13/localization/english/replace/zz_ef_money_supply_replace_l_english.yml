@@ -133,7 +133,7 @@
  zz_ef_ms_buildings_24:0 "  ← #P +$zz_ef_ms_x_expr_24$ $zz_ef_ms_cur$#! warship upkeep"
  zz_ef_ms_buildings_25:0 "  ← #P +$zz_ef_ms_x_expr_25$ $zz_ef_ms_cur$#! supply routes"
  zz_ef_ms_buildings_26:0 "5 Outside the accounts"
- zz_ef_ms_buildings_27:0 "  ↔ $zz_ef_ms_x_v_d_buildings_rest$ $zz_ef_ms_cur$ other"
+ zz_ef_ms_buildings_27:0 "  ↔ $zz_ef_ms_x_v_d_buildings_rest$ $zz_ef_ms_cur$ other — smoothed budget trends against the weekly ledger and the dependents' surcharge beyond the credit (under study, UI.7)"
  zz_ef_ms_buildings_28:0 "Cash reserves of all buildings: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*). Other: purchases abroad, profit taxes, the error of the wages-and-dividends estimate."
 
  # ---- banks ----
@@ -263,7 +263,7 @@
  zz_ef_ms_cb_18:0 "  → #N −$zz_ef_ms_x_v_f_cb_reval_neg$ $zz_ef_ms_cur$#! revaluation of the reserves: parity raised"
  zz_ef_ms_cb_19:0 "  ← #P +$zz_ef_ms_x_v_f_cb_rescale$ $zz_ef_ms_cur$#! metal rescaled to 40% cover (game start)"
  zz_ef_ms_cb_20:0 "  → #N −$zz_ef_ms_x_v_f_cb_rescale_neg$ $zz_ef_ms_cur$#! metal rescaled to 40% cover (game start)"
- zz_ef_ms_cb_21:0 "  ↔ $zz_ef_ms_x_v_d_cbm_rest$ $zz_ef_ms_cur$ other"
+ zz_ef_ms_cb_21:0 "  ↔ $zz_ef_ms_x_v_d_cbm_rest$ $zz_ef_ms_cur$ other — E&F's operations with the CB's metal (metal purchases, currency deals)"
  zz_ef_ms_cb_22:0 "The CB is the country's settlement agent: every payment with abroad goes through it. Credit to banks is new money, repayment withdraws it, interest goes to the treasury. The account's stock is the metal reserves (E&F's currency-good stock is counts of a good, not in them): a net outflow abroad pays out metal at the currency's value, an inflow brings it in (Hume's mechanism, metal standards with a CB only). The reserves are the currency's cover, not money: they are outside M0–M3, else a payment abroad would count twice (the money left the pool or business cash and the same metal left the CB). An outflow lowers the money and the cover by one sum; E&F's trade balance is no longer in the reserves."
  zz_ef_ms_cb_23:0 "#b Metal reserves: $zz_ef_ms_x_cb_metal$ @gold!#! (this week $zz_ef_ms_x_v_f_hume$); net flow with abroad $zz_ef_ms_x_v_f_ext_net$$zz_ef_ms_cur$; value $zz_ef_ms_x_money_value_0$ metal per $zz_ef_ms_cur$; cover at parity $zz_ef_ms_x_cb_cover$. Currency-good stock $zz_ef_ms_x_money_supply_state$ units."
 

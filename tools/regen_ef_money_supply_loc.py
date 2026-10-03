@@ -579,6 +579,15 @@ PROBES = [
 # UI.7 (3.10): the "прочее" of each card, as the tooltip computes it -> the
 # weekly log line EFO, so a run shows how big each residual is and when.
 RESID = {}
+# UI.7 (3.10, runs e0_4/e0_5): what is left in each card's residual, named
+OTHER_LAB = {
+    "cb": ("прочее — операции E&F с металлом ЦБ (закупки металла, валютные сделки)",
+           "other — E&F's operations with the CB's metal (metal purchases, currency deals)"),
+    "buildings": ("прочее — сглаженные тренды бюджета против недельного счёта и надбавка на иждивенцев "
+                  "сверх кредита (разбирается, UI.7)",
+                  "other — smoothed budget trends against the weekly ledger and the dependents' surcharge "
+                  "beyond the credit (under study, UI.7)"),
+}
 CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
 
 
@@ -715,7 +724,8 @@ def nested(lang):
                     if resid and counts:
                         resid = f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({e}))"
             if other == X and resid:
-                L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur} {other_lab}")
+                lab_o = OTHER_LAB.get(acc, ("прочее", "other"))[0 if ru else 1]
+                L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur} {lab_o}")
                 RESID[acc] = fixed_resid or resid
             if other == X and acc == K:
                 bin_, bout = ("Country.MakeScope.ScriptValue('zz_ef_total_income_week')",

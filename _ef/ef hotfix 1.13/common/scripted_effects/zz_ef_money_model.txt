@@ -767,10 +767,14 @@ zz_ef_metal_rescale_step = {
 		}
 		set_variable = { name = zz_ef_metal_rescale value = zz_ef_cover_normal }
 		change_variable = { name = zz_ef_metal_rescale divide = zz_ef_cb_cover_ref }
-		# UI.7 (3.10): the CB card shows the rescale as a flow
-		set_variable = { name = zz_ef_f_cb_rescale value = var:zz_ef_metal_rescale }
-		change_variable = { name = zz_ef_f_cb_rescale subtract = 1 }
-		change_variable = { name = zz_ef_f_cb_rescale multiply = zz_ef_cb_money }
+		# UI.7 (3.10): the CB card shows the rescale as a flow -- not at the
+		# first step, where the account has no change yet (run e0_5: +1 bn "other")
+		if = {
+			limit = { has_variable = zz_ef_prev_cbm }
+			set_variable = { name = zz_ef_f_cb_rescale value = var:zz_ef_metal_rescale }
+			change_variable = { name = zz_ef_f_cb_rescale subtract = 1 }
+			change_variable = { name = zz_ef_f_cb_rescale multiply = zz_ef_cb_money }
+		}
 		# every CB state, as E&F's gold_state_native_for_stockpile sums them
 		every_scope_state = {
 			limit = {
