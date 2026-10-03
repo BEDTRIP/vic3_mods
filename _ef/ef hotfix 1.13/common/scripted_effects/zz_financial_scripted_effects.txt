@@ -2,6 +2,7 @@
 # Rebuilt by tools/regen_ef_psc_copies.py from E&F: 01_financial_scripted_effects.txt
 # with building_ef_private_construction -> building_construction_sector.
 # Re-run that script after every E&F update.
+# В1.3: and reserves = 1 -> reserves = 0 (empty cash register at creation).
 
 REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 
@@ -60,7 +61,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -100,7 +101,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -140,7 +141,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -180,7 +181,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -220,7 +221,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -262,7 +263,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -302,7 +303,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -342,7 +343,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -384,7 +385,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -424,7 +425,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -464,7 +465,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -506,7 +507,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -548,7 +549,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -590,7 +591,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -632,7 +633,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -674,7 +675,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -714,7 +715,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -754,7 +755,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -796,7 +797,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -836,7 +837,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -876,7 +877,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -918,7 +919,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -958,7 +959,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -998,7 +999,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -1038,7 +1039,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -1078,7 +1079,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -1113,7 +1114,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1146,7 +1147,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1179,7 +1180,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1214,7 +1215,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1247,7 +1248,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1280,7 +1281,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1313,7 +1314,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1346,7 +1347,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1381,7 +1382,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1414,7 +1415,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1447,7 +1448,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1480,7 +1481,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1515,7 +1516,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1548,7 +1549,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1581,7 +1582,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1616,7 +1617,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1649,7 +1650,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1682,7 +1683,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1715,7 +1716,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1750,7 +1751,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1783,7 +1784,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1816,7 +1817,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1851,7 +1852,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1886,7 +1887,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1919,7 +1920,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1952,7 +1953,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -1987,7 +1988,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2020,7 +2021,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2053,7 +2054,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2086,7 +2087,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2121,7 +2122,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2156,7 +2157,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2189,7 +2190,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2222,7 +2223,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2255,7 +2256,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2288,7 +2289,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2323,7 +2324,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2356,7 +2357,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2389,7 +2390,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2424,7 +2425,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2457,7 +2458,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2490,7 +2491,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2525,7 +2526,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2558,7 +2559,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2591,7 +2592,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2624,7 +2625,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2659,7 +2660,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2692,7 +2693,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2725,7 +2726,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2760,7 +2761,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2793,7 +2794,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2826,7 +2827,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2861,7 +2862,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2896,7 +2897,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2931,7 +2932,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -2966,7 +2967,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3001,7 +3002,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3034,7 +3035,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3067,7 +3068,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3102,7 +3103,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3135,7 +3136,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3168,7 +3169,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3203,7 +3204,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3236,7 +3237,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3269,7 +3270,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3304,7 +3305,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3339,7 +3340,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3374,7 +3375,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3409,7 +3410,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3444,7 +3445,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3479,7 +3480,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3514,7 +3515,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 10
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3582,7 +3583,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=5
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}
@@ -3656,7 +3657,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3690,7 +3691,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3734,7 +3735,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_military_shipyard"
@@ -3745,7 +3746,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_shipyard"
@@ -3756,7 +3757,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3800,7 +3801,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_munition_plant"
@@ -3811,7 +3812,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_explosives_factory"
@@ -3822,7 +3823,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3856,7 +3857,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3895,7 +3896,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_chemical_plant"
@@ -3906,7 +3907,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3940,7 +3941,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -3984,7 +3985,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_artillery_foundry"
@@ -3995,7 +3996,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -4006,7 +4007,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4040,7 +4041,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4084,7 +4085,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_cotton_plantation"
@@ -4095,7 +4096,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_livestock_ranch"
@@ -4106,7 +4107,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4145,7 +4146,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_port"
@@ -4156,7 +4157,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4195,7 +4196,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_port"
@@ -4206,7 +4207,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4240,7 +4241,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4274,7 +4275,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4313,7 +4314,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -4324,7 +4325,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4358,7 +4359,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4397,7 +4398,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_furniture_manufactory"
@@ -4408,7 +4409,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4447,7 +4448,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_chemical_plant"
@@ -4458,7 +4459,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4517,7 +4518,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_railway"
@@ -4528,7 +4529,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_trade_center"
@@ -4539,7 +4540,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_gold_mine"
@@ -4550,7 +4551,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_silver_mine"
@@ -4561,7 +4562,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_financial_centre_pru"
@@ -4572,7 +4573,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4611,7 +4612,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_automotive_industry"
@@ -4622,7 +4623,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4656,7 +4657,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4695,7 +4696,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_sugar_plantation"
@@ -4706,7 +4707,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4750,7 +4751,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_shipyard"
@@ -4761,7 +4762,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -4772,7 +4773,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4811,7 +4812,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_art_academy"
@@ -4822,7 +4823,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4861,7 +4862,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_shipyard"
@@ -4872,7 +4873,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4906,7 +4907,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4940,7 +4941,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -4974,7 +4975,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5008,7 +5009,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5047,7 +5048,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_shipyard"
@@ -5058,7 +5059,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5097,7 +5098,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_motor_industry"
@@ -5108,7 +5109,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5152,7 +5153,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_chemical_plant"
@@ -5163,7 +5164,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_oil_rig"
@@ -5174,7 +5175,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5218,7 +5219,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_port"
@@ -5229,7 +5230,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_trade_center"
@@ -5240,7 +5241,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5279,7 +5280,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_synthetics_plant"
@@ -5290,7 +5291,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5329,7 +5330,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_rye_farm"
@@ -5340,7 +5341,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5374,7 +5375,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5413,7 +5414,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_logging_camp"
@@ -5424,7 +5425,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5458,7 +5459,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5497,7 +5498,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_synthetics_plant"
@@ -5508,7 +5509,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5547,7 +5548,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -5558,7 +5559,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5592,7 +5593,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5626,7 +5627,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5665,7 +5666,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_gold_mine"
@@ -5676,7 +5677,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5710,7 +5711,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5749,7 +5750,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_shipyard"
@@ -5760,7 +5761,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5794,7 +5795,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5833,7 +5834,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_motor_industry"
@@ -5844,7 +5845,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5883,7 +5884,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_glassworks"
@@ -5894,7 +5895,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5933,7 +5934,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_military_shipyard"
@@ -5944,7 +5945,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -5983,7 +5984,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_motor_industry"
@@ -5994,7 +5995,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6033,7 +6034,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_synthetics_plant"
@@ -6044,7 +6045,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6078,7 +6079,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6117,7 +6118,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_synthetics_plant"
@@ -6128,7 +6129,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6167,7 +6168,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_tooling_workshop"
@@ -6178,7 +6179,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6222,7 +6223,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_munition_plant"
@@ -6233,7 +6234,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_automotive_industry"
@@ -6244,7 +6245,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6283,7 +6284,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_wheat_farm"
@@ -6294,7 +6295,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6333,7 +6334,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_synthetics_plant"
@@ -6344,7 +6345,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6383,7 +6384,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_wheat_farm"
@@ -6394,7 +6395,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6433,7 +6434,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_railway"
@@ -6444,7 +6445,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6478,7 +6479,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6512,7 +6513,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6546,7 +6547,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6590,7 +6591,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_artillery_foundry"
@@ -6601,7 +6602,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_motor_industry"
@@ -6612,7 +6613,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6646,7 +6647,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6680,7 +6681,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6716,7 +6717,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6775,7 +6776,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_railway"
@@ -6786,7 +6787,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_trade_center"
@@ -6797,7 +6798,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_gold_mine"
@@ -6808,7 +6809,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_silver_mine"
@@ -6819,7 +6820,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_financial_centre_aus"
@@ -6830,7 +6831,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6864,7 +6865,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6903,7 +6904,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_paper_mill"
@@ -6914,7 +6915,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -6953,7 +6954,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_electrics_industry"
@@ -6964,7 +6965,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7003,7 +7004,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_tooling_workshop"
@@ -7014,7 +7015,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7053,7 +7054,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -7064,7 +7065,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7108,7 +7109,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_motor_industry"
@@ -7119,7 +7120,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_artillery_foundry"
@@ -7130,7 +7131,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7164,7 +7165,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7198,7 +7199,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7232,7 +7233,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7266,7 +7267,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7310,7 +7311,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_textile_mill"
@@ -7321,7 +7322,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_coal_mine"
@@ -7332,7 +7333,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7366,7 +7367,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7435,7 +7436,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_coal_mine"
@@ -7446,7 +7447,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_iron_mine"
@@ -7457,7 +7458,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_lead_mine"
@@ -7468,7 +7469,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_sulfur_mine"
@@ -7479,7 +7480,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_gold_mine"
@@ -7490,7 +7491,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_silver_mine"
@@ -7501,7 +7502,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_financial_centre_aus"
@@ -7512,7 +7513,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7546,7 +7547,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7580,7 +7581,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7614,7 +7615,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7653,7 +7654,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_textile_mill"
@@ -7664,7 +7665,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7708,7 +7709,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -7719,7 +7720,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_military_shipyard"
@@ -7730,7 +7731,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7769,7 +7770,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_military_shipyard"
@@ -7780,7 +7781,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7814,7 +7815,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7873,7 +7874,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_railway"
@@ -7884,7 +7885,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_trade_center"
@@ -7895,7 +7896,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_gold_mine"
@@ -7906,7 +7907,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_silver_mine"
@@ -7917,7 +7918,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_financial_centre_ita"
@@ -7928,7 +7929,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7962,7 +7963,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -7996,7 +7997,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8035,7 +8036,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_synthetics_plant"
@@ -8046,7 +8047,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8080,7 +8081,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8119,7 +8120,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_wheat_farm"
@@ -8130,7 +8131,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8169,7 +8170,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_food_industry"
@@ -8180,7 +8181,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8219,7 +8220,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -8230,7 +8231,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8264,7 +8265,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8303,7 +8304,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_art_academy"
@@ -8314,7 +8315,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8353,7 +8354,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_furniture_manufactory"
@@ -8364,7 +8365,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8398,7 +8399,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8442,7 +8443,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_railway"
@@ -8453,7 +8454,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_steel_mill"
@@ -8464,7 +8465,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8523,7 +8524,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_railway"
@@ -8534,7 +8535,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_trade_center"
@@ -8545,7 +8546,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_gold_mine"
@@ -8556,7 +8557,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_silver_mine"
@@ -8567,7 +8568,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_financial_centre_fra"
@@ -8578,7 +8579,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8617,7 +8618,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_textile_mill"
@@ -8628,7 +8629,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8672,7 +8673,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_munition_plant"
@@ -8683,7 +8684,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_automotive_industry"
@@ -8694,7 +8695,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8738,7 +8739,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_tooling_workshop"
@@ -8749,7 +8750,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_textile_mill"
@@ -8760,7 +8761,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8804,7 +8805,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_munition_plant"
@@ -8815,7 +8816,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_automotive_industry"
@@ -8826,7 +8827,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8860,7 +8861,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8899,7 +8900,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_textile_mill"
@@ -8910,7 +8911,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8944,7 +8945,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -8978,7 +8979,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9017,7 +9018,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_textile_mill"
@@ -9028,7 +9029,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9072,7 +9073,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_iron_mine"
@@ -9083,7 +9084,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_coal_mine"
@@ -9094,7 +9095,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9128,7 +9129,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9162,7 +9163,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9196,7 +9197,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9235,7 +9236,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_livestock_ranch"
@@ -9246,7 +9247,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9285,7 +9286,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_port"
@@ -9296,7 +9297,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9335,7 +9336,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_port"
@@ -9346,7 +9347,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9385,7 +9386,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_art_academy"
@@ -9396,7 +9397,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9435,7 +9436,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_food_industry"
@@ -9446,7 +9447,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9485,7 +9486,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 				create_building = {
 					building = "building_paper_mill"
@@ -9496,7 +9497,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9527,7 +9528,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9557,7 +9558,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9588,7 +9589,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels = 5
 						}
 					}
-					reserves = 1
+					reserves = 0
 				}
 			}
 		}
@@ -9623,7 +9624,7 @@ REPLACE_OR_CREATE:establish_bank_and_ef_compagnie = {
 							levels=10
 						}
 					}
-					reserves=1
+					reserves=0
 				}
 			}
 		}

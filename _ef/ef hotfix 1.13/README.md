@@ -1241,6 +1241,22 @@ Names in all 11 `zz_ef_cm_goods_l_*.yml`.
 Британия +23 слота от биржи, 27 компаний. Версия 2.10 (ставка ЦБ до +10 + капитализация до +10), прогон
 e0_1, 1843.1: Британия +17, Бельгия +20, США +16 — капитализация в игре выше исторической (EF.35).
 
+## Здания E&F рождаются с пустой кассой (В1.3, 3.10.2026)
+
+E&F создаёт здания скриптом с `create_building = { … reserves = 1 }` — касса 100% от максимума, деньги из
+ниоткуда. Прогон e0_2: 1.1.1837 у Британии появляется Manchester Stock Exchange (ур. 5) с кассой 2 000 000,
+1841 — Hong Kong Stock Exchange с 750 000 (тот самый «скачок кассы предприятий на Новый год» блока В).
+Решение пользователя: `reserves = 0`, касса наполняется выручкой.
+
+| файл | что |
+| --- | --- |
+| `scripted_effects/zz_ef_create_building_no_cash.txt` | 44 эффекта бирж из `09_introduction_building_lvl.txt` (`macro_facilities_fc_*`, `initialize_historic_macro_facilities_fc`, `financial_center_respawn_after_crisis`) — `REPLACE_OR_CREATE:` с `reserves = 0`; `tools/regen_ef_create_building_no_cash.py`, перезапускать после обновления E&F |
+| `scripted_effects/zz_financial_scripted_effects.txt` | `establish_bank_and_ef_compagnie` — та же замена в `tools/regen_ef_psc_copies.py` (335 мест) |
+| `scripted_effects/zz_ef_cm_bank_ownership.txt` | центробанки — руками (100 мест) |
+
+История старта (`history/buildings/00_ef_building.txt`, `reserves=1`) не тронута — это стартовый капитал.
+Биржи, которые E&F создаёт на старте через `initialize_historic_macro_facilities_fc`, тоже начинают с пустой кассой.
+
 ## Стройка: PSC (бывший компач E&F × PSC)
 
 С 02.10.2026 здесь (СТР.6). E&F держит отдельное здание частной стройки

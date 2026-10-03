@@ -1,5 +1,8 @@
 ﻿### E&F Compat -- hand-maintained (was generated; generator retired 02.09.2026, see EF.6).
 ###
+### В1.3 (3.10.2026): reserves = 0 -- the central bank is born with an empty cash
+### register, not a full one from nowhere (E&F had 1; tools/regen_ef_create_building_no_cash.py).
+###
 ### Source: the curated central bank companies in E&F's own
 ### 00_ef_companies.txt, in CENTRAL_BANK_COMPANY order, then the generated one.
 ###
@@ -130,7 +133,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoNacionArgentina
@@ -152,7 +155,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoProvincia
@@ -174,7 +177,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_OesterreichischeNationalbank
@@ -196,7 +199,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BayerischeHypothekenUndWechselBank
@@ -218,7 +221,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BanqueNationaleDeBelgique
@@ -240,7 +243,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_ImperialBankofIndia
@@ -262,7 +265,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoNacionalDeBolivia
@@ -284,7 +287,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoDoBrasil
@@ -306,7 +309,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_CanadianImperialBankOfCommerce
@@ -328,7 +331,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_DaQingBank
@@ -350,7 +353,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankHSBC
@@ -372,7 +375,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoEstado
@@ -394,7 +397,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoDeValparaiso
@@ -416,7 +419,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoRepublicaColombia
@@ -438,7 +441,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCentralDeCostaRica
@@ -460,7 +463,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoEspanolDeLaHabana
@@ -482,7 +485,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_LandmandsBanken
@@ -504,7 +507,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BanqueEgyptienne
@@ -526,7 +529,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BanqueDeFrance
@@ -548,7 +551,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankofEngland
@@ -570,7 +573,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Reichsbank
@@ -592,7 +595,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_PreussischeSeehandlung
@@ -614,7 +617,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_bankofgreec
@@ -636,7 +639,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCentralDeGuatemala
@@ -658,7 +661,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCentralDeHonduras
@@ -680,7 +683,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancaDItalia
@@ -702,7 +705,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Rothschild_Bank_ita
@@ -724,7 +727,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankOfJapan
@@ -746,7 +749,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Mitsubishiexchangehousebank
@@ -768,7 +771,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoDeMexico
@@ -790,7 +793,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_DeNederlandscheBank
@@ -812,7 +815,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_ChristianiaBank
@@ -834,7 +837,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_ColonialBankOfAustralia
@@ -856,7 +859,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_RoyalBankofCanada
@@ -878,7 +881,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoNacionalDePanama
@@ -900,7 +903,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankMelliIran
@@ -922,7 +925,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_ImperialBankofPersia
@@ -944,7 +947,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoDePortugal
@@ -966,7 +969,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoNacionalDelParaguay
@@ -988,7 +991,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankOfMontreal
@@ -1010,7 +1013,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_StateBankRussianEmpire
@@ -1032,7 +1035,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankSBoBSA
@@ -1054,7 +1057,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_CassaDiRisparmioDiTorino
@@ -1076,7 +1079,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankofSpain
@@ -1098,7 +1101,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_HandelsBanken
@@ -1120,7 +1123,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Bankenverein
@@ -1142,7 +1145,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_OttomanBank
@@ -1164,7 +1167,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCentralDelUruguay
@@ -1186,7 +1189,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCentralDeVenezuela
@@ -1208,7 +1211,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankJPMorgan
@@ -1230,7 +1233,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankGoldmanSachs
@@ -1252,7 +1255,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_ChaseBank
@@ -1274,7 +1277,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankWellsFargo
@@ -1296,7 +1299,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankAmericanExpress
@@ -1318,7 +1321,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_amsterdamschebank
@@ -1340,7 +1343,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_RotterdamscheBankvereeniging
@@ -1362,7 +1365,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_SocieteGeneraledeBelgique
@@ -1384,7 +1387,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BanqueDeBruxelles
@@ -1406,7 +1409,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoDeBilbao
@@ -1428,7 +1431,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoHispanoColonial
@@ -1450,7 +1453,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCommercialPortugues
@@ -1472,7 +1475,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Bank_Ultramarino
@@ -1494,7 +1497,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancaCommercialeItaliana
@@ -1516,7 +1519,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_LloydsBank
@@ -1538,7 +1541,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_barclaysBank
@@ -1560,7 +1563,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_NationalWestminsterBank
@@ -1582,7 +1585,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_RoyalBankOfScotland
@@ -1604,7 +1607,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Rothschild_Bank_gbr
@@ -1626,7 +1629,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankCreditLyonnais
@@ -1648,7 +1651,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_SocieteGenerale
@@ -1670,7 +1673,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BanqueDeParisEtDesPaysBas
@@ -1692,7 +1695,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Rothschild_Bank_fra
@@ -1714,7 +1717,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = saint_petersburg_international_commercial_bank
@@ -1736,7 +1739,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = russo_chinese_bank
@@ -1758,7 +1761,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_DeutscheBank
@@ -1780,7 +1783,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Rothschild_Bank_ger
@@ -1802,7 +1805,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_OesterreichischeCreditAnstalt
@@ -1824,7 +1827,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_WienerBankverein
@@ -1846,7 +1849,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_Rothschild_Bank_aus
@@ -1868,7 +1871,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_TurkishZiraatBankasi
@@ -1890,7 +1893,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BanqueImperialeOttomane
@@ -1912,7 +1915,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankTejaratPersia
@@ -1934,7 +1937,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankAngloPersian
@@ -1956,7 +1959,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_ChohungBank
@@ -1978,7 +1981,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankIBC
@@ -2000,7 +2003,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankBOCOM
@@ -2022,7 +2025,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_SumitomoBank
@@ -2044,7 +2047,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankOfIndiaCompany
@@ -2066,7 +2069,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankOfBombay
@@ -2088,7 +2091,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BankDesjardins
@@ -2110,7 +2113,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_NationalBankOfAustralia
@@ -2132,7 +2135,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_SouthAustralianBank
@@ -2154,7 +2157,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_bancodelondresmexico
@@ -2176,7 +2179,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoMercantilMexicano
@@ -2198,7 +2201,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoMercantil
@@ -2220,7 +2223,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoCommercialDoBrasil
@@ -2242,7 +2245,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoHipotecarioNacional
@@ -2264,7 +2267,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = company_BancoDeChile
@@ -2286,7 +2289,7 @@ zz_ef_cm_create_owned_bank = {
 			}
 			create_building = {
 				building = $BANK_BLDG_TYPE$
-				reserves = 1
+				reserves = 0
 				add_ownership = {
 					company = {
 						type    = zz_ef_cm_central_bank
@@ -2313,7 +2316,7 @@ zz_ef_cm_create_owned_bank = {
 			create_building = {
 				building = $BANK_BLDG_TYPE$
 				level    = $CB_SIZE$
-				reserves = 1
+				reserves = 0
 			}
 		}
 

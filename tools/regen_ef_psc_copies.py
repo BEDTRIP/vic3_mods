@@ -67,6 +67,7 @@ from pathlib import Path
 BUILDING_RE = re.compile(r"\bbuilding_ef_private_construction\b(?![A-Za-z0-9_])")
 OLD_NAME = "building_ef_private_construction"
 NEW_NAME = "building_construction_sector"
+RESERVES_RE = re.compile(r"(\breserves\s*=\s*)1\b")
 
 # E&F files copied wholesale into the hotfix, with the rename. Order is cosmetic.
 COPY_JOBS = [
@@ -331,7 +332,13 @@ def main() -> int:
     block = extract_block(read(src), key)
     block = "REPLACE_OR_CREATE:" + block.lstrip("﻿").lstrip()
     block, n = BUILDING_RE.subn(NEW_NAME, block)
-    text = BANNER.format(origin="E&F", src=src.name, old=OLD_NAME, new=NEW_NAME) + "\n" + block
+    # В1.3 (3.10): buildings created by script start with an empty register,
+    # not a full one from nowhere (as in tools/regen_ef_create_building_no_cash.py).
+    block, nres = RESERVES_RE.subn(r"\g<1>0", block)
+    print(f"[В1.3] {key}: reserves = 1 -> 0 at {nres} site(s)")
+    text = (BANNER.format(origin="E&F", src=src.name, old=OLD_NAME, new=NEW_NAME)
+            + "# В1.3: and reserves = 1 -> reserves = 0 (empty cash register at creation).\n"
+            + "\n" + block)
     jobs.append((dst_rel, src, "E&F", text, n, False))
 
     for lang_dir in sorted(p for p in (ef / "localization").iterdir() if p.is_dir()):
