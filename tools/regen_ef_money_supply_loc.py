@@ -280,7 +280,11 @@ FLOWS = [
     # GetInvestmentIncomeTrend is a smoothed trend and did not match the pool; GetInvestmentFundTrend is the STOCK)
     (B, K, "[concept_budget_investment_income]: на стройку", "[concept_budget_investment_income]: for construction",
      sv_("zz_ef_v_f_transfer"), None),
-    (X, K, "[concept_budget_minting] — новые деньги движка", "[concept_budget_minting] — new engine money",
+    # minting through the CB (user 3.10): new money is issued by the CB and goes on to the treasury at once;
+    # for the bridge (ext_expr) it stays an outside budget line
+    (X, C, "выпуск: [concept_budget_minting] — новые деньги движка", "issue: [concept_budget_minting] — new engine money",
+     gt("GetMintingTrend"), C),
+    (C, K, "[concept_budget_minting] — выпуск ЦБ в казну", "[concept_budget_minting] — the CB's issue to the treasury",
      gt("GetMintingTrend"), None),
     # vanilla pays the interest to the pops whose buildings' cash reserves back the loans
     (K, N, "[concept_budget_interest] — держателям долга (владельцам резервов зданий)",
@@ -500,12 +504,15 @@ def abr_expr():
     return sum_expr(ins, outs)
 
 
+MINTING = ("gt", "GetMintingTrend")   # passes through the CB card, still outside for the bridge
+
+
 def ext_expr():
     """The budget's lines outside the accounts (outside + abroad), in - out, a week."""
     ins, outs = [], []
     for f in FLOWS:
         frm, to, _, _, v, _ = f
-        if to == K and frm in (X, Z):
+        if to == K and (frm in (X, Z) or v == MINTING):
             ins.append(expr(v))
         elif frm == K and to in (X, Z):
             outs.append(expr(v))
