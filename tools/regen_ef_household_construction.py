@@ -90,6 +90,10 @@ SECTOR_INPUTS = {
 }
 COST = {"wood": 20, "fabric": 20, "iron": 40, "tools": 40, "glass": 40, "steel": 50, "explosives": 50,
         "wood_construction": 130, "iron_construction": 92, "steel_construction": 70, "arc_welded_construction": 70}
+PSC_GOODS = REPO.parent / "vic3_mods_out/PSC/common/goods/PSC_goods.txt"
+TRADE_QUANTITY = 1     # units per trade route level (vanilla wood 10, iron 5)
+TRADE_CONVOY = 3       # convoy cost multiplier (vanilla max 1.5)
+OUT_GOODS = HOTFIX / "common/goods/zz_ef_construction_goods_trade.txt"
 UNLOCK = {"arc_welded_construction": "arc_welding"}  # PSC: pm_arc_welded_buildings
 VANILLA_URBAN =REPO.parent / "vic3_mods_out/.vanillaVIC3/common/production_methods/06_urban_center.txt"
 
@@ -232,6 +236,25 @@ def build_pms() -> str:
     return "\n".join(out)
 
 
+def build_goods() -> str:
+    """PSC's four construction goods: market goods instead of state-local ones (the user, 2026-10-03:
+    "they became a real market -- tradeable, but as hard to transport as possible")."""
+    src = V.read(PSC_GOODS)
+    out = [HEAD + f"""### PSC defines the four construction goods `local = yes` (each state its own market, like services).
+### Since households and cities buy them (СТР.3) they are market goods: a state without a sector buys from
+### the rest of its market. Hard to move between markets: the highest convoy cost in the set
+### ({TRADE_CONVOY}; vanilla goes up to 1.5, wood 0.15) and the smallest lot per trade route level
+### ({TRADE_QUANTITY}; wood 10, iron 5). PSC's own fields otherwise. Re-diff on a PSC update.
+"""]
+    for g in ("wood_construction", "iron_construction", "steel_construction", "arc_welded_construction"):
+        decl, body = V.entry(src, g)
+        assert re.search(r"local\s*=\s*yes", body), f"PSC's {g} is no longer local -- re-read СТР.3"
+        lines = [l for l in body.split("\n") if not re.match(r"\s*local\s*=", l) and l.strip()]
+        lines += [f"\ttraded_quantity = {TRADE_QUANTITY}", f"\tconvoy_cost_multiplier = {TRADE_CONVOY}"]
+        out.append(f"REPLACE:{g} = {{\n" + "\n".join(lines) + "\n}\n")
+    return "\n".join(out)
+
+
 def build_loc(lang: str) -> str:
     lines = [f"l_{lang}:"] + [f' {k}:0 "{v}"' for k, v in LOC[lang].items()]
     return "\n".join(lines) + "\n"
@@ -258,6 +281,7 @@ def main() -> int:
         (OUT_NEED, build_need(), True),   # Cyrillic in the header comments: BOM
         (OUT_PKG, build_packages(vals), True),
         (OUT_PM, build_pms(), True),
+        (OUT_GOODS, build_goods(), True),
     ]
     for lang in LOC:
         files.append((HOTFIX / f"localization/{lang}/zz_ef_household_construction_l_{lang}.yml", build_loc(lang), True))
