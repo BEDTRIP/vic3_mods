@@ -137,24 +137,25 @@ def main_text(lang, c):
         f"{L['title']}:",
         f"{L['total']}: #p {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')}",
         f" {L['m0']}: #T {money('zz_ef_agg_m0')}#! — {ratio(0)} ({dyn(0)})",
-        f"  -> {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#! "
+        f"  -> {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#!{mark('calc', ru)} "
         f"({sv('zz_ef_pop_savings_week', 'D+=')}{cur}; "
         + L["savall"].format(money("zz_ef_pop_savings"), money("zz_ef_pop_deposits")) + ")",
         f" {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} ({dyn(1)})",
-        f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#! ({delta('zz_ef_v_d_buildings')}; "
+        f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} ({delta('zz_ef_v_d_buildings')}; "
         f"{L['tc']} {money('zz_ef_tc_cash')})",
         f" {L['m2']}: #T {money('zz_ef_agg_m2')}#!{ing('zz_ef_agg_m2_gold')} — {ratio(2)} ({dyn(2)})",
-        f"  -> {tt('zz_ef_ms_tt_banks', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!",
+        f"  -> {tt('zz_ef_ms_tt_banks', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!{mark('mod', ru)}",
         f" {L['m3']}: #T {money('zz_ef_agg_m3')}#! ({dyn(3)})",
-        f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#! ({delta('zz_ef_v_d_abroad')}; "
+        f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#!{mark('ef', ru)} ({delta('zz_ef_v_d_abroad')}; "
         + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
         f"{L['out']}",
-        f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#! ({delta('zz_ef_v_d_treasury')})",
-        f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#! ({delta('zz_ef_v_d_pool')}; "
+        f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#!{mark('eng', ru)} ({delta('zz_ef_v_d_treasury')})",
+        f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#!{mark('eng', ru)} ({delta('zz_ef_v_d_pool')}; "
         + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt")) + ")",
-        f"  -> {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#! ({delta('zz_ef_v_d_cbm')}; "
+        f"  -> {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#!{mark('mod', ru)} ({delta('zz_ef_v_d_cbm')}; "
         + L["cbf"].format("", sv("zz_ef_cb_cover", "%0"), sv("zz_ef_cb_cover_credit_mult", "%0"),
                           money("zz_ef_bank_cb_debt")) + ")",
+        SRC_LEGEND[0 if ru else 1],
         f"{L['circ']}.",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
             sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%'), sv('zz_ef_price_index', '1')) + ")",
@@ -601,6 +602,48 @@ OTHER_LAB = {
 }
 CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
 
+# UI.9 step 1 (3.10, the user: "I cannot check which information is true"): every number in a card gets
+# a grey mark of where it comes from.
+#   eng  -- read from the engine as is (budget lines, cash of buildings, the pool's in/out);
+#   mod  -- money the mod moved itself (deposits, credit, Hume's metal, coinage) -- real, but our rules;
+#   calc -- derived from other numbers (money conservation, a residual, a revaluation);
+#   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
+#   ef   -- an E&F variable (its bonds).
+SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
+SRC_MOD = {"zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+           "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
+           "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
+SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
+            "zz_ef_v_f_cb_rescale", "zz_ef_tr_to_cb"}
+SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
+SRC_LAB = {"eng": ("дв", "eng"), "mod": ("мод", "mod"), "calc": ("расч", "calc"), "est": ("оц", "est"),
+           "ef": ("E&F", "E&F")}
+# the account's own change: engine stocks, our CB metal, E&F's bonds
+SRC_ACC = {"treasury": "eng", "buildings": "eng", "banks": "eng", "cb": "mod", "abroad": "ef"}
+SRC_LEGEND = ("#grey Метки: дв — число движка как есть (бюджет, кассы, пул); мод — деньги, которые перевёл мод (вклады, "
+              "кредиты, металл); расч — выведено из других чисел (сохранение денег, остаток, переоценка); оц — оценка "
+              "(зарплаты = ВВП / 52); E&F — переменная E&F (облигации).#!",
+              "#grey Marks: eng — the engine's number as is (budget, cash, pool); mod — money the mod moved (deposits, "
+              "credit, metal); calc — derived from other numbers (money conservation, residual, revaluation); est — "
+              "an estimate (wages = GDP / 52); E&F — an E&F variable (bonds).#!")
+
+
+def src_of(v):
+    kind = v[0]
+    if kind in ("gt", "gv"):
+        return "eng"
+    if kind in ("expr", "closing"):
+        return "est"
+    name = v[1]
+    for key, names in (("eng", SRC_ENGINE), ("mod", SRC_MOD), ("calc", SRC_CALC), ("ef", SRC_EF)):
+        if name in names:
+            return key
+    raise SystemExit(f"UI.9: no source mark for {name} -- add it to SRC_*")
+
+
+def mark(key, ru):
+    return f" #grey {SRC_LAB[key][0 if ru else 1]}#!"
+
 
 def flow_key(v):
     if v[0] == "expr":
@@ -709,7 +752,7 @@ def nested(lang):
     for acc in ACC_ORDER:
         flows = card_flows(acc)
         head = TITLES[acc][k] + (" за неделю" if ru else " this week")
-        L = [f"#b {head}: {delta(DELTA[acc])}#!" if acc in DELTA else f"#b {head}#!"]
+        L = [f"#b {head}: {delta(DELTA[acc])}#!{mark(SRC_ACC[acc], ru)}" if acc in DELTA else f"#b {head}#!"]
         resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA else None
         fixed_resid = "Country.MakeScope.ScriptValue('zz_ef_other_treasury_rest')" if acc == K else None
         n = 0
@@ -727,16 +770,16 @@ def nested(lang):
                 # the same for the CB: E&F's treasury moves with the CB do not touch its metal
                 counts = (acc != Z or f[4][1] in CLAIM_VALUES) and not (acc == C and f[4][1] == "zz_ef_tr_to_cb")
                 if dr == "in":
-                    L.append(f"  ← #P +[{e}|D] {cur}#! {lab}")
+                    L.append(f"  ← #P +[{e}|D] {cur}#!{mark(src_of(f[4]), ru)} {lab}")
                     if resid and counts:
                         resid = f"Subtract_CFixedPoint({resid}, {e})"
                 else:
-                    L.append(f"  → #N −[{e}|D] {cur}#! {lab}")
+                    L.append(f"  → #N −[{e}|D] {cur}#!{mark(src_of(f[4]), ru)} {lab}")
                     if resid and counts:
                         resid = f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({e}))"
             if other == X and resid:
                 lab_o = OTHER_LAB.get(acc, ("прочее", "other"))[0 if ru else 1]
-                L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur} {lab_o}")
+                L.append(f"  ↔ [{fixed_resid or resid}|D+=] {cur}{mark('calc', ru)} {lab_o}")
                 RESID[acc] = fixed_resid or resid
             if other == X and acc == K:
                 bin_, bout = ("Country.MakeScope.ScriptValue('zz_ef_total_income_week')",
@@ -752,7 +795,7 @@ def nested(lang):
                          + f"[{bout}|D+=] {cur}")
         if not n:
             L.append(none)
-        L += ["", NOTES[acc][k]]
+        L += ["", NOTES[acc][k], SRC_LEGEND[k]]
         if acc == B:
             L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель {money('zz_ef_cb_credit_target')} = "
                       f"ВВП × {sv('zz_ef_cb_credit_share', '%0')} от 50% при ставке {sv('zz_ef_money_rate', '%1')}; "
