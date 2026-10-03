@@ -718,11 +718,28 @@ zz_ef_dep_interest = {
 		min = 0
 	}
 }
+# В1.2 (3.10): the pool's unexplained loss is companies buying building
+# levels from aristocrats and capitalists (manors, financial districts) at the
+# privatization price -- the engine's company privatization of privately
+# owned levels: VC's PRIVATIZATION_PER_LEVEL_COST 150 x MIN_FAKE_CONSTRUCTION_
+# COST 100 = 15 000 a level. Saves of the night-Г run 4 (1839.1 -> 1841.1,
+# levels moved without the building changing): 130-190 levels a half-year in
+# the world go from manors / financial districts / foreign pops to companies,
+# the state sells 6-49. The engine pays the sellers nothing (pops hold no
+# money, manors have no cash): the sellers get it in their savings -- the
+# receiver of money the engine loses. The buyer's country's savings (a seller
+# abroad -- rare -- is not told apart).
+zz_ef_v_f_buyout = {
+	value = zz_ef_v_f_pool_other
+	max = 0
+	multiply = -1
+}
 # Change of the savings at this week's receive: what dropped out of the
-# engine's money + deposit interest.
+# engine's money + deposit interest + the levels sold to companies.
 zz_ef_pop_savings_week = {
 	value = zz_ef_v_f_inflow
 	add = zz_ef_v_f_dep_int
+	add = zz_ef_v_f_buyout
 }
 zz_ef_v_f_inflow = {
 	value = 0

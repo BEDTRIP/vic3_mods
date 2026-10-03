@@ -428,6 +428,15 @@ zz_ef_pop_savings_step = {
 		set_variable = { name = zz_ef_f_inflow value = 0 }
 	}
 	change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_inflow }
+	# В1.2 (3.10): levels sold to companies -- the price to the sellers' savings
+	# (zz_ef_v_f_buyout); the pool's loss stays out of the leak.
+	if = {
+		limit = {
+			has_variable = zz_ef_weeks_run
+			var:zz_ef_weeks_run >= 3
+		}
+		change_variable = { name = zz_ef_pop_savings add = zz_ef_v_f_buyout }
+	}
 
 	set_variable = { name = zz_ef_f_dep_in value = zz_ef_dep_in }
 	set_variable = { name = zz_ef_f_dep_out value = zz_ef_dep_out }

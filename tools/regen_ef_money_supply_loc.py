@@ -346,11 +346,14 @@ FLOWS = [
     (K, Z, "E&F: казна покупает облигации других стран", "E&F: the treasury buys other countries' bonds",
      svp("zz_ef_v_d_tbonds"), None),
     (Z, K, "E&F: облигации казны погашены", "E&F: the treasury's bonds repaid", svn("zz_ef_v_d_tbonds"), None),
-    # the pool's unexplained change (EF.48 item 2): foreign investment from the pool
-    (B, X, "выкуп уровней зданий по цене приватизации (15 000 за уровень) — деньги выходят из обращения "
-           "(необъяснённый остаток пула)",
-     "building levels bought at the privatization price (15 000 a level) — money leaves circulation (the "
-     "pool's unexplained change)", svn("zz_ef_v_f_pool_other"), None),
+    # the pool's unexplained loss (EF.48 item 2) = companies buying levels from aristocrats and capitalists at the
+    # privatization price (В1.2, 3.10): the engine pays the sellers nothing, the model puts it in their savings
+    (B, N, "компании выкупают уровни зданий у аристократов и капиталистов (цена приватизации, 15 000 за уровень) — "
+           "деньги продавцам",
+     "companies buy building levels from aristocrats and capitalists (the privatization price, 15 000 a level) — "
+     "money to the sellers", svn("zz_ef_v_f_pool_other"), None),
+    (N, X, "в накопления: выручка продавцов уровней", "into savings: the level sellers' proceeds",
+     sv_("zz_ef_v_f_buyout"), N),
     (X, B, "необъяснённый приход в пул", "the pool's unexplained gain", svp("zz_ef_v_f_pool_other"), None),
 ]
 
@@ -710,7 +713,8 @@ def nested(lang):
                      (f"Pops' income ≈ GDP / 52 = {money('zz_ef_gdp_week')}."))
             L.append((f"#b Накопления: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} за "
                       f"неделю) — во вкладах {money('zz_ef_pop_deposits')}, на руках {money('zz_ef_pop_cash')}. "
-                      f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, проценты по вкладам "
+                      f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, продажа уровней компаниям "
+                      f"{sv('zz_ef_v_f_buyout', 'D+=')}{cur}, проценты по вкладам "
                       f"{sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; внесено {money('zz_ef_v_f_dep_in')}, снято "
                       f"{money('zz_ef_v_f_dep_out')}. Норма наличных на руках — {money('zz_ef_pop_cash_norm')} "
                       f"({sv('zz_ef_cash_norm_gdp', '%0')} ВВП: 20% при ставке по вкладам 0%, 12% при 3%, не ниже 6%); "
@@ -720,7 +724,8 @@ def nested(lang):
                      if ru else
                      (f"#b Savings: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} this "
                       f"week) — in deposits {money('zz_ef_pop_deposits')}, at hand {money('zz_ef_pop_cash')}. This "
-                      f"week: dropped out of the engine's money {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, deposit "
+                      f"week: dropped out of the engine's money {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, levels sold to companies "
+                      f"{sv('zz_ef_v_f_buyout', 'D+=')}{cur}, deposit "
                       f"interest {sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; deposited {money('zz_ef_v_f_dep_in')}, "
                       f"withdrawn {money('zz_ef_v_f_dep_out')}. Cash norm at hand {money('zz_ef_pop_cash_norm')} "
                       f"({sv('zz_ef_cash_norm_gdp', '%0')} of GDP: 20% at a 0% deposit rate, 12% at 3%, at least 6%); "
