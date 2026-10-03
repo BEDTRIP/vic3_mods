@@ -583,10 +583,8 @@ RESID = {}
 OTHER_LAB = {
     "cb": ("прочее — операции E&F с металлом ЦБ (закупки металла, валютные сделки)",
            "other — E&F's operations with the CB's metal (metal purchases, currency deals)"),
-    "buildings": ("прочее — сглаженные тренды бюджета против недельного счёта и надбавка на иждивенцев "
-                  "сверх кредита (разбирается, UI.7)",
-                  "other — smoothed budget trends against the weekly ledger and the dependents' surcharge "
-                  "beyond the credit (under study, UI.7)"),
+    "buildings": ("прочее — сглаженные тренды бюджета против недельного изменения кассы",
+                  "other — smoothed budget trends against the weekly change of the cash"),
 }
 CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
 

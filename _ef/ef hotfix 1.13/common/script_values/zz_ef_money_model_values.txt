@@ -563,9 +563,13 @@ zz_ef_pool_other_week = {
 # private banks bought (they left the pool for abroad), minus the pool's own
 # unexplained change and the trade centres' cash (both abroad, items 1-2).
 # What is left is the treasury and the businesses' cash only. The consumer
-# credit paid to pops last week (through their dependents' income, item 4)
-# came from the pool: what of it is not spent is savings, what is spent shows
-# up in the businesses' cash -- so it is taken out here.
+# credit (item 4) is NOT taken out (UI.7б, 3.10): the pool loses it and the
+# engine pays pops the same as the dependents' surcharge; what pops spend comes
+# back into business cash, both inside M2 -- the change of M2 is minus the
+# unspent part, which is exactly the savings. Taking it out (until 3.10)
+# counted it into savings twice: run e0_6, Switzerland -- the business card's
+# "other" equal to last week's cc_net to the unit in 115 weeks of 119; pops'
+# savings grew by the whole consumer credit every week on top.
 zz_ef_leak_week = {
 	value = zz_ef_v_d_m2
 	subtract = zz_ef_v_f_ext
@@ -577,7 +581,6 @@ zz_ef_leak_week = {
 	add = zz_ef_v_w_dep_int
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
-	subtract = zz_ef_v_w_cc_net
 	subtract = zz_ef_tr_other_net
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
@@ -2628,7 +2631,7 @@ zz_ef_priv_levels = {
 # В1.3 probe (3.10): 1 = on (zz_ef_probe_newyear_cash, the EFJ log lines).
 zz_ef_probe_on = 1
 # UI.7б probe (3.10): 1 = on (zz_ef_probe_pop_income, the EFD log lines).
-zz_ef_probe_pop_on = 1
+zz_ef_probe_pop_on = 0
 # building scope: the cash now, level
 zz_ef_probe_cash_now = {
 	value = cash_reserves_available

@@ -133,7 +133,7 @@
  zz_ef_ms_buildings_24:0 "  ← #P +$zz_ef_ms_x_expr_24$ $zz_ef_ms_cur$#! содержание военных кораблей"
  zz_ef_ms_buildings_25:0 "  ← #P +$zz_ef_ms_x_expr_25$ $zz_ef_ms_cur$#! маршруты поставок"
  zz_ef_ms_buildings_26:0 "5 Вне счетов"
- zz_ef_ms_buildings_27:0 "  ↔ $zz_ef_ms_x_v_d_buildings_rest$ $zz_ef_ms_cur$ прочее — сглаженные тренды бюджета против недельного счёта и надбавка на иждивенцев сверх кредита (разбирается, UI.7)"
+ zz_ef_ms_buildings_27:0 "  ↔ $zz_ef_ms_x_v_d_buildings_rest$ $zz_ef_ms_cur$ прочее — сглаженные тренды бюджета против недельного изменения кассы"
  zz_ef_ms_buildings_28:0 "Денежные резервы всех зданий: кредитный лимит − база − доля ВВП (COUNTRY_MIN_CREDIT_*). Прочее — закупки у заграницы, налоги с прибыли, разница оценки зарплат и дивидендов."
 
  # ---- banks ----

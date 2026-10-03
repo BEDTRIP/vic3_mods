@@ -133,7 +133,7 @@
  zz_ef_ms_buildings_24:0 "  ← #P +$zz_ef_ms_x_expr_24$ $zz_ef_ms_cur$#! warship upkeep"
  zz_ef_ms_buildings_25:0 "  ← #P +$zz_ef_ms_x_expr_25$ $zz_ef_ms_cur$#! supply routes"
  zz_ef_ms_buildings_26:0 "5 Outside the accounts"
- zz_ef_ms_buildings_27:0 "  ↔ $zz_ef_ms_x_v_d_buildings_rest$ $zz_ef_ms_cur$ other — smoothed budget trends against the weekly ledger and the dependents' surcharge beyond the credit (under study, UI.7)"
+ zz_ef_ms_buildings_27:0 "  ↔ $zz_ef_ms_x_v_d_buildings_rest$ $zz_ef_ms_cur$ other — smoothed budget trends against the weekly change of the cash"
  zz_ef_ms_buildings_28:0 "Cash reserves of all buildings: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*). Other: purchases abroad, profit taxes, the error of the wages-and-dividends estimate."
 
  # ---- banks ----
