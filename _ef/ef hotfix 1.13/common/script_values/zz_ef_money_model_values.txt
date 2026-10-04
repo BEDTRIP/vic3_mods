@@ -2138,6 +2138,48 @@ zz_ef_bop_financial = {
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
 }
+# Е.3–Е.4 (5.10, Д.1): the same balance in two groups for reading -- "+ received" and "− paid out", each item by its
+# sign; goods trade as exports (+) and imports (−) (imports recorded at the step, exports = net + imports so the
+# pair adds up to the net); what the parts miss of the net flow -- "other", by its sign. received − paid = the net.
+zz_ef_v_f_imp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_imp } value = var:zz_ef_f_imp }
+}
+zz_ef_bop_exp = {
+	value = zz_ef_v_f_trade
+	add = zz_ef_v_f_imp
+}
+zz_ef_bop_other = {
+	value = zz_ef_v_f_ext_net
+	subtract = zz_ef_bop_current
+	subtract = zz_ef_bop_financial
+}
+zz_ef_bop_div_in = { value = zz_ef_v_f_div min = 0 }
+zz_ef_bop_div_out = { value = 0 subtract = zz_ef_v_f_div min = 0 }
+zz_ef_bop_int_in = { value = zz_ef_v_f_aint min = 0 }
+zz_ef_bop_int_out = { value = 0 subtract = zz_ef_v_f_aint min = 0 }
+zz_ef_bop_sec_in = { value = zz_ef_bop_secondary min = 0 }
+zz_ef_bop_sec_out = { value = 0 subtract = zz_ef_bop_secondary min = 0 }
+zz_ef_bop_fin_in = { value = zz_ef_bop_financial min = 0 }
+zz_ef_bop_fin_out = { value = 0 subtract = zz_ef_bop_financial min = 0 }
+zz_ef_bop_oth_in = { value = zz_ef_bop_other min = 0 }
+zz_ef_bop_oth_out = { value = 0 subtract = zz_ef_bop_other min = 0 }
+zz_ef_bop_in_total = {
+	value = zz_ef_bop_exp
+	add = zz_ef_bop_div_in
+	add = zz_ef_bop_int_in
+	add = zz_ef_bop_sec_in
+	add = zz_ef_bop_fin_in
+	add = zz_ef_bop_oth_in
+}
+zz_ef_bop_out_total = {
+	value = zz_ef_v_f_imp
+	add = zz_ef_bop_div_out
+	add = zz_ef_bop_int_out
+	add = zz_ef_bop_sec_out
+	add = zz_ef_bop_fin_out
+	add = zz_ef_bop_oth_out
+}
 zz_ef_abroad_net = {
 	value = zz_ef_foreign_assets
 	add = zz_ef_fx_money

@@ -466,6 +466,8 @@ zz_ef_money_hook_receive = {
 		# night 2, item 4: trade and dividends abroad in money, for the leak
 		# and Hume (values file)
 		set_variable = { name = zz_ef_f_trade value = zz_ef_trade_net_week }
+		# Е.3 (5.10): imports of the week for the balance of payments' "paid out" group (exports = net + imports)
+		set_variable = { name = zz_ef_f_imp value = zz_ef_trade_imports_week }
 		# В3.3: a customs union member's account, for the market owner's side
 		if = {
 			limit = { zz_ef_cu_member = yes }

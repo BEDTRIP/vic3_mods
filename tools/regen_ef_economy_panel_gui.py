@@ -81,33 +81,11 @@ def _sv(n):
     return "[GetPlayer.MakeScope.ScriptValue('" + n + "')|D+=] [GetPlayer.GetCustom('currency_symbol')]"
 
 
-# П.17 (4.10): the balance of payments of the week (the same numbers as the money tooltip's "external sector" card)
-BOP_RU = "\\n".join([
-    "#b Платёжный баланс за неделю#!",
-    "Текущий счёт: " + _sv("zz_ef_bop_current"),
-    "  торговля товарами " + _sv("zz_ef_v_f_trade"),
-    "  первичные доходы (дивиденды, проценты) " + _sv("zz_ef_bop_primary"),
-    "  вторичные доходы (статьи бюджета с заграницей) " + _sv("zz_ef_bop_secondary"),
-    "Финансовый счёт (облигации других стран): " + _sv("zz_ef_bop_financial"),
-    "#b Сальдо " + _sv("zz_ef_v_f_ext_net") + "#! → мировой клиринг",
-    "Резервные активы: " + _sv("zz_ef_v_f_clr_reserves_money") + " (металл " + _sv("zz_ef_v_f_clr_metal_money")
-    + ", валюта " + _sv("zz_ef_v_f_clr_fx_money") + ")",
-    "  не сведено клирингом " + _sv("zz_ef_v_f_clr_unsettled"),
-    "#b Чистая международная позиция " + _sv("zz_ef_abroad_net") + "#!",
-])
-BOP_EN = "\\n".join([
-    "#b Balance of payments this week#!",
-    "Current account: " + _sv("zz_ef_bop_current"),
-    "  goods trade " + _sv("zz_ef_v_f_trade"),
-    "  primary income (dividends, interest) " + _sv("zz_ef_bop_primary"),
-    "  secondary income (budget lines with abroad) " + _sv("zz_ef_bop_secondary"),
-    "Financial account (other countries' bonds): " + _sv("zz_ef_bop_financial"),
-    "#b Balance " + _sv("zz_ef_v_f_ext_net") + "#! → the world clearing",
-    "Reserve assets: " + _sv("zz_ef_v_f_clr_reserves_money") + " (metal " + _sv("zz_ef_v_f_clr_metal_money")
-    + ", currency " + _sv("zz_ef_v_f_clr_fx_money") + ")",
-    "  not settled by the clearing " + _sv("zz_ef_v_f_clr_unsettled"),
-    "#b Net international position " + _sv("zz_ef_abroad_net") + "#!",
-])
+# П.17 (4.10): the balance of payments of the week (the same numbers as the money tooltip's "external sector" card);
+# Е.3–Е.4 (5.10, Д.1): two groups as in the card (regen_ef_money_supply_loc.bop_lines), the budget lines -- card only
+from regen_ef_money_supply_loc import bop_lines  # noqa: E402
+BOP_RU = "\\n".join(bop_lines(True, "GetPlayer") + ["#b Чистая международная позиция " + _sv("zz_ef_abroad_net") + "#!"])
+BOP_EN = "\\n".join(bop_lines(False, "GetPlayer") + ["#b Net international position " + _sv("zz_ef_abroad_net") + "#!"])
 
 LOC = {
     "russian": {

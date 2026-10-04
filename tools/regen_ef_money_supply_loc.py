@@ -83,6 +83,63 @@ def ctx(c):
     return cur, sv, money, delta, tt
 
 
+def bop_lines(ru, c):
+    """Е.3–Е.4 (5.10, Д.1): the week's balance of payments in two groups -- green "+" received, red "−" paid out --
+    and one line of what it moves; shared by the 'external sector' card and Budget -> Economy (regen_ef_economy_panel_gui)."""
+    cur, sv, money, delta, tt = ctx(c)
+
+    def p(name, lab):
+        return f"  #P +{sv(name)} {cur}#! {lab}"
+
+    def n(name, lab):
+        return f"  #N −{sv(name)} {cur}#! {lab}"
+    if ru:
+        return [
+            "#b Платёжный баланс за неделю#!",
+            f"#P Получено / у нас: +{sv('zz_ef_bop_in_total')} {cur}#!",
+            p("zz_ef_bop_exp", "экспорт товаров (по ценам рынка)"),
+            p("zz_ef_bop_div_in", "дивиденды из-за рубежа (оценка)"),
+            p("zz_ef_bop_int_in", "проценты по облигациям"),
+            p("zz_ef_bop_sec_in", "статьи бюджета с заграницей"),
+            p("zz_ef_bop_fin_in", "продано / погашено облигаций других стран"),
+            p("zz_ef_bop_oth_in", "прочее"),
+            f"#N Отдано / мы должны: −{sv('zz_ef_bop_out_total')} {cur}#!",
+            n("zz_ef_v_f_imp", "импорт товаров (по ценам рынка)"),
+            n("zz_ef_bop_div_out", "дивиденды за рубеж (оценка)"),
+            n("zz_ef_bop_int_out", "проценты по облигациям"),
+            n("zz_ef_bop_sec_out", "статьи бюджета с заграницей"),
+            n("zz_ef_bop_fin_out", "куплено облигаций других стран"),
+            n("zz_ef_bop_oth_out", "прочее"),
+            f"#b Сальдо {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#!",
+            f"На что влияет: сальдо → мировой клиринг → резервы ЦБ {sv('zz_ef_v_f_clr_reserves_money', 'D+=')} {cur} "
+            f"(металл {sv('zz_ef_v_f_clr_metal_money', 'D+=')}, валюта {sv('zz_ef_v_f_clr_fx_money', 'D+=')}) → покрытие "
+            f"{sv('zz_ef_cb_cover', '%0')} → курс (сила к эталону {sv('zz_ef_currency_strength', '2')})",
+            f"  не сведено клирингом {sv('zz_ef_v_f_clr_unsettled', 'D+=')} {cur} — платежи без оплаты",
+        ]
+    return [
+        "#b Balance of payments this week#!",
+        f"#P Received / ours: +{sv('zz_ef_bop_in_total')} {cur}#!",
+        p("zz_ef_bop_exp", "goods exports (market prices)"),
+        p("zz_ef_bop_div_in", "dividends from abroad (estimate)"),
+        p("zz_ef_bop_int_in", "bond interest"),
+        p("zz_ef_bop_sec_in", "budget lines with abroad"),
+        p("zz_ef_bop_fin_in", "other countries' bonds sold / repaid"),
+        p("zz_ef_bop_oth_in", "other"),
+        f"#N Paid out / we owe: −{sv('zz_ef_bop_out_total')} {cur}#!",
+        n("zz_ef_v_f_imp", "goods imports (market prices)"),
+        n("zz_ef_bop_div_out", "dividends abroad (estimate)"),
+        n("zz_ef_bop_int_out", "bond interest"),
+        n("zz_ef_bop_sec_out", "budget lines with abroad"),
+        n("zz_ef_bop_fin_out", "other countries' bonds bought"),
+        n("zz_ef_bop_oth_out", "other"),
+        f"#b Balance {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#!",
+        f"What it moves: balance → the world clearing → CB reserves {sv('zz_ef_v_f_clr_reserves_money', 'D+=')} {cur} "
+        f"(metal {sv('zz_ef_v_f_clr_metal_money', 'D+=')}, currency {sv('zz_ef_v_f_clr_fx_money', 'D+=')}) → cover "
+        f"{sv('zz_ef_cb_cover', '%0')} → the rate (strength to the reference {sv('zz_ef_currency_strength', '2')})",
+        f"  not settled by the clearing {sv('zz_ef_v_f_clr_unsettled', 'D+=')} {cur} — payments without settlement",
+    ]
+
+
 def main_text(lang, c):
     cur, sv, money, delta, tt = ctx(c)
     gold = "@gold!"
@@ -911,36 +968,15 @@ def nested(lang):
             # its standard parts; current + financial = the net flow the step records; the clearing settles it in
             # reserve assets; what it did not settle is the BoP's errors and omissions
             if ru:
-                L += [f"#b Платёжный баланс за неделю#!",
-                      f"#b Текущий счёт {sv('zz_ef_bop_current', 'D+=')} {cur}#!",
-                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} торговля товарами: экспорт − импорт по ценам рынка",
-                      f"  {sv('zz_ef_bop_primary', 'D+=')} {cur} первичные доходы: дивиденды из-за рубежа (оценка) "
-                      f"{sv('zz_ef_v_f_div', 'D+=')}, проценты по облигациям {sv('zz_ef_v_f_aint', 'D+=')}",
-                      f"  {sv('zz_ef_bop_secondary', 'D+=')} {cur} вторичные доходы: статьи бюджета с заграницей (ниже)",
-                      f"#b Финансовый счёт {sv('zz_ef_bop_financial', 'D+=')} {cur}#! — облигации других стран: банки "
-                      f"{sv('zz_ef_v_d_bonds_neg', 'D+=')}, казна {sv('zz_ef_v_d_tbonds_neg', 'D+=')}",
-                      f"#b Сальдо {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → мировой клиринг",
-                      f"#b Резервные активы {sv('zz_ef_v_f_clr_reserves_money', 'D+=')} {cur}#!: металл ЦБ "
-                      f"{sv('zz_ef_v_f_clr_metal_money', 'D+=')}, валюта {sv('zz_ef_v_f_clr_fx_money', 'D+=')}",
-                      f"  не сведено клирингом (ошибки и пропуски) {sv('zz_ef_v_f_clr_unsettled', 'D+=')} {cur}",
+                # Е.3–Е.4 (5.10, Д.1): two groups and what it moves (bop_lines); the budget lines -- only here
+                L += bop_lines(True, "Country") + [
                       "#grey Статьи бюджета с заграницей сейчас (+ в страну, − за рубеж):#!"]
                 clr = [f"Клиринг: при оттоке металлом платится {sv('zz_ef_clr_metal_share', '%0')} — по доверию к валюте "
                        f"(сила к эталону {sv('zz_ef_currency_strength', '2')}), остальное нашей валютой; мир: получатели берут "
                        f"{sv('zz_ef_clr_ratio_v', '%0')} притока, плательщики платят {sv('zz_ef_clr_pay_ratio_v', '%0')}; "
                        f"в клиринге {sv('zz_ef_clr_pot_value')} @gold!"]
             else:
-                L += [f"#b Balance of payments this week#!",
-                      f"#b Current account {sv('zz_ef_bop_current', 'D+=')} {cur}#!",
-                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} goods trade: exports − imports at market prices",
-                      f"  {sv('zz_ef_bop_primary', 'D+=')} {cur} primary income: dividends from abroad (estimate) "
-                      f"{sv('zz_ef_v_f_div', 'D+=')}, bond interest {sv('zz_ef_v_f_aint', 'D+=')}",
-                      f"  {sv('zz_ef_bop_secondary', 'D+=')} {cur} secondary income: budget lines with abroad (below)",
-                      f"#b Financial account {sv('zz_ef_bop_financial', 'D+=')} {cur}#! — other countries' bonds: banks "
-                      f"{sv('zz_ef_v_d_bonds_neg', 'D+=')}, treasury {sv('zz_ef_v_d_tbonds_neg', 'D+=')}",
-                      f"#b Balance {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → the world clearing",
-                      f"#b Reserve assets {sv('zz_ef_v_f_clr_reserves_money', 'D+=')} {cur}#!: the CB's metal "
-                      f"{sv('zz_ef_v_f_clr_metal_money', 'D+=')}, currency {sv('zz_ef_v_f_clr_fx_money', 'D+=')}",
-                      f"  not settled by the clearing (errors and omissions) {sv('zz_ef_v_f_clr_unsettled', 'D+=')} {cur}",
+                L += bop_lines(False, "Country") + [
                       "#grey Budget lines with abroad now (+ in, − out):#!"]
                 clr = [f"Clearing: on an outflow {sv('zz_ef_clr_metal_share', '%0')} is paid in metal — by trust in the "
                        f"currency (strength to the reference {sv('zz_ef_currency_strength', '2')}), the rest in our currency; "
