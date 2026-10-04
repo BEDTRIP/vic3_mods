@@ -16,13 +16,18 @@ function Pages($tabX, $n, $tag) {
 }
 
 # The account cards: links inside the currency tooltip (it pins itself after ~2 s, then the mouse
-# may enter it). Rows as in Britain's tooltip of 1836 (gold standard); a country whose first lines
-# wrap differently shifts them by a line (~0.01) -- check the shots.
+# may enter it). Rows as in Britain's tooltip of 1836 (gold standard); under silver (Russia,
+# Switzerland) E&F's line "share of silver reserves ... (140.11%)" wraps and every row is one line
+# (~0.0125) lower -- the night of 4.10 got only the treasury card for Russia. So each card is taken
+# at both heights (<card>_a, <card>_b); the one that missed shows the bare currency tooltip.
 $Cards = [ordered]@{ cash = 0.192; business = 0.248; deposits = 0.304; abroad = 0.346; treasury = 0.3876; pool = 0.401; cb = 0.429 }
 function CardShots {
     $s = @()
     foreach ($k in $Cards.Keys) {
-        $s += "hover 0.15 0.012; wait 1; hover 0.1 0.06; wait 0.5; hover 0.0975 0.0916; wait 3; hover 0.06 0.1; wait 0.3; hover 0.03 $($Cards[$k]); wait 2.5; shot {P}_card_$k; hover 0.6 0.97; wait 2"
+        foreach ($v in @(@("a", 0.0), @("b", 0.0125))) {
+            $y = [Math]::Round($Cards[$k] + $v[1], 4)
+            $s += "hover 0.15 0.012; wait 1; hover 0.1 0.06; wait 0.5; hover 0.0975 0.0916; wait 3; hover 0.06 0.1; wait 0.3; hover 0.03 $y; wait 2.5; shot {P}_card_${k}_$($v[0]); hover 0.6 0.97; wait 2"
+        }
     }
     return ($s -join "; ")
 }
