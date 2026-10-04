@@ -1,0 +1,13 @@
+#############################################
+# Е.5 (5.10, Д.2): the issuer pays the interest on its bonds held by other countries' treasuries every week,
+# as an expense line ("additional expenses"). E&F pays the holders (interest_from_foreign_debt_investment,
+# "additional income" = interest per month x 0.25) and nobody paid it. Applied weekly by
+# zz_ef_bond_interest_step (scripted_effects/zz_ef_money_model.txt) with multiplier =
+# zz_ef_bond_interest_due_week (the same sum: the holders' yearly interest / 48). With no money in the treasury
+# the engine borrows -- the debt grows.
+#############################################
+
+zz_ef_foreign_bond_interest = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds
+	country_expenses_add = 1
+}

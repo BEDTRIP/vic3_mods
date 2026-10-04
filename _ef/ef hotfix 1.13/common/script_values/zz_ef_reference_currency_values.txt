@@ -76,6 +76,25 @@ zz_ef_metal_target_in_gold = {
 }
 
 # Ф.2 (4.10, scripted_effects/zz_ef_money_model.txt): what the issuer owes foreign private banks a year.
+# Е.5 (5.10, Д.2): the week's interest the scope country owes on its bonds held by other countries' treasuries --
+# E&F's yearly interest of the holders on its bonds (ai_central_bank_interest_refund_per_year_N: over the buyer list
+# of bond N), / 48 as E&F pays the holders (interest per month = year / 12, x 0.25 a week). The private banks'
+# bonds are paid by zz_ef_privbank_interest_pay (Ф.2).
+zz_ef_bond_interest_due_week = {
+	value = 0
+	add = ai_central_bank_interest_refund_per_year_1
+	add = ai_central_bank_interest_refund_per_year_2
+	add = ai_central_bank_interest_refund_per_year_3
+	add = ai_central_bank_interest_refund_per_year_4
+	add = ai_central_bank_interest_refund_per_year_5
+	add = ai_central_bank_interest_refund_per_year_6
+	add = ai_central_bank_interest_refund_per_year_7
+	add = ai_central_bank_interest_refund_per_year_8
+	add = ai_central_bank_interest_refund_per_year_9
+	add = ai_central_bank_interest_refund_per_year_10
+	divide = 48
+	min = 0
+}
 zz_ef_privbank_interest_due = {
 	value = 0
 	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_1

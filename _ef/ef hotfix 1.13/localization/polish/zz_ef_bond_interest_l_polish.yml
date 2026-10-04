@@ -1,0 +1,3 @@
+﻿l_polish:
+ zz_ef_foreign_bond_interest:0 "Interest on our bonds abroad"
+ zz_ef_foreign_bond_interest_desc:0 "The weekly interest to the holders of our bonds — other countries' treasuries (they get the same as additional income). With no money in the treasury the debt grows."
