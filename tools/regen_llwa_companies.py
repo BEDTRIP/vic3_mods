@@ -184,9 +184,11 @@ PORT = [
 # trim_bank_building_types) -- with ~100 bank companies there was a company for
 # almost every building and banks took ~30% of all company construction. The
 # argument above ("it already carries railway") no longer holds.
-EF_BANK_BUILDINGS = [
-    "llwa_building_exchange",
-]
+#
+# EMPTY since 2026-10-04 (Ф.6, user decision 4.10: exchanges are private, EF.49 / LLWA.11): any E&F
+# bank may become a country's central bank company, and the CB company owns only the CB building
+# (the treasury gets only the issuing income); LLWA's exchange is market logistics, owned by others.
+EF_BANK_BUILDINGS = []
 
 # E&F's diversified banks -- decided separately from the vanilla/TGR/VC/HC/MoH
 # rule above (user question, follow-up to LLWA.8): every E&F company whose
@@ -349,7 +351,8 @@ def verify_and_collect() -> dict[str, list[str]]:
         if not any(b.startswith("building_financial_centre") for b in bt):
             wrong.append((key, label, "no longer has a building_financial_centre* building"))
             continue
-        additions.setdefault(key, set()).update(EF_BANK_BUILDINGS)
+        if EF_BANK_BUILDINGS:
+            additions.setdefault(key, set()).update(EF_BANK_BUILDINGS)
     assert not missing, f"{len(missing)} companies no longer found anywhere: {missing[:5]}..."
     assert not wrong, f"{len(wrong)} companies drifted: {wrong[:5]}"
     return {k: sorted(v) for k, v in additions.items()}
@@ -390,22 +393,22 @@ def build():
           f"add LLWA buildings to {len(additions)} companies "
           f"in building_types",
           "Every historical railway/port company across vanilla, TGR, VC, HC, and "
-          "MoH predates LLWA and knows nothing about its roads/canals/rivers -- same "
-          "for E&F's banks, which get LLWA's exchange (banks keep only banking, "
-          "2026-10-02). "
+          "MoH predates LLWA and knows nothing about its roads/canals/rivers. E&F's "
+          "banks get nothing here since 2026-10-04 (exchanges are private, the CB "
+          "company owns only the CB, Ф.6). "
           "In building_types, not extension_building_types, so the companies hold "
           "them from the start (LLWA.9). INJECT: appends to the list -- nothing "
           "overwritten, no company's own design touched. Grey's/USU's ~70 railway "
           "companies are deliberately not here -- see the generator's module docstring.")
-    banks = sum(1 for v in additions.values() if set(EF_BANK_BUILDINGS) <= set(v))
+    banks = sum(1 for v in additions.values() if EF_BANK_BUILDINGS and set(EF_BANK_BUILDINGS) <= set(v))
     transport = len(additions) - banks
     roadway = sum(1 for k, v in additions.items()
-                  if 'LLWA_building_roadway' in v and not set(EF_BANK_BUILDINGS) <= set(v))
+                  if 'LLWA_building_roadway' in v)
     waterway = sum(1 for k, v in additions.items()
-                   if 'LLWA_building_waterway' in v and not set(EF_BANK_BUILDINGS) <= set(v))
+                   if 'LLWA_building_waterway' in v)
     both_rail_port = sum(1 for k, v in additions.items()
                          if 'LLWA_building_roadway' in v and 'LLWA_building_waterway' in v
-                         and not set(EF_BANK_BUILDINGS) <= set(v))
+                         )
     print(f"  {len(additions)} companies: {transport} transport companies "
           f"({roadway} get roadway, {waterway} get waterway/riverway, "
           f"{both_rail_port} get both), {banks} E&F banks get all "
