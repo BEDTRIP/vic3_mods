@@ -404,6 +404,10 @@ zz_ef_money_model_step = {
 	zz_ef_money_window_roll = { F = cc_int }
 	zz_ef_money_window_roll = { F = cc_net }
 	zz_ef_money_window_roll = { F = hume_money }
+	# 4.10 (the cash-at-hand card): what went into pops' savings at the last receiver -- the window the
+	# ledger's change of M0 / savings / deposits covers
+	zz_ef_money_window_roll = { F = inflow }
+	zz_ef_money_window_roll = { F = buyout_got }
 	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
 	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
 	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
@@ -531,12 +535,14 @@ zz_ef_pop_savings_step = {
 	change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_inflow }
 	# В1.2 (3.10): levels sold to companies -- the price to the sellers' savings
 	# (zz_ef_v_f_buyout); the pool's loss stays out of the leak.
+	set_variable = { name = zz_ef_f_buyout_got value = 0 }
 	if = {
 		limit = {
 			has_variable = zz_ef_weeks_run
 			var:zz_ef_weeks_run >= 3
 		}
-		change_variable = { name = zz_ef_pop_savings add = zz_ef_v_f_buyout }
+		set_variable = { name = zz_ef_f_buyout_got value = zz_ef_v_f_buyout }
+		change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_buyout_got }
 	}
 
 	set_variable = { name = zz_ef_f_dep_in value = zz_ef_dep_in }

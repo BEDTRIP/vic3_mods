@@ -137,3 +137,13 @@ zz_ef_value_in_silver = {
 	value = money_value_0
 	multiply = gold_to_silver_rate
 }
+
+# 4.10 (the cards): the last receiver's flows into pops' savings, in the window of the ledger's changes
+zz_ef_v_w_inflow = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_inflow } value = var:zz_ef_w_inflow }
+}
+zz_ef_v_w_buyout = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_buyout_got } value = var:zz_ef_w_buyout_got }
+}

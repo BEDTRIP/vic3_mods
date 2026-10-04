@@ -148,7 +148,7 @@ def main_text(lang, c):
         f"→   {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} "
         f"{delta('zz_ef_v_d_buildings')}",
         f"#b M2#! = {L['m2']}: #T {money('zz_ef_agg_m2')}#! — {ratio(2)} {dyn(2)}",
-        f"→   {tt('zz_ef_ms_tt_banks', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!{mark('mod', ru)} "
+        f"→   {tt('zz_ef_ms_tt_deposits', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!{mark('mod', ru)} "
         f"{delta('zz_ef_v_d_deposits')}",
         f"#b M3#! = {L['m3']}: #T {money('zz_ef_agg_m3')}#! {dyn(3)}",
         f"→   {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#!{mark('ef', ru)} "
@@ -228,7 +228,7 @@ ACC_ORDER = ["pops", "buildings", "banks", "abroad", "treasury", "cb"]
 TITLES = {
     "treasury": ("Казна", "Treasury"),
     "buildings": ("Касса предприятий", "Business cash"),
-    "banks": ("Средства банков", "Bank funds"),
+    "banks": ("Резервы банков (пул)", "Bank reserves (the pool)"),
     "pops": ("Население", "Pops"),
     "cb": ("Центральный банк", "Central bank"),
     "abroad": ("Заграница", "Abroad"),
@@ -413,50 +413,19 @@ FLOWS = [
 ]
 
 NOTES = {
-    "treasury": ("Статьи бюджета — точно, за неделю, как в бюджете игры; изменение казны — между недельными "
-                 "шагами модели (сразу после недельного расчёта бюджета).",
-                 "Budget lines are exact, a week, as in the game's budget; the treasury's change is between the "
-                 "model's weekly steps (right after the budget's weekly tick)."),
-    "buildings": ("Денежные резервы всех зданий: кредитный лимит − база − доля ВВП (COUNTRY_MIN_CREDIT_*). Прочее — "
-                  "закупки у заграницы, налоги с прибыли, разница оценки зарплат и дивидендов.",
-                  "Cash reserves of all buildings: credit limit − base − GDP share (COUNTRY_MIN_CREDIT_*). Other: "
-                  "purchases abroad, profit taxes, the error of the wages-and-dividends estimate."),
-    "banks": ("Инвестиционный пул. Частная стройка идёт через казну: пул → казна (трансфер) → предприятия "
-              "(строительные товары). Банки занимают у ЦБ под ключевую ставку — долг идёт к доле ВВП по ставке "
-              "(50% при 2%, 0 при 12%): ставка ниже — больше новых денег в пул, выше — банки гасят долг из пула.",
-              "The investment pool. Private construction goes through the treasury: pool → treasury (transfer) → "
-              "businesses (construction goods). Banks borrow from the CB at the key rate — the debt goes to a share of "
-              "GDP by the rate (50% at 2%, 0 at 12%): a lower rate puts more new money into the pool, a higher one "
-              "makes banks repay from the pool."),
-    "pops": ("Денег у населения в движке нет: остаток дохода движок превращает в достаток (число). Мод ловит "
-             "эти деньги в накопления — по сохранению денег (мост GUI → скрипт): что пропало из казны и касс "
-             "предприятий сверх известных переводов. Оплата заграницы (касса торговых центров) и необъяснённый "
-             "остаток пула (выкуп уровней) сюда не входят. Часть накоплений лежит во вкладах — это снова "
-             "деньги движка (пул).",
-             "Pops hold no money in the engine: it turns the income left over into wealth (a number). The mod "
-             "catches this money into savings by money conservation (the GUI → script bridge): what vanished from "
-             "the treasury and business cash beyond the known transfers. Payments abroad (the trade centres' cash) "
-             "and the pool's unexplained change (levels bought) are not in it. Part of the savings is "
-             "in deposits — engine money again (the pool)."),
-    "abroad": ("Заграница — требования страны к другим странам: облигации частных банков и казны (E&F). Все платежи с заграницей идут через ЦБ: чистый отток "
-               "списывает его металл (механизм Юма). Платежи требований не меняют — они в «прочее» не входят; "
-               "«прочее» — изменение облигаций, не объяснённое покупками и погашениями.",
-               "Abroad — the country's claims on other countries: the private banks' and the treasury's bonds (E&F). Every payment with abroad goes through "
-               "the CB: a net outflow pays out its metal (Hume's mechanism). Payments do not change the claims and "
-               "are not in 'other'; 'other' is the bonds' change not explained by purchases and redemptions."),
-    "cb": ("ЦБ — расчётный агент страны: все платежи с заграницей идут через него. Кредит банкам — новые деньги, "
-           "погашение их изымает, проценты уходят в казну. Запас счёта — резервы металла (склад товара-валюты "
-           "E&F — штуки товара, в резервы не входит): чистый отток за рубеж по курсу списывает металл, приток — добавляет (механизм Юма, "
-           "только металлический стандарт с ЦБ). Резервы — покрытие валюты, а не деньги: в M0–M3 не входят, "
-           "иначе отток за рубеж считался бы дважды (деньги ушли из пула или касс и тот же металл ушёл из ЦБ). "
-           "Отток уменьшает деньги и покрытие на одну сумму; торговый баланс E&F в резервы больше не входит.",
-           "The CB is the country's settlement agent: every payment with abroad goes through it. Credit to banks is "
-           "new money, repayment withdraws it, interest goes to the treasury. The account's stock is the metal "
-           "reserves (E&F's currency-good stock is counts of a good, not in them): a net outflow abroad pays out metal at the "
-           "currency's value, an inflow brings it in (Hume's mechanism, metal standards with a CB only). The reserves "
-           "are the currency's cover, not money: they are outside M0–M3, else a payment abroad would count twice "
-           "(the money left the pool or business cash and the same metal left the CB). An outflow lowers the money "
-           "and the cover by one sum; E&F's trade balance is no longer in the reserves."),
+    # 4.10 (the user: the cards are useful but too long): one or two sentences each
+    "treasury": ("Статьи бюджета — точно, за неделю, как в бюджете игры.",
+                 "Budget lines are exact, a week, as in the game's budget."),
+    "buildings": ("Деньги всех зданий. Прочее — сглаженные тренды бюджета против точного недельного изменения.",
+                  "The cash of all buildings. Other: smoothed budget trends against the exact weekly change."),
+    "banks": ("Резервы банков (инвестиционный пул). Частная стройка идёт через казну: пул → казна → предприятия.",
+              "The banks' reserves (the investment pool). Private construction goes pool → treasury → businesses."),
+    "abroad": ("Счёт — требования страны к другим странам (облигации). Платежи с заграницей его не меняют: их "
+               "рассчитывает ЦБ металлом (механизм Юма).",
+               "The account is the country's claims on others (bonds). Payments with abroad do not change it: the CB "
+               "settles them in metal (Hume's mechanism)."),
+    "cb": ("Запас счёта — металл ЦБ по паритету: покрытие валюты, а не деньги (вне M0–M3).",
+           "The account's stock is the CB's metal at parity: the currency's cover, not money (outside M0–M3)."),
 }
 
 STATE_PAY = ["GetGovernmentWagesExpenseTrend", "GetMilitaryWagesExpenseTrend", "GetWelfarePaymentsTrend"]
@@ -757,6 +726,74 @@ def fx_card(lang):
     return "\\n".join(L)
 
 
+def pops_card(lang):
+    """4.10: cash at hand -- the head is M0's weekly change (the money tooltip's), the rows add up to it: what
+    went into savings and what went into / out of deposits at the last receiver (the window of the ledger).
+    The pops' income and spending of the week (transit, estimates) follow, not in the sum."""
+    cur, sv, money, delta, tt = ctx("Country")
+    ru = lang == "russian"
+    k = 0 if ru else 1
+    v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
+    L = [f"#b {'Наличные на руках за неделю' if ru else 'Cash at hand this week'}: {delta('zz_ef_v_d_agg0')}#!{mark('calc', ru)}",
+         "1 " + ("В накопления" if ru else "Into savings"),
+         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("остаток дохода — деньги, выпавшие из казны и касс предприятий"
+                                                                         if ru else "income left over — money that dropped out of the treasury and business cash"),
+         f"  ← #P +{money('zz_ef_v_w_buyout')}#!{mark('calc', ru)} " + ("выручка продавцов уровней зданий" if ru else "proceeds of the building levels sold"),
+         f"  ← #P +{money('zz_ef_v_f_mint_own')}#!{mark('mod', ru)} " + ("чеканка из добытого металла — владельцам" if ru else "coinage of mined metal — to the owners"),
+         "2 " + ("Вклады в банках" if ru else "Bank deposits"),
+         f"  → #N −{money('zz_ef_v_w_dep_in')}#!{mark('mod', ru)} " + ("внесено во вклады" if ru else "deposited"),
+         f"  ← #P +{money('zz_ef_v_w_dep_out')}#!{mark('mod', ru)} " + ("снято со вкладов" if ru else "withdrawn"),
+         ]
+    resid = v("zz_ef_v_d_agg0")
+    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_buyout", -1), ("zz_ef_v_f_mint_own", -1),
+                     ("zz_ef_v_w_dep_in", 1), ("zz_ef_v_w_dep_out", -1)):
+        resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
+                 f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
+    L.append("3 " + ("Вне счетов" if ru else "Outside the accounts"))
+    L.append(f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"))
+    L.append("")
+    L.append("#b " + ("Доходы и траты населения за неделю (транзит, оценка — в сумму не входят):" if ru else
+                      "Pops' income and spending this week (transit, estimates — not in the sum):") + "#!")
+    for other, dr, f in card_flows(N):
+        if other == X:
+            continue
+        e = expr(f[4])
+        lab = (f[2] if ru else f[3]) + f" ({TITLES[other][k].lower()})"
+        L.append(f"  ← #P +[{e}|D] {cur}#! {lab}" if dr == "in" else f"  → #N −[{e}|D] {cur}#! {lab}")
+    L.append("")
+    L.append((f"Накопления {money('zz_ef_pop_savings')}: во вкладах {money('zz_ef_pop_deposits')}, на руках "
+              f"{money('zz_ef_pop_cash')}; норма наличных {money('zz_ef_pop_cash_norm')} — сверх неё население несёт во "
+              f"вклады, ниже — снимает. Потребкредит: долг {money('zz_ef_cc_debt')}, ставка {sv('zz_ef_cc_rate', '%1')}.")
+             if ru else
+             (f"Savings {money('zz_ef_pop_savings')}: in deposits {money('zz_ef_pop_deposits')}, at hand "
+              f"{money('zz_ef_pop_cash')}; cash norm {money('zz_ef_pop_cash_norm')} — over it pops deposit, under it "
+              f"they withdraw. Consumer credit: debt {money('zz_ef_cc_debt')}, rate {sv('zz_ef_cc_rate', '%1')}."))
+    return "\\n".join(L)
+
+
+def deposits_card(lang):
+    """4.10: pops' deposits -- the head is the ledger's weekly change, the rows of the last receiver add up to it."""
+    cur, sv, money, delta, tt = ctx("Country")
+    ru = lang == "russian"
+    v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
+    resid = v("zz_ef_v_d_deposits")
+    for n_, sign in (("zz_ef_v_w_dep_in", -1), ("zz_ef_v_w_dep_out", 1), ("zz_ef_v_w_dep_int", -1)):
+        resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
+                 f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
+    L = [f"#b {'Вклады в банках за неделю' if ru else 'Bank deposits this week'}: {delta('zz_ef_v_d_deposits')}#!{mark('mod', ru)}",
+         f"  ← #P +{money('zz_ef_v_w_dep_in')}#!{mark('mod', ru)} " + ("внесено из наличных" if ru else "deposited from cash"),
+         f"  → #N −{money('zz_ef_v_w_dep_out')}#!{mark('mod', ru)} " + ("снято в наличные" if ru else "withdrawn to cash"),
+         f"  ← #P +{money('zz_ef_v_w_dep_int')}#!{mark('mod', ru)} " + ("проценты (платят банки из пула)" if ru else "interest (the banks pay it from the pool)"),
+         f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
+         "",
+         (f"Вклады — долг банков населению; деньги лежат в резервах банков (пул) и в выданных кредитах. Ставка по "
+          f"вкладам {sv('zz_ef_deposit_rate', '%1')} = ключевая − маржа банков {sv('zz_ef_deposit_margin', '%1')}.")
+         if ru else
+         (f"Deposits are the banks' debt to pops; the money is in the banks' reserves (the pool) and in their loans. "
+          f"Deposit rate {sv('zz_ef_deposit_rate', '%1')} = key − the banks' margin {sv('zz_ef_deposit_margin', '%1')}.")]
+    return "\\n".join(L)
+
+
 def nested(lang):
     cur, sv, money, delta, tt = ctx("Country")
     gold = "@gold!"
@@ -767,7 +804,11 @@ def nested(lang):
     other_lab = "прочее" if ru else "other"
     d = {}
     for acc in ACC_ORDER:
+        if acc == N:
+            d["zz_ef_ms_tt_pops"] = pops_card(lang)
+            continue
         flows = card_flows(acc)
+        pays = []
         head = TITLES[acc][k] + (" за неделю" if ru else " this week")
         L = [f"#b {head}: {delta(DELTA[acc])}#!{mark(SRC_ACC[acc], ru)}" if acc in DELTA else f"#b {head}#!"]
         resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA else None
@@ -779,6 +820,14 @@ def nested(lang):
                 continue
             n += 1
             L.append(f"{n} {TITLES[other][k]}")
+            if acc == Z:
+                # 4.10: payments with abroad do not move the claims -- listed apart, under the groups
+                pays += [(other, dr, f) for dr, f in rows if f[4][1] not in CLAIM_VALUES]
+                rows = [(dr, f) for dr, f in rows if f[4][1] in CLAIM_VALUES]
+                if not rows and other != X:
+                    n -= 1
+                    L.pop()
+                    continue
             for dr, f in rows:
                 e = expr(f[4])
                 lab = f[2] if ru else f[3]
@@ -812,19 +861,25 @@ def nested(lang):
                          + f"[{bout}|D+=] {cur}")
         if not n:
             L.append(none)
-        L += ["", NOTES[acc][k], SRC_LEGEND[k]]
+        if pays:
+            L.append("#b " + ("Платежи с заграницей за неделю (+ в страну, − за рубеж) — через ЦБ металлом, счёт не меняют:" if ru else
+                              "Payments with abroad this week (+ in, − out) — settled by the CB in metal, the account does not move:") + "#!")
+            for other, dr, f in pays:
+                e = expr(f[4])
+                lab = (f[2] if ru else f[3]) + f" ({TITLES[other][k].lower()})"
+                # the country's side: + came into the country, − went abroad
+                L.append(f"  ← #P +[{e}|D] {cur}#! {lab}" if dr == "out" else f"  → #N −[{e}|D] {cur}#! {lab}")
+            L.append(("  итого: чистый поток с заграницей " if ru else "  net flow with abroad ")
+                     + f"{sv('zz_ef_v_f_ext_net', 'D+=')}{cur}" + (" → металл ЦБ (Юм)" if ru else " → the CB's metal (Hume)"))
+        L += ["", NOTES[acc][k]]
         if acc == B:
-            L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}; цель {money('zz_ef_cb_credit_target')} = "
-                      f"ВВП × {sv('zz_ef_cb_credit_share', '%0')} от 50% при ставке {sv('zz_ef_money_rate', '%1')}; "
-                      f"1.15% разрыва в неделю (~5% в месяц), но занимают только недостачу пула до потребности "
-                      f"{money('zz_ef_pool_need')} (3 месяца выплат пула), а свободные деньги сверх неё идут на погашение. "
+            L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}, цель {money('zz_ef_cb_credit_target')} "
+                      f"({sv('zz_ef_cb_credit_share', '%0')} от 50% ВВП при ставке {sv('zz_ef_money_rate', '%1')}). "
                       f"Пул — {sv('zz_ef_pool_months', '1')} мес. взносов.")
                      if ru else
-                     (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}; target {money('zz_ef_cb_credit_target')} = "
-                      f"GDP × {sv('zz_ef_cb_credit_share', '%0')} of 50% at a rate of {sv('zz_ef_money_rate', '%1')}; "
-                      f"1.15% of the gap a week (~5% a month), but they borrow only what the pool lacks of its need "
-                      f"{money('zz_ef_pool_need')} (3 months of its payouts), and idle money over it repays the CB. The "
-                      f"pool holds {sv('zz_ef_pool_months', '1')} months of contributions."))
+                     (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}, target {money('zz_ef_cb_credit_target')} "
+                      f"({sv('zz_ef_cb_credit_share', '%0')} of 50% of GDP at a rate of {sv('zz_ef_money_rate', '%1')}). "
+                      f"The pool holds {sv('zz_ef_pool_months', '1')} months of contributions."))
         if acc == B:
             # Ф.1 (the user, 4.10; В7.3): the banks' balance sheet -- the user's 1840 save had deposits 80.3M
             # against pool 18.2M + loans 36.5M: the gap is the banks' capital (negative = the deposits are
@@ -851,64 +906,13 @@ def nested(lang):
                       f"metal per {cur}; cover at parity {sv('zz_ef_cb_cover', '%0')}. Currency-good stock "
                       f"{sv('money_supply_state')} units."))
         if acc == B:
-            L.append((f"#b Кредит бизнесу: долг предприятий {money('zz_ef_bc_debt')}#! "
-                      f"({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП). Частная стройка за неделю оплачена заёмными "
-                      f"деньгами банков на {sv('zz_ef_bc_borrowed_share', '%0')} (кредит ЦБ и вклады к пулу): новый "
-                      f"долг {money('zz_ef_v_f_bc_new')}; проценты {money('zz_ef_v_f_bc_int')} (ключевая + 3 п.п.), "
-                      f"срок 5 лет; из взносов зданий в счёт долга {money('zz_ef_v_f_bc_paid')} "
-                      f"({sv('zz_ef_bc_service_share', '%0')} взносов) — деньги из касс в пул. Не хватает взносов — "
-                      f"владельцы отдают больше дохода в пул вместо дивидендов: сейчас +{sv('zz_ef_v_bc_svc', '0')}% "
-                      f"доли взносов (до +30%).")
+            L.append((f"#b Кредит бизнесу:#! долг {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП); "
+                      f"за неделю выдано {money('zz_ef_v_f_bc_new')}, проценты {money('zz_ef_v_f_bc_int')}, погашено из "
+                      f"взносов {money('zz_ef_v_f_bc_paid')}; срок 5 лет, ставка ключевая + 3 п.п.")
                      if ru else
-                     (f"#b Business credit: businesses' debt {money('zz_ef_bc_debt')}#! "
-                      f"({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP). This week's private construction was paid with "
-                      f"the banks' borrowed money for {sv('zz_ef_bc_borrowed_share', '%0')} (CB credit and deposits "
-                      f"to the pool): new debt {money('zz_ef_v_f_bc_new')}; interest {money('zz_ef_v_f_bc_int')} (key "
-                      f"+ 3 pp), term 5 years; counted from the buildings' contributions {money('zz_ef_v_f_bc_paid')} "
-                      f"({sv('zz_ef_bc_service_share', '%0')} of them) — money from business cash to the pool. When "
-                      f"they fall short, owners put more income into the pool instead of dividends: now "
-                      f"+{sv('zz_ef_v_bc_svc', '0')}% of the contribution share (up to +30%)."))
-        if acc == N:
-            L.append((f"#b Потребительский кредит: долг {money('zz_ef_cc_debt')}#! "
-                      f"({sv('zz_ef_cc_debt_to_gdp', '%1')} ВВП); предел 4 месяца дохода {money('zz_ef_cc_limit')}, "
-                      f"цель {money('zz_ef_cc_target')} ({sv('zz_ef_cc_share', '%0')} предела по ставке: 100% при 2%, "
-                      f"0 при 12%); ставка {sv('zz_ef_cc_rate', '%1')} (ключевая + 3 п.п.), срок год. На эту неделю: "
-                      f"выдано {money('zz_ef_v_f_cc_issue')}, погашено {money('zz_ef_v_f_cc_repay')}, проценты "
-                      f"{money('zz_ef_v_f_cc_int')} — итого населению {sv('zz_ef_v_f_cc_net', 'D+=')}{cur}, надбавка "
-                      f"к доходу иждивенцев {sv('zz_ef_cc_wage_add', '+=2')} в год на иждивенца "
-                      f"({sv('zz_ef_v_dependents')} иждивенцев).")
-                     if ru else
-                     (f"#b Consumer credit: debt {money('zz_ef_cc_debt')}#! "
-                      f"({sv('zz_ef_cc_debt_to_gdp', '%1')} of GDP); limit 4 months of income {money('zz_ef_cc_limit')}, "
-                      f"target {money('zz_ef_cc_target')} ({sv('zz_ef_cc_share', '%0')} of the limit by the rate: 100% "
-                      f"at 2%, 0 at 12%); rate {sv('zz_ef_cc_rate', '%1')} (key + 3 pp), term a year. This week: lent "
-                      f"{money('zz_ef_v_f_cc_issue')}, repaid {money('zz_ef_v_f_cc_repay')}, interest "
-                      f"{money('zz_ef_v_f_cc_int')} — net to pops {sv('zz_ef_v_f_cc_net', 'D+=')}{cur}, dependents' "
-                      f"surcharge {sv('zz_ef_cc_wage_add', '+=2')} a year per dependent "
-                      f"({sv('zz_ef_v_dependents')} dependents)."))
-            L.append((f"Доход населения ≈ ВВП / 52 = {money('zz_ef_gdp_week')}.") if ru else
-                     (f"Pops' income ≈ GDP / 52 = {money('zz_ef_gdp_week')}."))
-            L.append((f"#b Накопления: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} за "
-                      f"неделю) — во вкладах {money('zz_ef_pop_deposits')}, на руках {money('zz_ef_pop_cash')}. "
-                      f"За неделю: выпало из денег движка {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, продажа уровней компаниям "
-                      f"{sv('zz_ef_v_f_buyout', 'D+=')}{cur}, проценты по вкладам "
-                      f"{sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; внесено {money('zz_ef_v_f_dep_in')}, снято "
-                      f"{money('zz_ef_v_f_dep_out')} (в средствах банков — в изменении следующей недели). Норма наличных на руках — {money('zz_ef_pop_cash_norm')} "
-                      f"({sv('zz_ef_cash_norm_gdp', '%0')} ВВП: 20% при ставке по вкладам 0%, 12% при 3%, не ниже 6%); "
-                      f"сверх неё население вносит во вклады, ниже — снимает, по 10% разрыва в неделю. Ставка по "
-                      f"вкладам {sv('zz_ef_deposit_rate', '%1')} = ключевая − маржа банков {sv('zz_ef_deposit_margin', '%1')} "
-                      f"(1.5 п.п. + 1 п.п. за каждую потребность пула свободных денег).")
-                     if ru else
-                     (f"#b Savings: {money('zz_ef_pop_savings')}#! ({sv('zz_ef_pop_savings_week', 'D+=')}{cur} this "
-                      f"week) — in deposits {money('zz_ef_pop_deposits')}, at hand {money('zz_ef_pop_cash')}. This "
-                      f"week: dropped out of the engine's money {sv('zz_ef_v_f_inflow', 'D+=')}{cur}, levels sold to companies "
-                      f"{sv('zz_ef_v_f_buyout', 'D+=')}{cur}, deposit "
-                      f"interest {sv('zz_ef_v_f_dep_int', 'D+=')}{cur}; deposited {money('zz_ef_v_f_dep_in')}, "
-                      f"withdrawn {money('zz_ef_v_f_dep_out')}. Cash norm at hand {money('zz_ef_pop_cash_norm')} "
-                      f"({sv('zz_ef_cash_norm_gdp', '%0')} of GDP: 20% at a 0% deposit rate, 12% at 3%, at least 6%); "
-                      f"over it pops deposit, under it they withdraw, 10% of the gap a week. Deposit rate "
-                      f"{sv('zz_ef_deposit_rate', '%1')} = key − the banks' margin {sv('zz_ef_deposit_margin', '%1')} "
-                      f"(1.5 pp + 1 pp per need of idle money in the pool)."))
+                     (f"#b Business credit:#! debt {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP); "
+                      f"this week lent {money('zz_ef_v_f_bc_new')}, interest {money('zz_ef_v_f_bc_int')}, repaid from "
+                      f"contributions {money('zz_ef_v_f_bc_paid')}; term 5 years, rate key + 3 pp."))
         d[f"zz_ef_ms_tt_{acc}"] = "\\n".join(L)
     return d
 
@@ -922,6 +926,7 @@ def build(lang):
         d[key] = main_text(src, "GetPlayer")
     d.update(nested(src))
     d["zz_ef_ms_tt_check"] = check_text(src, "Country")
+    d["zz_ef_ms_tt_deposits"] = deposits_card(src)
     return d
 
 
