@@ -229,6 +229,21 @@ zz_ef_money_model_step = {
 	}
 	add_treasury = var:zz_ef_f_cb_interest
 
+	# Д4.5 / EF.38 (the user, 4.10): the treasury over the engine's limit (gold_reserves_limit; over it
+	# the engine's returns fall off and the surplus burns, E&F GOLD_RESERVE_RETURNS_FACTOR) buys the
+	# banks' bonds -- the excess goes into the pool (stays in circulation as bank money). Before the
+	# ledger: a known flow treasury -> pool (zz_ef_v_f_tr_pool in both accounts' "other").
+	set_variable = { name = zz_ef_f_tr_pool value = 0 }
+	if = {
+		limit = { gold_reserves > gold_reserves_limit }
+		set_variable = { name = zz_ef_f_tr_pool value = gold_reserves }
+		change_variable = { name = zz_ef_f_tr_pool subtract = gold_reserves_limit }
+		add_treasury = {
+			value = var:zz_ef_f_tr_pool
+			multiply = -1
+		}
+		add_investment_pool = var:zz_ef_f_tr_pool
+	}
 	# EF.48 item 5 (business credit; repayment in money, 1.10 evening).
 	zz_ef_business_credit_step = yes
 

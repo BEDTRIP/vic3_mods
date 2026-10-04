@@ -430,6 +430,13 @@ zz_ef_other_treasury_budget = {
 	subtract = zz_ef_v_f_budget
 	subtract = zz_ef_v_f_cb_interest
 	subtract = zz_ef_v_f_mint_tr
+	# Д4.5 (4.10): the treasury's surplus over its limit, moved to the pool
+	add = zz_ef_v_f_tr_pool
+}
+# Д4.5 (4.10): treasury -> pool this step (zz_ef_money_model_step)
+zz_ef_v_f_tr_pool = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_tr_pool } value = var:zz_ef_f_tr_pool }
 }
 
 # ---- reconciliation block (raw engine numbers, weekly) --------------------
@@ -559,6 +566,8 @@ zz_ef_pool_other_week = {
 	subtract = zz_ef_v_w_cc_int
 	# M.3 (4.10): Hume's coined / withdrawn money
 	subtract = zz_ef_v_w_hume_money
+	# Д4.5 (4.10): the treasury's surplus put into the pool
+	subtract = zz_ef_v_f_tr_pool
 }
 # Unexplained change of M2 this week: the change minus the budget's lines
 # outside the accounts, minus the CB's net credit, plus the foreign bonds the
