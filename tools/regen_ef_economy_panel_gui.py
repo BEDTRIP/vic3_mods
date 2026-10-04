@@ -119,6 +119,7 @@ LOC = {
         "zz_ef_ep_cbfx_money": "В наших деньгах",
         "zz_ef_ep_cbfx_gold": "В золоте (за неделю)",
         "zz_ef_ep_holders_title": "У кого наша валюта",
+        "zz_ef_ep_bank_holders_title": "У каких банков наша валюта",
         "zz_ef_ep_bop": BOP_RU,
     },
     "english": {
@@ -130,6 +131,7 @@ LOC = {
         "zz_ef_ep_cbfx_money": "In our money",
         "zz_ef_ep_cbfx_gold": "In gold (a week)",
         "zz_ef_ep_holders_title": "Who holds our currency",
+        "zz_ef_ep_bank_holders_title": "Which banks hold our currency",
         "zz_ef_ep_bop": BOP_EN,
     },
 }
@@ -184,7 +186,8 @@ def post(body: str) -> str:
     a = ("visible = \"[GetVariableSystem.Exists('import_export_value_in_currency_in_reeserve')]\"\n\n"
          "\t\t\t\t\t\t\tdirection = vertical\n")
     assert body.count(a) == 1, body.count(a)
-    body = body.replace(a, a + "\n\t\t\t\t\t\t\tzz_ef_holders_piechart = {}\n")
+    # Е.2: under it, the private banks holding our currency
+    body = body.replace(a, a + "\n\t\t\t\t\t\t\tzz_ef_holders_piechart = {}\n\t\t\t\t\t\t\tzz_ef_bank_holders_piechart = {}\n")
     # П.18: E&F's "currency reserves" section (its currency-good stocks; the pies were one red square) hidden --
     # the CB's currencies are the table above, the holders of ours the pie
     a = '\tdefault_header = {\n\t\t\t\tblockoverride "text" {\n\t\t\t\t\ttext = "RESERVE_CURRENCY_TITLE"'
@@ -218,6 +221,48 @@ PIE = """
 		}
 		blockoverride "rightside1_info" {
 			raw_text = "#bold [Scope.GetCountry.MakeScope.Var('zz_ef_holds_pc').GetValue|D]#! [GetPlayer.GetCustom('currency_symbol')]"
+		}
+		blockoverride "rightside2_info" {
+			raw_text = ""
+		}
+		blockoverride "pie_item_goto_button" {
+			button = {
+				using = clean_button
+				size = { 100% 100% }
+			}
+		}
+		blockoverride "piechartsize" {
+			size = { 200 200 }
+		}
+		blockoverride "minimumsize" {
+			minimumsize = { 100 -1 }
+		}
+		blockoverride "maxverticalslots" {
+			maxverticalslots = 10
+		}
+	}
+
+	# Е.2 (5.10): E&F's private banks holding our currency (zz_ef_holders_update, company var:zz_ef_bank_holds_pc)
+	type zz_ef_bank_holders_piechart = chart {
+		blockoverride "datamodel" {
+			datamodel = "[GetGlobalList('zz_ef_bank_holders_list')]"
+		}
+		blockoverride "heading" {
+			text = "zz_ef_ep_bank_holders_title"
+		}
+		blockoverride "pieslice" {
+			# a float, as vanilla's charts (GetCloutAsFloat); a formatted string drew nothing (run clr3) -- E&F's own pies
+			# pass one too and drew a red square
+			value = "[FixedPointToFloat(Scope.GetCompany.MakeScope.Var('zz_ef_bank_holds_pc').GetValue)]"
+		}
+		blockoverride "color" {
+			color = "[Scope.GetCompany.GetCountry.GetMapColor]"
+		}
+		blockoverride "leftside_info" {
+			raw_text = "[Scope.GetCompany.GetNameNoIcon]"
+		}
+		blockoverride "rightside1_info" {
+			raw_text = "#bold [Scope.GetCompany.MakeScope.Var('zz_ef_bank_holds_pc').GetValue|D]#! [GetPlayer.GetCustom('currency_symbol')]"
 		}
 		blockoverride "rightside2_info" {
 			raw_text = ""

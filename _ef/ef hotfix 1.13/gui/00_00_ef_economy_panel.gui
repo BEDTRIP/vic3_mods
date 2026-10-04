@@ -3032,6 +3032,7 @@ types zz_ef_economy_panel
 							direction = vertical
 
 							zz_ef_holders_piechart = {}
+							zz_ef_bank_holders_piechart = {}
 
 							widget = {
 								size = { @panel_width 30 }
@@ -9849,6 +9850,48 @@ types zz_ef_economy_panel
 		}
 		blockoverride "rightside1_info" {
 			raw_text = "#bold [Scope.GetCountry.MakeScope.Var('zz_ef_holds_pc').GetValue|D]#! [GetPlayer.GetCustom('currency_symbol')]"
+		}
+		blockoverride "rightside2_info" {
+			raw_text = ""
+		}
+		blockoverride "pie_item_goto_button" {
+			button = {
+				using = clean_button
+				size = { 100% 100% }
+			}
+		}
+		blockoverride "piechartsize" {
+			size = { 200 200 }
+		}
+		blockoverride "minimumsize" {
+			minimumsize = { 100 -1 }
+		}
+		blockoverride "maxverticalslots" {
+			maxverticalslots = 10
+		}
+	}
+
+	# Е.2 (5.10): E&F's private banks holding our currency (zz_ef_holders_update, company var:zz_ef_bank_holds_pc)
+	type zz_ef_bank_holders_piechart = chart {
+		blockoverride "datamodel" {
+			datamodel = "[GetGlobalList('zz_ef_bank_holders_list')]"
+		}
+		blockoverride "heading" {
+			text = "zz_ef_ep_bank_holders_title"
+		}
+		blockoverride "pieslice" {
+			# a float, as vanilla's charts (GetCloutAsFloat); a formatted string drew nothing (run clr3) -- E&F's own pies
+			# pass one too and drew a red square
+			value = "[FixedPointToFloat(Scope.GetCompany.MakeScope.Var('zz_ef_bank_holds_pc').GetValue)]"
+		}
+		blockoverride "color" {
+			color = "[Scope.GetCompany.GetCountry.GetMapColor]"
+		}
+		blockoverride "leftside_info" {
+			raw_text = "[Scope.GetCompany.GetNameNoIcon]"
+		}
+		blockoverride "rightside1_info" {
+			raw_text = "#bold [Scope.GetCompany.MakeScope.Var('zz_ef_bank_holds_pc').GetValue|D]#! [GetPlayer.GetCustom('currency_symbol')]"
 		}
 		blockoverride "rightside2_info" {
 			raw_text = ""

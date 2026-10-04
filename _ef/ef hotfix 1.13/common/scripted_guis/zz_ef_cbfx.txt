@@ -508,5 +508,97 @@ zz_ef_holders_update = {
 		else_if = { limit = { has_law = law_type:law_thaler_prussian_thaler_currency } every_country = { limit = { NOT = { this = scope:holders_root } NOT = { has_law = law_type:law_thaler_prussian_thaler_currency } has_modifier = has_central_bank capital = { has_variable = stockpiling_thaler_prussian_thaler_state_1 var:stockpiling_thaler_prussian_thaler_state_1 > 0 } } set_variable = { name = zz_ef_holds_pc value = capital.var:stockpiling_thaler_prussian_thaler_state_1 } } }
 		else_if = { limit = { has_law = law_type:law_thaler_saxon_thaler_currency } every_country = { limit = { NOT = { this = scope:holders_root } NOT = { has_law = law_type:law_thaler_saxon_thaler_currency } has_modifier = has_central_bank capital = { has_variable = stockpiling_thaler_saxon_thaler_state_1 var:stockpiling_thaler_saxon_thaler_state_1 > 0 } } set_variable = { name = zz_ef_holds_pc value = capital.var:stockpiling_thaler_saxon_thaler_state_1 } } }
 		ordered_country = { limit = { has_variable = zz_ef_holds_pc } order_by = zz_ef_holds_pc_v max = 1000 check_range_bounds = no add_to_global_variable_list = { name = zz_ef_holders_list target = this } }
+		# Е.2 (5.10): E&F's private banks holding our currency, the biggest first
+		clear_global_variable_list = zz_ef_bank_holders_list
+		set_variable = { name = zz_ef_bh_n value = 0 }
+		set_variable = { name = zz_ef_bh_BancaCommercialeItaliana value = zz_ef_bank_holds_BancaCommercialeItaliana }
+		if = { limit = { var:zz_ef_bh_BancaCommercialeItaliana > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_BankHSBC value = zz_ef_bank_holds_BankHSBC }
+		if = { limit = { var:zz_ef_bh_BankHSBC > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_BankIBC value = zz_ef_bank_holds_BankIBC }
+		if = { limit = { var:zz_ef_bh_BankIBC > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_BankJPMorgan value = zz_ef_bank_holds_BankJPMorgan }
+		if = { limit = { var:zz_ef_bh_BankJPMorgan > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Bankenverein value = zz_ef_bank_holds_Bankenverein }
+		if = { limit = { var:zz_ef_bh_Bankenverein > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_BanqueDeParisEtDesPaysBas value = zz_ef_bank_holds_BanqueDeParisEtDesPaysBas }
+		if = { limit = { var:zz_ef_bh_BanqueDeParisEtDesPaysBas > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_DeNederlandscheBank value = zz_ef_bank_holds_DeNederlandscheBank }
+		if = { limit = { var:zz_ef_bh_DeNederlandscheBank > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_DeutscheBank value = zz_ef_bank_holds_DeutscheBank }
+		if = { limit = { var:zz_ef_bh_DeutscheBank > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Mitsubishiexchangehousebank value = zz_ef_bank_holds_Mitsubishiexchangehousebank }
+		if = { limit = { var:zz_ef_bh_Mitsubishiexchangehousebank > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Rothschild_Bank_aus value = zz_ef_bank_holds_Rothschild_Bank_aus }
+		if = { limit = { var:zz_ef_bh_Rothschild_Bank_aus > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Rothschild_Bank_fra value = zz_ef_bank_holds_Rothschild_Bank_fra }
+		if = { limit = { var:zz_ef_bh_Rothschild_Bank_fra > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Rothschild_Bank_gbr value = zz_ef_bank_holds_Rothschild_Bank_gbr }
+		if = { limit = { var:zz_ef_bh_Rothschild_Bank_gbr > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Rothschild_Bank_ger value = zz_ef_bank_holds_Rothschild_Bank_ger }
+		if = { limit = { var:zz_ef_bh_Rothschild_Bank_ger > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_Rothschild_Bank_ita value = zz_ef_bank_holds_Rothschild_Bank_ita }
+		if = { limit = { var:zz_ef_bh_Rothschild_Bank_ita > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_RotterdamscheBankvereeniging value = zz_ef_bank_holds_RotterdamscheBankvereeniging }
+		if = { limit = { var:zz_ef_bh_RotterdamscheBankvereeniging > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		set_variable = { name = zz_ef_bh_amsterdamschebank value = zz_ef_bank_holds_amsterdamschebank }
+		if = { limit = { var:zz_ef_bh_amsterdamschebank > 0 } change_variable = { name = zz_ef_bh_n add = 1 } }
+		while = {
+			limit = { var:zz_ef_bh_n > 0 }
+			set_variable = { name = zz_ef_bh_max value = 0 }
+			if = { limit = { var:zz_ef_bh_BancaCommercialeItaliana > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_BancaCommercialeItaliana } }
+			if = { limit = { var:zz_ef_bh_BankHSBC > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_BankHSBC } }
+			if = { limit = { var:zz_ef_bh_BankIBC > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_BankIBC } }
+			if = { limit = { var:zz_ef_bh_BankJPMorgan > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_BankJPMorgan } }
+			if = { limit = { var:zz_ef_bh_Bankenverein > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Bankenverein } }
+			if = { limit = { var:zz_ef_bh_BanqueDeParisEtDesPaysBas > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_BanqueDeParisEtDesPaysBas } }
+			if = { limit = { var:zz_ef_bh_DeNederlandscheBank > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_DeNederlandscheBank } }
+			if = { limit = { var:zz_ef_bh_DeutscheBank > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_DeutscheBank } }
+			if = { limit = { var:zz_ef_bh_Mitsubishiexchangehousebank > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Mitsubishiexchangehousebank } }
+			if = { limit = { var:zz_ef_bh_Rothschild_Bank_aus > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Rothschild_Bank_aus } }
+			if = { limit = { var:zz_ef_bh_Rothschild_Bank_fra > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Rothschild_Bank_fra } }
+			if = { limit = { var:zz_ef_bh_Rothschild_Bank_gbr > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Rothschild_Bank_gbr } }
+			if = { limit = { var:zz_ef_bh_Rothschild_Bank_ger > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Rothschild_Bank_ger } }
+			if = { limit = { var:zz_ef_bh_Rothschild_Bank_ita > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_Rothschild_Bank_ita } }
+			if = { limit = { var:zz_ef_bh_RotterdamscheBankvereeniging > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_RotterdamscheBankvereeniging } }
+			if = { limit = { var:zz_ef_bh_amsterdamschebank > var:zz_ef_bh_max } set_variable = { name = zz_ef_bh_max value = var:zz_ef_bh_amsterdamschebank } }
+			set_variable = { name = zz_ef_bh_done value = no }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_BancaCommercialeItaliana > 0 var:zz_ef_bh_BancaCommercialeItaliana >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_BancaCommercialeItaliana } every_company = { limit = { is_company_type = company_type:company_BancaCommercialeItaliana } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_BancaCommercialeItaliana } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_BancaCommercialeItaliana value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_BankHSBC > 0 var:zz_ef_bh_BankHSBC >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_BankHSBC } every_company = { limit = { is_company_type = company_type:company_BankHSBC } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_BankHSBC } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_BankHSBC value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_BankIBC > 0 var:zz_ef_bh_BankIBC >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_BankIBC } every_company = { limit = { is_company_type = company_type:company_BankIBC } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_BankIBC } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_BankIBC value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_BankJPMorgan > 0 var:zz_ef_bh_BankJPMorgan >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_BankJPMorgan } every_company = { limit = { is_company_type = company_type:company_BankJPMorgan } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_BankJPMorgan } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_BankJPMorgan value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Bankenverein > 0 var:zz_ef_bh_Bankenverein >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Bankenverein } every_company = { limit = { is_company_type = company_type:company_Bankenverein } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Bankenverein } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Bankenverein value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_BanqueDeParisEtDesPaysBas > 0 var:zz_ef_bh_BanqueDeParisEtDesPaysBas >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_BanqueDeParisEtDesPaysBas } every_company = { limit = { is_company_type = company_type:company_BanqueDeParisEtDesPaysBas } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_BanqueDeParisEtDesPaysBas } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_BanqueDeParisEtDesPaysBas value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_DeNederlandscheBank > 0 var:zz_ef_bh_DeNederlandscheBank >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_DeNederlandscheBank } every_company = { limit = { is_company_type = company_type:company_DeNederlandscheBank } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_DeNederlandscheBank } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_DeNederlandscheBank value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_DeutscheBank > 0 var:zz_ef_bh_DeutscheBank >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_DeutscheBank } every_company = { limit = { is_company_type = company_type:company_DeutscheBank } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_DeutscheBank } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_DeutscheBank value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Mitsubishiexchangehousebank > 0 var:zz_ef_bh_Mitsubishiexchangehousebank >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Mitsubishiexchangehousebank } every_company = { limit = { is_company_type = company_type:company_Mitsubishiexchangehousebank } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Mitsubishiexchangehousebank } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Mitsubishiexchangehousebank value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Rothschild_Bank_aus > 0 var:zz_ef_bh_Rothschild_Bank_aus >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Rothschild_Bank_aus } every_company = { limit = { is_company_type = company_type:company_Rothschild_Bank_aus } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Rothschild_Bank_aus } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Rothschild_Bank_aus value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Rothschild_Bank_fra > 0 var:zz_ef_bh_Rothschild_Bank_fra >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Rothschild_Bank_fra } every_company = { limit = { is_company_type = company_type:company_Rothschild_Bank_fra } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Rothschild_Bank_fra } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Rothschild_Bank_fra value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Rothschild_Bank_gbr > 0 var:zz_ef_bh_Rothschild_Bank_gbr >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Rothschild_Bank_gbr } every_company = { limit = { is_company_type = company_type:company_Rothschild_Bank_gbr } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Rothschild_Bank_gbr } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Rothschild_Bank_gbr value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Rothschild_Bank_ger > 0 var:zz_ef_bh_Rothschild_Bank_ger >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Rothschild_Bank_ger } every_company = { limit = { is_company_type = company_type:company_Rothschild_Bank_ger } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Rothschild_Bank_ger } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Rothschild_Bank_ger value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_Rothschild_Bank_ita > 0 var:zz_ef_bh_Rothschild_Bank_ita >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_Rothschild_Bank_ita } every_company = { limit = { is_company_type = company_type:company_Rothschild_Bank_ita } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_Rothschild_Bank_ita } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_Rothschild_Bank_ita value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_RotterdamscheBankvereeniging > 0 var:zz_ef_bh_RotterdamscheBankvereeniging >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_RotterdamscheBankvereeniging } every_company = { limit = { is_company_type = company_type:company_RotterdamscheBankvereeniging } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_RotterdamscheBankvereeniging } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_RotterdamscheBankvereeniging value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			if = { limit = { var:zz_ef_bh_done = no var:zz_ef_bh_amsterdamschebank > 0 var:zz_ef_bh_amsterdamschebank >= var:zz_ef_bh_max } every_country = { limit = { has_company = company_type:company_amsterdamschebank } every_company = { limit = { is_company_type = company_type:company_amsterdamschebank } set_variable = { name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_amsterdamschebank } add_to_global_variable_list = { name = zz_ef_bank_holders_list target = this } } } set_variable = { name = zz_ef_bh_amsterdamschebank value = 0 } set_variable = { name = zz_ef_bh_done value = yes } }
+			change_variable = { name = zz_ef_bh_n subtract = 1 }
+		}
+		remove_variable = zz_ef_bh_n
+		remove_variable = zz_ef_bh_max
+		remove_variable = zz_ef_bh_done
+		remove_variable = zz_ef_bh_BancaCommercialeItaliana
+		remove_variable = zz_ef_bh_BankHSBC
+		remove_variable = zz_ef_bh_BankIBC
+		remove_variable = zz_ef_bh_BankJPMorgan
+		remove_variable = zz_ef_bh_Bankenverein
+		remove_variable = zz_ef_bh_BanqueDeParisEtDesPaysBas
+		remove_variable = zz_ef_bh_DeNederlandscheBank
+		remove_variable = zz_ef_bh_DeutscheBank
+		remove_variable = zz_ef_bh_Mitsubishiexchangehousebank
+		remove_variable = zz_ef_bh_Rothschild_Bank_aus
+		remove_variable = zz_ef_bh_Rothschild_Bank_fra
+		remove_variable = zz_ef_bh_Rothschild_Bank_gbr
+		remove_variable = zz_ef_bh_Rothschild_Bank_ger
+		remove_variable = zz_ef_bh_Rothschild_Bank_ita
+		remove_variable = zz_ef_bh_RotterdamscheBankvereeniging
+		remove_variable = zz_ef_bh_amsterdamschebank
 	}
 }
