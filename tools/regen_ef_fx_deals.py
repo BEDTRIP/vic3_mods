@@ -9,7 +9,8 @@ the scale of E&F's own money (~1 billion), while the money in circulation is now
 (~25 times smaller: Britain's M2 15-40M). One deal moved the cover by tens of percent (run 16:
 France 105%, Russia 2%). The quantity becomes zz_ef_fx_deal_size of the issuer -- a share of
 its M2 (script_values/zz_ef_money_model_values.txt). The sell_* effects sell half of what a
-bank holds -- proportional already, kept.
+bank holds -- proportional already, kept. M.5 (4.10): an AI buyer whose own metal cover is under
+40% does not buy (quantity 0).
 
 Writes _ef/ef hotfix 1.13/common/scripted_effects/zz_ef_fx_deals.txt: every buy_<currency>_currency
 as E&F has it, key-level REPLACE_OR_CREATE, with the one line changed.
@@ -25,7 +26,10 @@ SRC = os.path.normpath(os.path.join(HERE, r"..\..\vic3_mods_out\E&F\common\scrip
 OUT = os.path.normpath(os.path.join(HERE, r"..\_ef\ef hotfix 1.13\common\scripted_effects\zz_ef_fx_deals.txt"))
 
 RANDOM = "value = { 1000000 10000000 }"
-SCALED = "value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size"
+# M.5 (the user, 4.10): an AI central bank does not pay out metal for another currency while its
+# own cover is under the norm (zz_ef_cover_normal, 40%) -- the deal's quantity is 0 then.
+SCALED = ("value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size "
+          "if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }")
 
 
 def blocks(text):

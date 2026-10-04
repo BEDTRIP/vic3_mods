@@ -9,12 +9,26 @@ zz_ef_mp_pace_max = 5
 # The target the player can set, a share of the money supply.
 zz_ef_mp_target_min = 0.05
 zz_ef_mp_target_max = 3
-# The AI's rule.
+# The AI's rule (M.4, 4.10): two years under 25% / over 80% cover -> one parity step towards 40%,
+# at most 25%, then 5 years' pause (1825 days, in the effect). zz_ef_mp_ai_target stays for a law the AI might still get.
 zz_ef_mp_ai_target = 0.4
-zz_ef_mp_ai_dev_cover = 0.3
-zz_ef_mp_ai_dev_ratio = 0.75
-zz_ef_mp_ai_rev_cover = 0.6
-zz_ef_mp_ai_rev_ratio = 1.25
+zz_ef_mp_ai_dev_cover = 0.25
+zz_ef_mp_ai_rev_cover = 0.8
+zz_ef_mp_ai_months = 24
+zz_ef_mp_ai_step_max = 0.25
+# The parity's multiplier: cover / 40% (the cover at the new parity is 40%), within 1 -+ 25%.
+zz_ef_mp_ai_parity_step = {
+	value = zz_ef_cb_cover
+	divide = zz_ef_mp_ai_target
+	max = {
+		value = 1
+		add = zz_ef_mp_ai_step_max
+	}
+	min = {
+		value = 1
+		subtract = zz_ef_mp_ai_step_max
+	}
+}
 
 zz_ef_mp_pace_frac = {
 	value = zz_ef_mp_pace_default

@@ -56,7 +56,7 @@ REPLACE_OR_CREATE:buy_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -236,7 +236,7 @@ REPLACE_OR_CREATE:buy_dinar_algerian_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_algerian_dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -416,7 +416,7 @@ REPLACE_OR_CREATE:buy_dinar_iraqi_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_iraqi_dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -596,7 +596,7 @@ REPLACE_OR_CREATE:buy_dinar_libyan_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_libyan_dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -776,7 +776,7 @@ REPLACE_OR_CREATE:buy_dinar_moroccan_dirham_currency = {
 					}
 					set_variable = {
 						name = dinar_moroccan_dirham_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -956,7 +956,7 @@ REPLACE_OR_CREATE:buy_dinar_omanian_rial_currency = {
 					}
 					set_variable = {
 						name = dinar_omanian_rial_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -1136,7 +1136,7 @@ REPLACE_OR_CREATE:buy_dinar_qiran_currency = {
 					}
 					set_variable = {
 						name = dinar_qiran_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -1316,7 +1316,7 @@ REPLACE_OR_CREATE:buy_dinar_saudi_riyal_currency = {
 					}
 					set_variable = {
 						name = dinar_saudi_riyal_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -1496,7 +1496,7 @@ REPLACE_OR_CREATE:buy_dinar_serbian_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_serbian_dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -1676,7 +1676,7 @@ REPLACE_OR_CREATE:buy_dinar_tunisian_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_tunisian_dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -1856,7 +1856,7 @@ REPLACE_OR_CREATE:buy_dinar_yugoslav_dinar_currency = {
 					}
 					set_variable = {
 						name = dinar_yugoslav_dinar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -2036,7 +2036,7 @@ REPLACE_OR_CREATE:buy_dollar_australian_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_australian_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -2216,7 +2216,7 @@ REPLACE_OR_CREATE:buy_dollar_canadian_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_canadian_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -2396,7 +2396,7 @@ REPLACE_OR_CREATE:buy_dollar_caribbean_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_caribbean_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -2576,7 +2576,7 @@ REPLACE_OR_CREATE:buy_dollar_confederate_states_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_confederate_states_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -2756,7 +2756,7 @@ REPLACE_OR_CREATE:buy_dollar_liberian_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_liberian_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -2936,7 +2936,7 @@ REPLACE_OR_CREATE:buy_dollar_new_zealand_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_new_zealand_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -3116,7 +3116,7 @@ REPLACE_OR_CREATE:buy_dollar_sierra_leonean_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_sierra_leonean_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -3296,7 +3296,7 @@ REPLACE_OR_CREATE:buy_dollar_united_states_dollar_currency = {
 					}
 					set_variable = {
 						name = dollar_united_states_dollar_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -3476,7 +3476,7 @@ REPLACE_OR_CREATE:buy_eco_ariary_currency = {
 					}
 					set_variable = {
 						name = eco_ariary_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -3656,7 +3656,7 @@ REPLACE_OR_CREATE:buy_eco_central_african_eco_currency = {
 					}
 					set_variable = {
 						name = eco_central_african_eco_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -3836,7 +3836,7 @@ REPLACE_OR_CREATE:buy_eco_east_african_eco_currency = {
 					}
 					set_variable = {
 						name = eco_east_african_eco_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -4016,7 +4016,7 @@ REPLACE_OR_CREATE:buy_eco_ethiopian_birr_currency = {
 					}
 					set_variable = {
 						name = eco_ethiopian_birr_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -4196,7 +4196,7 @@ REPLACE_OR_CREATE:buy_eco_ghanaian_pound_currency = {
 					}
 					set_variable = {
 						name = eco_ghanaian_pound_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -4376,7 +4376,7 @@ REPLACE_OR_CREATE:buy_eco_nigerian_naira_currency = {
 					}
 					set_variable = {
 						name = eco_nigerian_naira_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -4556,7 +4556,7 @@ REPLACE_OR_CREATE:buy_eco_south_african_rand_currency = {
 					}
 					set_variable = {
 						name = eco_south_african_rand_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -4736,7 +4736,7 @@ REPLACE_OR_CREATE:buy_eco_tuareg_ouguiya_currency = {
 					}
 					set_variable = {
 						name = eco_tuareg_ouguiya_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -4916,7 +4916,7 @@ REPLACE_OR_CREATE:buy_eco_west_african_eco_currency = {
 					}
 					set_variable = {
 						name = eco_west_african_eco_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -5096,7 +5096,7 @@ REPLACE_OR_CREATE:buy_franc_belgian_franc_currency = {
 					}
 					set_variable = {
 						name = franc_belgian_franc_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -5276,7 +5276,7 @@ REPLACE_OR_CREATE:buy_franc_french_franc_currency = {
 					}
 					set_variable = {
 						name = franc_french_franc_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -5456,7 +5456,7 @@ REPLACE_OR_CREATE:buy_franc_luxembourgish_franc_currency = {
 					}
 					set_variable = {
 						name = franc_luxembourgish_franc_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -5636,7 +5636,7 @@ REPLACE_OR_CREATE:buy_franc_swiss_franc_currency = {
 					}
 					set_variable = {
 						name = franc_swiss_franc_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -5816,7 +5816,7 @@ REPLACE_OR_CREATE:buy_gulden_currency = {
 					}
 					set_variable = {
 						name = gulden_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -5996,7 +5996,7 @@ REPLACE_OR_CREATE:buy_gulden_bavarian_gulden_currency = {
 					}
 					set_variable = {
 						name = gulden_bavarian_gulden_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -6176,7 +6176,7 @@ REPLACE_OR_CREATE:buy_gulden_florin_currency = {
 					}
 					set_variable = {
 						name = gulden_florin_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -6356,7 +6356,7 @@ REPLACE_OR_CREATE:buy_gulden_hungarian_forint_currency = {
 					}
 					set_variable = {
 						name = gulden_hungarian_forint_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -6536,7 +6536,7 @@ REPLACE_OR_CREATE:buy_gulden_indies_guilder_currency = {
 					}
 					set_variable = {
 						name = gulden_indies_guilder_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -6716,7 +6716,7 @@ REPLACE_OR_CREATE:buy_gulden_south_german_gulden_currency = {
 					}
 					set_variable = {
 						name = gulden_south_german_gulden_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -6896,7 +6896,7 @@ REPLACE_OR_CREATE:buy_krone_czech_koruna_currency = {
 					}
 					set_variable = {
 						name = krone_czech_koruna_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -7076,7 +7076,7 @@ REPLACE_OR_CREATE:buy_krone_danish_krone_currency = {
 					}
 					set_variable = {
 						name = krone_danish_krone_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -7256,7 +7256,7 @@ REPLACE_OR_CREATE:buy_krone_estonian_kroon_currency = {
 					}
 					set_variable = {
 						name = krone_estonian_kroon_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -7436,7 +7436,7 @@ REPLACE_OR_CREATE:buy_krone_icelandic_krona_currency = {
 					}
 					set_variable = {
 						name = krone_icelandic_krona_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -7616,7 +7616,7 @@ REPLACE_OR_CREATE:buy_krone_norwegian_krone_currency = {
 					}
 					set_variable = {
 						name = krone_norwegian_krone_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -7796,7 +7796,7 @@ REPLACE_OR_CREATE:buy_krone_slovak_koruna_currency = {
 					}
 					set_variable = {
 						name = krone_slovak_koruna_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -7976,7 +7976,7 @@ REPLACE_OR_CREATE:buy_krone_swedish_krona_currency = {
 					}
 					set_variable = {
 						name = krone_swedish_krona_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -8156,7 +8156,7 @@ REPLACE_OR_CREATE:buy_leon_leu_currency = {
 					}
 					set_variable = {
 						name = leon_leu_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -8336,7 +8336,7 @@ REPLACE_OR_CREATE:buy_leon_lev_currency = {
 					}
 					set_variable = {
 						name = leon_lev_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -8516,7 +8516,7 @@ REPLACE_OR_CREATE:buy_lira_currency = {
 					}
 					set_variable = {
 						name = lira_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -8696,7 +8696,7 @@ REPLACE_OR_CREATE:buy_lira_ducato_currency = {
 					}
 					set_variable = {
 						name = lira_ducato_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -8876,7 +8876,7 @@ REPLACE_OR_CREATE:buy_lira_ottoman_lira_currency = {
 					}
 					set_variable = {
 						name = lira_ottoman_lira_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -9056,7 +9056,7 @@ REPLACE_OR_CREATE:buy_lira_scudo_pontificio_currency = {
 					}
 					set_variable = {
 						name = lira_scudo_pontificio_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -9236,7 +9236,7 @@ REPLACE_OR_CREATE:buy_lira_scudo_sardo_currency = {
 					}
 					set_variable = {
 						name = lira_scudo_sardo_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -9416,7 +9416,7 @@ REPLACE_OR_CREATE:buy_lira_toscane_lira_currency = {
 					}
 					set_variable = {
 						name = lira_toscane_lira_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -9596,7 +9596,7 @@ REPLACE_OR_CREATE:buy_mark_currency = {
 					}
 					set_variable = {
 						name = mark_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -9776,7 +9776,7 @@ REPLACE_OR_CREATE:buy_mark_finnish_markka_currency = {
 					}
 					set_variable = {
 						name = mark_finnish_markka_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -9956,7 +9956,7 @@ REPLACE_OR_CREATE:buy_peso_currency = {
 					}
 					set_variable = {
 						name = peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -10136,7 +10136,7 @@ REPLACE_OR_CREATE:buy_peso_argentine_peso_currency = {
 					}
 					set_variable = {
 						name = peso_argentine_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -10316,7 +10316,7 @@ REPLACE_OR_CREATE:buy_peso_bolivien_peso_currency = {
 					}
 					set_variable = {
 						name = peso_bolivien_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -10496,7 +10496,7 @@ REPLACE_OR_CREATE:buy_peso_chilean_peso_currency = {
 					}
 					set_variable = {
 						name = peso_chilean_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -10676,7 +10676,7 @@ REPLACE_OR_CREATE:buy_peso_colombian_peso_currency = {
 					}
 					set_variable = {
 						name = peso_colombian_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -10856,7 +10856,7 @@ REPLACE_OR_CREATE:buy_peso_costa_rican_colon_currency = {
 					}
 					set_variable = {
 						name = peso_costa_rican_colon_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -11036,7 +11036,7 @@ REPLACE_OR_CREATE:buy_peso_cuban_peso_currency = {
 					}
 					set_variable = {
 						name = peso_cuban_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -11216,7 +11216,7 @@ REPLACE_OR_CREATE:buy_peso_ecuadorian_peso_currency = {
 					}
 					set_variable = {
 						name = peso_ecuadorian_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -11396,7 +11396,7 @@ REPLACE_OR_CREATE:buy_peso_el_salvador_colon_currency = {
 					}
 					set_variable = {
 						name = peso_el_salvador_colon_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -11576,7 +11576,7 @@ REPLACE_OR_CREATE:buy_peso_guatemalan_quetzal_currency = {
 					}
 					set_variable = {
 						name = peso_guatemalan_quetzal_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -11756,7 +11756,7 @@ REPLACE_OR_CREATE:buy_peso_honduran_lempira_currency = {
 					}
 					set_variable = {
 						name = peso_honduran_lempira_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -11936,7 +11936,7 @@ REPLACE_OR_CREATE:buy_peso_mexican_peso_currency = {
 					}
 					set_variable = {
 						name = peso_mexican_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -12116,7 +12116,7 @@ REPLACE_OR_CREATE:buy_peso_nicaraguan_cordoba_currency = {
 					}
 					set_variable = {
 						name = peso_nicaraguan_cordoba_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -12296,7 +12296,7 @@ REPLACE_OR_CREATE:buy_peso_paraguayan_peso_currency = {
 					}
 					set_variable = {
 						name = peso_paraguayan_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -12476,7 +12476,7 @@ REPLACE_OR_CREATE:buy_peso_philippine_peso_currency = {
 					}
 					set_variable = {
 						name = peso_philippine_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -12656,7 +12656,7 @@ REPLACE_OR_CREATE:buy_peso_sol_de_oro_currency = {
 					}
 					set_variable = {
 						name = peso_sol_de_oro_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -12836,7 +12836,7 @@ REPLACE_OR_CREATE:buy_peso_uruguayan_peso_currency = {
 					}
 					set_variable = {
 						name = peso_uruguayan_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -13016,7 +13016,7 @@ REPLACE_OR_CREATE:buy_peso_venezuelan_peso_currency = {
 					}
 					set_variable = {
 						name = peso_venezuelan_peso_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -13196,7 +13196,7 @@ REPLACE_OR_CREATE:buy_pound_egyptian_pound_currency = {
 					}
 					set_variable = {
 						name = pound_egyptian_pound_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -13376,7 +13376,7 @@ REPLACE_OR_CREATE:buy_pound_irish_pound_currency = {
 					}
 					set_variable = {
 						name = pound_irish_pound_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -13556,7 +13556,7 @@ REPLACE_OR_CREATE:buy_pound_sterling_currency = {
 					}
 					set_variable = {
 						name = pound_sterling_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -13736,7 +13736,7 @@ REPLACE_OR_CREATE:buy_real_currency = {
 					}
 					set_variable = {
 						name = real_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -13916,7 +13916,7 @@ REPLACE_OR_CREATE:buy_real_brazilian_real_currency = {
 					}
 					set_variable = {
 						name = real_brazilian_real_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -14096,7 +14096,7 @@ REPLACE_OR_CREATE:buy_rupee_indian_rupee_currency = {
 					}
 					set_variable = {
 						name = rupee_indian_rupee_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -14276,7 +14276,7 @@ REPLACE_OR_CREATE:buy_rupee_indonesian_rupiah_currency = {
 					}
 					set_variable = {
 						name = rupee_indonesian_rupiah_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -14456,7 +14456,7 @@ REPLACE_OR_CREATE:buy_spe_baht_currency = {
 					}
 					set_variable = {
 						name = spe_baht_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -14636,7 +14636,7 @@ REPLACE_OR_CREATE:buy_spe_dong_currency = {
 					}
 					set_variable = {
 						name = spe_dong_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -14816,7 +14816,7 @@ REPLACE_OR_CREATE:buy_spe_drachma_currency = {
 					}
 					set_variable = {
 						name = spe_drachma_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -14996,7 +14996,7 @@ REPLACE_OR_CREATE:buy_spe_korean_won_currency = {
 					}
 					set_variable = {
 						name = spe_korean_won_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -15176,7 +15176,7 @@ REPLACE_OR_CREATE:buy_spe_latvian_lats_currency = {
 					}
 					set_variable = {
 						name = spe_latvian_lats_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -15356,7 +15356,7 @@ REPLACE_OR_CREATE:buy_spe_lithuanian_litas_currency = {
 					}
 					set_variable = {
 						name = spe_lithuanian_litas_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -15536,7 +15536,7 @@ REPLACE_OR_CREATE:buy_spe_peseta_currency = {
 					}
 					set_variable = {
 						name = spe_peseta_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -15716,7 +15716,7 @@ REPLACE_OR_CREATE:buy_spe_ruble_currency = {
 					}
 					set_variable = {
 						name = spe_ruble_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -15896,7 +15896,7 @@ REPLACE_OR_CREATE:buy_spe_uni_currency = {
 					}
 					set_variable = {
 						name = spe_uni_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -16076,7 +16076,7 @@ REPLACE_OR_CREATE:buy_spe_yen_currency = {
 					}
 					set_variable = {
 						name = spe_yen_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -16256,7 +16256,7 @@ REPLACE_OR_CREATE:buy_spe_yuan_currency = {
 					}
 					set_variable = {
 						name = spe_yuan_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -16436,7 +16436,7 @@ REPLACE_OR_CREATE:buy_spe_zloti_currency = {
 					}
 					set_variable = {
 						name = spe_zloti_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -16616,7 +16616,7 @@ REPLACE_OR_CREATE:buy_thaler_hannoveraner_thaler_currency = {
 					}
 					set_variable = {
 						name = thaler_hannoveraner_thaler_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -16796,7 +16796,7 @@ REPLACE_OR_CREATE:buy_thaler_prussian_thaler_currency = {
 					}
 					set_variable = {
 						name = thaler_prussian_thaler_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var
@@ -16976,7 +16976,7 @@ REPLACE_OR_CREATE:buy_thaler_saxon_thaler_currency = {
 					}
 					set_variable = {
 						name = thaler_saxon_thaler_quantity_var
-						value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size
+						value = { value = scope:undervalued_currency_country_owner.zz_ef_fx_deal_size if = { limit = { root = { is_ai = yes zz_ef_cb_cover < zz_ef_cover_normal } } value = 0 } }
 					}
 					set_variable = {
 						name = stockpiling_undervalued_quantity_var

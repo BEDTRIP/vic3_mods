@@ -66,12 +66,21 @@ zz_ef_mp_clear = {
 	if = { limit = { has_variable = zz_ef_mp_armed } remove_variable = zz_ef_mp_armed }
 }
 
-# The target reached: the parity becomes today's value (new metal content), the law ends.
+# The target reached: the parity moves with the cover (new metal content), the law ends. Since
+# M.2 (4.10) the value stays at the parity while the cover is 25%+, so "the parity becomes today's
+# value" would change nothing: the parity x cover now / cover at the start -- the metal per unit
+# falls (rises) as much as the money printed (taken) moved the cover, the cover at the new parity
+# is the start's again.
 zz_ef_mp_complete = {
 	set_variable = { name = zz_ef_mp_parity_before value = var:money_value_target_1 }
 	if = {
-		limit = { money_value_0 > 0 }
-		set_variable = { name = money_value_target_1 value = money_value_0 }
+		limit = {
+			has_variable = zz_ef_mp_start
+			var:zz_ef_mp_start > 0
+			zz_ef_cb_cover > 0
+		}
+		change_variable = { name = money_value_target_1 multiply = zz_ef_cb_cover }
+		change_variable = { name = money_value_target_1 divide = var:zz_ef_mp_start }
 	}
 	debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|done|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|target [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_target_v')|3]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_cum_v')|0]|parity_before [THIS.GetCountry.MakeScope.Var('zz_ef_mp_parity_before').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
 	set_variable = { name = zz_ef_mp_cooldown value = yes days = 730 }
@@ -139,15 +148,15 @@ zz_ef_mp_step = {
 			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|step|dev [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_dir')|0]|armed [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_armed_v')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|start [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_start_v')|3]|target [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_target_v')|3]|flow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_flow_v')|0]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_cum_v')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('money_supply')|0]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|ratio [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_value_ratio')|3]"
 		}
 	}
-	# the AI's rule (В4.1): it devalues an under-covered currency that has fallen, revalues an
-	# over-covered one that has risen -- in both cases the parity follows the value
+	# the AI's rule (M.4, the user 4.10): the parity is fixed; it moves only when the cover has been
+	# under 25% (devaluation) or over 80% (revaluation) for two years running -- one step, at most
+	# 25%, to the parity that puts the cover back at 40%, then 5 years' pause. No printing: the
+	# metal content changes (zz_ef_mp_ai_parity_step). The months are counted every month, also
+	# during the pause.
 	else_if = {
 		limit = {
 			is_ai = yes
 			has_law = law_type:law_no_monetary_policy
-			NOT = { has_variable = zz_ef_mp_cooldown }
-			NOT = { has_law = law_type:law_isolationism }
-			has_technology_researched = central_banking
 			zz_ef_mp_can_work = yes
 			# not before the CB's metal is in our scale (run 25: on day 1 E&F's metal gave a cover of
 			# 104 and nearly every AI took a revaluation before the rescale of week 12)
@@ -156,26 +165,40 @@ zz_ef_mp_step = {
 			NOT = { has_variable = zz_ef_metal_rescale_due }
 		}
 		if = {
-			limit = {
-				zz_ef_cb_cover < zz_ef_mp_ai_dev_cover
-				zz_ef_mp_value_ratio <= zz_ef_mp_ai_dev_ratio
-			}
-			activate_law = law_type:law_devaluation
-			if = {
-				limit = { NOT = { has_variable = zz_ef_mp_armed } }
-				zz_ef_mp_init = yes
-			}
+			limit = { NOT = { has_variable = zz_ef_mp_low_months } }
+			set_variable = { name = zz_ef_mp_low_months value = 0 }
+			set_variable = { name = zz_ef_mp_high_months value = 0 }
 		}
-		else_if = {
+		if = {
+			limit = { zz_ef_cb_cover < zz_ef_mp_ai_dev_cover }
+			change_variable = { name = zz_ef_mp_low_months add = 1 }
+		}
+		else = {
+			set_variable = { name = zz_ef_mp_low_months value = 0 }
+		}
+		if = {
+			limit = { zz_ef_cb_cover > zz_ef_mp_ai_rev_cover }
+			change_variable = { name = zz_ef_mp_high_months add = 1 }
+		}
+		else = {
+			set_variable = { name = zz_ef_mp_high_months value = 0 }
+		}
+		if = {
 			limit = {
-				zz_ef_cb_cover > zz_ef_mp_ai_rev_cover
-				zz_ef_mp_value_ratio >= zz_ef_mp_ai_rev_ratio
+				NOT = { has_variable = zz_ef_mp_cooldown }
+				NOT = { has_law = law_type:law_isolationism }
+				has_technology_researched = central_banking
+				OR = {
+					var:zz_ef_mp_low_months >= zz_ef_mp_ai_months
+					var:zz_ef_mp_high_months >= zz_ef_mp_ai_months
+				}
 			}
-			activate_law = law_type:law_revaluation
-			if = {
-				limit = { NOT = { has_variable = zz_ef_mp_armed } }
-				zz_ef_mp_init = yes
-			}
+			set_variable = { name = zz_ef_mp_parity_before value = var:money_value_target_1 }
+			change_variable = { name = money_value_target_1 multiply = zz_ef_mp_ai_parity_step }
+			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ai_parity|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|low [THIS.GetCountry.MakeScope.Var('zz_ef_mp_low_months').GetValue|0]|high [THIS.GetCountry.MakeScope.Var('zz_ef_mp_high_months').GetValue|0]|parity_before [THIS.GetCountry.MakeScope.Var('zz_ef_mp_parity_before').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
+			set_variable = { name = zz_ef_mp_low_months value = 0 }
+			set_variable = { name = zz_ef_mp_high_months value = 0 }
+			set_variable = { name = zz_ef_mp_cooldown value = yes days = 1825 }
 		}
 	}
 }
