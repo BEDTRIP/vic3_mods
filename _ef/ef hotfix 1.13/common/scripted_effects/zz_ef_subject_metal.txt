@@ -1,0 +1,116 @@
+﻿#############################################
+# M.8 / В3.2 and В2.5 (the user, 4.10).
+#
+# M.8 -- once, at week 12 of a game (with the CB rescale, zz_ef_money_model_step): a subject's metal
+# in E&F's scale (the East India Company: silver 1.79 bn, no CB; Hanover: a CB, 423M -- ~10 times
+# our money) is recounted to 40% of its money supply at its parity and handed to the overlord's
+# CB (its capital's CB state, in the overlord's standard metal); the subject's CB states keep
+# nothing. An independent country without a CB is recounted to 40% the same way and keeps it.
+# Moving subjects to the overlord's currency law (В3.2) is NOT done here: E&F has a law per
+# currency (95) -- a generator, later.
+#
+# В2.5 -- a CB state that changed hands (the 1839 revolt in the Home Counties took Britain's CB
+# state: the metal 0, the value 0): its metal goes back to the old owner's capital, which becomes
+# a CB place (central_bank_historic_place) if it is not one. Weekly; every CB state remembers its
+# owner (var:zz_ef_cb_owner).
+#############################################
+
+# Country scope, once (var:zz_ef_subject_metal_done).
+zz_ef_subject_metal_step = {
+	if = {
+		limit = {
+			NOT = { has_variable = zz_ef_subject_metal_done }
+			OR = {
+				is_subject = yes
+				NOT = { has_modifier = has_central_bank }
+			}
+			zz_ef_metal_in_gold > 0
+		}
+		set_variable = { name = zz_ef_subject_metal_done value = yes }
+		# the metal 40% of the money supply would need, in gold
+		set_variable = { name = zz_ef_metal_target_gold value = zz_ef_metal_target_in_gold }
+		if = {
+			limit = { is_subject = yes }
+			# to the overlord's CB, in its standard
+			overlord = {
+				random_scope_state = {
+					limit = { is_capital = yes }
+					if = {
+						limit = { NOT = { has_modifier = central_bank_historic_place } }
+						add_modifier = { name = central_bank_historic_place }
+					}
+					if = {
+						limit = { owner = { has_law = law_type:law_silver_standard } }
+						if = { limit = { NOT = { has_variable = silver_state_1 } } set_variable = { name = silver_state_1 value = 0 } }
+						change_variable = {
+							name = silver_state_1
+							add = {
+								value = root.var:zz_ef_metal_target_gold
+								multiply = gold_to_silver_rate
+							}
+						}
+					}
+					else = {
+						if = { limit = { NOT = { has_variable = gold_state_1 } } set_variable = { name = gold_state_1 value = 0 } }
+						change_variable = { name = gold_state_1 add = root.var:zz_ef_metal_target_gold }
+					}
+				}
+			}
+			every_scope_state = {
+				limit = { has_modifier = central_bank_historic_place }
+				if = { limit = { has_variable = gold_state_1 } set_variable = { name = gold_state_1 value = 0 } }
+				if = { limit = { has_variable = silver_state_1 } set_variable = { name = silver_state_1 value = 0 } }
+			}
+		}
+		else = {
+			# independent, no CB: scale its own metal to the target
+			set_variable = { name = zz_ef_metal_scale value = var:zz_ef_metal_target_gold }
+			change_variable = { name = zz_ef_metal_scale divide = zz_ef_metal_in_gold }
+			every_scope_state = {
+				limit = { has_modifier = central_bank_historic_place }
+				if = { limit = { has_variable = gold_state_1 } change_variable = { name = gold_state_1 multiply = owner.var:zz_ef_metal_scale } }
+				if = { limit = { has_variable = silver_state_1 } change_variable = { name = silver_state_1 multiply = owner.var:zz_ef_metal_scale } }
+			}
+		}
+		debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|subject_metal|subj [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_subject')|0]|target_gold [THIS.GetCountry.MakeScope.Var('zz_ef_metal_target_gold').GetValue|0]"
+	}
+}
+
+# Country scope, weekly: CB states taken from us go back to us in metal (В2.5).
+zz_ef_cb_state_owner_step = {
+	every_scope_state = {
+		limit = { has_modifier = central_bank_historic_place }
+		if = {
+			limit = {
+				has_variable = zz_ef_cb_owner
+				NOT = { var:zz_ef_cb_owner = owner }
+				exists = var:zz_ef_cb_owner
+				var:zz_ef_cb_owner = { exists = capital }
+			}
+			save_scope_as = zz_ef_lost_cb_state
+			var:zz_ef_cb_owner = {
+				capital = {
+					if = {
+						limit = { NOT = { has_modifier = central_bank_historic_place } }
+						add_modifier = { name = central_bank_historic_place }
+					}
+					if = { limit = { NOT = { has_variable = gold_state_1 } } set_variable = { name = gold_state_1 value = 0 } }
+					if = { limit = { NOT = { has_variable = silver_state_1 } } set_variable = { name = silver_state_1 value = 0 } }
+					if = {
+						limit = { scope:zz_ef_lost_cb_state = { has_variable = gold_state_1 } }
+						change_variable = { name = gold_state_1 add = scope:zz_ef_lost_cb_state.var:gold_state_1 }
+					}
+					if = {
+						limit = { scope:zz_ef_lost_cb_state = { has_variable = silver_state_1 } }
+						change_variable = { name = silver_state_1 add = scope:zz_ef_lost_cb_state.var:silver_state_1 }
+					}
+					set_variable = { name = zz_ef_cb_owner value = owner }
+				}
+				debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cb_state_lost"
+			}
+			if = { limit = { has_variable = gold_state_1 } set_variable = { name = gold_state_1 value = 0 } }
+			if = { limit = { has_variable = silver_state_1 } set_variable = { name = silver_state_1 value = 0 } }
+		}
+		set_variable = { name = zz_ef_cb_owner value = owner }
+	}
+}

@@ -1,0 +1,124 @@
+﻿#############################################
+# В3.6 (the user, 3.10; decided 4.10) -- the reference currency is chosen by geopolitics too: a
+# great power with a credit rating above A (E&F's country_credit_note_fixe >= 8: AA, AAA) and,
+# among those, the biggest reserves in gold (national_capacity_in_gold -- since M.1 the CB's
+# reserves themselves). No candidate -- the reference stays where it is ("Britain is the best,
+# but who cares if it is in default"). E&F took the biggest reserves of all.
+# Also: both lists are cleared first (E&F only added to them, year after year).
+# The candidate trigger: scripted_triggers/zz_ef_reference_currency_triggers.txt.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's national_capacity_variable_list
+# (scripted_effects/08_list_effect.txt:202): E&F's body plus the three changes above.
+#############################################
+
+REPLACE_OR_CREATE:national_capacity_variable_list = {
+	clear_variable_list = national_capacity_variable_list
+	clear_variable_list = reference_currency_list_1
+    every_country = {
+        limit = {
+            has_modifier = has_central_bank
+			not = {
+				or = {
+					market_owner_is_root_univ_with_buiding = yes
+					is_subject_custom_trigger = yes
+				}
+			}
+        }
+        root = {
+            add_to_variable_list = {
+                name = national_capacity_variable_list
+                target = prev
+            }
+        }
+    }
+    root  = {
+        if = {
+            clear_variable_list = list_before_order
+            every_in_list = {
+                variable = national_capacity_variable_list
+                root = {
+                    add_to_variable_list = {
+                        name = list_before_order
+                        target = prev
+                    }
+                }
+            }
+            clear_global_variable_list = national_capacity_variable_list_ordered_1
+            ordered_in_list = {
+                variable = list_before_order
+                order_by = national_capacity_in_gold
+                min = 0
+                max = 10
+                check_range_bounds = no
+                root = {
+                    add_to_global_variable_list = {
+                        name = national_capacity_variable_list_ordered_1
+                        target = prev
+                    }
+                    if = {
+                        limit = { prev = { zz_ef_reference_candidate = yes } }
+                        add_to_variable_list = {
+                            name = reference_currency_list_1
+                            target = prev
+                        }
+                    }
+                }
+            }
+            clear_variable_list = reference_currency_country_1
+            ordered_in_list = {
+                variable = reference_currency_list_1
+                order_by = national_capacity_in_gold
+                min = 0
+                position = 1
+                max = 1
+                check_range_bounds = no
+                root = {
+                    add_to_variable_list = {
+                        name = reference_currency_country_1
+                        target = prev
+                    }
+                }
+            } 
+
+			if = {
+				limit = { any_in_list = { variable = reference_currency_country_1 } }
+			every_country = {
+				limit = {
+					has_modifier = global_monetary_reference
+				}
+				save_scope_as = target_country
+			}
+            every_in_list = {
+                variable = national_capacity_variable_list 
+				remove_modifier = global_monetary_reference
+            } 
+
+            every_in_list = {
+                variable = reference_currency_country_1 
+				add_modifier = {
+					name = global_monetary_reference
+				}
+
+				if = {
+					limit = { 
+						not = { 
+							scope:target_country = this 
+						}
+					} 
+					#Event for player
+					capital= {
+						save_scope_as = capital_state
+					}
+					save_scope_as = target_country
+
+					every_country = {
+						limit = {
+							is_player = yes 
+						}
+						trigger_event = 00_ef_economic_event.33
+					}   
+				} 
+			}
+            }
+        }
+    }
+}

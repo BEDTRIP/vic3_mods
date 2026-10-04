@@ -1,0 +1,61 @@
+﻿#############################################
+# В3.6 / М.9 (the user, 4.10).
+# The reference currency's candidate (В3.6): a great power, credit rating above A (E&F's note >= 8:
+# AA, AAA), a central bank, a metal or gold exchange standard, not in default (E&F's
+# central_bank_bankruptcy).
+# Strong / balanced / weak (М.9 b): against the reference currency, not against the average of all
+# currencies (E&F's money_value_median compared grams of gold per pound with grams per franc). The
+# measure: the currency's value against its own parity, divided by the reference's
+# (zz_ef_currency_strength, script_values/zz_ef_reference_currency_values.txt); strong > 1.25,
+# weak < 0.75, as E&F's bands. Under a metal standard (M.2) the value is the parity while the cover
+# is 25%+, so "weak" = redemption suspended.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's is_strong_currency, is_balanced_currency,
+# is_weak_currency (scripted_triggers/00_ef_custom_trigger.txt:607-643): E&F's conditions, the
+# comparisons with the median replaced.
+#############################################
+
+zz_ef_reference_candidate = {
+	country_rank >= rank_value:great_power
+	has_modifier = has_central_bank
+	has_variable = country_credit_note_fixe
+	var:country_credit_note_fixe >= 8
+	OR = {
+		has_law = law_type:law_gold_standard
+		has_law = law_type:law_silver_standard
+		has_law = law_type:law_bimetallism_standard
+		has_law = law_type:law_gold_exchange_standard
+	}
+	NOT = { has_variable = central_bank_bankruptcy var:central_bank_bankruptcy > 0 }
+}
+
+REPLACE_OR_CREATE:is_strong_currency = {
+	has_modifier = has_central_bank
+	not = {
+		has_modifier = global_monetary_reference
+		money_value_in_gold < 0.01
+	}
+	zz_ef_currency_strength > 1.25
+	var:central_bank_bankruptcy = 0
+}
+REPLACE_OR_CREATE:is_balanced_currency = {
+	has_modifier = has_central_bank
+	not = {
+		has_modifier = global_monetary_reference
+		money_value_in_gold < 0.01
+		zz_ef_currency_strength > 1.25
+	}
+	zz_ef_currency_strength <= 1.25
+	zz_ef_currency_strength >= 0.75
+	var:central_bank_bankruptcy = 0
+}
+REPLACE_OR_CREATE:is_weak_currency = {
+	has_modifier = has_central_bank
+	not = {
+		has_modifier = global_monetary_reference
+		money_value_in_gold < 0.01
+		zz_ef_currency_strength >= 0.75
+	}
+	zz_ef_currency_strength < 0.75
+	money_value_in_gold > 0.01
+	var:central_bank_bankruptcy = 0
+}

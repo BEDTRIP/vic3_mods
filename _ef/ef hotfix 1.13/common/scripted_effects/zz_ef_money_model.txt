@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.39 / EF.48 (2026-09-30) -- the money model, in the engine's money, on
 # the budget's own rhythm: a WEEKLY step (bank credit from the central bank
 # at the key rate, its interest to the treasury, the ledger of each account's
@@ -92,6 +92,8 @@ zz_ef_money_model_step = {
 	set_variable = { name = zz_ef_f_cb_rescale value = 0 }
 	# foreign currency in the reserves (night 2, item 2), before the rescale
 	zz_ef_fx_metal_update = yes
+	# В2.5 (4.10): CB states taken from a country send their metal back to it
+	zz_ef_cb_state_owner_step = yes
 	if = {
 		limit = { NOT = { has_variable = zz_ef_weeks_run } }
 		set_variable = { name = zz_ef_weeks_run value = 0 }
@@ -99,6 +101,11 @@ zz_ef_money_model_step = {
 	if = {
 		limit = { var:zz_ef_weeks_run < 100 }
 		change_variable = { name = zz_ef_weeks_run add = 1 }
+	}
+	# M.8 (4.10): subjects' and CB-less countries' E&F metal to 40% of their money, once at week 12
+	if = {
+		limit = { var:zz_ef_weeks_run >= 12 }
+		zz_ef_subject_metal_step = yes
 	}
 
 	# Gold parity re-anchor, once per change of what the money supply counts.
@@ -351,6 +358,7 @@ zz_ef_money_model_step = {
 	zz_ef_money_window_roll = { F = cc_repay }
 	zz_ef_money_window_roll = { F = cc_int }
 	zz_ef_money_window_roll = { F = cc_net }
+	zz_ef_money_window_roll = { F = hume_money }
 	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
 	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
 	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
@@ -518,6 +526,7 @@ zz_ef_pop_savings_step = {
 zz_ef_cb_hume_step = {
 	set_variable = { name = zz_ef_f_ext_net value = zz_ef_ext_net_week }
 	set_variable = { name = zz_ef_f_hume value = 0 }
+	set_variable = { name = zz_ef_f_hume_money value = 0 }
 	if = {
 		limit = {
 			has_modifier = has_central_bank
@@ -548,6 +557,39 @@ zz_ef_cb_hume_step = {
 				}
 				change_variable = { name = gold_state_1 add = owner.var:zz_ef_f_hume }
 			}
+		}
+		# M.3 (the user, 4.10): Hume at full strength -- the metal that came in is coined: the CB
+		# issues as much money at the parity; the metal that went out takes as much money out of
+		# circulation. The engine has no effect on a building's cash, so the money goes into / out of
+		# the banks (the pool: the exporters' receipts deposited; the importers' payments drawn),
+		# at most the pool on the way out. The pool operation falls into next week's window, as the
+		# deposits do (var:zz_ef_w_hume_money in the pool's and the leak's accounts).
+		# Check (night 4.10): the engine already pays exporters for the goods sold abroad and takes
+		# the importers' money, so part of this may count twice -- switch: zz_ef_hume_money_on.
+		if = {
+			limit = {
+				has_variable = money_value_target_1
+				var:money_value_target_1 > 0
+				NOT = { var:zz_ef_f_hume = 0 }
+				zz_ef_hume_money_on > 0
+			}
+			set_variable = { name = zz_ef_f_hume_money value = var:zz_ef_f_hume }
+			change_variable = { name = zz_ef_f_hume_money divide = var:money_value_target_1 }
+			if = {
+				limit = { var:zz_ef_f_hume_money < 0 }
+				set_variable = {
+					name = zz_ef_f_hume_money
+					value = {
+						value = var:zz_ef_f_hume_money
+						min = {
+							value = investment_pool
+							min = 0
+							multiply = -1
+						}
+					}
+				}
+			}
+			add_investment_pool = var:zz_ef_f_hume_money
 		}
 	}
 }
@@ -623,6 +665,8 @@ zz_ef_pop_extra_income_step = {
 zz_ef_money_model_monthly_step = {
 	# night 2, item 1: the silver-to-gold rate from market prices
 	zz_ef_silver_rate_update = yes
+	# М.9 (4.10): the reference currency's value / parity for the strength of the others
+	zz_ef_reference_strength_step = yes
 	# В2.1 (2.10): part of the net exports paid in the importer's currency
 	# (generated, scripted_effects/zz_ef_reserve_trade.txt)
 	zz_ef_rc_step = yes

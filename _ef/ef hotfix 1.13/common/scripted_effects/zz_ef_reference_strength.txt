@@ -1,0 +1,11 @@
+﻿#############################################
+# М.9 (4.10): the reference currency keeps its value / parity for everyone's strength
+# (script_values/zz_ef_reference_currency_values.txt). Monthly, from the money model's monthly step.
+#############################################
+
+zz_ef_reference_strength_step = {
+	if = {
+		limit = { has_modifier = global_monetary_reference }
+		set_global_variable = { name = zz_ef_ref_vtp value = zz_ef_value_to_parity }
+	}
+}

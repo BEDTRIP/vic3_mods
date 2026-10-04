@@ -1,0 +1,76 @@
+﻿#############################################
+# М.9 (the user, 4.10): a currency's strength against the reference currency (see
+# scripted_triggers/zz_ef_reference_currency_triggers.txt). COUNTRY scope.
+# zz_ef_value_to_parity: under a metal standard with a parity -- the value / the parity (1 at the
+# parity; M.2); else E&F's own measure -- the value in gold / the median of all currencies.
+# The reference's own value_to_parity is kept monthly in global_var:zz_ef_ref_vtp by the reference
+# country (zz_ef_reference_strength_step, the money model's monthly step).
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's difference_with_average_gold_exchange_
+# rate_currencies and money_value_median_and_money_value_in_gold_ratio (script_values/
+# 00_economic_scripted_value.txt:4970, 8542): our strength instead of the value / the median --
+# they drive E&F's trade-route modifiers and the tooltip's "+15% against the average".
+#############################################
+
+zz_ef_value_to_parity = {
+	value = 1
+	if = {
+		limit = { has_global_variable = money_value_median global_var:money_value_median > 0 }
+		value = money_value_in_gold
+		divide = global_var:money_value_median
+	}
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		value = money_value_0
+		divide = var:money_value_target_1
+	}
+}
+zz_ef_currency_strength = {
+	value = zz_ef_value_to_parity
+	if = {
+		limit = { has_global_variable = zz_ef_ref_vtp global_var:zz_ef_ref_vtp > 0 }
+		divide = global_var:zz_ef_ref_vtp
+	}
+}
+REPLACE_OR_CREATE:difference_with_average_gold_exchange_rate_currencies = {
+	value = zz_ef_currency_strength
+}
+REPLACE_OR_CREATE:money_value_median_and_money_value_in_gold_ratio = {
+	value = zz_ef_currency_strength
+}
+
+# M.8 (4.10, scripted_effects/zz_ef_subject_metal.txt): a country's metal in gold, and the metal in
+# gold 40% of its money supply needs at its parity (E&F's value in gold when there is no parity).
+zz_ef_metal_in_gold = {
+	value = gold_state_native_for_stockpile
+	add = {
+		value = silver_state_native_for_stockpile
+		multiply = silver_to_gold_rate
+	}
+}
+zz_ef_metal_target_in_gold = {
+	value = zz_ef_agg_m2
+	multiply = zz_ef_cover_normal
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		multiply = var:money_value_target_1
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			multiply = silver_to_gold_rate
+		}
+	}
+	else = {
+		multiply = money_value_in_gold
+	}
+	min = 0
+}

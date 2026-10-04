@@ -557,6 +557,8 @@ zz_ef_pool_other_week = {
 	add = zz_ef_v_w_cc_issue
 	subtract = zz_ef_v_w_cc_repay
 	subtract = zz_ef_v_w_cc_int
+	# M.3 (4.10): Hume's coined / withdrawn money
+	subtract = zz_ef_v_w_hume_money
 }
 # Unexplained change of M2 this week: the change minus the budget's lines
 # outside the accounts, minus the CB's net credit, plus the foreign bonds the
@@ -582,6 +584,8 @@ zz_ef_leak_week = {
 	subtract = zz_ef_v_f_pool_other
 	subtract = zz_ef_v_d_tc
 	subtract = zz_ef_tr_other_net
+	# M.3 (4.10): Hume's coined / withdrawn money -- the CB's, not pops'
+	subtract = zz_ef_v_w_hume_money
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
 # scripted moves on the treasury -- ai_refund_central_bank (the government
@@ -789,8 +793,16 @@ zz_ef_v_w_dep_int = {
 # cover falls under 40%. The CB's reserves in money (zz_ef_cb_metal_money) and
 # Hume's metal per unit (money_value_0) stay consistent: an outflow of X
 # lowers the reserves by X.
+#
+# M.1 / M.2 (the user, 4.10): one measure. The reserves = the CB's metal + foreign currency in its
+# reserves, in the standard's metal; "gold pledged abroad" and "gold loaned to the CB"
+# (gold_loaned_to_central_bank_in_national_metal) are NOT reserves (В2.6: the debt's repayment cut
+# the capacity in steps at the turn of the year). The capacity is the reserves themselves -- no
+# x 2.5 (the "national capital" table read 193M for Britain's 9.87M of metal, В2.7); the cover =
+# the reserves at parity / M2 everywhere (zz_ef_cb_cover), the value comes from the cover and the
+# parity (money_value_0 below), not from capacity / money.
 zz_ef_cover_normal = 0.4
-zz_ef_capacity_per_metal = 2.5
+zz_ef_capacity_per_metal = 1
 REPLACE_OR_CREATE:national_capacity = {
 	value = 1
 	if = {
@@ -802,13 +814,81 @@ REPLACE_OR_CREATE:national_capacity = {
 			}
 		}
 		add = central_bank_reserves
-		add = gold_loaned_to_central_bank_in_national_metal
 		# night 2, item 2 (2.10): foreign currency in the reserves, in the
 		# standard's metal (var:zz_ef_fx_metal, kept weekly by the step)
 		add = zz_ef_v_fx_metal
 		multiply = zz_ef_capacity_per_metal
 	}
 	min = 0.01
+}
+
+# M.2 (the user, 4.10): under a metal standard the currency is worth its parity (the mint par:
+# metal per unit, var:money_value_target_1) within +-2% while the cover is 25%+ -- notes are
+# redeemed in metal, arbitrage holds the value; the band leans with the cover (+-0.1 x the gap to
+# 40%). Under 25% redemption is suspended and the value = parity x cover / 40%. Fiat and the gold
+# exchange standard: E&F's formula (fiat 0.01 -- E&F's own money_value then; gold exchange by the
+# reference currency). Was (E&F, and ours with x 2.5): value = capacity / money -- the value
+# swung with every week's metal and money, and the AI's devaluation chased it.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's money_value_0
+# (script_values/00_economic_scripted_value.txt:5408).
+zz_ef_value_floor_cover = 0.25
+zz_ef_value_band = 0.02
+REPLACE_OR_CREATE:money_value_0 = {
+	value = 0
+	if = {
+		limit = {
+			has_law = law_type:law_fiat_standard
+		}
+		value = 0.01
+	}
+	if = {
+		limit = {
+			or = {
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+				has_law = law_type:law_gold_standard
+			}
+		}
+		value = zz_ef_metal_value
+	}
+	if = {
+		limit = {
+			has_law = law_type:law_gold_exchange_standard
+		}
+		add = money_value_by_reference_currency
+	}
+}
+zz_ef_metal_value = {
+	# no parity yet (a standard just adopted, E&F sets it from the value): E&F's formula
+	value = national_capacity
+	divide = money_supply
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		value = var:money_value_target_1
+		if = {
+			limit = { zz_ef_cb_cover >= zz_ef_value_floor_cover }
+			multiply = {
+				value = zz_ef_cb_cover
+				subtract = zz_ef_cover_normal
+				multiply = 0.1
+				min = {
+					value = zz_ef_value_band
+					multiply = -1
+				}
+				max = zz_ef_value_band
+				add = 1
+			}
+		}
+		else = {
+			multiply = {
+				value = zz_ef_cb_cover
+				divide = zz_ef_cover_normal
+			}
+		}
+	}
 }
 
 # The metal the CB pays out from (silver standard: silver; else gold, for
@@ -839,6 +919,8 @@ zz_ef_ext_net_week = {
 	add = zz_ef_v_f_trade
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
+	# M.6 (4.10): dividends from abroad, net
+	add = zz_ef_v_f_div
 }
 # Metal moved by it: the flow x the currency's PARITY (metal per unit of
 # money at the mint par, var:money_value_target_1), never more than the CB
@@ -1055,6 +1137,17 @@ zz_ef_v_f_abr = {
 zz_ef_v_f_ext_net = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_ext_net } value = var:zz_ef_f_ext_net }
+}
+# M.3 (4.10): Hume's money on (1) / off (0) -- see zz_ef_cb_hume_step.
+zz_ef_hume_money_on = 1
+# M.3 (4.10): money the CB issued (+) / withdrew (-) for Hume's metal, this receiver / last window
+zz_ef_v_f_hume_money = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_hume_money } value = var:zz_ef_f_hume_money }
+}
+zz_ef_v_w_hume_money = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_hume_money } value = var:zz_ef_w_hume_money }
 }
 zz_ef_v_f_hume = {
 	value = 0
@@ -2494,15 +2587,18 @@ zz_ef_profit_week = {
 		}
 	}
 }
+# M.6 / В1.4 (the user, 4.10: a channel back for the metal): dividends and interest from abroad,
+# net -- (GDP owned in foreign countries - GDP foreign-owned here, the engine's yearly numbers from
+# the GUI bridge) x the owners' yield, a week. Was: x the buildings' profit / GDP -- the profit of a
+# year came out at ~1 GDP (Britain +11..25M a year, run e0_7), in the log only. The yield 15% of the
+# GDP owned (capital's share of value added ~30-40%, half of it paid out) -- decided at night,
+# check. Now in the flow abroad (zz_ef_ext_net_week): it moves the metal (Hume).
+zz_ef_div_yield = 0.15
 zz_ef_div_net_week = {
-	value = 0
-	if = {
-		limit = { gdp > 0 }
-		value = zz_ef_v_g_aown
-		subtract = zz_ef_v_g_fown
-		multiply = zz_ef_profit_week
-		divide = gdp
-	}
+	value = zz_ef_v_g_aown
+	subtract = zz_ef_v_g_fown
+	multiply = zz_ef_div_yield
+	divide = 52
 }
 zz_ef_v_f_trade = {
 	value = 0
@@ -2624,7 +2720,7 @@ zz_ef_priv_levels = {
 }
 
 # В1.3 probe (3.10): 1 = on (zz_ef_probe_newyear_cash, the EFJ log lines).
-zz_ef_probe_on = 1
+zz_ef_probe_on = 0
 # UI.7б probe (3.10): 1 = on (zz_ef_probe_pop_income, the EFD log lines).
 zz_ef_probe_pop_on = 0
 # building scope: the cash now, level
