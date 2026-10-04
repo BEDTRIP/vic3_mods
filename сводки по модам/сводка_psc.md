@@ -1,4 +1,4 @@
-﻿**Версия в репозитории**: `.metadata/metadata.json` → `version = 1.3.7`, имя мода `[1.13] Private Sector Construction`, `supported_game_version` пустой. Коммит папки — `PSC 2.05.2026`.
+**Версия в репозитории**: `.metadata/metadata.json` → `version = 1.3.7`, имя мода `[1.13] Private Sector Construction`, `supported_game_version` пустой. Коммит папки — `PSC 2.05.2026`.
 Steam ID: `3420714166`.
 **Сверено с файлами: 19.08.2026.**
 

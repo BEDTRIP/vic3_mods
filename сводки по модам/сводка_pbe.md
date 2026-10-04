@@ -1,4 +1,4 @@
-﻿# Сводка по `PowerBlocksExpanded` (PBE)
+# Сводка по `PowerBlocksExpanded` (PBE)
 
 - **Версия мода:** `1.13*` (`.metadata/metadata.json`: `name = "[1.13] Power Blocs Expanded"`, id `3623185901`, `supported_game_version = 1.13*`, `relationships = []`)
 - **Дата сверки:** 2026-08-19

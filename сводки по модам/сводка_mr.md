@@ -1,4 +1,4 @@
-﻿### Morgenröte (Morgenroete) — общая сводка, что меняет в игре (приоритет `common/`)
+### Morgenröte (Morgenroete) — общая сводка, что меняет в игре (приоритет `common/`)
 
 **Версия**: **2.8.3e «Mitsopoulos»**, `supported_game_version` = **1.13.\*** (коммит `Morgenrote 15.08.2026`).
 Steam ID: `2889925770`.
