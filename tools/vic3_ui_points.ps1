@@ -24,14 +24,13 @@ function Pages($tabX, $n, $tag) {
 # Rows as in Britain's tooltip of 1838 (gold standard).
 $Cards = [ordered]@{ cash = 0.2613; business = 0.3307; deposits = 0.3724; treasury = 0.4418; pool = 0.456; abroad = 0.4978; cb = 0.5387 }
 function CardShots {
-    $s = @()
+    # 4.10 (П.15, the user): straight onto "£ = 7.31" -- no stops on the diplomacy (0.15 0.012) and innovation
+    # (0.1 0.06) icons of the top bar; 3 s for the tooltip to pin; one hover a card (the second height, +0.0125 for
+    # E&F's wrapped silver line, missed every card with the new tooltip -- the user saw a row-by-row walk).
+    # the first tooltip of a macro did not show (the cash card missed twice) -- a warm-up hover first
+    $s = @("hover 0.6 0.97; wait 0.5; hover 0.0975 0.0916; wait 1; hover 0.6 0.97; wait 1")
     foreach ($k in $Cards.Keys) {
-        # 4.10 (П.15): one height -- the second one (b, +0.0125, for E&F's wrapped silver line) missed every card
-        # with the new tooltip and showed as a stray row-by-row hover (the user)
-        foreach ($v in @(@("a", 0.0))) {
-            $y = [Math]::Round($Cards[$k] + $v[1], 4)
-            $s += "hover 0.15 0.012; wait 1; hover 0.1 0.06; wait 0.5; hover 0.0975 0.0916; wait 4; hover 0.0975 0.125; wait 0.5; hover 0.03 $y; wait 2.5; shot {P}_card_${k}_$($v[0]); hover 0.6 0.97; wait 2"
-        }
+        $s += "hover 0.0975 0.0916; wait 3; hover 0.0975 0.125; wait 0.3; hover 0.03 $($Cards[$k]); wait 2; shot {P}_card_$k; hover 0.6 0.97; wait 1"
     }
     return ($s -join "; ")
 }
@@ -41,7 +40,7 @@ $Macros = @{
     # expands on hover, the second row holds "CHF = 19.2" (the currency's value); its tooltip lists
     # M0..M3 and the accounts. F2 + the panel's X first: F2 opens the budget over any panel ("tag"
     # leaves a state panel open, its title tooltip took the hover), the X closes it.
-    currency = "key f2; wait 1; click 0.2265 0.095; wait 1; hover 0.15 0.012; wait 1; hover 0.1 0.06; wait 0.5; hover 0.0975 0.0916; wait 3; shot {P}_currency; hover 0.6 0.97; wait 2"
+    currency = "key f2; wait 1; click 0.2265 0.095; wait 1; hover 0.0975 0.0916; wait 3; shot {P}_currency; hover 0.6 0.97; wait 1"
     cards    = CardShots
     # the budget panel (F2, the left column's second icon) and its five tabs page by page. F2 opens it over
     # any other panel and does not toggle; the panel's X (0.2265 0.095) closes it at the end
