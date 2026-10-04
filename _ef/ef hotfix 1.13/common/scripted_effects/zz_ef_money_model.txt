@@ -25,13 +25,40 @@
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of investement_pool_borrowing.
 #############################################
 
+# Ф.2 (the user, 4.10): that interest is now paid -- by the issuer's treasury, every January
+# (zz_ef_privbank_interest_pay, the monthly step) -- so the holder gets it always, not only while
+# its pool is under the target (EF.34: "money from nothing" in the banks' card).
 REPLACE_OR_CREATE:investement_pool_borrowing = {
 	if = {
 		limit = {
 			ai_privat_bank_total_interest > 0
-			investment_pool < zz_ef_pool_target
 		}
 		add_investment_pool = ai_privat_bank_total_interest
+	}
+}
+
+# Ф.2 (4.10): the issuer pays the year's interest on its bonds held by foreign private banks (E&F's
+# ai_entral_bank_debt_privat_bank_interest_refund_per_year_1..25: the holders' interest on bond N, summed
+# over its buyer list) out of its treasury -- the engine's money is one unit for every country, so the
+# sum is the holders'. E&F only counted it against the "gold loaned" and paid the holders from nothing.
+# The treasury's change lands in the treasury's E&F moves (tr_other), a payment abroad.
+zz_ef_privbank_interest_pay = {
+	set_variable = { name = zz_ef_f_pbi_paid value = zz_ef_privbank_interest_due }
+	if = {
+		limit = { var:zz_ef_f_pbi_paid > 0 }
+		add_treasury = {
+			value = var:zz_ef_f_pbi_paid
+			multiply = -1
+		}
+		if = {
+			limit = {
+				OR = {
+					is_player = yes
+					gdp > 20000000
+				}
+			}
+			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|privbank_interest|paid [THIS.GetCountry.MakeScope.Var('zz_ef_f_pbi_paid').GetValue|0]"
+		}
 	}
 }
 
@@ -667,6 +694,11 @@ zz_ef_money_model_monthly_step = {
 	zz_ef_silver_rate_update = yes
 	# М.9 (4.10): the reference currency's value / parity for the strength of the others
 	zz_ef_reference_strength_step = yes
+	# Ф.2 (4.10): the issuer pays its foreign private banks' interest, in January
+	if = {
+		limit = { month = 0 }
+		zz_ef_privbank_interest_pay = yes
+	}
 	# В2.1 (2.10): part of the net exports paid in the importer's currency
 	# (generated, scripted_effects/zz_ef_reserve_trade.txt)
 	zz_ef_rc_step = yes

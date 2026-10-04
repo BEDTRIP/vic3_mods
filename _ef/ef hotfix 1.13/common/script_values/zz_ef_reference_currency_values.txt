@@ -74,3 +74,45 @@ zz_ef_metal_target_in_gold = {
 	}
 	min = 0
 }
+
+# Ф.2 (4.10, scripted_effects/zz_ef_money_model.txt): what the issuer owes foreign private banks a year.
+zz_ef_privbank_interest_due = {
+	value = 0
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_1
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_2
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_3
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_4
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_5
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_6
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_7
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_8
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_9
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_10
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_11
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_12
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_13
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_14
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_15
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_16
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_17
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_18
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_19
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_20
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_21
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_22
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_23
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_24
+	add = ai_entral_bank_debt_privat_bank_interest_refund_per_year_25
+	min = 0
+}
+
+# Ф.1 (4.10, В7.3): the banks' balance sheet -- assets (the pool as their reserves, business and
+# consumer credit, bonds) minus liabilities (pops' deposits, debt to the CB); shown in the banks' card.
+zz_ef_bank_capital = {
+	value = zz_ef_pool
+	add = zz_ef_bc_debt
+	add = zz_ef_cc_debt
+	add = zz_ef_bank_bonds
+	subtract = zz_ef_pop_deposits
+	subtract = zz_ef_bank_cb_debt
+}

@@ -808,6 +808,21 @@ def nested(lang):
                       f"1.15% of the gap a week (~5% a month), but they borrow only what the pool lacks of its need "
                       f"{money('zz_ef_pool_need')} (3 months of its payouts), and idle money over it repays the CB. The "
                       f"pool holds {sv('zz_ef_pool_months', '1')} months of contributions."))
+        if acc == B:
+            # Ф.1 (the user, 4.10; В7.3): the banks' balance sheet -- the user's 1840 save had deposits 80.3M
+            # against pool 18.2M + loans 36.5M: the gap is the banks' capital (negative = the deposits are
+            # not covered), now a line of its own
+            L.append((f"#b Баланс банков:#! активы — резервы (пул) {money('zz_ef_pool')} + кредит бизнесу "
+                      f"{money('zz_ef_bc_debt')} + потребкредит {money('zz_ef_cc_debt')} + облигации "
+                      f"{money('zz_ef_bank_bonds')}; обязательства — вклады {money('zz_ef_pop_deposits')} + долг ЦБ "
+                      f"{money('zz_ef_bank_cb_debt')}; #b капитал банков {sv('zz_ef_bank_capital', 'D+=')} {cur}#! "
+                      f"(активы − обязательства; меньше нуля — вклады не покрыты).")
+                     if ru else
+                     (f"#b Banks' balance sheet:#! assets — reserves (the pool) {money('zz_ef_pool')} + business "
+                      f"credit {money('zz_ef_bc_debt')} + consumer credit {money('zz_ef_cc_debt')} + bonds "
+                      f"{money('zz_ef_bank_bonds')}; liabilities — deposits {money('zz_ef_pop_deposits')} + CB debt "
+                      f"{money('zz_ef_bank_cb_debt')}; #b banks' capital {sv('zz_ef_bank_capital', 'D+=')} {cur}#! "
+                      f"(assets − liabilities; under zero — the deposits are not covered)."))
         if acc == C:
             L.append((f"#b Резервы металла: {sv('zz_ef_cb_metal')} {gold}#! (за неделю {sv('zz_ef_v_f_hume', 'D+=')}); "
                       f"чистый поток с заграницей {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; курс {sv('money_value_0', '3')} "
