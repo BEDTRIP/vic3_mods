@@ -1,4 +1,4 @@
-<#
+﻿<#
 Points and step sequences of tools/vic3_ui.ps1, measured on the screenshots of the night of 4.10.2026
 (Victoria 3 1.13.11, this playset, 2560x1440 window, Russian UI). Fractions of the window.
 Macros: "macro <name> <prefix>" runs the sequence; {P} in it becomes the prefix of the shots.
@@ -20,7 +20,9 @@ function Pages($tabX, $n, $tag) {
 # Switzerland) E&F's line "share of silver reserves ... (140.11%)" wraps and every row is one line
 # (~0.0125) lower -- the night of 4.10 got only the treasury card for Russia. So each card is taken
 # at both heights (<card>_a, <card>_b); the one that missed shows the bare currency tooltip.
-$Cards = [ordered]@{ cash = 0.192; business = 0.248; deposits = 0.304; abroad = 0.346; treasury = 0.3876; pool = 0.401; cb = 0.429 }
+# 4.10 (П.1/П.7): the tooltip opens with the four-line rate block; abroad moved under "outside the money".
+# Rows as in Britain's tooltip of 1838 (gold standard).
+$Cards = [ordered]@{ cash = 0.2613; business = 0.3307; deposits = 0.3724; treasury = 0.4418; pool = 0.456; abroad = 0.4978; cb = 0.5387 }
 function CardShots {
     $s = @()
     foreach ($k in $Cards.Keys) {
