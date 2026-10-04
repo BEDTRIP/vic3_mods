@@ -481,6 +481,11 @@ zz_ef_cu_member_v = {
 	value = 0
 	if = { limit = { zz_ef_cu_member = yes } value = 1 }
 }
+# Е.1: the amount of the player's currency on a holder (zz_ef_holders_update), for ordering the list
+zz_ef_holds_pc_v = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_holds_pc } value = var:zz_ef_holds_pc }
+}
 zz_ef_clr_gold_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_clr_gold } value = global_var:zz_ef_clr_gold }
@@ -543,14 +548,17 @@ def sguis(cur):
     # П.18: who holds our currency -- the other CBs' stocks of the player's currency, for a pie chart
     out.append("\n# П.18 (4.10): the other CBs holding the player's currency (global list zz_ef_holders_list; the amount\n"
                "# in the player's money on each holder, var:zz_ef_holds_pc), for the pie chart in the trade balance.\n"
+               "# Е.1 (5.10): biggest holder first -- the amounts are set first, then ordered_country fills the list.\n"
                "zz_ef_holders_update = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_holders_list\n"
-               "\t\tsave_scope_as = holders_root\n")
+               "\t\tsave_scope_as = holders_root\n"
+               "\t\tevery_country = { limit = { has_variable = zz_ef_holds_pc } remove_variable = zz_ef_holds_pc }\n")
     for i, c in enumerate(cur):
         kw = "if" if i == 0 else "else_if"
         out.append(f"\t\t{kw} = {{ limit = {{ has_law = law_type:law_{c}_currency }} every_country = {{ limit = {{ NOT = {{ this = scope:holders_root }} "
                    f"NOT = {{ has_law = law_type:law_{c}_currency }} has_modifier = has_central_bank capital = {{ has_variable = stockpiling_{c}_state_1 "
-                   f"var:stockpiling_{c}_state_1 > 0 }} }} set_variable = {{ name = zz_ef_holds_pc value = capital.var:stockpiling_{c}_state_1 }} "
-                   f"add_to_global_variable_list = {{ name = zz_ef_holders_list target = this }} }} }}\n")
+                   f"var:stockpiling_{c}_state_1 > 0 }} }} set_variable = {{ name = zz_ef_holds_pc value = capital.var:stockpiling_{c}_state_1 }} }} }}\n")
+    out.append("\t\tordered_country = { limit = { has_variable = zz_ef_holds_pc } order_by = zz_ef_holds_pc_v max = 1000 check_range_bounds = no "
+               "add_to_global_variable_list = { name = zz_ef_holders_list target = this } }\n")
     out.append("\t}\n}\n")
     return "".join(out)
 

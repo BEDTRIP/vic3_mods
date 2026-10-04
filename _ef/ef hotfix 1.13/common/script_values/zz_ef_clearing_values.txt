@@ -120,6 +120,11 @@ zz_ef_cu_member_v = {
 	value = 0
 	if = { limit = { zz_ef_cu_member = yes } value = 1 }
 }
+# Е.1: the amount of the player's currency on a holder (zz_ef_holders_update), for ordering the list
+zz_ef_holds_pc_v = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_holds_pc } value = var:zz_ef_holds_pc }
+}
 zz_ef_clr_gold_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_clr_gold } value = global_var:zz_ef_clr_gold }
