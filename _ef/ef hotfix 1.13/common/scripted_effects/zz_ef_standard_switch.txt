@@ -1,0 +1,160 @@
+﻿#############################################
+# M.10 (the user, 4.10; В2.4) -- a change of the metal standard keeps the money's worth in gold.
+#
+# E&F, on a new standard law (on_activate_monetary_system_law), sets the parity to
+# money_value_target_pre_set -- a value from its own scale -- and leaves the CB's metal as it was
+# (run 1.10: Russia 1842 silver -> gold, the metal 18.7 -> 2.0 bn, the rate 250 -> 28). Now: the
+# reserves are converted at the market rate of silver to gold (silver_to_gold_rate) and the parity
+# follows in the same metal, so the value in gold does not jump:
+#   silver -> gold:          gold += silver x s2g, silver = 0;  parity x s2g
+#   silver -> bimetallism:   metals stay (bimetallism counts silver in gold); parity x s2g
+#   bimetallism -> gold:     gold += silver x s2g, silver = 0;  parity as it was (gold)
+#   gold / bimetallism -> silver: silver += gold / s2g, gold = 0; parity / s2g
+#   gold -> bimetallism:     nothing to convert, parity as it was
+# Parities: silver standard in silver per unit, gold and bimetallism in gold per unit (as the
+# reserves are counted: central_bank_metal_reserves_state). To or from fiat / no system, and a
+# standard taken without a parity before: E&F's as it was.
+# E&F's status vars var:law_<standard> still hold the OLD standard here (set_reset_monetary_
+# system_status clears them at the end of the effect).
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's on_activate_monetary_system_law
+# (scripted_effects/01_economic_scripted_effects.txt:55352): E&F's body, line for line, plus
+# zz_ef_std_switch_before / _after.
+#############################################
+
+REPLACE_OR_CREATE:on_activate_monetary_system_law = {
+	if = {
+		limit = {
+			var:extreme_weak_currency_solution_count = 0
+		}
+		zz_ef_std_switch_before = yes
+		money_value_target_pre_set = yes
+		central_bank_production_methods = yes
+		remove_modifier = foreign_exchange_controls
+		add_modifier = {
+			name = foreign_exchange_controls
+			months = 12
+		}
+		set_variable = {
+			name = money_value_target_1
+			value = money_value_target_pre_set
+		}
+		zz_ef_std_switch_after = yes
+		trade_balance = yes
+		remove_modifier = monetary_systeme_transition
+		add_modifier = {
+			name = monetary_systeme_transition
+			months = 12
+		}
+		set_reset_monetary_system_status = yes
+	}
+}
+
+# The old parity and the old standard (1 silver, 2 bimetallism, 3 gold), before E&F rewrites them.
+zz_ef_std_switch_before = {
+	if = { limit = { has_variable = zz_ef_std_old } remove_variable = zz_ef_std_old }
+	if = { limit = { has_variable = zz_ef_std_parity_old } remove_variable = zz_ef_std_parity_old }
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		if = {
+			limit = { has_variable = law_silver_standard var:law_silver_standard = 1 }
+			set_variable = { name = zz_ef_std_old value = 1 }
+		}
+		else_if = {
+			limit = { has_variable = law_bimetallism_standard var:law_bimetallism_standard = 1 }
+			set_variable = { name = zz_ef_std_old value = 2 }
+		}
+		else_if = {
+			limit = { has_variable = law_gold_standard var:law_gold_standard = 1 }
+			set_variable = { name = zz_ef_std_old value = 3 }
+		}
+		if = {
+			limit = { has_variable = zz_ef_std_old }
+			set_variable = { name = zz_ef_std_parity_old value = var:money_value_target_1 }
+		}
+	}
+}
+
+zz_ef_std_switch_after = {
+	if = {
+		limit = { has_variable = zz_ef_std_old }
+		set_variable = { name = zz_ef_std_parity_new value = var:zz_ef_std_parity_old }
+		# silver -> gold or bimetallism: the parity into gold
+		if = {
+			limit = {
+				var:zz_ef_std_old = 1
+				OR = {
+					has_law = law_type:law_gold_standard
+					has_law = law_type:law_bimetallism_standard
+				}
+			}
+			change_variable = { name = zz_ef_std_parity_new multiply = silver_to_gold_rate }
+		}
+		# gold or bimetallism -> silver: the parity into silver
+		if = {
+			limit = {
+				var:zz_ef_std_old > 1
+				has_law = law_type:law_silver_standard
+			}
+			change_variable = { name = zz_ef_std_parity_new multiply = gold_to_silver_rate }
+		}
+		# the reserves: into gold for the gold standard, into silver for the silver one
+		if = {
+			limit = { has_law = law_type:law_gold_standard }
+			every_scope_state = {
+				limit = {
+					has_modifier = central_bank_historic_place
+					has_variable = silver_state_1
+					var:silver_state_1 > 0
+				}
+				if = {
+					limit = { NOT = { has_variable = gold_state_1 } }
+					set_variable = { name = gold_state_1 value = 0 }
+				}
+				change_variable = {
+					name = gold_state_1
+					add = {
+						value = var:silver_state_1
+						multiply = silver_to_gold_rate
+					}
+				}
+				set_variable = { name = silver_state_1 value = 0 }
+			}
+		}
+		else_if = {
+			limit = { has_law = law_type:law_silver_standard }
+			every_scope_state = {
+				limit = {
+					has_modifier = central_bank_historic_place
+					has_variable = gold_state_1
+					var:gold_state_1 > 0
+				}
+				if = {
+					limit = { NOT = { has_variable = silver_state_1 } }
+					set_variable = { name = silver_state_1 value = 0 }
+				}
+				change_variable = {
+					name = silver_state_1
+					add = {
+						value = var:gold_state_1
+						multiply = gold_to_silver_rate
+					}
+				}
+				set_variable = { name = gold_state_1 value = 0 }
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_law = law_type:law_gold_standard
+					has_law = law_type:law_silver_standard
+					has_law = law_type:law_bimetallism_standard
+				}
+			}
+			set_variable = { name = money_value_target_1 value = var:zz_ef_std_parity_new }
+		}
+		debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|std_switch|old [THIS.GetCountry.MakeScope.Var('zz_ef_std_old').GetValue|0]|parity_old [THIS.GetCountry.MakeScope.Var('zz_ef_std_parity_old').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]"
+	}
+}
