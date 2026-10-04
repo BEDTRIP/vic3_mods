@@ -380,3 +380,18 @@ function Profile-Shift($old, $new) {
     $q = if ($best.Value -gt 0) { $second.Value / $best.Value } else { 99 }
     return @($best.Key, $q)
 }
+
+# П.15 (the user 4.10: "optimize the script for tokens"): a shot of a region only (pixels of a 2560x1440 window).
+function Shot-Region($p, $name, $x0, $y0, $x1, $y1) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $w = [int](($x1 - $x0) * $kx); $h = [int](($y1 - $y0) * $ky)
+    if ($w -le 0 -or $h -le 0) { return }
+    $bmp = New-Object System.Drawing.Bitmap $w, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + [int]($x0 * $kx), $r.T + [int]($y0 * $ky), 0, 0, $bmp.Size)
+    $f = Join-Path $OutDir $name
+    $bmp.Save($f); $g.Dispose(); $bmp.Dispose()
+    Log "screenshot $f"
+}

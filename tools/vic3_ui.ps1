@@ -110,7 +110,7 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
                 $sig = Region-Sig $p 60 600 300 1430
                 if ($sig -eq $last) { Log "browse: the end at page $pg"; break }
                 $last = $sig
-                Shot $p ("{0}_{1:D2}.png" -f $name, $pg)
+                Shot-Region $p ("{0}_{1:D2}.png" -f $name, $pg) 0 0 640 1440
                 # a page down: the thumb dragged by 85% of its height (its height is the visible share)
                 $th = Find-Thumb $p 608 280 1435
                 if (-not $th) { Log "browse: no scrollbar - one page"; break }
@@ -136,6 +136,34 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
             & $PSCommandPath -OutDir $OutDir -Do (("click 0.0085 0.2635; wait 2; hover 0.75 0.55; wait 0.5; click 0.13 0.976; wait 2; " +
                 "hover 0.75 0.55; wait 0.5; click 0.1835 0.145; wait 2; click 0.0785 {0}; wait 2; hover 0.75 0.55; wait 0.5; " +
                 "click 0.215 0.145; wait 2; hover 0.75 0.55; wait 1; browse {1}_market_global; click 0.2265 0.095; wait 1") -f (0.385 + 0.0209 * ($row - 1)).ToString([Globalization.CultureInfo]::InvariantCulture), $name)
+        }
+        "crop"    {
+            # "crop <name> <x0> <y0> <x1> <y1>" -- a region shot, pixels of 2560x1440
+            $xy = $rest -split '\s+'; Focus-Game $p; Start-Sleep -Milliseconds 300
+            Shot-Region $p ($xy[0] + ".png") ([int]$xy[1]) ([int]$xy[2]) ([int]$xy[3]) ([int]$xy[4])
+        }
+        "census"  {
+            # П.15 (4.10, the user: no paging the census -- sort, filter, open a row): "census <name> [sort <column>]
+            # [row <n>]". Opens the census from the population panel, sorts by a header column (a second click
+            # reverses), shoots the table's top (cropped), and the row's arrow opens that pop group's details.
+            # Columns (1836 Britain): pop size, profession, culture, religion, state, workplace, radicals, loyalists,
+            # standard of living, political strength, interest groups.
+            $cols = @{ size = 0.33; profession = 0.385; culture = 0.448; religion = 0.482; state = 0.52; workplace = 0.565
+                radicals = 0.628; loyalists = 0.664; sol = 0.72; political = 0.775; ig = 0.817 }
+            $xy = $rest -split '\s+'; $name = $xy[0]; $sort = $null; $row = 0
+            for ($i = 1; $i -lt $xy.Count - 1; $i++) { if ($xy[$i] -eq "sort") { $sort = $xy[$i + 1] }; if ($xy[$i] -eq "row") { $row = [int]$xy[$i + 1] } }
+            Hover-Window $p 0.75 0.55; Start-Sleep -Milliseconds 400
+            Click-Window $p 0.0085 0.461; Start-Sleep -Milliseconds 1800
+            Click-Window $p 0.13 0.976; Start-Sleep -Milliseconds 2500
+            if ($sort -and $cols[$sort]) { Click-Window $p $cols[$sort] 0.3876; Start-Sleep -Milliseconds 1200 }
+            Hover-Window $p 0.95 0.5; Start-Sleep -Milliseconds 500
+            # the table's header and first ~16 rows
+            Shot-Region $p ($name + "_census.png") 800 540 2200 1000
+            if ($row -gt 0) {
+                Click-Window $p 0.846 (0.438 + 0.0222 * ($row - 1)); Start-Sleep -Milliseconds 2000
+                Hover-Window $p 0.75 0.55; Start-Sleep -Milliseconds 500
+                Shot-Region $p ($name + "_popgroup_$row.png") 0 0 640 1440
+            }
         }
         "close"   { Close-And-Collect }
         default   { Log "unknown step '$step'" }

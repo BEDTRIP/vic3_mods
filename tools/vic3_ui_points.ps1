@@ -49,7 +49,23 @@ function BudgetTipShots {
     return ($s -join "; ")
 }
 
+# П.15 (4.10, the user: population, incomes, needs, the census): the population panel (the left column's
+# icon at 0.461), the classes' income / taxes / needs tooltips (columns 0.06 / 0.13 / 0.2), then the census
+# (the panel's bottom button) -- the table paged by the wheel over it.
+function PopShots {
+    # the panel remembers its tab (it opened on "Diagrams", 4.10) -- "Overview" clicked first; the census is the
+    # "census" step (sort / row), not pages (the user: "no 500 screenshots of the census")
+    $s = @("hover 0.75 0.55; wait 0.5; click 0.0085 0.461; wait 2; click 0.05 0.145; wait 1; hover 0.75 0.55; wait 1; crop {P}_pop 0 0 640 1440")
+    foreach ($c in @(@("low", 0.06), @("mid", 0.13), @("high", 0.2))) {
+        foreach ($r in @(@("income", 0.529), @("taxes", 0.559), @("needs", 0.587))) {
+            $s += "hover $($c[1]) $($r[1]); wait 1.5; crop {P}_pop_$($c[0])_$($r[0]) 0 0 1400 1440; hover 0.75 0.55; wait 0.5"
+        }
+    }
+    return ($s -join "; ")
+}
+
 $Macros = @{
+    pop      = PopShots
     # П.15: the inflation tooltip (the top bar's second row, "-8.03%")
     infl     = "hover 0.6 0.97; wait 1; hover 0.0575 0.0907; wait 2.5; shot {P}_inflation; hover 0.6 0.97; wait 1"
     budgettip = BudgetTipShots
