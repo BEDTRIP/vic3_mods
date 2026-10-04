@@ -12401,6 +12401,68 @@ types zz_ef_cb_rate_panel
 					text = "gold_lent_to_foreign_countries"
 				}
 			}
+			# Е.6 (5.10): zz_ef_bt_out_list (tools/regen_ef_bond_tables.py)
+			flowcontainer = {
+				parentanchor = hcenter
+				direction = vertical
+				margin_top = 10
+				spacing = 4
+				flowcontainer = {
+					direction = horizontal
+					spacing = 10
+					parentanchor = hcenter
+					textbox = {
+						using = fontsize_large
+						autoresize = yes
+						text = "zz_ef_bt_out_title"
+					}
+					button = {
+						using = default_button
+						size = { 120 30 }
+						text = "zz_ef_bt_button"
+						tooltip = "zz_ef_bt_button_tt"
+						onclick = "[GetScriptedGui('zz_ef_bonds_update').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+					}
+				}
+				textbox = {
+					autoresize = yes
+					multiline = yes
+					max_width = 520
+					text = "zz_ef_bt_head"
+				}
+				textbox = {
+					visible = "[IsDataModelEmpty(GetGlobalList('zz_ef_bt_out_list'))]"
+					autoresize = yes
+					text = "zz_ef_bt_empty"
+				}
+				flowcontainer = {
+					direction = vertical
+					spacing = 2
+					datamodel = "[GetGlobalList('zz_ef_bt_out_list')]"
+					item = {
+						flowcontainer = {
+							direction = vertical
+							textbox = {
+								autoresize = yes
+								raw_text = "[Scope.GetCountry.GetFlagTextIcon] #b [Scope.GetCountry.GetName]#!"
+							}
+							textbox = {
+								visible = "[GreaterThan_CFixedPoint(Scope.GetCountry.MakeScope.Var('zz_ef_bto_t_amt').GetValue, '(CFixedPoint)0')]"
+								autoresize = yes
+								margin_left = 20
+								text = "zz_ef_bto_t_row"
+							}
+							textbox = {
+								visible = "[GreaterThan_CFixedPoint(Scope.GetCountry.MakeScope.Var('zz_ef_bto_b_amt').GetValue, '(CFixedPoint)0')]"
+								autoresize = yes
+								margin_left = 20
+								text = "zz_ef_bto_b_row"
+							}
+						}
+					}
+				}
+			}
+
 			flowcontainer  = {
 				parentanchor = hcenter
 				direction = vertical
@@ -17264,6 +17326,68 @@ types zz_ef_cb_rate_panel
 					text = "gold_lent_to_us"
 				}
 			}
+			# Е.6 (5.10): zz_ef_bt_in_list (tools/regen_ef_bond_tables.py)
+			flowcontainer = {
+				parentanchor = hcenter
+				direction = vertical
+				margin_top = 10
+				spacing = 4
+				flowcontainer = {
+					direction = horizontal
+					spacing = 10
+					parentanchor = hcenter
+					textbox = {
+						using = fontsize_large
+						autoresize = yes
+						text = "zz_ef_bt_in_title"
+					}
+					button = {
+						using = default_button
+						size = { 120 30 }
+						text = "zz_ef_bt_button"
+						tooltip = "zz_ef_bt_button_tt"
+						onclick = "[GetScriptedGui('zz_ef_bonds_update').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End )]"
+					}
+				}
+				textbox = {
+					autoresize = yes
+					multiline = yes
+					max_width = 520
+					text = "zz_ef_bt_head"
+				}
+				textbox = {
+					visible = "[IsDataModelEmpty(GetGlobalList('zz_ef_bt_in_list'))]"
+					autoresize = yes
+					text = "zz_ef_bt_empty"
+				}
+				flowcontainer = {
+					direction = vertical
+					spacing = 2
+					datamodel = "[GetGlobalList('zz_ef_bt_in_list')]"
+					item = {
+						flowcontainer = {
+							direction = vertical
+							textbox = {
+								autoresize = yes
+								raw_text = "[Scope.GetCountry.GetFlagTextIcon] #b [Scope.GetCountry.GetName]#!"
+							}
+							textbox = {
+								visible = "[GreaterThan_CFixedPoint(Scope.GetCountry.MakeScope.Var('zz_ef_bt_t_amt').GetValue, '(CFixedPoint)0')]"
+								autoresize = yes
+								margin_left = 20
+								text = "zz_ef_bt_t_row"
+							}
+							textbox = {
+								visible = "[GreaterThan_CFixedPoint(Scope.GetCountry.MakeScope.Var('zz_ef_bt_b_amt').GetValue, '(CFixedPoint)0')]"
+								autoresize = yes
+								margin_left = 20
+								text = "zz_ef_bt_b_row"
+							}
+						}
+					}
+				}
+			}
+
 			flowcontainer  = {
 				parentanchor = hcenter
 				direction = vertical

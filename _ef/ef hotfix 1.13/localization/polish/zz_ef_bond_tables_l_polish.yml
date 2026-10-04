@@ -1,0 +1,11 @@
+﻿l_polish:
+ zz_ef_bt_button:0 "Show"
+ zz_ef_bt_button_tt:0 "Fill the bond table (as of today)."
+ zz_ef_bt_in_title:0 "Who holds our bonds (our debt)"
+ zz_ef_bt_out_title:0 "Our bonds of other countries (treasury and banks)"
+ zz_ef_bt_head:0 "#grey Country: treasury — sum, yearly rate, interest a week; banks — sum in gold, interest a year#!"
+ zz_ef_bt_t_row:0 "treasury [Scope.GetCountry.MakeScope.Var('zz_ef_bt_t_amt').GetValue|D] [GetPlayer.GetCustom('currency_symbol')], rate [Scope.GetCountry.MakeScope.ScriptValue('zz_ef_bt_t_rate')|%1], a week [Scope.GetCountry.MakeScope.Var('zz_ef_bt_t_week').GetValue|D] [GetPlayer.GetCustom('currency_symbol')]"
+ zz_ef_bt_b_row:0 "banks [Scope.GetCountry.MakeScope.Var('zz_ef_bt_b_amt').GetValue|D] @gold!, a year [Scope.GetCountry.MakeScope.Var('zz_ef_bt_b_year').GetValue|D] @gold!"
+ zz_ef_bto_t_row:0 "treasury [Scope.GetCountry.MakeScope.Var('zz_ef_bto_t_amt').GetValue|D] [GetPlayer.GetCustom('currency_symbol')], rate [Scope.GetCountry.MakeScope.ScriptValue('zz_ef_bto_t_rate')|%1], a week [Scope.GetCountry.MakeScope.Var('zz_ef_bto_t_week').GetValue|D] [GetPlayer.GetCustom('currency_symbol')]"
+ zz_ef_bto_b_row:0 "banks [Scope.GetCountry.MakeScope.Var('zz_ef_bto_b_amt').GetValue|D] @gold!, a year [Scope.GetCountry.MakeScope.Var('zz_ef_bto_b_year').GetValue|D] @gold!"
+ zz_ef_bt_empty:0 "#grey (none — or press 'Show')#!"

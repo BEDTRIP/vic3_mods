@@ -1,0 +1,11 @@
+﻿l_russian:
+ zz_ef_bt_button:0 "Показать"
+ zz_ef_bt_button_tt:0 "Собрать таблицу облигаций (на сегодня)."
+ zz_ef_bt_in_title:0 "Кто держит наши облигации (наш долг)"
+ zz_ef_bt_out_title:0 "Наши облигации других стран (казна и банки)"
+ zz_ef_bt_head:0 "#grey Страна: казна — сумма, ставка в год, проценты в неделю; банки — сумма в золоте, проценты в год#!"
+ zz_ef_bt_t_row:0 "казна [Scope.GetCountry.MakeScope.Var('zz_ef_bt_t_amt').GetValue|D] [GetPlayer.GetCustom('currency_symbol')], ставка [Scope.GetCountry.MakeScope.ScriptValue('zz_ef_bt_t_rate')|%1], в неделю [Scope.GetCountry.MakeScope.Var('zz_ef_bt_t_week').GetValue|D] [GetPlayer.GetCustom('currency_symbol')]"
+ zz_ef_bt_b_row:0 "банки [Scope.GetCountry.MakeScope.Var('zz_ef_bt_b_amt').GetValue|D] @gold!, в год [Scope.GetCountry.MakeScope.Var('zz_ef_bt_b_year').GetValue|D] @gold!"
+ zz_ef_bto_t_row:0 "казна [Scope.GetCountry.MakeScope.Var('zz_ef_bto_t_amt').GetValue|D] [GetPlayer.GetCustom('currency_symbol')], ставка [Scope.GetCountry.MakeScope.ScriptValue('zz_ef_bto_t_rate')|%1], в неделю [Scope.GetCountry.MakeScope.Var('zz_ef_bto_t_week').GetValue|D] [GetPlayer.GetCustom('currency_symbol')]"
+ zz_ef_bto_b_row:0 "банки [Scope.GetCountry.MakeScope.Var('zz_ef_bto_b_amt').GetValue|D] @gold!, в год [Scope.GetCountry.MakeScope.Var('zz_ef_bto_b_year').GetValue|D] @gold!"
+ zz_ef_bt_empty:0 "#grey (нет — или нажмите «Показать»)#!"

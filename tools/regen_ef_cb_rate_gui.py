@@ -371,7 +371,88 @@ def build(src: str) -> tuple[str, str]:
     assert ind.strip() == "", repr(ind)
     body = body[:line_start] + cb_row(ind) + mp_row(ind) + body[line_start:]
 
+    # 4. Е.6 (5.10, Д.3): the bond tables under E&F's two headers (tools/regen_ef_bond_tables.py fills the lists)
+    for key, lst, pre, title in (("gold_lent_to_foreign_countries", "zz_ef_bt_out_list", "zz_ef_bto", "zz_ef_bt_out_title"),
+                                 ("gold_lent_to_us", "zz_ef_bt_in_list", "zz_ef_bt", "zz_ef_bt_in_title")):
+        anchor = f'text = "{key}"\n'
+        assert body.count(anchor) == 1, anchor
+        a = body.index(anchor)
+        hdr = body.rfind("default_header = {", 0, a)
+        assert a - hdr < 200, key
+        line_start = body.rfind("\n", 0, hdr) + 1
+        ind = body[line_start:hdr]
+        end = V._match_brace(body, body.index("{", hdr)) + 1
+        body = body[:end] + "\n" + bond_table(lst, pre, title, ind) + body[end:]
+
     return body, orig_sha
+
+
+def bond_table(lst: str, pre: str, title: str, ind: str) -> str:
+    """Е.6: a button (zz_ef_bonds_update) and the list of countries with their treasury / banks rows."""
+    i1, i2, i3, i4, i5 = (ind + "\t" * k for k in range(1, 6))
+    gt = "[GreaterThan_CFixedPoint(Scope.GetCountry.MakeScope.Var('{0}').GetValue, '(CFixedPoint)0')]"
+    return f"""{ind}# Е.6 (5.10): {lst} (tools/regen_ef_bond_tables.py)
+{ind}flowcontainer = {{
+{i1}parentanchor = hcenter
+{i1}direction = vertical
+{i1}margin_top = 10
+{i1}spacing = 4
+{i1}flowcontainer = {{
+{i2}direction = horizontal
+{i2}spacing = 10
+{i2}parentanchor = hcenter
+{i2}textbox = {{
+{i3}using = fontsize_large
+{i3}autoresize = yes
+{i3}text = "{title}"
+{i2}}}
+{i2}button = {{
+{i3}using = default_button
+{i3}size = {{ 120 30 }}
+{i3}text = "zz_ef_bt_button"
+{i3}tooltip = "zz_ef_bt_button_tt"
+{i3}onclick = "[GetScriptedGui('zz_ef_bonds_update').Execute( {SG} )]"
+{i2}}}
+{i1}}}
+{i1}textbox = {{
+{i2}autoresize = yes
+{i2}multiline = yes
+{i2}max_width = 520
+{i2}text = "zz_ef_bt_head"
+{i1}}}
+{i1}textbox = {{
+{i2}visible = "[IsDataModelEmpty(GetGlobalList('{lst}'))]"
+{i2}autoresize = yes
+{i2}text = "zz_ef_bt_empty"
+{i1}}}
+{i1}flowcontainer = {{
+{i2}direction = vertical
+{i2}spacing = 2
+{i2}datamodel = "[GetGlobalList('{lst}')]"
+{i2}item = {{
+{i3}flowcontainer = {{
+{i4}direction = vertical
+{i4}textbox = {{
+{i5}autoresize = yes
+{i5}raw_text = "[Scope.GetCountry.GetFlagTextIcon] #b [Scope.GetCountry.GetName]#!"
+{i4}}}
+{i4}textbox = {{
+{i5}visible = "{gt.format(pre + '_t_amt')}"
+{i5}autoresize = yes
+{i5}margin_left = 20
+{i5}text = "{pre}_t_row"
+{i4}}}
+{i4}textbox = {{
+{i5}visible = "{gt.format(pre + '_b_amt')}"
+{i5}autoresize = yes
+{i5}margin_left = 20
+{i5}text = "{pre}_b_row"
+{i4}}}
+{i3}}}
+{i2}}}
+{i1}}}
+{ind}}}
+"""
 
 
 def main() -> int:
