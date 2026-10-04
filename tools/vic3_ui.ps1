@@ -1,4 +1,4 @@
-<#
+﻿<#
 Drives a Victoria 3 window left open by run_vic3_sandbox.ps1 -KeepOpen (4.10, night of stages 0-4):
 screenshots of tooltips and panels, other countries, then closing the game with the logs gathered.
 
@@ -75,6 +75,47 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
         "country" {
             # sit down as another country (paused, nothing played) and take its money screens
             & $PSCommandPath -OutDir $OutDir -Do "console tag $rest; wait 3; hover 0.6 0.97; wait 1; macro currency $rest; macro cards $rest; macro budget $rest"
+        }
+        "browse"  {
+            # П.15 (4.10): the open panel's tab top to bottom -- every collapsed section expanded (only "›",
+            # what is open stays open), a shot a page, until the page stops moving. "browse <name> [pages]".
+            # Paged by dragging the scrollbar's thumb (x 0.2375): the wheel over the content scrolled the nested
+            # tables (currencies, countries) instead of the panel, over the scrollbar it did nothing. A "›" that stays after its click (a button,
+            # not a section) is not clicked again.
+            $xy = $rest -split '\s+'; $name = $xy[0]; $max = if ($xy.Count -gt 1) { [int]$xy[1] } else { 150 }
+            # the panel's title bar is remembered; before every click and drag it must be the same -- the user
+            # closed the panel once and the drags went on over the map (4.10)
+            Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+            $title = Region-Sig $p 130 540 95 175
+            $same = { (Region-Sig $p 130 540 95 175) -eq $title }
+            # to the top: the thumb dragged above the track
+            $th = Find-Thumb $p 608 280 1435
+            if ($th) { Drag-Window $p 0.2375 (($th[0] + $th[1]) / 2) 0.2375 0.15 }
+            Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+            $last = ""
+            for ($pg = 1; $pg -le $max; $pg++) {
+                $skip = @()
+                for ($k = 0; $k -lt 10; $k++) {
+                    $f = @(Find-Collapsed $p 50 92 300 1430 | Where-Object { $y = $_; -not ($skip | Where-Object { [Math]::Abs($_ - $y) -lt 0.004 }) })
+                    if ($f.Count -eq 0) { break }
+                    if (-not (& $same)) { Log "browse: the panel changed - stopping"; $pg = $max + 1; break }
+                    Log ("browse: expanding the section at y {0:N4}" -f $f[0])
+                    Click-Window $p 0.06 $f[0]; Start-Sleep -Milliseconds 900; Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 500
+                    $after = @(Find-Collapsed $p 50 92 300 1430)
+                    if ($after | Where-Object { [Math]::Abs($_ - $f[0]) -lt 0.004 }) { $skip += $f[0]; Log "browse: it stays collapsed - skipped" }
+                }
+                if ($pg -gt $max) { break }
+                if (-not (& $same)) { Log "browse: the panel changed - stopping"; break }
+                $sig = Region-Sig $p 60 600 300 1430
+                if ($sig -eq $last) { Log "browse: the end at page $pg"; break }
+                $last = $sig
+                Shot $p ("{0}_{1:D2}.png" -f $name, $pg)
+                # a page down: the thumb dragged by 85% of its height (its height is the visible share)
+                $th = Find-Thumb $p 608 280 1435
+                if (-not $th) { Log "browse: no scrollbar - one page"; break }
+                $mid = ($th[0] + $th[1]) / 2; Drag-Window $p 0.2375 $mid 0.2375 ($mid + 0.85 * ($th[1] - $th[0]))
+                Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+            }
         }
         "close"   { Close-And-Collect }
         default   { Log "unknown step '$step'" }

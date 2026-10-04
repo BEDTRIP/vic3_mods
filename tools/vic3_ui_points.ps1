@@ -53,6 +53,9 @@ $Macros = @{
     # П.15: the inflation tooltip (the top bar's second row, "-8.03%")
     infl     = "hover 0.6 0.97; wait 1; hover 0.0575 0.0907; wait 2.5; shot {P}_inflation; hover 0.6 0.97; wait 1"
     budgettip = BudgetTipShots
+    # П.15: the budget's Economy, Finance and Stocks tabs whole -- every collapsed section expanded, page by page
+    # (the "browse" step: the scrollbar's thumb, stops at the end or when the panel changes)
+    budgetall = "hover 0.6 0.97; key f2; wait 2; hover 0.13 0.09; wait 0.8; click 0.13 0.214; wait 1.5; browse {P}_eco; hover 0.13 0.09; wait 0.8; click 0.1725 0.214; wait 1.5; browse {P}_fin; hover 0.13 0.09; wait 0.8; click 0.215 0.214; wait 1.5; browse {P}_stocks; click 0.2265 0.095; wait 1"
     # the currency tooltip ("Денежная масса" and the money's value, all accounts in one): the top bar
     # expands on hover, the second row holds "CHF = 19.2" (the currency's value); its tooltip lists
     # M0..M3 and the accounts. F2 + the panel's X first: F2 opens the budget over any panel ("tag"

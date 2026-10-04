@@ -248,3 +248,103 @@ function Scroll-Window($p, $fx, $fy, $notches) {
     for ($i = 0; $i -lt $n; $i++) { [W]::mouse_event(0x0800, 0, 0, [BitConverter]::ToUInt32([BitConverter]::GetBytes([int32]$d), 0), [UIntPtr]::Zero); Start-Sleep -Milliseconds 80 }
     Start-Sleep -Milliseconds 400
 }
+
+# П.15 (4.10, the user: "the script must be able to see everything"): the collapsed section headers of a
+# panel ("› Показать список", "› Займы"): a gold chevron at the panel's left edge. Collapsed "›" is taller than
+# wide, expanded "⌄" wider than tall. Returns the window-fraction y of each collapsed chevron, top down.
+# $x0..$x1, $y0..$y1 -- pixels of a 2560x1440 window (scaled to the real size).
+function Find-Collapsed($p, $x0, $x1, $y0, $y1) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $w = [int](($x1 - $x0) * $kx); $h = [int](($y1 - $y0) * $ky)
+    $bmp = New-Object System.Drawing.Bitmap $w, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + [int]($x0 * $kx), $r.T + [int]($y0 * $ky), 0, 0, $bmp.Size)
+    $rows = @{}
+    for ($y = 0; $y -lt $h; $y++) {
+        for ($x = 0; $x -lt $w; $x++) {
+            $c = $bmp.GetPixel($x, $y)
+            if ($c.R -gt 150 -and $c.G -gt 100 -and ($c.R - $c.B) -gt 70) {
+                if (-not $rows.ContainsKey($y)) { $rows[$y] = @($x, $x, 1) }
+                else { $rows[$y] = @([Math]::Min($rows[$y][0], $x), [Math]::Max($rows[$y][1], $x), ($rows[$y][2] + 1)) }
+            }
+        }
+    }
+    $g.Dispose(); $bmp.Dispose()
+    # clusters of consecutive rows
+    $out = @(); $ys = $rows.Keys | Sort-Object
+    # "›" (4.10, Britain's budget): 18 px tall, 11 wide, a thin stroke (~1/3 of its box); "⌄" 17 wide, 12 tall;
+    # a flag in a table is a filled block
+    $start = $null; $prev = $null; $minx = 9999; $maxx = -1; $cnt = 0
+    foreach ($y in ($ys + @(99999))) {
+        if ($null -ne $prev -and $y -gt $prev + 2) {
+            $hh = ($prev - $start + 1) / $ky; $ww = ($maxx - $minx + 1) / $kx; $fill = $cnt / [double](($prev - $start + 1) * ($maxx - $minx + 1))
+            # the shape of ">": the middle rows reach further right than the top and the bottom ones (the orange
+            # first letters of table cells -- "С", "М", "Д" -- passed the size test, 4.10)
+            $n3 = [Math]::Max(1, [int](($prev - $start + 1) / 4))
+            $cx = { param($a, $b) $v = @(); for ($q = $a; $q -le $b; $q++) { if ($rows.ContainsKey($q)) { $v += ($rows[$q][0] + $rows[$q][1]) / 2.0 } }; if ($v.Count) { ($v | Measure-Object -Average).Average } else { 0 } }
+            $ct = & $cx $start ($start + $n3 - 1); $cb = & $cx ($prev - $n3 + 1) $prev
+            $mid = [int](($start + $prev) / 2); $cm = & $cx ($mid - 1) ($mid + 1)
+            $arrow = ($cm -gt $ct + 2 * $kx) -and ($cm -gt $cb + 2 * $kx)
+            if ($arrow -and $hh -ge 12 -and $hh -le 28 -and $ww -ge 5 -and $ww -le 18 -and $hh -gt 1.3 * $ww -and $fill -lt 0.55) {
+                $out += (($y0 + ($start + $prev) / 2.0 / $ky) / 1440.0)
+            }
+            $start = $null; $minx = 9999; $maxx = -1; $cnt = 0
+        }
+        if ($y -eq 99999) { break }
+        if ($null -eq $start) { $start = $y }
+        $minx = [Math]::Min($minx, $rows[$y][0]); $maxx = [Math]::Max($maxx, $rows[$y][1]); $cnt += $rows[$y][2]; $prev = $y
+    }
+    return $out
+}
+
+# П.15: a cheap signature of a screen region (the panel), to tell when scrolling stopped moving it.
+function Region-Sig($p, $x0, $x1, $y0, $y1) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $w = [int](($x1 - $x0) * $kx); $h = [int](($y1 - $y0) * $ky)
+    $bmp = New-Object System.Drawing.Bitmap $w, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + [int]($x0 * $kx), $r.T + [int]($y0 * $ky), 0, 0, $bmp.Size)
+    $sb = New-Object System.Text.StringBuilder
+    for ($y = 0; $y -lt $h; $y += 23) { for ($x = 0; $x -lt $w; $x += 29) { $c = $bmp.GetPixel($x, $y); [void]$sb.Append([int](($c.R + $c.G + $c.B) / 24)) } }
+    $g.Dispose(); $bmp.Dispose()
+    return $sb.ToString()
+}
+
+# П.15: the panel's scrollbar thumb (teal, x ~608 px of 2560 for the left panels). Returns @(top, bottom) in
+# window fractions, or $null.
+function Find-Thumb($p, $xpx, $y0, $y1) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $h = [int](($y1 - $y0) * $ky)
+    $bmp = New-Object System.Drawing.Bitmap 5, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + [int](($xpx - 2) * $kx), $r.T + [int]($y0 * $ky), 0, 0, $bmp.Size)
+    $top = -1; $bot = -1
+    for ($y = 0; $y -lt $h; $y++) {
+        $c = $bmp.GetPixel(2, $y)
+        if ($c.G -gt $c.R + 15 -and $c.B -gt $c.R + 10 -and $c.G -gt 70) { if ($top -lt 0) { $top = $y }; $bot = $y }
+    }
+    $g.Dispose(); $bmp.Dispose()
+    if ($top -lt 0) { return $null }
+    return @((($y0 + $top / $ky) / 1440.0), (($y0 + $bot / $ky) / 1440.0))
+}
+# Drag with the left button from one point to another (window fractions), in small steps.
+function Drag-Window($p, $fx, $fy, $tx, $ty) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    Assert-Front $p
+    $W = $r.R - $r.L; $H = $r.B - $r.T
+    [W]::SetCursorPos([int]($r.L + $W * $fx), [int]($r.T + $H * $fy)) | Out-Null; Start-Sleep -Milliseconds 150
+    [W]::mouse_event(2, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 100
+    for ($i = 1; $i -le 10; $i++) {
+        $x = $fx + ($tx - $fx) * $i / 10; $y = $fy + ($ty - $fy) * $i / 10
+        [W]::SetCursorPos([int]($r.L + $W * $x), [int]($r.T + $H * $y)) | Out-Null; Start-Sleep -Milliseconds 30
+    }
+    Start-Sleep -Milliseconds 100
+    [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 300
+}
