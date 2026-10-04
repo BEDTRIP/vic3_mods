@@ -79,19 +79,20 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
         "browse"  {
             # П.15 (4.10): the open panel's tab top to bottom -- every collapsed section expanded (only "›",
             # what is open stays open), a shot a page, until the page stops moving. "browse <name> [pages]".
-            # Paged by dragging the scrollbar's thumb (x 0.2375): the wheel over the content scrolled the nested
+            # The mouse rests on the map (0.75 0.55): on a panel's title it pinned the title's tooltip over the
+            # scrollbar (a market's owner, 4.10). Paged by dragging the scrollbar's thumb (x 0.2375): the wheel over the content scrolled the nested
             # tables (currencies, countries) instead of the panel, over the scrollbar it did nothing. A "›" that stays after its click (a button,
             # not a section) is not clicked again.
             $xy = $rest -split '\s+'; $name = $xy[0]; $max = if ($xy.Count -gt 1) { [int]$xy[1] } else { 150 }
             # the panel's title bar is remembered; before every click and drag it must be the same -- the user
             # closed the panel once and the drags went on over the map (4.10)
-            Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+            Hover-Window $p 0.75 0.55; Start-Sleep -Milliseconds 700
             $title = Region-Sig $p 130 540 95 175
             $same = { (Region-Sig $p 130 540 95 175) -eq $title }
             # to the top: the thumb dragged above the track
             $th = Find-Thumb $p 608 280 1435
             if ($th) { Drag-Window $p 0.2375 (($th[0] + $th[1]) / 2) 0.2375 0.15 }
-            Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+            Hover-Window $p 0.75 0.55; Start-Sleep -Milliseconds 700
             $last = ""; $fac = 0.85
             for ($pg = 1; $pg -le $max; $pg++) {
                 $skip = @()
@@ -100,7 +101,7 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
                     if ($f.Count -eq 0) { break }
                     if (-not (& $same)) { Log "browse: the panel changed - stopping"; $pg = $max + 1; break }
                     Log ("browse: expanding the section at y {0:N4}" -f $f[0])
-                    Click-Window $p 0.06 $f[0]; Start-Sleep -Milliseconds 900; Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 500
+                    Click-Window $p 0.06 $f[0]; Start-Sleep -Milliseconds 900; Hover-Window $p 0.75 0.55; Start-Sleep -Milliseconds 500
                     $after = @(Find-Collapsed $p 50 92 300 1430)
                     if ($after | Where-Object { [Math]::Abs($_ - $f[0]) -lt 0.004 }) { $skip += $f[0]; Log "browse: it stays collapsed - skipped" }
                 }
@@ -116,14 +117,25 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
                 # the step adapts: the content's real shift (row profiles before / after) against 85% of the view
                 $before = Row-Profile $p 70 580 310 1420
                 $mid = ($th[0] + $th[1]) / 2; Drag-Window $p 0.2375 $mid 0.2375 ([Math]::Min(0.995, $mid + $fac * ($th[1] - $th[0])))
-                Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+                Hover-Window $p 0.75 0.55; Start-Sleep -Milliseconds 700
                 $after = Row-Profile $p 70 580 310 1420
                 $sh = Profile-Shift $before $after; $d = $sh[0]; $q = $sh[1]; $n = [int]($before.Length / 6)
                 if ($q -ge 1.5 -and $d -gt 20) { $fac = $fac * [Math]::Max(0.5, [Math]::Min(2.0, 0.85 * $n / $d)) }
                 elseif ($q -ge 1.5) { $fac = $fac * 2 }
                 $fac = [Math]::Max(0.2, [Math]::Min(8, $fac))
                 Log ("browse: page {0} moved {1} rows (match {2:N1}), next factor {3:N2}" -f $pg, $d, $q, $fac)
+                if ($q -ge 1.5 -and $d -ge 0 -and $d -lt 15) { Log "browse: the end at page $pg (no more movement)"; break }
             }
+        }
+        "market"  {
+            # П.15 (4.10): another market's "Global" tab (forex, rating, bonds): own market (the left column's
+            # icon) -> "World market" -> "Participants" -> the row's arrow -> "Global", browsed. Rows are the
+            # world market's own order (the biggest first; Britain 1836: 1 Britain, 2 Russia, 3 France).
+            # "market <row> <name>"
+            $xy = $rest -split '\s+'; $row = [int]$xy[0]; $name = $xy[1]
+            & $PSCommandPath -OutDir $OutDir -Do ("click 0.0085 0.2635; wait 2; hover 0.75 0.55; wait 0.5; click 0.13 0.976; wait 2; " +
+                "hover 0.75 0.55; wait 0.5; click 0.1835 0.145; wait 2; click 0.0785 {0}; wait 2; hover 0.75 0.55; wait 0.5; " +
+                "click 0.215 0.145; wait 2; hover 0.75 0.55; wait 1; browse {1}_market_global; click 0.2265 0.095; wait 1" -f (0.385 + 0.0209 * ($row - 1)).ToString([Globalization.CultureInfo]::InvariantCulture), $name)
         }
         "close"   { Close-And-Collect }
         default   { Log "unknown step '$step'" }
