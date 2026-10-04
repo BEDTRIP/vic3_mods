@@ -1,0 +1,5 @@
+﻿l_simp_chinese:
+ zz_ef_ep_current_account:0 "Current account, a week"
+ zz_ef_ep_current_account_tt:0 "The week's net flow with abroad — the same number as the 'net' line of the 'Abroad' card in the money supply tooltip: budget lines with abroad, the market's trade balance, dividends from abroad, foreign bonds bought. The CB settles it in metal at the next weekly step (Hume's mechanism)."
+ zz_ef_ep_trade_tt:0 "The market's trade balance this week: exports − imports of all goods at the market's prices (engine money)."
+ zz_ef_ep_week_market_prices:0 "a week, at the market's prices"

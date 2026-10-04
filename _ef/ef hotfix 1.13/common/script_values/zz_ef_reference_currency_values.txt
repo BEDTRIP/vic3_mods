@@ -177,3 +177,60 @@ zz_ef_bank_liabilities = {
 	value = zz_ef_pop_deposits
 	add = zz_ef_bank_cb_debt
 }
+
+# 4.10 (the tooltip): negated values to print with their own sign and colour
+zz_ef_v_d_deposits_neg = {
+	value = zz_ef_v_d_deposits
+	multiply = -1
+}
+zz_ef_tr_abr_overlap_neg = {
+	value = zz_ef_tr_abr_overlap
+	multiply = -1
+}
+zz_ef_v_d_bonds_neg = {
+	value = zz_ef_v_d_bonds
+	multiply = -1
+}
+zz_ef_v_d_tbonds_neg = {
+	value = zz_ef_v_d_tbonds
+	multiply = -1
+}
+
+# UI.8 (4.10, Budget -> Economy, regen_ef_economy_panel_gui.py): the market's imports and exports of the
+# week at its prices (base price x (1 + market_goods_pricier)), the market owner's; others 0
+zz_ef_trade_exports_week = {
+	value = 0
+	if = {
+		limit = { exists = market market.owner = this }
+		market = {
+			every_market_goods = {
+				add = {
+					value = market_goods_exports
+					multiply = {
+						value = market_goods_pricier
+						add = 1
+					}
+					multiply = goods.base_price
+				}
+			}
+		}
+	}
+}
+zz_ef_trade_imports_week = {
+	value = 0
+	if = {
+		limit = { exists = market market.owner = this }
+		market = {
+			every_market_goods = {
+				add = {
+					value = market_goods_imports
+					multiply = {
+						value = market_goods_pricier
+						add = 1
+					}
+					multiply = goods.base_price
+				}
+			}
+		}
+	}
+}
