@@ -1,0 +1,25 @@
+#############################################
+# Е.10 (5.10, Д.5): the currency's strength moves trade -- every currency against the reference one (М.9,
+# zz_ef_currency_strength): dearer than the reference (strength > 1) -- imports cheaper, exports dearer
+# (+ import, - export advantage); cheaper -- the other way. +-10% at strength 1.25 / 0.75, linear between,
+# 0 at the reference's level; the reference itself gets none (its bonuses: E&F's reference_currency and
+# global_monetary_reference). Applied monthly by zz_ef_currency_trade_step (scripted_effects/
+# zz_ef_reference_strength.txt), multiplier = zz_ef_currency_trade_m (-10..10, + for a weak currency).
+#
+# E&F's strong_currency / weak_currency gave the same per unit with multiplier (1 - strength) x 100: 1% of
+# trade per 1% of strength, so a rouble at strength 1.7 had "+70% to imports" (the user, 4.10). Their trade
+# fields are dropped here (REPLACE: full body, the rules section 1); the modifiers stay as the label.
+#############################################
+
+zz_ef_currency_trade = {
+	icon = gfx/interface/icons/timed_modifier_icons/balanced_currency.dds
+	state_export_advantage_mult = 0.01
+	state_import_advantage_mult = -0.01
+}
+
+REPLACE:strong_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/strong_currency.dds
+}
+REPLACE:weak_currency = {
+	icon = gfx/interface/icons/timed_modifier_icons/weak_currency.dds
+}

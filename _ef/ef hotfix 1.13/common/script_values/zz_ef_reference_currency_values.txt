@@ -39,6 +39,16 @@ zz_ef_currency_strength = {
 		divide = global_var:zz_ef_ref_vtp
 	}
 }
+# Е.10 (5.10, Д.5): the trade modifier's multiplier: (1 - strength) x 40, within -10..10 -- +10 (export +10%,
+# import -10%) at strength 0.75, -10 at 1.25, 0 at the reference's level. Beyond the band it stays at 10
+# (taken at night: the user named +-10% at 1.25 / 0.75, the clamp is a guess -- check).
+zz_ef_currency_trade_m = {
+	value = 1
+	subtract = zz_ef_currency_strength
+	multiply = 40
+	max = 10
+	min = -10
+}
 REPLACE_OR_CREATE:difference_with_average_gold_exchange_rate_currencies = {
 	value = zz_ef_currency_strength
 }

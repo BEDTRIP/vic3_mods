@@ -9,3 +9,21 @@ zz_ef_reference_strength_step = {
 		set_global_variable = { name = zz_ef_ref_vtp value = zz_ef_value_to_parity }
 	}
 }
+
+# Е.10 (5.10, Д.5): the trade modifier of the currency's strength (static_modifiers/zz_ef_currency_trade.txt).
+# Monthly, after the reference's step; countries with a central bank, not the reference.
+zz_ef_currency_trade_step = {
+	remove_modifier = zz_ef_currency_trade
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			NOT = { has_modifier = global_monetary_reference }
+			has_global_variable = zz_ef_ref_vtp
+			NOT = { zz_ef_currency_trade_m = 0 }
+		}
+		add_modifier = {
+			name = zz_ef_currency_trade
+			multiplier = zz_ef_currency_trade_m
+		}
+	}
+}

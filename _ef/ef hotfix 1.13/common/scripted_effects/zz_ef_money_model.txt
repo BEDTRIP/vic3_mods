@@ -739,6 +739,8 @@ zz_ef_money_model_monthly_step = {
 	zz_ef_silver_rate_update = yes
 	# М.9 (4.10): the reference currency's value / parity for the strength of the others
 	zz_ef_reference_strength_step = yes
+	# Е.10 (5.10, Д.5): the strength's trade modifier, against the reference
+	zz_ef_currency_trade_step = yes
 	# Ф.2 (4.10): the issuer pays its foreign private banks' interest, in January
 	if = {
 		limit = { month = 0 }
