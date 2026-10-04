@@ -318,8 +318,16 @@ FLOWS = [
     (K, Z, "[concept_budget_diplomatic_pacts]", "[concept_budget_diplomatic_pacts]", gt("GetDiplomaticPactsExpenseTrend"), None),
     (K, Z, "[concept_budget_treaties]", "[concept_budget_treaties]", gt("GetTreatiesExpenseTrend"), None),
     (K, Z, "[concept_budget_power_bloc]", "[concept_budget_power_bloc]", gt("GetPowerBlocExpenseTrend"), None),
-    (X, K, "[concept_budget_additional_income]", "[concept_budget_additional_income]", gt("GetAdditionalIncomeTrend"), None),
-    (K, X, "[concept_budget_additional_expenses]", "[concept_budget_additional_expenses]",
+    # 4.10 (the user's budget screenshot): E&F puts the treasury's foreign bonds' interest here, weekly --
+    # the holder's "interest from investment in foreign debt" (interest_from_foreign_debt_investment) into the
+    # additional income, the debtor's (interest_at_the_central_bank) into the additional expenses -- and
+    # events' payments between countries (Haiti's independence debt). Payments with abroad: the CB settles
+    # them (Hume), they belong to the abroad group, not outside the accounts.
+    (Z, K, "[concept_budget_additional_income] — проценты по облигациям казны, выплаты других стран",
+     "[concept_budget_additional_income] — interest on the treasury's bonds, other countries' payments",
+     gt("GetAdditionalIncomeTrend"), None),
+    (K, Z, "[concept_budget_additional_expenses] — проценты по нашим облигациям у других стран",
+     "[concept_budget_additional_expenses] — interest on our bonds held abroad",
      gt("GetAdditionalExpensesTrend"), None),
     # --- pops: a transit account ---
     (P, N, "зарплаты и дивиденды (оценка: ВВП / 52 − госвыплаты)", "wages and dividends (estimate: GDP / 52 − state pay)",
