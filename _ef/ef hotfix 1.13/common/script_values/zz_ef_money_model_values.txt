@@ -647,9 +647,24 @@ zz_ef_tr_other_net = {
 # ~11% of GDP, and part of the savings goes to deposits. Not engine money
 # (pops hold none): the share deposited enters the pool as new money --
 # check.
+# Е.7 (5.10, Д.4): the start puts M2 at the model's norm, 45% of a year's GDP (Britain 1830s): the pops'
+# savings = 45% of GDP - the business cash (M2 = cash at hand + business cash + deposits), not under the
+# cash norm; over the norm they are deposits at once (zz_ef_pop_start_deposits), as the weekly step settles
+# them by the deposit rate. Was 15% of GDP with no deposits: the banks started empty and the first years went
+# to filling the norm (the user, 4.10: "население беднеет, вкладов нет").
 zz_ef_pop_start_savings = {
 	value = gdp
-	multiply = 0.15
+	multiply = 0.45
+	subtract = {
+		value = zz_ef_building_cash
+		min = 0
+	}
+	min = zz_ef_pop_cash_norm
+	min = 0
+}
+zz_ef_pop_start_deposits = {
+	value = zz_ef_pop_start_savings
+	subtract = zz_ef_pop_cash_norm
 	min = 0
 }
 # ---- pops' cash at hand and deposits (the user, 1.10 evening, run 14) -------

@@ -554,7 +554,9 @@ zz_ef_pop_savings_step = {
 		# pops' starting cash (1.10 evening): M0 is cash at hand, it cannot
 		# start at zero; zz_ef_pop_start_savings
 		set_variable = { name = zz_ef_pop_savings value = zz_ef_pop_start_savings }
-		set_variable = { name = zz_ef_pop_deposits value = 0 }
+		# Е.7 (5.10, Д.4): over the cash norm -- deposits from the start, the money in the banks' pool
+		set_variable = { name = zz_ef_pop_deposits value = zz_ef_pop_start_deposits }
+		add_investment_pool = var:zz_ef_pop_deposits
 	}
 	set_variable = { name = zz_ef_f_inflow value = zz_ef_v_f_leak }
 	change_variable = { name = zz_ef_f_inflow multiply = -1 }
