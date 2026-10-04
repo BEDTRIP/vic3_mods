@@ -119,6 +119,8 @@ zz_ef_money_model_step = {
 	set_variable = { name = zz_ef_f_cb_rescale value = 0 }
 	# foreign currency in the reserves (night 2, item 2), before the rescale
 	zz_ef_fx_metal_update = yes
+	# П.8 (4.10): each foreign currency's weekly change, for E&F's table (generated, zz_ef_clearing.txt)
+	zz_ef_cbfx_week_step = yes
 	# В2.5 (4.10): CB states taken from a country send their metal back to it
 	zz_ef_cb_state_owner_step = yes
 	if = {
@@ -362,7 +364,8 @@ zz_ef_money_model_step = {
 	zz_ef_money_ledger_delta = { ACC = tbonds VALUE = zz_ef_treasury_bonds }
 	zz_ef_money_ledger_delta = { ACC = m2 VALUE = zz_ef_m2 }
 	zz_ef_money_ledger_delta = { ACC = cbm VALUE = zz_ef_cb_money }
-	zz_ef_money_ledger_delta = { ACC = abroad VALUE = zz_ef_foreign_assets }
+	# П.7 (4.10, В.4): abroad = the net foreign position (bonds + the CB's foreign currency - our currency abroad)
+	zz_ef_money_ledger_delta = { ACC = abroad VALUE = zz_ef_abroad_net }
 	zz_ef_money_ledger_delta = { ACC = agg0 VALUE = zz_ef_agg_m0 }
 	zz_ef_money_ledger_delta = { ACC = agg1 VALUE = zz_ef_agg_m1 }
 	zz_ef_money_ledger_delta = { ACC = agg2 VALUE = zz_ef_agg_m2 }
@@ -385,7 +388,7 @@ zz_ef_money_model_step = {
 				gdp > 20000000
 			}
 		}
-		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m3')|0]|circ [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circulation')|0]|cbm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_money')|0]|abroad [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_foreign_assets')|0]|eng [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circ_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cbtgt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_credit_target')|0]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|2]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|bcash [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_building_cash')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_credit')|0]|rate [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_rate')|4]|rule [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|4]|r_cov [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_cover')|4]|r_mon [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_money')|4]|deprate [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_deposit_rate')|4]|normsh [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cash_norm_gdp')|3]|need [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool_need')|0]|r_rat [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_rating')|4]|r_stab [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_stability')|4]"
+		debug_log = "EFW|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|m0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m0')|0]|m1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m1')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m3')|0]|circ [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circulation')|0]|cbm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_money')|0]|abroad [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_abroad_net')|0]|bonds_abr [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_foreign_assets')|0]|eng [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_m2')|0]|d_treasury [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_treasury')|0]|d_buildings [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_buildings')|0]|d_pool [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_pool')|0]|d_m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_d_m2')|0]|budget [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_budget')|0]|contrib [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_contrib')|0]|transfer [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_transfer')|0]|cb_borrow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_borrow')|0]|cb_repay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cb_repay')|0]|cb_debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_cb_debt')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|infl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_inflation')|3]|g_m3 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_circ_growth_year')|3]|g_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gdp_growth_year')|3]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|2]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cbtgt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_credit_target')|0]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|2]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|bcash [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_building_cash')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_credit')|0]|rate [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_rate')|4]|rule [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rate_rating_target')|4]|r_cov [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_cover')|4]|r_mon [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_money')|4]|deprate [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_deposit_rate')|4]|normsh [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cash_norm_gdp')|3]|need [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_pool_need')|0]|r_rat [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_rating')|4]|r_stab [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_rule_stability')|4]"
 	}
 
 	# The GUI bridge (gui/zz_ef_money_hook.gui): the budget's lines outside
@@ -408,6 +411,10 @@ zz_ef_money_model_step = {
 	# ledger's change of M0 / savings / deposits covers
 	zz_ef_money_window_roll = { F = inflow }
 	zz_ef_money_window_roll = { F = buyout_got }
+	# П.6 / П.7 (4.10): the clearing's currency at the last receiver, for the abroad card
+	zz_ef_money_window_roll = { F = clr_cur_out }
+	zz_ef_money_window_roll = { F = clr_fx_in }
+	zz_ef_money_window_roll = { F = clr_own_back }
 	if = { limit = { has_variable = zz_ef_f_ext } remove_variable = zz_ef_f_ext }
 	if = { limit = { has_variable = zz_ef_f_leak } remove_variable = zz_ef_f_leak }
 	set_variable = { name = zz_ef_hook_pending value = yes days = 6 }
@@ -578,6 +585,11 @@ zz_ef_cb_hume_step = {
 	set_variable = { name = zz_ef_f_ext_net value = zz_ef_ext_net_week }
 	set_variable = { name = zz_ef_f_hume value = 0 }
 	set_variable = { name = zz_ef_f_hume_money value = 0 }
+	# П.6 (the user, 4.10, В.2 / В.3): the world clearing -- the outflow pays the house in metal (by trust in
+	# the currency) and in the own currency, the inflow takes a slice of what the house holds; every country
+	# with a CB, fiat too (pays in currency). Was: the metal moved by the country's own flow with nobody on the
+	# other side (generated, scripted_effects/zz_ef_clearing.txt; sets var:zz_ef_f_hume, the CB's metal, native).
+	zz_ef_clr_step = yes
 	if = {
 		limit = {
 			has_modifier = has_central_bank
@@ -585,28 +597,6 @@ zz_ef_cb_hume_step = {
 				has_law = law_type:law_gold_standard
 				has_law = law_type:law_silver_standard
 				has_law = law_type:law_bimetallism_standard
-			}
-		}
-		set_variable = { name = zz_ef_f_hume value = zz_ef_hume_metal_week }
-		every_scope_state = {
-			limit = {
-				has_modifier = central_bank_historic_place
-				is_capital = yes
-			}
-			if = {
-				limit = { owner = { has_law = law_type:law_silver_standard } }
-				if = {
-					limit = { NOT = { has_variable = silver_state_1 } }
-					set_variable = { name = silver_state_1 value = 0 }
-				}
-				change_variable = { name = silver_state_1 add = owner.var:zz_ef_f_hume }
-			}
-			else = {
-				if = {
-					limit = { NOT = { has_variable = gold_state_1 } }
-					set_variable = { name = gold_state_1 value = 0 }
-				}
-				change_variable = { name = gold_state_1 add = owner.var:zz_ef_f_hume }
 			}
 		}
 		# M.3 (the user, 4.10): Hume at full strength -- the metal that came in is coined: the CB
@@ -724,8 +714,10 @@ zz_ef_money_model_monthly_step = {
 		zz_ef_privbank_interest_pay = yes
 	}
 	# В2.1 (2.10): part of the net exports paid in the importer's currency
-	# (generated, scripted_effects/zz_ef_reserve_trade.txt)
-	zz_ef_rc_step = yes
+	# (generated, scripted_effects/zz_ef_reserve_trade.txt). П.6 (4.10): off -- the
+	# weekly clearing pays the outflow in metal and the payer's currency
+	# (zz_ef_clr_step), the monthly pair swap on top of it would count it twice.
+	# zz_ef_rc_step = yes
 	# В2.1: AI central banks on the forex monthly was tried and taken back
 	# (run 24, 2.10): every E&F purchase is at parity, twelve a year blew the
 	# reserves up (France's cover 64% -> 436%, Russia's currency 1.2 billion
@@ -736,7 +728,7 @@ zz_ef_money_model_monthly_step = {
 			has_variable = money_value_target_1
 			gdp > 1000000
 		}
-		debug_log = "EFX|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|std [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_std_code')|0]|cb [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_has_cb')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|3]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|3]|gpu [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_unit')|4]|subj [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_subject')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|gold [THIS.GetCountry.MakeScope.ScriptValue('gold_state_native_for_stockpile')|0]|silver [THIS.GetCountry.MakeScope.ScriptValue('silver_state_native_for_stockpile')|0]|fxm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_fx_metal')|0]|own [THIS.GetCountry.MakeScope.ScriptValue('money_supply_state')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|crisis [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_crisis_flag')|0]|s2g [THIS.GetCountry.MakeScope.ScriptValue('silver_to_gold_rate')|5]|median [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_median')|3]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|rcin [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_fx_in')|0]|rcback [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_back')|0]|rcmetal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_metal_out')|0]|liab [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_fx_liab')|0]"
+		debug_log = "EFX|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|std [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_std_code')|0]|cb [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_has_cb')|0]|mv0 [THIS.GetCountry.MakeScope.ScriptValue('money_value_0')|3]|target1 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|3]|gpu [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_unit')|4]|subj [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_subject')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|gold [THIS.GetCountry.MakeScope.ScriptValue('gold_state_native_for_stockpile')|0]|silver [THIS.GetCountry.MakeScope.ScriptValue('silver_state_native_for_stockpile')|0]|fxm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_fx_metal')|0]|own [THIS.GetCountry.MakeScope.ScriptValue('money_supply_state')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|crisis [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_crisis_flag')|0]|s2g [THIS.GetCountry.MakeScope.ScriptValue('silver_to_gold_rate')|5]|median [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_money_median')|3]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]|rcin [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_fx_in')|0]|rcback [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_back')|0]|rcmetal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_rc_metal_out')|0]|liab [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_fx_liab_all')|0]|clr_ratio [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_ratio_v')|3]|clr_pot [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_pot_value')|0]|clr_hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_hume')|0]|clr_cur_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_w_clr_cur_out')|0]|clr_fx_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_w_clr_fx_in_money')|0]|clr_back [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_w_clr_own_back')|0]|share [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_metal_share')|2]|strength [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_currency_strength')|3]|extn [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_ext_net')|0]|gpm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_gold_per_money')|5]|trade [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_trade')|0]|mtrade [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_members_trade_sum')|0]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cu_member_v')|0]"
 	}
 	# EF.48 item 4: dependents for the surcharge (consumer credit; since 1.10
 	# evening also the savings spent -- every country).

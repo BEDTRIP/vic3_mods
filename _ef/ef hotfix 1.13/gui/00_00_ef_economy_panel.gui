@@ -3248,12 +3248,13 @@ types zz_ef_economy_panel
 						section_header_button = {
 
 							blockoverride "left_text" {
-								text = "import_export_value_in_currency_in_reeserve_panel"
+								text = "zz_ef_ep_cbfx_title"
+								tooltip = "zz_ef_ep_cbfx_tt"
 							}
 
 							blockoverride "onclick" {
 								onclick = "[GetVariableSystem.Toggle('import_export_value_in_currency_in_reeserve')]"
-								onclick = "[GetScriptedGui('update_import_export_value_in_currency_in_reeserve_liste').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+								onclick = "[GetScriptedGui('zz_ef_cbfx_update').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 
 								#onclick = "[GetScriptedGui('update_import_export_value_in_currency_in_reeserve_liste_debug').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 
@@ -3316,7 +3317,7 @@ types zz_ef_economy_panel
 
 							flowcontainer = {
 								direction = vertical
-								datamodel = "[GetGlobalList('import_export_value_in_currency_in_reeserve')]"
+								datamodel = "[GetGlobalList('zz_ef_cbfx_list')]"
 
 								margin_top = 10
 
@@ -3351,7 +3352,7 @@ types zz_ef_economy_panel
 												layoutstretchfactor_horizontal = 1
 												layoutpolicy_horizontal = preferred
 												datacontext = "[Scope.GetCountry]"
-												text = "[Localize(Concatenate(Scope.GetFlagName,'_money_value'))]"
+												text = "[Localize(Concatenate(Scope.GetFlagName,'_zz_cbfx_units'))]"
 
 												margin_left = 0
 												margin_bottom = 0
@@ -3368,7 +3369,7 @@ types zz_ef_economy_panel
 												layoutpolicy_horizontal = preferred
 												datacontext = "[Scope.GetCountry]"
 
-												text = "[Localize(Concatenate(Scope.GetFlagName,'_stockpiling_currency_state'))]"
+												text = "[Localize(Concatenate(Scope.GetFlagName,'_zz_cbfx_money'))]"
 
 												margin_left = 0
 												margin_bottom = 0
@@ -3385,7 +3386,7 @@ types zz_ef_economy_panel
 												layoutpolicy_horizontal = preferred
 												datacontext = "[Scope.GetCountry]"
 
-												text = "[Localize(Concatenate(Scope.GetFlagName,'_currency_state_in_gold'))]"
+												text = "[Localize(Concatenate(Scope.GetFlagName,'_zz_cbfx_gold'))]"
 
 												margin_left = 0
 												margin_bottom = 0

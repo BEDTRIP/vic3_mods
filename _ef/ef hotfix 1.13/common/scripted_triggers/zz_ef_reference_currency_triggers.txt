@@ -26,6 +26,8 @@ zz_ef_reference_candidate = {
 		has_law = law_type:law_gold_exchange_standard
 	}
 	NOT = { has_variable = central_bank_bankruptcy var:central_bank_bankruptcy > 0 }
+	# В.9 (the user, 4.10): redemption not suspended -- cover 25%+ (M.2); lost it -> the yearly re-pick moves on
+	zz_ef_cb_cover >= zz_ef_value_floor_cover
 }
 
 REPLACE_OR_CREATE:is_strong_currency = {

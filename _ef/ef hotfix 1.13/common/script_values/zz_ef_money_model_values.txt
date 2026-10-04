@@ -1147,8 +1147,10 @@ zz_ef_v_f_ext_net = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_ext_net } value = var:zz_ef_f_ext_net }
 }
-# M.3 (4.10): Hume's money on (1) / off (0) -- see zz_ef_cb_hume_step.
-zz_ef_hume_money_on = 1
+# M.3 (4.10): Hume's money on (1) / off (0) -- see zz_ef_cb_hume_step. П.5 (the user, 4.10, В.1): off -- the
+# engine pays the exporter already (one money for the world), the CB's issue counted it twice (run n1_b: Britain's
+# pool 4M -> 163M in 8 years, rates down to 2%).
+zz_ef_hume_money_on = 0
 # M.3 (4.10): money the CB issued (+) / withdrew (-) for Hume's metal, this receiver / last window
 zz_ef_v_f_hume_money = {
 	value = 0
@@ -2101,6 +2103,39 @@ zz_ef_treasury_bonds = {
 zz_ef_foreign_assets = {
 	value = zz_ef_bank_bonds
 	add = zz_ef_treasury_bonds
+}
+# П.7 (the user, 4.10, В.4): the account "abroad" = the country's net foreign position, in its money -- the
+# claims (other countries' bonds of the banks and the treasury, the CB's foreign currency) minus the debt (our
+# currency held by other CBs and waiting in the clearing house, П.6). The CB's foreign currency counts in the
+# cover too (national_capacity); in the tooltip it is here, not in the CB's reserves (metal only).
+zz_ef_fx_liab_all = {
+	value = zz_ef_fx_liab
+	add = zz_ef_clr_own_in_pot
+}
+zz_ef_abroad_net = {
+	value = zz_ef_foreign_assets
+	add = zz_ef_fx_money
+	subtract = zz_ef_fx_liab_all
+}
+# the clearing's currency at the last receiver (window values, П.6), in money
+zz_ef_v_w_clr_cur_out = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_clr_cur_out } value = var:zz_ef_w_clr_cur_out }
+}
+zz_ef_v_w_clr_own_back = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_clr_own_back } value = var:zz_ef_w_clr_own_back }
+}
+zz_ef_v_w_clr_fx_in_money = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_w_clr_fx_in
+			zz_ef_clr_gold_per_money > 0
+		}
+		value = var:zz_ef_w_clr_fx_in
+		divide = zz_ef_clr_gold_per_money
+	}
 }
 # As in real statistics (the user, 1.10 evening, run 12): M0 = cash at
 # hand, M1 = + business cash (current accounts), M2 = + pops' deposits. The

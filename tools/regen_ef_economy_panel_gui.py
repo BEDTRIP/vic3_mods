@@ -20,7 +20,7 @@ regen_ef_cb_rate_gui.py), with the block's numbers replaced:
     zz_ef_trade_exports_week), in money.
 The CB's metal block above it (E&F's "metal reserves of the CB", "stored this month") is E&F's and already
 the same number as the tooltip's "metal in the standard's metal" -- left as it is. E&F's table "currency in
-the trade balance" (its bilateral currency deals) is left too: it is not the CB's currency reserves.
+the trade balance" (its trade reserve, empty since В2.1) shows the CB's foreign currency by currency (П.8).
 
 Output: `_ef/ef hotfix 1.13/gui/00_00_ef_economy_panel.gui`.
 
@@ -61,6 +61,15 @@ EDITS = [
      'text = "' + SV.format("zz_ef_trade_imports_week") + '"'),
     ('text = "import_value_in_gold_week_fix"', 'text = "zz_ef_ep_week_market_prices"'),
     ('text = "export_value_in_gold_week_fix"', 'text = "zz_ef_ep_week_market_prices"'),
+    # П.8 (4.10, В.5): "currency in the trade balance" (E&F's trade reserve, zeroed by В2.1 -- empty) -> the CB's
+    # foreign currency by currency (tools/regen_ef_clearing.py: zz_ef_cbfx_*, scripted GUI zz_ef_cbfx_update)
+    ('text = "import_export_value_in_currency_in_reeserve_panel"',
+     'text = "zz_ef_ep_cbfx_title"\n\t\t\t\t\t\t\t\ttooltip = "zz_ef_ep_cbfx_tt"'),
+    ("GetScriptedGui('update_import_export_value_in_currency_in_reeserve_liste')", "GetScriptedGui('zz_ef_cbfx_update')"),
+    ("GetGlobalList('import_export_value_in_currency_in_reeserve')", "GetGlobalList('zz_ef_cbfx_list')"),
+    ("Scope.GetFlagName,'_money_value'))]\"", "Scope.GetFlagName,'_zz_cbfx_units'))]\""),
+    ("Scope.GetFlagName,'_stockpiling_currency_state'))]\"", "Scope.GetFlagName,'_zz_cbfx_money'))]\""),
+    ("Scope.GetFlagName,'_currency_state_in_gold'))]\"", "Scope.GetFlagName,'_zz_cbfx_gold'))]\""),
 ]
 # the export value line: E&F's text ends differently, matched by its script value
 EXPORT_RE = re.compile(r'text = "\[GetPlayer\.MakeScope\.ScriptValue\(\'excess_foreign_state_currency_in_gold\'\)\|\+D\][^"\n]*"')
@@ -68,13 +77,13 @@ EXPORT_RE = re.compile(r'text = "\[GetPlayer\.MakeScope\.ScriptValue\(\'excess_f
 LOC = {
     "russian": {
         "zz_ef_ep_current_account": "Текущий счёт за неделю",
-        "zz_ef_ep_current_account_tt": "Чистый поток с заграницей за неделю — то же число, что «итого» в карточке «Заграница» подсказки денежной массы: статьи бюджета с заграницей, торговый баланс рынка, дивиденды из-за рубежа, покупка чужих облигаций. ЦБ рассчитывает его металлом на следующем недельном шаге (механизм Юма).",
+        "zz_ef_ep_current_account_tt": "Чистый поток с заграницей за неделю — то же число, что «итого» в карточке «Заграница» подсказки денежной массы: статьи бюджета с заграницей, торговый баланс рынка, дивиденды из-за рубежа, покупка чужих облигаций. ЦБ сводит его через мировой клиринг на следующем недельном шаге: отток — металлом (доля по доверию к валюте) и нашей валютой, приток — металлом и валютами плательщиков.",
         "zz_ef_ep_trade_tt": "Торговый баланс рынка за неделю: экспорт − импорт всех товаров по ценам рынка (в деньгах движка).",
         "zz_ef_ep_week_market_prices": "за неделю, по ценам рынка",
     },
     "english": {
         "zz_ef_ep_current_account": "Current account, a week",
-        "zz_ef_ep_current_account_tt": "The week's net flow with abroad — the same number as the 'net' line of the 'Abroad' card in the money supply tooltip: budget lines with abroad, the market's trade balance, dividends from abroad, foreign bonds bought. The CB settles it in metal at the next weekly step (Hume's mechanism).",
+        "zz_ef_ep_current_account_tt": "The week's net flow with abroad — the same number as the 'net' line of the 'Abroad' card in the money supply tooltip: budget lines with abroad, the market's trade balance, dividends from abroad, foreign bonds bought. The CB settles it through the world clearing at the next weekly step: an outflow in metal (the share by trust in the currency) and our currency, an inflow in the payers' metal and currencies.",
         "zz_ef_ep_trade_tt": "The market's trade balance this week: exports − imports of all goods at the market's prices (engine money).",
         "zz_ef_ep_week_market_prices": "a week, at the market's prices",
     },
