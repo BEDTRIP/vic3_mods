@@ -35,7 +35,24 @@ function CardShots {
     return ($s -join "; ")
 }
 
+# П.15 (4.10, the user): the budget tooltip ("£ +125K", top bar) pins itself; each of its lines' number has a
+# tooltip of its own (the breakdown). Lines as in Britain's of 1836: 18 px a line from 0.176 to 0.636 (1440p);
+# a stop on a heading or a gap just shoots the bare tooltip.
+function BudgetTipShots {
+    $s = @("hover 0.6 0.97; wait 1; hover 0.24 0.012; wait 3; shot {P}_budgettip")
+    $i = 0
+    for ($y = 0.176; $y -le 0.636; $y += 0.016) {
+        $i++
+        $s += "hover 0.6 0.97; wait 0.5; hover 0.24 0.012; wait 3; hover 0.2 0.05; wait 0.3; hover 0.17 $([Math]::Round($y, 4)); wait 1.5; shot {P}_budgettip_$('{0:D2}' -f $i)"
+    }
+    $s += "hover 0.6 0.97; wait 1"
+    return ($s -join "; ")
+}
+
 $Macros = @{
+    # П.15: the inflation tooltip (the top bar's second row, "-8.03%")
+    infl     = "hover 0.6 0.97; wait 1; hover 0.0575 0.0907; wait 2.5; shot {P}_inflation; hover 0.6 0.97; wait 1"
+    budgettip = BudgetTipShots
     # the currency tooltip ("Денежная масса" and the money's value, all accounts in one): the top bar
     # expands on hover, the second row holds "CHF = 19.2" (the currency's value); its tooltip lists
     # M0..M3 and the accounts. F2 + the panel's X first: F2 opens the budget over any panel ("tag"
