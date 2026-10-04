@@ -59,6 +59,9 @@ def sgui() -> str:
            "# a year (gold). Filled when the player opens the table (button in Budget -> Finances).\n"
            "zz_ef_bonds_update = {\n\teffect = {\n\t\tsave_scope_as = bt_root\n"
            "\t\tclear_global_variable_list = zz_ef_bt_in_list\n\t\tclear_global_variable_list = zz_ef_bt_out_list\n"
+           "\t\tclear_global_variable_list = zz_ef_bt_in_tmp\n\t\tclear_global_variable_list = zz_ef_bt_out_tmp\n"
+           "\t\t# the banks' sums are gold: the player's gold per unit of money, for the order\n"
+           "\t\tset_global_variable = { name = zz_ef_bt_gpm value = zz_ef_clr_gold_per_money }\n"
            "\t\tevery_country = {\n"]
     for v in VARS:
         out.append(f"\t\t\tset_variable = {{ name = {v} value = 0 }}\n")
@@ -76,7 +79,7 @@ def sgui() -> str:
                    f"change_variable = {{ name = zz_ef_bt_b_year add = var:ai_privat_bank_interest_calculated_{m} }} }}\n"
                    f"\t\t\t}}\n")
     out.append("\t\t\tif = { limit = { OR = { var:zz_ef_bt_t_amt > 0 var:zz_ef_bt_b_amt > 0 } } "
-               "add_to_global_variable_list = { name = zz_ef_bt_in_list target = this } }\n\t\t}\n")
+               "add_to_global_variable_list = { name = zz_ef_bt_in_tmp target = this } }\n\t\t}\n")
     # 2. whose we hold: our slots, the sum goes on the seller (the listed country)
     out.append("\t\t# 2. our bonds of other countries: each of our slots adds to its seller's row\n")
     for n in range(1, N_STATE + 1):
@@ -85,22 +88,29 @@ def sgui() -> str:
                    f"\t\t\tvar:ai_seller_country_general_{n} = {{\n"
                    f"\t\t\t\tchange_variable = {{ name = zz_ef_bto_t_amt add = scope:bt_root.var:ai_total_bond_value_{n} }}\n"
                    f"\t\t\t\tchange_variable = {{ name = zz_ef_bto_t_week add = {{ value = scope:bt_root.var:ai_interest_per_month_calculated_{n} multiply = 0.25 }} }}\n"
-                   f"\t\t\t\tif = {{ limit = {{ NOT = {{ is_target_in_global_variable_list = {{ name = zz_ef_bt_out_list target = this }} }} }} add_to_global_variable_list = {{ name = zz_ef_bt_out_list target = this }} }}\n"
+                   f"\t\t\t\tif = {{ limit = {{ NOT = {{ is_target_in_global_variable_list = {{ name = zz_ef_bt_out_tmp target = this }} }} }} add_to_global_variable_list = {{ name = zz_ef_bt_out_tmp target = this }} }}\n"
                    f"\t\t\t}}\n\t\t}}\n"
                    f"\t\tif = {{ limit = {{ has_variable = seller_country_general_{n} has_variable = total_bond_value_{n} var:total_bond_value_{n} > 0 }}\n"
                    f"\t\t\tvar:seller_country_general_{n} = {{\n"
                    f"\t\t\t\tchange_variable = {{ name = zz_ef_bto_t_amt add = scope:bt_root.var:total_bond_value_{n} }}\n"
                    f"\t\t\t\tchange_variable = {{ name = zz_ef_bto_t_week add = {{ value = scope:bt_root.var:interest_per_month_calculated_{n} multiply = 0.25 }} }}\n"
-                   f"\t\t\t\tif = {{ limit = {{ NOT = {{ is_target_in_global_variable_list = {{ name = zz_ef_bt_out_list target = this }} }} }} add_to_global_variable_list = {{ name = zz_ef_bt_out_list target = this }} }}\n"
+                   f"\t\t\t\tif = {{ limit = {{ NOT = {{ is_target_in_global_variable_list = {{ name = zz_ef_bt_out_tmp target = this }} }} }} add_to_global_variable_list = {{ name = zz_ef_bt_out_tmp target = this }} }}\n"
                    f"\t\t\t}}\n\t\t}}\n")
     for m in range(1, N_BANK + 1):
         out.append(f"\t\tif = {{ limit = {{ has_variable = ai_privat_bank_bond_value_{m} var:ai_privat_bank_bond_value_{m} > 0 }}\n"
+                   # night check (run ext2): the slot's seller list held Britain itself for Britain's banks --
+                   # our own bonds are not "other countries'"
                    f"\t\t\trandom_in_list = {{\n\t\t\t\tvariable = ai_privat_bank_seller_country_general_{m}\n"
+                   f"\t\t\t\tlimit = {{ NOT = {{ this = scope:bt_root }} }}\n"
                    f"\t\t\t\tchange_variable = {{ name = zz_ef_bto_b_amt add = scope:bt_root.var:ai_privat_bank_bond_value_{m} }}\n"
                    f"\t\t\t\tif = {{ limit = {{ scope:bt_root = {{ has_variable = ai_privat_bank_interest_calculated_{m} }} }} "
                    f"change_variable = {{ name = zz_ef_bto_b_year add = scope:bt_root.var:ai_privat_bank_interest_calculated_{m} }} }}\n"
-                   f"\t\t\t\tif = {{ limit = {{ NOT = {{ is_target_in_global_variable_list = {{ name = zz_ef_bt_out_list target = this }} }} }} add_to_global_variable_list = {{ name = zz_ef_bt_out_list target = this }} }}\n"
+                   f"\t\t\t\tif = {{ limit = {{ NOT = {{ is_target_in_global_variable_list = {{ name = zz_ef_bt_out_tmp target = this }} }} }} add_to_global_variable_list = {{ name = zz_ef_bt_out_tmp target = this }} }}\n"
                    f"\t\t\t}}\n\t\t}}\n")
+    # night check (run ext2): the biggest first -- treasury (money) + banks (gold / the player's gold per money)
+    for k in ("in", "out"):
+        out.append(f"\t\tordered_in_global_list = {{ variable = zz_ef_bt_{k}_tmp order_by = zz_ef_bt_{k}_key max = 1000 "
+                   f"check_range_bounds = no add_to_global_variable_list = {{ name = zz_ef_bt_{k}_list target = this }} }}\n")
     out.append("\t}\n}\n")
     return "".join(out)
 
@@ -147,6 +157,23 @@ LOC = {
 CUR = "[GetPlayer.GetCustom('currency_symbol')]"
 
 SV = """
+# Е.6: the rows' order -- treasury sum (money) + banks' sum (gold) in the player's money
+zz_ef_bt_in_key = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bt_t_amt } add = var:zz_ef_bt_t_amt }
+	if = {
+		limit = { has_variable = zz_ef_bt_b_amt has_global_variable = zz_ef_bt_gpm global_var:zz_ef_bt_gpm > 0 }
+		add = { value = var:zz_ef_bt_b_amt divide = global_var:zz_ef_bt_gpm }
+	}
+}
+zz_ef_bt_out_key = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bto_t_amt } add = var:zz_ef_bto_t_amt }
+	if = {
+		limit = { has_variable = zz_ef_bto_b_amt has_global_variable = zz_ef_bt_gpm global_var:zz_ef_bt_gpm > 0 }
+		add = { value = var:zz_ef_bto_b_amt divide = global_var:zz_ef_bt_gpm }
+	}
+}
 # Е.6: the row's yearly rate on the treasury's bonds (interest a week x 52 / sum)
 zz_ef_bt_t_rate = {
 	value = 0
