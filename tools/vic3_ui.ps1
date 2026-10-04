@@ -133,9 +133,9 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
             # world market's own order (the biggest first; Britain 1836: 1 Britain, 2 Russia, 3 France).
             # "market <row> <name>"
             $xy = $rest -split '\s+'; $row = [int]$xy[0]; $name = $xy[1]
-            & $PSCommandPath -OutDir $OutDir -Do ("click 0.0085 0.2635; wait 2; hover 0.75 0.55; wait 0.5; click 0.13 0.976; wait 2; " +
+            & $PSCommandPath -OutDir $OutDir -Do (("click 0.0085 0.2635; wait 2; hover 0.75 0.55; wait 0.5; click 0.13 0.976; wait 2; " +
                 "hover 0.75 0.55; wait 0.5; click 0.1835 0.145; wait 2; click 0.0785 {0}; wait 2; hover 0.75 0.55; wait 0.5; " +
-                "click 0.215 0.145; wait 2; hover 0.75 0.55; wait 1; browse {1}_market_global; click 0.2265 0.095; wait 1" -f (0.385 + 0.0209 * ($row - 1)).ToString([Globalization.CultureInfo]::InvariantCulture), $name)
+                "click 0.215 0.145; wait 2; hover 0.75 0.55; wait 1; browse {1}_market_global; click 0.2265 0.095; wait 1") -f (0.385 + 0.0209 * ($row - 1)).ToString([Globalization.CultureInfo]::InvariantCulture), $name)
         }
         "close"   { Close-And-Collect }
         default   { Log "unknown step '$step'" }
