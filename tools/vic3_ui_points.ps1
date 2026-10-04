@@ -26,9 +26,11 @@ $Cards = [ordered]@{ cash = 0.2613; business = 0.3307; deposits = 0.3724; treasu
 function CardShots {
     $s = @()
     foreach ($k in $Cards.Keys) {
-        foreach ($v in @(@("a", 0.0), @("b", 0.0125))) {
+        # 4.10 (П.15): one height -- the second one (b, +0.0125, for E&F's wrapped silver line) missed every card
+        # with the new tooltip and showed as a stray row-by-row hover (the user)
+        foreach ($v in @(@("a", 0.0))) {
             $y = [Math]::Round($Cards[$k] + $v[1], 4)
-            $s += "hover 0.15 0.012; wait 1; hover 0.1 0.06; wait 0.5; hover 0.0975 0.0916; wait 3; hover 0.0975 0.125; wait 0.5; hover 0.03 $y; wait 2.5; shot {P}_card_${k}_$($v[0]); hover 0.6 0.97; wait 2"
+            $s += "hover 0.15 0.012; wait 1; hover 0.1 0.06; wait 0.5; hover 0.0975 0.0916; wait 4; hover 0.0975 0.125; wait 0.5; hover 0.03 $y; wait 2.5; shot {P}_card_${k}_$($v[0]); hover 0.6 0.97; wait 2"
         }
     }
     return ($s -join "; ")
