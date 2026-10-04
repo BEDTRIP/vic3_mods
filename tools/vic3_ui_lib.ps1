@@ -1,4 +1,4 @@
-<#
+﻿<#
 Shared helpers of the Victoria 3 sandbox scripts (run_vic3_sandbox.ps1, vic3_ui.ps1):
 window focus, keys, clicks and hovers at window fractions, console commands, screenshots,
 screen recognition by colour. Dot-source it; the caller sets $OutDir (and $Logs, $t0 for
@@ -144,7 +144,9 @@ $Screens = @{
     # the lobby: the dark right panel AND the grey "Start" button -- run 17 (1.10 night) took a
     # loading screen's light stadium for the lobby's sea and clicked into the void
     lobby = @{ box = @(2200, 300, 2540, 900); rgb = @(47, 52, 49); tol = 15; box2 = @(2180, 1395, 2540, 1430); rgb2 = @(53, 53, 53); tol2 = 15 }
-    game  = @{ box = @(5, 210, 45, 980); rgb = @(76, 68, 68); tol = 15 }
+    # the column's skin depends on the country's interface style: (76, 68, 68) for most, (92, 84, 65) for
+    # Croatia -- Austria's style (4.10, the user; a new game waited the full 400 s) -- tolerance 25
+    game  = @{ box = @(5, 210, 45, 980); rgb = @(76, 68, 68); tol = 25 }
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]
