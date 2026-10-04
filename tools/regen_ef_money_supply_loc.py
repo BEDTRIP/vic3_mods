@@ -92,7 +92,7 @@ def main_text(lang, c):
     # and the CB's reserves are accounts outside the money supply. The currency's value and the inflation read M2.
     if ru:
         L = dict(title="Денежная масса", total="Всего (#b M3#!)", week="за неделю", wk="неделя", mo="мес.", yr="год", y5="5л.",
-                 m0="наличные", cash="Наличные на руках", cashf="отложено в накопления {0}, во вклады {1}; всего накоплений {2}",
+                 m0="наличные", cash="Наличные на руках", cashf="{0} в накопления − {1} во вклады = {3}/неделя;\\n       (всего накоплений {2})",
                  m1="M0 + счета", bld="Касса предприятий", tc="из них торговые центры",
                  m2="M1 + вклады", dep="Вклады в банках", check="Сверка с движком",
                  m3="M2 + заграница", abroad="Заграница",
@@ -100,7 +100,7 @@ def main_text(lang, c):
                  out="Вне денежной массы:", tr="Казна (счёт правительства)",
                  bank="Резервы банков (пул)", bankf="банки должны вкладчикам {0} и ЦБ {1}, выдали кредитов {2}; капитал банков {3} {4}",
                  cb="Резервы ЦБ — покрытие валюты, не деньги",
-                 cbf="покрытие M2 {0}, норма 40%; металл {1} и валюта {2} в металле стандарта; залог за рубежом — не резерв",
+                 cbf="металл {1} ({2}/неделя) + чужая валюта {3}; покрытие M2 {0}, норма 40%",
                  circ="Курс и инфляция считаются по M2",
                  infl="Инфляция за год", inflf="индекс цен потребительской корзины {2} (100 = базовые цены); для сравнения: рост M2 {0}, рост ВВП {1}",
                  debt="Долги (не деньги)", debtf="бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}",
@@ -108,7 +108,7 @@ def main_text(lang, c):
                  dyn="месяц {0}, год {1}, 5 лет {2}", gdp="к ВВП")
     else:
         L = dict(title="Money Supply", total="Total (#b M3#!)", week="this week", wk="week", mo="mo", yr="yr", y5="5y",
-                 m0="cash", cash="Cash at hand", cashf="put into savings {0}, into deposits {1}; all savings {2}",
+                 m0="cash", cash="Cash at hand", cashf="{0} into savings − {1} into deposits = {3}/week;\\n       (all savings {2})",
                  m1="M0 + accounts", bld="Business cash", tc="of it trade centres",
                  m2="M1 + deposits", dep="Bank deposits", check="Reconciliation with the engine",
                  m3="M2 + abroad", abroad="Abroad",
@@ -116,7 +116,7 @@ def main_text(lang, c):
                  out="Outside the money supply:", tr="Treasury (the government's account)",
                  bank="Bank reserves (the pool)", bankf="banks owe depositors {0} and the CB {1}, lent {2}; banks' capital {3} {4}",
                  cb="CB reserves — the currency's cover, not money",
-                 cbf="cover of M2 {0}, norm 40%; metal {1} and currency {2} in the standard's metal; collateral abroad is not a reserve",
+                 cbf="metal {1} ({2}/week) + foreign currency {3}; cover of M2 {0}, norm 40%",
                  circ="The value and the inflation read M2",
                  infl="Inflation, a year", inflf="consumer price index {2} (100 = base prices); for comparison: M2 growth {0}, GDP growth {1}",
                  debt="Debts (not money)", debtf="budget {0}, banks to the CB {1}, consumer credit {2}, business {3}",
@@ -141,9 +141,9 @@ def main_text(lang, c):
         f"#b {L['title']}#!",
         f"{L['total']}: #p {money('zz_ef_agg_m3')}#!",
         f"#b M0#! = {L['m0']}: #T {money('zz_ef_agg_m0')}#! — {ratio(0)} {dyn(0)}",
-        f"→   {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#!{mark('calc', ru)} "
-        f"{delta('zz_ef_v_d_agg0')};\\n{ind}(" + L["cashf"].format(delta("zz_ef_v_d_savings"), delta("zz_ef_v_d_deposits"),
-                                                                  money("zz_ef_pop_savings")) + ")",
+        f"→   {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#!{mark('calc', ru)}: "
+        + L["cashf"].format(delta("zz_ef_v_d_savings"), money("zz_ef_v_d_deposits"), money("zz_ef_pop_savings"),
+                            delta("zz_ef_v_d_agg0")),
         f"#b M1#! = {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} {dyn(1)}",
         f"→   {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} "
         f"{delta('zz_ef_v_d_buildings')}",
@@ -158,8 +158,8 @@ def main_text(lang, c):
         f"→   {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#!{mark('eng', ru)} {delta('zz_ef_v_d_pool')};\\n{ind}("
         + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt"), money("zz_ef_bank_loans"),
                             sv("zz_ef_bank_capital", "D+="), cur) + ")",
-        f"→   {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#!{mark('mod', ru)} {delta('zz_ef_v_d_cbm')};\\n{ind}("
-        + L["cbf"].format(sv("zz_ef_cb_cover", "%0"), sv("central_bank_metal_reserves_state"), sv("zz_ef_v_fx_metal")) + ")",
+        f"→   {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_reserves_money')}#!{mark('mod', ru)};\\n{ind}("
+        + L["cbf"].format(sv("zz_ef_cb_cover", "%0"), money("zz_ef_cb_money"), delta("zz_ef_v_d_cbm"), money("zz_ef_fx_money")) + ")",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
             sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%'), sv('zz_ef_price_index', '1')) + ")",
         f"#italic {L['hint']}#! {tt('zz_ef_ms_tt_check', L['check'])}",
@@ -410,6 +410,14 @@ FLOWS = [
     (N, X, "в накопления: выручка продавцов уровней", "into savings: the level sellers' proceeds",
      sv_("zz_ef_v_f_buyout"), N),
     (X, B, "необъяснённый приход в пул", "the pool's unexplained gain", svp("zz_ef_v_f_pool_other"), None),
+    # M.3 (4.10): the CB issues money for Hume's inflow of metal into the banks, withdraws it for an outflow
+    (C, B, "Юм: ЦБ выпустил деньги под приток металла (прошлая неделя)",
+     "Hume: the CB issued money for the metal that came in (last week)", svp("zz_ef_v_w_hume_money"), B),
+    (B, C, "Юм: ЦБ изъял деньги под отток металла (прошлая неделя)",
+     "Hume: the CB withdrew money for the metal that went out (last week)", svn("zz_ef_v_w_hume_money"), B),
+    # Д4.5 (4.10): the treasury's surplus over its limit buys the banks' bonds
+    (K, B, "излишек казны сверх потолка — покупка облигаций банков", "the treasury's surplus over its limit — banks' bonds bought",
+     sv_("zz_ef_v_f_tr_pool"), None),
 ]
 
 NOTES = {
@@ -596,7 +604,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_w_hume_money", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
@@ -873,46 +881,46 @@ def nested(lang):
                      + f"{sv('zz_ef_v_f_ext_net', 'D+=')}{cur}" + (" → металл ЦБ (Юм)" if ru else " → the CB's metal (Hume)"))
         L += ["", NOTES[acc][k]]
         if acc == B:
-            L.append((f"Долг банков перед ЦБ {money('zz_ef_bank_cb_debt')}, цель {money('zz_ef_cb_credit_target')} "
-                      f"({sv('zz_ef_cb_credit_share', '%0')} от 50% ВВП при ставке {sv('zz_ef_money_rate', '%1')}). "
-                      f"Пул — {sv('zz_ef_pool_months', '1')} мес. взносов.")
-                     if ru else
-                     (f"Banks' debt to the CB {money('zz_ef_bank_cb_debt')}, target {money('zz_ef_cb_credit_target')} "
-                      f"({sv('zz_ef_cb_credit_share', '%0')} of 50% of GDP at a rate of {sv('zz_ef_money_rate', '%1')}). "
-                      f"The pool holds {sv('zz_ef_pool_months', '1')} months of contributions."))
-        if acc == B:
-            # Ф.1 (the user, 4.10; В7.3): the banks' balance sheet -- the user's 1840 save had deposits 80.3M
-            # against pool 18.2M + loans 36.5M: the gap is the banks' capital (negative = the deposits are
-            # not covered), now a line of its own
-            L.append((f"#b Баланс банков:#! активы — резервы (пул) {money('zz_ef_pool')} + кредит бизнесу "
-                      f"{money('zz_ef_bc_debt')} + потребкредит {money('zz_ef_cc_debt')} + облигации "
-                      f"{money('zz_ef_bank_bonds')}; обязательства — вклады {money('zz_ef_pop_deposits')} + долг ЦБ "
-                      f"{money('zz_ef_bank_cb_debt')}; #b капитал банков {sv('zz_ef_bank_capital', 'D+=')} {cur}#! "
-                      f"(активы − обязательства; меньше нуля — вклады не покрыты).")
-                     if ru else
-                     (f"#b Banks' balance sheet:#! assets — reserves (the pool) {money('zz_ef_pool')} + business "
-                      f"credit {money('zz_ef_bc_debt')} + consumer credit {money('zz_ef_cc_debt')} + bonds "
-                      f"{money('zz_ef_bank_bonds')}; liabilities — deposits {money('zz_ef_pop_deposits')} + CB debt "
-                      f"{money('zz_ef_bank_cb_debt')}; #b banks' capital {sv('zz_ef_bank_capital', 'D+=')} {cur}#! "
-                      f"(assets − liabilities; under zero — the deposits are not covered)."))
+            # Ф.1 (В7.3) and the CB's credit, a line per item (the user 4.10: one paragraph does not read)
+            if ru:
+                L += [f"#b Баланс банков#!",
+                      f"  активы {money('zz_ef_bank_assets')}: резервы (пул) {money('zz_ef_pool')}, кредит бизнесу "
+                      f"{money('zz_ef_bc_debt')}, потребкредит {money('zz_ef_cc_debt')}, облигации {money('zz_ef_bank_bonds')}",
+                      f"  обязательства {money('zz_ef_bank_liabilities')}: вклады {money('zz_ef_pop_deposits')}, долг ЦБ "
+                      f"{money('zz_ef_bank_cb_debt')}",
+                      f"  #b капитал банков {sv('zz_ef_bank_capital', 'D+=')} {cur}#! (меньше нуля — вклады не покрыты)",
+                      f"#b Кредит бизнесу#! {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП): за неделю выдано "
+                      f"{money('zz_ef_v_f_bc_new')}, проценты {money('zz_ef_v_f_bc_int')}, погашено {money('zz_ef_v_f_bc_paid')}",
+                      f"#b Кредит ЦБ банкам#! {money('zz_ef_bank_cb_debt')}, цель {money('zz_ef_cb_credit_target')}; "
+                      f"пул — {sv('zz_ef_pool_months', '1')} мес. взносов"]
+            else:
+                L += [f"#b Banks' balance sheet#!",
+                      f"  assets {money('zz_ef_bank_assets')}: reserves (the pool) {money('zz_ef_pool')}, business credit "
+                      f"{money('zz_ef_bc_debt')}, consumer credit {money('zz_ef_cc_debt')}, bonds {money('zz_ef_bank_bonds')}",
+                      f"  liabilities {money('zz_ef_bank_liabilities')}: deposits {money('zz_ef_pop_deposits')}, CB debt "
+                      f"{money('zz_ef_bank_cb_debt')}",
+                      f"  #b banks' capital {sv('zz_ef_bank_capital', 'D+=')} {cur}#! (under zero — deposits not covered)",
+                      f"#b Business credit#! {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP): this week lent "
+                      f"{money('zz_ef_v_f_bc_new')}, interest {money('zz_ef_v_f_bc_int')}, repaid {money('zz_ef_v_f_bc_paid')}",
+                      f"#b CB credit to banks#! {money('zz_ef_bank_cb_debt')}, target {money('zz_ef_cb_credit_target')}; "
+                      f"the pool holds {sv('zz_ef_pool_months', '1')} months of contributions"]
         if acc == C:
-            L.append((f"#b Резервы металла: {sv('zz_ef_cb_metal')} {gold}#! (за неделю {sv('zz_ef_v_f_hume', 'D+=')}); "
-                      f"чистый поток с заграницей {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; курс {sv('money_value_0', '3')} "
-                      f"металла за {cur}; покрытие по паритету {sv('zz_ef_cb_cover', '%0')}. Склад товара-валюты "
-                      f"{sv('money_supply_state')} шт.")
-                     if ru else
-                     (f"#b Metal reserves: {sv('zz_ef_cb_metal')} {gold}#! (this week {sv('zz_ef_v_f_hume', 'D+=')}); "
-                      f"net flow with abroad {sv('zz_ef_v_f_ext_net', 'D+=')}{cur}; value {sv('money_value_0', '3')} "
-                      f"metal per {cur}; cover at parity {sv('zz_ef_cb_cover', '%0')}. Currency-good stock "
-                      f"{sv('money_supply_state')} units."))
-        if acc == B:
-            L.append((f"#b Кредит бизнесу:#! долг {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП); "
-                      f"за неделю выдано {money('zz_ef_v_f_bc_new')}, проценты {money('zz_ef_v_f_bc_int')}, погашено из "
-                      f"взносов {money('zz_ef_v_f_bc_paid')}; срок 5 лет, ставка ключевая + 3 п.п.")
-                     if ru else
-                     (f"#b Business credit:#! debt {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP); "
-                      f"this week lent {money('zz_ef_v_f_bc_new')}, interest {money('zz_ef_v_f_bc_int')}, repaid from "
-                      f"contributions {money('zz_ef_v_f_bc_paid')}; term 5 years, rate key + 3 pp."))
+            if ru:
+                L += [f"#b Резервы ЦБ {money('zz_ef_reserves_money')}#! по паритету {sv('zz_ef_cb_valuation', '4')}:",
+                      f"  металл {money('zz_ef_cb_money')}: золото {sv('gold_state_native_for_stockpile')} @gold! + серебро "
+                      f"{sv('silver_state_native_for_stockpile')} @silver! (в металле стандарта "
+                      f"{sv('central_bank_metal_reserves_state')})",
+                      f"  чужая валюта {money('zz_ef_fx_money')} (в металле {sv('zz_ef_v_fx_metal')})",
+                      f"Покрытие M2 {sv('zz_ef_cb_cover', '%0')}; чистый поток с заграницей этой недели "
+                      f"{sv('zz_ef_v_f_ext_net', 'D+=')}{cur} — в металл на следующем шаге."]
+            else:
+                L += [f"#b CB reserves {money('zz_ef_reserves_money')}#! at parity {sv('zz_ef_cb_valuation', '4')}:",
+                      f"  metal {money('zz_ef_cb_money')}: gold {sv('gold_state_native_for_stockpile')} @gold! + silver "
+                      f"{sv('silver_state_native_for_stockpile')} @silver! (in the standard's metal "
+                      f"{sv('central_bank_metal_reserves_state')})",
+                      f"  foreign currency {money('zz_ef_fx_money')} (in metal {sv('zz_ef_v_fx_metal')})",
+                      f"Cover of M2 {sv('zz_ef_cb_cover', '%0')}; this week's net flow with abroad "
+                      f"{sv('zz_ef_v_f_ext_net', 'D+=')}{cur} — into the metal at the next step."]
         d[f"zz_ef_ms_tt_{acc}"] = "\\n".join(L)
     return d
 

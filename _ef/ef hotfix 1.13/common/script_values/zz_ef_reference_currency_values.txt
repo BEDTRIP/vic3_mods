@@ -147,3 +147,33 @@ zz_ef_v_w_buyout = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_w_buyout_got } value = var:zz_ef_w_buyout_got }
 }
+
+# 4.10 (the tooltip and the cards): the CB's foreign currency at parity in money, and its reserves in money
+# (metal + currency) -- what the cover counts (national_capacity / parity)
+zz_ef_fx_money = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+		}
+		value = zz_ef_v_fx_metal
+		divide = var:money_value_target_1
+	}
+	min = 0
+}
+zz_ef_reserves_money = {
+	value = zz_ef_cb_money
+	add = zz_ef_fx_money
+}
+# the banks' balance sheet's two sides (Ф.1)
+zz_ef_bank_assets = {
+	value = zz_ef_pool
+	add = zz_ef_bc_debt
+	add = zz_ef_cc_debt
+	add = zz_ef_bank_bonds
+}
+zz_ef_bank_liabilities = {
+	value = zz_ef_pop_deposits
+	add = zz_ef_bank_cb_debt
+}
