@@ -116,3 +116,24 @@ zz_ef_bank_capital = {
 	subtract = zz_ef_pop_deposits
 	subtract = zz_ef_bank_cb_debt
 }
+
+# 4.10 (the money tooltip): the week's change of pops' savings and deposits (ledger at the step), and the
+# banks' loans (business + consumer credit) for the banks' line.
+zz_ef_v_d_savings = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_savings } value = var:zz_ef_d_savings }
+}
+zz_ef_v_d_deposits = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_d_deposits } value = var:zz_ef_d_deposits }
+}
+zz_ef_bank_loans = {
+	value = zz_ef_bc_debt
+	add = zz_ef_cc_debt
+}
+
+# 4.10 (the rate line, bimetallism): the value in silver too -- E&F counts bimetallism in gold.
+zz_ef_value_in_silver = {
+	value = money_value_0
+	multiply = gold_to_silver_rate
+}

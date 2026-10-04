@@ -372,6 +372,9 @@ zz_ef_money_model_step = {
 	zz_ef_money_ledger_delta = { ACC = price VALUE = zz_ef_price_index }
 	# night 2, item 6: building levels the government owns (privatization)
 	zz_ef_money_ledger_delta = { ACC = govlv VALUE = zz_ef_gov_levels }
+	# 4.10 (the money tooltip): pops' savings and deposits, for the cash-at-hand and deposits lines
+	zz_ef_money_ledger_delta = { ACC = savings VALUE = zz_ef_pop_savings }
+	zz_ef_money_ledger_delta = { ACC = deposits VALUE = zz_ef_pop_deposits }
 
 	# Sandbox log (tools/run_vic3_sandbox.ps1 reads debug.log): one line a
 	# week for the player and the big economies.

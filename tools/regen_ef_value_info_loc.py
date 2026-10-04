@@ -45,36 +45,29 @@ STANDARDS = [
     ("gold_Player", "GetPlayer", "@gold!"),
 ]
 
+# 4.10 (the user: "the tooltip is for the money supply and the rate"): the rate in two lines -- the value
+# against the parity (bimetallism: also in silver), the cover and its rule in one line; the reserves block
+# (NATIONAL_CAPACITY_DESC) is empty -- the CB's reserves are told once, on their line in the money supply.
 TEXT = {
     "russian": {
-        "info": ("Текущий индекс с учётом инфляции/дефляции: #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')]#! {m} "
-                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-] @inflation!)\\n"
-                 "Курс: #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_0')|4]#! {m} — паритет #T [{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4]#! {m} "
-                 "(сила к эталону [{c}.MakeScope.ScriptValue('zz_ef_currency_strength')|2])\\n"
-                 "Покрытие: резервы ЦБ по паритету / M2 = #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (норма 40%). "
-                 "Пока покрытие 25% и выше, банкноты разменны на металл и курс держится у паритета (±2%); ниже 25% размен приостановлен: "
-                 "курс = паритет × покрытие / 40%.\\n$TOOLTIP_DELIMITER$"),
-        "cap": ("Резервы ЦБ:\\nВсего #v резервы#!: [{c}.MakeScope.ScriptValue('national_capacity')|D] {m} = "
-                "#T [{c}.MakeScope.ScriptValue('zz_ef_cb_money')|D]#! {sym} по паритету\\n"
-                "- металл в хранилище ЦБ: #T [{c}.MakeScope.ScriptValue('central_bank_metal_reserves_state')|D]#! {m}\\n"
-                "- чужая валюта в резервах (по курсу, в металле): #T [{c}.MakeScope.ScriptValue('zz_ef_v_fx_metal')|D]#! {m}\\n"
-                "Не резервы: залоговое золото за рубежом (обеспечение долга) — [{c}.MakeScope.Var('gold_loaned_to_central_bank_fix').GetValue|D] @gold!\\n"
-                "$TOOLTIP_DELIMITER$"),
+        "info": ("#b Курс:#! #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_0')|4]#! {m}{alt} — паритет "
+                 "[{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4] {m}; сила к эталону [{c}.MakeScope.ScriptValue('zz_ef_currency_strength')|2]\\n"
+                 "Покрытие #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (норма 40%): от 25% — размен на металл, курс у паритета ±2%; "
+                 "ниже — размен приостановлен, курс = паритет × покрытие / 40%\\n"
+                 "С инфляцией: 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')] {m} "
+                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-] @inflation!)\\n$TOOLTIP_DELIMITER$"),
+        "alt": " = [{c}.MakeScope.ScriptValue('zz_ef_value_in_silver')|2] @silver!",
+        "cap": "",
     },
     "english": {
-        "info": ("Current index with inflation/deflation: #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')]#! {m} "
-                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-] @inflation!)\\n"
-                 "Value: #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_0')|4]#! {m} — parity #T [{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4]#! {m} "
-                 "(strength against the reference [{c}.MakeScope.ScriptValue('zz_ef_currency_strength')|2])\\n"
-                 "Cover: the CB's reserves at parity / M2 = #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (norm 40%). "
-                 "While the cover is 25% or more, notes are redeemed in metal and the value stays at the parity (±2%); under 25% "
-                 "redemption is suspended: value = parity × cover / 40%.\\n$TOOLTIP_DELIMITER$"),
-        "cap": ("CB reserves:\\nTotal #v reserves#!: [{c}.MakeScope.ScriptValue('national_capacity')|D] {m} = "
-                "#T [{c}.MakeScope.ScriptValue('zz_ef_cb_money')|D]#! {sym} at parity\\n"
-                "- metal in the CB's vault: #T [{c}.MakeScope.ScriptValue('central_bank_metal_reserves_state')|D]#! {m}\\n"
-                "- foreign currency in the reserves (at its value, in metal): #T [{c}.MakeScope.ScriptValue('zz_ef_v_fx_metal')|D]#! {m}\\n"
-                "Not reserves: gold pledged abroad (debt collateral) — [{c}.MakeScope.Var('gold_loaned_to_central_bank_fix').GetValue|D] @gold!\\n"
-                "$TOOLTIP_DELIMITER$"),
+        "info": ("#b Rate:#! #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_0')|4]#! {m}{alt} — parity "
+                 "[{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4] {m}; strength against the reference [{c}.MakeScope.ScriptValue('zz_ef_currency_strength')|2]\\n"
+                 "Cover #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (norm 40%): from 25% notes are redeemed in metal, the value "
+                 "stays at the parity ±2%; under it redemption is suspended, value = parity × cover / 40%\\n"
+                 "With inflation: 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')] {m} "
+                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-] @inflation!)\\n$TOOLTIP_DELIMITER$"),
+        "alt": " = [{c}.MakeScope.ScriptValue('zz_ef_value_in_silver')|2] @silver!",
+        "cap": "",
     },
 }
 
@@ -98,8 +91,9 @@ def text_for(lang):
     lines = [f"l_{lang}:"]
     for suffix, c, m in STANDARDS:
         sym = f"[{c}.GetCustom('currency_symbol')]"
-        lines.append(f' MONEY_VALUE_INFO_{suffix}:0 "{t["info"].format(c=c, m=m, sym=sym)}"')
-        lines.append(f' NATIONAL_CAPACITY_DESC_{suffix}:0 "{t["cap"].format(c=c, m=m, sym=sym)}"')
+        alt = t["alt"].format(c=c) if suffix.startswith("bimetallism") else ""
+        lines.append(f' MONEY_VALUE_INFO_{suffix}:0 "{t["info"].format(c=c, m=m, sym=sym, alt=alt)}"')
+        lines.append(f' NATIONAL_CAPACITY_DESC_{suffix}:0 "{t["cap"]}"')
     infl = INFL["russian" if lang == "russian" else "english"]
     lines.append(f' INFLATION_BALANCE:0 "{infl.format(c="Country")}"')
     lines.append(f' INFLATION_BALANCE_player:0 "{infl.format(c="GetPlayer")}"')

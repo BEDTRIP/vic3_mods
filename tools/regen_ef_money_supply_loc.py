@@ -91,81 +91,96 @@ def main_text(lang, c):
     # business cash, M2 = + pops' deposits, M3 = + claims on abroad. The treasury, the banks' own funds (the pool)
     # and the CB's reserves are accounts outside the money supply. The currency's value and the inflation read M2.
     if ru:
-        L = dict(title="Денежная масса", total="Всего (M3)", week="за неделю",
-                 m0="M0 = наличные у населения", cash="Наличные на руках", savall="всего накоплений {0}, во вкладах {1}",
-                 m1="M1 = M0 + счета предприятий", bld="Касса предприятий", tc="из них торговые центры",
-                 m2="M2 = M1 + вклады населения", dep="Вклады в банках",
-                 m3="M3 = M2 + заграница", abroad="Заграница",
+        L = dict(title="Денежная масса", total="Всего (#b M3#!)", week="за неделю", wk="неделя", mo="мес.", yr="год", y5="5л.",
+                 m0="наличные", cash="Наличные на руках", cashf="отложено в накопления {0}, во вклады {1}; всего накоплений {2}",
+                 m1="M0 + счета", bld="Касса предприятий", tc="из них торговые центры",
+                 m2="M1 + вклады", dep="Вклады в банках", check="Сверка с движком",
+                 m3="M2 + заграница", abroad="Заграница",
                  abf="облигации банков {0}, облигации казны {1}",
                  out="Вне денежной массы:", tr="Казна (счёт правительства)",
-                 bank="Средства банков (пул)", bankf="из них вклады {0}, долг перед ЦБ {1}",
+                 bank="Резервы банков (пул)", bankf="банки должны вкладчикам {0} и ЦБ {1}, выдали кредитов {2}; капитал банков {3} {4}",
                  cb="Резервы ЦБ — покрытие валюты, не деньги",
-                 cbf="металл по паритету; покрытие M2 {1} (норма 40%; ниже — кредит ЦБ сжимается, при 20% — ноль, сейчас {2} цели); выпущено ЦБ (долг банков) {3}",
+                 cbf="покрытие M2 {0}, норма 40%; металл {1} и валюта {2} в металле стандарта; залог за рубежом — не резерв",
                  circ="Курс и инфляция считаются по M2",
                  infl="Инфляция за год", inflf="индекс цен потребительской корзины {2} (100 = базовые цены); для сравнения: рост M2 {0}, рост ВВП {1}",
                  debt="Долги (не деньги)", debtf="бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}",
                  hint="Наведите на счёт — все переводы за неделю.",
                  dyn="месяц {0}, год {1}, 5 лет {2}", gdp="к ВВП")
     else:
-        L = dict(title="Money Supply", total="Total (M3)", week="this week",
-                 m0="M0 = pops' cash", cash="Cash at hand", savall="all savings {0}, in deposits {1}",
-                 m1="M1 = M0 + business accounts", bld="Business cash", tc="of it trade centres",
-                 m2="M2 = M1 + pops' deposits", dep="Bank deposits",
-                 m3="M3 = M2 + abroad", abroad="Abroad",
+        L = dict(title="Money Supply", total="Total (#b M3#!)", week="this week", wk="week", mo="mo", yr="yr", y5="5y",
+                 m0="cash", cash="Cash at hand", cashf="put into savings {0}, into deposits {1}; all savings {2}",
+                 m1="M0 + accounts", bld="Business cash", tc="of it trade centres",
+                 m2="M1 + deposits", dep="Bank deposits", check="Reconciliation with the engine",
+                 m3="M2 + abroad", abroad="Abroad",
                  abf="banks' bonds {0}, treasury's bonds {1}",
                  out="Outside the money supply:", tr="Treasury (the government's account)",
-                 bank="Bank funds (the pool)", bankf="of it deposits {0}, debt to the CB {1}",
+                 bank="Bank reserves (the pool)", bankf="banks owe depositors {0} and the CB {1}, lent {2}; banks' capital {3} {4}",
                  cb="CB reserves — the currency's cover, not money",
-                 cbf="metal at parity; cover of M2 {1} (normal 40%; under it the CB's credit shrinks, zero at 20%, now {2} of the target); issued by the CB (banks' debt) {3}",
+                 cbf="cover of M2 {0}, norm 40%; metal {1} and currency {2} in the standard's metal; collateral abroad is not a reserve",
                  circ="The value and the inflation read M2",
                  infl="Inflation, a year", inflf="consumer price index {2} (100 = base prices); for comparison: M2 growth {0}, GDP growth {1}",
                  debt="Debts (not money)", debtf="budget {0}, banks to the CB {1}, consumer credit {2}, business {3}",
                  hint="Hover an account for all its transfers this week.",
                  dyn="month {0}, year {1}, 5 years {2}", gdp="of GDP")
 
-    def ing(name):
-        return f" ≈ {sv(name)} {gold}"
-
+    # 4.10 (the user edited the tooltip in the game's folder and asked for it short): the money supply and
+    # nothing else -- a line per aggregate, its dynamics on a second line; a sub-line per account with its own
+    # weekly change; outside the money -- treasury, banks (their liabilities said as liabilities), the CB
+    # (its reserves told once, here). The legend of marks, the bubble, the debts and the reconciliation with
+    # the engine went to their own nested tooltip (zz_ef_ms_tt_check).
     def dyn(k):
         pc = [sv(f"zz_ef_agg{k}_pct_{p}", "+=1%") for p in ("month", "year", "5y")]
-        return f"{delta(f'zz_ef_v_d_agg{k}')} {L['week']}; " + L["dyn"].format(*pc)
+        return (f"{delta(f'zz_ef_v_d_agg{k}')}/{L['wk']};\\n"
+                f"({pc[0]}/{L['mo']}, {pc[1]}/{L['yr']}, {pc[2]}/{L['y5']})")
 
     def ratio(k):
         return f"{sv(f'zz_ef_agg_m{k}_to_gdp', '%0')} {L['gdp']}"
 
+    ind = "       "
     lines = [
-        f"{L['title']}:",
-        f"{L['total']}: #p {money('zz_ef_agg_m3')}#!{ing('zz_ef_agg_m3_gold')}",
-        f" {L['m0']}: #T {money('zz_ef_agg_m0')}#! — {ratio(0)} ({dyn(0)})",
-        f"  -> {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#!{mark('calc', ru)} "
-        f"({sv('zz_ef_pop_savings_week', 'D+=')}{cur}; "
-        + L["savall"].format(money("zz_ef_pop_savings"), money("zz_ef_pop_deposits")) + ")",
-        f" {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} ({dyn(1)})",
-        f"  -> {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} ({delta('zz_ef_v_d_buildings')}; "
-        f"{L['tc']} {money('zz_ef_tc_cash')})",
-        f" {L['m2']}: #T {money('zz_ef_agg_m2')}#!{ing('zz_ef_agg_m2_gold')} — {ratio(2)} ({dyn(2)})",
-        f"  -> {tt('zz_ef_ms_tt_banks', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!{mark('mod', ru)}",
-        f" {L['m3']}: #T {money('zz_ef_agg_m3')}#! ({dyn(3)})",
-        f"  -> {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#!{mark('ef', ru)} ({delta('zz_ef_v_d_abroad')}; "
-        + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
-        f"{L['out']}",
-        f"  -> {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#!{mark('eng', ru)} ({delta('zz_ef_v_d_treasury')})",
-        f"  -> {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#!{mark('eng', ru)} ({delta('zz_ef_v_d_pool')}; "
-        + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt")) + ")",
-        f"  -> {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#!{mark('mod', ru)} ({delta('zz_ef_v_d_cbm')}; "
-        + L["cbf"].format("", sv("zz_ef_cb_cover", "%0"), sv("zz_ef_cb_cover_credit_mult", "%0"),
-                          money("zz_ef_bank_cb_debt")) + ")",
-        SRC_LEGEND[0 if ru else 1],
-        f"{L['circ']}.",
+        f"#b {L['title']}#!",
+        f"{L['total']}: #p {money('zz_ef_agg_m3')}#!",
+        f"#b M0#! = {L['m0']}: #T {money('zz_ef_agg_m0')}#! — {ratio(0)} {dyn(0)}",
+        f"→   {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#!{mark('calc', ru)} "
+        f"{delta('zz_ef_v_d_agg0')};\\n{ind}(" + L["cashf"].format(delta("zz_ef_v_d_savings"), delta("zz_ef_v_d_deposits"),
+                                                                  money("zz_ef_pop_savings")) + ")",
+        f"#b M1#! = {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} {dyn(1)}",
+        f"→   {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} "
+        f"{delta('zz_ef_v_d_buildings')}",
+        f"#b M2#! = {L['m2']}: #T {money('zz_ef_agg_m2')}#! — {ratio(2)} {dyn(2)}",
+        f"→   {tt('zz_ef_ms_tt_banks', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!{mark('mod', ru)} "
+        f"{delta('zz_ef_v_d_deposits')}",
+        f"#b M3#! = {L['m3']}: #T {money('zz_ef_agg_m3')}#! {dyn(3)}",
+        f"→   {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {money('zz_ef_foreign_assets')}#!{mark('ef', ru)} "
+        f"{delta('zz_ef_v_d_abroad')};\\n{ind}(" + L["abf"].format(money("zz_ef_bank_bonds"), money("zz_ef_treasury_bonds")) + ")",
+        f"#b {L['out']}#!",
+        f"→   {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#!{mark('eng', ru)} {delta('zz_ef_v_d_treasury')}",
+        f"→   {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#!{mark('eng', ru)} {delta('zz_ef_v_d_pool')};\\n{ind}("
+        + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt"), money("zz_ef_bank_loans"),
+                            sv("zz_ef_bank_capital", "D+="), cur) + ")",
+        f"→   {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#!{mark('mod', ru)} {delta('zz_ef_v_d_cbm')};\\n{ind}("
+        + L["cbf"].format(sv("zz_ef_cb_cover", "%0"), sv("central_bank_metal_reserves_state"), sv("zz_ef_v_fx_metal")) + ")",
         f"{L['infl']}: #T {sv('zz_ef_inflation', '+=1%')}#! (" + L['inflf'].format(
             sv('zz_ef_circ_growth_year', '+=1%'), sv('zz_ef_gdp_growth_year', '+=1%'), sv('zz_ef_price_index', '1')) + ")",
+        f"#italic {L['hint']}#! {tt('zz_ef_ms_tt_check', L['check'])}",
+    ]
+    return "\\n".join(lines) + "\\n$TOOLTIP_DELIMITER$"
+
+
+def check_text(lang, c):
+    """The reconciliation with the engine's raw numbers (until 4.10 the tail of the money tooltip), the
+    bubble signs, the debts and the legend of marks -- a nested tooltip of its own."""
+    cur, sv, money, delta, tt = ctx(c)
+    ru = lang == "russian"
+    lines = [
         (f"Признаки пузыря: кредит {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} ВВП; пул — "
          f"{sv('zz_ef_pool_months', '1')} мес. взносов; накопления — {sv('zz_ef_savings_to_gdp', '%0')} ВВП") if ru else
         (f"Bubble signs: credit {money('zz_ef_credit_total')} = {sv('zz_ef_credit_to_gdp', '%0')} of GDP; the pool — "
          f"{sv('zz_ef_pool_months', '1')} months of contributions; savings — {sv('zz_ef_savings_to_gdp', '%0')} of GDP"),
-        f"{L['debt']}: " + L["debtf"].format(money("zz_ef_debt_principal"), money("zz_ef_bank_cb_debt"),
-                                              money("zz_ef_cc_debt"), money("zz_ef_bc_debt")),
-        f"#italic {L['hint']}#!",
+        ("Долги (не деньги): " if ru else "Debts (not money): ")
+        + (("бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}" if ru else
+            "budget {0}, banks to the CB {1}, consumer credit {2}, business {3}").format(
+            money("zz_ef_debt_principal"), money("zz_ef_bank_cb_debt"), money("zz_ef_cc_debt"), money("zz_ef_bc_debt"))),
         "",
     ]
     raw = [
@@ -198,7 +213,9 @@ def main_text(lang, c):
                   f"{sv('zz_ef_pool_transfer_week')} / [{c}.GetInvestmentIncome|D]"))
     lines.append(", ".join(f"{r[1] if ru else r[2]} {sv('zz_ef_raw_' + r[0])}" for r in raw)
                  + (f"; ВВП в год {sv('zz_ef_raw_gdp')}" if ru else f"; GDP per year {sv('zz_ef_raw_gdp')}"))
-    return "\\n".join(lines) + "\\n$TOOLTIP_DELIMITER$"
+    lines.append("")
+    lines.append(SRC_LEGEND[0 if ru else 1])
+    return "\\n".join(lines)
 
 
 # ---------------------------------------------------------------------------
@@ -904,6 +921,7 @@ def build(lang):
     for key in KEYS_PLAYER:
         d[key] = main_text(src, "GetPlayer")
     d.update(nested(src))
+    d["zz_ef_ms_tt_check"] = check_text(src, "Country")
     return d
 
 
