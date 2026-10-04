@@ -10,3 +10,10 @@
 NEconomy = {
 	REINVESTMENT_SUBSISTENCE_FRACTION_REDUCTION = 0
 }
+
+# Н.4 / СТР.5 (the user, 4.10): companies buy fewer levels at privatization -- vanilla 0.75 x the
+# expansion chance, here 0.4; the pops' share of construction (save_ownership.py, aim 20%) is what to
+# watch. Nobody else in the set sets this define.
+NAI = {
+	OWNER_COMPANY_PRIVATIZATION_CHANCE_MULTIPLIER = 0.4
+}
