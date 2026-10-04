@@ -131,3 +131,32 @@ REPLACE_OR_CREATE:recurse_sqrt1 = {
 		value = scope:guess
 	}
 }
+
+#############################################
+# 2026-10-04 (night of stages 0-4) -- PSC's construction_ordering reads
+# var:state_construction_production, which a state gets only after PSC's first
+# pass over it (a state with no construction sector yet): "Value of wrong type
+# ... PSC_scripted_effects.txt:197 ... type 'none'" -- ~5 000 lines a minute,
+# 70-90% of error.log, which rotates in minutes and loses the load errors.
+# Here the missing variable counts as 0. Otherwise PSC's own code.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of PSC's construction_ordering
+# (PSC_construction_values.txt:123) -- re-diff after a PSC update.
+#############################################
+
+REPLACE_OR_CREATE:construction_ordering = {
+	value = 0
+	if = {
+		limit = { has_variable = state_construction_production }
+		value = var:state_construction_production
+	}
+	multiply = 100
+	add = {
+		value = gdp
+		owner = {
+			divide = {
+				value = gdp
+				min = 1
+			}
+		}
+	}
+}

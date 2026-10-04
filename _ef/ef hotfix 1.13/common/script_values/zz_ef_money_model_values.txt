@@ -1894,7 +1894,7 @@ zz_ef_cb_metal_money = {
 zz_ef_cb_valuation = {
 	value = var:money_value_target_1
 	max = 1000000
-	min = 0.000001
+	min = 0.00001
 }
 # The CB's reserves in money (not money: outside M0-M3, shown as the cover).
 zz_ef_cb_money = {
@@ -2369,20 +2369,20 @@ zz_ef_silver_to_gold_market = {
 	divide = zz_ef_world_gold_price_mult
 	divide = 15.5
 	max = 0.2
-	min = 0.015625
+	min = 0.01563
 }
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's silver_to_gold_rate
 # (script_values/00_economic_scripted_value.txt); gold_to_silver_rate = 1 /
 # it stays E&F's. Before the first month of a game (E&F's history at the
 # start): 1 / 15.5.
 REPLACE_OR_CREATE:silver_to_gold_rate = {
-	value = 0.064516
+	value = 0.06452
 	if = {
 		limit = { has_global_variable = zz_ef_s2g }
 		value = global_var:zz_ef_s2g
 	}
 	max = 0.2
-	min = 0.015625
+	min = 0.01563
 }
 
 # Item 2: foreign currency in the reserves, in the standard's metal (kept
