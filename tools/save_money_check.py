@@ -24,6 +24,9 @@ import os
 import re
 import sys
 
+# the Windows console is cp1251: "Σ" in the output crashed the script (5.10)
+sys.stdout.reconfigure(encoding='utf-8')
+
 SAVES = os.path.expanduser(r'~\Documents\Paradox Interactive\Victoria 3\save games')
 
 INCOME = {0: "дополнительный доход", 1: "подоходные налоги", 2: "подушные налоги", 3: "потребительские налоги",
