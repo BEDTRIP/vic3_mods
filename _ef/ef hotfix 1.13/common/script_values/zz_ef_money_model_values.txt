@@ -2112,6 +2112,32 @@ zz_ef_fx_liab_all = {
 	value = zz_ef_fx_liab
 	add = zz_ef_clr_own_in_pot
 }
+# П.17 (4.10): the balance of payments of the week, recorded at the receiver with the net flow (zz_ef_ext_net_week):
+# current account = goods trade + primary income (dividends, bond interest) + secondary income (the other budget
+# lines with abroad); financial account = foreign bonds bought (-); current + financial = the net flow.
+zz_ef_v_f_aint = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_aint } value = var:zz_ef_f_aint }
+}
+zz_ef_bop_primary = {
+	value = zz_ef_v_f_div
+	add = zz_ef_v_f_aint
+}
+zz_ef_bop_secondary = {
+	value = zz_ef_v_f_abr
+	subtract = zz_ef_v_f_aint
+	subtract = zz_ef_tr_abr_overlap
+}
+zz_ef_bop_current = {
+	value = zz_ef_v_f_trade
+	add = zz_ef_bop_primary
+	add = zz_ef_bop_secondary
+}
+zz_ef_bop_financial = {
+	value = 0
+	subtract = zz_ef_v_d_bonds
+	subtract = zz_ef_v_d_tbonds
+}
 zz_ef_abroad_net = {
 	value = zz_ef_foreign_assets
 	add = zz_ef_fx_money

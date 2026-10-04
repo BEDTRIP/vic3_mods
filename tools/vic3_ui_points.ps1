@@ -28,7 +28,9 @@ function CardShots {
     # (0.1 0.06) icons of the top bar; 3 s for the tooltip to pin; one hover a card (the second height, +0.0125 for
     # E&F's wrapped silver line, missed every card with the new tooltip -- the user saw a row-by-row walk).
     # the first tooltip of a macro did not show (the cash card missed twice) -- a warm-up hover first
-    $s = @("hover 0.6 0.97; wait 0.5; hover 0.0975 0.0916; wait 1; hover 0.6 0.97; wait 1")
+    # any open panel closed first: F2 opens the budget over it, the panel's X closes the budget ("tag" leaves a state
+    # panel open -- the first cards were taken over it, the user noticed, 4.10)
+    $s = @("key f2; wait 1; click 0.2265 0.095; wait 1; hover 0.6 0.97; wait 0.5; hover 0.0975 0.0916; wait 1; hover 0.6 0.97; wait 1")
     foreach ($k in $Cards.Keys) {
         $s += "hover 0.0975 0.0916; wait 3; hover 0.0975 0.125; wait 0.3; hover 0.03 $($Cards[$k]); wait 2; shot {P}_card_$k; hover 0.6 0.97; wait 1"
     }

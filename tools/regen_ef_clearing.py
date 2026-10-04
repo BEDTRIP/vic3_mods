@@ -64,7 +64,13 @@ zz_ef_clr_window_roll = {
 			limit = { NOT = { has_global_variable = zz_ef_clr_out_acc } }
 			set_global_variable = { name = zz_ef_clr_out_acc value = 0 }
 		}
+		# П.6а (runs clr1, clr2): the world's net flows do not add up to zero (trade at different markets'
+		# prices, countries without a CB), so both sides are scaled. Receivers take at most what the house holds
+		# against last window's claims (up to 1.5); payers pay the share that keeps the house near twice a
+		# window's claims: min(1, (2 x claims - held) / payments). On random flows (in = out) a receiver gets
+		# ~0.8-0.9 of its inflow and the house stays bounded; was: receivers 20% (clr1), the house 187M (clr2).
 		set_global_variable = { name = zz_ef_clr_ratio value = 1 }
+		set_global_variable = { name = zz_ef_clr_pay_ratio value = 1 }
 		if = {
 			limit = { global_var:zz_ef_clr_in_acc > 0 }
 			set_global_variable = {
@@ -72,7 +78,21 @@ zz_ef_clr_window_roll = {
 				value = {
 					value = zz_ef_clr_pot_value
 					divide = global_var:zz_ef_clr_in_acc
-					max = 2
+					max = zz_ef_clr_take_max
+					min = 0
+				}
+			}
+		}
+		if = {
+			limit = { global_var:zz_ef_clr_out_acc > 0 }
+			set_global_variable = {
+				name = zz_ef_clr_pay_ratio
+				value = {
+					value = global_var:zz_ef_clr_in_acc
+					multiply = zz_ef_clr_pot_target
+					subtract = zz_ef_clr_pot_value
+					divide = global_var:zz_ef_clr_out_acc
+					max = 1
 					min = 0
 				}
 			}
@@ -113,6 +133,20 @@ zz_ef_clr_step = {
 			zz_ef_clr_receive = yes
 		}
 	}
+	# П.6а (run clr3): a country without a CB pays its outflow too -- in its currency only (no metal reserves);
+	# it takes nothing (no CB to hold it). Its payments were counted as the receivers' inflow (subjects' tribute,
+	# the East India Company -> Britain's diplomatic pacts +112K a week) with nothing paid into the house:
+	# receivers got 15-40% of their claims. A subject on its overlord's currency pays in that currency, which
+	# comes home to the overlord and is redeemed -- nothing out of nothing.
+	else_if = {
+		limit = {
+			NOT = { has_modifier = has_central_bank }
+			zz_ef_rc_currency_value > 0.0002
+			var:zz_ef_f_ext_net < 0
+		}
+		zz_ef_clr_window_roll = yes
+		zz_ef_clr_pay = yes
+	}
 }
 
 zz_ef_clr_pay = {
@@ -125,10 +159,14 @@ zz_ef_clr_pay = {
 			multiply = zz_ef_clr_gold_per_money
 		}
 	}
+	# the world's claims see the whole outflow; the payment is its share (П.6а)
+	change_global_variable = { name = zz_ef_clr_out_acc add = var:zz_ef_clr_due }
+	change_variable = { name = zz_ef_clr_due multiply = zz_ef_clr_pay_ratio_v }
 	# the metal part, native (fiat: none), at most the CB's metal
 	set_variable = { name = zz_ef_clr_metal value = 0 }
 	if = {
 		limit = {
+			has_modifier = has_central_bank
 			OR = {
 				has_law = law_type:law_gold_standard
 				has_law = law_type:law_silver_standard
@@ -144,6 +182,7 @@ zz_ef_clr_pay = {
 				multiply = -1
 				multiply = var:money_value_target_1
 				multiply = zz_ef_clr_metal_share
+				multiply = zz_ef_clr_pay_ratio_v
 				max = zz_ef_cb_metal
 				min = 0
 			}
@@ -196,7 +235,6 @@ zz_ef_clr_pay = {
 		zz_ef_clr_put_own = yes
 	}
 	set_variable = { name = zz_ef_f_clr_cur_out value = var:zz_ef_clr_units }
-	change_global_variable = { name = zz_ef_clr_out_acc add = var:zz_ef_clr_due }
 	remove_variable = zz_ef_clr_due
 	remove_variable = zz_ef_clr_metal
 	remove_variable = zz_ef_clr_mgold
@@ -389,6 +427,42 @@ zz_ef_v_f_clr_fx_in_money = {
 		divide = zz_ef_clr_gold_per_money
 	}
 }
+# П.6а: the house's limits -- receivers take at most 1.5 of their claim; payers keep the house near 2 windows' claims
+zz_ef_clr_take_max = 1.5
+zz_ef_clr_pot_target = 2
+zz_ef_clr_pay_ratio_v = {
+	value = 1
+	if = { limit = { has_global_variable = zz_ef_clr_pay_ratio } value = global_var:zz_ef_clr_pay_ratio }
+}
+# this receiver's clearing, in money (the abroad card's reserve assets, П.17): metal at the parity, currency
+zz_ef_v_f_clr_metal_money = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_hume has_variable = money_value_target_1 var:money_value_target_1 > 0 }
+		value = var:zz_ef_f_hume
+		divide = zz_ef_cb_valuation
+	}
+}
+zz_ef_v_f_clr_fx_money = {
+	value = 0
+	if = {
+		limit = { zz_ef_clr_gold_per_money > 0 }
+		value = zz_ef_v_f_clr_fx_in
+		divide = zz_ef_clr_gold_per_money
+	}
+	subtract = zz_ef_v_f_clr_cur_out
+	add = zz_ef_v_f_clr_own_back
+}
+# the reserves' change by the clearing and what the clearing did not settle this week (the BoP's errors and omissions)
+zz_ef_v_f_clr_reserves_money = {
+	value = zz_ef_v_f_clr_metal_money
+	add = zz_ef_v_f_clr_fx_money
+}
+zz_ef_v_f_clr_unsettled = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_ext_net } value = var:zz_ef_f_ext_net }
+	subtract = zz_ef_v_f_clr_reserves_money
+}
 zz_ef_clr_ratio_v = {
 	value = 1
 	if = { limit = { has_global_variable = zz_ef_clr_ratio } value = global_var:zz_ef_clr_ratio }
@@ -444,6 +518,39 @@ def sguis(cur):
     for c in cur:
         out.append(f"\t\tif = {{ limit = {{ zz_ef_cbfx_{c} > 0 NOT = {{ has_law = law_type:law_{c}_currency }} }} "
                    f"add_to_global_variable_list = {{ name = zz_ef_cbfx_list target = global_var:currency_import_export_value_{c}_03 }} }}\n")
+    out.append("\t}\n}\n")
+    # П.16: the same list sorted by the stock's value in gold, the biggest first (selection: the largest not yet
+    # listed, again and again)
+    out.append("\n# П.16 (4.10): E&F's table sorted by value in gold, the biggest first.\n"
+               "zz_ef_cbfx_update_sorted = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_cbfx_list\n"
+               "\t\tset_variable = { name = zz_ef_cbfx_n value = 0 }\n")
+    for c in cur:
+        out.append(f"\t\tif = {{ limit = {{ zz_ef_cbfx_{c}_gold > 0 NOT = {{ has_law = law_type:law_{c}_currency }} }} "
+                   f"change_variable = {{ name = zz_ef_cbfx_n add = 1 }} set_variable = {{ name = zz_ef_cbfx_left_{c} value = yes }} }}\n")
+    out.append("\t\twhile = {\n\t\t\tlimit = { var:zz_ef_cbfx_n > 0 }\n"
+               "\t\t\tset_variable = { name = zz_ef_cbfx_max value = -1 }\n")
+    for c in cur:
+        out.append(f"\t\t\tif = {{ limit = {{ has_variable = zz_ef_cbfx_left_{c} zz_ef_cbfx_{c}_gold > var:zz_ef_cbfx_max }} "
+                   f"set_variable = {{ name = zz_ef_cbfx_max value = zz_ef_cbfx_{c}_gold }} }}\n")
+    out.append("\t\t\tset_variable = { name = zz_ef_cbfx_done value = no }\n")
+    for c in cur:
+        out.append(f"\t\t\tif = {{ limit = {{ var:zz_ef_cbfx_done = no has_variable = zz_ef_cbfx_left_{c} zz_ef_cbfx_{c}_gold >= var:zz_ef_cbfx_max }} "
+                   f"add_to_global_variable_list = {{ name = zz_ef_cbfx_list target = global_var:currency_import_export_value_{c}_03 }} "
+                   f"remove_variable = zz_ef_cbfx_left_{c} set_variable = {{ name = zz_ef_cbfx_done value = yes }} }}\n")
+    out.append("\t\t\tchange_variable = { name = zz_ef_cbfx_n subtract = 1 }\n\t\t}\n"
+               "\t\tremove_variable = zz_ef_cbfx_n\n\t\tremove_variable = zz_ef_cbfx_max\n\t\tremove_variable = zz_ef_cbfx_done\n"
+               "\t}\n}\n")
+    # П.18: who holds our currency -- the other CBs' stocks of the player's currency, for a pie chart
+    out.append("\n# П.18 (4.10): the other CBs holding the player's currency (global list zz_ef_holders_list; the amount\n"
+               "# in the player's money on each holder, var:zz_ef_holds_pc), for the pie chart in the trade balance.\n"
+               "zz_ef_holders_update = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_holders_list\n"
+               "\t\tsave_scope_as = holders_root\n")
+    for i, c in enumerate(cur):
+        kw = "if" if i == 0 else "else_if"
+        out.append(f"\t\t{kw} = {{ limit = {{ has_law = law_type:law_{c}_currency }} every_country = {{ limit = {{ NOT = {{ this = scope:holders_root }} "
+                   f"NOT = {{ has_law = law_type:law_{c}_currency }} has_modifier = has_central_bank capital = {{ has_variable = stockpiling_{c}_state_1 "
+                   f"var:stockpiling_{c}_state_1 > 0 }} }} set_variable = {{ name = zz_ef_holds_pc value = capital.var:stockpiling_{c}_state_1 }} "
+                   f"add_to_global_variable_list = {{ name = zz_ef_holders_list target = this }} }} }}\n")
     out.append("\t}\n}\n")
     return "".join(out)
 

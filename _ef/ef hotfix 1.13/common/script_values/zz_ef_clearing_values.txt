@@ -66,6 +66,42 @@ zz_ef_v_f_clr_fx_in_money = {
 		divide = zz_ef_clr_gold_per_money
 	}
 }
+# П.6а: the house's limits -- receivers take at most 1.5 of their claim; payers keep the house near 2 windows' claims
+zz_ef_clr_take_max = 1.5
+zz_ef_clr_pot_target = 2
+zz_ef_clr_pay_ratio_v = {
+	value = 1
+	if = { limit = { has_global_variable = zz_ef_clr_pay_ratio } value = global_var:zz_ef_clr_pay_ratio }
+}
+# this receiver's clearing, in money (the abroad card's reserve assets, П.17): metal at the parity, currency
+zz_ef_v_f_clr_metal_money = {
+	value = 0
+	if = {
+		limit = { has_variable = zz_ef_f_hume has_variable = money_value_target_1 var:money_value_target_1 > 0 }
+		value = var:zz_ef_f_hume
+		divide = zz_ef_cb_valuation
+	}
+}
+zz_ef_v_f_clr_fx_money = {
+	value = 0
+	if = {
+		limit = { zz_ef_clr_gold_per_money > 0 }
+		value = zz_ef_v_f_clr_fx_in
+		divide = zz_ef_clr_gold_per_money
+	}
+	subtract = zz_ef_v_f_clr_cur_out
+	add = zz_ef_v_f_clr_own_back
+}
+# the reserves' change by the clearing and what the clearing did not settle this week (the BoP's errors and omissions)
+zz_ef_v_f_clr_reserves_money = {
+	value = zz_ef_v_f_clr_metal_money
+	add = zz_ef_v_f_clr_fx_money
+}
+zz_ef_v_f_clr_unsettled = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_ext_net } value = var:zz_ef_f_ext_net }
+	subtract = zz_ef_v_f_clr_reserves_money
+}
 zz_ef_clr_ratio_v = {
 	value = 1
 	if = { limit = { has_global_variable = zz_ef_clr_ratio } value = global_var:zz_ef_clr_ratio }

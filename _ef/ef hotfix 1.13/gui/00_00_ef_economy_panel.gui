@@ -2987,261 +2987,15 @@ types zz_ef_economy_panel
 								}
 							}
 
-							widget = {
-								size = { @panel_width 30 }
-
-								hbox = {
-									sort_button = {
-										layoutpolicy_horizontal = preferred
-										size = { 40 20 }
-										align = hcenter|nobaseline
-										text = "trade_routes"
-										datacontext = "[GetScriptedGui('gdpg_sort_by_country_gdp')]"
-										onclick = "[ScriptedGui.Execute(GuiScope.AddScope('player_country', GetPlayer.MakeScope).End )]"
-									}
-									sort_button = {
-										layoutpolicy_horizontal = preferred
-										size = { 120 20 }
-										align = hcenter|nobaseline
-										text = "in_currrency"
-										datacontext = "[GetScriptedGui('gdpg_sort_by_country_gdp')]"
-										onclick = "[ScriptedGui.Execute(GuiScope.AddScope('player_country', GetPlayer.MakeScope).End )]"
-									}
-									sort_button = {
-										layoutpolicy_horizontal = preferred
-										size = { 120 20 }
-										align = hcenter|nobaseline
-										text = "in_gold"
-										datacontext = "[GetScriptedGui('gdpg_sort_by_country_gdp')]"
-										onclick = "[ScriptedGui.Execute(GuiScope.AddScope('player_country', GetPlayer.MakeScope).End )]"
-									}
-								}
-							}
-
-							flowcontainer = {
-								direction = vertical
-								datamodel = "[GetGlobalList('import_export_value_in_currency')]"
-
-								margin_top = 10
-
-								item = {
-									#margin_left = 25
-
-									container = {
-										#direction = vertical
-										margin_top = 10
-										parentanchor = hcenter|nobaseline
-
-										minimumsize = { @panel_width 170 }
-
-										background = {
-											using = entry_bg_simple
-											margin = { 0 -3 }
-											alpha = 1
-										}
-
-										vbox = {
-											margin_top = 20
-											minimumsize = { @panel_width 170 }
-
-											textbox = {
-												layoutstretchfactor_vertical = 1
-												layoutpolicy_vertical = fixed
-
-												margin_bottom = -5
-
-												datacontext = "[Scope.GetCountry]"
-
-												text = "[Localize(Concatenate(Scope.GetFlagName,'_name_currency'))] - [Localize(Concatenate(Scope.GetFlagName,'_delta_with_player_country'))]"
-
-												fontsize = 27
-												margin_left = 0
-												elide = right
-												align = Hcenter|nobaseline
-												parentanchor = Hcenter|nobaseline
-												alwaystransparent = yes
-											}
-
-											vbox = {
-												layoutstretchfactor_vertical = 3
-												layoutpolicy_vertical = expanding
-
-												maximumsize = { @panel_width 100 }
-
-												textbox = {
-													layoutstretchfactor_vertical = 1
-													layoutpolicy_vertical = fixed
-													datacontext = "[Scope.GetCountry]"
-
-													text = "money_value_parity"
-
-													fontsize = 17
-													margin_left = 0
-													elide = right
-													align = Hcenter|nobaseline
-													parentanchor = Hcenter|nobaseline
-													alwaystransparent = yes
-												}
-
-												flowcontainer = {
-													layoutstretchfactor_vertical = 1
-													layoutpolicy_vertical = fixed
-
-													direction = vertical
-
-													button = {
-														using = default_button
-														size = { 510 30 }
-														parentanchor = hcenter
-
-														hbox = {
-															margin = { 0 0 }
-															textbox = {
-																layoutstretchfactor_horizontal = 1
-																layoutpolicy_horizontal = preferred
-																datacontext = "[Scope.GetCountry]"
-
-																text = "[Localize(Concatenate(Scope.GetFlagName,'_import_from'))]"
-
-																margin_left = 0
-																margin_bottom = 0
-																elide = right
-																align = Hcenter|nobaseline
-																parentanchor = left|nobaseline
-																alwaystransparent = yes
-															}
-
-
-															vertical_divider = {}
-
-															textbox = {
-																layoutstretchfactor_horizontal = 2
-																layoutpolicy_horizontal = preferred
-																datacontext = "[Scope.GetCountry]"
-
-																text = "[Localize(Concatenate(Scope.GetFlagName,'_debt_in_national'))] [Localize(Concatenate(Scope.GetFlagName,'_import_in'))]"
-
-																margin_left = 0
-																margin_bottom = 0
-																elide = right
-																align = Hcenter|nobaseline
-																parentanchor = left|nobaseline
-																alwaystransparent = yes
-																tooltip =  "_debt_in_national"
-															}
-
-															vertical_divider = {}
-
-															textbox = {
-																layoutstretchfactor_horizontal = 2
-																layoutpolicy_horizontal = preferred
-																datacontext = "[Scope.GetCountry]"
-
-																text = "[Localize(Concatenate(Scope.GetFlagName,'_debt_in_national_currency'))] [Localize(Concatenate(Scope.GetFlagName,'_import_in_gold'))]"
-
-																margin_left = 0
-																margin_bottom = 0
-																elide = right
-																align = Hcenter|nobaseline
-																parentanchor = left|nobaseline
-																alwaystransparent = yes
-																tooltip =  "_debt_in_national_currency"
-															}
-														}
-													}
-												}
-
-												textbox = {
-													layoutpolicy_vertical = 1
-													layoutpolicy_vertical = fixed
-
-													datacontext = "[Scope.GetCountry]"
-
-													text = "[Localize(Concatenate(Scope.GetFlagName,'_gold_parity'))]"
-
-													fontsize = 17
-													margin_left = 0
-													elide = right
-													align = Hcenter|nobaseline
-													parentanchor = Hcenter|nobaseline
-													alwaystransparent = yes
-												}
-
-												flowcontainer = {
-													layoutstretchfactor_vertical = 1
-													layoutpolicy_vertical = fixed
-
-													direction = vertical
-
-													button = {
-														using = default_button
-														size = { 510 30 }
-														parentanchor = hcenter
-
-														hbox = {
-															margin = { 0 0 }
-															textbox = {
-																layoutstretchfactor_horizontal = 1
-																layoutpolicy_horizontal = preferred
-																datacontext = "[Scope.GetCountry]"
-
-																text = "[Localize(Concatenate(Scope.GetFlagName,'_export_to'))]"
-
-																margin_left = 0
-																margin_bottom = 0
-																elide = right
-																align = Hcenter|nobaseline
-																parentanchor = left|nobaseline
-																alwaystransparent = yes
-															}
-
-															vertical_divider = {}
-
-															textbox = {
-																layoutstretchfactor_horizontal = 2
-																layoutpolicy_horizontal = preferred
-																datacontext = "[Scope.GetCountry]"
-
-																text = "[Localize(Concatenate(Scope.GetFlagName,'_stockpiling_currency_state'))] [Localize(Concatenate(Scope.GetFlagName,'_export_in'))]"
-
-																margin_left = 0
-																margin_bottom = 0
-																elide = right
-																align = Hcenter|nobaseline
-																parentanchor = left|nobaseline
-																alwaystransparent = yes
-
-
-																using = tooltip_below
-																tooltip =  "_stockpiling_currency_state"
-
-															}
-
-															vertical_divider = {}
-
-															textbox = {
-																layoutstretchfactor_horizontal = 2
-																layoutpolicy_horizontal = preferred
-																datacontext = "[Scope.GetCountry]"
-
-																text = "[Localize(Concatenate(Scope.GetFlagName,'_currency_state_in_gold'))] [Localize(Concatenate(Scope.GetFlagName,'_export_in_gold'))]"
-
-																margin_left = 0
-																margin_bottom = 0
-																elide = right
-																align = Hcenter|nobaseline
-																parentanchor = left|nobaseline
-																alwaystransparent = yes
-																using = tooltip_below
-																tooltip =  "_currency_state_in_gold"
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
+							textbox = {
+								using = fontsize_large
+								multiline = yes
+								autoresize = yes
+								minimumsize = { 500 -1 }
+								maximumsize = { 500 -1 }
+								parentanchor = hcenter
+								align = left|nobaseline
+								text = "zz_ef_ep_bop"
 							}
 						}
 						#import_export_value_in_currency_in_reeserve
@@ -3254,7 +3008,8 @@ types zz_ef_economy_panel
 
 							blockoverride "onclick" {
 								onclick = "[GetVariableSystem.Toggle('import_export_value_in_currency_in_reeserve')]"
-								onclick = "[GetScriptedGui('zz_ef_cbfx_update').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+								onclick = "[GetScriptedGui('zz_ef_cbfx_update_sorted').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
+								onclick = "[GetScriptedGui('zz_ef_holders_update').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 
 								#onclick = "[GetScriptedGui('update_import_export_value_in_currency_in_reeserve_liste_debug').Execute( GuiScope.SetRoot(GetPlayer.MakeScope).End)]"
 
@@ -3276,6 +3031,8 @@ types zz_ef_economy_panel
 
 							direction = vertical
 
+							zz_ef_holders_piechart = {}
+
 							widget = {
 								size = { @panel_width 30 }
 
@@ -3292,7 +3049,7 @@ types zz_ef_economy_panel
 										layoutpolicy_horizontal = preferred
 										size = { 5 20 }
 										align = hcenter|nobaseline
-										text = "in_currency"
+										text = "zz_ef_ep_cbfx_units"
 										datacontext = "[GetScriptedGui('cv_sort_by_country_gdp')]"
 										onclick = "[ScriptedGui.Execute(GuiScope.AddScope('player_country', GetPlayer.MakeScope).End )]"
 									}
@@ -3300,7 +3057,7 @@ types zz_ef_economy_panel
 										layoutpolicy_horizontal = preferred
 										size = { 70 20 }
 										align = hcenter|nobaseline
-										text = "in_currency"
+										text = "zz_ef_ep_cbfx_money"
 										datacontext = "[GetScriptedGui('cv_sort_by_country_gdp')]"
 										onclick = "[ScriptedGui.Execute(GuiScope.AddScope('player_country', GetPlayer.MakeScope).End )]"
 									}
@@ -3308,7 +3065,7 @@ types zz_ef_economy_panel
 										layoutpolicy_horizontal = preferred
 										align = hcenter|nobaseline
 										size = { 70 20 }
-										text = "in_mettal"
+										text = "zz_ef_ep_cbfx_gold"
 										datacontext = "[GetScriptedGui('cv_sort_by_currency_value')]"
 										onclick = "[ScriptedGui.Execute(GuiScope.AddScope('player_country', GetPlayer.MakeScope).End )]"
 									}
@@ -7127,11 +6884,13 @@ types zz_ef_economy_panel
 			############################################################################################################################################################
 
 			default_header = {
+				visible = no
 				blockoverride "text" {
 					text = "RESERVE_CURRENCY_TITLE"
 				}
 			}
 			flowcontainer  = {
+				visible = no
 				parentanchor = hcenter
 				direction = vertical
 
@@ -10066,6 +9825,48 @@ types zz_ef_economy_panel
 			############################################################################################################################################################
 			############################################################################################################################################################
 			############################################################################################################################################################
+		}
+	}
+
+	# П.18 (4.10): the other CBs holding our currency (scripted GUI zz_ef_holders_update, var:zz_ef_holds_pc)
+	type zz_ef_holders_piechart = chart {
+		blockoverride "datamodel" {
+			datamodel = "[GetGlobalList('zz_ef_holders_list')]"
+		}
+		blockoverride "heading" {
+			text = "zz_ef_ep_holders_title"
+		}
+		blockoverride "pieslice" {
+			# a float, as vanilla's charts (GetCloutAsFloat); a formatted string drew nothing (run clr3) -- E&F's own pies
+			# pass one too and drew a red square
+			value = "[FixedPointToFloat(Scope.GetCountry.MakeScope.Var('zz_ef_holds_pc').GetValue)]"
+		}
+		blockoverride "color" {
+			color = "[Scope.GetCountry.GetMapColor]"
+		}
+		blockoverride "leftside_info" {
+			raw_text = "[Scope.GetCountry.GetName]"
+		}
+		blockoverride "rightside1_info" {
+			raw_text = "#bold [Scope.GetCountry.MakeScope.Var('zz_ef_holds_pc').GetValue|D]#! [GetPlayer.GetCustom('currency_symbol')]"
+		}
+		blockoverride "rightside2_info" {
+			raw_text = ""
+		}
+		blockoverride "pie_item_goto_button" {
+			button = {
+				using = clean_button
+				size = { 100% 100% }
+			}
+		}
+		blockoverride "piechartsize" {
+			size = { 200 200 }
+		}
+		blockoverride "minimumsize" {
+			minimumsize = { 100 -1 }
+		}
+		blockoverride "maxverticalslots" {
+			maxverticalslots = 10
 		}
 	}
 }

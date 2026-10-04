@@ -95,7 +95,7 @@ def main_text(lang, c):
                  m0="наличные", cash="Наличные на руках", cashf="{0} в накопления, {1} во вклады = {3};\\n       (всего накоплений {2})",
                  m1="M0 + счета", bld="Касса предприятий", tc="из них торговые центры",
                  m2="M1 + вклады", dep="Вклады в банках", check="Сверка с движком",
-                 m3="M2 + облигации других стран", abroad="Заграница (чистая позиция)", bonds="Облигации других стран",
+                 m3="M2 + облигации других стран", abroad="Внешний сектор — чистая международная позиция", bonds="Облигации других стран",
                  abf="банки {0}, казна {1}",
                  abrf="облигации {0} + валюта в ЦБ {1} − наша валюта за рубежом {2}",
                  out="Вне денежной массы:", tr="Казна (счёт правительства)",
@@ -112,7 +112,7 @@ def main_text(lang, c):
                  m0="cash", cash="Cash at hand", cashf="{0} into savings, {1} into deposits = {3};\\n       (all savings {2})",
                  m1="M0 + accounts", bld="Business cash", tc="of it trade centres",
                  m2="M1 + deposits", dep="Bank deposits", check="Reconciliation with the engine",
-                 m3="M2 + other countries' bonds", abroad="Abroad (net position)", bonds="Other countries' bonds",
+                 m3="M2 + other countries' bonds", abroad="External sector — net international position", bonds="Other countries' bonds",
                  abf="banks {0}, treasury {1}",
                  abrf="bonds {0} + currency in the CB {1} − our currency abroad {2}",
                  out="Outside the money supply:", tr="Treasury (the government's account)",
@@ -236,7 +236,7 @@ TITLES = {
     "banks": ("Резервы банков (пул)", "Bank reserves (the pool)"),
     "pops": ("Население", "Pops"),
     "cb": ("Центральный банк", "Central bank"),
-    "abroad": ("Заграница", "Abroad"),
+    "abroad": ("Внешний сектор", "External sector"),
     "ext": ("Вне счетов", "Outside the accounts"),
 }
 # The account's change over the month; pops, the CB (in money) and abroad hold
@@ -448,10 +448,10 @@ NOTES = {
                   "The cash of all buildings. Other: smoothed budget trends against the exact weekly change."),
     "banks": ("Резервы банков (инвестиционный пул). Частная стройка идёт через казну: пул → казна → предприятия.",
               "The banks' reserves (the investment pool). Private construction goes pool → treasury → businesses."),
-    "abroad": ("Чистая внешняя позиция: облигации других стран и чужая валюта в ЦБ минус наша валюта у других ЦБ. "
+    "abroad": ("Запас счёта — чистая международная позиция: облигации других стран и чужая валюта в ЦБ минус наша валюта у других ЦБ. "
                "Платежи с заграницей сводит мировой клиринг: отток оплачивается металлом ЦБ (доля — по доверию к "
                "валюте) и нашей валютой, приток — долей металла и валют, собранных с плательщиков.",
-               "The net foreign position: other countries' bonds and foreign currency in the CB minus our currency at "
+               "The account's stock is the net international position: other countries' bonds and foreign currency in the CB minus our currency at "
                "other CBs. Payments with abroad go through the world clearing: an outflow pays in the CB's metal (the "
                "share by trust in the currency) and in our currency, an inflow takes a share of the metal and "
                "currencies the payers brought."),
@@ -606,6 +606,10 @@ PROBES = [
     ("ipay", "Country.GetInterestPayment"),
     ("sdebt", "Country.GetGovernmentSelfDebt"),
     ("sdebtf", "Country.GetGovernmentSelfDebtFraction"),
+    # П.17 (4.10): the BoP's primary income -- E&F puts the treasury bonds' weekly interest into the additional
+    # income / expenses (zz_ef_f_aint in the receiver)
+    ("aint", "Subtract_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalIncomeTrend)), "
+             "Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalExpensesTrend)))"),
 ]
 
 
@@ -846,6 +850,8 @@ def nested(lang):
         flows = card_flows(acc)
         pays = []
         head = TITLES[acc][k] + (" за неделю" if ru else " this week")
+        if acc == Z:
+            head = ("Чистая международная позиция за неделю" if ru else "Net international position this week")
         L = [f"#b {head}: {delta(DELTA[acc])}#!{mark(SRC_ACC[acc], ru)}" if acc in DELTA else f"#b {head}#!"]
         resid = f"Country.MakeScope.ScriptValue('{DELTA[acc]}')" if acc in DELTA else None
         fixed_resid = "Country.MakeScope.ScriptValue('zz_ef_other_treasury_rest')" if acc == K else None
@@ -901,34 +907,45 @@ def nested(lang):
             # 4.10 (the user: "where does +108K come from if the lines do not add up"): the block lists exactly the
             # parts of the net flow the step records (zz_ef_ext_net_week); the budget lines with abroad are the
             # breakdown of its first part, the trade centres' cash is not in it since night 2
+            # П.17 (4.10, the user: "the abroad account in an academic form"): the balance of payments of the week,
+            # its standard parts; current + financial = the net flow the step records; the clearing settles it in
+            # reserve assets; what it did not settle is the BoP's errors and omissions
             if ru:
-                L += [f"#b Платежи с заграницей за неделю: {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → мировой клиринг",
-                      f"  {sv('zz_ef_v_f_abr', 'D+=')} {cur} статьи бюджета с заграницей (записано)",
-                      f"  {sv('zz_ef_tr_abr_overlap_neg', 'D+=')} {cur} из них уже в операциях казны E&F",
-                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} торговый баланс рынка: экспорт − импорт по ценам рынка",
-                      f"  {sv('zz_ef_v_f_div', 'D+=')} {cur} дивиденды из-за рубежа, нетто (оценка)",
-                      f"  {sv('zz_ef_v_d_bonds_neg', 'D+=')} {cur} облигации других стран, купленные банками",
-                      f"  {sv('zz_ef_v_d_tbonds_neg', 'D+=')} {cur} облигации других стран, купленные казной",
+                L += [f"#b Платёжный баланс за неделю#!",
+                      f"#b Текущий счёт {sv('zz_ef_bop_current', 'D+=')} {cur}#!",
+                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} торговля товарами: экспорт − импорт по ценам рынка",
+                      f"  {sv('zz_ef_bop_primary', 'D+=')} {cur} первичные доходы: дивиденды из-за рубежа (оценка) "
+                      f"{sv('zz_ef_v_f_div', 'D+=')}, проценты по облигациям {sv('zz_ef_v_f_aint', 'D+=')}",
+                      f"  {sv('zz_ef_bop_secondary', 'D+=')} {cur} вторичные доходы: статьи бюджета с заграницей (ниже)",
+                      f"#b Финансовый счёт {sv('zz_ef_bop_financial', 'D+=')} {cur}#! — облигации других стран: банки "
+                      f"{sv('zz_ef_v_d_bonds_neg', 'D+=')}, казна {sv('zz_ef_v_d_tbonds_neg', 'D+=')}",
+                      f"#b Сальдо {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → мировой клиринг",
+                      f"#b Резервные активы {sv('zz_ef_v_f_clr_reserves_money', 'D+=')} {cur}#!: металл ЦБ "
+                      f"{sv('zz_ef_v_f_clr_metal_money', 'D+=')}, валюта {sv('zz_ef_v_f_clr_fx_money', 'D+=')}",
+                      f"  не сведено клирингом (ошибки и пропуски) {sv('zz_ef_v_f_clr_unsettled', 'D+=')} {cur}",
                       "#grey Статьи бюджета с заграницей сейчас (+ в страну, − за рубеж):#!"]
-                clr = [f"#b Клиринг#!: металл ЦБ {sv('zz_ef_v_f_hume', 'D+=')} (в металле стандарта); при оттоке "
-                       f"металлом платится {sv('zz_ef_clr_metal_share', '%0')} — по доверию к валюте (сила к эталону "
-                       f"{sv('zz_ef_currency_strength', '2')}), остальное нашей валютой",
-                       f"  мир: оплачено {sv('zz_ef_clr_ratio_v', '%0')} притоков прошлой недели (притоки {sv('zz_ef_clr_in_last_v')}, "
-                       f"платежи {sv('zz_ef_clr_out_last_v')} @gold!); в клиринге {sv('zz_ef_clr_pot_value')} @gold!"]
+                clr = [f"Клиринг: при оттоке металлом платится {sv('zz_ef_clr_metal_share', '%0')} — по доверию к валюте "
+                       f"(сила к эталону {sv('zz_ef_currency_strength', '2')}), остальное нашей валютой; мир: получатели берут "
+                       f"{sv('zz_ef_clr_ratio_v', '%0')} притока, плательщики платят {sv('zz_ef_clr_pay_ratio_v', '%0')}; "
+                       f"в клиринге {sv('zz_ef_clr_pot_value')} @gold!"]
             else:
-                L += [f"#b Payments with abroad this week: {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → the world clearing",
-                      f"  {sv('zz_ef_v_f_abr', 'D+=')} {cur} budget lines with abroad (recorded)",
-                      f"  {sv('zz_ef_tr_abr_overlap_neg', 'D+=')} {cur} of it already in the treasury's E&F moves",
-                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} the market's trade balance: exports − imports at market prices",
-                      f"  {sv('zz_ef_v_f_div', 'D+=')} {cur} dividends from abroad, net (estimate)",
-                      f"  {sv('zz_ef_v_d_bonds_neg', 'D+=')} {cur} other countries' bonds bought by the banks",
-                      f"  {sv('zz_ef_v_d_tbonds_neg', 'D+=')} {cur} other countries' bonds bought by the treasury",
+                L += [f"#b Balance of payments this week#!",
+                      f"#b Current account {sv('zz_ef_bop_current', 'D+=')} {cur}#!",
+                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} goods trade: exports − imports at market prices",
+                      f"  {sv('zz_ef_bop_primary', 'D+=')} {cur} primary income: dividends from abroad (estimate) "
+                      f"{sv('zz_ef_v_f_div', 'D+=')}, bond interest {sv('zz_ef_v_f_aint', 'D+=')}",
+                      f"  {sv('zz_ef_bop_secondary', 'D+=')} {cur} secondary income: budget lines with abroad (below)",
+                      f"#b Financial account {sv('zz_ef_bop_financial', 'D+=')} {cur}#! — other countries' bonds: banks "
+                      f"{sv('zz_ef_v_d_bonds_neg', 'D+=')}, treasury {sv('zz_ef_v_d_tbonds_neg', 'D+=')}",
+                      f"#b Balance {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → the world clearing",
+                      f"#b Reserve assets {sv('zz_ef_v_f_clr_reserves_money', 'D+=')} {cur}#!: the CB's metal "
+                      f"{sv('zz_ef_v_f_clr_metal_money', 'D+=')}, currency {sv('zz_ef_v_f_clr_fx_money', 'D+=')}",
+                      f"  not settled by the clearing (errors and omissions) {sv('zz_ef_v_f_clr_unsettled', 'D+=')} {cur}",
                       "#grey Budget lines with abroad now (+ in, − out):#!"]
-                clr = [f"#b Clearing#!: the CB's metal {sv('zz_ef_v_f_hume', 'D+=')} (in the standard's metal); on an "
-                       f"outflow {sv('zz_ef_clr_metal_share', '%0')} is paid in metal — by trust in the currency "
-                       f"(strength to the reference {sv('zz_ef_currency_strength', '2')}), the rest in our currency",
-                       f"  world: {sv('zz_ef_clr_ratio_v', '%0')} of last week's inflows paid (inflows {sv('zz_ef_clr_in_last_v')}, "
-                       f"payments {sv('zz_ef_clr_out_last_v')} @gold!); in the clearing house {sv('zz_ef_clr_pot_value')} @gold!"]
+                clr = [f"Clearing: on an outflow {sv('zz_ef_clr_metal_share', '%0')} is paid in metal — by trust in the "
+                       f"currency (strength to the reference {sv('zz_ef_currency_strength', '2')}), the rest in our currency; "
+                       f"world: receivers take {sv('zz_ef_clr_ratio_v', '%0')} of the inflow, payers pay "
+                       f"{sv('zz_ef_clr_pay_ratio_v', '%0')}; in the clearing house {sv('zz_ef_clr_pot_value')} @gold!"]
             for other, dr, f in pays:
                 if other != K:
                     continue

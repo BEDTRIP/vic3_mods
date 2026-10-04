@@ -14,7 +14,13 @@ zz_ef_clr_window_roll = {
 			limit = { NOT = { has_global_variable = zz_ef_clr_out_acc } }
 			set_global_variable = { name = zz_ef_clr_out_acc value = 0 }
 		}
+		# П.6а (runs clr1, clr2): the world's net flows do not add up to zero (trade at different markets'
+		# prices, countries without a CB), so both sides are scaled. Receivers take at most what the house holds
+		# against last window's claims (up to 1.5); payers pay the share that keeps the house near twice a
+		# window's claims: min(1, (2 x claims - held) / payments). On random flows (in = out) a receiver gets
+		# ~0.8-0.9 of its inflow and the house stays bounded; was: receivers 20% (clr1), the house 187M (clr2).
 		set_global_variable = { name = zz_ef_clr_ratio value = 1 }
+		set_global_variable = { name = zz_ef_clr_pay_ratio value = 1 }
 		if = {
 			limit = { global_var:zz_ef_clr_in_acc > 0 }
 			set_global_variable = {
@@ -22,7 +28,21 @@ zz_ef_clr_window_roll = {
 				value = {
 					value = zz_ef_clr_pot_value
 					divide = global_var:zz_ef_clr_in_acc
-					max = 2
+					max = zz_ef_clr_take_max
+					min = 0
+				}
+			}
+		}
+		if = {
+			limit = { global_var:zz_ef_clr_out_acc > 0 }
+			set_global_variable = {
+				name = zz_ef_clr_pay_ratio
+				value = {
+					value = global_var:zz_ef_clr_in_acc
+					multiply = zz_ef_clr_pot_target
+					subtract = zz_ef_clr_pot_value
+					divide = global_var:zz_ef_clr_out_acc
+					max = 1
 					min = 0
 				}
 			}
@@ -63,6 +83,20 @@ zz_ef_clr_step = {
 			zz_ef_clr_receive = yes
 		}
 	}
+	# П.6а (run clr3): a country without a CB pays its outflow too -- in its currency only (no metal reserves);
+	# it takes nothing (no CB to hold it). Its payments were counted as the receivers' inflow (subjects' tribute,
+	# the East India Company -> Britain's diplomatic pacts +112K a week) with nothing paid into the house:
+	# receivers got 15-40% of their claims. A subject on its overlord's currency pays in that currency, which
+	# comes home to the overlord and is redeemed -- nothing out of nothing.
+	else_if = {
+		limit = {
+			NOT = { has_modifier = has_central_bank }
+			zz_ef_rc_currency_value > 0.0002
+			var:zz_ef_f_ext_net < 0
+		}
+		zz_ef_clr_window_roll = yes
+		zz_ef_clr_pay = yes
+	}
 }
 
 zz_ef_clr_pay = {
@@ -75,10 +109,14 @@ zz_ef_clr_pay = {
 			multiply = zz_ef_clr_gold_per_money
 		}
 	}
+	# the world's claims see the whole outflow; the payment is its share (П.6а)
+	change_global_variable = { name = zz_ef_clr_out_acc add = var:zz_ef_clr_due }
+	change_variable = { name = zz_ef_clr_due multiply = zz_ef_clr_pay_ratio_v }
 	# the metal part, native (fiat: none), at most the CB's metal
 	set_variable = { name = zz_ef_clr_metal value = 0 }
 	if = {
 		limit = {
+			has_modifier = has_central_bank
 			OR = {
 				has_law = law_type:law_gold_standard
 				has_law = law_type:law_silver_standard
@@ -94,6 +132,7 @@ zz_ef_clr_pay = {
 				multiply = -1
 				multiply = var:money_value_target_1
 				multiply = zz_ef_clr_metal_share
+				multiply = zz_ef_clr_pay_ratio_v
 				max = zz_ef_cb_metal
 				min = 0
 			}
@@ -146,7 +185,6 @@ zz_ef_clr_pay = {
 		zz_ef_clr_put_own = yes
 	}
 	set_variable = { name = zz_ef_f_clr_cur_out value = var:zz_ef_clr_units }
-	change_global_variable = { name = zz_ef_clr_out_acc add = var:zz_ef_clr_due }
 	remove_variable = zz_ef_clr_due
 	remove_variable = zz_ef_clr_metal
 	remove_variable = zz_ef_clr_mgold
