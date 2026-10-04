@@ -115,10 +115,11 @@ zz_ef_cb_rule_rating = {
 # EF.43 item 14 (1.10): the risk premium beyond E&F's rating, which bunches
 # the big countries together (Russia = France = 8.6 in 1836, while history
 # had Russia borrowing 2-7 pp dearer): a default +3 pp; instability -- the
-# radicals' share x 10 (up to +2 pp), legitimacy under 50 +0.5 / under 25
-# +1 pp, war +0.5 pp; an illiterate state collects its taxes and keeps its
-# books worse -- (40% - literacy) x 2.5, up to +1 pp. Weights decided at
-# night -- check.
+# radicals' share x 20 (up to +4 pp), legitimacy under 50 +1 / under 25
+# +2 pp, war +1 pp; an illiterate state collects its taxes and keeps its
+# books worse -- (40% - literacy) x 5, up to +2 pp. Weights doubled 4.10
+# (EF.43, decided by the user, D.1 b): with the 1.10 weights Russia, France
+# and Austria still came out within 1 pp of each other.
 zz_ef_cb_rule_stability = {
 	value = 0
 	if = {
@@ -127,27 +128,27 @@ zz_ef_cb_rule_stability = {
 	}
 	add = {
 		value = radical_population_fraction
-		multiply = 0.1
-		max = 0.02
+		multiply = 0.2
+		max = 0.04
 	}
 	if = {
 		limit = { legitimacy < 25 }
-		add = 0.01
+		add = 0.02
 	}
 	else_if = {
 		limit = { legitimacy < 50 }
-		add = 0.005
+		add = 0.01
 	}
 	if = {
 		limit = { is_at_war = yes }
-		add = 0.005
+		add = 0.01
 	}
 	add = {
 		value = 0.4
 		subtract = literacy_rate
-		multiply = 0.025
+		multiply = 0.05
 		min = 0
-		max = 0.01
+		max = 0.02
 	}
 }
 # The premium: the rating's part + the stability part, 0..8 pp.
