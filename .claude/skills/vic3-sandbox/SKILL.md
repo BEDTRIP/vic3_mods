@@ -38,7 +38,8 @@ powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -RunMinutes 
 powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -StartSave "великобритания_1836_04_13.v3" -RunMinutes 10 -OutDir "<scratch>\runN"
 ```
 
-Окончание ждать фоновым `until grep -q "done:\|stopping\|not in front" <OutDir>/run.log; do sleep 10; done`.
+Окончание ждать фоновым `until grep -q "\] done: C:\|stopping\|not in front" <OutDir>/stdout.txt; do sleep 10; done`
+(с `-Shots` строки «vic3_ui done:» идут раньше конца — ловить именно «] done: C:», 4.10).
 
 Параметры: `-RunMinutes N` (реальные минуты на скорости 5), `-Autosaves N` (остановиться после N новых
 автосейвов; автосейв раз в полгода), `-Tag` (страна новой игры, по умолчанию BUG — Буганда: 2.10 пользователь заметил, что страна игрока под
