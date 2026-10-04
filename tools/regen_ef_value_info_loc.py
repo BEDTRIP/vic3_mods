@@ -48,24 +48,24 @@ STANDARDS = [
 # 4.10 (the user: "the tooltip is for the money supply and the rate"): the rate in two lines -- the value
 # against the parity (bimetallism: also in silver), the cover and its rule in one line; the reserves block
 # (NATIONAL_CAPACITY_DESC) is empty -- the CB's reserves are told once, on their line in the money supply.
+# 4.10 (the user: "hard to read, formulas"): four lines -- rate, rate with inflation, parity, cover -- in the
+# standard's metal (bimetallism: gold = silver); the rule of redemption lives in the concept / the CB panel.
 TEXT = {
     "russian": {
-        "info": ("#b Курс:#! #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_0')|4]#! {m}{alt} — паритет "
-                 "[{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4] {m}; сила к эталону [{c}.MakeScope.ScriptValue('zz_ef_currency_strength')|2]\\n"
-                 "Покрытие #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (норма 40%): от 25% — размен на металл, курс у паритета ±2%; "
-                 "ниже — размен приостановлен, курс = паритет × покрытие / 40%\\n"
-                 "С инфляцией: 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')] {m} "
-                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-] @inflation!)\\n$TOOLTIP_DELIMITER$"),
+        "info": ("Курс: #T 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_0')|4] {m}{alt}#!\\n"
+                 "Курс с инфляцией: 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')|4] {m} "
+                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-])\\n"
+                 "Паритет: 1 {sym} = [{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4] {m}\\n"
+                 "Покрытие: #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (норма 40%, ниже 25% — размен приостановлен)\\n$TOOLTIP_DELIMITER$"),
         "alt": " = [{c}.MakeScope.ScriptValue('zz_ef_value_in_silver')|2] @silver!",
         "cap": "",
     },
     "english": {
-        "info": ("#b Rate:#! #T 1 {sym}#! = #T [{c}.MakeScope.ScriptValue('money_value_0')|4]#! {m}{alt} — parity "
-                 "[{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4] {m}; strength against the reference [{c}.MakeScope.ScriptValue('zz_ef_currency_strength')|2]\\n"
-                 "Cover #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (norm 40%): from 25% notes are redeemed in metal, the value "
-                 "stays at the parity ±2%; under it redemption is suspended, value = parity × cover / 40%\\n"
-                 "With inflation: 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')] {m} "
-                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-] @inflation!)\\n$TOOLTIP_DELIMITER$"),
+        "info": ("Rate: #T 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_0')|4] {m}{alt}#!\\n"
+                 "Rate with inflation: 1 {sym} = [{c}.MakeScope.ScriptValue('money_value_rapported_inflation')|4] {m} "
+                 "([{c}.MakeScope.ScriptValue('inflation_value')|%|=-])\\n"
+                 "Parity: 1 {sym} = [{c}.MakeScope.ScriptValue('zz_ef_cb_valuation')|4] {m}\\n"
+                 "Cover: #T [{c}.MakeScope.ScriptValue('zz_ef_cb_cover')|%0]#! (norm 40%, under 25% redemption is suspended)\\n$TOOLTIP_DELIMITER$"),
         "alt": " = [{c}.MakeScope.ScriptValue('zz_ef_value_in_silver')|2] @silver!",
         "cap": "",
     },

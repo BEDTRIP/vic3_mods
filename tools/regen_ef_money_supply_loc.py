@@ -92,7 +92,7 @@ def main_text(lang, c):
     # and the CB's reserves are accounts outside the money supply. The currency's value and the inflation read M2.
     if ru:
         L = dict(title="Денежная масса", total="Всего (#b M3#!)", week="за неделю", wk="неделя", mo="мес.", yr="год", y5="5л.",
-                 m0="наличные", cash="Наличные на руках", cashf="{0} в накопления − {1} во вклады = {3}/неделя;\\n       (всего накоплений {2})",
+                 m0="наличные", cash="Наличные на руках", cashf="{0} в накопления, {1} во вклады = {3};\\n       (всего накоплений {2})",
                  m1="M0 + счета", bld="Касса предприятий", tc="из них торговые центры",
                  m2="M1 + вклады", dep="Вклады в банках", check="Сверка с движком",
                  m3="M2 + заграница", abroad="Заграница",
@@ -100,7 +100,7 @@ def main_text(lang, c):
                  out="Вне денежной массы:", tr="Казна (счёт правительства)",
                  bank="Резервы банков (пул)", bankf="банки должны вкладчикам {0} и ЦБ {1}, выдали кредитов {2}; капитал банков {3} {4}",
                  cb="Резервы ЦБ — покрытие валюты, не деньги",
-                 cbf="металл {1} ({2}/неделя) + чужая валюта {3}; покрытие M2 {0}, норма 40%",
+                 cbf="металл {1} ({2}) + чужая валюта {3}; покрытие M2 {0}, норма 40%",
                  circ="Курс и инфляция считаются по M2",
                  infl="Инфляция за год", inflf="индекс цен потребительской корзины {2} (100 = базовые цены); для сравнения: рост M2 {0}, рост ВВП {1}",
                  debt="Долги (не деньги)", debtf="бюджета {0}, банков перед ЦБ {1}, потребкредит {2}, бизнеса {3}",
@@ -108,7 +108,7 @@ def main_text(lang, c):
                  dyn="месяц {0}, год {1}, 5 лет {2}", gdp="к ВВП")
     else:
         L = dict(title="Money Supply", total="Total (#b M3#!)", week="this week", wk="week", mo="mo", yr="yr", y5="5y",
-                 m0="cash", cash="Cash at hand", cashf="{0} into savings − {1} into deposits = {3}/week;\\n       (all savings {2})",
+                 m0="cash", cash="Cash at hand", cashf="{0} into savings, {1} into deposits = {3};\\n       (all savings {2})",
                  m1="M0 + accounts", bld="Business cash", tc="of it trade centres",
                  m2="M1 + deposits", dep="Bank deposits", check="Reconciliation with the engine",
                  m3="M2 + abroad", abroad="Abroad",
@@ -116,7 +116,7 @@ def main_text(lang, c):
                  out="Outside the money supply:", tr="Treasury (the government's account)",
                  bank="Bank reserves (the pool)", bankf="banks owe depositors {0} and the CB {1}, lent {2}; banks' capital {3} {4}",
                  cb="CB reserves — the currency's cover, not money",
-                 cbf="metal {1} ({2}/week) + foreign currency {3}; cover of M2 {0}, norm 40%",
+                 cbf="metal {1} ({2}) + foreign currency {3}; cover of M2 {0}, norm 40%",
                  circ="The value and the inflation read M2",
                  infl="Inflation, a year", inflf="consumer price index {2} (100 = base prices); for comparison: M2 growth {0}, GDP growth {1}",
                  debt="Debts (not money)", debtf="budget {0}, banks to the CB {1}, consumer credit {2}, business {3}",
@@ -130,7 +130,7 @@ def main_text(lang, c):
     # the engine went to their own nested tooltip (zz_ef_ms_tt_check).
     def dyn(k):
         pc = [sv(f"zz_ef_agg{k}_pct_{p}", "+=1%") for p in ("month", "year", "5y")]
-        return (f"{delta(f'zz_ef_v_d_agg{k}')}/{L['wk']};\\n"
+        return (f"{delta(f'zz_ef_v_d_agg{k}')};\\n"
                 f"({pc[0]}/{L['mo']}, {pc[1]}/{L['yr']}, {pc[2]}/{L['y5']})")
 
     def ratio(k):
@@ -142,7 +142,7 @@ def main_text(lang, c):
         f"{L['total']}: #p {money('zz_ef_agg_m3')}#!",
         f"#b M0#! = {L['m0']}: #T {money('zz_ef_agg_m0')}#! — {ratio(0)} {dyn(0)}",
         f"→   {tt('zz_ef_ms_tt_pops', L['cash'])}: #T {money('zz_ef_pop_cash_held')}#!{mark('calc', ru)}: "
-        + L["cashf"].format(delta("zz_ef_v_d_savings"), money("zz_ef_v_d_deposits"), money("zz_ef_pop_savings"),
+        + L["cashf"].format(delta("zz_ef_v_d_savings"), delta("zz_ef_v_d_deposits_neg"), money("zz_ef_pop_savings"),
                             delta("zz_ef_v_d_agg0")),
         f"#b M1#! = {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} {dyn(1)}",
         f"→   {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} "
@@ -589,8 +589,8 @@ PROBES = [
 RESID = {}
 # UI.7 (3.10, runs e0_4/e0_5): what is left in each card's residual, named
 OTHER_LAB = {
-    "cb": ("прочее — операции E&F с металлом ЦБ (закупки металла, валютные сделки)",
-           "other — E&F's operations with the CB's metal (metal purchases, currency deals)"),
+    "cb": ("прочее — здание ЦБ E&F копит металл раз в месяц (за месяц [Country.MakeScope.ScriptValue('central_bank_metal_reserves_state_per_month')|D+=] металла), валютные сделки",
+           "other — E&F's CB building stores metal once a month (this month [Country.MakeScope.ScriptValue('central_bank_metal_reserves_state_per_month')|D+=] metal), currency deals"),
     "buildings": ("прочее — сглаженные тренды бюджета против недельного изменения кассы",
                   "other — smoothed budget trends against the weekly change of the cash"),
 }
@@ -869,16 +869,34 @@ def nested(lang):
                          + f"[{bout}|D+=] {cur}")
         if not n:
             L.append(none)
-        if pays:
-            L.append("#b " + ("Платежи с заграницей за неделю (+ в страну, − за рубеж) — через ЦБ металлом, счёт не меняют:" if ru else
-                              "Payments with abroad this week (+ in, − out) — settled by the CB in metal, the account does not move:") + "#!")
+        if acc == Z:
+            # 4.10 (the user: "where does +108K come from if the lines do not add up"): the block lists exactly the
+            # parts of the net flow the step records (zz_ef_ext_net_week); the budget lines with abroad are the
+            # breakdown of its first part, the trade centres' cash is not in it since night 2
+            if ru:
+                L += [f"#b Платежи с заграницей за неделю: {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → металл ЦБ (Юм на следующем шаге)",
+                      f"  {sv('zz_ef_v_f_abr', 'D+=')} {cur} статьи бюджета с заграницей (записано)",
+                      f"  {sv('zz_ef_tr_abr_overlap_neg', 'D+=')} {cur} из них уже в операциях казны E&F",
+                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} торговый баланс рынка: экспорт − импорт по ценам рынка",
+                      f"  {sv('zz_ef_v_f_div', 'D+=')} {cur} дивиденды из-за рубежа, нетто (оценка)",
+                      f"  {sv('zz_ef_v_d_bonds_neg', 'D+=')} {cur} облигации других стран, купленные банками",
+                      f"  {sv('zz_ef_v_d_tbonds_neg', 'D+=')} {cur} облигации других стран, купленные казной",
+                      "#grey Статьи бюджета с заграницей сейчас (+ в страну, − за рубеж):#!"]
+            else:
+                L += [f"#b Payments with abroad this week: {sv('zz_ef_v_f_ext_net', 'D+=')} {cur}#! → the CB's metal (Hume at the next step)",
+                      f"  {sv('zz_ef_v_f_abr', 'D+=')} {cur} budget lines with abroad (recorded)",
+                      f"  {sv('zz_ef_tr_abr_overlap_neg', 'D+=')} {cur} of it already in the treasury's E&F moves",
+                      f"  {sv('zz_ef_v_f_trade', 'D+=')} {cur} the market's trade balance: exports − imports at market prices",
+                      f"  {sv('zz_ef_v_f_div', 'D+=')} {cur} dividends from abroad, net (estimate)",
+                      f"  {sv('zz_ef_v_d_bonds_neg', 'D+=')} {cur} other countries' bonds bought by the banks",
+                      f"  {sv('zz_ef_v_d_tbonds_neg', 'D+=')} {cur} other countries' bonds bought by the treasury",
+                      "#grey Budget lines with abroad now (+ in, − out):#!"]
             for other, dr, f in pays:
+                if other != K:
+                    continue
                 e = expr(f[4])
-                lab = (f[2] if ru else f[3]) + f" ({TITLES[other][k].lower()})"
-                # the country's side: + came into the country, − went abroad
-                L.append(f"  ← #P +[{e}|D] {cur}#! {lab}" if dr == "out" else f"  → #N −[{e}|D] {cur}#! {lab}")
-            L.append(("  итого: чистый поток с заграницей " if ru else "  net flow with abroad ")
-                     + f"{sv('zz_ef_v_f_ext_net', 'D+=')}{cur}" + (" → металл ЦБ (Юм)" if ru else " → the CB's metal (Hume)"))
+                lab = f[2] if ru else f[3]
+                L.append(f"    #grey +[{e}|D] {cur} {lab}#!" if dr == "out" else f"    #grey −[{e}|D] {cur} {lab}#!")
         L += ["", NOTES[acc][k]]
         if acc == B:
             # Ф.1 (В7.3) and the CB's credit, a line per item (the user 4.10: one paragraph does not read)
