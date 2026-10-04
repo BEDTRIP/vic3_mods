@@ -348,3 +348,35 @@ function Drag-Window($p, $fx, $fy, $tx, $ty) {
     Start-Sleep -Milliseconds 100
     [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 300
 }
+
+# П.15 (the user: "you page by ~20% -- the overlap is far too much"): a row profile of a region -- one number a
+# pixel row -- and the shift between two profiles, to measure how far the content actually moved.
+function Row-Profile($p, $x0, $x1, $y0, $y1) {
+    # 6 bands a pixel row: rows of a table look alike as one sum, not as six
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $w = [int](($x1 - $x0) * $kx); $h = [int](($y1 - $y0) * $ky)
+    $bmp = New-Object System.Drawing.Bitmap $w, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + [int]($x0 * $kx), $r.T + [int]($y0 * $ky), 0, 0, $bmp.Size)
+    $bw = [int]($w / 6)
+    $prof = New-Object 'int[]' ($h * 6)
+    for ($y = 0; $y -lt $h; $y++) { for ($b = 0; $b -lt 6; $b++) { $s = 0; for ($x = $b * $bw; $x -lt ($b + 1) * $bw; $x += 5) { $c = $bmp.GetPixel($x, $y); $s += $c.R + $c.G + $c.B }; $prof[$y * 6 + $b] = $s } }
+    $g.Dispose(); $bmp.Dispose()
+    return ,$prof
+}
+# The content moved up by d rows: new[y] ~ old[y + d]. Returns @(d, quality): quality = the second best error
+# (more than 6 rows away) / the best one -- under 1.5 the match is not trusted.
+function Profile-Shift($old, $new) {
+    $n = [int]($old.Length / 6); $errs = @{}
+    for ($d = 0; $d -le $n - 60; $d += 2) {
+        $err = 0.0; $cnt = 0
+        for ($y = 0; $y + $d -lt $n; $y += 3) { for ($b = 0; $b -lt 6; $b++) { $e = $new[$y * 6 + $b] - $old[($y + $d) * 6 + $b]; $err += [Math]::Abs($e) }; $cnt++ }
+        $errs[$d] = $err / $cnt
+    }
+    $best = ($errs.GetEnumerator() | Sort-Object Value | Select-Object -First 1)
+    $second = ($errs.GetEnumerator() | Where-Object { [Math]::Abs($_.Key - $best.Key) -gt 6 } | Sort-Object Value | Select-Object -First 1)
+    $q = if ($best.Value -gt 0) { $second.Value / $best.Value } else { 99 }
+    return @($best.Key, $q)
+}

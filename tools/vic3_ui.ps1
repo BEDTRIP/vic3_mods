@@ -92,7 +92,7 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
             $th = Find-Thumb $p 608 280 1435
             if ($th) { Drag-Window $p 0.2375 (($th[0] + $th[1]) / 2) 0.2375 0.15 }
             Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
-            $last = ""
+            $last = ""; $fac = 0.85
             for ($pg = 1; $pg -le $max; $pg++) {
                 $skip = @()
                 for ($k = 0; $k -lt 10; $k++) {
@@ -113,8 +113,16 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
                 # a page down: the thumb dragged by 85% of its height (its height is the visible share)
                 $th = Find-Thumb $p 608 280 1435
                 if (-not $th) { Log "browse: no scrollbar - one page"; break }
-                $mid = ($th[0] + $th[1]) / 2; Drag-Window $p 0.2375 $mid 0.2375 ($mid + 0.85 * ($th[1] - $th[0]))
+                # the step adapts: the content's real shift (row profiles before / after) against 85% of the view
+                $before = Row-Profile $p 70 580 310 1420
+                $mid = ($th[0] + $th[1]) / 2; Drag-Window $p 0.2375 $mid 0.2375 ([Math]::Min(0.995, $mid + $fac * ($th[1] - $th[0])))
                 Hover-Window $p 0.13 0.09; Start-Sleep -Milliseconds 700
+                $after = Row-Profile $p 70 580 310 1420
+                $sh = Profile-Shift $before $after; $d = $sh[0]; $q = $sh[1]; $n = [int]($before.Length / 6)
+                if ($q -ge 1.5 -and $d -gt 20) { $fac = $fac * [Math]::Max(0.5, [Math]::Min(2.0, 0.85 * $n / $d)) }
+                elseif ($q -ge 1.5) { $fac = $fac * 2 }
+                $fac = [Math]::Max(0.2, [Math]::Min(8, $fac))
+                Log ("browse: page {0} moved {1} rows (match {2:N1}), next factor {3:N2}" -f $pg, $d, $q, $fac)
             }
         }
         "close"   { Close-And-Collect }
