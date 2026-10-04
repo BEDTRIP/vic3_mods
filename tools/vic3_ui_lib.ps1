@@ -58,7 +58,8 @@ function Get-Game { Get-Process -Name "victoria3" -ErrorAction SilentlyContinue 
 # key would land in the user's window (1.10 morning: "enable_ai all" was typed
 # into the user's chat). So nothing is sent unless the game is in front; if
 # it cannot be brought forward the run stops.
-function Focus-Game($p) {
+function Raise-Game($p) {
+    if ([W]::GetForegroundWindow() -eq $p.MainWindowHandle) { return $true }
     [W]::ShowWindow($p.MainWindowHandle, 9) | Out-Null
     [W]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
     Start-Sleep -Milliseconds 400
@@ -68,7 +69,11 @@ function Focus-Game($p) {
         [W]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
         Start-Sleep -Milliseconds 400
     }
-    if ([W]::GetForegroundWindow() -ne $p.MainWindowHandle) {
+    return ([W]::GetForegroundWindow() -eq $p.MainWindowHandle)
+}
+
+function Focus-Game($p) {
+    if (-not (Raise-Game $p)) {
         Log "the game is not in front (another window has the focus) - stopping, nothing sent"
         throw "game window not in front"
     }
@@ -171,11 +176,15 @@ function Is-Box($p, $box, $rgb, $tol) {
     return $true
 }
 # Waits until the screen is up (polled every 3 s), at most $max seconds; then $settle seconds.
+# The colour is read off the screen, so the game must be in front: at launch Windows may leave
+# another window on top (4.10 night: Obsidian, the menu was "seen" in its colours; 4.10 evening:
+# the game started behind the user's window). Each poll raises the game first; a box is only
+# trusted while the game is in front.
 function Wait-Screen($name, $max, $settle) {
     $t = Get-Date
     while (((Get-Date) - $t).TotalSeconds -lt $max) {
         $p = Get-Game
-        if ($p -and $p.MainWindowHandle -ne 0 -and (Is-Screen $p $name)) {
+        if ($p -and $p.MainWindowHandle -ne 0 -and (Raise-Game $p) -and (Is-Screen $p $name)) {
             Log ("screen '$name' after {0:N0} s" -f ((Get-Date) - $t).TotalSeconds); Start-Sleep $settle; return $true
         }
         if ($t0) { Save-DebugParts }
