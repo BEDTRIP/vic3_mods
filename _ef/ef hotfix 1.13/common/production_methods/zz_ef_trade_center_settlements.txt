@@ -1,0 +1,29 @@
+﻿#############################################
+# Д2.4 (5.10.2026, the user: "add a small production of settlements to trade centres, so that minor countries
+# get their own minimum for the population and businesses -- not a stock, production"): trade centres make
+# bank settlements (liquidity_currency) as an ordinary output, sold on the market like the banks'.
+#
+# A trade centre buys 28 per workforce through E&F's market liquidity method
+# (production_methods/zz_ef_market_liquidity_input.txt); it makes 60 -- covers itself and gives ~32 per level to
+# its market. A minor with a few trade centre levels and no bank has settlements of its own.
+# !! TUNING !! the 60.
+#
+# INJECT: adds a named entry to the method's workforce_scaled block (vanilla's pm_trade_center and its
+# principle replacement; nothing in the set REPLACEs them -- checked 5.10).
+#############################################
+
+INJECT:pm_trade_center = {
+	building_modifiers = {
+		workforce_scaled = {
+			goods_output_liquidity_currency_add = 60
+		}
+	}
+}
+
+INJECT:pm_trade_center_principle_external_trade_2 = {
+	building_modifiers = {
+		workforce_scaled = {
+			goods_output_liquidity_currency_add = 60
+		}
+	}
+}
