@@ -560,6 +560,18 @@ zz_ef_pb_buy = {
 	remove_variable = zz_ef_bl_y
 }
 
+# Buyer scope, slot $N$ rose with no seller found in E&F's list (run s1g: Britain 1838.1, 1.95M): no debt to hold a
+# part of -- the whole purchase back to our pool and off E&F's value (only existing debt is bought).
+zz_ef_pb_no_seller = {
+	set_variable = { name = zz_ef_bl_y value = var:zz_ef_pb_v }
+	change_variable = { name = zz_ef_bl_y subtract = var:zz_ef_pbh_$N$ }
+	add_investment_pool = var:zz_ef_bl_y
+	change_variable = { name = zz_ef_f_pb_refund add = var:zz_ef_bl_y }
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|slot $N$|no_seller [THIS.GetCountry.MakeScope.Var('zz_ef_bl_y').GetValue|0]"
+	zz_ef_pb_cut = { N = $N$ }
+	remove_variable = zz_ef_bl_y
+}
+
 # Buyer scope: E&F's value of slot $N$ down by var:zz_ef_bl_y (at most to 0), its interest scaled with it.
 zz_ef_pb_cut = {
 	if = {
@@ -646,6 +658,9 @@ zz_ef_pb_slot_1 = {
 			set_variable = { name = zz_ef_pbs_1 value = scope:zz_ef_pbsel_1 }
 			zz_ef_pb_buy = { N = 1 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 1 }
+		}
 		set_variable = { name = zz_ef_pbh_1 value = var:ai_privat_bank_bond_value_1 }
 	}
 	else_if = {
@@ -691,6 +706,9 @@ zz_ef_pb_slot_2 = {
 			scope:zz_ef_pbsel_2 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_2 value = scope:zz_ef_pbsel_2 }
 			zz_ef_pb_buy = { N = 2 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 2 }
 		}
 		set_variable = { name = zz_ef_pbh_2 value = var:ai_privat_bank_bond_value_2 }
 	}
@@ -738,6 +756,9 @@ zz_ef_pb_slot_3 = {
 			set_variable = { name = zz_ef_pbs_3 value = scope:zz_ef_pbsel_3 }
 			zz_ef_pb_buy = { N = 3 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 3 }
+		}
 		set_variable = { name = zz_ef_pbh_3 value = var:ai_privat_bank_bond_value_3 }
 	}
 	else_if = {
@@ -783,6 +804,9 @@ zz_ef_pb_slot_4 = {
 			scope:zz_ef_pbsel_4 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_4 value = scope:zz_ef_pbsel_4 }
 			zz_ef_pb_buy = { N = 4 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 4 }
 		}
 		set_variable = { name = zz_ef_pbh_4 value = var:ai_privat_bank_bond_value_4 }
 	}
@@ -830,6 +854,9 @@ zz_ef_pb_slot_5 = {
 			set_variable = { name = zz_ef_pbs_5 value = scope:zz_ef_pbsel_5 }
 			zz_ef_pb_buy = { N = 5 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 5 }
+		}
 		set_variable = { name = zz_ef_pbh_5 value = var:ai_privat_bank_bond_value_5 }
 	}
 	else_if = {
@@ -875,6 +902,9 @@ zz_ef_pb_slot_6 = {
 			scope:zz_ef_pbsel_6 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_6 value = scope:zz_ef_pbsel_6 }
 			zz_ef_pb_buy = { N = 6 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 6 }
 		}
 		set_variable = { name = zz_ef_pbh_6 value = var:ai_privat_bank_bond_value_6 }
 	}
@@ -922,6 +952,9 @@ zz_ef_pb_slot_7 = {
 			set_variable = { name = zz_ef_pbs_7 value = scope:zz_ef_pbsel_7 }
 			zz_ef_pb_buy = { N = 7 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 7 }
+		}
 		set_variable = { name = zz_ef_pbh_7 value = var:ai_privat_bank_bond_value_7 }
 	}
 	else_if = {
@@ -967,6 +1000,9 @@ zz_ef_pb_slot_8 = {
 			scope:zz_ef_pbsel_8 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_8 value = scope:zz_ef_pbsel_8 }
 			zz_ef_pb_buy = { N = 8 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 8 }
 		}
 		set_variable = { name = zz_ef_pbh_8 value = var:ai_privat_bank_bond_value_8 }
 	}
@@ -1014,6 +1050,9 @@ zz_ef_pb_slot_9 = {
 			set_variable = { name = zz_ef_pbs_9 value = scope:zz_ef_pbsel_9 }
 			zz_ef_pb_buy = { N = 9 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 9 }
+		}
 		set_variable = { name = zz_ef_pbh_9 value = var:ai_privat_bank_bond_value_9 }
 	}
 	else_if = {
@@ -1059,6 +1098,9 @@ zz_ef_pb_slot_10 = {
 			scope:zz_ef_pbsel_10 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_10 value = scope:zz_ef_pbsel_10 }
 			zz_ef_pb_buy = { N = 10 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 10 }
 		}
 		set_variable = { name = zz_ef_pbh_10 value = var:ai_privat_bank_bond_value_10 }
 	}
@@ -1106,6 +1148,9 @@ zz_ef_pb_slot_11 = {
 			set_variable = { name = zz_ef_pbs_11 value = scope:zz_ef_pbsel_11 }
 			zz_ef_pb_buy = { N = 11 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 11 }
+		}
 		set_variable = { name = zz_ef_pbh_11 value = var:ai_privat_bank_bond_value_11 }
 	}
 	else_if = {
@@ -1151,6 +1196,9 @@ zz_ef_pb_slot_12 = {
 			scope:zz_ef_pbsel_12 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_12 value = scope:zz_ef_pbsel_12 }
 			zz_ef_pb_buy = { N = 12 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 12 }
 		}
 		set_variable = { name = zz_ef_pbh_12 value = var:ai_privat_bank_bond_value_12 }
 	}
@@ -1198,6 +1246,9 @@ zz_ef_pb_slot_13 = {
 			set_variable = { name = zz_ef_pbs_13 value = scope:zz_ef_pbsel_13 }
 			zz_ef_pb_buy = { N = 13 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 13 }
+		}
 		set_variable = { name = zz_ef_pbh_13 value = var:ai_privat_bank_bond_value_13 }
 	}
 	else_if = {
@@ -1243,6 +1294,9 @@ zz_ef_pb_slot_14 = {
 			scope:zz_ef_pbsel_14 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_14 value = scope:zz_ef_pbsel_14 }
 			zz_ef_pb_buy = { N = 14 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 14 }
 		}
 		set_variable = { name = zz_ef_pbh_14 value = var:ai_privat_bank_bond_value_14 }
 	}
@@ -1290,6 +1344,9 @@ zz_ef_pb_slot_15 = {
 			set_variable = { name = zz_ef_pbs_15 value = scope:zz_ef_pbsel_15 }
 			zz_ef_pb_buy = { N = 15 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 15 }
+		}
 		set_variable = { name = zz_ef_pbh_15 value = var:ai_privat_bank_bond_value_15 }
 	}
 	else_if = {
@@ -1335,6 +1392,9 @@ zz_ef_pb_slot_16 = {
 			scope:zz_ef_pbsel_16 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_16 value = scope:zz_ef_pbsel_16 }
 			zz_ef_pb_buy = { N = 16 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 16 }
 		}
 		set_variable = { name = zz_ef_pbh_16 value = var:ai_privat_bank_bond_value_16 }
 	}
@@ -1382,6 +1442,9 @@ zz_ef_pb_slot_17 = {
 			set_variable = { name = zz_ef_pbs_17 value = scope:zz_ef_pbsel_17 }
 			zz_ef_pb_buy = { N = 17 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 17 }
+		}
 		set_variable = { name = zz_ef_pbh_17 value = var:ai_privat_bank_bond_value_17 }
 	}
 	else_if = {
@@ -1427,6 +1490,9 @@ zz_ef_pb_slot_18 = {
 			scope:zz_ef_pbsel_18 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_18 value = scope:zz_ef_pbsel_18 }
 			zz_ef_pb_buy = { N = 18 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 18 }
 		}
 		set_variable = { name = zz_ef_pbh_18 value = var:ai_privat_bank_bond_value_18 }
 	}
@@ -1474,6 +1540,9 @@ zz_ef_pb_slot_19 = {
 			set_variable = { name = zz_ef_pbs_19 value = scope:zz_ef_pbsel_19 }
 			zz_ef_pb_buy = { N = 19 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 19 }
+		}
 		set_variable = { name = zz_ef_pbh_19 value = var:ai_privat_bank_bond_value_19 }
 	}
 	else_if = {
@@ -1519,6 +1588,9 @@ zz_ef_pb_slot_20 = {
 			scope:zz_ef_pbsel_20 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_20 value = scope:zz_ef_pbsel_20 }
 			zz_ef_pb_buy = { N = 20 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 20 }
 		}
 		set_variable = { name = zz_ef_pbh_20 value = var:ai_privat_bank_bond_value_20 }
 	}
@@ -1566,6 +1638,9 @@ zz_ef_pb_slot_21 = {
 			set_variable = { name = zz_ef_pbs_21 value = scope:zz_ef_pbsel_21 }
 			zz_ef_pb_buy = { N = 21 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 21 }
+		}
 		set_variable = { name = zz_ef_pbh_21 value = var:ai_privat_bank_bond_value_21 }
 	}
 	else_if = {
@@ -1611,6 +1686,9 @@ zz_ef_pb_slot_22 = {
 			scope:zz_ef_pbsel_22 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_22 value = scope:zz_ef_pbsel_22 }
 			zz_ef_pb_buy = { N = 22 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 22 }
 		}
 		set_variable = { name = zz_ef_pbh_22 value = var:ai_privat_bank_bond_value_22 }
 	}
@@ -1658,6 +1736,9 @@ zz_ef_pb_slot_23 = {
 			set_variable = { name = zz_ef_pbs_23 value = scope:zz_ef_pbsel_23 }
 			zz_ef_pb_buy = { N = 23 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 23 }
+		}
 		set_variable = { name = zz_ef_pbh_23 value = var:ai_privat_bank_bond_value_23 }
 	}
 	else_if = {
@@ -1704,6 +1785,9 @@ zz_ef_pb_slot_24 = {
 			set_variable = { name = zz_ef_pbs_24 value = scope:zz_ef_pbsel_24 }
 			zz_ef_pb_buy = { N = 24 }
 		}
+		else = {
+			zz_ef_pb_no_seller = { N = 24 }
+		}
 		set_variable = { name = zz_ef_pbh_24 value = var:ai_privat_bank_bond_value_24 }
 	}
 	else_if = {
@@ -1749,6 +1833,9 @@ zz_ef_pb_slot_25 = {
 			scope:zz_ef_pbsel_25 = { save_scope_as = zz_ef_bl_seller }
 			set_variable = { name = zz_ef_pbs_25 value = scope:zz_ef_pbsel_25 }
 			zz_ef_pb_buy = { N = 25 }
+		}
+		else = {
+			zz_ef_pb_no_seller = { N = 25 }
 		}
 		set_variable = { name = zz_ef_pbh_25 value = var:ai_privat_bank_bond_value_25 }
 	}
