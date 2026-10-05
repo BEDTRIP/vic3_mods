@@ -29,12 +29,12 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 (`tools/pc_bridge/server.py`, туннель ngrok, `.mcp.json`; на ПК запускается `tools/pc_bridge/start.ps1`).
 Нет инструментов `mcp__vic3-pc__*` — мост выключен, попросить пользователя запустить `start.ps1`.
 
-1. Правки — в своём клоне, **коммит и `git push` в ветку** (мост берёт код с GitHub, не из облака).
+1. Правки — в своём клоне, **коммит и `git push` в `main`** (мост берёт код с GitHub, не из облака).
 2. `checkout(branch)` → `_bridge/wt` на ПК; `sync_mod()` (по умолчанию `_ef/ef hotfix 1.13` → `E&F Hotfix`;
    другие моды — `repo_folder`, `live_name`); при идущей игре отказывает.
 3. `start_run(run_minutes, new_game, tag, start_save, autosaves, shots, countries, …)` — те же параметры, что
-   у скрипта ниже; сразу отдаёт id. Дальше `run_status(id)` раз в 1–2 минуты (в облаке ждать `sleep`
-   в Bash), пока не «finished». Игра встала («Конец игры») — `stop_run(id)`, логи тогда в `docs/logs`.
+   у скрипта ниже; сразу отдаёт id. Дальше `run_status(id)` раз в 1–2 минуты (в облаке ждать фоновой
+   командой Bash `sleep 120` с `run_in_background` — обычный `sleep` заблокирован), пока не «finished». Игра встала («Конец игры») — `stop_run(id)`, логи тогда в `docs/logs`.
 4. Чтение: `list_dir` / `read_text` (`from_end`) / `grep` по путям `runs/<id>/…`, `docs/logs/…`,
    `docs/crashes/…`, `game/game/…`; снимки — `get_image(path, crop=[x0,y0,x1,y1])` (доли, кадрировать
    подсказку, а не весь экран); `py_tool("parse_eflog" | "save_money_check", args)` — разбор на ПК.
