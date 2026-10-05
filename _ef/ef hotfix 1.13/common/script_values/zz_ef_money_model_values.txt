@@ -951,6 +951,8 @@ zz_ef_cb_metal = {
 # +220K a week from abroad, its metal 59 -> 458M in three years.
 zz_ef_ext_net_week = {
 	value = zz_ef_v_f_abr
+	# В1.6: the fees' part the world's importers did not pay (the world trade pool)
+	subtract = zz_ef_tfees_cut
 	subtract = zz_ef_tr_abr_overlap
 	add = zz_ef_v_f_trade
 	subtract = zz_ef_v_d_bonds
@@ -2630,18 +2632,20 @@ zz_ef_money_median = {
 # В1.6 item 1 (5.10): at ONE price -- the good's base price, not the market's (base x (1 + pricier)). A good
 # leaving one market and entering another was counted at two prices, the importer's and the exporter's, so the
 # world's trade did not add up (run s1b, 1839: +32M gold a year without a counterpart).
+# В1.6 (5.10 evening, run s1f): at one price the world's exports were still over its imports by 1-4M a month (the
+# world market of 1.13 holds goods between its hubs), and the treasuries' market fees, tolls and piracy (abr, +0.5-1.5M)
+# have no payer's line. The world market is a pool: what the importers pay is shared by the exporters and the fees'
+# receivers (zz_ef_wtr_kr: min(1, imports / (exports + fees)) of the window before); if they claim less, the importers
+# pay as much (zz_ef_wtr_kp). The fees' part not covered goes off the flow (zz_ef_tfees_cut).
 zz_ef_trade_net_week = {
 	value = 0
 	if = {
 		limit = { exists = market market.owner = this }
-		market = {
-			every_market_goods = {
-				add = {
-					value = market_goods_exports
-					subtract = market_goods_imports
-					multiply = goods.base_price
-				}
-			}
+		value = zz_ef_trade_exports_week
+		multiply = zz_ef_wtr_kr_v
+		subtract = {
+			value = zz_ef_trade_imports_week
+			multiply = zz_ef_wtr_kp_v
 		}
 		# В3.3 (2.10): customs union members with their own currency settle
 		# their sales inside the market with the owner (generated,
@@ -2886,6 +2890,45 @@ zz_ef_wld_div_m_v = {
 zz_ef_wld_bond_m_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_wld_bond_m } value = global_var:zz_ef_wld_bond_m }
+}
+# В1.6 (5.10 evening): the world trade pool -- the ratios of the window before (1 until set), the week's fees
+zz_ef_wld_wexp_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_wexp } value = global_var:zz_ef_wld_wexp }
+}
+zz_ef_wld_wimp_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_wimp } value = global_var:zz_ef_wld_wimp }
+}
+zz_ef_wld_wfee_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_wfee } value = global_var:zz_ef_wld_wfee }
+}
+zz_ef_wld_waint_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_waint } value = global_var:zz_ef_wld_waint }
+}
+zz_ef_wtr_kr_v = {
+	value = 1
+	if = { limit = { has_global_variable = zz_ef_wtr_kr } value = global_var:zz_ef_wtr_kr }
+}
+zz_ef_wtr_kp_v = {
+	value = 1
+	if = { limit = { has_global_variable = zz_ef_wtr_kp } value = global_var:zz_ef_wtr_kp }
+}
+zz_ef_v_f_tfees = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_tfees } value = var:zz_ef_f_tfees }
+	min = 0
+}
+zz_ef_tfees_cut = {
+	value = 1
+	subtract = zz_ef_wtr_kr_v
+	multiply = zz_ef_v_f_tfees
+}
+zz_ef_v_f_exp = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_exp } value = var:zz_ef_f_exp }
 }
 zz_ef_wld_gpm_avg_v = {
 	value = 0

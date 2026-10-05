@@ -700,6 +700,11 @@ PROBES = [
     # income / expenses (zz_ef_f_aint in the receiver)
     ("aint", "Subtract_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalIncomeTrend)), "
              "Abs_CFixedPoint(GetTrendValue(Country.GetAdditionalExpensesTrend)))"),
+    # В1.6 (5.10 evening): the treasury's income the world's trade pays -- market fees, strait tolls, piracy (the world
+    # trade pool, zz_ef_wtr_*: the importers' payments are shared by the exporters and these)
+    ("tfees", "Subtract_CFixedPoint(Subtract_CFixedPoint(Abs_CFixedPoint(Country.GetMarketFeesIncome), "
+              "Negate_CFixedPoint(Abs_CFixedPoint(Country.PredictTolls))), "
+              "Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPiracyIncomeTrend))))"),
 ]
 
 
