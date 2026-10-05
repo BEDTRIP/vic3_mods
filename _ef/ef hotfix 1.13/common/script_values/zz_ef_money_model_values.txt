@@ -2875,3 +2875,41 @@ zz_ef_probe_cash_now = {
 zz_ef_probe_level = {
 	value = level
 }
+
+# В1.6 (5.10): the world's sums of the week for the EFG line (scripted_effects/zz_ef_money_model.txt, zz_ef_world_acc)
+zz_ef_wld_in_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_in } value = global_var:zz_ef_wld_in }
+}
+zz_ef_wld_out_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_out } value = global_var:zz_ef_wld_out }
+}
+zz_ef_wld_nocl_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_nocl } value = global_var:zz_ef_wld_nocl }
+}
+zz_ef_wld_subj_in_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_subj_in } value = global_var:zz_ef_wld_subj_in }
+}
+zz_ef_wld_subj_out_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_subj_out } value = global_var:zz_ef_wld_subj_out }
+}
+zz_ef_wld_hume_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_hume } value = global_var:zz_ef_wld_hume }
+}
+zz_ef_wld_hume_abs_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_hume_abs } value = global_var:zz_ef_wld_hume_abs }
+}
+zz_ef_wld_n_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_n } value = global_var:zz_ef_wld_n }
+}
+zz_ef_wld_n0_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_n0 } value = global_var:zz_ef_wld_n0 }
+}

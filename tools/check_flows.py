@@ -7,6 +7,10 @@ metal neither appear nor vanish. This reads the money model's log lines (tools/r
       world check needs a world line from the model -- stage 1, В1.6): ext_net -- the week's net flow with the rest of the world, hume -- metal through the
       clearing (money at parity), trade -- the market's trade balance, div -- dividends from abroad, gmined -- metal
       mined; summed per calendar month and country;
+  EFG (В1.6, 5.10; weekly, the WHOLE world, in gold): in / out -- the net inflows / outflows with abroad of all
+      countries; nocl -- |flow| of the countries outside the clearing (no CB); subj_in / subj_out -- the subjects' part;
+      hume / hume_abs -- the CBs' metal moved by the clearing, signed sum and |sum|; n / n0 -- countries / with no value;
+      clr_in / clr_out / clr_pot -- the clearing's last window;
   EFX (monthly, every country): gold / silver -- the central bank's metal (E&F's own scale), fxm -- foreign currency
       in the reserves (in metal), liab -- our currency held abroad; clr_in / clr_out / clr_pay / clr_pot -- the world
       clearing of the last window (the same numbers in every country's line).
@@ -48,11 +52,12 @@ def num(v):
 def read(paths):
     efr = defaultdict(lambda: defaultdict(lambda: defaultdict(float)))   # month -> country -> key -> sum
     efx = defaultdict(dict)                                              # month -> country -> last EFX record
+    efg = defaultdict(lambda: defaultdict(float))                        # month -> key -> sum of the weeks
     seen = set()
     for path in paths:
         for line in open(path, encoding="utf-8-sig", errors="replace"):
             parts = line.strip().split("|")
-            if len(parts) < 4 or parts[0] not in ("EFR", "EFX"):
+            if len(parts) < 4 or parts[0] not in ("EFR", "EFX", "EFG"):
                 continue
             key = (parts[0], parts[1], parts[2])          # a line repeated in two eflogs (or parts) counts once
             if key in seen:
@@ -66,7 +71,16 @@ def read(paths):
                 if " " in p:
                     k, v = p.split(" ", 1)
                     rec[k] = num(v)
-            if parts[0] == "EFR":
+            if parts[0] == "EFG":
+                g = efg[mon]
+                for k, v in rec.items():
+                    if v is not None and k not in ("clr_pot", "n", "n0"):
+                        g[k] += v
+                for k in ("clr_pot", "n", "n0"):
+                    if rec.get(k) is not None:
+                        g[k] = rec[k]
+                g["weeks"] += 1
+            elif parts[0] == "EFR":
                 acc = efr[mon][parts[2]]
                 for k in ("ext_net", "hume", "trade", "div", "gmined", "ext"):
                     if rec.get(k) is not None:
@@ -74,7 +88,29 @@ def read(paths):
                 acc["weeks"] += 1
             else:
                 efx[mon][parts[2]] = rec
-    return efr, efx
+    return efr, efx, efg
+
+
+def world_table(efg, tol):
+    """В1.6: the EFG lines -- the whole world's flows with abroad, in gold, summed by month."""
+    if not efg:
+        print("\nno EFG lines (the world line, В1.6) -- a run before 5.10")
+        return [], 0
+    print(f"\nWORLD (EFG, gold): {'month':8} {'wk':>3} {'in':>12} {'out':>12} {'in-out':>12} {'share':>7} {'nocl':>11} "
+          f"{'subj in':>11} {'subj out':>11} {'hume':>10} {'|hume|':>10} {'n':>4} {'n0':>4}")
+    out, flags = [], 0
+    for mon in sorted(efg):
+        g = efg[mon]
+        gin, gout = g.get("in", 0.0), g.get("out", 0.0)
+        share = (gin - gout) / (gin + gout) if gin + gout else 0.0
+        flag = abs(share) > tol
+        flags += flag
+        print(f"{'>>' if flag else '  '}                 {mon:8} {g['weeks']:>3.0f} {gin:>12,.0f} {gout:>12,.0f} "
+              f"{gin - gout:>12,.0f} {share:>7.3f} {g.get('nocl', 0):>11,.0f} {g.get('subj_in', 0):>11,.0f} "
+              f"{g.get('subj_out', 0):>11,.0f} {g.get('hume', 0):>10,.0f} {g.get('hume_abs', 0):>10,.0f} "
+              f"{g.get('n', 0):>4.0f} {g.get('n0', 0):>4.0f}")
+        out.append({"month": mon, **g, "share": share, "flag": flag})
+    return out, flags
 
 
 def main():
@@ -94,7 +130,7 @@ def main():
     if not paths:
         print(__doc__)
         sys.exit(1)
-    efr, efx = read(paths)
+    efr, efx, efg = read(paths)
     months = sorted(set(efr) | set(efx))
     out = []
     prev = None
@@ -148,9 +184,10 @@ def main():
         if xs:
             prev = {"gold": gold, "silver": silv, "n": len(xs), "first": prev is None,
                     "by": {c: ((x.get("gold") or 0), (x.get("silver") or 0) * (x.get("s2g") or 0)) for c, x in xs.items()}}
-    print(f"\n{len(months)} months, {flags} flagged (share without a counterpart > {tol}, or world metal off mining by > {mtol})")
+    world, wflags = world_table(efg, tol)
+    print(f"\n{len(months)} months, {flags} flagged, {wflags} world months flagged (share without a counterpart > {tol}, or world metal off mining by > {mtol})")
     if jout:
-        json.dump(out, open(jout, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        json.dump({"countries": out, "world": world}, open(jout, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 
 if __name__ == "__main__":

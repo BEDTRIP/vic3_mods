@@ -680,6 +680,85 @@ zz_ef_cb_hume_step = {
 			add_investment_pool = var:zz_ef_f_hume_money
 		}
 	}
+	# В1.6 (5.10): the world's sums of the week (the EFG line)
+	zz_ef_world_acc = yes
+}
+
+# В1.6 (5.10): the world line. Every country's receiver adds its week to global sums in GOLD (the flow x
+# zz_ef_clr_gold_per_money; a country with no value of its money counts in n0 only); the first receiver of the
+# next 7-day window writes them (EFG|date|WORLD|..., tools/check_flows.py) and zeroes them. Keys: in / out -- the
+# net inflows / outflows with abroad (zz_ef_f_ext_net) of all countries; nocl -- |flow| of the countries outside
+# the clearing (no CB); subj_in / subj_out -- the subjects' part (В1.7); hume -- the CBs' metal moved by the
+# clearing, + in / - out, signed sum and |sum|; n / n0 -- countries counted / with no gold value.
+zz_ef_world_acc = {
+	if = {
+		limit = { NOT = { has_global_variable = zz_ef_wld_window } }
+		if = {
+			limit = { has_global_variable = zz_ef_wld_n }
+			debug_log = "EFG|[TimeKeeper.GetCurrentDate.GetString]|WORLD|in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_in_v')|0]|out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_out_v')|0]|nocl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_nocl_v')|0]|subj_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_subj_in_v')|0]|subj_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_subj_out_v')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_hume_v')|0]|hume_abs [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_hume_abs_v')|0]|n [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_n_v')|0]|n0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_n0_v')|0]|clr_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_in_last_v')|0]|clr_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_out_last_v')|0]|clr_pot [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_pot_value')|0]"
+		}
+		set_global_variable = { name = zz_ef_wld_window value = yes days = 7 }
+		set_global_variable = { name = zz_ef_wld_in value = 0 }
+		set_global_variable = { name = zz_ef_wld_out value = 0 }
+		set_global_variable = { name = zz_ef_wld_nocl value = 0 }
+		set_global_variable = { name = zz_ef_wld_subj_in value = 0 }
+		set_global_variable = { name = zz_ef_wld_subj_out value = 0 }
+		set_global_variable = { name = zz_ef_wld_hume value = 0 }
+		set_global_variable = { name = zz_ef_wld_hume_abs value = 0 }
+		set_global_variable = { name = zz_ef_wld_n value = 0 }
+		set_global_variable = { name = zz_ef_wld_n0 value = 0 }
+	}
+	change_global_variable = { name = zz_ef_wld_n add = 1 }
+	if = {
+		limit = { zz_ef_clr_gold_per_money > 0 }
+		set_variable = { name = zz_ef_wld_g value = var:zz_ef_f_ext_net }
+		change_variable = { name = zz_ef_wld_g multiply = zz_ef_clr_gold_per_money }
+		if = {
+			limit = { var:zz_ef_wld_g > 0 }
+			change_global_variable = { name = zz_ef_wld_in add = var:zz_ef_wld_g }
+			if = {
+				limit = { is_subject = yes }
+				change_global_variable = { name = zz_ef_wld_subj_in add = var:zz_ef_wld_g }
+			}
+		}
+		else = {
+			change_global_variable = { name = zz_ef_wld_out subtract = var:zz_ef_wld_g }
+			if = {
+				limit = { is_subject = yes }
+				change_global_variable = { name = zz_ef_wld_subj_out subtract = var:zz_ef_wld_g }
+			}
+		}
+		if = {
+			limit = { NOT = { has_modifier = has_central_bank } }
+			if = {
+				limit = { var:zz_ef_wld_g < 0 }
+				change_variable = { name = zz_ef_wld_g multiply = -1 }
+			}
+			change_global_variable = { name = zz_ef_wld_nocl add = var:zz_ef_wld_g }
+		}
+		remove_variable = zz_ef_wld_g
+	}
+	else = {
+		change_global_variable = { name = zz_ef_wld_n0 add = 1 }
+	}
+	if = {
+		limit = {
+			has_variable = zz_ef_f_hume
+			NOT = { var:zz_ef_f_hume = 0 }
+		}
+		set_variable = { name = zz_ef_wld_g value = var:zz_ef_f_hume }
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			change_variable = { name = zz_ef_wld_g multiply = silver_to_gold_rate }
+		}
+		change_global_variable = { name = zz_ef_wld_hume add = var:zz_ef_wld_g }
+		if = {
+			limit = { var:zz_ef_wld_g < 0 }
+			change_variable = { name = zz_ef_wld_g multiply = -1 }
+		}
+		change_global_variable = { name = zz_ef_wld_hume_abs add = var:zz_ef_wld_g }
+		remove_variable = zz_ef_wld_g
+	}
 }
 
 # EF.48 item 4: consumer credit, in the receiver after the savings (its pool
