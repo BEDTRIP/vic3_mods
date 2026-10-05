@@ -25,8 +25,8 @@
   торгуется между рынками (`goods/zz_ef_cm_liquidity_currency_market.txt`); `market_goods_is_currency` = нет
   (`scripted_triggers/zz_ef_cm_scripted_triggers.txt`) — товар в обычных списках рынка. Выдача валюты малым странам
   (`zz_ef_local_currency_fix`) убрана — без банков услуги ввозятся.
-* **Спрос ~5% ВВП** (Д2.2; пользователь: население ~2%, бизнес ~3%): вход предприятий 98 → 35
-  (`production_methods/zz_ef_market_liquidity_input.txt`, REPLACE); потребность населения `popneed_currency` × 0.25
+* **Спрос ~5% ВВП** (Д2.2; пользователь: население ~2%, бизнес ~3%): вход предприятий 98 → 28
+  (`production_methods/zz_ef_market_liquidity_input.txt`, REPLACE); потребность населения `popneed_currency` × 0.13
   (`buy_packages/zz_ef_currency_need_packages.txt`, генератор `tools/regen_ef_currency_need.py`; ветка VC — тот же
   множитель в `regen_vc_ef.py`, общий — `tools/ef_settlements_need.py`). Прогон r1005_201105: до правки ~90% спроса —
   население (~8% ВВП Британии). Зависимость от ставки — потом.

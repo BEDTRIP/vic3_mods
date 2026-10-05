@@ -6,7 +6,8 @@
 # services (buildings/zz_ef_bank.txt). With the population's popneed_currency that came to ~208K a week for
 # Britain in 1839 (~20% of GDP), all of it the central bank's profit. The user split the 5% of GDP (Д2.2):
 # businesses ~3%, population ~2% (popneed_currency x 0.25, tools/ef_settlements_need.py). Run r1005_201105 (1838):
-# with 10 here British businesses bought ~7.6K a week (<1% of GDP) -> 35. A dependence on the key rate later.
+# with 10 here British businesses bought ~7.6K a week (<1% of GDP) -> 35; run r1005_214144: all bank
+# settlements ~8-9% of GDP, businesses ~49% of it -> 28 (with the population's x 0.13). Key rate later.
 # !! TUNING !! goods_input_liquidity_currency_add.
 #
 # REPLACE: restates the whole entry -- the rest is E&F's, line for line.
@@ -21,7 +22,7 @@ REPLACE:pm_market_liquidity_currency = {
 
 	building_modifiers = {
 		workforce_scaled = {
-			goods_input_liquidity_currency_add = 35	### Д2.2: E&F has 98
+			goods_input_liquidity_currency_add = 28	### Д2.2: E&F has 98
 		}
 	}
 }

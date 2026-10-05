@@ -10,7 +10,9 @@ POP_NEED_FACTOR, in every branch that re-applies E&F's packages:
 """
 import re
 
-POP_NEED_FACTOR = 0.25
+# 0.25 (r1005_214144, 1838): world bank sales ~948K a week = ~8-9% of the logged GDP (~11M a week), population
+# ~51% of the units, businesses ~49% -> 0.13 (population ~40% of ~5%).
+POP_NEED_FACTOR = 0.13
 
 _NEED = re.compile(r"(popneed_currency\s*=\s*)(\d+(?:\.\d+)?)")
 
