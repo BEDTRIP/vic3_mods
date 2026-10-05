@@ -1006,6 +1006,8 @@ zz_ef_money_model_monthly_step = {
 	zz_ef_reference_strength_step = yes
 	# Е.10 (5.10, Д.5): the strength's trade modifier, against the reference
 	zz_ef_currency_trade_step = yes
+	# Д2.7а (5.10): the CB's metal = what its building bought (scripted_effects/zz_ef_cb_stockpile_track.txt)
+	zz_ef_cb_metal_purchase_step = yes
 	# Ф.2 (4.10): the issuer pays its foreign private banks' interest, in January
 	if = {
 		limit = { month = 0 }

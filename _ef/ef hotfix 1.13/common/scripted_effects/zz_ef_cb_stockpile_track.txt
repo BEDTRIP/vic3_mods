@@ -1,19 +1,73 @@
-﻿# UI.11 (5.10): E&F's CB building stores metal once a month (stockpiling_central_bank_metal_reserves_state, called
-# from E&F's monthly pulse for a market owner: storing_gold_1 / storing_silver_1 add the market's gold / silver sell
-# orders x 100 x 4 to the CB state). The CB card showed it inside "other"; now the change of E&F's reserves
-# (central_bank_reserves, the standard's metal) across the call is summed in var:zz_ef_cb_stock_acc and the money
-# model's step shows it as its own line (zz_ef_v_f_cb_stock, at the parity) in the week it happened.
-# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's effect (01_economic_scripted_effects.txt): the body is
-# E&F's as of 04.07.2026 (storing_gold_1 + storing_silver_1) plus the measurement.
+﻿# Д2.7а (5.10.2026, decided by the user): the central bank's metal = only what its building bought.
+#
+# E&F's CB building on a metal standard buys gold / silver as an input (pm_gold_standard_bank_money_currency:
+# goods_input_gold_add = 1 per workforce, silver 10; bimetallism both) -- paid by the treasury (the building is the
+# state's since Д2.5), the metal consumed. E&F's reserves grew by another rule: once a month, for a market owner,
+# storing_gold_1 / storing_silver_1 added the market's gold / silver SELL ORDERS x 100 x 4 to the CB state's
+# gold_state_1 / silver_state_1 -- metal from nothing, unrelated to what was bought. Now:
+#   * E&F's monthly stockpiling effect does nothing (REPLACE_OR_CREATE below, an empty body);
+#   * every country with a CB, monthly (zz_ef_money_model_monthly_step): the building's gold / silver input
+#     (modifier:goods_input_gold_add / _silver_add of the building -- the week's quantity, as E&F reads the
+#     bank's output modifier in base_demande_currency_fix) x zz_ef_weeks_per_month x 100 (E&F's goods unit ->
+#     reserve unit) is added to gold_state_1 / silver_state_1 of the CB state. The treasury paid, the CB got it.
+# UI.11 (5.10): the change of E&F's reserves (central_bank_reserves) across the step is summed in
+# var:zz_ef_cb_stock_acc; the money model shows it as its own CB card line (zz_ef_v_f_cb_stock, at the parity).
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's effect (01_economic_scripted_effects.txt, 04.07.2026).
+
 REPLACE_OR_CREATE:stockpiling_central_bank_metal_reserves_state = {
-	set_variable = { name = zz_ef_cb_stock_before value = central_bank_reserves }
-	storing_gold_1 = yes
-	storing_silver_1 = yes
+	# Д2.7а: E&F's storing_gold_1 / storing_silver_1 (the market's sell orders x 400) -- off
+}
+
+# COUNTRY scope, monthly.
+zz_ef_cb_metal_purchase_step = {
 	if = {
-		limit = { NOT = { has_variable = zz_ef_cb_stock_acc } }
-		set_variable = { name = zz_ef_cb_stock_acc value = 0 }
+		limit = {
+			any_scope_state = {
+				has_modifier = central_bank_historic_place
+				any_scope_building = { is_building_type = building_bank }
+			}
+		}
+		set_variable = { name = zz_ef_cb_stock_before value = central_bank_reserves }
+		random_scope_state = {
+			limit = {
+				has_modifier = central_bank_historic_place
+				any_scope_building = { is_building_type = building_bank }
+			}
+			random_scope_building = {
+				limit = { is_building_type = building_bank }
+				save_scope_as = zz_ef_cbb
+			}
+			if = {
+				limit = { NOT = { has_variable = gold_state_1 } }
+				set_variable = { name = gold_state_1 value = 0 }
+			}
+			if = {
+				limit = { NOT = { has_variable = silver_state_1 } }
+				set_variable = { name = silver_state_1 value = 0 }
+			}
+			change_variable = {
+				name = gold_state_1
+				add = {
+					value = scope:zz_ef_cbb.modifier:goods_input_gold_add
+					multiply = zz_ef_weeks_per_month
+					multiply = 100
+				}
+			}
+			change_variable = {
+				name = silver_state_1
+				add = {
+					value = scope:zz_ef_cbb.modifier:goods_input_silver_add
+					multiply = zz_ef_weeks_per_month
+					multiply = 100
+				}
+			}
+		}
+		if = {
+			limit = { NOT = { has_variable = zz_ef_cb_stock_acc } }
+			set_variable = { name = zz_ef_cb_stock_acc value = 0 }
+		}
+		change_variable = { name = zz_ef_cb_stock_acc add = central_bank_reserves }
+		change_variable = { name = zz_ef_cb_stock_acc subtract = var:zz_ef_cb_stock_before }
+		remove_variable = zz_ef_cb_stock_before
 	}
-	change_variable = { name = zz_ef_cb_stock_acc add = central_bank_reserves }
-	change_variable = { name = zz_ef_cb_stock_acc subtract = var:zz_ef_cb_stock_before }
-	remove_variable = zz_ef_cb_stock_before
 }
