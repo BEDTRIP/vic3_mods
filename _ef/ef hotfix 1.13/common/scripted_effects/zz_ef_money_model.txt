@@ -677,8 +677,24 @@ zz_ef_world_acc = {
 		limit = { NOT = { has_global_variable = zz_ef_wld_window } }
 		if = {
 			limit = { has_global_variable = zz_ef_wld_n }
-			debug_log = "EFG|[TimeKeeper.GetCurrentDate.GetString]|WORLD|in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_in_v')|0]|out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_out_v')|0]|nocl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_nocl_v')|0]|subj_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_subj_in_v')|0]|subj_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_subj_out_v')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_hume_v')|0]|hume_abs [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_hume_abs_v')|0]|n [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_n_v')|0]|n0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_n0_v')|0]|clr_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_in_last_v')|0]|clr_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_out_last_v')|0]|clr_pot [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_pot_value')|0]|in_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_in_m_v')|0]|out_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_out_m_v')|0]|trade_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_trade_m_v')|0]|abr_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_abr_m_v')|0]|div_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_div_m_v')|0]|bond_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_bond_m_v')|0]|sub [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_sub_v')|0]"
+			debug_log = "EFG|[TimeKeeper.GetCurrentDate.GetString]|WORLD|in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_in_v')|0]|out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_out_v')|0]|nocl [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_nocl_v')|0]|subj_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_subj_in_v')|0]|subj_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_subj_out_v')|0]|hume [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_hume_v')|0]|hume_abs [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_hume_abs_v')|0]|n [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_n_v')|0]|n0 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_n0_v')|0]|clr_in [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_in_last_v')|0]|clr_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_out_last_v')|0]|clr_pot [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_clr_pot_value')|0]|in_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_in_m_v')|0]|out_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_out_m_v')|0]|trade_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_trade_m_v')|0]|abr_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_abr_m_v')|0]|div_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_div_m_v')|0]|bond_m [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_bond_m_v')|0]|sub [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_sub_v')|0]|gpm_avg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_wld_gpm_avg_v')|5]"
 		}
+		# the world's average value of money in gold, weighted by GDP (the price of a market with no currency)
+		if = {
+			limit = {
+				has_global_variable = zz_ef_wld_gpm_w
+				global_var:zz_ef_wld_gpm_w > 0
+			}
+			set_global_variable = {
+				name = zz_ef_wld_gpm_avg
+				value = {
+					value = global_var:zz_ef_wld_gpm_wsum
+					divide = global_var:zz_ef_wld_gpm_w
+				}
+			}
+		}
+		set_global_variable = { name = zz_ef_wld_gpm_wsum value = 0 }
+		set_global_variable = { name = zz_ef_wld_gpm_w value = 0 }
 		set_global_variable = { name = zz_ef_wld_window value = yes days = 7 }
 		set_global_variable = { name = zz_ef_wld_in value = 0 }
 		set_global_variable = { name = zz_ef_wld_out value = 0 }
@@ -698,6 +714,14 @@ zz_ef_world_acc = {
 		set_global_variable = { name = zz_ef_wld_sub value = 0 }
 	}
 	change_global_variable = { name = zz_ef_wld_n add = 1 }
+	if = {
+		limit = {
+			zz_ef_clr_gpm_own > 0
+			gdp > 0
+		}
+		change_global_variable = { name = zz_ef_wld_gpm_wsum add = { value = zz_ef_clr_gpm_own multiply = gdp } }
+		change_global_variable = { name = zz_ef_wld_gpm_w add = gdp }
+	}
 	# В1.6 item 5 (5.10): the same in the engine's money, every country (its payments abroad are in it), and the
 	# signed sums of the flow's parts -- a part whose world sum is not ~0 has a payment without a counterpart
 	if = {

@@ -465,7 +465,20 @@ zz_ef_clr_metal_share = {
 # Gold a unit of the scope country's money pays / claims abroad: at the parity under a metal standard (as Hume
 # settled), else E&F's value of its currency in gold. В1.6 items 2-3 (5.10): a country that settles through a
 # head (zz_ef_clr_head_find) -- the head's: the zone's overlord, or, with no value of its own, its market's owner.
+# The rest -- no price of its own nor its head's (a market with no currency, 121 of 269 countries in run s1e): the world's
+# average, weighted by GDP (the user, 5.10 evening; global_var:zz_ef_wld_gpm_avg, kept weekly by the world line).
 zz_ef_clr_gold_per_money = {
+	value = zz_ef_clr_gpm_head
+	if = {
+		limit = {
+			NOT = { zz_ef_clr_gpm_head > 0 }
+			has_global_variable = zz_ef_wld_gpm_avg
+		}
+		value = global_var:zz_ef_wld_gpm_avg
+	}
+	min = 0
+}
+zz_ef_clr_gpm_head = {
 	value = zz_ef_clr_gpm_own
 	if = {
 		limit = {

@@ -2887,6 +2887,10 @@ zz_ef_wld_bond_m_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_wld_bond_m } value = global_var:zz_ef_wld_bond_m }
 }
+zz_ef_wld_gpm_avg_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_gpm_avg } value = global_var:zz_ef_wld_gpm_avg }
+}
 zz_ef_wld_sub_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_wld_sub } value = global_var:zz_ef_wld_sub }
