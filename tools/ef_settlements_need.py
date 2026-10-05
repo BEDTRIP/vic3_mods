@@ -12,7 +12,10 @@ import re
 
 # 0.25 (r1005_214144, 1838): world bank sales ~948K a week = ~8-9% of the logged GDP (~11M a week), population
 # ~51% of the units, businesses ~49% -> 0.13 (population ~40% of ~5%).
-POP_NEED_FACTOR = 0.13
+# 0.13 (r1005_221335, 1838.7): the units sold barely moved -- the banks were short (price ~1.24), the population got
+# what was left. Its demand from the save's pops (tools/scan_pop_need.py) at 0.13: ~475K a week, mostly Qing (384M
+# people) and India (139M); the target ~2% of GDP (~13.5M a week) is ~270K -> 0.07.
+POP_NEED_FACTOR = 0.07
 
 _NEED = re.compile(r"(popneed_currency\s*=\s*)(\d+(?:\.\d+)?)")
 
