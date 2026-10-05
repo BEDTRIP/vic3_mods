@@ -394,14 +394,19 @@ FLOWS = [
     # additional income, the debtor's (interest_at_the_central_bank) into the additional expenses -- and
     # events' payments between countries (Haiti's independence debt). Payments with abroad: the CB settles
     # them (Hume), they belong to the abroad group, not outside the accounts.
-    (Z, K, "[concept_budget_additional_income] — проценты по облигациям казны, выплаты других стран",
-     "[concept_budget_additional_income] — interest on the treasury's bonds, other countries' payments",
+    # В1.6 (the user 5.10 evening, "what about event expenses -- expeditions..."): since В5.5 the bonds' interest is not
+    # here (the ledger pays it); what is left are vanilla expeditions (modifier_large_expedition_cost,
+    # expedition_extra_expenses_modifier) and DLC events' country_expenses_add / country_tax_income_add -- spending at
+    # home, not payments abroad: outside the accounts (was abroad -- the CB's metal paid for an expedition to the Congo,
+    # the world's sum +0.3-0.5M a month without a counterpart, run s1h).
+    (X, K, "[concept_budget_additional_income] — события и модификаторы (внутри страны)",
+     "[concept_budget_additional_income] — events and modifiers (at home)",
      gt("GetAdditionalIncomeTrend"), None),
     # В5.4 (5.10): the additional expenses also hold E&F's interest on the treasury's loan from its own CB
     # (interest_at_the_central_bank) -- a payment inside the country: out of the abroad line, treasury -> CB, and
     # withdrawn there (the treasury is outside the money, the engine's expense destroys it)
-    (K, Z, "[concept_budget_additional_expenses] — проценты по нашим облигациям у других стран",
-     "[concept_budget_additional_expenses] — interest on our bonds held abroad",
+    (K, X, "[concept_budget_additional_expenses] — экспедиции, события (внутри страны)",
+     "[concept_budget_additional_expenses] — expeditions, events (at home)",
      gtx("GetAdditionalExpensesTrend", "zz_ef_v_cbl_int"), None),
     (K, C, "[concept_budget_additional_expenses] — проценты казны по кредиту ЦБ (E&F)",
      "[concept_budget_additional_expenses] — the treasury's interest on the CB's credit (E&F)", CBL_INT, None),
