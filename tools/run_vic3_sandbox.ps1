@@ -129,7 +129,11 @@ if ($NewGame) {
 $p = Get-Game
 Shot $p "01_loaded.png"
 if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
-foreach ($c in ($Commands -split ';' | Where-Object { $_.Trim() })) { Console-Cmd $p $c.Trim(); Start-Sleep 5; Log "console: $($c.Trim())" }
+# a command "ui:<step>" is a step of tools/vic3_ui.ps1 (key, click, hover, shot, wait ...), the rest -- console commands
+foreach ($c in ($Commands -split ';' | ForEach-Object { $_.Trim() } | Where-Object { $_ })) {
+    if ($c.StartsWith("ui:")) { & (Join-Path $PSScriptRoot "vic3_ui.ps1") -OutDir $OutDir -Do $c.Substring(3) }
+    else { Console-Cmd $p $c; Start-Sleep 5; Log "console: $c" }
+}
 
 # speed 5, unpause; verify by the date on screen, toggle pause once more if it stands
 Focus-Game $p
@@ -168,7 +172,8 @@ else {
     }
     $p = Get-Game
     if ($p) {
-        Focus-Game $p; Send-Key 0x20 0x39; Start-Sleep 3; Shot $p "03_end.png"
+        # pause at once, even if the user is at the PC (the user, 5.10); the screens after it wait for the user
+        Pause-Now $p; $script:WantPaused = $true; Start-Sleep 3; Shot $p "03_end.png"
     }
 }
 

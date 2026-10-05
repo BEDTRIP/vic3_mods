@@ -31,8 +31,12 @@ function CardShots {
     # any open panel closed first: F2 opens the budget over it, the panel's X closes the budget ("tag" leaves a state
     # panel open -- the first cards were taken over it, the user noticed, 4.10)
     $s = @("key f2; wait 1; click 0.2265 0.095; wait 1; hover 0.6 0.97; wait 0.5; hover 0.0975 0.0916; wait 1; hover 0.6 0.97; wait 1")
+    # 5.10: the card's link is found by its underline (rows move per country -- r1005_102757 got no Swiss card);
+    # the fixed row is only the fallback
+    $i = 0
     foreach ($k in $Cards.Keys) {
-        $s += "hover 0.0975 0.0916; wait 3; hover 0.0975 0.125; wait 0.3; hover 0.03 $($Cards[$k]); wait 2; shot {P}_card_$k; hover 0.6 0.97; wait 1"
+        $i++
+        $s += "hover 0.0975 0.0916; wait 3; hover 0.0975 0.125; wait 0.3; hoverlink $i $($Cards[$k]); wait 2; shot {P}_card_$k; hover 0.6 0.97; wait 1"
     }
     return ($s -join "; ")
 }

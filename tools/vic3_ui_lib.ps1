@@ -20,6 +20,11 @@ public static class W {
     [DllImport("user32.dll")] public static extern bool SetCursorPos(int x, int y);
     [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
     [DllImport("user32.dll")] public static extern void mouse_event(uint f, int x, int y, uint d, UIntPtr e);
+    [StructLayout(LayoutKind.Sequential)] public struct LASTINPUTINFO { public uint cbSize; public uint dwTime; }
+    [DllImport("user32.dll")] public static extern bool GetLastInputInfo(ref LASTINPUTINFO li);
+    [DllImport("kernel32.dll")] public static extern uint GetTickCount();
+    // Milliseconds of the last keyboard/mouse input of anyone (the user's or ours), GetTickCount clock.
+    public static uint LastInput() { LASTINPUTINFO li = new LASTINPUTINFO(); li.cbSize = (uint)Marshal.SizeOf(li); GetLastInputInfo(ref li); return li.dwTime; }
     // Types text as Unicode characters (WM_CHAR), whatever the keyboard layout.
     public static void TypeText(string s) {
         foreach (char c in s) {
@@ -29,6 +34,36 @@ public static class W {
             SendInput(2, a, Marshal.SizeOf(typeof(INPUT)));
             System.Threading.Thread.Sleep(15);
         }
+    }
+}
+"@
+
+# Underlined links of a tooltip (5.10): the account cards were hovered at fixed rows, but the rows of the
+# currency tooltip move from country to country (standard, wrapped lines, long numbers) -- run r1005_102757 got
+# no Swiss card at all. A link's underline is a light grey line 1-2 px high, longer than any run of letters.
+Add-Type -ReferencedAssemblies System.Drawing @"
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
+public static class U {
+    // rows (bitmap y) of horizontal light-grey runs at least minLen long that start at x <= maxStart
+    public static int[] Underlines(Bitmap b, int minLen, int maxStart) {
+        var d = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+        var buf = new byte[d.Stride * b.Height];
+        System.Runtime.InteropServices.Marshal.Copy(d.Scan0, buf, 0, buf.Length);
+        b.UnlockBits(d);
+        var rows = new List<int>(); int last = -10;
+        for (int y = 0; y < b.Height; y++) {
+            int cur = 0, start = 0, best = 0, bestStart = 0;
+            for (int x = 0; x < b.Width; x++) {
+                int i = y * d.Stride + x * 3; int bl = buf[i], g = buf[i + 1], r = buf[i + 2];
+                bool on = r + g + bl > 480 && r > 150 && Math.Abs(r - g) < 30 && Math.Abs(r - bl) < 30;
+                if (on) { if (cur == 0) start = x; cur++; if (cur > best) { best = cur; bestStart = start; } } else cur = 0;
+            }
+            if (best >= minLen && bestStart <= maxStart) { if (y - last > 3) rows.Add(y); last = y; }
+        }
+        return rows.ToArray();
     }
 }
 "@
@@ -65,14 +100,54 @@ function Raise-Game($p) {
     Start-Sleep -Milliseconds 400
     if ([W]::GetForegroundWindow() -ne $p.MainWindowHandle) {
         # the ALT trick: a key event lets this process take the foreground
-        [W]::keybd_event(0x12, 0x38, 0, [UIntPtr]::Zero); [W]::keybd_event(0x12, 0x38, 2, [UIntPtr]::Zero)
+        [W]::keybd_event(0x12, 0x38, 0, [UIntPtr]::Zero); [W]::keybd_event(0x12, 0x38, 2, [UIntPtr]::Zero); Mark-Own
         [W]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
         Start-Sleep -Milliseconds 400
     }
     return ([W]::GetForegroundWindow() -eq $p.MainWindowHandle)
 }
 
+# The user at the PC (5.10, the user: "watch, don't stop: if the mouse was touched or another window is in
+# front, put your queue off by 5 s, and so on until I stop touching; then make sure the game is in front, leave
+# every menu (the console too) and go on"). The script marks the time of its own input (Mark-Own); any input
+# later than that is the user's (GetLastInputInfo counts both). Before every key, click and hover (Assert-Front)
+# the script waits while the user touches the keyboard or mouse, or while another window is in front, in steps
+# of 5 s; after 5 quiet seconds it raises the game, closes the console and the open panels (Reset-UI) and goes
+# on. Before 5.10 it stole the focus back and stopped only if Windows refused.
+$script:OwnTick = [W]::GetTickCount()
+$script:InReset = $false
+$script:WantPaused = $false
+function Mark-Own { $script:OwnTick = [W]::GetTickCount() }
+# The user's last input: ms ago, or -1 if there has been none since the script's own last input.
+function User-InputAgo {
+    $li = [W]::LastInput()
+    if ([int64]$li - [int64]$script:OwnTick -le 300) { return -1 }
+    return [int64][W]::GetTickCount() - [int64]$li
+}
+function User-Busy($p) {
+    $ago = User-InputAgo
+    return (($ago -ge 0 -and $ago -lt 5000) -or ([W]::GetForegroundWindow() -ne $p.MainWindowHandle))
+}
+function Wait-User($p) {
+    if ($script:InReset -or -not (User-Busy $p)) { return $false }
+    Log "the user is at the PC (input or another window in front) - waiting"
+    $t = Get-Date; $tries = 0
+    while ($true) {
+        Start-Sleep 5
+        $ago = User-InputAgo
+        if ($ago -ge 0 -and $ago -lt 5000) { continue }
+        if (Raise-Game $p) { break }
+        # quiet, but Windows will not give the game the focus: keep trying for 2 min, then stop
+        $tries++
+        if ($tries -ge 24) { Log "the game cannot be brought to front - stopping, nothing sent"; throw "game window not in front" }
+    }
+    Log ("the user left after {0:N0} s - leaving menus, going on" -f ((Get-Date) - $t).TotalSeconds)
+    Reset-UI $p
+    return $true
+}
+
 function Focus-Game($p) {
+    if (Wait-User $p) { return }
     if (-not (Raise-Game $p)) {
         Log "the game is not in front (another window has the focus) - stopping, nothing sent"
         throw "game window not in front"
@@ -80,7 +155,32 @@ function Focus-Game($p) {
 }
 
 function Assert-Front($p) {
+    Wait-User $p | Out-Null
     if ([W]::GetForegroundWindow() -ne $p.MainWindowHandle) { Focus-Game $p }
+}
+
+# Pause right now, without waiting for the user (the user, 5.10: "to pause it may take control without the
+# check and press pause quickly"). Space toggles: call it only while the game runs.
+function Pause-Now($p) {
+    Raise-Game $p | Out-Null
+    [W]::keybd_event(0x20, 0x39, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 60
+    [W]::keybd_event(0x20, 0x39, 2, [UIntPtr]::Zero); Mark-Own; Start-Sleep -Milliseconds 300
+}
+
+# After the user: the console closed, every panel closed, the game paused if the script wants it paused.
+# Escape closes the top panel; with nothing open it opens the game menu -- so Escape until the game menu is
+# up, then one Escape more closes it and nothing is left open.
+function Reset-UI($p) {
+    $script:InReset = $true
+    try {
+        if (Is-Screen $p "console") { Log "reset: the console is open"; Close-Console $p | Out-Null }
+        for ($i = 0; $i -lt 8; $i++) {
+            Send-Key 0x1B 0x01; Start-Sleep -Milliseconds 700
+            if (Is-Screen $p "escmenu") { Send-Key 0x1B 0x01; Start-Sleep -Milliseconds 700; break }
+        }
+        if (Is-Screen $p "escmenu") { Log "reset: the game menu stays open" }
+        if ($script:WantPaused -and (Is-Advancing $p 6)) { Pause-Now $p; Log "reset: paused again" }
+    } finally { $script:InReset = $false }
 }
 
 # vk + scan code (DirectInput reads scan codes): Space 0x20/0x39, '5' 0x35/0x06
@@ -88,7 +188,7 @@ function Send-Key([byte]$vk, [byte]$scan) {
     Assert-Front (Get-Game)
     [W]::keybd_event($vk, $scan, 0, [UIntPtr]::Zero)
     Start-Sleep -Milliseconds 60
-    [W]::keybd_event($vk, $scan, 2, [UIntPtr]::Zero)
+    [W]::keybd_event($vk, $scan, 2, [UIntPtr]::Zero); Mark-Own
     Start-Sleep -Milliseconds 200
 }
 
@@ -100,7 +200,7 @@ function Click-Window($p, $fx, $fy) {
     [W]::SetCursorPos([int]($r.L + ($r.R - $r.L) * $fx), [int]($r.T + ($r.B - $r.T) * $fy)) | Out-Null
     Start-Sleep -Milliseconds 150
     [W]::mouse_event(2, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 60
-    [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 300
+    [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Mark-Own; Start-Sleep -Milliseconds 300
 }
 
 # Console (debug_mode): the key left of 1 (VK_OEM_3, scan 0x29), clear the line
@@ -115,7 +215,7 @@ function Console-Cmd($p, $cmd) {
     Start-Sleep -Milliseconds 500
     for ($i = 0; $i -lt 3; $i++) { Send-Key 0x08 0x0E }
     Assert-Front $p
-    [W]::TypeText($cmd)
+    [W]::TypeText($cmd); Mark-Own
     Start-Sleep -Milliseconds 200
     Send-Key 0x0D 0x1C
     Start-Sleep -Milliseconds 800
@@ -170,6 +270,8 @@ $Screens = @{
     # the open console: its log area is a flat dark grey (45, 50, 52); the map there is (59, 75, 92), the
     # budget panel (63, 64, 58) -- 5.10, screenshots of r1005_042928 and r1005_044523
     console = @{ box = @(120, 250, 500, 650); rgb = @(45, 50, 52); tol = 8 }
+    # the game menu (Escape with nothing open) -- calibrated on the screenshots of run CAL (5.10)
+    escmenu = @{ box = @(0, 0, 1, 1); rgb = @(-999, -999, -999); tol = 0 }
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]
@@ -202,7 +304,10 @@ function Wait-Screen($name, $max, $settle) {
     $t = Get-Date
     while (((Get-Date) - $t).TotalSeconds -lt $max) {
         $p = Get-Game
-        if ($p -and $p.MainWindowHandle -ne 0 -and (Raise-Game $p) -and (Is-Screen $p $name)) {
+        # while the user touches the keyboard or mouse the game is not pulled forward (5.10)
+        $ago = User-InputAgo
+        $busy = ($ago -ge 0 -and $ago -lt 5000)
+        if ($p -and $p.MainWindowHandle -ne 0 -and -not $busy -and (Raise-Game $p) -and (Is-Screen $p $name)) {
             Log ("screen '$name' after {0:N0} s" -f ((Get-Date) - $t).TotalSeconds); Start-Sleep $settle; return $true
         }
         if ($t0) { Save-DebugParts }
@@ -234,12 +339,30 @@ function Is-Advancing($p, $sec) {
     return $false
 }
 
+# The n-th (1-based, top down) underlined link of the tooltip at the window's top left (x 0..900, y 150..1300 of
+# 2560x1440): returns @(fx, fy) of the link's text, or $null when there are fewer links.
+function Find-Link($p, $n) {
+    $r = New-Object W+RECT
+    [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
+    $kx = ($r.R - $r.L) / 2560.0; $ky = ($r.B - $r.T) / 1440.0
+    $x0 = 0; $y0 = [int](150 * $ky); $w = [int](900 * $kx); $h = [int](1150 * $ky)
+    $bmp = New-Object System.Drawing.Bitmap $w, $h
+    $g = [System.Drawing.Graphics]::FromImage($bmp)
+    $g.CopyFromScreen($r.L + $x0, $r.T + $y0, 0, 0, $bmp.Size)
+    $rows = [U]::Underlines($bmp, [int](90 * $kx), [int](90 * $kx))
+    $g.Dispose(); $bmp.Dispose()
+    if ($rows.Count -lt $n) { Log "links: $($rows.Count) found, #$n missing"; return $null }
+    $y = $y0 + $rows[$n - 1] - [int](8 * $ky)
+    return @((80 * $kx / ($r.R - $r.L)), ($y / ($r.B - $r.T)), $rows.Count)
+}
+
 # Moves the mouse to a point of the window (fraction of its size) without clicking: tooltips.
 function Hover-Window($p, $fx, $fy) {
     $r = New-Object W+RECT
     [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
     Assert-Front $p
-    [W]::SetCursorPos([int]($r.L + ($r.R - $r.L) * $fx), [int]($r.T + ($r.B - $r.T) * $fy)) | Out-Null
+    [W]::SetCursorPos([int]($r.L + ($r.R - $r.L) * $fx), [int]($r.T + ($r.B - $r.T) * $fy)) | Out-Null; Mark-Own
+    $script:LastHover = @($fx, $fy)
 }
 
 # Closes the game and gathers the logs written since $t0 into $OutDir: every log file, the
@@ -272,7 +395,7 @@ function Scroll-Window($p, $fx, $fy, $notches) {
     Hover-Window $p $fx $fy
     Start-Sleep -Milliseconds 150
     $n = [Math]::Abs([int]$notches); $d = if ($notches -lt 0) { -120 } else { 120 }
-    for ($i = 0; $i -lt $n; $i++) { [W]::mouse_event(0x0800, 0, 0, [BitConverter]::ToUInt32([BitConverter]::GetBytes([int32]$d), 0), [UIntPtr]::Zero); Start-Sleep -Milliseconds 80 }
+    for ($i = 0; $i -lt $n; $i++) { [W]::mouse_event(0x0800, 0, 0, [BitConverter]::ToUInt32([BitConverter]::GetBytes([int32]$d), 0), [UIntPtr]::Zero); Mark-Own; Start-Sleep -Milliseconds 80 }
     Start-Sleep -Milliseconds 400
 }
 
@@ -373,7 +496,7 @@ function Drag-Window($p, $fx, $fy, $tx, $ty) {
         [W]::SetCursorPos([int]($r.L + $W * $x), [int]($r.T + $H * $y)) | Out-Null; Start-Sleep -Milliseconds 30
     }
     Start-Sleep -Milliseconds 100
-    [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Start-Sleep -Milliseconds 300
+    [W]::mouse_event(4, 0, 0, 0, [UIntPtr]::Zero); Mark-Own; Start-Sleep -Milliseconds 300
 }
 
 # П.15 (the user: "you page by ~20% -- the overlap is far too much"): a row profile of a region -- one number a

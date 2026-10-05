@@ -31,6 +31,8 @@ $t0f = Join-Path $OutDir "t0.txt"
 $t0 = if (Test-Path $t0f) { [datetime]::Parse((Get-Content $t0f -Raw).Trim(), $null, [Globalization.DateTimeStyles]::RoundtripKind) } else { (Get-Date).AddHours(-3) }
 
 . (Join-Path $PSScriptRoot "vic3_ui_lib.ps1")
+# the steps are taken on a paused game (after a run, or -KeepOpen): after the user it is paused again (5.10)
+$script:WantPaused = $true
 
 $Keys = @{ esc = @(0x1B, 0x01); space = @(0x20, 0x39); enter = @(0x0D, 0x1C)
     f1 = @(0x70, 0x3B); f2 = @(0x71, 0x3C); f3 = @(0x72, 0x3D); f4 = @(0x73, 0x3E); f5 = @(0x74, 0x3F)
@@ -52,6 +54,13 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
         "shot"    { Focus-Game $p; Start-Sleep -Milliseconds 300; Shot $p ($rest + ".png") }
         "click"   { $xy = $rest -split '\s+'; Click-Window $p ([double]$xy[0]) ([double]$xy[1]) }
         "hover"   { $xy = $rest -split '\s+'; Hover-Window $p ([double]$xy[0]) ([double]$xy[1]) }
+        # hoverlink <n> <fy>: the n-th underlined link of the pinned tooltip, found by its look (5.10); not found --
+        # the fixed row fy (the old way)
+        "hoverlink" {
+            $xy = $rest -split '\s+'; $at = Find-Link $p ([int]$xy[0])
+            if ($at) { Hover-Window $p $at[0] $at[1]; if ($at[2] -ne 7) { Log "links: $($at[2]) found (7 expected)" } }
+            else { Hover-Window $p 0.03 ([double]$xy[1]) }
+        }
         "scroll"  { $xy = $rest -split '\s+'; Scroll-Window $p ([double]$xy[0]) ([double]$xy[1]) ([int]$xy[2]) }
         "wait"    { Start-Sleep -Milliseconds ([int]([double]$rest * 1000)) }
         "key"     { $k = $Keys[$rest]; Send-Key ([byte]$k[0]) ([byte]$k[1]) }
