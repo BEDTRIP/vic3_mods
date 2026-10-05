@@ -10,7 +10,8 @@ Usage:
 """
 import os
 
-ROOT = r"C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef hotfix 1.13\localization"
+# relative to the repo, not the PC's main checkout: run from the bridge worktree it wrote there (5.10)
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "_ef", "ef hotfix 1.13", "localization")
 LANGS = ["english", "russian", "braz_por", "french", "german", "japanese",
          "korean", "polish", "simp_chinese", "spanish", "turkish"]
 
