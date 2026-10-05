@@ -2,7 +2,7 @@
 # Д2.4 (5.10.2026) -- the private bank's methods by era. The user: "services everywhere, and more" -- every method
 # buys services (premises, couriers, guards, lawyers); a bank spends little on goods, mostly on people.
 #
-# One level: 1000 employees (vanilla scale, as a trade centre). Settlement services = liquidity_currency, base
+# One level: 1000 clerks, no capitalists (Д2.8, 5.10: capitalists are not hired into a bank; vanilla scale, as a trade centre). Settlement services = liquidity_currency, base
 # price 1; paper and services ~30 each. Inputs ~40-45% of the output's value; each era gives more services per
 # worker, so the services get cheaper over time.
 #   method                 tech                          input                                       output
@@ -25,8 +25,7 @@ pm_zz_ef_bank_money_changer = {
 			goods_output_liquidity_currency_add = 300
 		}
 		level_scaled = {
-			building_employment_clerks_add = 950
-			building_employment_capitalists_add = 50
+			building_employment_clerks_add = 1000
 		}
 	}
 }
@@ -41,8 +40,7 @@ pm_zz_ef_bank_counting_house = {
 			goods_output_liquidity_currency_add = 500
 		}
 		level_scaled = {
-			building_employment_clerks_add = 950
-			building_employment_capitalists_add = 50
+			building_employment_clerks_add = 1000
 		}
 	}
 }
@@ -61,8 +59,7 @@ pm_zz_ef_bank_joint_stock = {
 			goods_output_liquidity_currency_add = 750
 		}
 		level_scaled = {
-			building_employment_clerks_add = 950
-			building_employment_capitalists_add = 50
+			building_employment_clerks_add = 1000
 		}
 	}
 }
@@ -81,8 +78,7 @@ pm_zz_ef_bank_telegraph = {
 			goods_output_liquidity_currency_add = 1000
 		}
 		level_scaled = {
-			building_employment_clerks_add = 950
-			building_employment_capitalists_add = 50
+			building_employment_clerks_add = 1000
 		}
 	}
 }
@@ -103,8 +99,7 @@ pm_zz_ef_bank_modern = {
 			goods_output_liquidity_currency_add = 1600
 		}
 		level_scaled = {
-			building_employment_clerks_add = 950
-			building_employment_capitalists_add = 50
+			building_employment_clerks_add = 1000
 		}
 	}
 }
