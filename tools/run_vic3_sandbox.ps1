@@ -34,7 +34,8 @@ Parameters:
     -StartSave    start from this save instead of the last one: a file name in "save games" (e.g.
                   sandbox_1836.v3). It is copied to sandbox_start.v3 and continue_game.json is pointed at
                   the copy, so the original is never written to; later runs without -StartSave go on
-                  from the run's own autosaves.
+                  from the run's own autosaves -- if it made none, "continue" is put back to the previous save.
+                  A manual save may open in the lobby (no country chosen): a random country, then "tag <Tag>".
     -NewGame      start a new game from 1836 instead of a save (start conditions, history files):
                   main menu -> New game -> Sandbox -> Random country -> Start, then the console
                   "tag <Tag>". Clicks are at fractions of the window, measured on 2560x1440 (16:9).
@@ -86,6 +87,7 @@ if ($StartSave) {
     Copy-Item $src (Join-Path $Saves "sandbox_start.v3") -Force
     $cg = Join-Path $Docs "continue_game.json"
     $j = Get-Content $cg -Raw -Encoding UTF8 | ConvertFrom-Json
+    $prevTitle = $j.title
     $j.title = "sandbox_start"
     [IO.File]::WriteAllText($cg, ($j | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
     Log "start save: $StartSave (copied to sandbox_start.v3)"
@@ -207,5 +209,16 @@ if ($KeepOpen -and (Get-Game)) {
     Log "kept open (paused)"
 } else {
     Close-And-Collect
+}
+# -StartSave pointed "continue" at the copy; if the run made no autosave (a short run -- the game moves the pointer
+# itself on an autosave) the pointer still names the copy and the user's "Continue" (and the next run without
+# -StartSave) would open it: r1005_105248 continued the copy into the lobby. Put the previous save back.
+if ($StartSave -and -not $KeepOpen) {
+    $j = Get-Content $cg -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($j.title -eq "sandbox_start") {
+        $j.title = $prevTitle
+        [IO.File]::WriteAllText($cg, ($j | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+        Log "continue_game.json: back to '$prevTitle' (the run made no autosave)"
+    }
 }
 Log "done: $OutDir"
