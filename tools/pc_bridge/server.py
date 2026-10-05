@@ -319,7 +319,7 @@ def py_tool(name: str, args: list[str]) -> str:
         raise ValueError(f"tools: {', '.join(PY_TOOLS)} and {', '.join(PY_TOOL_GLOBS)}")
     real = [str(resolve(a)) if a.split("/")[0] in ROOTS else a for a in args]
     p = subprocess.run(["py", script, *real], cwd=WT, capture_output=True, text=True, encoding="utf-8",
-                       errors="replace", timeout=1200, creationflags=NO_WINDOW)
+                       errors="replace", timeout=1200, creationflags=NO_WINDOW, env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     log(f"py_tool {name} {real} -> {p.returncode}")
     return f"exit {p.returncode}\n{(p.stdout + p.stderr)[-20000:]}"
 
