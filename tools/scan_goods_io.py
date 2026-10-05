@@ -40,7 +40,12 @@ def main():
             k = body.find(kind + '={')
             if k < 0:
                 continue
-            g = re.search(r'\b' + gid + r'=\{\s*value=(-?[\d.]+)', body[k:k + 3000])
+            e = k + len(kind) + 2
+            depth = 1
+            while depth and e < len(body):  # the block's own braces only, not the next block
+                depth += {'{': 1, '}': -1}.get(body[e], 0)
+                e += 1
+            g = re.search(r'\b' + gid + r'=\{\s*value=(-?[\d.]+)', body[k:e])
             if g:
                 v = float(g.group(1))
                 ctr[tag] += v
