@@ -39,6 +39,9 @@ NEU = f"[{SV}('zz_ef_cb_rule_neutral_pp')|1]"
 PIN = f"[{SV}('zz_ef_cb_rule_inflation_pp')|+1]"
 PRI = f"[{SV}('zz_ef_cb_rule_risk_pp')|+1]"
 PCO = f"[{SV}('zz_ef_cb_rule_cover_pp')|+1]"
+# EF.43 + В4.3 (5.10): the currency (parity changes, suspended redemption) and debt / deficit parts of the premium
+PFX = f"[{SV}('zz_ef_risk_fx_pp')|+1]"
+PDB = f"[{SV}('zz_ef_risk_debt_pp')|+1]"
 PMO = f"[{SV}('zz_ef_cb_rule_money_pp')|+1]"
 COV = f"[{SV}('zz_ef_cb_cover')|%0]"
 GRT = f"[{SV}('zz_ef_gov_rate_target')|%2]"
@@ -105,7 +108,9 @@ RU = {
     "zz_ef_rate_box_gov_value": f"{GRT}",
     "zz_ef_rate_box_gov_tt": (
         f"Под сколько занимает правительство: {KR} + премия за риск = #v {GRT}#!\\n\\n"
-        f"Премия #v {GPR} п.п.#! — {PRI} п.п. по рейтингу и стабильности (как в {RR}), с поправкой #v {GCO}%#! от статуса "
+        f"Премия #v {GPR} п.п.#! — {PRI} п.п. по рейтингу и стабильности (как в {RR}; в них — "
+        f"{PFX} п.п. за смену паритета и приостановку размена, затухает за 5 лет, и {PDB} п.п. за долг выше 25% ВВП и "
+        f"хронический дефицит), с поправкой #v {GCO}%#! от статуса "
         "державы, компаний и технологий (не больше чем вдвое меньше или вдвое больше). Ниже ключевой ставка не бывает."
     ),
     "zz_ef_rate_box_policy": "Дискреционная поправка",
@@ -213,7 +218,9 @@ EN = {
     "zz_ef_rate_box_gov_value": f"{GRT}",
     "zz_ef_rate_box_gov_tt": (
         f"What the government borrows at: the {KR} + the risk premium = #v {GRT}#!\\n\\n"
-        f"Premium #v {GPR} pp#!: {PRI} pp from the rating and stability (as in the {RR}), scaled by #v {GCO}%#! for the "
+        f"Premium #v {GPR} pp#!: {PRI} pp from the rating and stability (as in the {RR}; of "
+        f"them {PFX} pp for parity changes and suspended redemption, fading over 5 years, and {PDB} pp for debt over 25% "
+        f"of GDP and a chronic deficit), scaled by #v {GCO}%#! for the "
         "country's rank, companies and technologies (at most halved or doubled). Never under the key rate."
     ),
     "zz_ef_rate_box_policy": "Discretionary adjustment",

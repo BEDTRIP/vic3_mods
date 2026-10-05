@@ -1,0 +1,75 @@
+﻿# EF.43 + В4.3 (5.10): the currency and debt factors of the risk premium -- see
+# script_values/zz_ef_risk_premium_values.txt.
+
+# A parity change by policy (the AI's rule, the player's law completed), after the change; var:zz_ef_mp_parity_before
+# holds the parity before it.
+zz_ef_risk_parity_changed = {
+	zz_ef_risk_fx_add = { PEN = zz_ef_risk_fx_parity_pen }
+}
+
+# The penalty grows by $PEN$ (at most zz_ef_risk_fx_max) and fades out over 5 years from now.
+zz_ef_risk_fx_add = {
+	if = {
+		limit = {
+			has_variable = zz_ef_weeks_run
+			var:zz_ef_weeks_run >= 13
+		}
+		if = {
+			limit = { NOT = { has_variable = zz_ef_risk_fx_pen } }
+			set_variable = { name = zz_ef_risk_fx_pen value = 0 }
+		}
+		change_variable = { name = zz_ef_risk_fx_pen add = $PEN$ }
+		set_variable = {
+			name = zz_ef_risk_fx_pen
+			value = {
+				value = var:zz_ef_risk_fx_pen
+				max = zz_ef_risk_fx_max
+			}
+		}
+		set_variable = { name = zz_ef_risk_fx_step value = var:zz_ef_risk_fx_pen }
+		change_variable = { name = zz_ef_risk_fx_step divide = zz_ef_risk_fx_months }
+	}
+}
+
+# Monthly, every country (zz_ef_cb_rate_monthly): the suspension's start, the fade, the deficit's average.
+zz_ef_risk_monthly = {
+	if = {
+		limit = { zz_ef_risk_fx_suspended = 1 }
+		if = {
+			limit = { NOT = { has_variable = zz_ef_risk_susp } }
+			set_variable = { name = zz_ef_risk_susp value = yes }
+			zz_ef_risk_fx_add = { PEN = zz_ef_risk_fx_susp_pen }
+		}
+	}
+	else_if = {
+		limit = { has_variable = zz_ef_risk_susp }
+		remove_variable = zz_ef_risk_susp
+	}
+	if = {
+		limit = {
+			has_variable = zz_ef_risk_fx_pen
+			has_variable = zz_ef_risk_fx_step
+		}
+		change_variable = { name = zz_ef_risk_fx_pen subtract = var:zz_ef_risk_fx_step }
+		if = {
+			limit = { var:zz_ef_risk_fx_pen <= 0 }
+			remove_variable = zz_ef_risk_fx_pen
+			remove_variable = zz_ef_risk_fx_step
+		}
+	}
+	if = {
+		limit = { NOT = { has_variable = zz_ef_risk_bal_avg } }
+		set_variable = { name = zz_ef_risk_bal_avg value = zz_ef_risk_balance_now }
+	}
+	else = {
+		set_variable = {
+			name = zz_ef_risk_bal_avg
+			value = {
+				value = zz_ef_risk_balance_now
+				subtract = var:zz_ef_risk_bal_avg
+				divide = 12
+				add = var:zz_ef_risk_bal_avg
+			}
+		}
+	}
+}

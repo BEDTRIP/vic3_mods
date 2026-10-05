@@ -16,6 +16,8 @@ on_monthly_pulse_country = {
 
 zz_ef_cb_rate_monthly = {
 	effect = {
+		# EF.43 + В4.3 (5.10): the risk premium's currency and deficit factors (scripted_effects/zz_ef_risk_premium.txt)
+		zz_ef_risk_monthly = yes
 		if = {
 			limit = { NOT = { has_variable = zz_ef_rate_bias } }
 			set_variable = { name = zz_ef_rate_bias value = 0 }

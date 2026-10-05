@@ -150,6 +150,11 @@ zz_ef_cb_rule_stability = {
 		min = 0
 		max = 0.02
 	}
+	# EF.43 + В4.3 (5.10): the currency (parity changes, suspended redemption, fading over 5 years) and debt and
+	# deficits (script_values/zz_ef_risk_premium_values.txt)
+	add = zz_ef_risk_fx
+	add = zz_ef_risk_debt
+	add = zz_ef_risk_deficit
 }
 # The premium: the rating's part + the stability part, 0..8 pp.
 zz_ef_cb_rule_risk = {

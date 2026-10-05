@@ -1,0 +1,108 @@
+﻿# EF.43 + В4.3 (decided by the user 5.10): two more factors of the risk premium (zz_ef_cb_rule_stability,
+# zz_ef_cb_rate_values.txt). E&F's rating does not tell Russia, France and Austria apart (premium 3.7 / 3.8 / 3.6 pp,
+# run n0_4 1844).
+#   currency -- "manipulating the convertibility": a parity change (the AI's rule, the player's devaluation /
+#     revaluation law) and the suspension of redemption (the cover falls under 25%) add a penalty that fades out
+#     linearly over 5 years from the last event; scripted changes at the start do not count (the AI's rule waits
+#     13 weeks, the rescale is not a parity change). It is also the rating's downgrade for manipulation.
+#   debt and deficits -- the engine's debt to GDP over 25%, and a chronic deficit (the budget's balance to GDP,
+#     a 12-month moving average) over 1% of GDP.
+# Not taken (the user): the form of government, the budget's transparency.
+# Monthly upkeep: scripted_effects/zz_ef_risk_premium.txt (zz_ef_risk_monthly, from zz_ef_cb_rate_monthly).
+
+# a parity change: 8 pp per 100% of the move (a 25% step -> 2 pp), 0.5..2 pp
+zz_ef_risk_fx_parity_pen = {
+	value = 0
+	if = {
+		limit = {
+			has_variable = zz_ef_mp_parity_before
+			var:zz_ef_mp_parity_before > 0
+			has_variable = money_value_target_1
+		}
+		value = var:money_value_target_1
+		divide = var:zz_ef_mp_parity_before
+		subtract = 1
+		abs = yes
+		multiply = 0.08
+		min = 0.005
+		max = 0.02
+	}
+}
+# the suspension of redemption, at its start
+zz_ef_risk_fx_susp_pen = 0.015
+zz_ef_risk_fx_max = 0.03
+zz_ef_risk_fx_months = 60
+# redemption suspended now: a metal standard with a CB and the cover under 25%
+zz_ef_risk_fx_suspended = {
+	value = 0
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+			zz_ef_cb_cover < zz_ef_value_floor_cover
+		}
+		value = 1
+	}
+}
+zz_ef_risk_fx = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_risk_fx_pen } value = var:zz_ef_risk_fx_pen }
+	min = 0
+	max = zz_ef_risk_fx_max
+}
+
+# the engine's debt to GDP (principal: the treasury's loans), +1 pp per 25% of GDP over 25%, up to +3 pp
+zz_ef_risk_debt_to_gdp = {
+	value = principal
+	divide = {
+		value = gdp
+		min = 1
+	}
+	min = 0
+}
+zz_ef_risk_debt = {
+	value = zz_ef_risk_debt_to_gdp
+	subtract = 0.25
+	multiply = 0.04
+	min = 0
+	max = 0.03
+}
+# the budget's balance of the week, a year, to GDP (deficit < 0)
+zz_ef_risk_balance_now = {
+	value = zz_ef_budget_week
+	multiply = 52
+	divide = {
+		value = gdp
+		min = 1
+	}
+	min = -1
+	max = 1
+}
+zz_ef_risk_balance_avg = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_risk_bal_avg } value = var:zz_ef_risk_bal_avg }
+}
+# a chronic deficit: +0.5 pp per 1% of GDP over 1%, up to +2 pp
+zz_ef_risk_deficit = {
+	value = -0.01
+	subtract = zz_ef_risk_balance_avg
+	multiply = 0.5
+	min = 0
+	max = 0.02
+}
+# for the log and the tooltip, pp
+zz_ef_risk_fx_pp = {
+	value = zz_ef_risk_fx
+	multiply = 100
+}
+zz_ef_risk_debt_pp = {
+	value = zz_ef_risk_debt
+	add = zz_ef_risk_deficit
+	multiply = 100
+}
