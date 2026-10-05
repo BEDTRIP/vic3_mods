@@ -1,6 +1,7 @@
 """Buildings of one type in a save, by country: levels, weekly sales / costs / profit, owners (Д2.4, этап 2).
 
-Usage:  py tools/scan_building_type.py <save> <building_type> [TAG ...] [--top N]
+Usage:  py tools/scan_building_type.py <save> <building_type> [TAG ...] [--top N] [--raw]
+--raw: with TAGs, also print each building's record (trends cut).
 
 Per country: levels (sum over buildings), goods_sales, goods_cost, profit_after_reserves (the save's weekly
 figures), and the owned levels by owner kind (fd = financial district, company, country, other). Parsing as in
@@ -23,6 +24,8 @@ def num(body, key):
 def main():
     args = sys.argv[1:]
     top = 30
+    raw = '--raw' in args
+    args = [a for a in args if a != '--raw']
     if '--top' in args:
         i = args.index('--top'); top = int(args[i + 1]); del args[i:i + 2]
     path, btype, tags = args[0], args[1], set(args[2:])
@@ -47,6 +50,8 @@ def main():
         c['cost'] += num(body, 'goods_cost')
         c['profit'] += num(body, 'profit_after_reserves')
         c['gov_div'] += num(body, 'government_dividends')
+        if raw and tag in tags:
+            print(f'--- {tag} building {bid}: ' + ' '.join(re.sub(r'\t*\w+_trend=\{.*?\n\t\}', '', body, flags=re.S).split())[:2500])
     for (kind, oid, bid), lv in d['own'].items():
         b = d['bld'].get(bid)
         if not b or b[0] != btype:
