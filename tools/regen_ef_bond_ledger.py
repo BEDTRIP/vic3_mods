@@ -31,6 +31,8 @@ E&F's value (its interest scaled with it); the principal under the parts -> the 
 pool into the buyer's; E&F dropping the value (its seller gone) -- written off. The banks' yearly interest stays as
 Ф.2 pays it (the issuer's treasury, bf28108). The parts count in the seller's var:zz_ef_bl_held with the treasury's.
 
+A rise with no seller found in E&F's list goes back whole (run s1g: Britain 1838.1, 1.95M unpaired; log line EFP).
+
 Only existing debt (the user 5.10 evening): E&F picks the seller by its own remaining_debt; the treasury's
 ai_buy_bond_1..10, the banks' seller list central_bank_debt_variable_list and ai_privat_bank_bond_N_renforcement also
 require room in the seller's engine debt (zz_ef_bl_room > 0) -- was: almost every purchase went back to the buyer
@@ -141,6 +143,9 @@ zz_ef_pb_slot_{n} = {{
 			set_variable = {{ name = zz_ef_pbs_{n} value = scope:zz_ef_pbsel_{n} }}
 			zz_ef_pb_buy = {{ N = {n} }}
 		}}
+		else = {{
+			zz_ef_pb_no_seller = {{ N = {n} }}
+		}}
 		set_variable = {{ name = zz_ef_pbh_{n} value = var:ai_privat_bank_bond_value_{n} }}
 	}}
 	else_if = {{
@@ -191,6 +196,18 @@ zz_ef_pb_buy = {
 		add_investment_pool = root.var:zz_ef_bl_x
 	}
 	remove_variable = zz_ef_bl_x
+	remove_variable = zz_ef_bl_y
+}
+
+# Buyer scope, slot $N$ rose with no seller found in E&F's list (run s1g: Britain 1838.1, 1.95M): no debt to hold a
+# part of -- the whole purchase back to our pool and off E&F's value (only existing debt is bought).
+zz_ef_pb_no_seller = {
+	set_variable = { name = zz_ef_bl_y value = var:zz_ef_pb_v }
+	change_variable = { name = zz_ef_bl_y subtract = var:zz_ef_pbh_$N$ }
+	add_investment_pool = var:zz_ef_bl_y
+	change_variable = { name = zz_ef_f_pb_refund add = var:zz_ef_bl_y }
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|slot $N$|no_seller [THIS.GetCountry.MakeScope.Var('zz_ef_bl_y').GetValue|0]"
+	zz_ef_pb_cut = { N = $N$ }
 	remove_variable = zz_ef_bl_y
 }
 
