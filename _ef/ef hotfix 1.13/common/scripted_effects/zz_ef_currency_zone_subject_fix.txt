@@ -1,0 +1,25 @@
+﻿# В3.2 (5.10, runs s1b / s1c): E&F's monthly pulse (ef_on_monthly_pulse_recurence) puts a subject with a CB inside its
+# overlord's market on law_external_exchange_standard (subject_currency) every month it is not on it; the currency
+# zone (zz_ef_currency_zone.txt) then put it back on the overlord's standard -- a standard switch every month for
+# Hanover, the Canadas, Finland, the Dutch East Indies... (each with E&F's 12 months of foreign_exchange_controls).
+# A subject in the zone (var:zz_ef_cur_zone) is skipped here; any other -- E&F's body as is.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's subject_currency (01_economic_scripted_effects.txt):
+# E&F's body as of 04.07.2026 inside the else.
+REPLACE_OR_CREATE:subject_currency = {
+	if = {
+		limit = { NOT = { has_variable = zz_ef_cur_zone } }
+		activate_law = law_type:law_external_exchange_standard
+		money_value_target_modification = yes
+		capital = {
+			save_scope_as = capital_state
+		}
+		save_scope_as = target_country
+		every_country = {
+			limit = {
+				is_player = yes
+				game_date >= 1837.1.1
+			}
+			trigger_event = 00_ef_economic_event.28
+		}
+	}
+}
