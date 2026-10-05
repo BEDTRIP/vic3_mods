@@ -25,4 +25,8 @@ if (-not (Get-Process ngrok -ErrorAction SilentlyContinue)) {
 }
 $env:PC_BRIDGE_PORT = "$Port"
 Write-Host "bridge: https://$Domain/mcp -> 127.0.0.1:$Port; token in $bridge\token.txt"
+foreach ($d in "vic3_mods_out", "_tmp_analysis") {
+    $link = Join-Path $bridge $d; $target = Join-Path (Split-Path $repo) $d
+    if ((Test-Path $target) -and -not (Test-Path $link)) { New-Item -ItemType Junction -Path $link -Target $target | Out-Null }
+}
 & $py (Join-Path $PSScriptRoot "server.py")

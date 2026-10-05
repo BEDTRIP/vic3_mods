@@ -38,9 +38,15 @@ WT = BRIDGE / "wt"                                    # worktree for the cloud's
 RUNS = BRIDGE / "runs"
 DOCS = Path.home() / "Documents" / "Paradox Interactive" / "Victoria 3"
 GAME = Path(r"C:\games\steam\steamapps\common\Victoria 3")
-ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT}
+ORIG = REPO.parent / "vic3_mods_out"
+WORKSHOP = Path(r"C:\games\steam\steamapps\workshop\content\529340")
+ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "workshop": WORKSHOP}
 PORT = int(os.environ.get("PC_BRIDGE_PORT", "8080"))
-PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/save_money_check.py"}
+PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/save_money_check.py",
+            "save_ownership": "tools/save_ownership.py", "save_ownership_transfers": "tools/save_ownership_transfers.py",
+            "save_construction_goods": "tools/save_construction_goods.py", "save_measure_ef": "tools/save_measure_ef.py"}
+PY_TOOL_GLOBS = ("regen_*.py", "build_addon*.py", "pair_matrix.py", "content_holes.py", "check_*.py", "scan_*.py",
+                 "stale_bodies.py", "replace_audit.py", "loc_dead_overrides.py", "list_lawgroups_diff.py")
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
 BRIDGE.mkdir(exist_ok=True)
@@ -307,14 +313,21 @@ def py_tool(name: str, args: list[str]) -> str:
     """Run a repo tool of the worktree on the PC's files (saves are 450 MB, too big to fetch):
     parse_eflog (args: <run>/eflog.txt <out.json>) or save_money_check (args: [save] [TAG ...]).
     Paths in args may be 'runs/...' or 'docs/...'. Returns the output (tail)."""
-    if name not in PY_TOOLS:
-        raise ValueError(f"tools: {', '.join(PY_TOOLS)}")
+    script = PY_TOOLS.get(name) or f"tools/{name}.py"
+    if name not in PY_TOOLS and not (re.fullmatch(r"\w+", name) and any(fnmatch.fnmatch(f"{name}.py", g) for g in PY_TOOL_GLOBS)
+                                     and (WT / script).is_file()):
+        raise ValueError(f"tools: {', '.join(PY_TOOLS)} and {', '.join(PY_TOOL_GLOBS)}")
     real = [str(resolve(a)) if a.split("/")[0] in ROOTS else a for a in args]
-    p = subprocess.run(["py", PY_TOOLS[name], *real], cwd=WT, capture_output=True, text=True, encoding="utf-8",
+    p = subprocess.run(["py", script, *real], cwd=WT, capture_output=True, text=True, encoding="utf-8",
                        errors="replace", timeout=1200, creationflags=NO_WINDOW)
     log(f"py_tool {name} {real} -> {p.returncode}")
     return f"exit {p.returncode}\n{(p.stdout + p.stderr)[-20000:]}"
 
+@mcp.tool()
+def wt_diff() -> str:
+    """The worktree's changes made by generators, new files included, as a git patch for `git apply` in the cloud clone."""
+    sh(["git", "-C", WT, "add", "-A", "-N"])
+    return sh(["git", "-C", WT, "diff", "--binary"])
 
 class BearerAuth:
     def __init__(self, app):
