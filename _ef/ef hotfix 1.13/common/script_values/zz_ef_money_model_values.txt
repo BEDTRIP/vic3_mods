@@ -2693,9 +2693,16 @@ zz_ef_profit_week = {
 # GDP owned (capital's share of value added ~30-40%, half of it paid out) -- decided at night,
 # check. Now in the flow abroad (zz_ef_ext_net_week): it moves the metal (Hume).
 zz_ef_div_yield = 0.15
+# В1.6 (5.10 evening, run s1g): the engine's GDP owned abroad and foreign-owned do not add up over the world (dividends
+# -0.1..-0.5M a month without a counterpart) -- a pool as the world trade's: the receivers get x zz_ef_wdv_kr =
+# min(1, world paid / world claimed), the payers pay x zz_ef_wdv_kp = min(1, claimed / paid) of the window before.
 zz_ef_div_net_week = {
 	value = zz_ef_v_g_aown
-	subtract = zz_ef_v_g_fown
+	multiply = zz_ef_wdv_kr_v
+	subtract = {
+		value = zz_ef_v_g_fown
+		multiply = zz_ef_wdv_kp_v
+	}
 	multiply = zz_ef_div_yield
 	divide = 52
 }
@@ -2907,6 +2914,22 @@ zz_ef_wld_wfee_v = {
 zz_ef_wld_waint_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_wld_waint } value = global_var:zz_ef_wld_waint }
+}
+zz_ef_wdv_kr_v = {
+	value = 1
+	if = { limit = { has_global_variable = zz_ef_wdv_kr } value = global_var:zz_ef_wdv_kr }
+}
+zz_ef_wdv_kp_v = {
+	value = 1
+	if = { limit = { has_global_variable = zz_ef_wdv_kp } value = global_var:zz_ef_wdv_kp }
+}
+zz_ef_wld_waown_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_waown } value = global_var:zz_ef_wld_waown }
+}
+zz_ef_wld_wfown_v = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wld_wfown } value = global_var:zz_ef_wld_wfown }
 }
 zz_ef_wtr_kr_v = {
 	value = 1

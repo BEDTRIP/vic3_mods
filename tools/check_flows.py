@@ -85,9 +85,9 @@ def read(paths):
             if parts[0] == "EFG":
                 g = efg[mon]
                 for k, v in rec.items():
-                    if v is not None and k not in ("clr_pot", "n", "n0", "gpm_avg", "kr", "kp"):
+                    if v is not None and k not in ("clr_pot", "n", "n0", "gpm_avg", "kr", "kp", "dkr", "dkp", "waown", "wfown"):
                         g[k] += v
-                for k in ("clr_pot", "n", "n0", "gpm_avg", "kr", "kp"):
+                for k in ("clr_pot", "n", "n0", "gpm_avg", "kr", "kp", "dkr", "dkp", "waown", "wfown"):
                     if rec.get(k) is not None:
                         g[k] = rec[k]
                 g["weeks"] += 1
