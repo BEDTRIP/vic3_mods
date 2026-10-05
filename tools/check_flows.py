@@ -31,8 +31,10 @@ Usage:  py tools/check_flows.py <run>/eflog.txt [more eflog.txt ...] [--tol 0.05
         (M.1) and the subjects' metal handed to the overlords (M.8), both at week 12 -- and are not flagged
         (through the PC bridge: py_tool("check_flows", ["runs/<id>/eflog.txt"]))
 """
-import json, re, sys
+import json, os, re, sys
 from collections import defaultdict
+
+TAG = re.compile(r"EF[RXG]\|")
 
 sys.stdout.reconfigure(encoding="utf-8")
 MON = {"января": 1, "февраля": 2, "марта": 3, "апреля": 4, "мая": 5, "июня": 6, "июля": 7, "августа": 8,
@@ -60,6 +62,10 @@ def read(paths):
     seen = set()
     for path in paths:
         for line in open(path, encoding="utf-8-sig", errors="replace"):
+            # a raw debug.log line (runs/<id>/dbgparts, a run stopped before eflog.txt): cut the prefix
+            m = TAG.search(line)
+            if m and m.start():
+                line = line[m.start():]
             parts = line.strip().split("|")
             if len(parts) < 4 or parts[0] not in ("EFR", "EFX", "EFG"):
                 continue
@@ -145,6 +151,9 @@ def main():
             mtol = float(args[i + 1]); i += 2
         elif args[i] == "--json":
             jout = args[i + 1]; i += 2
+        elif os.path.isdir(args[i]):
+            # a folder of debug.log parts (runs/<id>/dbgparts): every file, in name order
+            paths += [os.path.join(args[i], f) for f in sorted(os.listdir(args[i]))]; i += 1
         else:
             paths.append(args[i]); i += 1
     if not paths:
