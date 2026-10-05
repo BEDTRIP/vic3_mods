@@ -124,13 +124,16 @@ if ($NewGame) {
     Start-Sleep 5
 } else {
     Log "window up, waiting for the save to load (at most $LoadWaitSec s)"
-    # a save may open in the lobby (r1005_103836, -StartSave of a manual save: the country picker with "Начать"):
-    # start from there; the country is the save's own unless -Tag is given
+    # a save may open in the lobby (r1005_103836, -StartSave of a manual save: the country picker, no country
+    # chosen -- "Начать" does nothing until one is, r1005_104216 waited 5 min): as for a new game -- "Случайное
+    # государство", "Начать", then "tag" to -Tag (without -Tag the run plays the random country -- logged)
     if ((Wait-Screen @("game", "lobby") $LoadWaitSec 8) -eq "lobby") {
         $p = Get-Game; Shot $p "00c_lobby.png"
-        Click-Window $p 0.9215 0.975; Log "the save opened in the lobby: starting"
+        Click-Window $p 0.25 0.981; Start-Sleep 2
+        Click-Window $p 0.9215 0.975; Log "the save opened in the lobby: a random country, starting"
         Wait-Screen "game" 300 8 | Out-Null
         if ($PSBoundParameters.ContainsKey("Tag")) { Console-Cmd (Get-Game) "tag $Tag"; Start-Sleep 5 }
+        else { Log "no -Tag: playing the random country of the lobby" }
     }
 }
 $p = Get-Game
