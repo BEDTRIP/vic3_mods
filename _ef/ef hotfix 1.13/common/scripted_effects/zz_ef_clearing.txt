@@ -59,12 +59,61 @@ zz_ef_clr_window_roll = {
 # Leaves var:zz_ef_f_hume (the CB's metal, native, + in / - out), var:zz_ef_f_clr_cur_out (own currency paid,
 # money), var:zz_ef_f_clr_fx_in (foreign currency received, gold), var:zz_ef_f_clr_own_back (own currency
 # redeemed, money).
+# В1.7 (the user, 5.10, (a)) and В1.6 items 2-3: one position per currency zone / market. A subject in its
+# overlord's currency zone (var:zz_ef_cur_zone, В3.2), and a country with no value of its own money in gold that
+# does not own its market, do not settle themselves: the week's flow goes, in gold at the head's price
+# (zz_ef_clr_gold_per_money), to the head -- the overlord / the market owner (var:zz_ef_clr_head) -- which settles
+# it with its own next week (var:zz_ef_clr_sub_g, gold). Was (run s1b): the zone's subjects had no price (their
+# metal at the overlord, cover 0) and ~150 countries without a CB none either -- their flows were in neither the
+# world's sum nor the clearing; the subjects paid out 6-10M gold a month that nobody settled.
+# var:zz_ef_f_clr_net -- what this country settles (its flow + its members', money; 0 for a member).
 zz_ef_clr_step = {
 	set_variable = { name = zz_ef_f_hume value = 0 }
 	set_variable = { name = zz_ef_f_clr_cur_out value = 0 }
 	set_variable = { name = zz_ef_f_clr_fx_in value = 0 }
 	set_variable = { name = zz_ef_f_clr_own_back value = 0 }
+	set_variable = { name = zz_ef_f_clr_net value = var:zz_ef_f_ext_net }
+	set_variable = { name = zz_ef_f_clr_sub value = 0 }
+	set_variable = { name = zz_ef_f_clr_sent value = 0 }
+	# the members' flows sent since our last step
 	if = {
+		limit = { has_variable = zz_ef_clr_sub_g }
+		set_variable = { name = zz_ef_f_clr_sub value = var:zz_ef_clr_sub_g }
+		if = {
+			limit = { zz_ef_clr_gold_per_money > 0 }
+			change_variable = {
+				name = zz_ef_f_clr_net
+				add = {
+					value = var:zz_ef_clr_sub_g
+					divide = zz_ef_clr_gold_per_money
+				}
+			}
+		}
+		remove_variable = zz_ef_clr_sub_g
+	}
+	zz_ef_clr_head_find = yes
+	if = {
+		limit = { has_variable = zz_ef_clr_head }
+		set_variable = { name = zz_ef_f_clr_sent value = var:zz_ef_f_clr_net }
+		set_variable = {
+			name = zz_ef_clr_send_g
+			value = {
+				value = var:zz_ef_f_clr_net
+				multiply = zz_ef_clr_gold_per_money
+			}
+		}
+		save_scope_as = clr_member
+		var:zz_ef_clr_head = {
+			if = {
+				limit = { NOT = { has_variable = zz_ef_clr_sub_g } }
+				set_variable = { name = zz_ef_clr_sub_g value = 0 }
+			}
+			change_variable = { name = zz_ef_clr_sub_g add = scope:clr_member.var:zz_ef_clr_send_g }
+		}
+		remove_variable = zz_ef_clr_send_g
+		set_variable = { name = zz_ef_f_clr_net value = 0 }
+	}
+	else_if = {
 		limit = {
 			has_modifier = has_central_bank
 			zz_ef_clr_gold_per_money > 0
@@ -75,11 +124,11 @@ zz_ef_clr_step = {
 		}
 		zz_ef_clr_window_roll = yes
 		if = {
-			limit = { var:zz_ef_f_ext_net < 0 }
+			limit = { var:zz_ef_f_clr_net < 0 }
 			zz_ef_clr_pay = yes
 		}
 		else_if = {
-			limit = { var:zz_ef_f_ext_net > 0 }
+			limit = { var:zz_ef_f_clr_net > 0 }
 			zz_ef_clr_receive = yes
 		}
 	}
@@ -92,10 +141,36 @@ zz_ef_clr_step = {
 		limit = {
 			NOT = { has_modifier = has_central_bank }
 			zz_ef_rc_currency_value > 0.0002
-			var:zz_ef_f_ext_net < 0
+			var:zz_ef_f_clr_net < 0
 		}
 		zz_ef_clr_window_roll = yes
 		zz_ef_clr_pay = yes
+	}
+}
+
+# var:zz_ef_clr_head -- who settles for us (zz_ef_clr_step), or none: the overlord of the currency zone; else, with
+# no value of our money in gold, the market's owner if its money has one.
+zz_ef_clr_head_find = {
+	if = {
+		limit = { has_variable = zz_ef_clr_head }
+		remove_variable = zz_ef_clr_head
+	}
+	if = {
+		limit = {
+			has_variable = zz_ef_cur_zone
+			is_subject = yes
+		}
+		set_variable = { name = zz_ef_clr_head value = overlord }
+	}
+	else_if = {
+		limit = {
+			NOT = { zz_ef_clr_gpm_own > 0 }
+			exists = market
+			NOT = { market.owner = this }
+			market.owner = { zz_ef_clr_gpm_own > 0 }
+		}
+		market = { owner = { save_scope_as = clr_head_s } }
+		set_variable = { name = zz_ef_clr_head value = scope:clr_head_s }
 	}
 }
 
@@ -104,7 +179,7 @@ zz_ef_clr_pay = {
 	set_variable = {
 		name = zz_ef_clr_due
 		value = {
-			value = var:zz_ef_f_ext_net
+			value = var:zz_ef_f_clr_net
 			multiply = -1
 			multiply = zz_ef_clr_gold_per_money
 		}
@@ -128,7 +203,7 @@ zz_ef_clr_pay = {
 		set_variable = {
 			name = zz_ef_clr_metal
 			value = {
-				value = var:zz_ef_f_ext_net
+				value = var:zz_ef_f_clr_net
 				multiply = -1
 				multiply = var:money_value_target_1
 				multiply = zz_ef_clr_metal_share
@@ -195,7 +270,7 @@ zz_ef_clr_receive = {
 	set_variable = {
 		name = zz_ef_clr_claim
 		value = {
-			value = var:zz_ef_f_ext_net
+			value = var:zz_ef_f_clr_net
 			multiply = zz_ef_clr_gold_per_money
 		}
 	}
