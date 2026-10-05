@@ -1,0 +1,54 @@
+﻿#############################################
+# Д2.7б (5.10.2026) -- consols: the treasury's perpetual debt to the population for the CB's bonds sold. The
+# why and the numbers: script_values/zz_ef_consols_values.txt. Called from the weekly step
+# (scripted_effects/zz_ef_money_model.txt, zz_ef_money_model_step) before the treasury's surplus goes to the pool
+# and before the ledger's week-on-week changes. COUNTRY scope.
+#############################################
+
+zz_ef_consol_step = {
+	if = {
+		limit = { NOT = { has_variable = zz_ef_consol_debt } }
+		set_variable = { name = zz_ef_consol_debt value = 0 }
+	}
+	set_variable = { name = zz_ef_f_cons_sale value = zz_ef_consol_sale_week }
+	set_variable = { name = zz_ef_f_cons_int value = 0 }
+	set_variable = { name = zz_ef_f_cons_buy value = 0 }
+	# the sale: the engine already moved the money buyers -> CB building -> treasury; the claim is ours
+	change_variable = { name = zz_ef_consol_debt add = var:zz_ef_f_cons_sale }
+	# payments only once pops' savings exist (the receiver opens them), so each has its other side
+	if = {
+		limit = { has_variable = zz_ef_pop_savings }
+		set_variable = { name = zz_ef_f_cons_int value = zz_ef_consol_interest_week }
+		set_variable = { name = zz_ef_f_cons_buy value = zz_ef_consol_buyback_week }
+		if = {
+			limit = { var:zz_ef_f_cons_int > 0 }
+			add_treasury = {
+				value = var:zz_ef_f_cons_int
+				multiply = -1
+			}
+			change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_cons_int }
+		}
+		if = {
+			limit = { var:zz_ef_f_cons_buy > 0 }
+			add_treasury = {
+				value = var:zz_ef_f_cons_buy
+				multiply = -1
+			}
+			change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_cons_buy }
+			change_variable = { name = zz_ef_consol_debt subtract = var:zz_ef_f_cons_buy }
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				is_player = yes
+				gdp > 20000000
+			}
+			OR = {
+				var:zz_ef_consol_debt > 0
+				var:zz_ef_f_cons_sale > 0
+			}
+		}
+		debug_log = "EFS|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|debt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_consol_debt_v')|0]|sale [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cons_sale')|0]|int [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cons_int')|0]|buy [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_cons_buy')|0]|out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_consol_output')|1]|price [THIS.GetCountry.MakeScope.ScriptValue('bond_price')|2]|grt [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gov_rate_target')|4]|d_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_consol_debt_to_gdp')|3]"
+	}
+}

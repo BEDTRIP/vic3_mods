@@ -48,7 +48,7 @@ import os
 import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-HOTFIX = os.path.normpath(os.path.join(HERE, r"..\_ef\ef hotfix 1.13"))
+HOTFIX = os.path.normpath(os.path.join(HERE, "..", "_ef", "ef hotfix 1.13"))
 ROOT = os.path.join(HOTFIX, "localization")
 LANGS = ["english", "russian", "braz_por", "french", "german", "japanese",
          "korean", "polish", "simp_chinese", "spanish", "turkish"]
@@ -530,6 +530,11 @@ FLOWS = [
     # Д4.5 (4.10): the treasury's surplus over its limit buys the banks' bonds
     (K, B, "излишек казны сверх потолка — покупка облигаций банков", "the treasury's surplus over its limit — banks' bonds bought",
      sv_("zz_ef_v_f_tr_pool"), None),
+    # Д2.7б (5.10): consols -- the CB's bonds sold are the treasury's perpetual debt to pops (zz_ef_consols.txt)
+    (K, N, "консоли: проценты держателям облигаций ЦБ (ставка правительства)",
+     "consols: interest to the holders of the CB's bonds (the government's rate)", sv_("zz_ef_v_f_cons_int"), None),
+    (K, N, "консоли: выкуп из излишка казны сверх потолка", "consols: bought back out of the treasury's surplus over its limit",
+     sv_("zz_ef_v_f_cons_buy"), None),
 ]
 
 NOTES = {
@@ -736,7 +741,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",

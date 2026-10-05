@@ -434,6 +434,9 @@ zz_ef_other_treasury_budget = {
 	add = zz_ef_v_f_tr_pool
 	# В5.5 (5.10): interest on the treasury's parts of other countries' debt (the bond ledger)
 	subtract = zz_ef_v_f_bl_int_in
+	# Д2.7б (5.10): consols' interest and buy-back, treasury -> pops' savings (zz_ef_consols.txt)
+	add = zz_ef_v_f_cons_int
+	add = zz_ef_v_f_cons_buy
 }
 # Д4.5 (4.10): treasury -> pool this step (zz_ef_money_model_step)
 zz_ef_v_f_tr_pool = {
@@ -607,6 +610,9 @@ zz_ef_leak_week = {
 	add = zz_ef_v_f_bl_int_out
 	add = zz_ef_v_f_bl_redeem
 	subtract = zz_ef_v_f_bl_int_in
+	# Д2.7б (5.10): consols' interest and buy-back left M2 for pops' savings by our rule (put there at the step)
+	add = zz_ef_v_f_cons_int
+	add = zz_ef_v_f_cons_buy
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
 # scripted moves on the treasury -- ai_refund_central_bank (the government

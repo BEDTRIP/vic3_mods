@@ -1,0 +1,77 @@
+﻿#############################################
+# Д2.7б (5.10.2026, decided by the user) -- the central bank's bonds are the treasury's perpetual loan from the
+# population ("consols"). The CB building (state-owned, buildings/zz_ef_cm_bank.txt) makes E&F's good `bond`
+# (goods_output_bond_add, EF.15's multiplier by the debt / GDP) and sells it to pops and exchanges; the revenue
+# reaches the treasury by the engine itself. Here the claim that sale creates:
+#   * debt   var:zz_ef_consol_debt += the week's sale = the country's bond output (sum over its states,
+#            sg:bond.state_goods_production -- only CBs make bonds) x E&F's bond_price (50 x (1 + the market's price
+#            deviation), the price the engine pays);
+#   * interest at the government's rate (zz_ef_gov_rate_target, a year) / 52 -- treasury -> pops' savings, weekly;
+#   * no repayment; buy-back when the treasury is over the engine's limit (gold_reserves_limit, the same threshold as
+#            EF.38 / Д4.5): the excess buys consols back first (treasury -> pops' savings, the debt falls), the rest
+#            goes into the pool as before.
+# Both payments are taken out of the treasury's "other" and of the leak (the money left the engine's money for pops'
+# savings by our rule, not unexplained) -- script_values/zz_ef_money_model_values.txt.
+# COUNTRY scope. Numbers accepted at night -- check (the user may adjust).
+#############################################
+
+# The week's sale, money: the bonds the country's CB made x their price.
+zz_ef_consol_output = {
+	value = 0
+	every_scope_state = {
+		sg:bond ?= { add = state_goods_production }
+	}
+}
+zz_ef_consol_sale_week = {
+	value = 0
+	if = {
+		limit = { zz_ef_consol_output > 0 }
+		value = zz_ef_consol_output
+		multiply = bond_price
+		min = 0
+	}
+}
+zz_ef_consol_debt_v = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_consol_debt } value = var:zz_ef_consol_debt }
+}
+# Interest of the week at the government's rate.
+zz_ef_consol_interest_week = {
+	value = zz_ef_consol_debt_v
+	multiply = zz_ef_gov_rate_target
+	divide = 52
+	min = 0
+}
+# Buy-back: the treasury's excess over the engine's limit, at most the debt.
+zz_ef_consol_buyback_week = {
+	value = 0
+	if = {
+		limit = { gold_reserves > gold_reserves_limit }
+		value = gold_reserves
+		subtract = gold_reserves_limit
+		max = zz_ef_consol_debt_v
+		min = 0
+	}
+}
+zz_ef_consol_debt_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_consol_debt_v
+		divide = gdp
+	}
+}
+
+# Guarded reads of the step's flows (0 before the first step).
+zz_ef_v_f_cons_sale = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cons_sale } value = var:zz_ef_f_cons_sale }
+}
+zz_ef_v_f_cons_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cons_int } value = var:zz_ef_f_cons_int }
+}
+zz_ef_v_f_cons_buy = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cons_buy } value = var:zz_ef_f_cons_buy }
+}

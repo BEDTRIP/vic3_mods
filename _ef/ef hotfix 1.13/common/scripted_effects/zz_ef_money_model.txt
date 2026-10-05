@@ -238,6 +238,10 @@ zz_ef_money_model_step = {
 	}
 	add_treasury = var:zz_ef_f_cb_interest
 
+	# Д2.7б (5.10): consols -- the CB's bonds sold are the treasury's perpetual debt to pops: interest treasury -> pops'
+	# savings, buy-back out of the surplus over the engine's limit first (scripted_effects/zz_ef_consols.txt)
+	zz_ef_consol_step = yes
+
 	# Д4.5 / EF.38 (the user, 4.10): the treasury over the engine's limit (gold_reserves_limit; over it
 	# the engine's returns fall off and the surplus burns, E&F GOLD_RESERVE_RETURNS_FACTOR) buys the
 	# banks' bonds -- the excess goes into the pool (stays in circulation as bank money). Before the
