@@ -8079,10 +8079,15 @@ REPLACE_OR_CREATE:central_bank_respawn_after_crisis = {
 	}
 }
 
+# В2.4 (5.10): the introduction_of_<currency> effects below give the new central bank metal from nothing
+# ((money in E&F's count + its stock + building savings) x the parity into the capital's gold_state_1 /
+# silver_state_1) -- wrapped: after the start (13 weeks, the model's own rescale) the capital's metal is put back
+# as it was, a first currency gets the norm instead (scripted_effects/zz_ef_currency_intro_metal.txt).
 REPLACE_OR_CREATE:introduction_new_currency = {
 	#objectif de cet effect doit etre de réinitialiser à 100% la currency d'un pays comme si il venais d'avoir la tech
 	#ce qui n'ai pas le cas car les pret étranger ne sont pas reset
 	#doit utiliser le activate_law = law_type:law_no_market_liquidity avant d'appler l'effet si on veut un reset
+	zz_ef_cur_intro_before = yes
 
 	if = {
 		limit = {
@@ -8213,4 +8218,5 @@ REPLACE_OR_CREATE:introduction_new_currency = {
 		}
 		money_value_global_var = yes
 	}
+	zz_ef_cur_intro_after = yes
 }

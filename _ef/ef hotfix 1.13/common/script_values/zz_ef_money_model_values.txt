@@ -2913,3 +2913,8 @@ zz_ef_wld_n0_v = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_wld_n0 } value = global_var:zz_ef_wld_n0 }
 }
+# В2.4 (5.10): for the cur_intro log line (scripted_effects/zz_ef_currency_intro_metal.txt)
+zz_ef_cur_intro_first_v = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_cur_intro_first } value = 1 }
+}

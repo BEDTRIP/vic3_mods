@@ -1,0 +1,91 @@
+﻿# В2.4 (decided 4.10, М.10 а; 5.10): E&F's metal "from nothing" at a currency's introduction is switched off.
+# E&F's introduction_of_<currency> (95 effects, 09_introduction_building_lvl.txt, ~190 edits) adds to the capital's
+# gold_state_1 / silver_state_1 (money in E&F's count + its stock + building savings) x the new parity -- a cover far
+# over 100% out of nowhere; reset_law_event_currency (the currency's reset after a crisis) zeroes the metal
+# (scripted_effects/zz_ef_currency_reset_keep_metal.txt keeps it now). Wrapped around introduction_new_currency
+# (zz_ef_cm_bank_spawn.txt):
+#   * the first 13 weeks: untouched -- the start's metal is E&F's and the model rescales it to 40% (M.1);
+#   * later: the capital's metal is put back as it was before the call;
+#   * a FIRST currency (no var:country_already_central_bank before the call) on a metal standard gets the norm --
+#     40% of the model's M2 at the new parity, in the standard's metal (gold for bimetallism) -- as the start does
+#     for countries without a CB (M.8); logged (EFM|...|cur_intro) and seen by tools/check_flows.py as a jump of the
+#     world metal. Accepted 5.10, check: the norm is still metal that nobody gave; with the pops' metal (В8.1,
+#     stage 3) it can be bought from them.
+
+zz_ef_cur_intro_before = {
+	if = { limit = { has_variable = zz_ef_cur_intro_first } remove_variable = zz_ef_cur_intro_first }
+	if = {
+		limit = { NOT = { has_variable = country_already_central_bank } }
+		set_variable = { name = zz_ef_cur_intro_first value = yes }
+	}
+	capital = {
+		set_variable = { name = zz_ef_cur_intro_gold value = 0 }
+		set_variable = { name = zz_ef_cur_intro_silver value = 0 }
+		if = {
+			limit = { has_variable = gold_state_1 }
+			set_variable = { name = zz_ef_cur_intro_gold value = var:gold_state_1 }
+		}
+		if = {
+			limit = { has_variable = silver_state_1 }
+			set_variable = { name = zz_ef_cur_intro_silver value = var:silver_state_1 }
+		}
+	}
+}
+
+zz_ef_cur_intro_after = {
+	if = {
+		limit = {
+			has_variable = zz_ef_weeks_run
+			var:zz_ef_weeks_run >= 13
+		}
+		capital = {
+			set_variable = { name = zz_ef_cur_intro_g_ef value = 0 }
+			if = {
+				limit = { has_variable = gold_state_1 }
+				set_variable = { name = zz_ef_cur_intro_g_ef value = var:gold_state_1 }
+			}
+			set_variable = { name = gold_state_1 value = var:zz_ef_cur_intro_gold }
+			set_variable = { name = silver_state_1 value = var:zz_ef_cur_intro_silver }
+		}
+		set_variable = { name = zz_ef_cur_intro_norm value = 0 }
+		if = {
+			limit = {
+				has_variable = zz_ef_cur_intro_first
+				has_variable = money_value_target_1
+				var:money_value_target_1 > 0
+				OR = {
+					has_law = law_type:law_gold_standard
+					has_law = law_type:law_silver_standard
+					has_law = law_type:law_bimetallism_standard
+				}
+			}
+			set_variable = { name = zz_ef_cur_intro_norm value = zz_ef_agg_m2 }
+			change_variable = { name = zz_ef_cur_intro_norm multiply = zz_ef_cover_normal }
+			change_variable = { name = zz_ef_cur_intro_norm multiply = var:money_value_target_1 }
+			if = {
+				limit = { var:zz_ef_cur_intro_norm < 0 }
+				set_variable = { name = zz_ef_cur_intro_norm value = 0 }
+			}
+			if = {
+				limit = { has_law = law_type:law_silver_standard }
+				capital = {
+					change_variable = { name = silver_state_1 add = owner.var:zz_ef_cur_intro_norm }
+				}
+			}
+			else = {
+				capital = {
+					change_variable = { name = gold_state_1 add = owner.var:zz_ef_cur_intro_norm }
+				}
+			}
+		}
+		debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cur_intro|first [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cur_intro_first_v')|0]|gold_ef [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_g_ef').GetValue|0]|gold_kept [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_gold').GetValue|0]|norm [THIS.GetCountry.MakeScope.Var('zz_ef_cur_intro_norm').GetValue|0]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
+		capital = {
+			if = { limit = { has_variable = zz_ef_cur_intro_g_ef } remove_variable = zz_ef_cur_intro_g_ef }
+		}
+	}
+	capital = {
+		if = { limit = { has_variable = zz_ef_cur_intro_gold } remove_variable = zz_ef_cur_intro_gold }
+		if = { limit = { has_variable = zz_ef_cur_intro_silver } remove_variable = zz_ef_cur_intro_silver }
+	}
+	if = { limit = { has_variable = zz_ef_cur_intro_first } remove_variable = zz_ef_cur_intro_first }
+}
