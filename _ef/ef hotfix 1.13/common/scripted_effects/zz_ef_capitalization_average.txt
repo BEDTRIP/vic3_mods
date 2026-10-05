@@ -64,13 +64,11 @@ zz_ef_cap_monthly_update = {
 	}
 	set_local_variable = { name = zz_s_total value = local_var:zz_s_new }
 
+	# Д2.10 (6.10, run r1006_003421): always -- with nothing listed the snapshot is 0, and a country whose
+	# averages had not started showed the old formula (weekly output x 520) through the quantities' fallback
+	# (Britain 1836: 2.55 GDP with nothing listed).
 	if = {
-		limit = {
-			OR = {
-				local_var:zz_s_total > 0
-				has_variable = zz_ef_cap_half
-			}
-		}
+		limit = { always = yes }
 		if = {
 			limit = { has_variable = zz_ef_cap_avg_ms }
 			set_variable = {

@@ -7,8 +7,10 @@
 #     rich (var:zz_ef_rich_literacy, zz_ef_stock_issue_update): reading a prospectus took literate investors;
 #     the rest are private;
 #   * not allowed (no exchange, traditionalism...) -- every public headquarters goes back to private.
-# activate_production_method works on a building type in a state, so the switch is per state: two
-# headquarters in one state share it (the last one wins).
+# 6.10 (run r1006_003421: no headquarters found -- hq 0 everywhere): every company has its own headquarters
+# type, building_company_<key>, group bg_company_headquarter; activate_production_method takes the type as a
+# literal, so the switch is a generated dispatcher (scripted_effects/zz_ef_listing_switch.txt,
+# tools/regen_ef_listing.py: the capitalist-owned companies of vanilla and E&F).
 # Logged for big economies: EFL|date|country|hq H|listed L|share S|lit R|cap C|div D|cap_gdp G.
 # COUNTRY scope, from on_actions/zz_ef_capitalization_on_actions.txt before the capitalization update.
 #############################################
@@ -35,7 +37,7 @@ zz_ef_listing_update = {
 		set_local_variable = { name = zz_lst_cum value = 0 }
 		ordered_scope_building = {
 			limit = {
-				is_building_type = building_company_headquarter
+				is_building_group = bg_company_headquarter
 				level > 0
 			}
 			order_by = level
@@ -45,22 +47,12 @@ zz_ef_listing_update = {
 				limit = { local_var:zz_lst_cum < local_var:zz_lst_target }
 				if = {
 					limit = { NOT = { has_active_production_method = pm_company_headquarter_publicly_traded } }
-					state = {
-						activate_production_method = {
-							building_type = building_company_headquarter
-							production_method = pm_company_headquarter_publicly_traded
-						}
-					}
+					zz_ef_listing_go_public = yes
 				}
 			}
 			else_if = {
 				limit = { has_active_production_method = pm_company_headquarter_publicly_traded }
-				state = {
-					activate_production_method = {
-						building_type = building_company_headquarter
-						production_method = pm_company_headquarter_privately_owned
-					}
-				}
+				zz_ef_listing_go_private = yes
 			}
 			change_local_variable = { name = zz_lst_cum add = level }
 		}
@@ -68,15 +60,10 @@ zz_ef_listing_update = {
 	else = {
 		every_scope_building = {
 			limit = {
-				is_building_type = building_company_headquarter
+				is_building_group = bg_company_headquarter
 				has_active_production_method = pm_company_headquarter_publicly_traded
 			}
-			state = {
-				activate_production_method = {
-					building_type = building_company_headquarter
-					production_method = pm_company_headquarter_privately_owned
-				}
-			}
+			zz_ef_listing_go_private = yes
 		}
 	}
 }
@@ -89,6 +76,6 @@ zz_ef_listing_log = {
 				gdp > 20000000
 			}
 		}
-		debug_log = "EFL|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|hq [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_hq_levels')|1]|listed [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_listed_hq_levels')|1]|lshare [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_listed_share')|3]|cshare [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_company_share')|3]|lit [THIS.GetCountry.MakeScope.Var('zz_ef_rich_literacy').GetValue|3]|div [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_listed_div_year')|0]|snap [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cap_listed_snapshot')|0]|cap [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_equity_capitalization')|0]|cap_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cap_to_gdp')|3]|disc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cap_discount')|4]"
+		debug_log = "EFL|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|hq [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_hq_levels')|1]|listed [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_listed_hq_levels')|1]|lshare [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_listed_share')|3]|nhq [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_hq_count')|0]|hqdiv [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_hq_div_week')|0]|lit [THIS.GetCountry.MakeScope.Var('zz_ef_rich_literacy').GetValue|3]|div [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_listed_div_year')|0]|snap [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cap_listed_snapshot')|0]|cap [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_equity_capitalization')|0]|cap_gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cap_to_gdp')|3]|disc [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cap_discount')|4]"
 	}
 }

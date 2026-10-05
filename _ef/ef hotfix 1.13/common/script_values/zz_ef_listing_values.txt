@@ -6,11 +6,9 @@
 # capitalization: until 5.10 the capitalization was their weekly output x 520 x price (EF.24).
 #
 # Listed = company headquarters with the "publicly traded" method (EF.22, switched by script monthly, Д2.11:
-# scripted_effects/zz_ef_listing.txt). The engine gives the script no link building -> company and no company
-# profit, so the listed companies' dividends are estimated (accepted at night, check):
-#   the country's building profit a year (zz_ef_profit_week x 52, losses not counted)
-#   x the companies' share of the building levels (sum of company_owned_levels / all levels)
-#   x the listed headquarters' share of all headquarter levels (an HQ's level ~ the company's size).
+# scripted_effects/zz_ef_listing.txt). A company's dividends are its headquarters' profit (the save: the HQ's
+# profit_after_reserves = dividends = its ownership income less taxes; one HQ type per company,
+# building_company_<key>, group bg_company_headquarter): listed dividends a year = the public HQs' weekly_profit x 52.
 # Without an exchange nothing is listed: capitalization 0, burnt through the yearly average (Д2.12, EF.47).
 # COUNTRY scope.
 #############################################
@@ -21,32 +19,34 @@ zz_ef_equity_premium = 0.04
 zz_ef_hq_levels = {
 	value = 0
 	every_scope_building = {
-		limit = { is_building_type = building_company_headquarter }
+		limit = { is_building_group = bg_company_headquarter }
 		add = level
+	}
+}
+zz_ef_hq_count = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_group = bg_company_headquarter }
+		add = 1
+	}
+}
+# All companies' dividends a week (the headquarters' profit), for the log.
+zz_ef_hq_div_week = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_group = bg_company_headquarter }
+		add = {
+			value = weekly_profit
+			min = 0
+		}
 	}
 }
 zz_ef_listed_hq_levels = {
 	value = 0
 	every_scope_building = {
 		limit = {
-			is_building_type = building_company_headquarter
+			is_building_group = bg_company_headquarter
 			has_active_production_method = pm_company_headquarter_publicly_traded
-		}
-		add = level
-	}
-}
-zz_ef_company_levels = {
-	value = 0
-	every_company = {
-		add = company_owned_levels
-	}
-}
-zz_ef_all_levels = {
-	value = 0
-	every_scope_building = {
-		limit = {
-			level > 0
-			is_subsistence_building = no
 		}
 		add = level
 	}
@@ -60,21 +60,19 @@ zz_ef_listed_share = {
 		max = 1
 	}
 }
-zz_ef_company_share = {
-	value = 0
-	if = {
-		limit = { zz_ef_all_levels > 0 }
-		value = zz_ef_company_levels
-		divide = zz_ef_all_levels
-		max = 1
-	}
-}
 zz_ef_listed_div_year = {
-	value = zz_ef_profit_week
+	value = 0
+	every_scope_building = {
+		limit = {
+			is_building_group = bg_company_headquarter
+			has_active_production_method = pm_company_headquarter_publicly_traded
+		}
+		add = {
+			value = weekly_profit
+			min = 0
+		}
+	}
 	multiply = 52
-	multiply = zz_ef_company_share
-	multiply = zz_ef_listed_share
-	min = 0
 }
 zz_ef_cap_discount = {
 	value = zz_ef_gov_rate_target
