@@ -32,7 +32,7 @@
   телеграфные переводы (`electric_telegraph`), современный банк (`modern_financial_instruments`); 1000 занятых, все
   покупают услуги (пользователь: «услуги везде, и побольше»): 2 бумаги + 5 услуг → 500 … 14 услуг + телефоны +
   электричество → 1600 (`production_methods/zz_ef_bank_pm.txt`). 98 банков E&F строят и владеют им (`company_types/zz_ef_cm_companies.txt`,
-  Д2.6). Посев в первый месяц игры: ВВП / 520 000 уровней в столице, владелец — финквартал (иначе государство)
+  Д2.6). Посев в первый месяц игры: ВВП / 520 000 уровней в столице одной постройкой (лесенка размеров, `tools/regen_ef_bank_seed.py`), владелец — государство, ИИ продаёт частникам (`ai_nationalization_desire = -5`)
   (`scripted_effects/zz_ef_bank_seed.txt`, лог `EFK`).
 * **ЦБ — государству** (Д2.5): `building_bank` снова `no_ownership`, без группы «тип валюты» (выпуска валюты нет)
   (`buildings/zz_ef_cm_bank.txt`); постройка ЦБ — просто нужного размера (`scripted_effects/zz_ef_cm_bank_ownership.txt`).

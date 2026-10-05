@@ -12,8 +12,8 @@
 # (company_types/zz_ef_cm_companies.txt); state construction allowed too. No technology needed (run r1005_192418:
 # create_building refused the seed in every country without `banking` -- Cuba, Sindh...; counting houses and
 # money-changers existed everywhere); the later methods need their technologies.
-# Seeded in the first month of a game (scripted_effects/zz_ef_bank_seed.txt) -- the currency used to be there
-# from day one.
+# Seeded in the first month of a game, state-owned (scripted_effects/zz_ef_bank_seed.txt, tools/regen_ef_bank_seed.py)
+# -- the currency used to be there from day one; ai_nationalization_desire -5 makes the AI privatise it.
 # Methods by era, every one buying services (the user, 5.10): production_methods/zz_ef_bank_pm.txt.
 #############################################
 
@@ -30,6 +30,7 @@ building_zz_ef_bank = {
 		pmg_zz_ef_bank_base
 	}
 
+	ai_nationalization_desire = -5	# seeded state-owned (zz_ef_bank_seed.txt): the AI sells it to private owners
 	ownership_type = self
 
 	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds"
