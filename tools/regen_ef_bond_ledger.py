@@ -17,8 +17,8 @@ record of WHO HOLDS A PART of the seller's principal:
   3. repayment -- the engine repays alone; the principal under the parts held -> each holder gets the difference back
                   from the seller's pool; E&F's maturity -> the part is bought back from the seller's pool (E&F's
                   payout from nobody removed);
-  4. default   -- the principal falls by more than half in a week (clear_debt, bankruptcy): the parts over it are
-                  written off, nobody pays (accepted 5.10, check).
+  4. default   -- the principal falls by more than half in a week while the country is in default (in_default): the
+                  parts over it are written off, nobody pays; a fast repayment out of default is bought back (5.10 evening).
 Weekly, in the money model's step: the holder walks its 10 slots; the seller's side is summed in var:zz_ef_bl_acc_*
 and rolled into var:zz_ef_f_bl_* at its own step (at most a week late). The bond tables (Е.6) -- later.
 
@@ -307,11 +307,14 @@ zz_ef_bond_ledger_step = {{
 		}}
 		set_variable = {{ name = zz_ef_bl_ratio value = zz_ef_bl_principal }}
 		change_variable = {{ name = zz_ef_bl_ratio divide = var:zz_ef_bl_held }}
-		# default: the principal more than halved in a week -> the parts over it are written off
+		# default: the principal more than halved in a week IN DEFAULT -> the parts over it are written off. Run
+		# r1005_163333 (5.10 evening): Russia repaid its last 450K in one week and the holders' parts were written off --
+		# a repayment is bought back from the pool, only the engine's default (in_default) writes off.
 		if = {{
 			limit = {{
 				has_variable = zz_ef_bl_prev_principal
 				zz_ef_bl_principal < zz_ef_bl_half_prev
+				in_default = yes
 			}}
 			set_variable = {{ name = zz_ef_bl_woff_now value = yes }}
 		}}
