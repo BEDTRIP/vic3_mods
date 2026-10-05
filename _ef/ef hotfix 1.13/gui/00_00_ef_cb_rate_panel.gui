@@ -2021,7 +2021,7 @@ types zz_ef_cb_rate_panel
 										textbox = {
 											datacontext = "[Scope.GetCountry]"
 
-											text = "@agricultural_stock! [Country.MakeScope.ScriptValue('mining_stock_index')|D]"
+											text = "@agricultural_stock! [Country.MakeScope.ScriptValue('agricultural_stock_index')|D]"  # EF.36
 											margin_left = 0
 											margin_bottom = 1
 											elide = right
@@ -2040,7 +2040,7 @@ types zz_ef_cb_rate_panel
 										textbox = {
 											datacontext = "[Scope.GetCountry]"
 
-											text = "@mining_stock! [Country.MakeScope.ScriptValue('agricultural_stock_index')|D]"
+											text = "@mining_stock! [Country.MakeScope.ScriptValue('mining_stock_index')|D]"  # EF.36
 											margin_left = 0
 											margin_bottom = 1
 											elide = right

@@ -384,6 +384,14 @@ def build(src: str) -> tuple[str, str]:
         end = V._match_brace(body, body.index("{", hdr)) + 1
         body = body[:end] + "\n" + bond_table(lst, pre, title, ind) + body[end:]
 
+    # 5. EF.36 (э2): the capitalization list (after "divers_index") shows the mining index under the agricultural
+    # icon and the agricultural index under the mining one -- E&F swapped the two script values
+    for icon, wrong, right in (("agricultural_stock", "mining_stock_index", "agricultural_stock_index"),
+                               ("mining_stock", "agricultural_stock_index", "mining_stock_index")):
+        old = f"text = \"@{icon}! [Country.MakeScope.ScriptValue('{wrong}')|D]\""
+        assert body.count(old) == 1, old
+        body = body.replace(old, f"text = \"@{icon}! [Country.MakeScope.ScriptValue('{right}')|D]\"  # EF.36")
+
     return body, orig_sha
 
 
