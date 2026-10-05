@@ -9,7 +9,9 @@
 # its owner (plan, "Этап 2 — решения").
 #
 # Private: built by financial districts (bg_trade score) and by E&F's 98 bank companies
-# (company_types/zz_ef_cm_companies.txt); state construction allowed too. Unlocked by vanilla `banking`.
+# (company_types/zz_ef_cm_companies.txt); state construction allowed too. No technology needed (run r1005_192418:
+# create_building refused the seed in every country without `banking` -- Cuba, Sindh...; counting houses and
+# money-changers existed everywhere); the later methods need their technologies.
 # Seeded in the first month of a game (scripted_effects/zz_ef_bank_seed.txt) -- the currency used to be there
 # from day one.
 # Methods by era, every one buying services (the user, 5.10): production_methods/zz_ef_bank_pm.txt.
@@ -21,10 +23,6 @@ building_zz_ef_bank = {
 	city_type = city
 	levels_per_mesh = 50
 	lens = infrastructure
-
-	unlocking_technologies = {
-		banking
-	}
 
 	required_construction = construction_cost_low
 

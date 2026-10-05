@@ -6,7 +6,7 @@
 # price 1; paper and services ~30 each. Inputs ~40-45% of the output's value; each era gives more services per
 # worker, so the services get cheaper over time.
 #   method                 tech                          input                                       output
-#   counting house         banking (era 1)               paper 2, services 5            (~210)          500
+#   counting house         -- (no technology)             paper 2, services 5            (~210)          500
 #   joint-stock bank       joint_stock_companies (2)     paper 3, services 8            (~330)          750
 #   telegraph transfers    electric_telegraph            paper 3, services 11           (~420)         1000
 #   modern bank            modern_financial_instruments  paper 2, services 14, telephones 2, electricity 2  1600
@@ -16,10 +16,6 @@
 
 pm_zz_ef_bank_counting_house = {
 	texture = "gfx/interface/icons/production_method_icons/market_trade.dds"
-
-	unlocking_technologies = {
-		banking
-	}
 
 	building_modifiers = {
 		workforce_scaled = {

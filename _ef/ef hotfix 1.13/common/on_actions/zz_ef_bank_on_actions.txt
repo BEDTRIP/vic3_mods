@@ -1,4 +1,4 @@
-# Д2.4 (5.10.2026) -- private banks seeded in a country's first monthly pulse (scripted_effects/zz_ef_bank_seed.txt).
+﻿# Д2.4 (5.10.2026) -- private banks seeded in a country's first monthly pulse (scripted_effects/zz_ef_bank_seed.txt).
 on_monthly_pulse_country = {
 	on_actions = {
 		zz_ef_bank_monthly

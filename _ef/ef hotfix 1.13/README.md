@@ -28,7 +28,7 @@
 * **Спрос ~5% ВВП** (Д2.2): вход предприятий 98 → 10 (`production_methods/zz_ef_market_liquidity_input.txt`, REPLACE),
   потребность населения — как у E&F; сумма проверяется прогоном. Зависимость от ставки — потом.
 * **Здание «Банк»** (Д2.4, EF.42): `buildings/zz_ef_bank.txt` (`building_zz_ef_bank`, группа `bg_zz_ef_banking` — ребёнок
-  `bg_trade`, её строят финкварталы), методы по эпохам — банкирский дом (`banking`), акционерный банк (`joint_stock_companies`),
+  `bg_trade`, её строят финкварталы), методы по эпохам — банкирский дом (без технологии), акционерный банк (`joint_stock_companies`),
   телеграфные переводы (`electric_telegraph`), современный банк (`modern_financial_instruments`); 1000 занятых, все
   покупают услуги (пользователь: «услуги везде, и побольше»): 2 бумаги + 5 услуг → 500 … 14 услуг + телефоны +
   электричество → 1600 (`production_methods/zz_ef_bank_pm.txt`). 98 банков E&F строят и владеют им (`company_types/zz_ef_cm_companies.txt`,
