@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vic3-pc": {
+      "type": "http",
+      "url": "https://untimed-diploma-creation.ngrok-free.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer ${PC_BRIDGE_TOKEN}"
+      }
+    }
+  }
+}
