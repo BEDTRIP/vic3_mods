@@ -140,7 +140,7 @@ def sync_mod(repo_folder: str = "_ef/ef hotfix 1.13", live_name: str = "E&F Hotf
         rel = f.relative_to(src)
         if f.is_file() and not skip(rel):
             t = dst / rel
-            if not t.exists() or t.read_bytes() != f.read_bytes():
+            if not t.exists() or t.read_bytes().replace(b"\r\n", b"\n") != f.read_bytes().replace(b"\r\n", b"\n"):
                 t.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(f, t)
                 copied.append(str(rel))
