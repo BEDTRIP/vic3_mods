@@ -190,6 +190,9 @@ else {
 if (($Shots -or $Countries) -and (Get-Game)) {
     # the night of 4.10 (D.3): tooltips and budget tabs of the played country and of big ones
     Set-Content (Join-Path $OutDir "t0.txt") $t0.ToString("o")
+    # events and panels the AI or the console click left open covered the shots (r1005_102757, r1005_104528: an
+    # event window over the cards) -- closed first, as after the user (Escape until the game menu, once more)
+    Reset-UI (Get-Game); Shot (Get-Game) "03b_clean.png"
     $steps = @()
     if ($Shots) { $own = if ($NewGame) { $Tag } else { "own" }; $steps += "macro currency $own; macro cards $own; macro budget $own" }
     foreach ($c in ($Countries -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })) { $steps += "country $c" }

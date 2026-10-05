@@ -276,10 +276,10 @@ $Screens = @{
     # budget panel (63, 64, 58) -- 5.10, screenshots of r1005_042928 and r1005_044523
     console = @{ box = @(120, 250, 500, 650); rgb = @(45, 50, 52); tol = 8 }
     # the game menu (Escape with nothing open) -- calibrated on the screenshots of run CAL (5.10)
-    # the menu darkens the whole screen to ~0.4 (the lobby's exit dialog, r1005_103836: the date panel (58, 42, 46) ->
-    # (29, 21, 23), the bottom (67, 66, 63) -> (33, 33, 31)); in the game the date panel (82, 73, 70) and the bottom
-    # bar (75, 67, 69) dimmed the same -- estimate, to check on the screenshots of an in-game Escape
-    escmenu = @{ box = @(2200, 10, 2540, 60); rgb = @(33, 29, 28); tol = 14; box2 = @(1100, 1380, 1460, 1440); rgb2 = @(31, 28, 28); tol2 = 14 }
+    # the game menu (Escape with nothing open; "Вернуться к игре" ...): the HUD is gone -- the left icon column turns
+    # dark (27, 26, 21), the backdrop under the buttons (39, 34, 29); the game (75, 68, 68) / (57..68), the console
+    # (43, 48, 50) / (47, 49, 50) -- measured on r1005_104528 cal_esc1 (5.10)
+    escmenu = @{ box = @(5, 210, 45, 595); rgb = @(27, 26, 21); tol = 10; box2 = @(40, 420, 360, 880); rgb2 = @(39, 34, 29); tol2 = 10 }
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]
