@@ -324,6 +324,15 @@ def svn(name):
     return ("svn", name)
 
 
+def gtx(fn, name):
+    """В5.4: a budget trend minus a script value (the part of the line that is not what it says)."""
+    return ("gtx", fn, name)
+
+
+# В5.4 (5.10): interest on the treasury's loan from its own CB -- inside the "additional expenses"
+CBL_INT = ("sv", "zz_ef_v_cbl_int")
+
+
 # (from, to, ru, en, value, only) -- only: the one card to show it in, or None.
 FLOWS = [
     # --- budget, exact (GUI), a week ---
@@ -388,9 +397,16 @@ FLOWS = [
     (Z, K, "[concept_budget_additional_income] — проценты по облигациям казны, выплаты других стран",
      "[concept_budget_additional_income] — interest on the treasury's bonds, other countries' payments",
      gt("GetAdditionalIncomeTrend"), None),
+    # В5.4 (5.10): the additional expenses also hold E&F's interest on the treasury's loan from its own CB
+    # (interest_at_the_central_bank) -- a payment inside the country: out of the abroad line, treasury -> CB, and
+    # withdrawn there (the treasury is outside the money, the engine's expense destroys it)
     (K, Z, "[concept_budget_additional_expenses] — проценты по нашим облигациям у других стран",
      "[concept_budget_additional_expenses] — interest on our bonds held abroad",
-     gt("GetAdditionalExpensesTrend"), None),
+     gtx("GetAdditionalExpensesTrend", "zz_ef_v_cbl_int"), None),
+    (K, C, "[concept_budget_additional_expenses] — проценты казны по кредиту ЦБ (E&F)",
+     "[concept_budget_additional_expenses] — the treasury's interest on the CB's credit (E&F)", CBL_INT, None),
+    (C, X, "проценты казны по кредиту ЦБ — деньги изъяты", "the treasury's interest on the CB's credit — money withdrawn",
+     CBL_INT, None),
     # --- pops: a transit account ---
     (P, N, "зарплаты и дивиденды (оценка: ВВП / 52 − госвыплаты)", "wages and dividends (estimate: GDP / 52 − state pay)",
      ("expr", "WAGES"), None),
@@ -535,6 +551,9 @@ def expr(v):
         return wages_expr()
     if v[0] == "closing":
         return EXPRS["closing"]
+    if v[0] == "gtx":
+        return (f"Max_CFixedPoint(Subtract_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.{v[1]})), "
+                f"Country.MakeScope.ScriptValue('{v[2]}')), {ZERO})")
     kind, name = v
     if kind == "gt":
         return f"Abs_CFixedPoint(GetTrendValue(Country.{name}))"
@@ -591,7 +610,7 @@ def ext_expr():
         frm, to, _, _, v, _ = f
         if to == K and (frm in (X, Z) or v == MINTING):
             ins.append(expr(v))
-        elif frm == K and to in (X, Z):
+        elif frm == K and (to in (X, Z) or v == CBL_INT):
             outs.append(expr(v))
     acc = ins[0]
     for x in ins[1:]:
@@ -698,7 +717,7 @@ SRC_MOD = {"zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
             "zz_ef_v_f_cb_rescale", "zz_ef_tr_to_cb"}
-SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds"}
+SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_cbl_int"}
 SRC_LAB = {"eng": ("дв", "eng"), "mod": ("мод", "mod"), "calc": ("расч", "calc"), "est": ("оц", "est"),
            "ef": ("E&F", "E&F")}
 # the account's own change: engine stocks, our CB metal, E&F's bonds
@@ -715,6 +734,8 @@ def src_of(v):
     kind = v[0]
     if kind in ("gt", "gv"):
         return "eng"
+    if kind == "gtx":
+        return "calc"
     if kind in ("expr", "closing"):
         return "est"
     name = v[1]
@@ -733,6 +754,8 @@ def flow_key(v):
         return "wages"
     if v[0] == "closing":
         return "closing"
+    if v[0] == "gtx":
+        v = ("gt", v[1])
     kind, name = v
     name = name.replace("zz_ef_v_", "").replace("Get", "").replace("ExpenseTrend", "_x").replace("IncomeTrend", "_i")
     name = name.replace("Trend", "").replace("Expenses", "_x")
@@ -950,7 +973,7 @@ def nested(lang):
                 bin_, bout = ("Country.MakeScope.ScriptValue('zz_ef_total_income_week')",
                               "Country.MakeScope.ScriptValue('zz_ef_total_expenses_week')")
                 for o, dr, f in flows:
-                    if f[4][0] in ("gt", "gv") or f[4] == sv_("zz_ef_v_f_transfer"):
+                    if f[4][0] in ("gt", "gv", "gtx") or f[4] in (sv_("zz_ef_v_f_transfer"), CBL_INT):
                         if dr == "in":
                             bin_ = f"Subtract_CFixedPoint({bin_}, {expr(f[4])})"
                         else:
