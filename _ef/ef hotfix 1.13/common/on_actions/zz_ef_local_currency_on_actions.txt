@@ -33,16 +33,7 @@ zz_ef_local_currency_monthly = {
 			}
 		}
 
-		### Issue
-		if = {
-			limit = {
-				zz_ef_local_currency_needs_throttle = yes
-				zz_ef_local_currency_per_state > 0
-			}
-			add_modifier = {
-				name = zz_ef_local_currency_fix
-				multiplier = zz_ef_local_currency_per_state
-			}
-		}
+		### Issue -- removed 5.10 (Д2.3): the former currency good is settlement services made by banks and traded
+		### between markets; a country without banks imports them. Only the cleanup above stays (old saves).
 	}
 }

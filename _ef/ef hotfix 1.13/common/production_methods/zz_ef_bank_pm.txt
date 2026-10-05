@@ -1,0 +1,23 @@
+#############################################
+# Д2.4 (5.10.2026) -- the private bank's method: a counting house (банкирский дом). Eras later.
+#
+# One level: 1000 employees (vanilla scale, as a trade centre), input 2 paper (~60), output 450 settlement
+# services (liquidity_currency, base price 1) -- value added ~390 a week per 1000 employees, a little above a
+# trade centre's (finance). Demand: ~5% of GDP (Д2.2), i.e. Britain 1836 (GDP ~50M a year) ~110 levels.
+# !! TUNING !! the output (and the input of businesses, zz_ef_market_liquidity_input.txt) -- by the run.
+#############################################
+
+pm_zz_ef_bank_counting_house = {
+	texture = "gfx/interface/icons/production_method_icons/market_trade.dds"
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_paper_add = 2
+			goods_output_liquidity_currency_add = 450
+		}
+		level_scaled = {
+			building_employment_clerks_add = 950
+			building_employment_capitalists_add = 50
+		}
+	}
+}

@@ -1,0 +1,27 @@
+#############################################
+# Д2.2 (5.10.2026, decided by the user) -- businesses' demand for settlement services: ~5% of GDP, not ~20%.
+#
+# E&F's "market liquidity" method (production_methods/00_ef_market_liquidity.txt, 4.1.7) sits on almost every
+# building and buys 98 units of liquidity_currency per workforce unit -- the currency good, now settlement
+# services (buildings/zz_ef_bank.txt). With the population's popneed_currency that came to ~208K a week for
+# Britain in 1839 (~20% of GDP), all of it the central bank's profit. 98 -> 10 for a start: the population's
+# need (E&F's buy packages, ~8% of a middle pop's basket) is left as it is, and the sum is checked by the run
+# against ~5% of GDP (Д2.2); a dependence on the key rate comes later.
+# !! TUNING !! goods_input_liquidity_currency_add.
+#
+# REPLACE: restates the whole entry -- the rest is E&F's, line for line.
+#############################################
+
+REPLACE:pm_market_liquidity_currency = {
+	texture = "gfx/interface/icons/production_method_icons/market_trade.dds"
+
+	disallowing_laws = {
+		law_no_market_liquidity
+	}
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_liquidity_currency_add = 10	### Д2.2: E&F has 98
+		}
+	}
+}

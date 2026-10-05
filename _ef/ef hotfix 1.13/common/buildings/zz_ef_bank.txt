@@ -1,0 +1,38 @@
+#############################################
+# Д2.1-Д2.4 (5.10.2026, decided by the user) -- the private bank: "Банк" / "Bank".
+#
+# E&F's currency good (liquidity_currency) becomes settlement services: what E&F modelled as "money as a good" is
+# the service of moving money -- payments, transfers, bills. Our accounts already carry the money itself
+# (money model, M0-M3), so the good measures nothing; it is a service businesses (E&F's "market liquidity"
+# method, production_methods/zz_ef_market_liquidity_input.txt) and the population (popneed_currency) buy, and
+# banks make. Until 5.10 the central bank made it, to the whole market's demand, ~15-20% of GDP of profit for
+# its owner (plan, "Этап 2 — решения").
+#
+# Private: built by financial districts (bg_trade score) and by E&F's 98 bank companies
+# (company_types/zz_ef_cm_companies.txt); state construction allowed too. Unlocked by vanilla `banking`.
+# Seeded in the first month of a game (scripted_effects/zz_ef_bank_seed.txt) -- the currency used to be there
+# from day one.
+# One method for now (eras later -- Д2.4). Sizes: production_methods/zz_ef_bank_pm.txt.
+#############################################
+
+building_zz_ef_bank = {
+	building_group = bg_zz_ef_banking
+	icon = "gfx/interface/icons/building_icons/building_financial_district.dds"
+	city_type = city
+	levels_per_mesh = 50
+	lens = infrastructure
+
+	unlocking_technologies = {
+		banking
+	}
+
+	required_construction = construction_cost_low
+
+	production_method_groups = {
+		pmg_zz_ef_bank_base
+	}
+
+	ownership_type = self
+
+	background = "gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds"
+}

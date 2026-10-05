@@ -1045,9 +1045,7 @@ zz_ef_money_model_monthly_step = {
 	# (generated, scripted_effects/zz_ef_monetary_policy.txt)
 	zz_ef_mp_step = yes
 
-	# СТР.5: the central bank's company pays its dividends to the treasury
-	# (generated, scripted_effects/zz_ef_cb_company_dividends.txt).
-	zz_ef_cb_company_dividends_step = yes
+	# СТР.5 (CB company dividends -> treasury) removed 5.10 (Д2.5): the central bank is the state's again.
 
 	# EF.31: the rate's share of private construction. PSC rewrites the whole
 	# private share every week; it keeps this line only because our

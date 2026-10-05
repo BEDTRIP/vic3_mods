@@ -1,0 +1,14 @@
+#############################################
+# Д2.4 (5.10.2026) -- private banks' building group (buildings/zz_ef_bank.txt).
+#
+# A child of vanilla bg_trade (trade centres; under bg_private_infrastructure: privately funded, cash reserves
+# 25000): financial districts already score bg_trade for private investment (building_financial_district
+# investment_scores, bg_trade_score 1.0), so banks are built by investors with no new score; trade laws and
+# bg_trade modifiers apply to banks too -- trade and payments, close enough (decided in the day session, check).
+#############################################
+
+bg_zz_ef_banking = {
+	parent_group = bg_trade
+
+	urbanization = 10
+}

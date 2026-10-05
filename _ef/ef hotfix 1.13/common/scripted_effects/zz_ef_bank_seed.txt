@@ -1,0 +1,64 @@
+#############################################
+# Д2.4 (5.10.2026) -- the private banks are seeded once, in a country's first monthly pulse
+# (on_actions/zz_ef_bank_on_actions.txt): settlement services (the former currency good) used to come from the
+# central bank from day one, and a market without them buys none for its businesses and population.
+#
+# COUNTRY scope. In the capital, zz_ef_bank_seed_levels levels (GDP / 468000), one create_building per level:
+# add_ownership exists only inside create_building and its `levels` cannot read a variable (rules, "Компании,
+# здания, товары"), so the count is a loop. Owner: the capital's financial district if there is one (private, as
+# decided), else the state (the AI can privatise it). reserves = 0: no cash from nowhere (В1.3).
+# Logged once per country: EFK|date|country|levels|gdp.
+#############################################
+
+zz_ef_bank_seed_step = {
+	if = {
+		limit = {
+			NOT = { has_variable = zz_ef_bank_seeded }
+			exists = capital
+		}
+		set_variable = zz_ef_bank_seeded
+		set_variable = { name = zz_ef_bank_n value = zz_ef_bank_seed_levels }
+		save_scope_as = zz_ef_bank_c
+		debug_log = "EFK|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|levels [THIS.GetCountry.MakeScope.Var('zz_ef_bank_n').GetValue|0]|gdp [THIS.GetCountry.GetGDP|0]"
+		if = {
+			limit = { var:zz_ef_bank_n >= 1 }
+			capital = {
+				if = {
+					limit = { has_building = building_financial_district }
+					while = {
+						limit = { scope:zz_ef_bank_c.var:zz_ef_bank_n >= 1 }
+						create_building = {
+							building = building_zz_ef_bank
+							reserves = 0
+							add_ownership = {
+								building = {
+									type = "building_financial_district"
+									country = scope:zz_ef_bank_c
+									levels = 1
+								}
+							}
+						}
+						scope:zz_ef_bank_c = { change_variable = { name = zz_ef_bank_n subtract = 1 } }
+					}
+				}
+				else = {
+					while = {
+						limit = { scope:zz_ef_bank_c.var:zz_ef_bank_n >= 1 }
+						create_building = {
+							building = building_zz_ef_bank
+							reserves = 0
+							add_ownership = {
+								country = {
+									country = scope:zz_ef_bank_c
+									levels = 1
+								}
+							}
+						}
+						scope:zz_ef_bank_c = { change_variable = { name = zz_ef_bank_n subtract = 1 } }
+					}
+				}
+			}
+		}
+		remove_variable = zz_ef_bank_n
+	}
+}

@@ -54,30 +54,7 @@ GLOBAL = {
 		}
 
 
-		########################################################################
-		# 4. Initial liquidity_currency grant (minor countries).
-		#    E&F's flat 2500 is disabled at the source, so without this block a
-		#    country would sit with no currency at all for the whole first
-		#    month: the game spreads on_monthly_pulse_country across the days
-		#    of the month.
-		#
-		#    The condition may well not fire: E&F applies no_money_production
-		#    from its own pulse, and it may not be there yet when history runs.
-		#    In that case nothing happens here and the pulse does the work.
-		#
-		#    Grants liquidity_currency, not a separate local_currency (unified
-		#    02.09.2026, same evening as the split -- see EF.10 in
-		#    План проекта.md).
-		########################################################################
-		if = {
-			limit = {
-				zz_ef_local_currency_needs_throttle = yes
-				zz_ef_local_currency_per_state > 0
-			}
-			add_modifier = {
-				name = zz_ef_local_currency_fix
-				multiplier = zz_ef_local_currency_per_state
-			}
-		}
+		# 4. Initial liquidity_currency grant to minor countries -- removed 5.10 (Д2.3): settlement services come
+		#    from banks (buildings/zz_ef_bank.txt) and are traded.
 	}
 }

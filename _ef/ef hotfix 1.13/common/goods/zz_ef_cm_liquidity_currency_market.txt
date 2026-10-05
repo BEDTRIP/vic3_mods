@@ -1,30 +1,14 @@
-### E&F Hotfix — liquidity_currency: trading, icon and name for the plain variant
+### E&F Hotfix -- liquidity_currency = settlement services (Д2.1, 5.10.2026); trading and icon.
 ###
-### E&F's 02.09.2026 update made liquidity_currency non-tradeable at the
-### source (see ef_00_goods.txt: tradeable = no, traded_quantity and
-### convoy_cost_multiplier commented out). liquidity_currency is the good
-### actual central banks mint, and the three prestige currency variants
-### (zz_ef_cm_prestige_currencies.txt) are built on top of it. A non-tradeable
-### base good makes those prestige goods untradeable too and kills the
-### market/trade-route gameplay the old per-nation currencies (spe_uni_c etc.)
-### used to have.
+### Д2.1 (5.10, decided by the user): E&F's currency good is the service of moving money -- payments, transfers,
+### bills -- made by private banks (buildings/zz_ef_bank.txt) and bought by businesses (E&F's market liquidity
+### method) and the population (popneed_currency). The key stays: thousands of E&F lines read it. Name:
+### localization/*/replace/zz_ef_cm_goods_replace_l_*.yml. The three regime-currency prestige goods built on it
+### are gone with the central bank's companies (Д2.5).
 ###
-### tradeable/traded_quantity/convoy_cost_multiplier match the old spe_uni_c
-### definition (pre-02.09.2026 E&F).
-###
-### 02.09.2026, same evening: local_currency and liquidity_currency unified
-### into one good on request. Minor countries (no monetary system) now get
-### plain liquidity_currency too, not a separate good — see
-### zz_ef_local_currency_fix.txt. The texture below is that plain variant's
-### icon: the local_currency coin, not E&F's own spe_uni.dds, so the ordinary
-### grant reads as "local currency" rather than "generic base money" even
-### though it is the same good the central banks' prestige goods sit on. The
-### three prestige variants keep their own textures
-### (zz_ef_cm_prestige_currencies.txt) — unaffected, that field lives on the
-### prestige_good entry, not here.
-###
-### Name: liquidity_currency:0 in localization/*/zz_ef_cm_goods_l_*.yml,
-### "Local Currency" / "Локальная валюта" — overrides E&F's own "Base Money".
+### Д2.3: traded between markets (E&F's 02.09.2026 update made it tradeable = no; tradeable/traded_quantity/
+### convoy_cost_multiplier as the old spe_uni_c): a country without banks imports the services from the banking
+### centres; the trade goes into the trade balance and the clearing like any good.
 
 INJECT:liquidity_currency = {
 	tradeable = yes
