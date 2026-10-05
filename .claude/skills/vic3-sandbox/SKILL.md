@@ -40,9 +40,10 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
    подсказку, а не весь экран); `py_tool("parse_eflog" | "save_money_check", args)` — разбор на ПК.
 
 Проверка моста 5.10 (прогон `r1005_042928`, продолжение сейва за Швейцарию, 1.7.1837):
-- Видно: `docs` (logs, save games, mod, crashes), `game`, `runs`, `wt`. **Не видно** оригиналов чужих модов —
-  `vic3_mods_out` и мастерской Steam (`steamapps/workshop/content/529340`) нет в `ROOTS` `server.py`. В облачном клоне
-  `vic3_mods_out` тоже нет (он вне git).
+- Видно: `docs` (logs, save games, mod, crashes), `game`, `runs`, `wt`, а с 5.10 и оригиналы чужих модов (только
+  чтение): `orig` = `vic3_mods_out` (E&F, PSC, VC, Morgenrote, TheGreatRevision, llwa, `.vanillaVIC3` …) и `workshop` =
+  мастерская Steam (`steamapps/workshop/content/529340/<id>`). Правку `ROOTS` в `server.py` пользователь вносит сам
+  в основной копии на ПК (сервер работает оттуда, не из `wt`) и перезапускает `start.ps1`.
 - `sync_mod` сравнивает побайтно, а `wt` и живая копия расходятся концами строк (LF/CRLF, `* text=auto`) — первая
   синхронизация переписала все ~330 файлов. Безвредно, но список `copied` не говорит, что реально изменилось.
 - ngrok временами отвечает `ERR_NGROK_3004` (повтор проходит). В 04:37:15 посреди снимков бюджета (`t3_economy_5` из 7)
