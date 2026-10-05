@@ -119,10 +119,22 @@ function Console-Cmd($p, $cmd) {
     Start-Sleep -Milliseconds 200
     Send-Key 0x0D 0x1C
     Start-Sleep -Milliseconds 800
-    Click-Window $p 0.62 0.45
-    Send-Key 0xC0 0x29
-    Start-Sleep -Milliseconds 400
+    Close-Console $p | Out-Null
     Log "console: $cmd"
+}
+
+# Click on the map + the console key, then look whether the console is gone; again up to 3 times
+# (5.10: the console stayed open twice running, the speed key "5" went into its line).
+function Close-Console($p) {
+    for ($i = 0; $i -lt 3; $i++) {
+        Click-Window $p 0.62 0.45
+        Send-Key 0xC0 0x29
+        Start-Sleep -Milliseconds 600
+        if (-not (Is-Screen $p "console")) { return $true }
+        Log "the console is still open - closing again"
+    }
+    Log "the console stays open"
+    return $false
 }
 
 function Shot($p, $name) {
@@ -151,7 +163,13 @@ $Screens = @{
     lobby = @{ box = @(2200, 300, 2540, 900); rgb = @(47, 52, 49); tol = 15; box2 = @(2180, 1395, 2540, 1430); rgb2 = @(53, 53, 53); tol2 = 15 }
     # the column's skin depends on the country's interface style: (76, 68, 68) for most, (92, 84, 65) for
     # Croatia -- Austria's style (4.10, the user; a new game waited the full 400 s) -- tolerance 25
-    game  = @{ box = @(5, 210, 45, 980); rgb = @(76, 68, 68); tol = 25 }
+    # Two halves of the column, each on its own: 5.10 (run r1005_044523) a loading screen's painting -- beige
+    # above, a dark suit below -- averaged (80, 63, 44) over the whole column, inside the tolerance, and the
+    # console commands went in while the game was still loading; its halves are (132, 108, 80) and (28, 18, 8)
+    game  = @{ box = @(5, 210, 45, 595); rgb = @(76, 68, 68); tol = 25; box2 = @(5, 595, 45, 980); rgb2 = @(76, 68, 68); tol2 = 25 }
+    # the open console: its log area is a flat dark grey (45, 50, 52); the map there is (59, 75, 92), the
+    # budget panel (63, 64, 58) -- 5.10, screenshots of r1005_042928 and r1005_044523
+    console = @{ box = @(120, 250, 500, 650); rgb = @(45, 50, 52); tol = 8 }
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]

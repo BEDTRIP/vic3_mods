@@ -161,6 +161,7 @@ else {
         if (-not (Is-Advancing $p 16)) {
             Log "date stands - unpausing"
             Shot $p ("stall_" + (Get-Date -Format "HHmmss") + ".png")
+            if (Is-Screen $p "console") { Log "the console is open"; Close-Console $p | Out-Null }
             Send-Key 0x20 0x39
             if (-not (Is-Advancing $p 16)) { Send-Key 0x20 0x39; Log "still standing after a toggle" }
         } else { Log "advancing" }
