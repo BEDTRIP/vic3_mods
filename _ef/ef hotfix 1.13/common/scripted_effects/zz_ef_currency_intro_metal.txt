@@ -13,84 +13,91 @@
 #     stage 3) it can be bought from them.
 
 zz_ef_cur_intro_before = {
-	if = { limit = { has_variable = zz_ef_cur_intro_first } remove_variable = zz_ef_cur_intro_first }
+	# 5.10 (run s1b): history can call it for a country with no capital yet
 	if = {
-		limit = { NOT = { has_variable = country_already_central_bank } }
-		set_variable = { name = zz_ef_cur_intro_first value = yes }
-	}
-	capital = {
-		set_variable = { name = zz_ef_cur_intro_gold value = 0 }
-		set_variable = { name = zz_ef_cur_intro_silver value = 0 }
+		limit = { exists = capital }
+		if = { limit = { has_variable = zz_ef_cur_intro_first } remove_variable = zz_ef_cur_intro_first }
 		if = {
-			limit = { has_variable = gold_state_1 }
-			set_variable = { name = zz_ef_cur_intro_gold value = var:gold_state_1 }
+			limit = { NOT = { has_variable = country_already_central_bank } }
+			set_variable = { name = zz_ef_cur_intro_first value = yes }
 		}
-		if = {
-			limit = { has_variable = silver_state_1 }
-			set_variable = { name = zz_ef_cur_intro_silver value = var:silver_state_1 }
+		capital = {
+			set_variable = { name = zz_ef_cur_intro_gold value = 0 }
+			set_variable = { name = zz_ef_cur_intro_silver value = 0 }
+			if = {
+				limit = { has_variable = gold_state_1 }
+				set_variable = { name = zz_ef_cur_intro_gold value = var:gold_state_1 }
+			}
+			if = {
+				limit = { has_variable = silver_state_1 }
+				set_variable = { name = zz_ef_cur_intro_silver value = var:silver_state_1 }
+			}
 		}
 	}
 }
 
 zz_ef_cur_intro_after = {
 	if = {
-		limit = {
-			has_variable = zz_ef_weeks_run
-			var:zz_ef_weeks_run >= 13
-		}
-		capital = {
-			set_variable = { name = zz_ef_cur_intro_g_ef value = 0 }
-			if = {
-				limit = { has_variable = gold_state_1 }
-				set_variable = { name = zz_ef_cur_intro_g_ef value = var:gold_state_1 }
-			}
-			set_variable = { name = gold_state_1 value = var:zz_ef_cur_intro_gold }
-			set_variable = { name = silver_state_1 value = var:zz_ef_cur_intro_silver }
-		}
-		set_variable = { name = zz_ef_cur_intro_norm value = 0 }
+		limit = { exists = capital }
 		if = {
 			limit = {
-				has_variable = zz_ef_cur_intro_first
-				has_variable = money_value_target_1
-				var:money_value_target_1 > 0
-				OR = {
-					has_law = law_type:law_gold_standard
-					has_law = law_type:law_silver_standard
-					has_law = law_type:law_bimetallism_standard
-				}
+				has_variable = zz_ef_weeks_run
+				var:zz_ef_weeks_run >= 13
 			}
-			set_variable = { name = zz_ef_cur_intro_norm value = zz_ef_agg_m2 }
-			change_variable = { name = zz_ef_cur_intro_norm multiply = zz_ef_cover_normal }
-			change_variable = { name = zz_ef_cur_intro_norm multiply = var:money_value_target_1 }
+			capital = {
+				set_variable = { name = zz_ef_cur_intro_g_ef value = 0 }
+				if = {
+					limit = { has_variable = gold_state_1 }
+					set_variable = { name = zz_ef_cur_intro_g_ef value = var:gold_state_1 }
+				}
+				set_variable = { name = gold_state_1 value = var:zz_ef_cur_intro_gold }
+				set_variable = { name = silver_state_1 value = var:zz_ef_cur_intro_silver }
+			}
+			set_variable = { name = zz_ef_cur_intro_norm value = 0 }
 			if = {
-				limit = { var:zz_ef_cur_intro_norm < 0 }
-				set_variable = { name = zz_ef_cur_intro_norm value = 0 }
-			}
-			if = {
-				limit = { has_law = law_type:law_silver_standard }
-				capital = {
-					change_variable = { name = silver_state_1 add = owner.var:zz_ef_cur_intro_norm }
+				limit = {
+					has_variable = zz_ef_cur_intro_first
+					has_variable = money_value_target_1
+					var:money_value_target_1 > 0
+					OR = {
+						has_law = law_type:law_gold_standard
+						has_law = law_type:law_silver_standard
+						has_law = law_type:law_bimetallism_standard
+					}
+				}
+				set_variable = { name = zz_ef_cur_intro_norm value = zz_ef_agg_m2 }
+				change_variable = { name = zz_ef_cur_intro_norm multiply = zz_ef_cover_normal }
+				change_variable = { name = zz_ef_cur_intro_norm multiply = var:money_value_target_1 }
+				if = {
+					limit = { var:zz_ef_cur_intro_norm < 0 }
+					set_variable = { name = zz_ef_cur_intro_norm value = 0 }
+				}
+				if = {
+					limit = { has_law = law_type:law_silver_standard }
+					capital = {
+						change_variable = { name = silver_state_1 add = owner.var:zz_ef_cur_intro_norm }
+					}
+				}
+				else = {
+					capital = {
+						change_variable = { name = gold_state_1 add = owner.var:zz_ef_cur_intro_norm }
+					}
 				}
 			}
-			else = {
-				capital = {
-					change_variable = { name = gold_state_1 add = owner.var:zz_ef_cur_intro_norm }
-				}
+			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cur_intro|first [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cur_intro_first_v')|0]|gold_ef [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_g_ef').GetValue|0]|gold_kept [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_gold').GetValue|0]|norm [THIS.GetCountry.MakeScope.Var('zz_ef_cur_intro_norm').GetValue|0]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
+			capital = {
+				if = { limit = { has_variable = zz_ef_cur_intro_g_ef } remove_variable = zz_ef_cur_intro_g_ef }
 			}
 		}
-		debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cur_intro|first [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cur_intro_first_v')|0]|gold_ef [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_g_ef').GetValue|0]|gold_kept [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_gold').GetValue|0]|norm [THIS.GetCountry.MakeScope.Var('zz_ef_cur_intro_norm').GetValue|0]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
 		capital = {
-			if = { limit = { has_variable = zz_ef_cur_intro_g_ef } remove_variable = zz_ef_cur_intro_g_ef }
+			if = { limit = { has_variable = zz_ef_cur_intro_gold } remove_variable = zz_ef_cur_intro_gold }
+			if = { limit = { has_variable = zz_ef_cur_intro_silver } remove_variable = zz_ef_cur_intro_silver }
 		}
-	}
-	capital = {
-		if = { limit = { has_variable = zz_ef_cur_intro_gold } remove_variable = zz_ef_cur_intro_gold }
-		if = { limit = { has_variable = zz_ef_cur_intro_silver } remove_variable = zz_ef_cur_intro_silver }
-	}
-	if = { limit = { has_variable = zz_ef_cur_intro_first } remove_variable = zz_ef_cur_intro_first }
-	# В3.2 (5.10): E&F just gave a subject its own currency -- back to the overlord's zone
-	if = {
-		limit = { is_subject = yes }
-		zz_ef_cur_zone_step = yes
+		if = { limit = { has_variable = zz_ef_cur_intro_first } remove_variable = zz_ef_cur_intro_first }
+		# В3.2 (5.10): E&F just gave a subject its own currency -- back to the overlord's zone
+		if = {
+			limit = { is_subject = yes }
+			zz_ef_cur_zone_step = yes
+		}
 	}
 }
