@@ -1,4 +1,4 @@
-# Д2.4 (5.10.2026) -- the private bank's methods by era (buildings/zz_ef_bank.txt, production_methods/zz_ef_bank_pm.txt).
+﻿# Д2.4 (5.10.2026) -- the private bank's methods by era (buildings/zz_ef_bank.txt, production_methods/zz_ef_bank_pm.txt).
 pmg_zz_ef_bank_base = {
 	texture = "gfx/interface/icons/generic_icons/mixed_icon_base.dds"
 	ai_selection = most_productive

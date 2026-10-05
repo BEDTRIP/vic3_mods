@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # Д2.1-Д2.4 (5.10.2026, decided by the user) -- the private bank: "Банк" / "Bank".
 #
 # E&F's currency good (liquidity_currency) becomes bank settlements: what E&F modelled as "money as a good" is

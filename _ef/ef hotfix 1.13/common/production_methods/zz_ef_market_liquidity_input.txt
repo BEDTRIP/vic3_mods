@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # Д2.2 (5.10.2026, decided by the user) -- businesses' demand for bank settlements: ~5% of GDP, not ~20%.
 #
 # E&F's "market liquidity" method (production_methods/00_ef_market_liquidity.txt, 4.1.7) sits on almost every

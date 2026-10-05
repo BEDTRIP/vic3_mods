@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # Д2.4 (5.10.2026) -- the private bank's methods by era. The user: "services everywhere, and more" -- every method
 # buys services (premises, couriers, guards, lawyers); a bank spends little on goods, mostly on people.
 #
