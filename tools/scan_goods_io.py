@@ -51,14 +51,15 @@ def main():
                 ctr[tag] += v
                 if kind == 'input_goods':
                     by_type[tag][bt] += v
-    # country records: goods_consumption / goods_production blocks (what is not in the buildings: pops? the state?)
-    cm = SO.section(s, 'country_manager')
+    # state records: goods_consumption / goods_production blocks (what is not in the buildings: pops? the state?)
+    cm = SO.section(s, 'states')
     ccons = collections.Counter(); cprod = collections.Counter()
     for m in re.finditer(r'\n(\d+)=\{\n(.*?)\n\}', cm, re.S):
-        tag = d['tag'].get(m.group(1))
+        body = m.group(2)
+        cid = re.search(r'\n\tcountry=(\d+)', '\n' + body)
+        tag = d['tag'].get(cid.group(1), cid.group(1)) if cid else None
         if not tag:
             continue
-        body = m.group(2)
         for kind, ctr in (('goods_consumption', ccons), ('goods_production', cprod)):
             k = body.find('\n\t' + kind + '={')
             if k < 0:
@@ -68,7 +69,7 @@ def main():
             if g:
                 ctr[tag] += float(g.group(1))
     print(f"date {d['date']}  good {gid}")
-    print('country records: goods_consumption top ' + ', '.join(f'{t} {v:.0f}' for t, v in ccons.most_common(8))
+    print('state records (by owner): goods_consumption top ' + ', '.join(f'{t} {v:.0f}' for t, v in ccons.most_common(8))
           + f'  ALL {sum(ccons.values()):.0f}; goods_production ALL {sum(cprod.values()):.0f}')
     print('country      input     output   top input building types')
     for tag, v in rin.most_common(top):
