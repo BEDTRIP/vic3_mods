@@ -49,7 +49,8 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 Нет инструментов `mcp__vic3-pc__*` — мост выключен, попросить пользователя запустить `start.ps1`.
 
 1. Правки — в своём клоне, **коммит и `git push` в `main`** (мост берёт код с GitHub, не из облака).
-2. `checkout(branch)` → `_bridge/wt` на ПК; `sync_mod()` (по умолчанию `_ef/ef hotfix 1.13` → `E&F Hotfix`;
+2. `checkout(branch)` → `_bridge/wt` на ПК; **сверить хеш** из ответа с `git log -1 --format=%h` своего клона — ngrok
+   иногда отвечает ERR_NGROK_3004, и прогон ушёл на старом коде (r1005_104201, 5.10): ошибка или чужой хеш — повторить; `sync_mod()` (по умолчанию `_ef/ef hotfix 1.13` → `E&F Hotfix`;
    другие моды — `repo_folder`, `live_name`); при идущей игре отказывает.
 3. `start_run(run_minutes, new_game, tag, start_save, autosaves, shots, countries, …)` — те же параметры, что
    у скрипта ниже; сразу отдаёт id. Дальше `run_status(id)` раз в 1–2 минуты (в облаке ждать фоновой
