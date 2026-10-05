@@ -10,7 +10,7 @@ Steps (';'-separated, run in order):
     hover <fx> <fy>         move the mouse there (a tooltip opens after ~1 s)
     scroll <fx> <fy> <n>    mouse wheel there, n notches (negative = down)
     wait <sec>              sleep
-    key <name>              esc | space | enter | f1..f9 (scan codes for DirectInput)
+    key <name>              esc | space | enter | f1..f9 | tilde (the console key) (scan codes for DirectInput)
     console <command>       a console command (debug_mode), e.g. "console tag GBR"
     macro <name> <prefix>   a named step sequence from vic3_ui_points.ps1 ({P} = prefix)
     tips <set> <prefix>     every hover of the named set below, one screenshot each (<prefix>_<n>.png)
@@ -36,7 +36,9 @@ $script:WantPaused = $true
 
 $Keys = @{ esc = @(0x1B, 0x01); space = @(0x20, 0x39); enter = @(0x0D, 0x1C)
     f1 = @(0x70, 0x3B); f2 = @(0x71, 0x3C); f3 = @(0x72, 0x3D); f4 = @(0x73, 0x3E); f5 = @(0x74, 0x3F)
-    f6 = @(0x75, 0x40); f7 = @(0x76, 0x41); f8 = @(0x77, 0x42); f9 = @(0x78, 0x43) }
+    f6 = @(0x75, 0x40); f7 = @(0x76, 0x41); f8 = @(0x77, 0x42); f9 = @(0x78, 0x43)
+    # the console key (5.10: after -Commands "tag ...; money ..." the console stayed open, the speed key went into it)
+    tilde = @(0xC0, 0x29) }
 
 # Named hover sets: the points measured on the screenshots of the night of 4.10 (fractions of a
 # 2560x1440 window). Filled in as they are found.
