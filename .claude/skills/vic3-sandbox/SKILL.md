@@ -39,6 +39,16 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
    `docs/crashes/…`, `game/game/…`; снимки — `get_image(path, crop=[x0,y0,x1,y1])` (доли, кадрировать
    подсказку, а не весь экран); `py_tool("parse_eflog" | "save_money_check", args)` — разбор на ПК.
 
+Проверка моста 5.10 (прогон `r1005_042928`, продолжение сейва за Швейцарию, 1.7.1837):
+- Видно: `docs` (logs, save games, mod, crashes), `game`, `runs`, `wt`. **Не видно** оригиналов чужих модов —
+  `vic3_mods_out` и мастерской Steam (`steamapps/workshop/content/529340`) нет в `ROOTS` `server.py`. В облачном клоне
+  `vic3_mods_out` тоже нет (он вне git).
+- `sync_mod` сравнивает побайтно, а `wt` и живая копия расходятся концами строк (LF/CRLF, `* text=auto`) — первая
+  синхронизация переписала все ~330 файлов. Безвредно, но список `copied` не говорит, что реально изменилось.
+- ngrok временами отвечает `ERR_NGROK_3004` (повтор проходит). Во время снимков (`-Shots`) сервер за туннелем упал
+  (`ERR_NGROK_8012`, `localhost:8080` не отвечает) — дальше только перезапуск `start.ps1` пользователем; прогон на ПК
+  при этом доходит сам, `run_status` после перезапуска скажет «unknown», файлы — в `runs/<id>`.
+
 ## Три режима
 
 Запуск всегда в фоне (`run_in_background: true`), вывод — в `-OutDir` (scratchpad сессии):
