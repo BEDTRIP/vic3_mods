@@ -144,6 +144,8 @@ function Wait-User($p) {
         if ($tries -ge 24) { Log "the game cannot be brought to front - stopping, nothing sent"; throw "game window not in front" }
     }
     Log ("the user left after {0:N0} s - leaving menus, going on" -f ((Get-Date) - $t).TotalSeconds)
+    # a "redo" step of vic3_ui.ps1 sees this and takes its piece again from the start (its menu reopened)
+    $global:Vic3Interrupted = $true
     Reset-UI $p
     return $true
 }
