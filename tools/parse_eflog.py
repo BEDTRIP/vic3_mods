@@ -3,7 +3,7 @@
 Usage: py tools/parse_eflog.py <run>/eflog.txt [more eflog.txt ...] <out.json>
 Output: {country: {"EFW": [{"date": "1837-01-05", key: value, ...}], "EFR": [...], "EFX": [...], "EFC": [...]}}
 (EFX: the monthly currency line of every country; EFC: a currency-crisis redemption, night 2;
-EFS: consols, Д2.7б -- debt, sale, interest, buy-back).
+EFS: consols, Д2.7б -- debt, sale, interest, buy-back; EFL: listed companies and capitalization, Д2.10-Д2.11, monthly).
 Dates are written by the game in Russian month names (the user's language).
 """
 import json, re, sys
@@ -22,7 +22,7 @@ out = {}
 for path in sys.argv[1:-1]:
     for line in open(path, encoding="utf-8-sig", errors="replace"):
         parts = line.strip().split("|")
-        if len(parts) < 4 or parts[0] not in ("EFW", "EFR", "EFX", "EFC", "EFM", "EFJ", "EFO", "EFF", "EFD", "EFS", "EFK", "EFA", "EFP", "EFG", "EFB"): continue
+        if len(parts) < 4 or parts[0] not in ("EFW", "EFR", "EFX", "EFC", "EFM", "EFJ", "EFO", "EFF", "EFD", "EFS", "EFK", "EFA", "EFP", "EFG", "EFB", "EFL"): continue
         rec = {"date": date(parts[1])}
         for p in parts[3:]:
             if " " in p:

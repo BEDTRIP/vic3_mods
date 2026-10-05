@@ -45,6 +45,24 @@ zz_ef_cap_monthly_update = {
 			add = local_var:zz_s_rr
 		}
 	}
+	# Д2.10 (5.10): the capitalization is the listed companies' value (script_values/zz_ef_listing_values.txt), not
+	# the stocks' output x 520 x price; the output only splits it over the four stocks (E&F's menu shows them
+	# apart), equally when there is no output. Nothing listed -- 0 for all four.
+	set_local_variable = { name = zz_s_new value = zz_ef_cap_listed_snapshot }
+	if = {
+		limit = { local_var:zz_s_total > 0 }
+		set_local_variable = { name = zz_s_ms value = { value = local_var:zz_s_ms divide = local_var:zz_s_total multiply = local_var:zz_s_new } }
+		set_local_variable = { name = zz_s_as value = { value = local_var:zz_s_as divide = local_var:zz_s_total multiply = local_var:zz_s_new } }
+		set_local_variable = { name = zz_s_mn value = { value = local_var:zz_s_mn divide = local_var:zz_s_total multiply = local_var:zz_s_new } }
+		set_local_variable = { name = zz_s_rr value = { value = local_var:zz_s_rr divide = local_var:zz_s_total multiply = local_var:zz_s_new } }
+	}
+	else = {
+		set_local_variable = { name = zz_s_ms value = { value = local_var:zz_s_new multiply = 0.25 } }
+		set_local_variable = { name = zz_s_as value = { value = local_var:zz_s_new multiply = 0.25 } }
+		set_local_variable = { name = zz_s_mn value = { value = local_var:zz_s_new multiply = 0.25 } }
+		set_local_variable = { name = zz_s_rr value = { value = local_var:zz_s_new multiply = 0.25 } }
+	}
+	set_local_variable = { name = zz_s_total value = local_var:zz_s_new }
 
 	if = {
 		limit = {

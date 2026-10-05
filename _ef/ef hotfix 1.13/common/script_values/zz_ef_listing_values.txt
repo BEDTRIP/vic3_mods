@@ -1,0 +1,96 @@
+﻿#############################################
+# Д2.10 (5.10.2026, decided by the user) -- the stock market's capitalization = the value of what is listed:
+# the listed companies' yearly dividends / (the government's rate + an equity risk premium ~4 pp). The target
+# (the user): about 0.3 GDP for Britain in the 1840s and ~1.0 by 1913 by itself, without steering the index.
+# E&F's stock goods (manufacture / agricultural / mining / railroad stock) are the exchange's turnover, not its
+# capitalization: until 5.10 the capitalization was their weekly output x 520 x price (EF.24).
+#
+# Listed = company headquarters with the "publicly traded" method (EF.22, switched by script monthly, Д2.11:
+# scripted_effects/zz_ef_listing.txt). The engine gives the script no link building -> company and no company
+# profit, so the listed companies' dividends are estimated (accepted at night, check):
+#   the country's building profit a year (zz_ef_profit_week x 52, losses not counted)
+#   x the companies' share of the building levels (sum of company_owned_levels / all levels)
+#   x the listed headquarters' share of all headquarter levels (an HQ's level ~ the company's size).
+# Without an exchange nothing is listed: capitalization 0, burnt through the yearly average (Д2.12, EF.47).
+# COUNTRY scope.
+#############################################
+
+# !! TUNING !! the equity risk premium over the government's rate (the user: ~4 pp)
+zz_ef_equity_premium = 0.04
+
+zz_ef_hq_levels = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_company_headquarter }
+		add = level
+	}
+}
+zz_ef_listed_hq_levels = {
+	value = 0
+	every_scope_building = {
+		limit = {
+			is_building_type = building_company_headquarter
+			has_active_production_method = pm_company_headquarter_publicly_traded
+		}
+		add = level
+	}
+}
+zz_ef_company_levels = {
+	value = 0
+	every_company = {
+		add = company_owned_levels
+	}
+}
+zz_ef_all_levels = {
+	value = 0
+	every_scope_building = {
+		limit = {
+			level > 0
+			is_subsistence_building = no
+		}
+		add = level
+	}
+}
+zz_ef_listed_share = {
+	value = 0
+	if = {
+		limit = { zz_ef_hq_levels > 0 }
+		value = zz_ef_listed_hq_levels
+		divide = zz_ef_hq_levels
+		max = 1
+	}
+}
+zz_ef_company_share = {
+	value = 0
+	if = {
+		limit = { zz_ef_all_levels > 0 }
+		value = zz_ef_company_levels
+		divide = zz_ef_all_levels
+		max = 1
+	}
+}
+zz_ef_listed_div_year = {
+	value = zz_ef_profit_week
+	multiply = 52
+	multiply = zz_ef_company_share
+	multiply = zz_ef_listed_share
+	min = 0
+}
+zz_ef_cap_discount = {
+	value = zz_ef_gov_rate_target
+	add = zz_ef_equity_premium
+	min = 0.02
+}
+# This month's capitalization (the snapshot the yearly average follows).
+zz_ef_cap_listed_snapshot = {
+	value = zz_ef_listed_div_year
+	divide = zz_ef_cap_discount
+}
+zz_ef_cap_to_gdp = {
+	value = 0
+	if = {
+		limit = { gdp > 0 }
+		value = zz_ef_equity_capitalization
+		divide = gdp
+	}
+}

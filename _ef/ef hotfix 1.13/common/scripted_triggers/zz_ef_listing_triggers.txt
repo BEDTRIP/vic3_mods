@@ -1,0 +1,17 @@
+﻿#############################################
+# Д2.11 (5.10.2026, decided by the user) -- when a country's companies may be publicly traded: a stock exchange
+# (a national financial centre of E&F, bg_financial_centre) + the law allows private joint-stock companies (not
+# traditionalism; the method itself is barred under command economy and cooperative ownership) + the method's
+# technology. Used by scripted_effects/zz_ef_listing.txt. COUNTRY scope.
+#############################################
+
+zz_ef_listing_allowed = {
+	any_scope_building = {
+		is_building_group = bg_financial_centre
+		level >= 1
+	}
+	has_technology_researched = joint_stock_companies
+	NOT = { has_law = law_type:law_traditionalism }
+	NOT = { has_law = law_type:law_command_economy }
+	NOT = { has_law = law_type:law_cooperative_ownership }
+}

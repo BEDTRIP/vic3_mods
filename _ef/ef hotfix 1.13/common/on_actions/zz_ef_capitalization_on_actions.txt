@@ -29,7 +29,10 @@ zz_ef_capitalization_monthly = {
 		### EF.28: stock issuance by the share of literate rich pops
 		### (scripted_effects/zz_ef_stock_issue_literacy.txt).
 		zz_ef_stock_issue_update = yes
+		### Д2.11 (5.10): listed companies -- the "publicly traded" HQ method by script (zz_ef_listing.txt)
+		zz_ef_listing_update = yes
 		zz_ef_cap_monthly_update = yes
+		zz_ef_listing_log = yes
 		zz_ef_cap_monthly_crash_check = yes
 
 		### EF.25

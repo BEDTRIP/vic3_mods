@@ -33,10 +33,12 @@
 zz_ef_stock_issue_update = {
 	set_local_variable = { name = zz_lr_all value = 0 }
 	set_local_variable = { name = zz_lr_rich value = 0 }
+	set_local_variable = { name = zz_lr_rich_all value = 0 }
 	every_scope_pop = {
 		change_local_variable = { name = zz_lr_all add = total_size }
 		if = {
 			limit = { wealth >= 15 }
+			change_local_variable = { name = zz_lr_rich_all add = total_size }
 			change_local_variable = {
 				name = zz_lr_rich
 				add = {
@@ -54,6 +56,19 @@ zz_ef_stock_issue_update = {
 				value = local_var:zz_lr_all
 				min = 1
 			}
+		}
+	}
+	# Д2.11 (5.10): the literacy of the rich themselves (literate rich / all rich), 0..1 -- the share of the
+	# companies' levels that go public (scripted_effects/zz_ef_listing.txt)
+	set_variable = {
+		name = zz_ef_rich_literacy
+		value = {
+			value = local_var:zz_lr_rich
+			divide = {
+				value = local_var:zz_lr_rich_all
+				min = 1
+			}
+			max = 1
 		}
 	}
 	remove_modifier = zz_ef_stock_issue_literacy
