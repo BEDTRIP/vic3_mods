@@ -432,6 +432,8 @@ zz_ef_other_treasury_budget = {
 	subtract = zz_ef_v_f_mint_tr
 	# Д4.5 (4.10): the treasury's surplus over its limit, moved to the pool
 	add = zz_ef_v_f_tr_pool
+	# В5.5 (5.10): interest on the treasury's parts of other countries' debt (the bond ledger)
+	subtract = zz_ef_v_f_bl_int_in
 }
 # Д4.5 (4.10): treasury -> pool this step (zz_ef_money_model_step)
 zz_ef_v_f_tr_pool = {
@@ -568,6 +570,10 @@ zz_ef_pool_other_week = {
 	subtract = zz_ef_v_w_hume_money
 	# Д4.5 (4.10): the treasury's surplus put into the pool
 	subtract = zz_ef_v_f_tr_pool
+	# В5.5 (5.10): the bond ledger's moves on the pool (a seller's), with abroad
+	subtract = zz_ef_v_f_bl_sold
+	add = zz_ef_v_f_bl_int_out
+	add = zz_ef_v_f_bl_redeem
 }
 # Unexplained change of M2 this week: the change minus the budget's lines
 # outside the accounts, minus the CB's net credit, plus the foreign bonds the
@@ -595,6 +601,12 @@ zz_ef_leak_week = {
 	subtract = zz_ef_tr_other_net
 	# M.3 (4.10): Hume's coined / withdrawn money -- the CB's, not pops'
 	subtract = zz_ef_v_w_hume_money
+	# В5.5 (5.10): the bond ledger with abroad -- the pool's (out of pool_other now) and the treasury's interest (out
+	# of the treasury's "other"; the parts repaid stay there, as E&F's bond moves)
+	subtract = zz_ef_v_f_bl_sold
+	add = zz_ef_v_f_bl_int_out
+	add = zz_ef_v_f_bl_redeem
+	subtract = zz_ef_v_f_bl_int_in
 }
 # The treasury's change beyond the week's budget and the CB's profit: E&F's
 # scripted moves on the treasury -- ai_refund_central_bank (the government
@@ -945,6 +957,13 @@ zz_ef_ext_net_week = {
 	subtract = zz_ef_v_d_tbonds
 	# M.6 (4.10): dividends from abroad, net
 	add = zz_ef_v_f_div
+	# В5.5 (5.10): the bond ledger -- as a seller: parts sold into our pool, interest and repayments out of it;
+	# as a holder: interest in (the parts bought / repaid are in d_tbonds; a part written off is no payment)
+	add = zz_ef_v_f_bl_sold
+	subtract = zz_ef_v_f_bl_int_out
+	subtract = zz_ef_v_f_bl_redeem
+	add = zz_ef_v_f_bl_int_in
+	subtract = zz_ef_v_f_bl_lost
 }
 # Metal moved by it: the flow x the currency's PARITY (metal per unit of
 # money at the mint par, var:money_value_target_1), never more than the CB
@@ -2027,87 +2046,8 @@ zz_ef_pop_cash_held = {
 # The treasury's foreign bonds (E&F ai_buy_bond_1..10: bought with
 # add_treasury = -ai_total_bond_value_N, live while ai_buy_bond_N_on = 1).
 zz_ef_treasury_bonds = {
-	value = 0
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_1_on
-			var:ai_buy_bond_1_on = 1
-			has_variable = ai_total_bond_value_1
-		}
-		add = var:ai_total_bond_value_1
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_2_on
-			var:ai_buy_bond_2_on = 1
-			has_variable = ai_total_bond_value_2
-		}
-		add = var:ai_total_bond_value_2
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_3_on
-			var:ai_buy_bond_3_on = 1
-			has_variable = ai_total_bond_value_3
-		}
-		add = var:ai_total_bond_value_3
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_4_on
-			var:ai_buy_bond_4_on = 1
-			has_variable = ai_total_bond_value_4
-		}
-		add = var:ai_total_bond_value_4
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_5_on
-			var:ai_buy_bond_5_on = 1
-			has_variable = ai_total_bond_value_5
-		}
-		add = var:ai_total_bond_value_5
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_6_on
-			var:ai_buy_bond_6_on = 1
-			has_variable = ai_total_bond_value_6
-		}
-		add = var:ai_total_bond_value_6
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_7_on
-			var:ai_buy_bond_7_on = 1
-			has_variable = ai_total_bond_value_7
-		}
-		add = var:ai_total_bond_value_7
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_8_on
-			var:ai_buy_bond_8_on = 1
-			has_variable = ai_total_bond_value_8
-		}
-		add = var:ai_total_bond_value_8
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_9_on
-			var:ai_buy_bond_9_on = 1
-			has_variable = ai_total_bond_value_9
-		}
-		add = var:ai_total_bond_value_9
-	}
-	if = {
-		limit = {
-			has_variable = ai_buy_bond_10_on
-			var:ai_buy_bond_10_on = 1
-			has_variable = ai_total_bond_value_10
-		}
-		add = var:ai_total_bond_value_10
-	}
+	# В5.5 (5.10): the treasury's parts of other countries' engine debt (the bond ledger), not E&F's prices
+	value = zz_ef_bl_parts
 }
 # Claims on abroad in M3: the banks' and the treasury's foreign bonds. E&F's
 # trade account (var:trade_balance_in_gold_fixe, a counter of cumulative trade
@@ -2150,6 +2090,9 @@ zz_ef_v_cbl_int = {
 zz_ef_bop_primary = {
 	value = zz_ef_v_f_div
 	add = zz_ef_v_f_aint
+	# В5.5 (5.10): bond interest by the ledger
+	add = zz_ef_v_f_bl_int_in
+	subtract = zz_ef_v_f_bl_int_out
 }
 zz_ef_bop_secondary = {
 	value = zz_ef_v_f_abr
@@ -2165,6 +2108,10 @@ zz_ef_bop_financial = {
 	value = 0
 	subtract = zz_ef_v_d_bonds
 	subtract = zz_ef_v_d_tbonds
+	# В5.5 (5.10): parts of our debt sold abroad / repaid; a part of theirs written off is no payment
+	add = zz_ef_v_f_bl_sold
+	subtract = zz_ef_v_f_bl_redeem
+	subtract = zz_ef_v_f_bl_lost
 }
 # Е.3–Е.4 (5.10, Д.1): the same balance in two groups for reading -- "+ received" and "− paid out", each item by its
 # sign; goods trade as exports (+) and imports (−) (imports recorded at the step, exports = net + imports so the
@@ -2212,6 +2159,8 @@ zz_ef_abroad_net = {
 	value = zz_ef_foreign_assets
 	add = zz_ef_fx_money
 	subtract = zz_ef_fx_liab_all
+	# В5.5 (5.10): the parts of our engine debt held abroad (the bond ledger)
+	subtract = zz_ef_bl_held_v
 }
 # the clearing's currency at the last receiver (window values, П.6), in money
 zz_ef_v_w_clr_cur_out = {
@@ -2291,6 +2240,8 @@ zz_ef_v_d_tbonds = {
 zz_ef_tr_to_cb = {
 	value = zz_ef_v_f_tr_other
 	add = zz_ef_v_d_tbonds
+	# В5.5 (5.10): a part written off left the parts without money
+	add = zz_ef_v_f_bl_lost
 }
 zz_ef_v_d_agg0 = {
 	value = 0

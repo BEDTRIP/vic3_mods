@@ -62,30 +62,8 @@ zz_ef_privbank_interest_pay = {
 	}
 }
 
-# Е.5 (5.10, Д.2): the interest on the scope country's bonds held by other countries' treasuries, an expense
-# line every week (static_modifiers/zz_ef_bond_interest.txt). E&F pays the holders as additional income and
-# took it from nobody; now the issuer pays the same sum. It is "additional expenses", so the money model counts
-# it with abroad (zz_ef_f_aint: the balance of payments, the clearing).
-zz_ef_bond_interest_step = {
-	set_variable = { name = zz_ef_f_bond_int value = zz_ef_bond_interest_due_week }
-	remove_modifier = zz_ef_foreign_bond_interest
-	if = {
-		limit = { var:zz_ef_f_bond_int > 0 }
-		add_modifier = {
-			name = zz_ef_foreign_bond_interest
-			multiplier = var:zz_ef_f_bond_int
-		}
-	}
-	if = {
-		limit = {
-			OR = {
-				is_player = yes
-				gdp > 20000000
-			}
-		}
-		debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|bond_interest|pays [THIS.GetCountry.MakeScope.Var('zz_ef_f_bond_int').GetValue|0]|gets [THIS.GetCountry.MakeScope.ScriptValue('interest_per_month_from_foreign_debt_investment')|0]|tbonds [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury_bonds')|0]|lent_to_us [THIS.GetCountry.MakeScope.ScriptValue('gold_loaned_to_central_bank_no_interest')|0]"
-	}
-}
+# Е.5 (5.10, Д.2): the issuer paid the interest on its bonds held by other treasuries as an expense line -- replaced
+# by the bond ledger (В5.5, 5.10: scripted_effects/zz_ef_bond_ledger.txt), which pays the holder out of the issuer's pool.
 
 # ---- the weekly chain -------------------------------------------------------
 
@@ -149,7 +127,9 @@ zz_ef_money_model_step = {
 	# В2.5 (4.10): CB states taken from a country send their metal back to it
 	zz_ef_cb_state_owner_step = yes
 	# Е.5 (5.10, Д.2): the issuer pays the week's interest to the treasuries holding its bonds
-	zz_ef_bond_interest_step = yes
+	# В5.5 (5.10): bonds as parts of the engine's debt (generated, scripted_effects/zz_ef_bond_ledger.txt); replaces
+	# Е.5's issuer-pays expense line (zz_ef_bond_interest_step)
+	zz_ef_bond_ledger_step = yes
 	if = {
 		limit = { NOT = { has_variable = zz_ef_weeks_run } }
 		set_variable = { name = zz_ef_weeks_run value = 0 }

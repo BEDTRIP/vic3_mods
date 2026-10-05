@@ -409,8 +409,8 @@ function Close-And-Collect {
         @(Get-ChildItem $OutDir -Filter "debug.log")
     if ($parts) {
         $seen = New-Object 'System.Collections.Generic.HashSet[string]'
-        Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|", "EFX|", "EFC|", "EFM|", "EFJ|", "EFO|", "EFF|", "EFD|", "EFG|" -SimpleMatch |
-            ForEach-Object { $_.Line -replace "^.*?(EF[WRXCMJOFDG]\|)", '$1' } |
+        Select-String -Path ($parts | ForEach-Object FullName) -Pattern "EFW|", "EFR|", "EFX|", "EFC|", "EFM|", "EFJ|", "EFO|", "EFF|", "EFD|", "EFG|", "EFB|" -SimpleMatch |
+            ForEach-Object { $_.Line -replace "^.*?(EF[WRXCMJOFDGB]\|)", '$1' } |
             Where-Object { $seen.Add($_) } |
             Set-Content -Encoding utf8 (Join-Path $OutDir "eflog.txt")
     }

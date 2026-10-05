@@ -499,6 +499,15 @@ FLOWS = [
     (K, Z, "E&F: казна покупает облигации других стран", "E&F: the treasury buys other countries' bonds",
      svp("zz_ef_v_d_tbonds"), None),
     (Z, K, "E&F: облигации казны погашены", "E&F: the treasury's bonds repaid", svn("zz_ef_v_d_tbonds"), None),
+    # В5.5 (5.10): bonds as parts of the engine's debt (the bond ledger, tools/regen_ef_bond_ledger.py)
+    (Z, K, "проценты по облигациям других стран (наша часть их госдолга)",
+     "interest on other countries' bonds (our part of their government debt)", sv_("zz_ef_v_f_bl_int_in"), None),
+    (Z, B, "облигации: держатели за рубежом купили часть нашего госдолга — цена в пул",
+     "bonds: holders abroad bought a part of our government debt — the price into the pool", sv_("zz_ef_v_f_bl_sold"), None),
+    (B, Z, "проценты держателям наших облигаций за рубежом", "interest to the holders of our bonds abroad",
+     sv_("zz_ef_v_f_bl_int_out"), None),
+    (B, Z, "погашение наших облигаций держателям за рубежом", "our bonds repaid to the holders abroad",
+     sv_("zz_ef_v_f_bl_redeem"), None),
     # the pool's unexplained loss (EF.48 item 2) = companies buying levels from aristocrats and capitalists at the
     # privatization price (В1.2, 3.10): the engine pays the sellers nothing, the model puts it in their savings
     (B, N, "компании выкупают уровни зданий у аристократов и капиталистов (цена приватизации, 15 000 за уровень) — "
@@ -717,7 +726,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
