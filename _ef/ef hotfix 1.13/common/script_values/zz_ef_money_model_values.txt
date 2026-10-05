@@ -2452,6 +2452,11 @@ zz_ef_agg3_pct_5y = {
 		divide = var:zz_ef_agg3_r20
 	}
 }
+# UI.11 (5.10): E&F's CB building stored metal since the last step (its monthly stockpiling), in money at the parity
+zz_ef_v_f_cb_stock = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_cb_stock } value = var:zz_ef_f_cb_stock }
+}
 zz_ef_v_d_cbm = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_d_cbm } value = var:zz_ef_d_cbm }

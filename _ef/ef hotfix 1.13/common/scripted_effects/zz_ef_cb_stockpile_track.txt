@@ -1,0 +1,19 @@
+﻿# UI.11 (5.10): E&F's CB building stores metal once a month (stockpiling_central_bank_metal_reserves_state, called
+# from E&F's monthly pulse for a market owner: storing_gold_1 / storing_silver_1 add the market's gold / silver sell
+# orders x 100 x 4 to the CB state). The CB card showed it inside "other"; now the change of E&F's reserves
+# (central_bank_reserves, the standard's metal) across the call is summed in var:zz_ef_cb_stock_acc and the money
+# model's step shows it as its own line (zz_ef_v_f_cb_stock, at the parity) in the week it happened.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's effect (01_economic_scripted_effects.txt): the body is
+# E&F's as of 04.07.2026 (storing_gold_1 + storing_silver_1) plus the measurement.
+REPLACE_OR_CREATE:stockpiling_central_bank_metal_reserves_state = {
+	set_variable = { name = zz_ef_cb_stock_before value = central_bank_reserves }
+	storing_gold_1 = yes
+	storing_silver_1 = yes
+	if = {
+		limit = { NOT = { has_variable = zz_ef_cb_stock_acc } }
+		set_variable = { name = zz_ef_cb_stock_acc value = 0 }
+	}
+	change_variable = { name = zz_ef_cb_stock_acc add = central_bank_reserves }
+	change_variable = { name = zz_ef_cb_stock_acc subtract = var:zz_ef_cb_stock_before }
+	remove_variable = zz_ef_cb_stock_before
+}

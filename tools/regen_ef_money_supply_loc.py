@@ -467,6 +467,11 @@ FLOWS = [
      "clearing: our currency came home — the debt is gone (last week)", sv_("zz_ef_v_w_clr_own_back"), Z),
     (X, C, "добытый металл, отчеканенный ЦБ, — в резервы", "mined metal coined by the CB — into the reserves",
      sv_("zz_ef_v_f_mint"), C),
+    # UI.11 (5.10): E&F's CB building stores the market's gold / silver sell orders once a month
+    (X, C, "здание ЦБ E&F: металл с рынка (раз в месяц)", "E&F's CB building: metal from the market (monthly)",
+     svp("zz_ef_v_f_cb_stock"), C),
+    (C, X, "здание ЦБ E&F: металл убыл (раз в месяц)", "E&F's CB building: metal fell (monthly)",
+     svn("zz_ef_v_f_cb_stock"), C),
     (X, C, "переоценка резервов: паритет снижен (девальвация, перепривязка)",
      "revaluation of the reserves: parity lowered (devaluation, re-anchor)", svp("zz_ef_v_f_cb_reval"), C),
     (C, X, "переоценка резервов: паритет повышен", "revaluation of the reserves: parity raised",
@@ -694,8 +699,8 @@ PROBES = [
 RESID = {}
 # UI.7 (3.10, runs e0_4/e0_5): what is left in each card's residual, named
 OTHER_LAB = {
-    "cb": ("прочее — здание ЦБ E&F копит металл раз в месяц (за месяц [Country.MakeScope.ScriptValue('central_bank_metal_reserves_state_per_month')|D+=] металла), валютные сделки",
-           "other — E&F's CB building stores metal once a month (this month [Country.MakeScope.ScriptValue('central_bank_metal_reserves_state_per_month')|D+=] metal), currency deals"),
+    "cb": ("прочее — валютные сделки E&F, прочие правки металла E&F",
+           "other — E&F's currency deals, E&F's other metal edits"),
     "abroad": ("прочее — переоценка валют, валютные сделки E&F, наша валюта у других ЦБ",
                "other — currencies revalued, E&F's currency deals, our currency at other CBs"),
     "buildings": ("прочее — сглаженные тренды бюджета против недельного изменения кассы",
@@ -717,7 +722,7 @@ SRC_MOD = {"zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
             "zz_ef_v_f_cb_rescale", "zz_ef_tr_to_cb"}
-SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_cbl_int"}
+SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_cbl_int", "zz_ef_v_f_cb_stock"}
 SRC_LAB = {"eng": ("дв", "eng"), "mod": ("мод", "mod"), "calc": ("расч", "calc"), "est": ("оц", "est"),
            "ef": ("E&F", "E&F")}
 # the account's own change: engine stocks, our CB metal, E&F's bonds

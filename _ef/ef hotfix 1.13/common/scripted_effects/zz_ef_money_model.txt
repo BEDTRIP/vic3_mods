@@ -353,6 +353,7 @@ zz_ef_money_model_step = {
 	# ledger, so it is in this week's change), at the parity.
 	set_variable = { name = zz_ef_f_cb_reval value = 0 }
 	set_variable = { name = zz_ef_f_cb_hume_m value = 0 }
+	set_variable = { name = zz_ef_f_cb_stock value = 0 }
 	if = {
 		limit = {
 			has_variable = money_value_target_1
@@ -376,11 +377,22 @@ zz_ef_money_model_step = {
 			set_variable = { name = zz_ef_f_cb_hume_m value = var:zz_ef_f_hume }
 			change_variable = { name = zz_ef_f_cb_hume_m divide = zz_ef_cb_valuation }
 		}
+		# UI.11 (5.10): E&F's CB building stored metal since the last step (its monthly stockpiling,
+		# scripted_effects/zz_ef_cb_stockpile_track.txt), at the parity -- a line of the CB card
+		if = {
+			limit = { has_variable = zz_ef_cb_stock_acc }
+			set_variable = { name = zz_ef_f_cb_stock value = var:zz_ef_cb_stock_acc }
+			change_variable = { name = zz_ef_f_cb_stock divide = zz_ef_cb_valuation }
+		}
 		set_variable = { name = zz_ef_prev_cbval value = zz_ef_cb_valuation }
 	}
 	else_if = {
 		limit = { has_variable = zz_ef_prev_cbval }
 		remove_variable = zz_ef_prev_cbval
+	}
+	if = {
+		limit = { has_variable = zz_ef_cb_stock_acc }
+		remove_variable = zz_ef_cb_stock_acc
 	}
 	# Week-on-week change of each account (0 in the first week).
 	zz_ef_money_ledger_delta = { ACC = pool VALUE = investment_pool }
