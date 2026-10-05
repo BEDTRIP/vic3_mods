@@ -83,6 +83,11 @@ zz_ef_cur_zone_step = {{
 			}}
 		}}
 		set_variable = {{ name = zz_ef_cur_zone value = overlord }}
+		# run s1b (5.10): E&F's monetary_systeme_transition put the subjects back on their own standard every
+		# month (Hanover, the Canadas, Finland: std_switch monthly, each with 12 months of foreign_exchange_controls);
+		# its own block flag (an empty modifier) keeps it off the zone
+		remove_modifier = monetary_systeme_transition
+		add_modifier = {{ name = monetary_systeme_transition months = 2 }}
 {std}		zz_ef_cur_zone_currency = yes
 		set_variable = {{ name = money_value_target_1 value = overlord.var:money_value_target_1 }}
 	}}
