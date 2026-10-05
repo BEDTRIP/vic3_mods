@@ -830,6 +830,9 @@ zz_ef_pop_extra_income_step = {
 # ---- the monthly step -------------------------------------------------------
 
 zz_ef_money_model_monthly_step = {
+	# В3.2 (5.10): a subject of a metal-standard overlord takes its standard, currency and parity
+	# (scripted_effects/zz_ef_currency_zone.txt, generated)
+	zz_ef_cur_zone_step = yes
 	# night 2, item 1: the silver-to-gold rate from market prices
 	zz_ef_silver_rate_update = yes
 	# М.9 (4.10): the reference currency's value / parity for the strength of the others

@@ -5,6 +5,8 @@
 # The tool works on a metal standard with a central bank (the cover is metal at parity / money).
 zz_ef_mp_can_work = {
 	has_modifier = has_central_bank
+	# В3.2 (5.10): a subject in its overlord's currency zone has no parity of its own
+	NOT = { has_variable = zz_ef_cur_zone }
 	has_variable = money_value_target_1
 	var:money_value_target_1 > 0
 	OR = {
