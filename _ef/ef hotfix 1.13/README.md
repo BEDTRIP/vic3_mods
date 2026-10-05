@@ -25,8 +25,11 @@
   торгуется между рынками (`goods/zz_ef_cm_liquidity_currency_market.txt`); `market_goods_is_currency` = нет
   (`scripted_triggers/zz_ef_cm_scripted_triggers.txt`) — товар в обычных списках рынка. Выдача валюты малым странам
   (`zz_ef_local_currency_fix`) убрана — без банков услуги ввозятся.
-* **Спрос ~5% ВВП** (Д2.2): вход предприятий 98 → 10 (`production_methods/zz_ef_market_liquidity_input.txt`, REPLACE),
-  потребность населения — как у E&F; сумма проверяется прогоном. Зависимость от ставки — потом.
+* **Спрос ~5% ВВП** (Д2.2; пользователь: население ~2%, бизнес ~3%): вход предприятий 98 → 35
+  (`production_methods/zz_ef_market_liquidity_input.txt`, REPLACE); потребность населения `popneed_currency` × 0.25
+  (`buy_packages/zz_ef_currency_need_packages.txt`, генератор `tools/regen_ef_currency_need.py`; ветка VC — тот же
+  множитель в `regen_vc_ef.py`, общий — `tools/ef_settlements_need.py`). Прогон r1005_201105: до правки ~90% спроса —
+  население (~8% ВВП Британии). Зависимость от ставки — потом.
 * **Здание «Банк»** (Д2.4, EF.42): `buildings/zz_ef_bank.txt` (`building_zz_ef_bank`, группа `bg_zz_ef_banking` — ребёнок
   `bg_trade`, её строят финкварталы), методы по эпохам — банкирский дом (без технологии), акционерный банк (`joint_stock_companies`),
   телеграфные переводы (`electric_telegraph`), современный банк (`modern_financial_instruments`); 1000 занятых, все
