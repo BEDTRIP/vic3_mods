@@ -2981,3 +2981,8 @@ zz_ef_v_f_event_sav = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_event_sav } value = var:zz_ef_f_event_sav }
 }
+# В4.2 (5.10 evening): the engine's factor on the government's rate (1 until measured)
+zz_ef_gr_k_v = {
+	value = 1
+	if = { limit = { has_variable = zz_ef_gr_k } value = var:zz_ef_gr_k }
+}
