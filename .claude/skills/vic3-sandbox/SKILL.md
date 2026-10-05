@@ -38,6 +38,22 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 4. Чтение: `list_dir` / `read_text` (`from_end`) / `grep` по путям `runs/<id>/…`, `docs/logs/…`,
    `docs/crashes/…`, `game/game/…`; снимки — `get_image(path, crop=[x0,y0,x1,y1])` (доли, кадрировать
    подсказку, а не весь экран); `py_tool("parse_eflog" | "save_money_check", args)` — разбор на ПК.
+5. Скрипты репозитория на ПК — `py_tool(name, args)`, `name` без `.py`; запускаются из `wt`. Поимённо — разбор сейвов
+   (`parse_eflog`, `save_money_check`, `save_ownership`, `save_ownership_transfers`, `save_construction_goods`,
+   `save_measure_ef`), по маске `PY_TOOL_GLOBS` — генераторы и анализаторы (`regen_*`, `build_addon*`, `pair_matrix`,
+   `content_holes`, `check_*`, `scan_*`, `stale_bodies`, `replace_audit`, `loc_dead_overrides`, `list_lawgroups_diff`).
+   Пути вида `docs/…`, `runs/…`, `orig/…` в `args` переводятся в пути ПК; остальные (`tools/blocks.json`) — от корня `wt`.
+   `vic3_mods_out` (30 ГБ, в облако не перенести) и `_tmp_analysis` видны скриптам через ссылки-junction
+   `_bridge/vic3_mods_out`, `_bridge/_tmp_analysis` (их делает `start.ps1`), так что `../../vic3_mods_out` из
+   `wt/tools` работает. Пример: `py_tool("pair_matrix", ["--blocks", "tools/blocks.json", "--pair", "E&F+hotfix,PSC"])`.
+6. **Генератор на ПК → коммит в облаке:** правка генератора здесь, коммит и `git push` → `checkout(branch)` →
+   `py_tool("regen_…", [])` (пишет в `wt`) → `wt_diff()` отдаёт изменения `wt` патчем (`git add -A -N` + `git diff --binary`,
+   новые файлы тоже) → сохранить в scratchpad, `git apply --check`, `git apply`, проверить `git diff --stat`, коммит и
+   push как обычно. Результат генератора живёт в `wt` только до следующего `checkout` (`git clean -fdq`) — забирать
+   `wt_diff` сразу. Если патч велик для ответа — генератор по частям или `read_text` по файлам из его вывода.
+   Не проверено (5.10: `wt_diff` добавлен в сервер посреди сессии, список инструментов MCP грузится в её начале —
+   первая проверка в следующей сессии). Концы строк: генераторы на ПК пишут как есть, а `wt` с `* text=auto` —
+   при лишних «изменениях» во всех строках смотреть `git diff --ignore-cr-at-eol` и не коммитить шум.
 
 Проверка моста 5.10 (прогон `r1005_042928`, продолжение сейва за Швейцарию, 1.7.1837):
 - Видно: `docs` (logs, save games, mod, crashes), `game`, `runs`, `wt`, а с 5.10 и оригиналы чужих модов (только
