@@ -43,10 +43,9 @@ def main():
     st_country = {}
     for m in re.finditer(r'\n(\d+)=\{\n\tcapital=\d+\n\n?\tcountry=(\d+)', SO.section(s, 'states')):
         st_country[m.group(1)] = m.group(2)
-    a = s.find('\npops={')
-    e = s.find('\n}\n', s.find('\tdatabase={', a))
+    pops = SO.section(s, 'pops')  # its records sit at column 0 too: cut at the next known top-level block
     dem = collections.Counter(); size = collections.Counter()
-    for m in re.finditer(r'\n\d+=\{\n\ttype=\w+\n(.*?)\n\}', s[a:e], re.S):
+    for m in re.finditer(r'\n\d+=\{\n\ttype=\w+\n(.*?)\n\}', pops, re.S):
         b = m.group(1)
         wf = re.search(r'\tworkforce=(\d+)', b); dp = re.search(r'\tdependents=(\d+)', b)
         n = (int(wf.group(1)) if wf else 0) + (int(dp.group(1)) if dp else 0)
