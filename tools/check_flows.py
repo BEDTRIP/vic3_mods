@@ -24,7 +24,9 @@ Printed per month:
 Flags (>> at the line's start) when the share without a counterpart is over --tol (default 0.05) or the world metal moves
 by more than --metal-tol (default 0.01) of itself beyond the month's mining.
 
-Usage:  py tools/check_flows.py <run>/eflog.txt [more eflog.txt ...] [--tol 0.05] [--metal-tol 0.01] [--json out.json]
+Usage:  py tools/check_flows.py <run>/eflog.txt [more eflog.txt ...] [--tol 0.05] [--metal-tol 0.01] [--start 1836-04] [--json out.json]
+        --start: months up to it are the game's start -- the one-time rescale of the CBs' metal to 40% cover
+        (M.1) and the subjects' metal handed to the overlords (M.8), both at week 12 -- and are not flagged
         (through the PC bridge: py_tool("check_flows", ["runs/<id>/eflog.txt"]))
 """
 import json, re, sys
@@ -115,12 +117,14 @@ def world_table(efg, tol):
 
 def main():
     args = sys.argv[1:]
-    tol, mtol, jout = 0.05, 0.01, None
+    tol, mtol, jout, start = 0.05, 0.01, None, "1836-04"
     paths = []
     i = 0
     while i < len(args):
         if args[i] == "--tol":
             tol = float(args[i + 1]); i += 2
+        elif args[i] == "--start":
+            start = args[i + 1]; i += 2
         elif args[i] == "--metal-tol":
             mtol = float(args[i + 1]); i += 2
         elif args[i] == "--json":
@@ -156,13 +160,18 @@ def main():
         flag = abs(share) > tol
         if not xs:
             gold = silv = fx = None                     # no monthly line (the run's last, cut month): not compared
+        churn = None
         if prev and xs:
-            d_gold = gold - prev["gold"]
-            d_silv = silv - prev["silver"]
+            # 5.10 (run s1a): a country's monthly line is sometimes missing from the log (debug.log rotation), and
+            # its metal then jumped the world by hundreds of millions -- compare the countries present in both months
+            common = [c for c in xs if c in prev["by"]]
+            d_gold = sum((xs[c].get("gold") or 0) - prev["by"][c][0] for c in common)
+            d_silv = sum((xs[c].get("silver") or 0) * (xs[c].get("s2g") or 0) - prev["by"][c][1] for c in common)
+            churn = (len(xs) - len(common), len(prev["by"]) - len(common))
             base = max(prev["gold"] + prev["silver"], 1.0)
             # world metal should move only by mining (and the countries that appear or vanish); the first month after
             # the start holds the one-time rescale of the metal to 40% cover (M.1) -- not flagged
-            if abs(d_gold + d_silv - mined) > mtol * base and prev.get("n", 0) > 0 and not prev.get("first"):
+            if abs(d_gold + d_silv - mined) > mtol * base and prev.get("n", 0) > 0 and mon > start:
                 flag = True
                 for c, x in xs.items():
                     px = prev["by"].get(c)
@@ -176,6 +185,8 @@ def main():
         print(f"{'>>' if flag else '  '}{mon:6} {len(rows):>4} {s_ext:>13,.0f} {gross:>13,.0f} {share:>7.3f} {s_hume:>12,.0f} "
               f"{s_trade:>13,.0f} | {fmt(gold):>14} {fmt(d_gold):>12} {fmt(silv):>14} {fmt(d_silv):>12} {fmt(fx):>12} | "
               + " / ".join(fmt(v) if k != 2 else ("" if v is None else f"{v:.3f}") for k, v in enumerate(clr)))
+        if churn and any(churn):
+            print(f"          lines: {churn[0]} new, {churn[1]} missing (not in d gold / d silver)")
         if movers:
             print("          metal moved by: " + ", ".join(f"{c} {d:+,}" for c, d in movers))
         out.append({"month": mon, "countries": len(rows), "sum_ext_net": s_ext, "gross": gross, "share": share,
