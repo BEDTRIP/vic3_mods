@@ -12,7 +12,7 @@
 # (company_types/zz_ef_cm_companies.txt); state construction allowed too. Unlocked by vanilla `banking`.
 # Seeded in the first month of a game (scripted_effects/zz_ef_bank_seed.txt) -- the currency used to be there
 # from day one.
-# One method for now (eras later -- Д2.4). Sizes: production_methods/zz_ef_bank_pm.txt.
+# Methods by era, every one buying services (the user, 5.10): production_methods/zz_ef_bank_pm.txt.
 #############################################
 
 building_zz_ef_bank = {

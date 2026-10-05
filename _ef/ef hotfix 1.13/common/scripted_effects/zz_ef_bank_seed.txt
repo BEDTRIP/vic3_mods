@@ -3,7 +3,7 @@
 # (on_actions/zz_ef_bank_on_actions.txt): settlement services (the former currency good) used to come from the
 # central bank from day one, and a market without them buys none for its businesses and population.
 #
-# COUNTRY scope. In the capital, zz_ef_bank_seed_levels levels (GDP / 468000), one create_building per level:
+# COUNTRY scope. In the capital, zz_ef_bank_seed_levels levels (GDP / 520000), one create_building per level:
 # add_ownership exists only inside create_building and its `levels` cannot read a variable (rules, "Компании,
 # здания, товары"), so the count is a loop. Owner: the capital's financial district if there is one (private, as
 # decided), else the state (the AI can privatise it). reserves = 0: no cash from nowhere (В1.3).
