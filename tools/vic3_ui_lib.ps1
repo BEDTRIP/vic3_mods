@@ -215,6 +215,10 @@ function Console-Cmd($p, $cmd) {
     Focus-Game $p
     Send-Key 0xC0 0x29
     Start-Sleep -Milliseconds 500
+    # the key toggles: if the console was open already, it just shut -- open it again (r1005_110005: "tag GBR" was
+    # typed into the map and lost)
+    if (-not (Is-Screen $p "console")) { Send-Key 0xC0 0x29; Start-Sleep -Milliseconds 500 }
+    if (-not (Is-Screen $p "console")) { Log "console: did not open - '$cmd' not sent"; return }
     for ($i = 0; $i -lt 3; $i++) { Send-Key 0x08 0x0E }
     Assert-Front $p
     [W]::TypeText($cmd); Mark-Own
@@ -229,6 +233,8 @@ function Console-Cmd($p, $cmd) {
 # (5.10: the console stayed open twice running, the speed key "5" went into its line).
 function Close-Console($p) {
     for ($i = 0; $i -lt 3; $i++) {
+        # the console key toggles: pressed with the console shut, it opens it (r1005_110005) -- look first
+        if (-not (Is-Screen $p "console")) { return $true }
         Click-Window $p 0.62 0.45
         Send-Key 0xC0 0x29
         Start-Sleep -Milliseconds 600
@@ -274,7 +280,9 @@ $Screens = @{
                box3 = @(2200, 10, 2540, 60); rgb3 = @(82, 73, 70); tol3 = 20 }
     # the open console: its log area is a flat dark grey (45, 50, 52); the map there is (59, 75, 92), the
     # budget panel (63, 64, 58) -- 5.10, screenshots of r1005_042928 and r1005_044523
-    console = @{ box = @(120, 250, 500, 650); rgb = @(45, 50, 52); tol = 8 }
+    # and even (spread 3; a state panel or a dark sea 18..61), with the dark input line below it (26, 29, 30): r1005_110005
+    # took a state panel for the console, "closed" it with the console key -- which opened it -- and "tag GBR" was lost
+    console = @{ box = @(120, 250, 500, 650); rgb = @(45, 50, 52); tol = 8; flat = 8; box2 = @(30, 745, 520, 775); rgb2 = @(26, 29, 30); tol2 = 8; flat2 = 6 }
     # the game menu (Escape with nothing open) -- calibrated on the screenshots of run CAL (5.10)
     # the game menu (Escape with nothing open; "Вернуться к игре" ...): the HUD is gone -- the left icon column turns
     # dark (27, 26, 21), the backdrop under the buttons (39, 34, 29); the game (75, 68, 68) / (57..68), the console
@@ -283,12 +291,13 @@ $Screens = @{
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]
-    if (-not (Is-Box $p $sc.box $sc.rgb $sc.tol)) { return $false }
-    if ($sc.box2 -and -not (Is-Box $p $sc.box2 $sc.rgb2 $sc.tol2)) { return $false }
+    if (-not (Is-Box $p $sc.box $sc.rgb $sc.tol $sc.flat)) { return $false }
+    if ($sc.box2 -and -not (Is-Box $p $sc.box2 $sc.rgb2 $sc.tol2 $sc.flat2)) { return $false }
     if ($sc.box3 -and -not (Is-Box $p $sc.box3 $sc.rgb3 $sc.tol3)) { return $false }
     return $true
 }
-function Is-Box($p, $box, $rgb, $tol) {
+# $flat: if set, the box must also be even -- the spread (std) of its brightness at most $flat
+function Is-Box($p, $box, $rgb, $tol, $flat = $null) {
     $sc = @{ box = $box; rgb = $rgb; tol = $tol }
     $r = New-Object W+RECT
     [W]::GetWindowRect($p.MainWindowHandle, [ref]$r) | Out-Null
@@ -298,10 +307,13 @@ function Is-Box($p, $box, $rgb, $tol) {
     $bmp = New-Object System.Drawing.Bitmap $w, $h
     $g = [System.Drawing.Graphics]::FromImage($bmp)
     $g.CopyFromScreen($r.L + $x0, $r.T + $y0, 0, 0, $bmp.Size)
-    $sum = @(0, 0, 0); $n = 0
-    for ($x = 0; $x -lt $w; $x += 3) { for ($y = 0; $y -lt $h; $y += 3) { $c = $bmp.GetPixel($x, $y); $sum[0] += $c.R; $sum[1] += $c.G; $sum[2] += $c.B; $n++ } }
+    $sum = @(0, 0, 0); $n = 0; $l1 = 0.0; $l2 = 0.0
+    for ($x = 0; $x -lt $w; $x += 3) { for ($y = 0; $y -lt $h; $y += 3) {
+        $c = $bmp.GetPixel($x, $y); $sum[0] += $c.R; $sum[1] += $c.G; $sum[2] += $c.B; $n++
+        $l = ($c.R + $c.G + $c.B) / 3.0; $l1 += $l; $l2 += $l * $l } }
     $g.Dispose(); $bmp.Dispose()
     for ($i = 0; $i -lt 3; $i++) { if ([Math]::Abs($sum[$i] / $n - $sc.rgb[$i]) -gt $sc.tol) { return $false } }
+    if ($null -ne $flat) { $m = $l1 / $n; if ([Math]::Sqrt([Math]::Max(0, $l2 / $n - $m * $m)) -gt $flat) { return $false } }
     return $true
 }
 # Waits until the screen is up (polled every 3 s), at most $max seconds; then $settle seconds.
