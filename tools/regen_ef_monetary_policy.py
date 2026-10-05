@@ -25,8 +25,9 @@ Now the measure is the metal cover (zz_ef_cb_cover: reserves at parity / money s
     content; the user 2.10), the law goes back to law_no_monetary_policy, E&F's modifiers go;
     a cover already past the target when armed means the parity is rewritten at once (the AI's
     case below);
-  * AI (M.4, the user 4.10; monthly, no law, metal standard with a CB, central_banking, not in
-    isolationism): the parity is fixed; the cover under 25% (over 80%) for 24 months running ->
+  * AI (M.4, the user 4.10; monthly, no law, metal standard with a CB, not in isolationism; no
+    central_banking requirement since В4.4, 5.10 -- at the start only tech tier 1 has it, Qing lost its
+    reserves 0.52 -> 0.12 in 2.3 years with no reaction): the parity is fixed; the cover under 25% (over 80%) for 24 months running ->
     the parity x cover / 40%, within 1 -+ 25% (devaluation / revaluation as a new metal content,
     no printing), then a 5 years' pause. E&F's petition and ai weights go (laws re-issued with
     ai_will_do = no).
@@ -286,7 +287,6 @@ zz_ef_mp_step = {{
 			limit = {{
 				NOT = {{ has_variable = zz_ef_mp_cooldown }}
 				NOT = {{ has_law = law_type:law_isolationism }}
-				has_technology_researched = central_banking
 				OR = {{
 					var:zz_ef_mp_low_months >= zz_ef_mp_ai_months
 					var:zz_ef_mp_high_months >= zz_ef_mp_ai_months

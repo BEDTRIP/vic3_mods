@@ -187,7 +187,6 @@ zz_ef_mp_step = {
 			limit = {
 				NOT = { has_variable = zz_ef_mp_cooldown }
 				NOT = { has_law = law_type:law_isolationism }
-				has_technology_researched = central_banking
 				OR = {
 					var:zz_ef_mp_low_months >= zz_ef_mp_ai_months
 					var:zz_ef_mp_high_months >= zz_ef_mp_ai_months
