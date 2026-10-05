@@ -89,3 +89,15 @@ zz_ef_v_f_bl_int_short = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_f_bl_int_short } value = var:zz_ef_f_bl_int_short }
 }
+zz_ef_v_f_pb_buy = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_pb_buy } value = var:zz_ef_f_pb_buy }
+}
+zz_ef_v_f_pb_refund = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_pb_refund } value = var:zz_ef_f_pb_refund }
+}
+zz_ef_v_f_pb_back = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_pb_back } value = var:zz_ef_f_pb_back }
+}

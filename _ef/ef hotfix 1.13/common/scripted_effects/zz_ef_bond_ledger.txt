@@ -41,6 +41,9 @@ zz_ef_bond_ledger_step = {
 	set_variable = { name = zz_ef_f_bl_back value = 0 }
 	set_variable = { name = zz_ef_f_bl_lost value = 0 }
 	set_variable = { name = zz_ef_f_bl_int_short value = 0 }
+	set_variable = { name = zz_ef_f_pb_buy value = 0 }
+	set_variable = { name = zz_ef_f_pb_refund value = 0 }
+	set_variable = { name = zz_ef_f_pb_back value = 0 }
 	zz_ef_bl_slot_1 = yes
 	zz_ef_bl_slot_2 = yes
 	zz_ef_bl_slot_3 = yes
@@ -51,6 +54,33 @@ zz_ef_bond_ledger_step = {
 	zz_ef_bl_slot_8 = yes
 	zz_ef_bl_slot_9 = yes
 	zz_ef_bl_slot_10 = yes
+	# private banks (В1.6)
+	zz_ef_pb_slot_1 = yes
+	zz_ef_pb_slot_2 = yes
+	zz_ef_pb_slot_3 = yes
+	zz_ef_pb_slot_4 = yes
+	zz_ef_pb_slot_5 = yes
+	zz_ef_pb_slot_6 = yes
+	zz_ef_pb_slot_7 = yes
+	zz_ef_pb_slot_8 = yes
+	zz_ef_pb_slot_9 = yes
+	zz_ef_pb_slot_10 = yes
+	zz_ef_pb_slot_11 = yes
+	zz_ef_pb_slot_12 = yes
+	zz_ef_pb_slot_13 = yes
+	zz_ef_pb_slot_14 = yes
+	zz_ef_pb_slot_15 = yes
+	zz_ef_pb_slot_16 = yes
+	zz_ef_pb_slot_17 = yes
+	zz_ef_pb_slot_18 = yes
+	zz_ef_pb_slot_19 = yes
+	zz_ef_pb_slot_20 = yes
+	zz_ef_pb_slot_21 = yes
+	zz_ef_pb_slot_22 = yes
+	zz_ef_pb_slot_23 = yes
+	zz_ef_pb_slot_24 = yes
+	zz_ef_pb_slot_25 = yes
+	remove_variable = zz_ef_pb_v
 	if = {
 		limit = {
 			OR = {
@@ -58,9 +88,10 @@ zz_ef_bond_ledger_step = {
 				gdp > 20000000
 				zz_ef_bl_held_v > 0
 				zz_ef_bl_parts > 0
+				zz_ef_bank_bonds > 0
 			}
 		}
-		debug_log = "EFB|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|principal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_principal')|0]|held [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_held_v')|0]|ratio [THIS.GetCountry.MakeScope.Var('zz_ef_bl_ratio').GetValue|3]|ipay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_g_ipay')|0]|sold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_sold')|0]|int_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_int_out')|0]|redeem [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_redeem')|0]|woff [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_woff')|0]|parts [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury_bonds')|0]|buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_buy').GetValue|0]|refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_refund').GetValue|0]|int_in [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_int_in').GetValue|0]|back [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_back').GetValue|0]|lost [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_lost').GetValue|0]"
+		debug_log = "EFB|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|principal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_principal')|0]|held [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_held_v')|0]|ratio [THIS.GetCountry.MakeScope.Var('zz_ef_bl_ratio').GetValue|3]|ipay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_g_ipay')|0]|sold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_sold')|0]|int_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_int_out')|0]|redeem [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_redeem')|0]|woff [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_woff')|0]|parts [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury_bonds')|0]|buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_buy').GetValue|0]|refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_refund').GetValue|0]|int_in [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_int_in').GetValue|0]|back [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_back').GetValue|0]|lost [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_lost').GetValue|0]|pb_buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_buy').GetValue|0]|pb_refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_refund').GetValue|0]|pb_back [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_back').GetValue|0]|pbonds [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_bonds')|0]"
 	}
 }
 
@@ -120,12 +151,12 @@ zz_ef_bl_hold = {
 			scope:zz_ef_bl_seller = { zz_ef_bl_acc_add = { F = woff V = root.var:zz_ef_bl_x } }
 		}
 		else = {
-			zz_ef_bl_pay = { F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost }
+			zz_ef_bl_pay = { F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost INTO = add_treasury }
 		}
 	}
 	set_variable = { name = zz_ef_bl_x value = var:zz_ef_bh_$N$ }
 	change_variable = { name = zz_ef_bl_x multiply = scope:zz_ef_bl_seller.zz_ef_bl_int_per_part }
-	zz_ef_bl_pay = { F = int_out TO = zz_ef_f_bl_int_in SHORT = zz_ef_f_bl_int_short }
+	zz_ef_bl_pay = { F = int_out TO = zz_ef_f_bl_int_in SHORT = zz_ef_f_bl_int_short INTO = add_treasury }
 	remove_variable = zz_ef_bl_x
 }
 
@@ -140,7 +171,7 @@ zz_ef_bl_end = {
 		var:zz_ef_bs_$N$ = { save_scope_as = zz_ef_bl_seller }
 		set_variable = { name = zz_ef_bl_x value = var:zz_ef_bh_$N$ }
 		scope:zz_ef_bl_seller = { change_variable = { name = zz_ef_bl_held subtract = root.var:zz_ef_bl_x } }
-		zz_ef_bl_pay = { F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost }
+		zz_ef_bl_pay = { F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost INTO = add_treasury }
 		remove_variable = zz_ef_bl_x
 	}
 	else = {
@@ -150,7 +181,8 @@ zz_ef_bl_end = {
 	if = { limit = { has_variable = zz_ef_bs_$N$ } remove_variable = zz_ef_bs_$N$ }
 }
 
-# Holder scope: var:zz_ef_bl_x from scope:zz_ef_bl_seller's pool (at most what it holds) to our treasury;
+# Holder scope: var:zz_ef_bl_x from scope:zz_ef_bl_seller's pool (at most what it holds) to our treasury ($INTO$ =
+# add_treasury) or our pool (add_investment_pool, private banks);
 # the seller sums it under $F$, we under var:$TO$; what its pool could not pay -- under var:$SHORT$.
 zz_ef_bl_pay = {
 	change_variable = { name = $SHORT$ add = var:zz_ef_bl_x }
@@ -172,7 +204,7 @@ zz_ef_bl_pay = {
 		}
 		zz_ef_bl_acc_add = { F = $F$ V = root.var:zz_ef_bl_x }
 	}
-	add_treasury = var:zz_ef_bl_x
+	$INTO$ = var:zz_ef_bl_x
 	change_variable = { name = $TO$ add = var:zz_ef_bl_x }
 	change_variable = { name = $SHORT$ subtract = var:zz_ef_bl_x }
 }
@@ -500,5 +532,1245 @@ zz_ef_bl_slot_10 = {
 	else_if = {
 		limit = { has_variable = zz_ef_bh_10 }
 		zz_ef_bl_end = { N = 10 }
+	}
+}
+
+# Buyer scope, private banks' slot $N$ rose (E&F's purchase or reinforcement): var:zz_ef_pb_v - var:zz_ef_pbh_$N$ bought
+# from scope:zz_ef_bl_seller; the part at most its room, the rest back to our pool and off E&F's value.
+zz_ef_pb_buy = {
+	set_variable = { name = zz_ef_bl_x value = var:zz_ef_pb_v }
+	change_variable = { name = zz_ef_bl_x subtract = var:zz_ef_pbh_$N$ }
+	set_variable = { name = zz_ef_bl_y value = var:zz_ef_bl_x }
+	change_variable = { name = zz_ef_bl_y subtract = scope:zz_ef_bl_seller.zz_ef_bl_room }
+	if = {
+		limit = { var:zz_ef_bl_y > 0 }
+		add_investment_pool = var:zz_ef_bl_y
+		change_variable = { name = zz_ef_f_pb_refund add = var:zz_ef_bl_y }
+		change_variable = { name = zz_ef_bl_x subtract = var:zz_ef_bl_y }
+		zz_ef_pb_cut = { N = $N$ }
+	}
+	change_variable = { name = zz_ef_f_pb_buy add = var:zz_ef_bl_x }
+	scope:zz_ef_bl_seller = {
+		if = { limit = { NOT = { has_variable = zz_ef_bl_held } } set_variable = { name = zz_ef_bl_held value = 0 } }
+		change_variable = { name = zz_ef_bl_held add = root.var:zz_ef_bl_x }
+		zz_ef_bl_acc_add = { F = sold V = root.var:zz_ef_bl_x }
+		add_investment_pool = root.var:zz_ef_bl_x
+	}
+	remove_variable = zz_ef_bl_x
+	remove_variable = zz_ef_bl_y
+}
+
+# Buyer scope: E&F's value of slot $N$ down by var:zz_ef_bl_y (at most to 0), its interest scaled with it.
+zz_ef_pb_cut = {
+	if = {
+		limit = { var:ai_privat_bank_bond_value_$N$ > 0 }
+		set_variable = {
+			name = zz_ef_pb_r
+			value = {
+				value = var:ai_privat_bank_bond_value_$N$
+				subtract = var:zz_ef_bl_y
+				divide = var:ai_privat_bank_bond_value_$N$
+				min = 0
+				max = 1
+			}
+		}
+		change_variable = { name = ai_privat_bank_bond_value_$N$ multiply = var:zz_ef_pb_r }
+		if = {
+			limit = { has_variable = ai_privat_bank_interest_calculated_$N$ }
+			change_variable = { name = ai_privat_bank_interest_calculated_$N$ multiply = var:zz_ef_pb_r }
+		}
+		remove_variable = zz_ef_pb_r
+	}
+}
+
+# Buyer scope, slot $N$ fell below what we registered (E&F reset it -- its seller gone): written off, nobody pays.
+zz_ef_pb_drop = {
+	set_variable = { name = zz_ef_bl_x value = var:zz_ef_pbh_$N$ }
+	change_variable = { name = zz_ef_bl_x subtract = var:zz_ef_pb_v }
+	change_variable = { name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }
+	if = {
+		limit = {
+			has_variable = zz_ef_pbs_$N$
+			exists = var:zz_ef_pbs_$N$
+			var:zz_ef_pbs_$N$ = { is_country_type = recognized }
+		}
+		var:zz_ef_pbs_$N$ = {
+			if = { limit = { has_variable = zz_ef_bl_held } change_variable = { name = zz_ef_bl_held subtract = root.var:zz_ef_bl_x } }
+			zz_ef_bl_acc_add = { F = woff V = root.var:zz_ef_bl_x }
+		}
+	}
+	set_variable = { name = zz_ef_pbh_$N$ value = var:zz_ef_pb_v }
+	remove_variable = zz_ef_bl_x
+}
+
+# Buyer scope, slot $N$ live, the seller's principal under the parts held: our part cut by (1 - ratio) -- bought back
+# from its pool into ours, or written off in a default.
+zz_ef_pb_cutback = {
+	var:zz_ef_pbs_$N$ = { save_scope_as = zz_ef_bl_seller }
+	set_variable = { name = zz_ef_bl_x value = var:zz_ef_pbh_$N$ }
+	change_variable = { name = zz_ef_bl_x multiply = { value = 1 subtract = scope:zz_ef_bl_seller.var:zz_ef_bl_ratio } }
+	set_variable = { name = zz_ef_bl_y value = var:zz_ef_bl_x }
+	zz_ef_pb_cut = { N = $N$ }
+	change_variable = { name = zz_ef_pbh_$N$ subtract = var:zz_ef_bl_x }
+	scope:zz_ef_bl_seller = { change_variable = { name = zz_ef_bl_held subtract = root.var:zz_ef_bl_x } }
+	if = {
+		limit = { scope:zz_ef_bl_seller = { has_variable = zz_ef_bl_woff_now } }
+		change_variable = { name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }
+		scope:zz_ef_bl_seller = { zz_ef_bl_acc_add = { F = woff V = root.var:zz_ef_bl_x } }
+	}
+	else = {
+		zz_ef_bl_pay = { F = redeem TO = zz_ef_f_pb_back SHORT = zz_ef_f_bl_lost INTO = add_investment_pool }
+	}
+	remove_variable = zz_ef_bl_x
+	remove_variable = zz_ef_bl_y
+}
+
+# private banks' slot 1: E&F's ai_privat_bank_bond_value_1 / ai_privat_bank_seller_country_general_1
+zz_ef_pb_slot_1 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_1 } } set_variable = { name = zz_ef_pbh_1 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_1 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_1 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_1 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_1 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_1
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_1
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_1 }
+			scope:zz_ef_pbsel_1 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_1 value = scope:zz_ef_pbsel_1 }
+			zz_ef_pb_buy = { N = 1 }
+		}
+		set_variable = { name = zz_ef_pbh_1 value = var:ai_privat_bank_bond_value_1 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_1 }
+		zz_ef_pb_drop = { N = 1 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_1 > 0
+			has_variable = zz_ef_pbs_1
+			exists = var:zz_ef_pbs_1
+			var:zz_ef_pbs_1 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 1 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_1 <= 0 has_variable = zz_ef_pbs_1 }
+		remove_variable = zz_ef_pbs_1
+	}
+}
+
+# private banks' slot 2: E&F's ai_privat_bank_bond_value_2 / ai_privat_bank_seller_country_general_2
+zz_ef_pb_slot_2 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_2 } } set_variable = { name = zz_ef_pbh_2 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_2 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_2 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_2 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_2 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_2
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_2
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_2 }
+			scope:zz_ef_pbsel_2 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_2 value = scope:zz_ef_pbsel_2 }
+			zz_ef_pb_buy = { N = 2 }
+		}
+		set_variable = { name = zz_ef_pbh_2 value = var:ai_privat_bank_bond_value_2 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_2 }
+		zz_ef_pb_drop = { N = 2 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_2 > 0
+			has_variable = zz_ef_pbs_2
+			exists = var:zz_ef_pbs_2
+			var:zz_ef_pbs_2 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 2 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_2 <= 0 has_variable = zz_ef_pbs_2 }
+		remove_variable = zz_ef_pbs_2
+	}
+}
+
+# private banks' slot 3: E&F's ai_privat_bank_bond_value_3 / ai_privat_bank_seller_country_general_3
+zz_ef_pb_slot_3 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_3 } } set_variable = { name = zz_ef_pbh_3 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_3 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_3 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_3 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_3 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_3
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_3
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_3 }
+			scope:zz_ef_pbsel_3 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_3 value = scope:zz_ef_pbsel_3 }
+			zz_ef_pb_buy = { N = 3 }
+		}
+		set_variable = { name = zz_ef_pbh_3 value = var:ai_privat_bank_bond_value_3 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_3 }
+		zz_ef_pb_drop = { N = 3 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_3 > 0
+			has_variable = zz_ef_pbs_3
+			exists = var:zz_ef_pbs_3
+			var:zz_ef_pbs_3 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 3 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_3 <= 0 has_variable = zz_ef_pbs_3 }
+		remove_variable = zz_ef_pbs_3
+	}
+}
+
+# private banks' slot 4: E&F's ai_privat_bank_bond_value_4 / ai_privat_bank_seller_country_general_4
+zz_ef_pb_slot_4 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_4 } } set_variable = { name = zz_ef_pbh_4 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_4 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_4 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_4 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_4 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_4
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_4
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_4 }
+			scope:zz_ef_pbsel_4 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_4 value = scope:zz_ef_pbsel_4 }
+			zz_ef_pb_buy = { N = 4 }
+		}
+		set_variable = { name = zz_ef_pbh_4 value = var:ai_privat_bank_bond_value_4 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_4 }
+		zz_ef_pb_drop = { N = 4 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_4 > 0
+			has_variable = zz_ef_pbs_4
+			exists = var:zz_ef_pbs_4
+			var:zz_ef_pbs_4 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 4 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_4 <= 0 has_variable = zz_ef_pbs_4 }
+		remove_variable = zz_ef_pbs_4
+	}
+}
+
+# private banks' slot 5: E&F's ai_privat_bank_bond_value_5 / ai_privat_bank_seller_country_general_5
+zz_ef_pb_slot_5 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_5 } } set_variable = { name = zz_ef_pbh_5 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_5 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_5 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_5 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_5 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_5
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_5
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_5 }
+			scope:zz_ef_pbsel_5 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_5 value = scope:zz_ef_pbsel_5 }
+			zz_ef_pb_buy = { N = 5 }
+		}
+		set_variable = { name = zz_ef_pbh_5 value = var:ai_privat_bank_bond_value_5 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_5 }
+		zz_ef_pb_drop = { N = 5 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_5 > 0
+			has_variable = zz_ef_pbs_5
+			exists = var:zz_ef_pbs_5
+			var:zz_ef_pbs_5 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 5 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_5 <= 0 has_variable = zz_ef_pbs_5 }
+		remove_variable = zz_ef_pbs_5
+	}
+}
+
+# private banks' slot 6: E&F's ai_privat_bank_bond_value_6 / ai_privat_bank_seller_country_general_6
+zz_ef_pb_slot_6 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_6 } } set_variable = { name = zz_ef_pbh_6 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_6 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_6 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_6 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_6 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_6
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_6
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_6 }
+			scope:zz_ef_pbsel_6 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_6 value = scope:zz_ef_pbsel_6 }
+			zz_ef_pb_buy = { N = 6 }
+		}
+		set_variable = { name = zz_ef_pbh_6 value = var:ai_privat_bank_bond_value_6 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_6 }
+		zz_ef_pb_drop = { N = 6 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_6 > 0
+			has_variable = zz_ef_pbs_6
+			exists = var:zz_ef_pbs_6
+			var:zz_ef_pbs_6 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 6 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_6 <= 0 has_variable = zz_ef_pbs_6 }
+		remove_variable = zz_ef_pbs_6
+	}
+}
+
+# private banks' slot 7: E&F's ai_privat_bank_bond_value_7 / ai_privat_bank_seller_country_general_7
+zz_ef_pb_slot_7 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_7 } } set_variable = { name = zz_ef_pbh_7 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_7 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_7 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_7 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_7 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_7
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_7
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_7 }
+			scope:zz_ef_pbsel_7 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_7 value = scope:zz_ef_pbsel_7 }
+			zz_ef_pb_buy = { N = 7 }
+		}
+		set_variable = { name = zz_ef_pbh_7 value = var:ai_privat_bank_bond_value_7 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_7 }
+		zz_ef_pb_drop = { N = 7 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_7 > 0
+			has_variable = zz_ef_pbs_7
+			exists = var:zz_ef_pbs_7
+			var:zz_ef_pbs_7 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 7 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_7 <= 0 has_variable = zz_ef_pbs_7 }
+		remove_variable = zz_ef_pbs_7
+	}
+}
+
+# private banks' slot 8: E&F's ai_privat_bank_bond_value_8 / ai_privat_bank_seller_country_general_8
+zz_ef_pb_slot_8 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_8 } } set_variable = { name = zz_ef_pbh_8 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_8 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_8 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_8 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_8 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_8
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_8
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_8 }
+			scope:zz_ef_pbsel_8 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_8 value = scope:zz_ef_pbsel_8 }
+			zz_ef_pb_buy = { N = 8 }
+		}
+		set_variable = { name = zz_ef_pbh_8 value = var:ai_privat_bank_bond_value_8 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_8 }
+		zz_ef_pb_drop = { N = 8 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_8 > 0
+			has_variable = zz_ef_pbs_8
+			exists = var:zz_ef_pbs_8
+			var:zz_ef_pbs_8 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 8 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_8 <= 0 has_variable = zz_ef_pbs_8 }
+		remove_variable = zz_ef_pbs_8
+	}
+}
+
+# private banks' slot 9: E&F's ai_privat_bank_bond_value_9 / ai_privat_bank_seller_country_general_9
+zz_ef_pb_slot_9 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_9 } } set_variable = { name = zz_ef_pbh_9 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_9 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_9 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_9 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_9 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_9
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_9
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_9 }
+			scope:zz_ef_pbsel_9 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_9 value = scope:zz_ef_pbsel_9 }
+			zz_ef_pb_buy = { N = 9 }
+		}
+		set_variable = { name = zz_ef_pbh_9 value = var:ai_privat_bank_bond_value_9 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_9 }
+		zz_ef_pb_drop = { N = 9 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_9 > 0
+			has_variable = zz_ef_pbs_9
+			exists = var:zz_ef_pbs_9
+			var:zz_ef_pbs_9 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 9 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_9 <= 0 has_variable = zz_ef_pbs_9 }
+		remove_variable = zz_ef_pbs_9
+	}
+}
+
+# private banks' slot 10: E&F's ai_privat_bank_bond_value_10 / ai_privat_bank_seller_country_general_10
+zz_ef_pb_slot_10 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_10 } } set_variable = { name = zz_ef_pbh_10 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_10 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_10 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_10 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_10 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_10
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_10
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_10 }
+			scope:zz_ef_pbsel_10 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_10 value = scope:zz_ef_pbsel_10 }
+			zz_ef_pb_buy = { N = 10 }
+		}
+		set_variable = { name = zz_ef_pbh_10 value = var:ai_privat_bank_bond_value_10 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_10 }
+		zz_ef_pb_drop = { N = 10 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_10 > 0
+			has_variable = zz_ef_pbs_10
+			exists = var:zz_ef_pbs_10
+			var:zz_ef_pbs_10 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 10 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_10 <= 0 has_variable = zz_ef_pbs_10 }
+		remove_variable = zz_ef_pbs_10
+	}
+}
+
+# private banks' slot 11: E&F's ai_privat_bank_bond_value_11 / ai_privat_bank_seller_country_general_11
+zz_ef_pb_slot_11 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_11 } } set_variable = { name = zz_ef_pbh_11 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_11 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_11 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_11 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_11 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_11
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_11
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_11 }
+			scope:zz_ef_pbsel_11 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_11 value = scope:zz_ef_pbsel_11 }
+			zz_ef_pb_buy = { N = 11 }
+		}
+		set_variable = { name = zz_ef_pbh_11 value = var:ai_privat_bank_bond_value_11 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_11 }
+		zz_ef_pb_drop = { N = 11 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_11 > 0
+			has_variable = zz_ef_pbs_11
+			exists = var:zz_ef_pbs_11
+			var:zz_ef_pbs_11 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 11 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_11 <= 0 has_variable = zz_ef_pbs_11 }
+		remove_variable = zz_ef_pbs_11
+	}
+}
+
+# private banks' slot 12: E&F's ai_privat_bank_bond_value_12 / ai_privat_bank_seller_country_general_12
+zz_ef_pb_slot_12 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_12 } } set_variable = { name = zz_ef_pbh_12 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_12 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_12 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_12 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_12 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_12
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_12
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_12 }
+			scope:zz_ef_pbsel_12 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_12 value = scope:zz_ef_pbsel_12 }
+			zz_ef_pb_buy = { N = 12 }
+		}
+		set_variable = { name = zz_ef_pbh_12 value = var:ai_privat_bank_bond_value_12 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_12 }
+		zz_ef_pb_drop = { N = 12 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_12 > 0
+			has_variable = zz_ef_pbs_12
+			exists = var:zz_ef_pbs_12
+			var:zz_ef_pbs_12 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 12 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_12 <= 0 has_variable = zz_ef_pbs_12 }
+		remove_variable = zz_ef_pbs_12
+	}
+}
+
+# private banks' slot 13: E&F's ai_privat_bank_bond_value_13 / ai_privat_bank_seller_country_general_13
+zz_ef_pb_slot_13 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_13 } } set_variable = { name = zz_ef_pbh_13 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_13 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_13 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_13 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_13 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_13
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_13
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_13 }
+			scope:zz_ef_pbsel_13 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_13 value = scope:zz_ef_pbsel_13 }
+			zz_ef_pb_buy = { N = 13 }
+		}
+		set_variable = { name = zz_ef_pbh_13 value = var:ai_privat_bank_bond_value_13 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_13 }
+		zz_ef_pb_drop = { N = 13 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_13 > 0
+			has_variable = zz_ef_pbs_13
+			exists = var:zz_ef_pbs_13
+			var:zz_ef_pbs_13 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 13 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_13 <= 0 has_variable = zz_ef_pbs_13 }
+		remove_variable = zz_ef_pbs_13
+	}
+}
+
+# private banks' slot 14: E&F's ai_privat_bank_bond_value_14 / ai_privat_bank_seller_country_general_14
+zz_ef_pb_slot_14 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_14 } } set_variable = { name = zz_ef_pbh_14 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_14 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_14 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_14 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_14 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_14
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_14
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_14 }
+			scope:zz_ef_pbsel_14 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_14 value = scope:zz_ef_pbsel_14 }
+			zz_ef_pb_buy = { N = 14 }
+		}
+		set_variable = { name = zz_ef_pbh_14 value = var:ai_privat_bank_bond_value_14 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_14 }
+		zz_ef_pb_drop = { N = 14 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_14 > 0
+			has_variable = zz_ef_pbs_14
+			exists = var:zz_ef_pbs_14
+			var:zz_ef_pbs_14 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 14 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_14 <= 0 has_variable = zz_ef_pbs_14 }
+		remove_variable = zz_ef_pbs_14
+	}
+}
+
+# private banks' slot 15: E&F's ai_privat_bank_bond_value_15 / ai_privat_bank_seller_country_general_15
+zz_ef_pb_slot_15 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_15 } } set_variable = { name = zz_ef_pbh_15 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_15 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_15 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_15 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_15 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_15
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_15
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_15 }
+			scope:zz_ef_pbsel_15 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_15 value = scope:zz_ef_pbsel_15 }
+			zz_ef_pb_buy = { N = 15 }
+		}
+		set_variable = { name = zz_ef_pbh_15 value = var:ai_privat_bank_bond_value_15 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_15 }
+		zz_ef_pb_drop = { N = 15 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_15 > 0
+			has_variable = zz_ef_pbs_15
+			exists = var:zz_ef_pbs_15
+			var:zz_ef_pbs_15 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 15 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_15 <= 0 has_variable = zz_ef_pbs_15 }
+		remove_variable = zz_ef_pbs_15
+	}
+}
+
+# private banks' slot 16: E&F's ai_privat_bank_bond_value_16 / ai_privat_bank_seller_country_general_16
+zz_ef_pb_slot_16 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_16 } } set_variable = { name = zz_ef_pbh_16 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_16 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_16 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_16 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_16 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_16
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_16
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_16 }
+			scope:zz_ef_pbsel_16 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_16 value = scope:zz_ef_pbsel_16 }
+			zz_ef_pb_buy = { N = 16 }
+		}
+		set_variable = { name = zz_ef_pbh_16 value = var:ai_privat_bank_bond_value_16 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_16 }
+		zz_ef_pb_drop = { N = 16 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_16 > 0
+			has_variable = zz_ef_pbs_16
+			exists = var:zz_ef_pbs_16
+			var:zz_ef_pbs_16 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 16 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_16 <= 0 has_variable = zz_ef_pbs_16 }
+		remove_variable = zz_ef_pbs_16
+	}
+}
+
+# private banks' slot 17: E&F's ai_privat_bank_bond_value_17 / ai_privat_bank_seller_country_general_17
+zz_ef_pb_slot_17 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_17 } } set_variable = { name = zz_ef_pbh_17 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_17 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_17 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_17 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_17 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_17
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_17
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_17 }
+			scope:zz_ef_pbsel_17 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_17 value = scope:zz_ef_pbsel_17 }
+			zz_ef_pb_buy = { N = 17 }
+		}
+		set_variable = { name = zz_ef_pbh_17 value = var:ai_privat_bank_bond_value_17 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_17 }
+		zz_ef_pb_drop = { N = 17 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_17 > 0
+			has_variable = zz_ef_pbs_17
+			exists = var:zz_ef_pbs_17
+			var:zz_ef_pbs_17 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 17 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_17 <= 0 has_variable = zz_ef_pbs_17 }
+		remove_variable = zz_ef_pbs_17
+	}
+}
+
+# private banks' slot 18: E&F's ai_privat_bank_bond_value_18 / ai_privat_bank_seller_country_general_18
+zz_ef_pb_slot_18 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_18 } } set_variable = { name = zz_ef_pbh_18 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_18 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_18 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_18 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_18 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_18
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_18
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_18 }
+			scope:zz_ef_pbsel_18 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_18 value = scope:zz_ef_pbsel_18 }
+			zz_ef_pb_buy = { N = 18 }
+		}
+		set_variable = { name = zz_ef_pbh_18 value = var:ai_privat_bank_bond_value_18 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_18 }
+		zz_ef_pb_drop = { N = 18 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_18 > 0
+			has_variable = zz_ef_pbs_18
+			exists = var:zz_ef_pbs_18
+			var:zz_ef_pbs_18 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 18 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_18 <= 0 has_variable = zz_ef_pbs_18 }
+		remove_variable = zz_ef_pbs_18
+	}
+}
+
+# private banks' slot 19: E&F's ai_privat_bank_bond_value_19 / ai_privat_bank_seller_country_general_19
+zz_ef_pb_slot_19 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_19 } } set_variable = { name = zz_ef_pbh_19 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_19 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_19 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_19 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_19 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_19
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_19
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_19 }
+			scope:zz_ef_pbsel_19 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_19 value = scope:zz_ef_pbsel_19 }
+			zz_ef_pb_buy = { N = 19 }
+		}
+		set_variable = { name = zz_ef_pbh_19 value = var:ai_privat_bank_bond_value_19 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_19 }
+		zz_ef_pb_drop = { N = 19 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_19 > 0
+			has_variable = zz_ef_pbs_19
+			exists = var:zz_ef_pbs_19
+			var:zz_ef_pbs_19 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 19 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_19 <= 0 has_variable = zz_ef_pbs_19 }
+		remove_variable = zz_ef_pbs_19
+	}
+}
+
+# private banks' slot 20: E&F's ai_privat_bank_bond_value_20 / ai_privat_bank_seller_country_general_20
+zz_ef_pb_slot_20 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_20 } } set_variable = { name = zz_ef_pbh_20 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_20 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_20 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_20 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_20 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_20
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_20
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_20 }
+			scope:zz_ef_pbsel_20 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_20 value = scope:zz_ef_pbsel_20 }
+			zz_ef_pb_buy = { N = 20 }
+		}
+		set_variable = { name = zz_ef_pbh_20 value = var:ai_privat_bank_bond_value_20 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_20 }
+		zz_ef_pb_drop = { N = 20 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_20 > 0
+			has_variable = zz_ef_pbs_20
+			exists = var:zz_ef_pbs_20
+			var:zz_ef_pbs_20 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 20 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_20 <= 0 has_variable = zz_ef_pbs_20 }
+		remove_variable = zz_ef_pbs_20
+	}
+}
+
+# private banks' slot 21: E&F's ai_privat_bank_bond_value_21 / ai_privat_bank_seller_country_general_21
+zz_ef_pb_slot_21 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_21 } } set_variable = { name = zz_ef_pbh_21 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_21 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_21 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_21 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_21 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_21
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_21
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_21 }
+			scope:zz_ef_pbsel_21 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_21 value = scope:zz_ef_pbsel_21 }
+			zz_ef_pb_buy = { N = 21 }
+		}
+		set_variable = { name = zz_ef_pbh_21 value = var:ai_privat_bank_bond_value_21 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_21 }
+		zz_ef_pb_drop = { N = 21 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_21 > 0
+			has_variable = zz_ef_pbs_21
+			exists = var:zz_ef_pbs_21
+			var:zz_ef_pbs_21 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 21 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_21 <= 0 has_variable = zz_ef_pbs_21 }
+		remove_variable = zz_ef_pbs_21
+	}
+}
+
+# private banks' slot 22: E&F's ai_privat_bank_bond_value_22 / ai_privat_bank_seller_country_general_22
+zz_ef_pb_slot_22 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_22 } } set_variable = { name = zz_ef_pbh_22 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_22 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_22 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_22 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_22 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_22
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_22
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_22 }
+			scope:zz_ef_pbsel_22 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_22 value = scope:zz_ef_pbsel_22 }
+			zz_ef_pb_buy = { N = 22 }
+		}
+		set_variable = { name = zz_ef_pbh_22 value = var:ai_privat_bank_bond_value_22 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_22 }
+		zz_ef_pb_drop = { N = 22 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_22 > 0
+			has_variable = zz_ef_pbs_22
+			exists = var:zz_ef_pbs_22
+			var:zz_ef_pbs_22 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 22 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_22 <= 0 has_variable = zz_ef_pbs_22 }
+		remove_variable = zz_ef_pbs_22
+	}
+}
+
+# private banks' slot 23: E&F's ai_privat_bank_bond_value_23 / ai_privat_bank_seller_country_general_23
+zz_ef_pb_slot_23 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_23 } } set_variable = { name = zz_ef_pbh_23 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_23 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_23 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_23 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_23 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_23
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_23
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_23 }
+			scope:zz_ef_pbsel_23 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_23 value = scope:zz_ef_pbsel_23 }
+			zz_ef_pb_buy = { N = 23 }
+		}
+		set_variable = { name = zz_ef_pbh_23 value = var:ai_privat_bank_bond_value_23 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_23 }
+		zz_ef_pb_drop = { N = 23 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_23 > 0
+			has_variable = zz_ef_pbs_23
+			exists = var:zz_ef_pbs_23
+			var:zz_ef_pbs_23 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 23 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_23 <= 0 has_variable = zz_ef_pbs_23 }
+		remove_variable = zz_ef_pbs_23
+	}
+}
+
+# private banks' slot 24: E&F's ai_privat_bank_bond_value_24 / ai_privat_bank_seller_country_general_24
+zz_ef_pb_slot_24 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_24 } } set_variable = { name = zz_ef_pbh_24 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_24 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_24 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_24 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_24 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_24
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_24
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_24 }
+			scope:zz_ef_pbsel_24 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_24 value = scope:zz_ef_pbsel_24 }
+			zz_ef_pb_buy = { N = 24 }
+		}
+		set_variable = { name = zz_ef_pbh_24 value = var:ai_privat_bank_bond_value_24 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_24 }
+		zz_ef_pb_drop = { N = 24 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_24 > 0
+			has_variable = zz_ef_pbs_24
+			exists = var:zz_ef_pbs_24
+			var:zz_ef_pbs_24 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 24 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_24 <= 0 has_variable = zz_ef_pbs_24 }
+		remove_variable = zz_ef_pbs_24
+	}
+}
+
+# private banks' slot 25: E&F's ai_privat_bank_bond_value_25 / ai_privat_bank_seller_country_general_25
+zz_ef_pb_slot_25 = {
+	if = { limit = { NOT = { has_variable = zz_ef_pbh_25 } } set_variable = { name = zz_ef_pbh_25 value = 0 } }
+	set_variable = { name = zz_ef_pb_v value = 0 }
+	if = { limit = { has_variable = ai_privat_bank_bond_value_25 } set_variable = { name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_25 } }
+	if = {
+		limit = { var:zz_ef_pb_v > var:zz_ef_pbh_25 }
+		if = {
+			limit = { has_variable_list = ai_privat_bank_seller_country_general_25 }
+			random_in_list = {
+				variable = ai_privat_bank_seller_country_general_25
+				limit = { is_country_type = recognized }
+				save_scope_as = zz_ef_pbsel_25
+			}
+		}
+		if = {
+			limit = { exists = scope:zz_ef_pbsel_25 }
+			scope:zz_ef_pbsel_25 = { save_scope_as = zz_ef_bl_seller }
+			set_variable = { name = zz_ef_pbs_25 value = scope:zz_ef_pbsel_25 }
+			zz_ef_pb_buy = { N = 25 }
+		}
+		set_variable = { name = zz_ef_pbh_25 value = var:ai_privat_bank_bond_value_25 }
+	}
+	else_if = {
+		limit = { var:zz_ef_pb_v < var:zz_ef_pbh_25 }
+		zz_ef_pb_drop = { N = 25 }
+	}
+	if = {
+		limit = {
+			var:zz_ef_pbh_25 > 0
+			has_variable = zz_ef_pbs_25
+			exists = var:zz_ef_pbs_25
+			var:zz_ef_pbs_25 = {
+				is_country_type = recognized
+				has_variable = zz_ef_bl_ratio
+				var:zz_ef_bl_ratio < 1
+			}
+		}
+		zz_ef_pb_cutback = { N = 25 }
+	}
+	if = {
+		limit = { var:zz_ef_pbh_25 <= 0 has_variable = zz_ef_pbs_25 }
+		remove_variable = zz_ef_pbs_25
 	}
 }
