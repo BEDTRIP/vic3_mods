@@ -5,6 +5,7 @@
  building_zz_ef_bank:0 "Банк"
  building_zz_ef_bank_desc:0 "Частный банк: платежи, переводы, векселя. Проводит банковские расчёты, которые покупают предприятия и население."
  pmg_zz_ef_bank_base:0 "Банковское дело"
+ pm_zz_ef_bank_money_changer:0 "Меняла"
  pm_zz_ef_bank_counting_house:0 "Банкирский дом"
  pm_zz_ef_bank_joint_stock:0 "Акционерный банк"
  pm_zz_ef_bank_telegraph:0 "Телеграфные переводы"

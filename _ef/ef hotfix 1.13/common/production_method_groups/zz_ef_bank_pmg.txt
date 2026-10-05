@@ -4,6 +4,7 @@ pmg_zz_ef_bank_base = {
 	ai_selection = most_productive
 
 	production_methods = {
+		pm_zz_ef_bank_money_changer
 		pm_zz_ef_bank_counting_house
 		pm_zz_ef_bank_joint_stock
 		pm_zz_ef_bank_telegraph

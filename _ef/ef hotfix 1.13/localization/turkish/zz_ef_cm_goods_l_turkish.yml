@@ -5,6 +5,7 @@
  building_zz_ef_bank:0 "Bank"
  building_zz_ef_bank_desc:0 "A private bank: payments, transfers, bills of exchange. Makes the bank settlements that businesses and the population buy."
  pmg_zz_ef_bank_base:0 "Banking"
+ pm_zz_ef_bank_money_changer:0 "Money Changer"
  pm_zz_ef_bank_counting_house:0 "Counting House"
  pm_zz_ef_bank_joint_stock:0 "Joint-Stock Bank"
  pm_zz_ef_bank_telegraph:0 "Telegraphic Transfers"

@@ -6,6 +6,7 @@
 # price 1; paper and services ~30 each. Inputs ~40-45% of the output's value; each era gives more services per
 # worker, so the services get cheaper over time.
 #   method                 tech                          input                                       output
+#   money changer          -- (no technology)            services 4                     (~120)          300
 #   counting house         -- (no technology)             paper 2, services 5            (~210)          500
 #   joint-stock bank       joint_stock_companies (2)     paper 3, services 8            (~330)          750
 #   telegraph transfers    electric_telegraph            paper 3, services 11           (~420)         1000
@@ -13,6 +14,22 @@
 # Demand: ~5% of GDP (Д2.2). !! TUNING !! the outputs, with the businesses' input
 # (zz_ef_market_liquidity_input.txt) and the seed (script_values/zz_ef_bank_values.txt: GDP / 520000).
 #############################################
+
+# The user (5.10): "the cheapest variant first, services only -- minors have no paper".
+pm_zz_ef_bank_money_changer = {
+	texture = "gfx/interface/icons/production_method_icons/market_trade.dds"
+
+	building_modifiers = {
+		workforce_scaled = {
+			goods_input_services_add = 4
+			goods_output_liquidity_currency_add = 300
+		}
+		level_scaled = {
+			building_employment_clerks_add = 950
+			building_employment_capitalists_add = 50
+		}
+	}
+}
 
 pm_zz_ef_bank_counting_house = {
 	texture = "gfx/interface/icons/production_method_icons/market_trade.dds"
