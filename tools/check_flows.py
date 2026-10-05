@@ -10,7 +10,9 @@ metal neither appear nor vanish. This reads the money model's log lines (tools/r
   EFG (В1.6, 5.10; weekly, the WHOLE world, in gold): in / out -- the net inflows / outflows with abroad of all
       countries; nocl -- |flow| of the countries outside the clearing (no CB); subj_in / subj_out -- the subjects' part;
       hume / hume_abs -- the CBs' metal moved by the clearing, signed sum and |sum|; n / n0 -- countries / with no value;
-      clr_in / clr_out / clr_pot -- the clearing's last window;
+      clr_in / clr_out / clr_pot -- the clearing's last window; in the engine's money (5.10): in_m / out_m, and the
+      signed world sums of the flow's parts trade_m / abr_m / div_m / bond_m; sub -- members' flows settled by their
+      heads (В1.7, gold);
   EFX (monthly, every country): gold / silver -- the central bank's metal (E&F's own scale), fxm -- foreign currency
       in the reserves (in metal), liab -- our currency held abroad; clr_in / clr_out / clr_pay / clr_pot -- the world
       clearing of the last window (the same numbers in every country's line).
@@ -112,6 +114,20 @@ def world_table(efg, tol):
               f"{g.get('subj_out', 0):>11,.0f} {g.get('hume', 0):>10,.0f} {g.get('hume_abs', 0):>10,.0f} "
               f"{g.get('n', 0):>4.0f} {g.get('n0', 0):>4.0f}")
         out.append({"month": mon, **g, "share": share, "flag": flag})
+    # 5.10: the same in the engine's money (every country, its payments abroad are in it) and the signed world sums
+    # of the flow's parts -- a part far from 0 is a payment without a counterpart; gold vs money apart = valuation
+    if any("in_m" in efg[m] for m in efg):
+        print(f"\nWORLD (EFG, money): {'month':8} {'in':>12} {'out':>12} {'in-out':>12} {'share':>7} {'trade':>12} "
+              f"{'abr':>12} {'div':>12} {'bonds':>12} {'sub(g)':>11}")
+        for row in out:
+            if "in_m" not in row:
+                continue
+            mi, mo = row.get("in_m", 0.0), row.get("out_m", 0.0)
+            sh = (mi - mo) / (mi + mo) if mi + mo else 0.0
+            row["share_m"] = sh
+            print(f"{'>>' if abs(sh) > tol else '  '}                  {row['month']:8} {mi:>12,.0f} {mo:>12,.0f} "
+                  f"{mi - mo:>12,.0f} {sh:>7.3f} {row.get('trade_m', 0):>12,.0f} {row.get('abr_m', 0):>12,.0f} "
+                  f"{row.get('div_m', 0):>12,.0f} {row.get('bond_m', 0):>12,.0f} {row.get('sub', 0):>11,.0f}")
     return out, flags
 
 

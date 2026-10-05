@@ -23,8 +23,31 @@ zz_ef_clr_metal_share = {
 	min = zz_ef_clr_metal_share_min
 }
 # Gold a unit of the scope country's money pays / claims abroad: at the parity under a metal standard (as Hume
-# settled), else E&F's value of its currency in gold.
+# settled), else E&F's value of its currency in gold. В1.6 items 2-3 (5.10): a country that settles through a
+# head (zz_ef_clr_head_find) -- the head's: the zone's overlord, or, with no value of its own, its market's owner.
 zz_ef_clr_gold_per_money = {
+	value = zz_ef_clr_gpm_own
+	if = {
+		limit = {
+			has_variable = zz_ef_cur_zone
+			is_subject = yes
+		}
+		value = 0
+		overlord = { add = zz_ef_clr_gpm_own }
+	}
+	else_if = {
+		limit = {
+			NOT = { zz_ef_clr_gpm_own > 0 }
+			exists = market
+			NOT = { market.owner = this }
+		}
+		value = 0
+		market = { owner = { add = zz_ef_clr_gpm_own } }
+	}
+	min = 0
+}
+# ... the country's own
+zz_ef_clr_gpm_own = {
 	value = zz_ef_rc_currency_value
 	if = {
 		limit = {
@@ -99,7 +122,7 @@ zz_ef_v_f_clr_reserves_money = {
 }
 zz_ef_v_f_clr_unsettled = {
 	value = 0
-	if = { limit = { has_variable = zz_ef_f_ext_net } value = var:zz_ef_f_ext_net }
+	if = { limit = { has_variable = zz_ef_f_clr_net } value = var:zz_ef_f_clr_net }
 	subtract = zz_ef_v_f_clr_reserves_money
 }
 zz_ef_clr_ratio_v = {
@@ -124,6 +147,15 @@ zz_ef_cu_member_v = {
 zz_ef_holds_pc_v = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_holds_pc } value = var:zz_ef_holds_pc }
+}
+# В1.7 (5.10): the members' flows settled with ours (gold) / our flow sent to the head (money), for the log
+zz_ef_v_f_clr_sub = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_clr_sub } value = var:zz_ef_f_clr_sub }
+}
+zz_ef_v_f_clr_sent = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_clr_sent } value = var:zz_ef_f_clr_sent }
 }
 zz_ef_clr_gold_v = {
 	value = 0
