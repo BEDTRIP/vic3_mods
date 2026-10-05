@@ -2966,3 +2966,13 @@ zz_ef_cur_intro_first_v = {
 	value = 0
 	if = { limit = { has_variable = zz_ef_cur_intro_first } value = 1 }
 }
+
+# В1.6 (5.10 evening): for the EFA line -- E&F's two modifiers of the additional income / expenses on or off
+zz_ef_cbm_v = {
+	value = 0
+	if = { limit = { has_modifier = interest_at_the_central_bank } value = 1 }
+}
+zz_ef_fdi_mod_v = {
+	value = 0
+	if = { limit = { has_modifier = interest_from_foreign_debt_investment } value = 1 }
+}
