@@ -1,7 +1,7 @@
 #############################################
 # Д2.4 (5.10.2026) -- the private banks' seed (scripted_effects/zz_ef_bank_seed.txt). COUNTRY scope.
 #
-# Levels so that the country's banks make ~5% of its GDP in settlement services (Д2.2): GDP (a year) x 5% / 52
+# Levels so that the country's banks make ~5% of its GDP in bank settlements (Д2.2): GDP (a year) x 5% / 52
 # weeks / ~500 per level (counting house, production_methods/zz_ef_bank_pm.txt, base price 1) = GDP / 520000.
 # Britain 1836 (~50M) -> ~97 levels. Capped at 400. Below 1 -> no bank: the country imports the services.
 #############################################

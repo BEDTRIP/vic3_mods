@@ -1,7 +1,7 @@
 ﻿### E&F's market_goods_is_currency (common/scripted_triggers/00_ef_custom_trigger.txt) -- hand-maintained.
 ###
 ### E&F's menus use it to keep currency goods out of the ordinary market lists. Since Д2.1 (5.10.2026) the only
-### one left, liquidity_currency, is settlement services -- an ordinary good, so nothing is a currency any more.
+### one left, liquidity_currency, is bank settlements -- an ordinary good, so nothing is a currency any more.
 ### (Before: OR = { goods = g:liquidity_currency }; E&F's 95-good list logged ~12,000 errors in two seconds.)
 ###
 ### REPLACE_OR_CREATE: is what makes this override at all.

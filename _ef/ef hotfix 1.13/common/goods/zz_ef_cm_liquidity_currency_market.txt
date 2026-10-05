@@ -1,4 +1,4 @@
-### E&F Hotfix -- liquidity_currency = settlement services (Д2.1, 5.10.2026); trading and icon.
+### E&F Hotfix -- liquidity_currency = bank settlements (Д2.1, 5.10.2026); trading and icon.
 ###
 ### Д2.1 (5.10, decided by the user): E&F's currency good is the service of moving money -- payments, transfers,
 ### bills -- made by private banks (buildings/zz_ef_bank.txt) and bought by businesses (E&F's market liquidity

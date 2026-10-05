@@ -2,7 +2,7 @@
 ###
 ### Д2.4 / Д2.6 (5.10.2026, decided by the user): E&F's 98 bank companies (the ones E&F lists in
 ### private_bank_type) own and build the private bank building "Банк" (building_zz_ef_bank,
-### buildings/zz_ef_bank.txt), which makes settlement services -- the former currency good (Д2.1).
+### buildings/zz_ef_bank.txt), which makes bank settlements -- the former currency good (Д2.1).
 ###
 ### Until 5.10 this file gave each of them building_bank (the central bank) and the three regime currencies as
 ### prestige goods (EF.4: any of them could become a country's central bank company). The central bank is the

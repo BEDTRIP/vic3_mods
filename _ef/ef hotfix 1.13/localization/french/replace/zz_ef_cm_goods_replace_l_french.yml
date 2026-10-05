@@ -1,5 +1,5 @@
 ﻿l_french:
- # liquidity_currency = settlement services since 5.10.2026 (Д2.1): E&F's currency good is the service of moving
+ # liquidity_currency = bank settlements since 5.10.2026 (Д2.1): E&F's currency good is the service of moving
  # money, made by private banks (building_zz_ef_bank). Overrides E&F's own name ("Base Money"); E&F (and the V4 RUS
  # translation) define the key first, and localization is first-come, so the override only works from replace/.
- liquidity_currency:0 "Settlement Services"
+ liquidity_currency:0 "Bank Settlements"

@@ -4,7 +4,7 @@
 ### EF.4 (2.09) had made it company-owned (ownership_type = self) so that a bank company could mint the three
 ### regime currencies as prestige goods; the company then drew the bank's whole profit -- E&F's currency good sold
 ### to every business and to the population (Britain 1839: 207.9K a week, ~15-20% of GDP; plan, "Этап 2 — решения").
-### The currency good becomes "settlement services" made by private banks (Д2.1-Д2.4), so the central bank:
+### The currency good becomes "bank settlements" made by private banks (Д2.1-Д2.4), so the central bank:
 ###   * ownership_type = no_ownership -- E&F's own value;
 ###   * pmg_currency_type removed -- it issued the currency good (pm_currency_liquidity_currency x currency_demande,
 ###     a mult, so without the PM's flat output E&F's demand modifier issues nothing);

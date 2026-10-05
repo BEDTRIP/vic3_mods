@@ -1,7 +1,7 @@
 #############################################
 # Д2.1-Д2.4 (5.10.2026, decided by the user) -- the private bank: "Банк" / "Bank".
 #
-# E&F's currency good (liquidity_currency) becomes settlement services: what E&F modelled as "money as a good" is
+# E&F's currency good (liquidity_currency) becomes bank settlements: what E&F modelled as "money as a good" is
 # the service of moving money -- payments, transfers, bills. Our accounts already carry the money itself
 # (money model, M0-M3), so the good measures nothing; it is a service businesses (E&F's "market liquidity"
 # method, production_methods/zz_ef_market_liquidity_input.txt) and the population (popneed_currency) buy, and

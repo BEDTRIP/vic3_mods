@@ -1,6 +1,6 @@
 #############################################
 # Д2.4 (5.10.2026) -- the private banks are seeded once, in a country's first monthly pulse
-# (on_actions/zz_ef_bank_on_actions.txt): settlement services (the former currency good) used to come from the
+# (on_actions/zz_ef_bank_on_actions.txt): bank settlements (the former currency good) used to come from the
 # central bank from day one, and a market without them buys none for its businesses and population.
 #
 # COUNTRY scope. In the capital, zz_ef_bank_seed_levels levels (GDP / 520000), one create_building per level:

@@ -1,9 +1,9 @@
 ﻿l_simp_chinese:
 
- # Д2.4 (5.10.2026): the private bank -- makes settlement services (the former E&F currency good).
+ # Д2.4 (5.10.2026): the private bank -- makes bank settlements (the former E&F currency good).
  bg_zz_ef_banking:0 "Banking"
  building_zz_ef_bank:0 "Bank"
- building_zz_ef_bank_desc:0 "A private bank: payments, transfers, bills of exchange. Makes the settlement services businesses and the population buy."
+ building_zz_ef_bank_desc:0 "A private bank: payments, transfers, bills of exchange. Makes the bank settlements that businesses and the population buy."
  pmg_zz_ef_bank_base:0 "Banking"
  pm_zz_ef_bank_counting_house:0 "Counting House"
  pm_zz_ef_bank_joint_stock:0 "Joint-Stock Bank"

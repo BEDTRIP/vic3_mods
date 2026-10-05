@@ -54,7 +54,7 @@ GLOBAL = {
 		}
 
 
-		# 4. Initial liquidity_currency grant to minor countries -- removed 5.10 (Д2.3): settlement services come
+		# 4. Initial liquidity_currency grant to minor countries -- removed 5.10 (Д2.3): bank settlements come
 		#    from banks (buildings/zz_ef_bank.txt) and are traded.
 	}
 }
