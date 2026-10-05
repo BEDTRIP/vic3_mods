@@ -2976,3 +2976,8 @@ zz_ef_fdi_mod_v = {
 	value = 0
 	if = { limit = { has_modifier = interest_from_foreign_debt_investment } value = 1 }
 }
+# В1.6 / ИВ.1 (5.10 evening): the week's event money between the treasury and pops' savings (+ to the savings)
+zz_ef_v_f_event_sav = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_event_sav } value = var:zz_ef_f_event_sav }
+}
