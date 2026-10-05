@@ -4,9 +4,9 @@
 # E&F's "market liquidity" method (production_methods/00_ef_market_liquidity.txt, 4.1.7) sits on almost every
 # building and buys 98 units of liquidity_currency per workforce unit -- the currency good, now settlement
 # services (buildings/zz_ef_bank.txt). With the population's popneed_currency that came to ~208K a week for
-# Britain in 1839 (~20% of GDP), all of it the central bank's profit. 98 -> 10 for a start: the population's
-# need (E&F's buy packages, ~8% of a middle pop's basket) is left as it is, and the sum is checked by the run
-# against ~5% of GDP (Д2.2); a dependence on the key rate comes later.
+# Britain in 1839 (~20% of GDP), all of it the central bank's profit. The user split the 5% of GDP (Д2.2):
+# businesses ~3%, population ~2% (popneed_currency x 0.25, tools/ef_settlements_need.py). Run r1005_201105 (1838):
+# with 10 here British businesses bought ~7.6K a week (<1% of GDP) -> 35. A dependence on the key rate later.
 # !! TUNING !! goods_input_liquidity_currency_add.
 #
 # REPLACE: restates the whole entry -- the rest is E&F's, line for line.
@@ -21,7 +21,7 @@ REPLACE:pm_market_liquidity_currency = {
 
 	building_modifiers = {
 		workforce_scaled = {
-			goods_input_liquidity_currency_add = 10	### Д2.2: E&F has 98
+			goods_input_liquidity_currency_add = 35	### Д2.2: E&F has 98
 		}
 	}
 }

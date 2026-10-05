@@ -60,6 +60,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from vic3merge3 import brace_balance, needs_bom, read_lines  # noqa: E402
+from ef_settlements_need import POP_NEED_FACTOR, scale_line  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 res = lambda p: os.path.normpath(os.path.join(HERE, p))
@@ -157,13 +158,16 @@ def build_buy_packages():
             "a blind re-inject would double it up")
 
     injects.sort(key=lambda ln: int(re.search(r"wealth_(\d+)", ln).group(1)))
+    # Д2.2 (5.10.2026): popneed_currency (bank settlements) scaled as in the hotfix (tools/ef_settlements_need.py)
+    injects = [scale_line(ln) for ln in injects]
     write("common/buy_packages/zz_vc_ef_buy_packages.txt",
           "\n".join(injects),
           "re-apply E&F's currency/financial-products needs",
           "VC's REPLACE_OR_CREATE:wealth_* wipes E&F's INJECTs (popneed_currency, "
           "popneed_financial_products) on all 99 tiers. VC never sets those two "
-          "needs itself, so this is a clean re-apply of E&F's own lines, read "
-          "live from its buy_packages file -- not a re-balance.")
+          "needs itself, so this is a re-apply of E&F's own lines, read live from "
+          f"its buy_packages file; popneed_currency x {POP_NEED_FACTOR} (Д2.2, 5.10: bank "
+          "settlements, population ~2% of GDP -- tools/ef_settlements_need.py).")
 
 
 def build_buildings():
