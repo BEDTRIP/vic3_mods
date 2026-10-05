@@ -27,3 +27,58 @@ REPLACE_OR_CREATE:target_supply_mutual_fund = {
 	value = collateral_quantity_mutual_fund
 	multiply = 1.25	### EF.17 (4b): E&F has 1.5
 }
+
+#############################################
+# EF.33 (Ф.7 а, night 5-6.10.2026) -- the margin is 1.25 only on paper: x2.5 in fact (London 1847: buys 603K a
+# week, sells 1.53M; value added ~18% of Britain's GDP). total_cost_fcc prices E&F's FORMULA demand
+# (target_demand_<good>_ajusted), while the exchange's actual purchase is that demand through the input modifier
+# capped at +25000% (target_demand_<good>_for_modifier, max = 25000: at most base x 251) -- the larger the market,
+# the further the formula runs past what is really bought, and the output follows the formula.
+# Now each part of total_cost_fcc is priced on the demand the cap lets through: min(adjusted demand,
+# base x 251) -- the same quantity the input modifier buys, so the output is 1.25 x the real purchase (the base
+# read only where E&F has set it, as 7a guards it).
+# Still needed after Д2.10 (capitalization from listed dividends): the exchange's value added is GDP and profit,
+# and the profit now feeds the capitalization.
+# !! MAINTENANCE !! key-level REPLACE_OR_CREATE of E&F's five *_price_by_demand_fc (00_financial_scripted_value.txt).
+#############################################
+
+REPLACE_OR_CREATE:bond_price_by_demand_fc = {
+	value = target_demand_bond_ajusted
+	if = {
+		limit = { has_variable = base_demande_bond_fix }
+		max = { value = var:base_demande_bond_fix multiply = 251 min = 0 }
+	}
+	multiply = bond_price_brut
+}
+REPLACE_OR_CREATE:manufacture_stock_price_by_demand_fc = {
+	value = target_demand_manufacture_stock_ajusted
+	if = {
+		limit = { has_variable = base_demande_manufacture_stock_fix }
+		max = { value = var:base_demande_manufacture_stock_fix multiply = 251 min = 0 }
+	}
+	multiply = manufacture_stock_price_brut
+}
+REPLACE_OR_CREATE:agricultural_stock_price_by_demand_fc = {
+	value = target_demand_agricultural_stock_ajusted
+	if = {
+		limit = { has_variable = base_demande_agricultural_stock_fix }
+		max = { value = var:base_demande_agricultural_stock_fix multiply = 251 min = 0 }
+	}
+	multiply = agricultural_stock_price_brut
+}
+REPLACE_OR_CREATE:mining_stock_price_by_demand_fc = {
+	value = target_demand_mining_stock_ajusted
+	if = {
+		limit = { has_variable = base_demande_mining_stock_fix }
+		max = { value = var:base_demande_mining_stock_fix multiply = 251 min = 0 }
+	}
+	multiply = mining_stock_price_brut
+}
+REPLACE_OR_CREATE:railroad_stock_price_by_demand_fc = {
+	value = target_demand_railroad_stock_ajusted
+	if = {
+		limit = { has_variable = base_demande_railroad_stock_fix }
+		max = { value = var:base_demande_railroad_stock_fix multiply = 251 min = 0 }
+	}
+	multiply = railroad_stock_price_brut
+}
