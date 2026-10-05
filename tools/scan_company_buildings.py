@@ -22,6 +22,7 @@ def main():
     raw = '--raw' in args
     args = [a for a in args if a not in ('--cb', '--raw')]
     d = SO.parse(args[0])
+    SO.parse_cache = {args[0] if os.path.isabs(args[0]) else os.path.join(SO.SG, args[0]): d}
     subs = args[1:]
     banks = SO.bank_companies() if cb else None
     owned = collections.defaultdict(collections.Counter)
@@ -64,6 +65,12 @@ def dump_raw(path, hq):
     cid = m.group(1)
     a = m.start() + 1
     e = comp.find('\n}', a)
+    bm = SO.section(s, 'building_manager')
+    for bid in sorted({b for (k, o, b) in SO.parse_cache[path]['own'] if k == 'building' and o == hq}):
+        r = re.search(r'\n' + bid + r'=\{\n(.*?)\n\}', bm, re.S)
+        if r:
+            body = re.sub(r'\t*\w+_trend=\{.*?\n\t\}', '', r.group(1), flags=re.S)
+            print('  --- building ' + bid + ': ' + ' '.join(body.split())[:1500])
     print('  --- company record', cid)
     print('  ' + comp[a:e + 2][:4000].replace('\n', '\n  '))
     ch = SO.section(s, 'company_charters')
