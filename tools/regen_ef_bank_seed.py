@@ -12,12 +12,13 @@ How (once per market, by its owner, in the owner's first monthly pulse):
     trade centre -- the owner's capital;
   * in each state one create_building, the largest ladder size not above its share (calling create_building
     again on a standing building adds no levels -- run r1005_192418);
-  * owners: 60% the state's financial district (the population), 40% an E&F bank company of the state's owner if
-    it has one (else all to the financial district). A company type cannot be a variable, so the company is a
-    macro argument: one ladder per bank company (BANKS below, the 98 of zz_ef_cm_companies.txt). The financial
-    district needs its region: `region = scope:zz_ef_bank_sr` (the state's state_region) -- if the engine does
-    not take a scope there and no bank is built, the fallback builds it state-owned (ai_nationalization_desire
-    -5 on the building: the AI sells it).
+  * owners: 40% an E&F bank company of the state's owner if it has one, the rest the state -- sold by the AI to
+    private owners (ai_nationalization_desire -5 on the building; run r1005_194935: in a year and a half 339 of
+    1097 state levels went to financial districts and companies). A company type cannot be a variable, so the
+    company is a macro argument: one ladder per bank company (the 98 of zz_ef_cm_companies.txt).
+    The financial district cannot be the seed's owner: it needs a literal region -- `region = scope:...` is
+    refused ("Failed to read key reference", run r1005_201105), and the state's region would take a dispatcher of
+    ~700 regions x 98 companies x the ladder.
 Logged per state: EFK|date|country|state|want N|tc T|built B.
 
 Usage:
@@ -45,8 +46,8 @@ HEADER = """\
 #############################################
 # Д2.4 (5.10.2026) -- the banks' seed, once per market, by its owner (on_actions/zz_ef_bank_on_actions.txt):
 # bank settlements (the former currency good) used to come from the central bank from day one. Levels = the
-# market's buy orders x 1.2 / 500, spread over the market's states by trade centre levels; owners 60% financial
-# district, 40% the owner's E&F bank company; fallback state-owned. Why so: the generator's docstring.
+# market's buy orders x 1.2 / 500, spread over the market's states by trade centre levels; owners 40% the owner's
+# E&F bank company, the rest the state (the AI sells it to private owners). Why so: the generator's docstring.
 #############################################
 
 """
@@ -60,7 +61,7 @@ def banks() -> list[str]:
 
 
 def split(size: int, with_company: bool) -> tuple[int, int]:
-    """(company, financial district) levels."""
+    """(company, state) levels."""
     if not with_company:
         return 0, size
     c = int(size * COMPANY_SHARE)
@@ -78,12 +79,6 @@ def ladder(owner_block) -> str:
     return "".join(out)
 
 
-def fd(levels: int) -> str:
-    return ("\t\t\t\tbuilding = {\n\t\t\t\t\ttype = \"building_financial_district\"\n"
-            "\t\t\t\t\tcountry = scope:zz_ef_bank_o\n\t\t\t\t\tregion = scope:zz_ef_bank_sr\n"
-            f"\t\t\t\t\tlevels = {levels}\n\t\t\t\t}}\n")
-
-
 def company(levels: int) -> str:
     return ("\t\t\t\tcompany = {\n\t\t\t\t\ttype = $COMPANY$\n\t\t\t\t\tcountry = scope:zz_ef_bank_o\n"
             f"\t\t\t\t\tlevels = {levels}\n\t\t\t\t}}\n")
@@ -95,7 +90,7 @@ def country(levels: int) -> str:
 
 def with_company_block(size: int) -> str:
     c, f = split(size, True)
-    return (company(c) if c else "") + fd(f)
+    return (company(c) if c else "") + country(f)
 
 
 def build() -> str:
@@ -163,7 +158,6 @@ zz_ef_bank_seed_state = {
 		limit = { var:zz_ef_bank_n >= 1 }
 		save_scope_as = zz_ef_bank_s
 		owner = { save_scope_as = zz_ef_bank_o }
-		state_region = { save_scope_as = zz_ef_bank_sr }
 		owner = { set_variable = zz_ef_bank_nocomp }
 """)
     for k in keys:
@@ -178,7 +172,7 @@ zz_ef_bank_seed_state = {
 		if = {
 			limit = { owner = { has_variable = zz_ef_bank_nocomp } }
 			owner = { remove_variable = zz_ef_bank_nocomp }
-			zz_ef_bank_seed_fd = yes
+			zz_ef_bank_seed_state_owned = yes
 		}
 		if = {
 			limit = { NOT = { has_building = building_zz_ef_bank } }
@@ -192,9 +186,7 @@ zz_ef_bank_seed_state = {
 """)
     o.append("### STATE scope; $COMPANY$ = an E&F bank company of the owner.\nzz_ef_bank_seed_company = {\n")
     o.append(ladder(with_company_block))
-    o.append("}\n\n### STATE scope; no bank company: all to the financial district.\nzz_ef_bank_seed_fd = {\n")
-    o.append(ladder(lambda s: fd(s)))
-    o.append("}\n\n### STATE scope; fallback when the above built nothing: state-owned.\nzz_ef_bank_seed_state_owned = {\n")
+    o.append("}\n\n### STATE scope; no bank company (and the fallback): state-owned, sold by the AI.\nzz_ef_bank_seed_state_owned = {\n")
     o.append(ladder(lambda s: country(s)))
     o.append("}\n")
     return "".join(o)

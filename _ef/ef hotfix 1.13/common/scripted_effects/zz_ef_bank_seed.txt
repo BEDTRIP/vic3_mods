@@ -2,8 +2,8 @@
 #############################################
 # Д2.4 (5.10.2026) -- the banks' seed, once per market, by its owner (on_actions/zz_ef_bank_on_actions.txt):
 # bank settlements (the former currency good) used to come from the central bank from day one. Levels = the
-# market's buy orders x 1.2 / 500, spread over the market's states by trade centre levels; owners 60% financial
-# district, 40% the owner's E&F bank company; fallback state-owned. Why so: the generator's docstring.
+# market's buy orders x 1.2 / 500, spread over the market's states by trade centre levels; owners 40% the owner's
+# E&F bank company, the rest the state (the AI sells it to private owners). Why so: the generator's docstring.
 #############################################
 
 ### COUNTRY scope (the market owner), monthly; once.
@@ -65,7 +65,6 @@ zz_ef_bank_seed_state = {
 		limit = { var:zz_ef_bank_n >= 1 }
 		save_scope_as = zz_ef_bank_s
 		owner = { save_scope_as = zz_ef_bank_o }
-		state_region = { save_scope_as = zz_ef_bank_sr }
 		owner = { set_variable = zz_ef_bank_nocomp }
 		if = {
 			limit = { owner = { has_variable = zz_ef_bank_nocomp has_company = company_type:company_BancoNacionArgentina } }
@@ -560,7 +559,7 @@ zz_ef_bank_seed_state = {
 		if = {
 			limit = { owner = { has_variable = zz_ef_bank_nocomp } }
 			owner = { remove_variable = zz_ef_bank_nocomp }
-			zz_ef_bank_seed_fd = yes
+			zz_ef_bank_seed_state_owned = yes
 		}
 		if = {
 			limit = { NOT = { has_building = building_zz_ef_bank } }
@@ -584,10 +583,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 80
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 120
 				}
 			}
@@ -604,10 +601,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 60
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 90
 				}
 			}
@@ -624,10 +619,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 48
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 72
 				}
 			}
@@ -644,10 +637,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 40
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 60
 				}
 			}
@@ -664,10 +655,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 32
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 48
 				}
 			}
@@ -684,10 +673,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 28
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 42
 				}
 			}
@@ -704,10 +691,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 24
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 36
 				}
 			}
@@ -724,10 +709,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 20
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 30
 				}
 			}
@@ -744,10 +727,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 16
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 24
 				}
 			}
@@ -764,10 +745,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 14
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 21
 				}
 			}
@@ -784,10 +763,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 12
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 18
 				}
 			}
@@ -804,10 +781,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 10
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 16
 				}
 			}
@@ -824,10 +799,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 8
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 14
 				}
 			}
@@ -844,10 +817,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 7
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 11
 				}
 			}
@@ -864,10 +835,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 6
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 9
 				}
 			}
@@ -884,10 +853,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 4
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 8
 				}
 			}
@@ -904,10 +871,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 4
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 6
 				}
 			}
@@ -924,10 +889,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 3
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 5
 				}
 			}
@@ -944,10 +907,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 2
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 4
 				}
 			}
@@ -964,10 +925,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 2
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 3
 				}
 			}
@@ -984,10 +943,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 1
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 3
 				}
 			}
@@ -1004,10 +961,8 @@ zz_ef_bank_seed_company = {
 					country = scope:zz_ef_bank_o
 					levels = 1
 				}
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 2
 				}
 			}
@@ -1019,10 +974,8 @@ zz_ef_bank_seed_company = {
 			building = building_zz_ef_bank
 			reserves = 0
 			add_ownership = {
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 2
 				}
 			}
@@ -1034,10 +987,8 @@ zz_ef_bank_seed_company = {
 			building = building_zz_ef_bank
 			reserves = 0
 			add_ownership = {
-				building = {
-					type = "building_financial_district"
+				country = {
 					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
 					levels = 1
 				}
 			}
@@ -1045,371 +996,7 @@ zz_ef_bank_seed_company = {
 	}
 }
 
-### STATE scope; no bank company: all to the financial district.
-zz_ef_bank_seed_fd = {
-	if = {
-		limit = { var:zz_ef_bank_n >= 200 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 200
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 150 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 150
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 120 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 120
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 100 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 100
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 80 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 80
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 70 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 70
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 60 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 60
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 50 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 50
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 40 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 40
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 35 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 35
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 30 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 30
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 26 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 26
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 22 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 22
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 18 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 18
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 15 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 15
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 12 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 12
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 10 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 10
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 8 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 8
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 6 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 6
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 5 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 5
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 4 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 4
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 3 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 3
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 2 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 2
-				}
-			}
-		}
-	}
-	else_if = {
-		limit = { var:zz_ef_bank_n >= 1 }
-		create_building = {
-			building = building_zz_ef_bank
-			reserves = 0
-			add_ownership = {
-				building = {
-					type = "building_financial_district"
-					country = scope:zz_ef_bank_o
-					region = scope:zz_ef_bank_sr
-					levels = 1
-				}
-			}
-		}
-	}
-}
-
-### STATE scope; fallback when the above built nothing: state-owned.
+### STATE scope; no bank company (and the fallback): state-owned, sold by the AI.
 zz_ef_bank_seed_state_owned = {
 	if = {
 		limit = { var:zz_ef_bank_n >= 200 }
