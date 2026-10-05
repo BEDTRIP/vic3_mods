@@ -7,8 +7,8 @@ central bank from day one. The user (5.10): enough banks to cover the initial de
 trade centres, not only the capital; owned by the population and by companies.
 
 How (once per market, by its owner, in the owner's first monthly pulse):
-  * levels wanted L = (the market's buy orders of liquidity_currency x 1.2 - its sell orders) / 500 (a counting
-    house level makes 500; the sell orders are what trade centres already make -- they produce settlements too);
+  * levels wanted L = (the market's buy orders of liquidity_currency x 1.2 - its sell orders) / 300 (a new bank
+    starts with the money changer, 300 a level -- the AI moves it to a counting house, 500, where there is paper; the sell orders are what trade centres already make -- they produce settlements too);
   * spread over the market's states (every country on the market) by their trade centre levels; a market with no
     trade centre -- the owner's capital;
   * in each state one create_building, the largest ladder size not above its share (calling create_building
@@ -47,7 +47,7 @@ HEADER = """\
 #############################################
 # Д2.4 (5.10.2026) -- the banks' seed, once per market, by its owner (on_actions/zz_ef_bank_on_actions.txt):
 # bank settlements (the former currency good) used to come from the central bank from day one. Levels = (the
-# market's buy orders x 1.2 - sell orders, trade centres make some) / 500, spread over the market's states by trade centre levels; owners 40% the owner's
+# market's buy orders x 1.2 - sell orders, trade centres make some) / 300, spread over the market's states by trade centre levels; owners 40% the owner's
 # E&F bank company, the rest the state (the AI sells it to private owners). Why so: the generator's docstring.
 #############################################
 
@@ -117,7 +117,7 @@ zz_ef_bank_seed_step = {
 				multiply = 1.2
 				subtract = market.mg:liquidity_currency.market_goods_sell_orders
 				min = 0
-				divide = 500
+				divide = 300
 			}
 		}
 		set_variable = { name = zz_ef_bank_w value = 0 }
