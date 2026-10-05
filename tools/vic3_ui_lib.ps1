@@ -114,14 +114,16 @@ function Raise-Game($p) {
 # the script waits while the user touches the keyboard or mouse, or while another window is in front, in steps
 # of 5 s; after 5 quiet seconds it raises the game, closes the console and the open panels (Reset-UI) and goes
 # on. Before 5.10 it stole the focus back and stopped only if Windows refused.
-$script:OwnTick = [W]::GetTickCount()
+# global: the ui: steps of a run are a second copy of this script (vic3_ui.ps1) in the same session -- with a
+# script-scoped tick the run took their keys for the user's (5.10, r1005_103836)
+if (-not $global:Vic3OwnTick) { $global:Vic3OwnTick = [W]::GetTickCount() }
 $script:InReset = $false
 $script:WantPaused = $false
-function Mark-Own { $script:OwnTick = [W]::GetTickCount() }
+function Mark-Own { $global:Vic3OwnTick = [W]::GetTickCount() }
 # The user's last input: ms ago, or -1 if there has been none since the script's own last input.
 function User-InputAgo {
     $li = [W]::LastInput()
-    if ([int64]$li - [int64]$script:OwnTick -le 300) { return -1 }
+    if ([int64]$li - [int64]$global:Vic3OwnTick -le 300) { return -1 }
     return [int64][W]::GetTickCount() - [int64]$li
 }
 function User-Busy($p) {
@@ -266,17 +268,24 @@ $Screens = @{
     # Two halves of the column, each on its own: 5.10 (run r1005_044523) a loading screen's painting -- beige
     # above, a dark suit below -- averaged (80, 63, 44) over the whole column, inside the tolerance, and the
     # console commands went in while the game was still loading; its halves are (132, 108, 80) and (28, 18, 8)
-    game  = @{ box = @(5, 210, 45, 595); rgb = @(76, 68, 68); tol = 25; box2 = @(5, 595, 45, 980); rgb2 = @(76, 68, 68); tol2 = 25 }
+    # and the date panel at the top right (82, 73, 70): r1005_103836 took a Japanese loading painting for the
+    # game -- both halves of the column inside the tolerance; there the panel is (166, 179, 178), the lobby (58, 42, 46)
+    game  = @{ box = @(5, 210, 45, 595); rgb = @(76, 68, 68); tol = 25; box2 = @(5, 595, 45, 980); rgb2 = @(76, 68, 68); tol2 = 25
+               box3 = @(2200, 10, 2540, 60); rgb3 = @(82, 73, 70); tol3 = 20 }
     # the open console: its log area is a flat dark grey (45, 50, 52); the map there is (59, 75, 92), the
     # budget panel (63, 64, 58) -- 5.10, screenshots of r1005_042928 and r1005_044523
     console = @{ box = @(120, 250, 500, 650); rgb = @(45, 50, 52); tol = 8 }
     # the game menu (Escape with nothing open) -- calibrated on the screenshots of run CAL (5.10)
-    escmenu = @{ box = @(0, 0, 1, 1); rgb = @(-999, -999, -999); tol = 0 }
+    # the menu darkens the whole screen to ~0.4 (the lobby's exit dialog, r1005_103836: the date panel (58, 42, 46) ->
+    # (29, 21, 23), the bottom (67, 66, 63) -> (33, 33, 31)); in the game the date panel (82, 73, 70) and the bottom
+    # bar (75, 67, 69) dimmed the same -- estimate, to check on the screenshots of an in-game Escape
+    escmenu = @{ box = @(2200, 10, 2540, 60); rgb = @(33, 29, 28); tol = 14; box2 = @(1100, 1380, 1460, 1440); rgb2 = @(31, 28, 28); tol2 = 14 }
 }
 function Is-Screen($p, $name) {
     $sc = $Screens[$name]
     if (-not (Is-Box $p $sc.box $sc.rgb $sc.tol)) { return $false }
-    if ($sc.box2) { return (Is-Box $p $sc.box2 $sc.rgb2 $sc.tol2) }
+    if ($sc.box2 -and -not (Is-Box $p $sc.box2 $sc.rgb2 $sc.tol2)) { return $false }
+    if ($sc.box3 -and -not (Is-Box $p $sc.box3 $sc.rgb3 $sc.tol3)) { return $false }
     return $true
 }
 function Is-Box($p, $box, $rgb, $tol) {
@@ -300,20 +309,23 @@ function Is-Box($p, $box, $rgb, $tol) {
 # another window on top (4.10 night: Obsidian, the menu was "seen" in its colours; 4.10 evening:
 # the game started behind the user's window). Each poll raises the game first; a box is only
 # trusted while the game is in front.
-function Wait-Screen($name, $max, $settle) {
+function Wait-Screen($names, $max, $settle) {
     $t = Get-Date
     while (((Get-Date) - $t).TotalSeconds -lt $max) {
         $p = Get-Game
         # while the user touches the keyboard or mouse the game is not pulled forward (5.10)
         $ago = User-InputAgo
         $busy = ($ago -ge 0 -and $ago -lt 5000)
-        if ($p -and $p.MainWindowHandle -ne 0 -and -not $busy -and (Raise-Game $p) -and (Is-Screen $p $name)) {
-            Log ("screen '$name' after {0:N0} s" -f ((Get-Date) - $t).TotalSeconds); Start-Sleep $settle; return $true
+        if ($p -and $p.MainWindowHandle -ne 0 -and -not $busy -and (Raise-Game $p)) {
+            # several names: the first one seen is returned (a save may open in the lobby, 5.10)
+            foreach ($name in @($names)) {
+                if (Is-Screen $p $name) { Log ("screen '$name' after {0:N0} s" -f ((Get-Date) - $t).TotalSeconds); Start-Sleep $settle; return $name }
+            }
         }
         if ($t0) { Save-DebugParts }
         Start-Sleep 3
     }
-    Log "screen '$name' not seen in $max s - going on"
+    Log "screen '$(@($names) -join '/')' not seen in $max s - going on"
     return $false
 }
 

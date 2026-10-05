@@ -84,7 +84,11 @@ $Macros = @{
     # leaves a state panel open, its title tooltip took the hover), the X closes it.
     currency = "key f2; wait 1; click 0.2265 0.095; wait 1; hover 0.0975 0.0916; wait 3; shot {P}_currency; hover 0.6 0.97; wait 1"
     cards    = CardShots
-    # the budget panel (F2, the left column's second icon) and its five tabs page by page. F2 opens it over
-    # any other panel and does not toggle; the panel's X (0.2265 0.095) closes it at the end
-    budget   = "key f2; wait 2; " + (Pages 0.045 5 "t1_overview") + "; " + (Pages 0.0875 3 "t2_states") + "; " + (Pages 0.13 7 "t3_economy") + "; " + (Pages 0.1725 8 "t4_finance") + "; " + (Pages 0.215 3 "t5_stocks") + "; click 0.2265 0.095; wait 1"
+    # the budget panel (F2, the left column's second icon) and its five tabs, each by "browse": every collapsed
+    # section expanded, paged by the scrollbar to the end (5.10, the user: "you page the budget but do not open
+    # the subheadings" -- the old fixed wheel pages left sections shut and cut long tabs). F2 opens it over any
+    # other panel and does not toggle; the panel's X (0.2265 0.095) closes it at the end
+    budget   = "hover 0.6 0.97; key f2; wait 2" + (-join (@(@(0.045, "t1_overview"), @(0.0875, "t2_states"), @(0.13, "t3_economy"), @(0.1725, "t4_finance"), @(0.215, "t5_stocks")) | ForEach-Object { "; hover $Neutral; wait 0.8; click $($_[0]) 0.214; wait 1.5; browse {P}_$($_[1])" })) + "; click 0.2265 0.095; wait 1"
+    # the old fixed pages (no expanding) -- kept for a quick look
+    budgetpages = "key f2; wait 2; " + (Pages 0.045 5 "t1_overview") + "; " + (Pages 0.0875 3 "t2_states") + "; " + (Pages 0.13 7 "t3_economy") + "; " + (Pages 0.1725 8 "t4_finance") + "; " + (Pages 0.215 3 "t5_stocks") + "; click 0.2265 0.095; wait 1"
 }

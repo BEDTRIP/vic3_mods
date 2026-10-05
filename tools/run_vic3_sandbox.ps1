@@ -124,7 +124,14 @@ if ($NewGame) {
     Start-Sleep 5
 } else {
     Log "window up, waiting for the save to load (at most $LoadWaitSec s)"
-    Wait-Screen "game" $LoadWaitSec 8 | Out-Null
+    # a save may open in the lobby (r1005_103836, -StartSave of a manual save: the country picker with "Начать"):
+    # start from there; the country is the save's own unless -Tag is given
+    if ((Wait-Screen @("game", "lobby") $LoadWaitSec 8) -eq "lobby") {
+        $p = Get-Game; Shot $p "00c_lobby.png"
+        Click-Window $p 0.9215 0.975; Log "the save opened in the lobby: starting"
+        Wait-Screen "game" 300 8 | Out-Null
+        if ($PSBoundParameters.ContainsKey("Tag")) { Console-Cmd (Get-Game) "tag $Tag"; Start-Sleep 5 }
+    }
 }
 $p = Get-Game
 Shot $p "01_loaded.png"
