@@ -76,6 +76,18 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
                 Shot $p ("{0}_{1:D2}_{2}.png" -f $pre, $i, $pt.name)
             }
         }
+        # redo <step|step|...>: a piece that needs its own menu (a budget tab, a card); if the user came in while it
+        # ran (the menus were closed after them), it is taken again from its start -- up to 3 times (5.10: the user
+        # interrupted a budget tab, the script closed the budget and paged on over the map)
+        "redo"    {
+            $sub = $rest -replace '\|', ';'
+            for ($k = 1; $k -le 3; $k++) {
+                $global:Vic3Interrupted = $false
+                & $PSCommandPath -OutDir $OutDir -Do $sub
+                if (-not $global:Vic3Interrupted) { break }
+                Log "redo: the user came in - again ($k)"
+            }
+        }
         "macro"   {
             $xy = $rest -split '\s+'; $m = $Macros[$xy[0]]
             if (-not $m) { Log "no macro '$($xy[0])'"; break }
