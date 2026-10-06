@@ -20,6 +20,31 @@ zz_ef_v_w_nr_dep = {
 	if = { limit = { has_variable = zz_ef_w_nr_dep } value = var:zz_ef_w_nr_dep }
 }
 
+# Д2.33 (a): the week's interest to the holders: the deposits x the deposit rate / 52
+zz_ef_nr_int_week = {
+	value = zz_ef_nr_dep_v
+	multiply = zz_ef_deposit_rate
+	divide = 52
+	min = 0
+}
+zz_ef_v_f_nr_int = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_nr_int } value = var:zz_ef_f_nr_int }
+}
+# Д2.33 (b): the export advantage's multiplier, +1 (= +1%) per 3% of GDP held abroad, at most 20
+zz_ef_fx_holders_demand_m = {
+	value = 0
+	if = {
+		limit = { zz_ef_raw_gdp > 0 }
+		value = zz_ef_fx_liab_all
+		divide = zz_ef_raw_gdp
+		multiply = 100
+		divide = 3
+	}
+	max = 20
+	min = 0
+}
+
 # !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's money_supply_stockpile_by_other_country
 # (01_economic_currency_scripted_value.txt:9739): E&F summed its own counters (<currency>_c_no_own, its unscaled
 # history -- "Hanoverian thaler 968M" in the world money table against Hanover's M2 1.4M); now our measure, the

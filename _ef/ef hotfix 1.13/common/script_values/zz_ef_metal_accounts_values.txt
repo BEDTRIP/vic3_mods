@@ -397,13 +397,33 @@ zz_ef_cb_sell_units = {
 		multiply = money_supply
 		multiply = zz_ef_cb_valuation
 		multiply = 0.02
-		# the cover counts foreign currency too: never more than 2% of the standard's own metal a week
-		max = {
-			value = zz_ef_cb_metal
-			multiply = 0.02
+		# Д2.34 (the user, 6.10 day): over 100% cover another 5% of that excess a week (run r1006_162423: the
+		# surplus countries' cover 2-3.6 -- the US 2.9, Belgium 3.6 -- the 2% did not hold it)
+		if = {
+			limit = { zz_ef_cb_cover > zz_ef_cb_sell_cover_high }
+			add = {
+				value = zz_ef_cb_cover
+				subtract = zz_ef_cb_sell_cover_high
+				multiply = money_supply
+				multiply = zz_ef_cb_valuation
+				multiply = 0.05
+			}
 		}
+		# the cover counts foreign currency too: never more than 2% of the standard's own metal a week (5% over
+		# 100% cover)
+		max = zz_ef_cb_sell_max_units
 	}
 	min = 0
+}
+zz_ef_cb_sell_cover_high = 1
+zz_ef_cb_sell_max_units = {
+	value = zz_ef_cb_metal
+	multiply = 0.02
+	if = {
+		limit = { zz_ef_cb_cover > zz_ef_cb_sell_cover_high }
+		value = zz_ef_cb_metal
+		multiply = 0.05
+	}
 }
 # The buy-back from pops under 40% cover: at most 1% of their metal of the standard a week, at most the gap; paid
 # at parity + 2%, new money into their savings.
