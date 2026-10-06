@@ -209,8 +209,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--fork", default=str(FORK))
     ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--force", action="store_true", help="писать, даже если форк уже правили руками")
     args = ap.parse_args()
     fork = Path(args.fork)
+
+    # После ручных правок форка перенос их затрёт (файлы E&F собираются из оригиналов) — только до них.
+    if not args.dry and not args.force:
+        import subprocess
+        log = subprocess.run(["git", "-C", str(fork), "log", "--format=%s", "48c3f70..HEAD"],
+                             capture_output=True, text=True, encoding="utf-8").stdout.split("\n")
+        foreign = [s for s in log if s.strip() and not s.startswith(("ФК0", "ФК1"))]
+        if foreign:
+            raise SystemExit(f"в форке есть коммиты после переноса ({foreign[0]!r} …): перенос затрёт ручные правки. "
+                             f"--dry — посмотреть отчёт, --force — писать всё равно.")
 
     report = defaultdict(list)
 
