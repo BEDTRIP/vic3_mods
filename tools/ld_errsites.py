@@ -16,9 +16,35 @@ import re
 import sys
 from collections import Counter, defaultdict
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ld_gen  # noqa: E402
+
 HEAD = re.compile(r"^\[\d\d:\d\d:\d\d\]\[[^\]]*\]:\s?")
 LOC = re.compile(r"((?:common|gui|events|localization)/[^'\"\n:]+?\.(?:txt|gui|yml))(?:['\"]?\s*(?:near line:|:)\s*(\d+))?")
 NUM = re.compile(r"\b\d+(\.\d+)?\b")
+
+
+_maps = {}
+
+
+def real_lines(rel, n):
+    """Строка error.log → настоящие строки файла форка. В эффектах и значениях движок считает строки определения
+    без пустых и комментарных (находка ФК2, 7.10): отсчёт сбрасывается на каждом определении верхнего уровня."""
+    if rel not in _maps:
+        p = os.path.join(ld_gen.FORK, rel)
+        rep = {}
+        if os.path.exists(p):
+            c = 0
+            with open(p, encoding="utf-8-sig", errors="replace") as f:
+                for i, l in enumerate(f.read().split("\n"), 1):
+                    if re.match(r"[A-Za-z_][\w:.\-]*\s*=", l):
+                        c = 0
+                    if re.match(r"^[ \t]*(#.*)?$", l):
+                        c += 1
+                    else:
+                        rep.setdefault(i - c, []).append(i)
+        _maps[rel] = rep
+    return _maps[rel].get(n, [])
 
 
 def entries(run):
@@ -69,7 +95,13 @@ def main():
         print(f"{n:7d}  {f}")
     print("\n## Места")
     for (loc, msg), n in sites.most_common(a.top):
-        print(f"{n:7d}  {loc}  {msg}")
+        extra = ""
+        if loc != "-" and "/script" in loc and loc.rsplit(":", 1)[1].isdigit():
+            f, ln = loc.rsplit(":", 1)
+            real = real_lines(f, int(ln))
+            if real and real != [int(ln)]:
+                extra = f"  (строки в файле: {','.join(map(str, real[:3]))})"
+        print(f"{n:7d}  {loc}  {msg}{extra}")
 
 
 if __name__ == "__main__":
