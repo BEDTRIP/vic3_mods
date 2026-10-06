@@ -1,6 +1,6 @@
 ﻿#############################################
 # В3.6 (the user, 3.10; decided 4.10) -- the reference currency is chosen by geopolitics too: a
-# great power with a credit rating above A (E&F's country_credit_note_fixe >= 8: AA, AAA) and,
+# great power with a credit rating BBB or better (E&F's country_credit_note_fixe >= 6; was >= 8 until 7.10) and,
 # among those, the biggest reserves in gold (national_capacity_in_gold -- since M.1 the CB's
 # reserves themselves). No candidate -- the reference stays where it is ("Britain is the best,
 # but who cares if it is in default"). E&F took the biggest reserves of all.
@@ -68,7 +68,10 @@ REPLACE_OR_CREATE:national_capacity_variable_list = {
                 variable = reference_currency_list_1
                 order_by = national_capacity_in_gold
                 min = 0
-                position = 1
+                # В1 (7.10): the FIRST -- positions count from 0 (vanilla: position = 0 for the top); E&F's 1 took the
+                # second biggest reserves, and with one candidate nobody, so the reference never moved (France, AA,
+                # cover 0.4-0.6, stayed behind Britain at 0.006 cover through 1842 in run r1006_141714)
+                position = 0
                 max = 1
                 check_range_bounds = no
                 root = {

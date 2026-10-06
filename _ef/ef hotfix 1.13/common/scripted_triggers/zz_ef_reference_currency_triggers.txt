@@ -1,7 +1,7 @@
 ﻿#############################################
 # В3.6 / М.9 (the user, 4.10).
-# The reference currency's candidate (В3.6): a great power, credit rating above A (E&F's note >= 8:
-# AA, AAA), a central bank, a metal or gold exchange standard, not in default (E&F's
+# The reference currency's candidate (В3.6): a great power, credit rating BBB or better (E&F's note >= 6; В1,
+# 7.10 -- was >= 8, AA), a central bank, a metal or gold exchange standard, not in default (E&F's
 # central_bank_bankruptcy).
 # Strong / balanced / weak (М.9 b): against the reference currency, not against the average of all
 # currencies (E&F's money_value_median compared grams of gold per pound with grams per franc). The
@@ -18,7 +18,8 @@ zz_ef_reference_candidate = {
 	country_rank >= rank_value:great_power
 	has_modifier = has_central_bank
 	has_variable = country_credit_note_fixe
-	var:country_credit_note_fixe >= 8
+	# В1 (the user, 7.10): BBB and better (E&F's note >= 6; was >= 8, AA)
+	var:country_credit_note_fixe >= 6
 	OR = {
 		has_law = law_type:law_gold_standard
 		has_law = law_type:law_silver_standard
