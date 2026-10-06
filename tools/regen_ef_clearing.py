@@ -25,25 +25,26 @@ Now one clearing house for the world (global variables), in gold:
 foreign currency by currency instead: units, in money, in gold, the week's change (zz_ef_cbfx_*; the list is
 filled by our scripted GUI zz_ef_cbfx_update, the table re-issued by tools/regen_ef_economy_panel_gui.py).
 
-Writes (_ef/ef hotfix 1.13/):
-  common/scripted_effects/zz_ef_clearing.txt, common/script_values/zz_ef_clearing_values.txt,
-  common/scripted_guis/zz_ef_cbfx.txt, localization/<lang>/zz_ef_cbfx_l_<lang>.yml
+Output (fork «E&F: Ledgerdemain», via ld_gen, by entry keys):
+  common/scripted_effects/ld_clearing.txt, common/script_values/ld_clearing_values.txt,
+  common/scripted_guis/ld_cbfx.txt, localization/{english,russian}/ld_cbfx_l_*.yml
+Reads the list of currencies through regen_ef_reserve_trade (the fork's E&F file).
 
 Usage:
-    py tools/regen_ef_clearing.py
+    python3 tools/regen_ef_clearing.py [--check]
 """
+import argparse
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ld_gen  # noqa: E402
 from regen_ef_reserve_trade import currencies, chain  # noqa: E402
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-HOTFIX = os.path.normpath(os.path.join(HERE, r"..\_ef\ef hotfix 1.13\common"))
-OUT_EFF = os.path.join(HOTFIX, "scripted_effects", "zz_ef_clearing.txt")
-OUT_SV = os.path.join(HOTFIX, "script_values", "zz_ef_clearing_values.txt")
-OUT_SG = os.path.join(HOTFIX, "scripted_guis", "zz_ef_cbfx.txt")
-LOC_DIR = os.path.normpath(os.path.join(HOTFIX, "..", "localization"))
+# hotfix paths; ld_gen writes into the fork (ld_clearing.txt, ld_clearing_values.txt, ld_cbfx.txt, ld_cbfx_l_*.yml)
+OUT_EFF = "common/scripted_effects/zz_ef_clearing.txt"
+OUT_SV = "common/script_values/zz_ef_clearing_values.txt"
+OUT_SG = "common/scripted_guis/zz_ef_cbfx.txt"
 # Е.2: E&F's private banks with a currency stock (global_var:stockpiling_<currency>_company_<bank>_fixe)
 BANKS = ["BancaCommercialeItaliana", "BankHSBC", "BankIBC", "BankJPMorgan", "Bankenverein", "BanqueDeParisEtDesPaysBas",
          "DeNederlandscheBank", "DeutscheBank", "Mitsubishiexchangehousebank", "Rothschild_Bank_aus", "Rothschild_Bank_fra",
@@ -739,19 +740,19 @@ def write_loc(cur):
             lines.append(f' {c}_03_zz_cbfx_units:0 "#v {sv("zz_ef_cbfx_" + c)}|D]#! @{c}!"\n')
             lines.append(f' {c}_03_zz_cbfx_money:0 "{sv("zz_ef_cbfx_" + c + "_money")}|D] [GetPlayer.GetCustom(\'currency_symbol\')]"\n')
             lines.append(f' {c}_03_zz_cbfx_gold:0 "{sv("zz_ef_cbfx_" + c + "_gold")}|D] @gold! ({sv("zz_ef_cbfx_" + c + "_d")}|+D] {w})"\n')
-        p = os.path.join(LOC_DIR, lang, f"zz_ef_cbfx_l_{lang}.yml")
-        with open(p, "w", encoding="utf-8-sig", newline="\n") as f:
-            f.write("".join(lines))
+        ld_gen.emit(f"localization/{lang}/zz_ef_cbfx_l_{lang}.yml", "".join(lines))
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true")
+    ap.parse_args()
     cur = currencies()
     write_loc(cur)
     for path, text in ((OUT_EFF, effects(cur)), (OUT_SV, values(cur)), (OUT_SG, sguis(cur))):
         assert text.count("{") == text.count("}"), path
-        with open(path, "w", encoding="utf-8-sig", newline="\n") as f:
-            f.write(text)
-        print("ok", len(cur), "currencies ->", path)
+        ld_gen.emit(path, text)
+    ld_gen.report("regen_ef_clearing")
 
 
 if __name__ == "__main__":
