@@ -473,9 +473,10 @@ FLOWS = [
     (X, C, "добытый металл, отчеканенный ЦБ, — в резервы", "mined metal coined by the CB — into the reserves",
      sv_("zz_ef_v_f_mint"), C),
     # UI.11 (5.10): E&F's CB building stores the market's gold / silver sell orders once a month
-    (X, C, "здание ЦБ E&F: металл с рынка (раз в месяц)", "E&F's CB building: metal from the market (monthly)",
-     svp("zz_ef_v_f_cb_stock"), C),
-    (C, X, "здание ЦБ E&F: металл убыл (раз в месяц)", "E&F's CB building: metal fell (monthly)",
+    # stage 2, night 6.10: weekly -- the CB building's purchase on the market, its sale of a surplus, the buy-back from pops
+    (X, C, "металл: куплен на рынке и выкуплен у населения (за вычетом проданного)",
+     "metal: bought on the market and from pops (net of the sold)", svp("zz_ef_v_f_cb_stock"), C),
+    (C, X, "металл: продан на рынке (излишек сверх 60% покрытия)", "metal: sold on the market (the surplus over 60% cover)",
      svn("zz_ef_v_f_cb_stock"), C),
     (X, C, "переоценка резервов: паритет снижен (девальвация, перепривязка)",
      "revaluation of the reserves: parity lowered (devaluation, re-anchor)", svp("zz_ef_v_f_cb_reval"), C),
@@ -543,8 +544,16 @@ NOTES = {
                  "Budget lines are exact, a week, as in the game's budget."),
     "buildings": ("Деньги всех зданий. Прочее — сглаженные тренды бюджета против точного недельного изменения.",
                   "The cash of all buildings. Other: smoothed budget trends against the exact weekly change."),
-    "banks": ("Резервы банков (инвестиционный пул). Частная стройка идёт через казну: пул → казна → предприятия.",
-              "The banks' reserves (the investment pool). Private construction goes pool → treasury → businesses."),
+    "banks": ("Резервы банков (инвестиционный пул). Частная стройка идёт через казну: пул → казна → предприятия. "
+              "Металл банков (покупает здание «Банк») по паритету — [Country.MakeScope.ScriptValue('zz_ef_bankm_money')|D]; "
+              "кредит бизнесу и потребкредит — не больше металл / норма резерва "
+              "([Country.MakeScope.ScriptValue('zz_ef_reserve_norm')|%1]) × множитель покрытия: предел "
+              "[Country.MakeScope.ScriptValue('zz_ef_credit_limit')|D], выдано [Country.MakeScope.ScriptValue('zz_ef_credit_now')|D].",
+              "The banks' reserves (the investment pool). Private construction goes pool → treasury → businesses. "
+              "The banks' metal (bought by the Bank building) at parity — [Country.MakeScope.ScriptValue('zz_ef_bankm_money')|D]; "
+              "business and consumer credit stay under metal / the reserve norm "
+              "([Country.MakeScope.ScriptValue('zz_ef_reserve_norm')|%1]) × the cover multiplier: limit "
+              "[Country.MakeScope.ScriptValue('zz_ef_credit_limit')|D], lent [Country.MakeScope.ScriptValue('zz_ef_credit_now')|D]."),
     "abroad": ("Запас счёта — чистая международная позиция: облигации других стран и чужая валюта в ЦБ минус наша валюта у других ЦБ. "
                "Платежи с заграницей сводит мировой клиринг: отток оплачивается металлом ЦБ (доля — по доверию к "
                "валюте) и нашей валютой, приток — долей металла и валют, собранных с плательщиков.",
@@ -888,14 +897,16 @@ def pops_card(lang):
          f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("остаток дохода — деньги, выпавшие из казны и касс предприятий"
                                                                          if ru else "income left over — money that dropped out of the treasury and business cash"),
          f"  ← #P +{money('zz_ef_v_w_buyout')}#!{mark('calc', ru)} " + ("выручка продавцов уровней зданий" if ru else "proceeds of the building levels sold"),
-         f"  ← #P +{money('zz_ef_v_f_mint_own')}#!{mark('mod', ru)} " + ("чеканка из добытого металла — владельцам" if ru else "coinage of mined metal — to the owners"),
+         # stage 2, night 6.10: the mint is gone (М); the CB's buy-back of the pops' metal and the savings over their norm
+         f"  ← #P +{money('zz_ef_v_f_buyback_m')}#!{mark('mod', ru)} " + ("ЦБ выкупил металл населения (паритет + 2%, новые деньги)" if ru else "the CB bought the pops' metal (parity + 2%, new money)"),
+         f"  → #N −{money('zz_ef_v_w_sav_wealth')}#!{mark('mod', ru)} " + ("сверх нормы накоплений — в богатство (из денег)" if ru else "over the savings' norm — into wealth (out of the money)"),
          "2 " + ("Вклады в банках" if ru else "Bank deposits"),
          f"  → #N −{money('zz_ef_v_w_dep_in')}#!{mark('mod', ru)} " + ("внесено во вклады" if ru else "deposited"),
          f"  ← #P +{money('zz_ef_v_w_dep_out')}#!{mark('mod', ru)} " + ("снято со вкладов" if ru else "withdrawn"),
          ]
     resid = v("zz_ef_v_d_agg0")
-    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_buyout", -1), ("zz_ef_v_f_mint_own", -1),
-                     ("zz_ef_v_w_dep_in", 1), ("zz_ef_v_w_dep_out", -1)):
+    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_buyout", -1), ("zz_ef_v_f_buyback_m", -1),
+                     ("zz_ef_v_w_sav_wealth", 1), ("zz_ef_v_w_dep_in", 1), ("zz_ef_v_w_dep_out", -1)):
         resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
                  f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
     L.append("3 " + ("Вне счетов" if ru else "Outside the accounts"))
@@ -912,11 +923,15 @@ def pops_card(lang):
     L.append("")
     L.append((f"Накопления {money('zz_ef_pop_savings')}: во вкладах {money('zz_ef_pop_deposits')}, на руках "
               f"{money('zz_ef_pop_cash')}; норма наличных {money('zz_ef_pop_cash_norm')} — сверх неё население несёт во "
-              f"вклады, ниже — снимает. Потребкредит: долг {money('zz_ef_cc_debt')}, ставка {sv('zz_ef_cc_rate', '%1')}.")
+              f"вклады, ниже — снимает; норма накоплений {money('zz_ef_sav_norm')}. Потребкредит: долг {money('zz_ef_cc_debt')}, "
+              f"ставка {sv('zz_ef_cc_rate', '%1')}. Металл населения: золото {sv('zz_ef_popm_gold', 'D')}, серебро "
+              f"{sv('zz_ef_popm_silver', 'D')} ед. — по паритету {money('zz_ef_popm_money')}.")
              if ru else
              (f"Savings {money('zz_ef_pop_savings')}: in deposits {money('zz_ef_pop_deposits')}, at hand "
               f"{money('zz_ef_pop_cash')}; cash norm {money('zz_ef_pop_cash_norm')} — over it pops deposit, under it "
-              f"they withdraw. Consumer credit: debt {money('zz_ef_cc_debt')}, rate {sv('zz_ef_cc_rate', '%1')}."))
+              f"they withdraw; savings norm {money('zz_ef_sav_norm')}. Consumer credit: debt {money('zz_ef_cc_debt')}, "
+              f"rate {sv('zz_ef_cc_rate', '%1')}. Pops' metal: gold {sv('zz_ef_popm_gold', 'D')}, silver "
+              f"{sv('zz_ef_popm_silver', 'D')} units — {money('zz_ef_popm_money')} at parity."))
     return "\\n".join(L)
 
 

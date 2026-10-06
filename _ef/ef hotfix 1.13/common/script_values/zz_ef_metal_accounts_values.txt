@@ -443,3 +443,15 @@ zz_ef_wm_rest_silver = {
 	subtract = zz_ef_wm_v_buy_silver
 	add = zz_ef_wm_v_sell_silver
 }
+
+# ---- the cards (tools/regen_ef_money_supply_loc.py) ---------------------------------------
+# the savings over their norm that left the money at the last receiver (rolled to zz_ef_w_ at the step)
+zz_ef_v_w_sav_wealth = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_w_sav_wealth } value = var:zz_ef_w_sav_wealth }
+}
+# the CB's buy-back of the pops' metal this week, in money (new money into their savings)
+zz_ef_v_f_buyback_m = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_f_mt_buyback_money } value = var:zz_ef_f_mt_buyback_money }
+}

@@ -445,6 +445,8 @@ zz_ef_money_model_step = {
 	# ledger's change of M0 / savings / deposits covers
 	zz_ef_money_window_roll = { F = inflow }
 	zz_ef_money_window_roll = { F = buyout_got }
+	# stage 2 (6.10): savings over their norm into wealth, at the last receiver -- the pops' card
+	zz_ef_money_window_roll = { F = sav_wealth }
 	# П.6 / П.7 (4.10): the clearing's currency at the last receiver, for the abroad card
 	zz_ef_money_window_roll = { F = clr_cur_out }
 	zz_ef_money_window_roll = { F = clr_fx_in }
