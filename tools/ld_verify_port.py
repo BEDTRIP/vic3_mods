@@ -90,7 +90,9 @@ def resolve_gui(mods, path_map):
     """{тип: текст} — тип регистрирует первый файл по имени (ASCII, по всем модам)."""
     files = files_vfs(mods, "gui", (".gui",))
     out = {}
-    for r, p in sorted(files.items(), key=lambda x: (x[0].rsplit("/", 1)[1], x[0])):
+    # при одинаковом имени раньше файл ближе к корню gui/ (gui.log: gui/production_methods.gui раньше
+    # gui/ef_dev_and_custom_windows/…/production_methods.gui, gui/companies_panel.gui — раньше копии E&F)
+    for r, p in sorted(files.items(), key=lambda x: (x[0].rsplit("/", 1)[1], x[0].count("/"), x[0])):
         text = ld_pdx.read(p)[0]
         for m in GUI_TYPE.finditer(text):
             if m.group(1) not in out:
