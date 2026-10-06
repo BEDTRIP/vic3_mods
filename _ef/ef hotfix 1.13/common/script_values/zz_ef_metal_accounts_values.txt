@@ -488,6 +488,14 @@ zz_ef_wm_v_sell_silver = {
 	value = 0
 	if = { limit = { has_global_variable = zz_ef_wm_sell_silver } value = global_var:zz_ef_wm_sell_silver }
 }
+zz_ef_wm_v_oth_gold = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_oth_gold } value = global_var:zz_ef_wm_oth_gold }
+}
+zz_ef_wm_v_oth_silver = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_oth_silver } value = global_var:zz_ef_wm_oth_silver }
+}
 zz_ef_wm_rest_gold = {
 	value = zz_ef_wm_sum_cb_gold
 	add = zz_ef_wm_sum_bank_gold
