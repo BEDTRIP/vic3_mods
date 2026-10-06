@@ -87,10 +87,10 @@ def ddate(s):
     return None
 
 
-def week_clock(run):
+def week_clock(run, prefix="EFW"):
     """Стенные часы недельного шага: метки [ЧЧ:ММ:СС] строк EFW одной страны (самой частой) в dbgparts/debug*.log.
     Возвращает (страна, [(дата, секунды от первой строки)])."""
-    rx = re.compile(r"^\[(\d\d):(\d\d):(\d\d)\].*?EFW\|([^|]+)\|([^|]+)\|")
+    rx = re.compile(r"^\[(\d\d):(\d\d):(\d\d)\].*?" + prefix + r"\|([^|]+)\|([^|]+)\|")
     rows = []
     files = sorted(glob.glob(os.path.join(run, "dbgparts", "*"))) + sorted(glob.glob(os.path.join(run, "debug*.log")))
     seen = set()
@@ -197,9 +197,10 @@ def main():
 
     ta, tb = timing(a.a), timing(a.b)
     print(f"\n## Время до автосейва / конца (run.log, точность ~1 мин)\nA: {ta} с\nB: {tb} с")
-    print("\n## Часы недельного шага (EFW одной страны: секунды от первой недели)")
-    for name, r in (("A", a.a), ("B", a.b)):
-        who, pts = week_clock(r)
+    for pre in ("EFW", "EFX"):
+      print(f"\n## Часы по {pre} одной страны (секунды от первой строки; EFW — неделя, EFX — месяц)")
+      for name, r in (("A", a.a), ("B", a.b)):
+        who, pts = week_clock(r, pre)
         if not pts:
             print(f"{name}: нет строк EFW с метками")
             continue
