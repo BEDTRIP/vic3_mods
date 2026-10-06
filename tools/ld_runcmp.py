@@ -38,8 +38,12 @@ def error_lines(run):
     return seen
 
 
+BLOB = re.compile(r"tooltip:[^\s!»]*|dw_\d+,[A-Za-z0-9+/=]+|[A-Za-z0-9+/]{24,}={0,2}")
+
+
 def family(line):
     s = TS.sub("", line)
+    s = BLOB.sub("<blob>", s)
     s = re.sub(r"^\[[^\]]*\]:?\s*", "", s)  # [file.cpp:123]:
     s = QUOTED.sub("'…'", s) if "Unknown" not in s and "unknown" not in s else s
     return NUM.sub("N", s).strip()
