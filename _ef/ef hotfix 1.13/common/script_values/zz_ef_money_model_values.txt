@@ -232,6 +232,8 @@ zz_ef_cb_borrow = {
 		value = zz_ef_pool_need
 		subtract = investment_pool
 	}
+	# stage 2, step 6 (Д2.26, 6.10): not past the banks' reserve ceiling (script_values/zz_ef_metal_accounts_values.txt)
+	max = zz_ef_credit_room
 	min = 0
 }
 # Repaid this week: the debt over its target, or the pool's idle money (the
@@ -1279,6 +1281,8 @@ zz_ef_cc_limit = {
 zz_ef_cc_target = {
 	value = zz_ef_cc_limit
 	multiply = zz_ef_cc_share
+	# stage 2, step 6 (Д2.27 а, 6.10): the cover squeezes the consumer credit too (1 at 40%, 0 at 20%)
+	multiply = zz_ef_cb_cover_credit_mult
 }
 # Rollover of a year's term.
 zz_ef_cc_rollover = {
@@ -1292,6 +1296,8 @@ zz_ef_cc_issue = {
 	subtract = zz_ef_cc_debt
 	multiply = zz_ef_cc_speed
 	min = 0
+	# stage 2, step 6 (Д2.26, 6.10): new credit not past the banks' reserve ceiling; the rollover as was
+	max = zz_ef_credit_room
 	add = zz_ef_cc_rollover
 	max = {
 		value = investment_pool

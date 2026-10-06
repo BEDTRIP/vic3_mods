@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # Stage 2, night 6.10 (Ф1 + Ф2; the user's decisions М, Д2.13, Д2.20-Д2.29) -- the metal accounts.
 # Effects: scripted_effects/zz_ef_metal_accounts.txt. Every unit of metal on an account was bought on the market
 # (or is the start's stock, logged as such): the CB (var:gold_state_1 / silver_state_1 of its CB states, E&F's
@@ -131,4 +131,297 @@ zz_ef_reserve_norm = {
 	add = 0.15
 	min = 0.05
 	max = 0.25
+}
+
+# The ceiling of the banks' credit (Д2.26 а, Д2.27 а): business credit + consumer credit <= the banks' metal at
+# parity / the reserve norm, times the cover's credit multiplier (1 at 40% cover, 0 at 20%). The room under it is
+# what the banks may lend more: the CB's credit to them and the new consumer credit stop at it (repayment as was).
+zz_ef_credit_now = {
+	value = zz_ef_bc_debt
+	add = zz_ef_cc_debt
+}
+zz_ef_credit_limit = {
+	value = zz_ef_bankm_money
+	divide = zz_ef_reserve_norm
+	multiply = zz_ef_cb_cover_credit_mult
+	min = 0
+}
+zz_ef_credit_room = {
+	value = zz_ef_credit_limit
+	subtract = zz_ef_credit_now
+	min = 0
+}
+
+# ---- step 6: savings at their norm (Д2.20, Д2.22 в) --------------------------
+# The norm of pops' savings: 0.6 of a year's GDP at a 0% deposit rate, 0.3 at 6%, linear, within 0.3..0.6 (as the
+# cash norm moves with the rate). Over it, 10% of the gap a week leaves the money -- into wealth, as the engine
+# turns pops' leftover income into wealth (Д2.20: the same leftover came back as deposits too, twice).
+zz_ef_sav_norm_gdp = {
+	value = zz_ef_deposit_rate
+	multiply = -5
+	add = 0.6
+	min = 0.3
+	max = 0.6
+}
+zz_ef_sav_norm = {
+	value = gdp
+	min = 0
+	multiply = zz_ef_sav_norm_gdp
+}
+zz_ef_sav_speed = 0.1
+zz_ef_sav_to_wealth = {
+	value = zz_ef_pop_savings
+	subtract = zz_ef_sav_norm
+	multiply = zz_ef_sav_speed
+	min = 0
+}
+
+# ---- steps 4, 5, 7: what was bought and sold this week, goods a week ------------
+# The CB's building(s): the method's input (1 gold / 10 silver per workforce) x (1 + our percent, zz_ef_cb_metal_buy).
+zz_ef_cb_in_gold_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_bank }
+		add = {
+			value = modifier:goods_input_gold_add
+			multiply = {
+				value = modifier:goods_input_gold_mult
+				add = 1
+				min = 0
+			}
+		}
+	}
+	min = 0
+}
+zz_ef_cb_in_silver_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_bank }
+		add = {
+			value = modifier:goods_input_silver_add
+			multiply = {
+				value = modifier:goods_input_silver_mult
+				add = 1
+				min = 0
+			}
+		}
+	}
+	min = 0
+}
+zz_ef_cb_out_gold_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_bank }
+		add = modifier:goods_output_gold_add
+	}
+	min = 0
+}
+zz_ef_cb_out_silver_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_bank }
+		add = modifier:goods_output_silver_add
+	}
+	min = 0
+}
+zz_ef_bank_in_gold_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_zz_ef_bank }
+		add = modifier:goods_input_gold_add
+	}
+	min = 0
+}
+zz_ef_bank_in_silver_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_zz_ef_bank }
+		add = modifier:goods_input_silver_add
+	}
+	min = 0
+}
+zz_ef_bank_levels = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_zz_ef_bank }
+		add = level
+	}
+}
+# The states' whole consumption (pops + buildings); the pops' = it - the CB's and the banks' input (step 1).
+zz_ef_state_gold_cons = {
+	value = 0
+	every_scope_state = {
+		add = sg:gold.state_goods_consumption
+	}
+}
+zz_ef_state_silver_cons = {
+	value = 0
+	every_scope_state = {
+		add = sg:silver.state_goods_consumption
+	}
+}
+zz_ef_pop_gold_goods = {
+	value = zz_ef_state_gold_cons
+	subtract = zz_ef_cb_in_gold_goods
+	subtract = zz_ef_bank_in_gold_goods
+	min = 0
+}
+zz_ef_pop_silver_goods = {
+	value = zz_ef_state_silver_cons
+	subtract = zz_ef_cb_in_silver_goods
+	subtract = zz_ef_bank_in_silver_goods
+	min = 0
+}
+
+# ---- step 5: the banks' purchase for next week (Д2.25) ----------------------------
+# Target: the norm x the larger of the credit (+5% room to grow) and the deposits; 2% of the gap a week; a surplus
+# buys nothing (sold in Ф3). In the country's metal (zz_ef_metal_silver_share).
+zz_ef_bank_buy_speed = 0.02
+zz_ef_bank_metal_target = {
+	value = zz_ef_credit_now
+	multiply = 1.05
+	min = zz_ef_pop_deposits
+	multiply = zz_ef_reserve_norm
+}
+zz_ef_bank_buy_money = {
+	value = zz_ef_bank_metal_target
+	subtract = zz_ef_bankm_money
+	multiply = zz_ef_bank_buy_speed
+	min = 0
+}
+zz_ef_bank_buy_gold_goods = {
+	value = zz_ef_bank_buy_money
+	multiply = zz_ef_gold_per_money_par
+	multiply = {
+		value = 1
+		subtract = zz_ef_metal_silver_share
+	}
+	divide = zz_ef_gold_units_per_good
+}
+zz_ef_bank_buy_silver_goods = {
+	value = zz_ef_bank_buy_money
+	multiply = zz_ef_gold_per_money_par
+	multiply = zz_ef_metal_silver_share
+	multiply = gold_to_silver_rate
+	divide = zz_ef_silver_units_per_good
+}
+
+# ---- step 7: the CB as an account (Д2.28 а) ----------------------------------------
+# Its building's purchase, percent on the method's input: (40% - cover) x 1500 -- +300% at 20% cover, the method's
+# own at 40%, none from 46.7%. Metal standards with a CB.
+zz_ef_cb_buy_mult = {
+	value = zz_ef_cover_normal
+	subtract = zz_ef_cb_cover
+	multiply = 1500
+	min = -100
+	max = 300
+}
+# The sale of a surplus: 2% a week of the metal over 60% cover, in goods (bimetallism sells gold).
+zz_ef_cb_sell_cover = 0.6
+zz_ef_cb_sell_units = {
+	value = 0
+	if = {
+		limit = { zz_ef_cb_cover > zz_ef_cb_sell_cover }
+		value = zz_ef_cb_cover
+		subtract = zz_ef_cb_sell_cover
+		multiply = money_supply
+		multiply = zz_ef_cb_valuation
+		multiply = 0.02
+	}
+}
+# The buy-back from pops under 40% cover: at most 1% of their metal of the standard a week, at most the gap; paid
+# at parity + 2%, new money into their savings.
+zz_ef_cb_buyback_units = {
+	value = 0
+	if = {
+		limit = { zz_ef_cb_cover < zz_ef_cover_normal }
+		value = zz_ef_cover_normal
+		subtract = zz_ef_cb_cover
+		multiply = money_supply
+		multiply = zz_ef_cb_valuation
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			max = {
+				value = zz_ef_popm_silver
+				multiply = 0.01
+			}
+		}
+		else = {
+			max = {
+				value = zz_ef_popm_gold
+				multiply = 0.01
+			}
+		}
+	}
+	min = 0
+}
+zz_ef_cb_buyback_premium = 1.02
+
+# ---- step 8: the world line of metal (EFV, zz_ef_world_metal_log) ---------------------
+# Every account summed over the world, gold and silver apart (Д3.1), against the start's stock + bought - sold
+# (cumulative globals, zz_ef_wm_add). The rest = what moved metal without the market or a pair -- 0 when the
+# system is closed (E&F's own metal operations with its private banks' metal would show here, Д3.5 / Ф3).
+zz_ef_wm_sum_cb_gold = {
+	value = 0
+	every_country = { add = gold_state_native_for_stockpile }
+}
+zz_ef_wm_sum_cb_silver = {
+	value = 0
+	every_country = { add = silver_state_native_for_stockpile }
+}
+zz_ef_wm_sum_bank_gold = {
+	value = 0
+	every_country = { add = zz_ef_bankm_gold }
+}
+zz_ef_wm_sum_bank_silver = {
+	value = 0
+	every_country = { add = zz_ef_bankm_silver }
+}
+zz_ef_wm_sum_pop_gold = {
+	value = 0
+	every_country = { add = zz_ef_popm_gold }
+}
+zz_ef_wm_sum_pop_silver = {
+	value = 0
+	every_country = { add = zz_ef_popm_silver }
+}
+zz_ef_wm_v_start_gold = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_start_gold } value = global_var:zz_ef_wm_start_gold }
+}
+zz_ef_wm_v_start_silver = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_start_silver } value = global_var:zz_ef_wm_start_silver }
+}
+zz_ef_wm_v_buy_gold = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_buy_gold } value = global_var:zz_ef_wm_buy_gold }
+}
+zz_ef_wm_v_buy_silver = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_buy_silver } value = global_var:zz_ef_wm_buy_silver }
+}
+zz_ef_wm_v_sell_gold = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_sell_gold } value = global_var:zz_ef_wm_sell_gold }
+}
+zz_ef_wm_v_sell_silver = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_wm_sell_silver } value = global_var:zz_ef_wm_sell_silver }
+}
+zz_ef_wm_rest_gold = {
+	value = zz_ef_wm_sum_cb_gold
+	add = zz_ef_wm_sum_bank_gold
+	add = zz_ef_wm_sum_pop_gold
+	subtract = zz_ef_wm_v_start_gold
+	subtract = zz_ef_wm_v_buy_gold
+	add = zz_ef_wm_v_sell_gold
+}
+zz_ef_wm_rest_silver = {
+	value = zz_ef_wm_sum_cb_silver
+	add = zz_ef_wm_sum_bank_silver
+	add = zz_ef_wm_sum_pop_silver
+	subtract = zz_ef_wm_v_start_silver
+	subtract = zz_ef_wm_v_buy_silver
+	add = zz_ef_wm_v_sell_silver
 }
