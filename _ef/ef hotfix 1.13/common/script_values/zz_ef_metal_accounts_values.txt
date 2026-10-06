@@ -305,6 +305,18 @@ zz_ef_bank_buy_silver_goods = {
 	multiply = gold_to_silver_rate
 	divide = zz_ef_silver_units_per_good
 }
+# BUILDING scope: this bank's share of the country's purchase, by its levels (an inline value in the effect read
+# `level` as none, run r1006_132739)
+zz_ef_bank_buy_g_bld = {
+	value = level
+	multiply = owner.var:zz_ef_mt_bank_g
+	divide = owner.var:zz_ef_mt_bank_levels
+}
+zz_ef_bank_buy_s_bld = {
+	value = level
+	multiply = owner.var:zz_ef_mt_bank_s
+	divide = owner.var:zz_ef_mt_bank_levels
+}
 
 # ---- step 7: the CB as an account (Д2.28 а) ----------------------------------------
 # Its building's purchase, percent on the method's input: (40% - cover) x 1500 -- +300% at 20% cover, the method's

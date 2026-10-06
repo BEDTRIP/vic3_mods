@@ -258,11 +258,7 @@ zz_ef_metal_week_step = {
 			}
 			add_modifier = {
 				name = zz_ef_bank_gold_buy
-				multiplier = {
-					value = root.var:zz_ef_mt_bank_g
-					multiply = level
-					divide = root.var:zz_ef_mt_bank_levels
-				}
+				multiplier = zz_ef_bank_buy_g_bld
 			}
 		}
 		if = {
@@ -272,11 +268,7 @@ zz_ef_metal_week_step = {
 			}
 			add_modifier = {
 				name = zz_ef_bank_silver_buy
-				multiplier = {
-					value = root.var:zz_ef_mt_bank_s
-					multiply = level
-					divide = root.var:zz_ef_mt_bank_levels
-				}
+				multiplier = zz_ef_bank_buy_s_bld
 			}
 		}
 	}
