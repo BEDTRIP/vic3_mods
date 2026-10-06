@@ -150,7 +150,10 @@ def main():
     ap.add_argument("--top", type=int, default=25)
     ap.add_argument("--top-b", type=int, default=0, help="сколько самых частых семейств B напечатать")
     ap.add_argument("--fork-only", action="store_true")
+    ap.add_argument("--out", help="писать отчёт в файл (вывод моста обрезается)")
     a = ap.parse_args()
+    if a.out:
+        sys.stdout = open(a.out, "w", encoding="utf-8")
     for r in (a.a, a.b):
         if not os.path.isdir(r):
             sys.exit(f"нет папки {r}")
