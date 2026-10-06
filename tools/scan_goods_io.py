@@ -1,6 +1,9 @@
 """One good's flows through buildings in a save, by country: input (bought by buildings) and output (Д2.2, этап 2).
 
 Usage:  py tools/scan_goods_io.py <save> <good_index> [--top N]
+        py tools/scan_goods_io.py <save> --ids building_gold_mine [building_silver_mine ...]
+
+--ids: the output goods ids of the first building of each type (gold / silver ids, этап 2 ночь 6.10).
 
 good_index is the save's numeric goods id (liquidity_currency was 69 in 1.13 with the set, run r1005_172152).
 Per country: units bought by buildings as input, units made, and the top input building types. What the
@@ -21,6 +24,8 @@ def main():
     top = 25
     if '--top' in args:
         i = args.index('--top'); top = int(args[i + 1]); del args[i:i + 2]
+    if len(args) > 1 and args[1] == '--ids':
+        return print_ids(args[0], args[2:])
     path, gid = args[0], args[1]
     d = SO.parse(path)
     if not os.path.isabs(path):
@@ -76,6 +81,21 @@ def main():
         tops = ', '.join(f'{k} {x:.0f}' for k, x in by_type[tag].most_common(4))
         print(f'{tag:7} {v:10.0f} {rout[tag]:10.0f}   {tops}')
     print(f"ALL     {sum(rin.values()):10.0f} {sum(rout.values()):10.0f}")
+
+
+def print_ids(path, types):
+    if not os.path.isabs(path):
+        path = os.path.join(SO.SG, path)
+    s = open(path, 'rb').read().decode('utf-8', 'replace')
+    bm = SO.section(s, 'building_manager')
+    for bt in types:
+        m = re.search(r'\n\d+=\{\n\tbuilding=' + bt + r'\n(.*?)\n\}', bm, re.S)
+        if not m:
+            print(bt, 'not found'); continue
+        body = m.group(1)
+        k = body.find('output_goods={')
+        ids = re.findall(r'(\d+)=\{\s*value=(-?[\d.]+)', body[k:k + 400]) if k >= 0 else []
+        print(bt, 'outputs', ids)
 
 
 if __name__ == '__main__':
