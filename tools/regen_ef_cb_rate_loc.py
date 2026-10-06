@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 """
 EF.30 / EF.45 -- localization of the key rate panel, button tooltips, concepts
-and the EF.31 modifier, 11 languages (RU and EN written, the other 9 get EN).
-Writes _ef/ef hotfix 1.13/localization/<lang>/zz_ef_cb_rate_panel_l_<lang>.yml
-(UTF-8 with BOM). Moved from a scratch script into tools/ 2026-09-30.
+and the EF.31 modifier. Writes, through ld_gen.emit (by line keys, into the fork «E&F: Ledgerdemain»),
+localization/{english,russian}/ld_cb_rate_panel_l_<lang>.yml; the other 9 languages are copies of english
+(ld_loc_langs.py). Reads nothing.
 
 Usage:
-    py tools/regen_ef_cb_rate_loc.py
+    py tools/regen_ef_cb_rate_loc.py [--check]
 """
 import os
+import sys
 
-# relative to the repo, not the PC's main checkout: run from the bridge worktree it wrote there (5.10)
-ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "_ef", "ef hotfix 1.13", "localization")
-LANGS = ["english", "russian", "braz_por", "french", "german", "japanese",
-         "korean", "polish", "simp_chinese", "spanish", "turkish"]
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ld_gen  # noqa: E402
 
 SV = "GetPlayer.MakeScope.ScriptValue"
 NOTE = f"[{SV}('zz_ef_cb_rate_note_value')|2]"
@@ -273,7 +272,7 @@ FILES = "(gui/00_00_ef_cb_rate_panel.gui, common/scripted_guis/zz_ef_cb_rate_but
 HEADER = {
     "russian": f" # EF.30: ключевая ставка — показатели центробанка, подсказки кнопок, понятия\n # {FILES}.\n\n",
 }
-for lang in LANGS:
+for lang in ("english", "russian"):
     d = RU if lang == "russian" else EN
     head = HEADER.get(lang, f" # EF.30: key rate -- central bank boxes, button tooltips, concepts\n # {FILES}.\n"
                             + ("" if lang == "english" else " # Not translated yet: English text.\n") + "\n")
@@ -281,9 +280,5 @@ for lang in LANGS:
     for k, v in d.items():
         assert '"' not in v.replace('\\"', ''), k
         lines.append(f' {k}:0 "{v}"\n')
-    path = os.path.join(ROOT, lang, f"zz_ef_cb_rate_panel_l_{lang}.yml")
-    tmp = path + ".tmp"
-    with open(tmp, "w", encoding="utf-8-sig", newline="\n") as f:
-        f.write("".join(lines))
-    os.replace(tmp, path)
-print("ok", len(RU), "keys x", len(LANGS))
+    ld_gen.emit(f"localization/{lang}/zz_ef_cb_rate_panel_l_{lang}.yml", "".join(lines))
+ld_gen.report("regen_ef_cb_rate_loc")

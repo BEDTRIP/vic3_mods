@@ -13,18 +13,11 @@ centres maintain (ЖКХ), and natural economies make a little wood_construction
 Real shares: households + ЖКХ ~25-35% of construction materials in the XIX century, ~half by
 the end of the game (Feinstein 1978, FIEC 2023 -- research of 26.09).
 
-What it writes (all in the E&F hotfix, which depends on PSC)
+What it writes (through ld_gen.emit, by entry keys, into the fork «E&F: Ledgerdemain», which depends on PSC)
 --------------
-1. common/pop_needs/zz_ef_household_construction.txt -- popneed_household_construction:
+1. common/pop_needs/ld_household_construction.txt -- popneed_household_construction:
    the four construction goods, wood first (default); pops buy whichever the state makes.
-2. common/buy_packages/zz_ef_household_construction_packages.txt -- INJECT into all 99
-   wealth_N: N = round(sum of the wealth level's package x SHARE(w)), SHARE falling from
-   SHARE_LOW at wealth 1 to SHARE_HIGH at wealth 50 and flat above. Package values are money
-   at base prices (OBSESSION_POP_NEED_EXPENSE_MULT: "total spent on pop needs"), so the
-   household spends that share of its basket on building. Sums are TGR's packages (the
-   no-VC branch). The VC branch: addon-VC's merged REPLACE_OR_CREATE file wipes this INJECT
-   and re-adds the same numbers (tools/regen_addon_vc.py reads this file).
-3. common/production_methods/zz_ef_household_construction_pms.txt -- INJECT:
+2. common/production_methods/ld_household_construction_pms.txt -- INJECT:
    * natural economies: the five subsistence buildings' home-workshop methods (and the
      collectivized "no home workshops" ones) output SUBSISTENCE_WOOD wood_construction per
      workforce unit (rice farms twice: their level employs 10 000, not 5 000);
@@ -33,9 +26,14 @@ What it writes (all in the E&F hotfix, which depends on PSC)
      at base prices going into the good (the user, 2026-10-03): stalls wood_construction, squares
      iron_construction + glass, covered markets steel_construction, arcades arc_welded_construction
      + electricity (arcades also need arc_welding, the good's technology).
-   grey_usu re-issues the amenity methods with REPLACE_OR_CREATE after the hotfix:
-   tools/regen_greys_psc.py applies the same swap to USU's bodies (and USU's usu_pm_hv_arcades).
-4. localization (english, russian).
+   grey_usu re-issues the amenity methods with REPLACE_OR_CREATE after the fork:
+   tools/regen_greys_psc.py applies the same swap to USU's bodies (and USU's usu_pm_hv_arcades)
+   and imports URBAN / urban_block from here.
+3. localization/{english,russian}/ld_household_construction_l_<lang>.yml.
+The wealth packages (INJECT into wealth_N) and the construction goods' trade fields are merged into
+E&F's / PSC's files by hand and are not generated.
+
+Reads vanilla (vic3_mods_out/.vanillaVIC3/common/production_methods/06_urban_center.txt): run --check on the PC.
 
 Calibration (2026-10-03, run 1 of night G, save 1837.1.1, world): the regulators burn ~9 800
 construction goods a week (wood 1 900 + iron 7 800), sectors make ~14 100. Households + ЖКХ at
@@ -43,7 +41,7 @@ construction goods a week (wood 1 900 + iron 7 800), sectors make ~14 100. House
 x SUBSISTENCE_WOOD a week. ЖКХ is held to ~15% of an urban centre's output value -- at a
 third of the households' figure it would cost urban centres more than they make in 1836
 (world urban centres make ~5 800 services a week); it grows with the cities instead.
-!! TUNING !! SHARE_LOW / SHARE_HIGH, SUBSISTENCE_WOOD, URBAN -- check against runs (Д.7, Д.8).
+!! TUNING !! SUBSISTENCE_WOOD, URBAN -- check against runs (Д.7, Д.8).
 Run 2 (3.10, 1836 -> 1841.1, with 3% / 1.5% and 0.1): households took ~4 000 a week in 1837
 (~18% of construction goods with ЖКХ, under Д.5's 25-35%) and ~3 100 in 1841, when sectors had
 doubled (~9%); prices stayed near base (world 110). Raised x1.5: 4.5% / 2.25% and 0.15.
@@ -59,14 +57,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import vic3lib as V  # noqa: E402
+import ld_gen  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
-HOTFIX = REPO / "_ef" / "ef hotfix 1.13"
-TGR_PACKAGES = REPO.parent / "vic3_mods_out/TheGreatRevision/common/buy_packages/TGR_TRADE_buy_packages_aggressive.txt"
 
 NEED = "popneed_household_construction"
-SHARE_LOW, SHARE_HIGH = 0.045, 0.0225      # share of the basket spent on building, wealth 1 / 50+
 SUBSISTENCE_WOOD = 0.15                   # wood_construction per workforce unit of a subsistence building
 SUBSISTENCE = ["farm", "orchard", "pasture", "fishing_village", "rice_farm"]
 # ЖКХ, decided by the user 2026-10-03 (after night G): one construction good per amenity tier, and the
@@ -90,16 +86,11 @@ SECTOR_INPUTS = {
 }
 COST = {"wood": 20, "fabric": 20, "iron": 40, "tools": 40, "glass": 40, "steel": 50, "explosives": 50,
         "wood_construction": 130, "iron_construction": 92, "steel_construction": 70, "arc_welded_construction": 70}
-PSC_GOODS = REPO.parent / "vic3_mods_out/PSC/common/goods/PSC_goods.txt"
-TRADE_QUANTITY = 1     # units per trade route level (vanilla wood 10, iron 5)
-TRADE_CONVOY = 3       # convoy cost multiplier (vanilla max 1.5)
-OUT_GOODS = HOTFIX / "common/goods/zz_ef_construction_goods_trade.txt"
 UNLOCK = {"arc_welded_construction": "arc_welding"}  # PSC: pm_arc_welded_buildings
 VANILLA_URBAN =REPO.parent / "vic3_mods_out/.vanillaVIC3/common/production_methods/06_urban_center.txt"
 
-OUT_NEED = HOTFIX / "common/pop_needs/zz_ef_household_construction.txt"
-OUT_PKG = HOTFIX / "common/buy_packages/zz_ef_household_construction_packages.txt"
-OUT_PM = HOTFIX / "common/production_methods/zz_ef_household_construction_pms.txt"
+OUT_NEED = "common/pop_needs/zz_ef_household_construction.txt"
+OUT_PM = "common/production_methods/zz_ef_household_construction_pms.txt"
 
 LOC = {
     "english": {
@@ -115,24 +106,6 @@ LOC = {
 HEAD = """### GENERATED by tools/regen_ef_household_construction.py -- do not edit by hand.
 ### СТР.3 (ночь Г, 2026-10-03): households and urban centres consume PSC's construction goods.
 """
-
-
-def share(w: int) -> float:
-    return SHARE_LOW - (SHARE_LOW - SHARE_HIGH) * min(1.0, (w - 1) / 49)
-
-
-def tgr_package_sums() -> dict[int, float]:
-    s = TGR_PACKAGES.read_text(encoding="utf-8-sig")
-    out = {}
-    for m in re.finditer(r"(?m)^(?:[A-Z_]+:)?wealth_(\d+)\s*=\s*\{(.*?)^\}", s, re.S):
-        g = re.search(r"goods\s*=\s*\{(.*?)\}", m.group(2), re.S)
-        out[int(m.group(1))] = sum(float(v) for _k, v in re.findall(r"(popneed_\w+)\s*=\s*([\d.]+)", g.group(1)))
-    assert sorted(out) == list(range(1, 100)), f"TGR packages: wealth levels {sorted(out)[:3]}..{len(out)}"
-    return out
-
-
-def package_values() -> dict[int, int]:
-    return {w: max(1, round(v * share(w))) for w, v in tgr_package_sums().items()}
 
 
 def build_need() -> str:
@@ -152,16 +125,6 @@ def build_need() -> str:
 	default = wood_construction
 {entries}}}
 """
-
-
-def build_packages(vals: dict[int, int]) -> str:
-    out = [HEAD + f"""### {NEED} in every wealth level: {SHARE_LOW:.1%} of the level's basket (TGR's packages,
-### money at base prices) at wealth 1, falling to {SHARE_HIGH:.1%} at wealth 50 and flat above.
-### The VC branch: addon-VC's REPLACE_OR_CREATE wipes these, tools/regen_addon_vc.py re-adds them.
-"""]
-    for w in range(1, 100):
-        out.append(f"INJECT:wealth_{w} = {{\n\tgoods = {{\n\t\t{NEED} = {vals[w]}\n\t}}\n}}\n")
-    return "\n".join(out)
 
 
 def urban_body(decl: str, pm: str, good: str, base: float, prefix: str) -> str:
@@ -236,61 +199,26 @@ def build_pms() -> str:
     return "\n".join(out)
 
 
-def build_goods() -> str:
-    """PSC's four construction goods: market goods instead of state-local ones (the user, 2026-10-03:
-    "they became a real market -- tradeable, but as hard to transport as possible")."""
-    src = V.read(PSC_GOODS)
-    out = [HEAD + f"""### PSC defines the four construction goods `local = yes` (each state its own market, like services).
-### Since households and cities buy them (СТР.3) they are market goods: a state without a sector buys from
-### the rest of its market. Hard to move between markets: the highest convoy cost in the set
-### ({TRADE_CONVOY}; vanilla goes up to 1.5, wood 0.15) and the smallest lot per trade route level
-### ({TRADE_QUANTITY}; wood 10, iron 5). PSC's own fields otherwise. Re-diff on a PSC update.
-"""]
-    for g in ("wood_construction", "iron_construction", "steel_construction", "arc_welded_construction"):
-        decl, body = V.entry(src, g)
-        assert re.search(r"local\s*=\s*yes", body), f"PSC's {g} is no longer local -- re-read СТР.3"
-        lines = [l for l in body.split("\n") if not re.match(r"\s*local\s*=", l) and l.strip()]
-        lines += [f"\ttraded_quantity = {TRADE_QUANTITY}", f"\tconvoy_cost_multiplier = {TRADE_CONVOY}"]
-        out.append(f"REPLACE:{g} = {{\n" + "\n".join(lines) + "\n}\n")
-    return "\n".join(out)
-
-
 def build_loc(lang: str) -> str:
     lines = [f"l_{lang}:"] + [f' {k}:0 "{v}"' for k, v in LOC[lang].items()]
     return "\n".join(lines) + "\n"
 
 
-def emit(path: Path, text: str, check: bool, bom: bool) -> bool:
-    data = (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")
-    old = path.read_bytes() if path.exists() else None
-    if check:
-        print(f"  {'SAME ' if old == data else 'DRIFT'} {path.relative_to(REPO)}")
-        return old == data
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes(data)
-    print(f"  wrote {path.relative_to(REPO)}")
-    return True
-
-
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
-    a = ap.parse_args()
-    vals = package_values()
+    ap.parse_args()
     files = [
-        (OUT_NEED, build_need(), True),   # Cyrillic in the header comments: BOM
-        (OUT_PKG, build_packages(vals), True),
-        (OUT_PM, build_pms(), True),
-        (OUT_GOODS, build_goods(), True),
+        (OUT_NEED, build_need()),
+        (OUT_PM, build_pms()),
     ]
     for lang in LOC:
-        files.append((HOTFIX / f"localization/{lang}/zz_ef_household_construction_l_{lang}.yml", build_loc(lang), True))
-    ok = True
-    for path, text, bom in files:
+        files.append((f"localization/{lang}/zz_ef_household_construction_l_{lang}.yml", build_loc(lang)))
+    for path, text in files:
         assert text.count("{") == text.count("}"), path
-        ok &= emit(path, text, a.check, bom)
-    print(f"  packages: wealth 1 {vals[1]}, 5 {vals[5]}, 10 {vals[10]}, 20 {vals[20]}, 50 {vals[50]}, 99 {vals[99]}")
-    return 0 if ok else 1
+        ld_gen.emit(path, text)
+    ld_gen.report("regen_ef_household_construction")
+    return 0
 
 
 if __name__ == "__main__":

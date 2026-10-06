@@ -39,6 +39,7 @@ def fork_rel(path):
     d, f = os.path.split(p)
     f = re.sub(r"^zz_pb_ef_", "ld_pb_", f)
     f = re.sub(r"^zz_ef_", "ld_", f)
+    f = re.sub(r"^00_00_ef_", "ld_", f)
     return (d + "/" + f) if d else f
 
 
