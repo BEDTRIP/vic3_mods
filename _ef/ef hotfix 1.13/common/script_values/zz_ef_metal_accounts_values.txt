@@ -1,0 +1,134 @@
+#############################################
+# Stage 2, night 6.10 (Ф1 + Ф2; the user's decisions М, Д2.13, Д2.20-Д2.29) -- the metal accounts.
+# Effects: scripted_effects/zz_ef_metal_accounts.txt. Every unit of metal on an account was bought on the market
+# (or is the start's stock, logged as such): the CB (var:gold_state_1 / silver_state_1 of its CB states, E&F's
+# reserves), the banks (var:zz_ef_bankm_gold / _silver, one per country -- by company in Ф3) and the pops
+# (var:zz_ef_popm_gold / _silver).
+#
+# Units -- E&F's reserve units. Gold: a good x 100 (gold costs 100: 1 unit = 1 money at the base price). Silver: E&F
+# counts it against gold by WEIGHT, 1:15.5 (silver_to_gold_rate, ours: the market prices / 15.5), so one silver
+# good (base price 50 = half a gold good) is 50 gold units = 50 x 15.5 = 775 silver units -- the value in the
+# reserves equals the market value at any prices. Was x 100 for silver too (Д2.7а): a silver standard's CB got
+# 7.75 times less cover than it paid for (accepted at night 6.10, check).
+#############################################
+
+zz_ef_gold_units_per_good = 100
+zz_ef_silver_units_per_good = 775
+
+# Gold per unit of money at the parity (0 = no parity): gold standard and bimetallism count their parity in gold,
+# a silver standard in silver.
+zz_ef_gold_per_money_par = {
+	value = 1
+	if = {
+		limit = {
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_bimetallism_standard
+				has_law = law_type:law_silver_standard
+			}
+		}
+		value = var:money_value_target_1
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			multiply = silver_to_gold_rate
+		}
+	}
+	min = 0.00001
+}
+
+# The country keeps its metal in silver (silver standard; no CB and no gold / bimetallic standard -- Asia's silver
+# economies) or in gold. Bimetallism: both, half and half.
+zz_ef_metal_is_silver = {
+	value = 0
+	if = {
+		limit = {
+			OR = {
+				has_law = law_type:law_silver_standard
+				AND = {
+					NOT = { has_modifier = has_central_bank }
+					NOT = { has_law = law_type:law_gold_standard }
+					NOT = { has_law = law_type:law_bimetallism_standard }
+				}
+			}
+		}
+		value = 1
+	}
+}
+zz_ef_metal_silver_share = {
+	value = zz_ef_metal_is_silver
+	if = {
+		limit = { has_law = law_type:law_bimetallism_standard }
+		value = 0.5
+	}
+}
+
+# ---- step 3: the start (Д2.23, Д2.13, Д3.3) --------------------------------
+# Pops' metal at the start, a share of a year's GDP: 5% with a CB (money in notes and deposits), 20% without
+# (metal is the money) -- Д3.3.
+zz_ef_popm_start_share = {
+	value = 0.2
+	if = {
+		limit = { has_modifier = has_central_bank }
+		value = 0.05
+	}
+}
+zz_ef_popm_start_money = {
+	value = gdp
+	min = 0
+	multiply = zz_ef_popm_start_share
+}
+
+# ---- accounts in money (at the country's parity, gold per money) ------------
+zz_ef_popm_gold = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_popm_gold } value = var:zz_ef_popm_gold }
+}
+zz_ef_popm_silver = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_popm_silver } value = var:zz_ef_popm_silver }
+}
+zz_ef_bankm_gold = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bankm_gold } value = var:zz_ef_bankm_gold }
+}
+zz_ef_bankm_silver = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bankm_silver } value = var:zz_ef_bankm_silver }
+}
+zz_ef_popm_money = {
+	value = zz_ef_popm_silver
+	multiply = silver_to_gold_rate
+	add = zz_ef_popm_gold
+	divide = zz_ef_gold_per_money_par
+}
+zz_ef_bankm_money = {
+	value = zz_ef_bankm_silver
+	multiply = silver_to_gold_rate
+	add = zz_ef_bankm_gold
+	divide = zz_ef_gold_per_money_par
+}
+zz_ef_cbm_gold = {
+	value = gold_state_native_for_stockpile
+}
+zz_ef_cbm_silver = {
+	value = silver_state_native_for_stockpile
+}
+
+# ---- step 6: the banks' reserve norm (Д2.26 а) ------------------------------
+# 15% at the key rate 6.5%, 10% at 2%, 20% at 12%, linear (two pieces), 5..25%.
+zz_ef_reserve_norm = {
+	value = zz_ef_money_rate
+	subtract = 0.065
+	if = {
+		limit = { zz_ef_money_rate < 0.065 }
+		multiply = 1.1111
+	}
+	else = {
+		multiply = 0.9091
+	}
+	add = 0.15
+	min = 0.05
+	max = 0.25
+}

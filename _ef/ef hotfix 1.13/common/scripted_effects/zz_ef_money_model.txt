@@ -171,11 +171,14 @@ zz_ef_money_model_step = {
 	# cash yet, Russia's M2 was 2M, France's 0, and the metal was cut to
 	# nothing), and at week 12 against the money itself, if it is over 10% of
 	# GDP by then (else a week later).
+	# Version 8 (stage 2, night 6.10, Д2.23 / Д2.13): the parity ~1 for everyone and the start's metal accounts
+	# (scripted_effects/zz_ef_metal_accounts.txt, zz_ef_metal_start_step) -- the week-12 recount stays, both are the
+	# start's stock in the world line of metal.
 	if = {
 		limit = { NOT = { has_variable = zz_ef_parity_version } }
-		set_variable = { name = zz_ef_parity_version value = 7 }
+		set_variable = { name = zz_ef_parity_version value = 8 }
 		set_variable = { name = zz_ef_metal_rescale_due value = 11 }
-		zz_ef_metal_rescale_step = yes
+		zz_ef_metal_start_step = yes
 	}
 	else_if = {
 		limit = { has_variable = zz_ef_metal_rescale_due }
@@ -186,7 +189,10 @@ zz_ef_money_model_step = {
 				zz_ef_agg_m2_to_gdp > 0.1
 			}
 			remove_variable = zz_ef_metal_rescale_due
+			zz_ef_metal_start_cb_before = yes
 			zz_ef_metal_rescale_step = yes
+			zz_ef_metal_start_cb_after = yes
+			zz_ef_metal_start_log = { WHAT = cb_week12 }
 		}
 	}
 	if = {
@@ -592,6 +598,8 @@ zz_ef_pop_savings_step = {
 		# Е.7 (5.10, Д.4): over the cash norm -- deposits from the start, the money in the banks' pool
 		set_variable = { name = zz_ef_pop_deposits value = zz_ef_pop_start_deposits }
 		add_investment_pool = var:zz_ef_pop_deposits
+		# stage 2, step 3 (6.10): the banks' start metal by the reserve norm (scripted_effects/zz_ef_metal_accounts.txt)
+		zz_ef_metal_start_banks = yes
 	}
 	set_variable = { name = zz_ef_f_inflow value = zz_ef_v_f_leak }
 	change_variable = { name = zz_ef_f_inflow multiply = -1 }
@@ -1153,6 +1161,8 @@ zz_ef_metal_rescale_step = {
 				has_law = law_type:law_bimetallism_standard
 			}
 			zz_ef_cb_cover_ref > 0
+			# 6.10: some metal to scale (E&F's reserves read 0.01 with none)
+			central_bank_reserves > 1
 		}
 		set_variable = { name = zz_ef_metal_rescale value = zz_ef_cover_normal }
 		change_variable = { name = zz_ef_metal_rescale divide = zz_ef_cb_cover_ref }
@@ -1184,6 +1194,35 @@ zz_ef_metal_rescale_step = {
 		if = {
 			limit = { has_variable = zz_ef_fx_metal }
 			change_variable = { name = zz_ef_fx_metal multiply = var:zz_ef_metal_rescale }
+		}
+	}
+	# Д2.23 (6.10): a CB with no metal at all gets the 40% too (the start's stock), in a CB state
+	else_if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+			any_scope_state = { has_modifier = central_bank_historic_place }
+		}
+		set_variable = { name = zz_ef_metal_rescale value = zz_ef_rescale_money }
+		change_variable = { name = zz_ef_metal_rescale multiply = zz_ef_cover_normal }
+		change_variable = { name = zz_ef_metal_rescale multiply = var:money_value_target_1 }
+		random_scope_state = {
+			limit = { has_modifier = central_bank_historic_place }
+			if = {
+				limit = { owner = { has_law = law_type:law_silver_standard } }
+				if = { limit = { NOT = { has_variable = silver_state_1 } } set_variable = { name = silver_state_1 value = 0 } }
+				change_variable = { name = silver_state_1 add = owner.var:zz_ef_metal_rescale }
+			}
+			else = {
+				if = { limit = { NOT = { has_variable = gold_state_1 } } set_variable = { name = gold_state_1 value = 0 } }
+				change_variable = { name = gold_state_1 add = owner.var:zz_ef_metal_rescale }
+			}
 		}
 	}
 }

@@ -1,0 +1,116 @@
+#############################################
+# Stage 2, night 6.10 (Ф1 + Ф2) -- the metal accounts: the start, the purchases, the world line.
+# Values and units: script_values/zz_ef_metal_accounts_values.txt. Called from the money model's weekly step
+# (scripted_effects/zz_ef_money_model.txt).
+#############################################
+
+# ---- step 3: the start in equilibrium (Д2.23, Д2.13, Д3.3) -------------------
+# Country scope, the first step of a new game, once. The user (6.10): "do not wait 10 years for it to settle" --
+#   * the parity ~1 for every metal standard with a CB (Д2.13): gold and bimetallism 1 gold unit per unit of money,
+#     a silver standard 15.5 silver units (gold_to_silver_rate) -- every currency starts worth the same gold; E&F's
+#     historical parity (the pound 7.32, the franc 0.75) is kept in var:zz_ef_parity_hist for the labels;
+#   * the CB's metal = 40% of M2 at that parity (zz_ef_metal_rescale_step; recounted once more at week 12 against
+#     the money itself, the start's second half -- the engine fills the buildings' cash in the first weeks);
+#   * E&F's start metal of a country without a CB (subjects, Asia: the East India Company 1.79 bn silver) is taken
+#     off -- its metal is the pops' (below), a subject's CB metal is only what it buys (М);
+#   * the pops' metal: 5% of GDP with a CB, 20% without (Д3.3), in the standard's metal;
+#   * the banks' metal: the reserve norm x the start deposits -- at the first receiver (zz_ef_metal_start_banks),
+#     where the deposits are made.
+# Everything here is the start's stock, not mining: logged (EFM|...|metal_start) and summed into
+# global_var:zz_ef_wm_start_gold / _silver for the world line.
+zz_ef_metal_start_step = {
+	if = {
+		limit = {
+			has_modifier = has_central_bank
+			has_variable = money_value_target_1
+			var:money_value_target_1 > 0
+			OR = {
+				has_law = law_type:law_gold_standard
+				has_law = law_type:law_silver_standard
+				has_law = law_type:law_bimetallism_standard
+			}
+		}
+		set_variable = { name = zz_ef_parity_hist value = var:money_value_target_1 }
+		if = {
+			limit = { has_law = law_type:law_silver_standard }
+			set_variable = { name = money_value_target_1 value = gold_to_silver_rate }
+		}
+		else = {
+			set_variable = { name = money_value_target_1 value = 1 }
+		}
+	}
+	zz_ef_metal_start_cb_before = yes
+	zz_ef_metal_rescale_step = yes
+	if = {
+		limit = { NOT = { has_modifier = has_central_bank } }
+		every_scope_state = {
+			limit = { has_modifier = central_bank_historic_place }
+			if = { limit = { has_variable = gold_state_1 } set_variable = { name = gold_state_1 value = 0 } }
+			if = { limit = { has_variable = silver_state_1 } set_variable = { name = silver_state_1 value = 0 } }
+		}
+	}
+	zz_ef_metal_start_cb_after = yes
+	# the pops' metal
+	set_variable = { name = zz_ef_popm_gold value = zz_ef_popm_start_money }
+	change_variable = { name = zz_ef_popm_gold multiply = { value = 1 subtract = zz_ef_metal_silver_share } }
+	set_variable = { name = zz_ef_popm_silver value = zz_ef_popm_start_money }
+	change_variable = { name = zz_ef_popm_silver multiply = zz_ef_metal_silver_share }
+	change_variable = { name = zz_ef_popm_silver multiply = gold_to_silver_rate }
+	zz_ef_wm_add = { KEY = start_gold VALUE = var:zz_ef_popm_gold }
+	zz_ef_wm_add = { KEY = start_silver VALUE = var:zz_ef_popm_silver }
+	zz_ef_metal_start_log = { WHAT = cb_pops }
+}
+
+# The CB's metal before / after a start operation (the rescale at the first step and at week 12): the change is
+# the start's stock (world line), not a purchase.
+zz_ef_metal_start_cb_before = {
+	set_variable = { name = zz_ef_ms_g0 value = gold_state_native_for_stockpile }
+	set_variable = { name = zz_ef_ms_s0 value = silver_state_native_for_stockpile }
+}
+zz_ef_metal_start_cb_after = {
+	set_variable = { name = zz_ef_ms_g1 value = gold_state_native_for_stockpile }
+	change_variable = { name = zz_ef_ms_g1 subtract = var:zz_ef_ms_g0 }
+	set_variable = { name = zz_ef_ms_s1 value = silver_state_native_for_stockpile }
+	change_variable = { name = zz_ef_ms_s1 subtract = var:zz_ef_ms_s0 }
+	# the first step: E&F's metal before it is nobody's -- the whole stock after is the start's
+	if = {
+		limit = { NOT = { has_variable = zz_ef_metal_started } }
+		set_variable = { name = zz_ef_metal_started value = yes }
+		set_variable = { name = zz_ef_ms_g1 value = gold_state_native_for_stockpile }
+		set_variable = { name = zz_ef_ms_s1 value = silver_state_native_for_stockpile }
+	}
+	zz_ef_wm_add = { KEY = start_gold VALUE = var:zz_ef_ms_g1 }
+	zz_ef_wm_add = { KEY = start_silver VALUE = var:zz_ef_ms_s1 }
+}
+
+# The first receiver, after the start deposits (zz_ef_pop_savings_step): the banks' metal = the reserve norm x the
+# deposits, in the standard's metal.
+zz_ef_metal_start_banks = {
+	set_variable = { name = zz_ef_ms_bank value = zz_ef_pop_deposits }
+	change_variable = { name = zz_ef_ms_bank multiply = zz_ef_reserve_norm }
+	change_variable = { name = zz_ef_ms_bank multiply = zz_ef_gold_per_money_par }
+	set_variable = { name = zz_ef_bankm_gold value = var:zz_ef_ms_bank }
+	change_variable = { name = zz_ef_bankm_gold multiply = { value = 1 subtract = zz_ef_metal_silver_share } }
+	set_variable = { name = zz_ef_bankm_silver value = var:zz_ef_ms_bank }
+	change_variable = { name = zz_ef_bankm_silver multiply = zz_ef_metal_silver_share }
+	change_variable = { name = zz_ef_bankm_silver multiply = gold_to_silver_rate }
+	remove_variable = zz_ef_ms_bank
+	zz_ef_wm_add = { KEY = start_gold VALUE = var:zz_ef_bankm_gold }
+	zz_ef_wm_add = { KEY = start_silver VALUE = var:zz_ef_bankm_silver }
+	zz_ef_metal_start_log = { WHAT = banks }
+}
+
+zz_ef_metal_start_log = {
+	debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|metal_start|what $WHAT$|cb_gold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cbm_gold')|0]|cb_silver [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cbm_silver')|0]|pop_gold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_gold')|0]|pop_silver [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_silver')|0]|bank_gold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_gold')|0]|bank_silver [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_silver')|0]|parity [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|4]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|m2 [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_agg_m2')|0]|gdp [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_raw_gdp')|0]"
+}
+
+# ---- step 8: the world line of metal ------------------------------------------
+# global_var:zz_ef_wm_<KEY> += VALUE -- cumulative since the start (never reset): start_* the start's stock,
+# buy_* bought on the market, sell_* sold to it; written by zz_ef_world_acc with the accounts' sums (EFG).
+zz_ef_wm_add = {
+	if = {
+		limit = { NOT = { has_global_variable = zz_ef_wm_$KEY$ } }
+		set_global_variable = { name = zz_ef_wm_$KEY$ value = 0 }
+	}
+	change_global_variable = { name = zz_ef_wm_$KEY$ add = $VALUE$ }
+}
