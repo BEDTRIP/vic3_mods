@@ -364,14 +364,16 @@ zz_ef_bank_mult_silver = {
 }
 
 # ---- step 7: the CB as an account (Д2.28 а) ----------------------------------------
-# Its building's purchase, percent on the method's input: (40% - cover) x 1500 -- +300% at 20% cover, the method's
-# own at 40%, none from 46.7%. Metal standards with a CB.
+# Its building's purchase, percent on the method's input: (40% - cover) x 5000 -- +500% at 30% cover, +1000% (the cap) at
+# 20%, the method's own at 40%, none from 42% (the method buys ~44 gold a week for Britain). Was x 1500, at most +300%:
+# run r1006_135058, Britain's cover 0.39 -> 0.27 in two years with the CB at the cap (~0.9M a year against the outflow
+# abroad and M2 +10% a year). Accepted at night 6.10, check the price of gold. Metal standards with a CB.
 zz_ef_cb_buy_mult = {
 	value = zz_ef_cover_normal
 	subtract = zz_ef_cb_cover
-	multiply = 1500
+	multiply = 5000
 	min = -100
-	max = 300
+	max = 1000
 }
 # The sale of a surplus: 2% a week of the metal over 60% cover, in goods (bimetallism sells gold).
 zz_ef_cb_sell_cover = 0.6
