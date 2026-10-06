@@ -54,7 +54,11 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 
 Облачная сессия не видит ПК: игра, `Documents/…` и PowerShell есть только у MCP-сервера `vic3-pc`
 (`tools/pc_bridge/server.py`, туннель ngrok, `.mcp.json`; на ПК запускается `tools/pc_bridge/start.ps1`).
-Нет инструментов `mcp__vic3-pc__*` — мост выключен, попросить пользователя запустить `start.ps1`.
+Нет инструментов `mcp__vic3-pc__*` — **сначала проверить сам мост**: сессия, начатая не в корне `vic3_mods` (например в
+`/home/user`), `.mcp.json` не читает, и инструментов нет при живом мосте (ночь 6.10 прошла без прогонов из-за этого).
+Проверка и работа без MCP-клиента: `python3 tools/pc_bridge/pc_call.py list` / `call <инструмент> '<JSON>'` (токен —
+`PC_BRIDGE_TOKEN`). Отвечает — работать через него; не отвечает (`ERR_NGROK_*`, отказ) — мост выключен, попросить
+пользователя запустить `start.ps1`.
 
 1. Правки — в своём клоне, **коммит и `git push` в `main`** (мост берёт код с GitHub, не из облака).
 2. `checkout(branch)` → `_bridge/wt` на ПК; **сверить хеш** из ответа с `git log -1 --format=%h` своего клона — ngrok
