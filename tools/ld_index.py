@@ -29,6 +29,14 @@ TEXT_EXT = (".txt", ".gui", ".yml", ".gfx", ".asset", ".shader", ".fxh")
 GUI_TYPE = re.compile(r"^\s*(?:type|template)\s+([A-Za-z_][A-Za-z0-9_]*)\s*=", re.M)
 
 
+# комментарий — `#` вне строки в кавычках: в GUI `"#T [..ScriptValue('x')..]"` — форматирование текста, не комментарий
+COMMENT = re.compile(r'"[^"\n]*"|#[^\n]*')
+
+
+def strip_comments(t):
+    return COMMENT.sub(lambda m: m.group(0) if m.group(0).startswith('"') else "", t)
+
+
 def walk(root):
     for dp, dn, fn in os.walk(root):
         dn[:] = [d for d in dn if d not in (".git", "docs", "_archive")]  # _archive/ — мёртвое, игра не читает
@@ -52,7 +60,7 @@ def main():
         rel = os.path.relpath(p, a.fork).replace("\\", "/")
         texts[rel] = t
         # комментарии не считаются ссылками
-        clean = re.sub(r"#[^\n]*", "", t) if not rel.endswith(".yml") else t
+        clean = strip_comments(t) if not rel.endswith(".yml") else t
         words.update(WORD.findall(clean))
         for m in PARAM.finditer(clean):
             pats.add(m.group(0))
