@@ -1,0 +1,53 @@
+﻿# Д2.32 (6.10 day, the user) -- E&F's "National capital" chart (gui/00_ef_deported_gui_2.gui:79, the world currency
+# panel): the line showed national_capacity_in_gold (gold equivalent) next to the standard's icon, so Qing's 33.7M read
+# as silver. Now the line shows the reserves in the standard's own metal (national_capacity: silver standard --
+# silver, gold -- gold, bimetallism -- E&F's bimetallic count), with the same icon; the slices and the order stay in
+# gold equivalent (national_capacity_in_gold, our national_capacity_variable_list), comparable across standards.
+# Loaded before E&F's file (00_00_...), so this definition of the type is the one used, as
+# gui/00_00_ef_currency_symbol_fix.gui does.
+# !! MAINTENANCE !! A copy of E&F's type with one line changed (rightside1_info); re-check if E&F edits it.
+
+types zz_ef_national_capacity_chart
+{
+	type ef_bp_national_capacity_piechart = chart {
+		blockoverride "datamodel" {
+			datamodel = "[GetGlobalList('national_capacity_variable_list_ordered_1')]"
+		}
+		blockoverride "heading" {
+			text = "EF_BP_CHART_NATIONAL_CAPACITY_HEADING"
+		}
+		blockoverride "tooltip" {
+		}
+		blockoverride "pieslice" {
+			value = "[Scope.GetCountry.MakeScope.ScriptValue('national_capacity_in_gold')|D=+]"
+		}
+		blockoverride "color" {
+			color = "[Scope.GetCountry.GetMapColor]"
+		}
+
+		blockoverride "leftside_info" {
+			raw_text = "[Scope.GetCountry.GetName]"
+		}
+		blockoverride "rightside1_info" {
+			raw_text = "#bold [Scope.GetCountry.MakeScope.ScriptValue('national_capacity')|D]#! [Scope.GetCountry.GetCustom('monetary_system')]"
+		}
+		blockoverride "rightside2_info" {
+			raw_text = ""
+		}
+		blockoverride "pie_item_goto_button" {
+			button = {
+				using = clean_button
+				size = { 100% 100% }
+			}
+		}
+		blockoverride "piechartsize" {
+			size = { 200 200 }
+		}
+		blockoverride "minimumsize" {
+			minimumsize = { 100 -1 }
+		}
+		blockoverride "maxverticalslots" {
+			maxverticalslots = 10
+		}
+	}
+}
