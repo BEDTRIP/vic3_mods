@@ -573,6 +573,8 @@ zz_ef_pool_other_week = {
 	subtract = zz_ef_v_w_cc_int
 	# M.3 (4.10): Hume's coined / withdrawn money
 	subtract = zz_ef_v_w_hume_money
+	# Д2.30 (6.10 day): other CBs' deposits put into / drawn out of the pool
+	subtract = zz_ef_v_w_nr_dep
 	# Д4.5 (4.10): the treasury's surplus put into the pool
 	subtract = zz_ef_v_f_tr_pool
 	# В5.5 (5.10): the bond ledger's moves on the pool (a seller's), with abroad
@@ -606,6 +608,8 @@ zz_ef_leak_week = {
 	subtract = zz_ef_tr_other_net
 	# M.3 (4.10): Hume's coined / withdrawn money -- the CB's, not pops'
 	subtract = zz_ef_v_w_hume_money
+	# Д2.30 (6.10 day): other CBs' deposits in the pool -- abroad's, not pops'
+	subtract = zz_ef_v_w_nr_dep
 	# В5.5 (5.10): the bond ledger with abroad -- the pool's (out of pool_other now) and the treasury's interest (out
 	# of the treasury's "other"; the parts repaid stay there, as E&F's bond moves)
 	subtract = zz_ef_v_f_bl_sold

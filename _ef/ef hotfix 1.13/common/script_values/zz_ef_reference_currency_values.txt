@@ -144,6 +144,8 @@ zz_ef_bank_capital = {
 	add = zz_ef_bank_bonds
 	subtract = zz_ef_pop_deposits
 	subtract = zz_ef_bank_cb_debt
+	# Д2.30 (6.10 day): other CBs' deposits (our currency they hold)
+	subtract = zz_ef_nr_dep_v
 }
 
 # 4.10 (the money tooltip): the week's change of pops' savings and deposits (ledger at the step), and the
@@ -205,6 +207,7 @@ zz_ef_bank_assets = {
 zz_ef_bank_liabilities = {
 	value = zz_ef_pop_deposits
 	add = zz_ef_bank_cb_debt
+	add = zz_ef_nr_dep_v
 }
 
 # 4.10 (the tooltip): negated values to print with their own sign and colour

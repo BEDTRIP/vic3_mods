@@ -529,6 +529,11 @@ FLOWS = [
      "Hume: the CB issued money for the metal that came in (last week)", svp("zz_ef_v_w_hume_money"), B),
     (B, C, "Юм: ЦБ изъял деньги под отток металла (прошлая неделя)",
      "Hume: the CB withdrew money for the metal that went out (last week)", svn("zz_ef_v_w_hume_money"), B),
+    # Д2.30 (6.10 day): our currency held by other CBs lies in our banks as their deposits
+    (X, B, "вклады чужих ЦБ: наша валюта у них лежит в наших банках (прошлая неделя)",
+     "other CBs' deposits: our currency they hold lies in our banks (last week)", svp("zz_ef_v_w_nr_dep"), B),
+    (B, X, "вклады чужих ЦБ сняты: наша валюта вернулась домой (прошлая неделя)",
+     "other CBs' deposits withdrawn: our currency came home (last week)", svn("zz_ef_v_w_nr_dep"), B),
     # Д4.5 (4.10): the treasury's surplus over its limit buys the banks' bonds
     (K, B, "излишек казны сверх потолка — покупка облигаций банков", "the treasury's surplus over its limit — banks' bonds bought",
      sv_("zz_ef_v_f_tr_pool"), None),
@@ -557,11 +562,13 @@ NOTES = {
               "[Country.MakeScope.ScriptValue('zz_ef_credit_limit')|D], lent [Country.MakeScope.ScriptValue('zz_ef_credit_now')|D]."),
     "abroad": ("Запас счёта — чистая международная позиция: облигации других стран и чужая валюта в ЦБ минус наша валюта у других ЦБ. "
                "Платежи с заграницей сводит мировой клиринг: отток оплачивается металлом ЦБ (доля — по доверию к "
-               "валюте) и нашей валютой, приток — долей металла и валют, собранных с плательщиков.",
+               "валюте) и нашей валютой, приток — долей металла и валют, собранных с плательщиков. Наша валюта у чужих ЦБ лежит "
+               "вкладами в наших банках ([Country.MakeScope.ScriptValue('zz_ef_nr_dep_v')|D]) — деньги работают дома.",
                "The account's stock is the net international position: other countries' bonds and foreign currency in the CB minus our currency at "
                "other CBs. Payments with abroad go through the world clearing: an outflow pays in the CB's metal (the "
                "share by trust in the currency) and in our currency, an inflow takes a share of the metal and "
-               "currencies the payers brought."),
+               "currencies the payers brought. Our currency at other CBs lies as deposits in our banks "
+               "([Country.MakeScope.ScriptValue('zz_ef_nr_dep_v')|D]) — the money works at home."),
     "cb": ("Запас счёта — металл ЦБ по паритету: покрытие валюты, а не деньги (вне M0–M3). Чужая валюта ЦБ — в счёте "
            "«Заграница», в покрытии учтена.",
            "The account's stock is the CB's metal at parity: the currency's cover, not money (outside M0–M3). The CB's "
@@ -751,7 +758,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
@@ -1065,7 +1072,7 @@ def nested(lang):
                       f"  активы {money('zz_ef_bank_assets')}: резервы (пул) {money('zz_ef_pool')}, кредит бизнесу "
                       f"{money('zz_ef_bc_debt')}, потребкредит {money('zz_ef_cc_debt')}, облигации {money('zz_ef_bank_bonds')}",
                       f"  обязательства {money('zz_ef_bank_liabilities')}: вклады {money('zz_ef_pop_deposits')}, долг ЦБ "
-                      f"{money('zz_ef_bank_cb_debt')}",
+                      f"{money('zz_ef_bank_cb_debt')}, вклады чужих ЦБ {money('zz_ef_nr_dep_v')}",
                       f"  #b капитал банков {sv('zz_ef_bank_capital', 'D+=')} {cur}#! (меньше нуля — вклады не покрыты)",
                       f"#b Кредит бизнесу#! {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП): за неделю выдано "
                       f"{money('zz_ef_v_f_bc_new')}, проценты {money('zz_ef_v_f_bc_int')}, погашено {money('zz_ef_v_f_bc_paid')}",
@@ -1076,7 +1083,7 @@ def nested(lang):
                       f"  assets {money('zz_ef_bank_assets')}: reserves (the pool) {money('zz_ef_pool')}, business credit "
                       f"{money('zz_ef_bc_debt')}, consumer credit {money('zz_ef_cc_debt')}, bonds {money('zz_ef_bank_bonds')}",
                       f"  liabilities {money('zz_ef_bank_liabilities')}: deposits {money('zz_ef_pop_deposits')}, CB debt "
-                      f"{money('zz_ef_bank_cb_debt')}",
+                      f"{money('zz_ef_bank_cb_debt')}, other CBs' deposits {money('zz_ef_nr_dep_v')}",
                       f"  #b banks' capital {sv('zz_ef_bank_capital', 'D+=')} {cur}#! (under zero — deposits not covered)",
                       f"#b Business credit#! {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP): this week lent "
                       f"{money('zz_ef_v_f_bc_new')}, interest {money('zz_ef_v_f_bc_int')}, repaid {money('zz_ef_v_f_bc_paid')}",
