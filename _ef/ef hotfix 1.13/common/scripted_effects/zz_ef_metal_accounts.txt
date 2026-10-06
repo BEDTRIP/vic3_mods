@@ -11,8 +11,8 @@
 #     historical parity (the pound 7.32, the franc 0.75) is kept in var:zz_ef_parity_hist for the labels;
 #   * the CB's metal = 40% of M2 at that parity (zz_ef_metal_rescale_step; recounted once more at week 12 against
 #     the money itself, the start's second half -- the engine fills the buildings' cash in the first weeks);
-#   * E&F's start metal of a country without a CB (subjects, Asia: the East India Company 1.79 bn silver) is taken
-#     off -- its metal is the pops' (below), a subject's CB metal is only what it buys (М);
+#   * E&F's start metal of a country without a CB on a metal standard (subjects, Asia: the East India Company 1.79 bn
+#     silver; Bavaria's CB with no standard) is taken off -- its metal is the pops' (below), a subject's CB metal is only what it buys (М);
 #   * the pops' metal: 5% of GDP with a CB, 20% without (Д3.3), in the standard's metal;
 #   * the banks' metal: the reserve norm x the start deposits -- at the first receiver (zz_ef_metal_start_banks),
 #     where the deposits are made.
@@ -41,8 +41,22 @@ zz_ef_metal_start_step = {
 	}
 	zz_ef_metal_start_cb_before = yes
 	zz_ef_metal_rescale_step = yes
+	# not a CB on a metal standard (run r1006_132739: Bavaria and Saxony have a CB with no standard, 1.15-1.19 bn
+	# silver of E&F's; subjects -- the East India Company 651M silver -- take the overlord's standard a month later
+	# through the currency zone and their E&F metal became cover, 2.74 for the Company)
 	if = {
-		limit = { NOT = { has_modifier = has_central_bank } }
+		limit = {
+			NOT = {
+				AND = {
+					has_modifier = has_central_bank
+					OR = {
+						has_law = law_type:law_gold_standard
+						has_law = law_type:law_silver_standard
+						has_law = law_type:law_bimetallism_standard
+					}
+				}
+			}
+		}
 		every_scope_state = {
 			limit = { has_modifier = central_bank_historic_place }
 			if = { limit = { has_variable = gold_state_1 } set_variable = { name = gold_state_1 value = 0 } }
