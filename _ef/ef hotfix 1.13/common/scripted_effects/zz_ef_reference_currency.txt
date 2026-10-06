@@ -13,6 +13,13 @@
 REPLACE_OR_CREATE:national_capacity_variable_list = {
 	clear_variable_list = national_capacity_variable_list
 	clear_variable_list = reference_currency_list_1
+	# 6.10 day (В1 check): the yearly pick's great powers, for the log -- E&F's rating note (candidate: 6+), cover
+	# (candidate: 0.25+), reserves in gold (the order), standard (1 gold, 2 silver, 3 bimetallism, 4 gold exchange),
+	# the reference now. Line EFE.
+	every_country = {
+		limit = { country_rank >= rank_value:great_power }
+		debug_log = "EFE|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|note [THIS.GetCountry.MakeScope.Var('country_credit_note_fixe').GetValue|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|cap_g [THIS.GetCountry.MakeScope.ScriptValue('national_capacity_in_gold')|0]|std [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_std_code')|0]|cb [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_has_cb_v')|0]|ref [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_is_reference_v')|0]"
+	}
     every_country = {
         limit = {
             has_modifier = has_central_bank

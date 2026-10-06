@@ -1,4 +1,4 @@
-#############################################
+﻿#############################################
 # EF.48, night 2 item 8 (2.10): E&F's private banks run the gold/silver
 # arbitrage against a bimetallic CB (central_bank_ef_on_yearly_pulse_country,
 # scripted_effects/00_on_action_main.txt:1060, before 1873): on a gold drain the

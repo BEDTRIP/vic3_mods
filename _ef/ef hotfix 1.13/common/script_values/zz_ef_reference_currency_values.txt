@@ -258,3 +258,13 @@ zz_ef_trade_imports_week = {
 		}
 	}
 }
+
+# 6.10 day: the EFP line of the yearly reference pick (zz_ef_reference_currency.txt)
+zz_ef_has_cb_v = {
+	value = 0
+	if = { limit = { has_modifier = has_central_bank } value = 1 }
+}
+zz_ef_is_reference_v = {
+	value = 0
+	if = { limit = { has_modifier = global_monetary_reference } value = 1 }
+}
