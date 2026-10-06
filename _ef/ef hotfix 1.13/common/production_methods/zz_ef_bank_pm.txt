@@ -11,6 +11,9 @@
 #   joint-stock bank       joint_stock_companies (2)     paper 3, services 8            (~330)          750
 #   telegraph transfers    electric_telegraph            paper 3, services 11           (~420)         1000
 #   modern bank            modern_financial_instruments  paper 2, services 14, telephones 2, electricity 2  1600
+# Stage 2, night 6.10 (Д2.25): every method takes 0.01 gold and 0.02 silver per workforce unit (~1 money each) as the
+# base of the banks' metal purchase; the week's quantity is set by a percent modifier (zz_ef_bank_metal_buy, as E&F
+# steers its exchanges' inputs): -100% (none) when the reserves are at their norm.
 # Demand: ~5% of GDP (Д2.2). !! TUNING !! the outputs, with the businesses' input
 # (zz_ef_market_liquidity_input.txt) and the seed (script_values/zz_ef_bank_values.txt: GDP / 520000).
 #############################################
@@ -21,6 +24,9 @@ pm_zz_ef_bank_money_changer = {
 
 	building_modifiers = {
 		workforce_scaled = {
+			# stage 2 (6.10, Д2.25): a base of metal for the reserves, steered by zz_ef_bank_metal_buy (-100%..+25000%)
+			goods_input_gold_add = 0.01
+			goods_input_silver_add = 0.02
 			goods_input_services_add = 4
 			goods_output_liquidity_currency_add = 300
 		}
@@ -35,6 +41,9 @@ pm_zz_ef_bank_counting_house = {
 
 	building_modifiers = {
 		workforce_scaled = {
+			# stage 2 (6.10, Д2.25): a base of metal for the reserves, steered by zz_ef_bank_metal_buy (-100%..+25000%)
+			goods_input_gold_add = 0.01
+			goods_input_silver_add = 0.02
 			goods_input_paper_add = 2
 			goods_input_services_add = 5
 			goods_output_liquidity_currency_add = 500
@@ -54,6 +63,9 @@ pm_zz_ef_bank_joint_stock = {
 
 	building_modifiers = {
 		workforce_scaled = {
+			# stage 2 (6.10, Д2.25): a base of metal for the reserves, steered by zz_ef_bank_metal_buy (-100%..+25000%)
+			goods_input_gold_add = 0.01
+			goods_input_silver_add = 0.02
 			goods_input_paper_add = 3
 			goods_input_services_add = 8
 			goods_output_liquidity_currency_add = 750
@@ -73,6 +85,9 @@ pm_zz_ef_bank_telegraph = {
 
 	building_modifiers = {
 		workforce_scaled = {
+			# stage 2 (6.10, Д2.25): a base of metal for the reserves, steered by zz_ef_bank_metal_buy (-100%..+25000%)
+			goods_input_gold_add = 0.01
+			goods_input_silver_add = 0.02
 			goods_input_paper_add = 3
 			goods_input_services_add = 11
 			goods_output_liquidity_currency_add = 1000
@@ -92,6 +107,9 @@ pm_zz_ef_bank_modern = {
 
 	building_modifiers = {
 		workforce_scaled = {
+			# stage 2 (6.10, Д2.25): a base of metal for the reserves, steered by zz_ef_bank_metal_buy (-100%..+25000%)
+			goods_input_gold_add = 0.01
+			goods_input_silver_add = 0.02
 			goods_input_paper_add = 2
 			goods_input_services_add = 14
 			goods_input_telephones_add = 2

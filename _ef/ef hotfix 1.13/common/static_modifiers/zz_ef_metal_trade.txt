@@ -2,8 +2,8 @@
 # Stage 2, night 6.10 (Ф1, Д2.14, Д2.25, Д2.28) -- the metal accounts buy and sell through buildings.
 # Applied weekly by zz_ef_metal_week_step (scripted_effects/zz_ef_metal_accounts.txt), add_modifier on the
 # building with a multiplier, as E&F sizes its exchanges' inputs (bond_deemande):
-#   * the bank (building_zz_ef_bank): goods a week of gold / silver for the banks' reserves (multiplier = the
-#     goods, the country's purchase split by levels) -- the bank's methods take no metal of their own;
+#   * the bank (building_zz_ef_bank): percent on its methods' base input of metal (multiplier = the country's
+#     purchase over the base, -100..+25000);
 #   * the CB (building_bank): its standard's method buys 1 gold (10 silver) per workforce unit; the multiplier
 #     (percent) steers it by the cover -- more under 40%, none from 50% (zz_ef_cb_buy_mult);
 #   * the CB's sale of a surplus over 60% cover: goods a week of gold / silver out (multiplier = the goods).
@@ -11,13 +11,15 @@
 # checked by the night's runs (the CB card and tools/scan_goods_io.py).
 #############################################
 
+# the bank: percent on its methods' base of 0.01 gold / 0.02 silver per workforce unit (run r1006_135058: a building's own
+# goods_input_gold_add modifier bought nothing -- the input read 0 with the modifier set)
 zz_ef_bank_gold_buy = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
-	goods_input_gold_add = 1
+	goods_input_gold_mult = 0.01
 }
 zz_ef_bank_silver_buy = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds
-	goods_input_silver_add = 1
+	goods_input_silver_mult = 0.01
 }
 zz_ef_cb_metal_buy = {
 	icon = gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds

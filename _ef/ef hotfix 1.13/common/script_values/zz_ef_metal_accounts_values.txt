@@ -228,11 +228,43 @@ zz_ef_bank_in_gold_goods = {
 	value = 0
 	every_scope_building = {
 		limit = { is_building_type = building_zz_ef_bank }
+		add = {
+			value = modifier:goods_input_gold_add
+			multiply = {
+				value = modifier:goods_input_gold_mult
+				add = 1
+				min = 0
+			}
+		}
+	}
+	min = 0
+}
+# the methods' base (before the percent)
+zz_ef_bank_base_gold_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_zz_ef_bank }
 		add = modifier:goods_input_gold_add
 	}
 	min = 0
 }
 zz_ef_bank_in_silver_goods = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_zz_ef_bank }
+		add = {
+			value = modifier:goods_input_silver_add
+			multiply = {
+				value = modifier:goods_input_silver_mult
+				add = 1
+				min = 0
+			}
+		}
+	}
+	min = 0
+}
+# the methods' base (before the percent)
+zz_ef_bank_base_silver_goods = {
 	value = 0
 	every_scope_building = {
 		limit = { is_building_type = building_zz_ef_bank }
@@ -305,17 +337,30 @@ zz_ef_bank_buy_silver_goods = {
 	multiply = gold_to_silver_rate
 	divide = zz_ef_silver_units_per_good
 }
-# BUILDING scope: this bank's share of the country's purchase, by its levels (an inline value in the effect read
-# `level` as none, run r1006_132739; owner.var: on a building -- none too, r1006_134435: the country via state.owner)
-zz_ef_bank_buy_g_bld = {
-	value = level
-	multiply = state.owner.var:zz_ef_mt_bank_g
-	divide = state.owner.var:zz_ef_mt_bank_levels
+# The percent for the banks' modifier: the purchase over the methods' base - 1, in percent, -100..+25000 (E&F's cap).
+zz_ef_bank_mult_gold = {
+	value = -100
+	if = {
+		limit = { zz_ef_bank_base_gold_goods > 0 }
+		value = zz_ef_bank_buy_gold_goods
+		divide = zz_ef_bank_base_gold_goods
+		subtract = 1
+		multiply = 100
+	}
+	min = -100
+	max = 25000
 }
-zz_ef_bank_buy_s_bld = {
-	value = level
-	multiply = state.owner.var:zz_ef_mt_bank_s
-	divide = state.owner.var:zz_ef_mt_bank_levels
+zz_ef_bank_mult_silver = {
+	value = -100
+	if = {
+		limit = { zz_ef_bank_base_silver_goods > 0 }
+		value = zz_ef_bank_buy_silver_goods
+		divide = zz_ef_bank_base_silver_goods
+		subtract = 1
+		multiply = 100
+	}
+	min = -100
+	max = 25000
 }
 
 # ---- step 7: the CB as an account (Д2.28 а) ----------------------------------------
@@ -333,7 +378,12 @@ zz_ef_cb_sell_cover = 0.6
 zz_ef_cb_sell_units = {
 	value = 0
 	if = {
-		limit = { zz_ef_cb_cover > zz_ef_cb_sell_cover }
+		limit = {
+			zz_ef_cb_cover > zz_ef_cb_sell_cover
+			# not during the start (until the week-12 recount: r1006_135058, the first step read 0.75 cover before the
+			# engine filled the business cash, and Britain sold 440 gold)
+			NOT = { has_variable = zz_ef_metal_rescale_due }
+		}
 		value = zz_ef_cb_cover
 		subtract = zz_ef_cb_sell_cover
 		multiply = money_supply
@@ -352,7 +402,10 @@ zz_ef_cb_sell_units = {
 zz_ef_cb_buyback_units = {
 	value = 0
 	if = {
-		limit = { zz_ef_cb_cover < zz_ef_cover_normal }
+		limit = {
+			zz_ef_cb_cover < zz_ef_cover_normal
+			NOT = { has_variable = zz_ef_metal_rescale_due }
+		}
 		value = zz_ef_cover_normal
 		subtract = zz_ef_cb_cover
 		multiply = money_supply

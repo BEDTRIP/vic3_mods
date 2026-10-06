@@ -261,29 +261,19 @@ zz_ef_metal_week_step = {
 	set_variable = { name = zz_ef_mt_bank_levels value = zz_ef_bank_levels }
 	set_variable = { name = zz_ef_mt_bank_g value = zz_ef_bank_buy_gold_goods }
 	set_variable = { name = zz_ef_mt_bank_s value = zz_ef_bank_buy_silver_goods }
+	set_variable = { name = zz_ef_mt_bank_mult_g value = zz_ef_bank_mult_gold }
+	set_variable = { name = zz_ef_mt_bank_mult_s value = zz_ef_bank_mult_silver }
 	every_scope_building = {
 		limit = { is_building_type = building_zz_ef_bank }
 		remove_modifier = zz_ef_bank_gold_buy
 		remove_modifier = zz_ef_bank_silver_buy
-		if = {
-			limit = {
-				root.var:zz_ef_mt_bank_levels > 0
-				root.var:zz_ef_mt_bank_g > 0
-			}
-			add_modifier = {
-				name = zz_ef_bank_gold_buy
-				multiplier = zz_ef_bank_buy_g_bld
-			}
+		add_modifier = {
+			name = zz_ef_bank_gold_buy
+			multiplier = root.var:zz_ef_mt_bank_mult_g
 		}
-		if = {
-			limit = {
-				root.var:zz_ef_mt_bank_levels > 0
-				root.var:zz_ef_mt_bank_s > 0
-			}
-			add_modifier = {
-				name = zz_ef_bank_silver_buy
-				multiplier = zz_ef_bank_buy_s_bld
-			}
+		add_modifier = {
+			name = zz_ef_bank_silver_buy
+			multiplier = root.var:zz_ef_mt_bank_mult_s
 		}
 	}
 	set_variable = { name = zz_ef_mt_cb_mult value = 0 }
@@ -345,7 +335,7 @@ zz_ef_metal_week_step = {
 				gdp > 20000000
 			}
 		}
-		debug_log = "EFT|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cbg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cbm_gold')|0]|cbs [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cbm_silver')|0]|bankg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_gold')|0]|banks [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_silver')|0]|popg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_gold')|0]|pops [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_silver')|0]|cb_in_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_in_g').GetValue|0]|cb_in_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_in_s').GetValue|0]|cb_out_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_out_g').GetValue|0]|cb_out_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_out_s').GetValue|0]|bank_in_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_bank_in_g').GetValue|0]|bank_in_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_bank_in_s').GetValue|0]|pop_in_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_pop_in_g').GetValue|0]|pop_in_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_pop_in_s').GetValue|0]|st_cons_g [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_state_gold_cons')|1]|st_cons_s [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_state_silver_cons')|1]|buyback [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_buyback').GetValue|0]|buyback_m [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_buyback_money').GetValue|0]|cb_mult [THIS.GetCountry.MakeScope.Var('zz_ef_mt_cb_mult').GetValue|0]|cb_sell [THIS.GetCountry.MakeScope.Var('zz_ef_mt_cb_sell').GetValue|1]|bank_buy_g [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_g').GetValue|2]|bank_buy_s [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_s').GetValue|2]|bank_lv [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_levels').GetValue|0]|rnorm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_reserve_norm')|3]|climit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_credit_limit')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_credit_now')|0]|croom [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_credit_room')|0]|bankm_money [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_money')|0]|popm_money [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_money')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|parity [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|4]|gpm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_money_par')|4]|gprice [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_price')|1]|sprice [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_silver_price')|1]"
+		debug_log = "EFT|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cbg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cbm_gold')|0]|cbs [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cbm_silver')|0]|bankg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_gold')|0]|banks [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_silver')|0]|popg [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_gold')|0]|pops [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_silver')|0]|cb_in_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_in_g').GetValue|0]|cb_in_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_in_s').GetValue|0]|cb_out_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_out_g').GetValue|0]|cb_out_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_cb_out_s').GetValue|0]|bank_in_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_bank_in_g').GetValue|0]|bank_in_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_bank_in_s').GetValue|0]|pop_in_g [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_pop_in_g').GetValue|0]|pop_in_s [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_pop_in_s').GetValue|0]|st_cons_g [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_state_gold_cons')|1]|st_cons_s [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_state_silver_cons')|1]|buyback [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_buyback').GetValue|0]|buyback_m [THIS.GetCountry.MakeScope.Var('zz_ef_f_mt_buyback_money').GetValue|0]|cb_mult [THIS.GetCountry.MakeScope.Var('zz_ef_mt_cb_mult').GetValue|0]|cb_sell [THIS.GetCountry.MakeScope.Var('zz_ef_mt_cb_sell').GetValue|1]|bank_buy_g [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_g').GetValue|2]|bank_buy_s [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_s').GetValue|2]|bank_lv [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_levels').GetValue|0]|bank_mult_g [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_mult_g').GetValue|0]|bank_mult_s [THIS.GetCountry.MakeScope.Var('zz_ef_mt_bank_mult_s').GetValue|0]|bank_base_g [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_base_gold_goods')|2]|rnorm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_reserve_norm')|3]|climit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_credit_limit')|0]|credit [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_credit_now')|0]|croom [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_credit_room')|0]|bankm_money [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bankm_money')|0]|popm_money [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_popm_money')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|parity [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_valuation')|4]|gpm [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_per_money_par')|4]|gprice [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_gold_price')|1]|sprice [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_silver_price')|1]"
 	}
 }
 
