@@ -31,7 +31,7 @@ GUI_TYPE = re.compile(r"^\s*(?:type|template)\s+([A-Za-z_][A-Za-z0-9_]*)\s*=", r
 
 def walk(root):
     for dp, dn, fn in os.walk(root):
-        dn[:] = [d for d in dn if d not in (".git", "docs")]
+        dn[:] = [d for d in dn if d not in (".git", "docs", "_archive")]  # _archive/ — мёртвое, игра не читает
         for f in fn:
             if f.endswith(TEXT_EXT):
                 yield os.path.join(dp, f)
