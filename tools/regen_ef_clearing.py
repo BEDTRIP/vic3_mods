@@ -130,17 +130,20 @@ zz_ef_clr_step = {
 	set_variable = { name = zz_ef_f_clr_net value = var:zz_ef_f_ext_net }
 	set_variable = { name = zz_ef_f_clr_sub value = 0 }
 	set_variable = { name = zz_ef_f_clr_sent value = 0 }
+	# the head's price of gold per unit, one pass of the 95-branch chain for the whole step (and zz_ef_clr_pay / _receive):
+	# nothing in the step changes its inputs (the laws, the parity, money_value_*, the zone, the world's average)
+	set_variable = { name = zz_ef_t_gpm value = zz_ef_clr_gold_per_money }
 	# the members' flows sent since our last step
 	if = {
 		limit = { has_variable = zz_ef_clr_sub_g }
 		set_variable = { name = zz_ef_f_clr_sub value = var:zz_ef_clr_sub_g }
 		if = {
-			limit = { zz_ef_clr_gold_per_money > 0 }
+			limit = { var:zz_ef_t_gpm > 0 }
 			change_variable = {
 				name = zz_ef_f_clr_net
 				add = {
 					value = var:zz_ef_clr_sub_g
-					divide = zz_ef_clr_gold_per_money
+					divide = var:zz_ef_t_gpm
 				}
 			}
 		}
@@ -154,7 +157,7 @@ zz_ef_clr_step = {
 			name = zz_ef_clr_send_g
 			value = {
 				value = var:zz_ef_f_clr_net
-				multiply = zz_ef_clr_gold_per_money
+				multiply = var:zz_ef_t_gpm
 			}
 		}
 		save_scope_as = clr_member
@@ -171,7 +174,7 @@ zz_ef_clr_step = {
 	else_if = {
 		limit = {
 			has_modifier = has_central_bank
-			zz_ef_clr_gold_per_money > 0
+			var:zz_ef_t_gpm > 0
 			any_scope_state = {
 				has_modifier = central_bank_historic_place
 				is_capital = yes
@@ -236,7 +239,7 @@ zz_ef_clr_pay = {
 		value = {
 			value = var:zz_ef_f_clr_net
 			multiply = -1
-			multiply = zz_ef_clr_gold_per_money
+			multiply = var:zz_ef_t_gpm
 		}
 	}
 	# the world's claims see the whole outflow; the payment is its share (П.6а)
@@ -326,7 +329,7 @@ zz_ef_clr_receive = {
 		name = zz_ef_clr_claim
 		value = {
 			value = var:zz_ef_f_clr_net
-			multiply = zz_ef_clr_gold_per_money
+			multiply = var:zz_ef_t_gpm
 		}
 	}
 	change_global_variable = { name = zz_ef_clr_in_acc add = var:zz_ef_clr_claim }
