@@ -396,6 +396,11 @@ def build(src: str) -> tuple[str, str]:
         assert body.count(old) == 1, old
         body = body.replace(old, f"text = \"@{icon}! [Country.MakeScope.ScriptValue('{right}')|D]\"  # EF.36")
 
+    # 6. ФК2 (7.10): a text that is an expression, not a localization key ("Unlocalized text … use the raw_text
+    # property", ~200 lines in error.log of r1007_013714) -> raw_text; raw_text evaluates [..] and @icon! the same
+    body, n = re.subn(r'(?m)^(\s*)text = "([^"]*[\[@#][^"]*)"', r'\1raw_text = "\2"', body)
+    assert n > 50, f"{n} expression texts, expected 100+"
+
     return body, orig_sha
 
 
