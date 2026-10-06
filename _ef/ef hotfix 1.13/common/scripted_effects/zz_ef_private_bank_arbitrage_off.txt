@@ -1,0 +1,21 @@
+﻿# В3 (6.10.2026): E&F's private-bank currency arbitrage moved central-bank metal from nothing.
+#
+# E&F's monthly / half-yearly / yearly country pulses (00_on_action_main.txt:466, 474, 487, 622, 1217) call
+# privat_bank_buy_currency while the country has rise_base_rate, privat_bank_sell_currency while it has
+# down_base_rate or revaluation_currency_target. buy_currency_privat_bank adds 10% of a foreign private bank's
+# investment pool, in metal, to the CB state's gold_state_1 / silver_state_1; sell_currency_privat_bank takes metal
+# out. Neither side is in the money model's metal accounts (CB / Banks / pops): the metal is created or destroyed.
+# Our rate step (zz_ef_cb_rate_step) sets rise_ / down_base_rate for 3 months after each step, so every country
+# moving its rate ran it monthly. Run r1006_154528 (1836): the weekly reconcile (EFQ) showed Russia +16.1M silver
+# in one week (= cbm_rest 1.19M at parity 13.59), world +1.5M gold / +41M silver by October.
+# Now both wrappers are empty: CB metal moves only through the market (CB building), the clearing (Hume) and the
+# metal accounts' own steps.
+# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's effects (01_economic_scripted_effects.txt:126568, 127654).
+
+REPLACE_OR_CREATE:privat_bank_buy_currency = {
+	# В3: E&F's private-bank purchase of the currency for metal -- off
+}
+
+REPLACE_OR_CREATE:privat_bank_sell_currency = {
+	# В3: E&F's private-bank sale of the currency for CB metal -- off
+}
