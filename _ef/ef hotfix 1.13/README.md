@@ -27,6 +27,10 @@
   при `rise_base_rate` / `down_base_rate`, которые ставит наш шаг ставки): 10% инвестиционного пула металлом в резервы ЦБ
   без списания где-либо (Россия +16.1 млн серебра за неделю). Оба эффекта пустые
   (`scripted_effects/zz_ef_private_bank_arbitrage_off.txt`).
+* **В3, годовой биметаллический арбитраж E&F — тоже выключен** (`script_values/zz_ef_private_bank_arbitrage_fix.txt`:
+  `misalignment_rate_gold_drain` / `_silver_drain` = 0): раз в год до 1873 частный банк E&F забирал у биметаллического
+  ЦБ недооценённый металл и платил другим из своего запаса — вне наших счетов (r1006_162423: 1837.12 −1.8 млн золота,
+  1838.12 +9.2 млн серебра в мировом «прочем»).
 * **Д2.30 — наша валюта у чужих ЦБ лежит вкладами в наших банках** (`tools/regen_ef_nr_deposits.py` →
   `scripted_effects/zz_ef_nr_deposits.txt`, `script_values/zz_ef_nr_deposits_values.txt`,
   `scripted_triggers/zz_ef_nr_deposits_triggers.txt`): после В1 эталон платил отток на 70% фунтами, движок уже списал
