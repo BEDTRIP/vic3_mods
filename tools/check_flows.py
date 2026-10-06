@@ -132,6 +132,16 @@ def metal_table(efv, mtol):
                   f"{r.get('sell_' + m) or 0:>10,.0f} {rest:>12,.0f} {share:>7.3%}")
             out.append({"month": mon, "metal": m, **{k: r.get(k + "_" + m) for k in
                         ("cb", "bank", "pop", "start", "buy", "sell", "rest")}, "flag": flag})
+    # the clearing keeps its pot in gold and converts silver <-> gold: only the sum in gold is conserved through it
+    if any("rest_ge" in r for r in efv.values()):
+        print(f"  gold equivalent (silver at the month's rate, + the clearing's pot): {'month':8} {'total':>14} {'pot':>12} "
+              f"{'rest':>12} {'rest%':>7}")
+        for mon in sorted(efv):
+            r = efv[mon]
+            tot, rest = r.get("total_ge") or 0, r.get("rest_ge") or 0
+            share = rest / tot if tot else 0.0
+            print(f"{'>>' if abs(share) > mtol else '  '}        {mon:8} {tot:>14,.0f} {r.get('clr_pot_g') or 0:>12,.0f} "
+                  f"{rest:>12,.0f} {share:>7.3%}")
     return out, flags
 
 

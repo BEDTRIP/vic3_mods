@@ -499,6 +499,31 @@ zz_ef_wm_rest_silver = {
 	add = zz_ef_wm_v_sell_silver
 }
 
+# The world clearing (scripted_effects/zz_ef_clearing.txt) keeps its pot in GOLD: a silver country pays silver turned to
+# gold at silver_to_gold_rate, a receiver on silver takes gold turned to silver -- gold and silver are not conserved
+# apart through it, only their sum in gold (run r1006_135058: rest_g -2.8M, rest_s +133M by 1838). The pot itself and
+# the rest in gold (silver at today's rate) for the world line:
+zz_ef_wm_clr_pot = {
+	value = 0
+	if = { limit = { has_global_variable = zz_ef_clr_gold } value = global_var:zz_ef_clr_gold }
+}
+zz_ef_wm_rest_gold_eq = {
+	value = zz_ef_wm_rest_silver
+	multiply = silver_to_gold_rate
+	add = zz_ef_wm_rest_gold
+	add = zz_ef_wm_clr_pot
+}
+zz_ef_wm_total_gold_eq = {
+	value = zz_ef_wm_sum_cb_silver
+	add = zz_ef_wm_sum_bank_silver
+	add = zz_ef_wm_sum_pop_silver
+	multiply = silver_to_gold_rate
+	add = zz_ef_wm_sum_cb_gold
+	add = zz_ef_wm_sum_bank_gold
+	add = zz_ef_wm_sum_pop_gold
+	add = zz_ef_wm_clr_pot
+}
+
 # ---- the cards (tools/regen_ef_money_supply_loc.py) ---------------------------------------
 # the savings over their norm that left the money at the last receiver (rolled to zz_ef_w_ at the step)
 zz_ef_v_w_sav_wealth = {
