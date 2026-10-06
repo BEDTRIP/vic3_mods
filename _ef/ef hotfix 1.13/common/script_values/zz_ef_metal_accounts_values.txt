@@ -374,6 +374,12 @@ zz_ef_cb_buy_mult = {
 	multiply = 5000
 	min = -100
 	max = 1000
+	# the start (until the week-12 recount): the method's own -- r1006_141026, the start's cover read 0.33 for its first
+	# weeks, the CB bought +355..+491% and gold in London went to 161
+	if = {
+		limit = { has_variable = zz_ef_metal_rescale_due }
+		value = 0
+	}
 }
 # The sale of a surplus: 2% a week of the metal over 60% cover, in goods (bimetallism sells gold).
 zz_ef_cb_sell_cover = 0.6
