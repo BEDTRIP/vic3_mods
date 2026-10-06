@@ -1436,6 +1436,10 @@ zz_ef_bc_borrowed_share = {
 zz_ef_bc_new = {
 	value = zz_ef_v_f_transfer
 	multiply = zz_ef_bc_borrowed_share
+	# stage 2, step 6 (Д2.26: new credit over the ceiling -- 0, 6.10): the part of construction over the banks' reserve
+	# ceiling is not lent (r1006_135058: Britain's business debt 19M against a ceiling of ~10M by 1838)
+	max = zz_ef_credit_room
+	min = 0
 }
 zz_ef_bc_interest = {
 	value = zz_ef_bc_debt
