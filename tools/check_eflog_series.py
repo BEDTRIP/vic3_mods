@@ -1,12 +1,13 @@
 """A few keys of the money model's log as monthly series (stage 2, night 6.10): eflog.txt -> a small table.
 
-Usage:  py tools/check_eflog_series.py <run>/eflog.txt <LINE> <country|*> key [key ...] [--every N] [--sum]
+Usage:  py tools/check_eflog_series.py <run>/eflog.txt | <run>/dbgparts <LINE> <country|*> key [key ...] [--every N] [--sum]
   LINE     EFW, EFR, EFT, EFV, EFM ...;  country: the name as in the log (Великобритания), '*' = all of them
            (one row per country, the last month only)
   --every  print every N-th line instead of the last line of each month (N weeks)
   --sum    sum the keys over the month instead of the last value (flows)
 Through the PC bridge: py_tool("check_eflog_series", ["runs/<id>/eflog.txt", "EFW", "Великобритания", "cover", "m2"]).
 """
+import os
 import re
 import sys
 from collections import OrderedDict
@@ -37,7 +38,20 @@ def main():
         a.remove("--sum"); summ = True
     path, line_tag, country, keys = a[0], a[1], a[2], a[3:]
     rows = []
-    for line in open(path, encoding="utf-8-sig", errors="replace"):
+    # a folder of raw debug.log parts (runs/<id>/dbgparts, a run still going): every file, the prefix cut
+    files = [os.path.join(path, f) for f in sorted(os.listdir(path))] if os.path.isdir(path) else [path]
+    seen = set()
+    lines = []
+    for f in files:
+        for line in open(f, encoding="utf-8-sig", errors="replace"):
+            k = line.find(line_tag + "|")
+            if k < 0:
+                continue
+            line = line[k:].strip()
+            if line not in seen:
+                seen.add(line)
+                lines.append(line)
+    for line in lines:
         p = line.strip().split("|")
         if len(p) < 4 or p[0] != line_tag or (country != "*" and p[2] != country):
             continue
