@@ -58,7 +58,8 @@ zz_ef_cb_metal_purchase_step = {
 				add = {
 					value = scope:zz_ef_cbb.modifier:goods_input_silver_add
 					multiply = zz_ef_weeks_per_month
-					multiply = 100
+					# 6.10 (stage 2): 775 silver units a good -- E&F's silver is counted against gold by weight, 1:15.5
+					multiply = zz_ef_silver_units_per_good
 				}
 			}
 		}
