@@ -104,50 +104,59 @@ def pb_slot(n):
     return f"""
 # private banks' slot {n}: E&F's ai_privat_bank_bond_value_{n} / ai_privat_bank_seller_country_general_{n}
 zz_ef_pb_slot_{n} = {{
-	if = {{ limit = {{ NOT = {{ has_variable = zz_ef_pbh_{n} }} }} set_variable = {{ name = zz_ef_pbh_{n} value = 0 }} }}
-	set_variable = {{ name = zz_ef_pb_v value = 0 }}
-	if = {{ limit = {{ has_variable = ai_privat_bank_bond_value_{n} }} set_variable = {{ name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_{n} }} }}
-	if = {{
-		limit = {{ var:zz_ef_pb_v > var:zz_ef_pbh_{n} }}
-		if = {{
-			limit = {{ has_variable_list = ai_privat_bank_seller_country_general_{n} }}
-			random_in_list = {{
-				variable = ai_privat_bank_seller_country_general_{n}
-				limit = {{ is_country_type = recognized }}
-				save_scope_as = zz_ef_pbsel_{n}
-			}}
-		}}
-		if = {{
-			limit = {{ exists = scope:zz_ef_pbsel_{n} }}
-			scope:zz_ef_pbsel_{n} = {{ save_scope_as = zz_ef_bl_seller }}
-			set_variable = {{ name = zz_ef_pbs_{n} value = scope:zz_ef_pbsel_{n} }}
-			zz_ef_pb_buy = {{ N = {n} }}
-		}}
-		else = {{
-			zz_ef_pb_no_seller = {{ N = {n} }}
-		}}
-		set_variable = {{ name = zz_ef_pbh_{n} value = var:ai_privat_bank_bond_value_{n} }}
-	}}
-	else_if = {{
-		limit = {{ var:zz_ef_pb_v < var:zz_ef_pbh_{n} }}
-		zz_ef_pb_drop = {{ N = {n} }}
-	}}
+	# no slot (E&F's value absent, nothing registered): the body would only set zeros nothing reads -- skip it
 	if = {{
 		limit = {{
-			var:zz_ef_pbh_{n} > 0
-			has_variable = zz_ef_pbs_{n}
-			exists = var:zz_ef_pbs_{n}
-			var:zz_ef_pbs_{n} = {{
-				is_country_type = recognized
-				has_variable = zz_ef_bl_ratio
-				var:zz_ef_bl_ratio < 1
+			OR = {{
+				has_variable = ai_privat_bank_bond_value_{n}
+				has_variable = zz_ef_pbh_{n}
 			}}
 		}}
-		zz_ef_pb_cutback = {{ N = {n} }}
-	}}
-	if = {{
-		limit = {{ var:zz_ef_pbh_{n} <= 0 has_variable = zz_ef_pbs_{n} }}
-		remove_variable = zz_ef_pbs_{n}
+		if = {{ limit = {{ NOT = {{ has_variable = zz_ef_pbh_{n} }} }} set_variable = {{ name = zz_ef_pbh_{n} value = 0 }} }}
+		set_variable = {{ name = zz_ef_pb_v value = 0 }}
+		if = {{ limit = {{ has_variable = ai_privat_bank_bond_value_{n} }} set_variable = {{ name = zz_ef_pb_v value = var:ai_privat_bank_bond_value_{n} }} }}
+		if = {{
+			limit = {{ var:zz_ef_pb_v > var:zz_ef_pbh_{n} }}
+			if = {{
+				limit = {{ has_variable_list = ai_privat_bank_seller_country_general_{n} }}
+				random_in_list = {{
+					variable = ai_privat_bank_seller_country_general_{n}
+					limit = {{ is_country_type = recognized }}
+					save_scope_as = zz_ef_pbsel_{n}
+				}}
+			}}
+			if = {{
+				limit = {{ exists = scope:zz_ef_pbsel_{n} }}
+				scope:zz_ef_pbsel_{n} = {{ save_scope_as = zz_ef_bl_seller }}
+				set_variable = {{ name = zz_ef_pbs_{n} value = scope:zz_ef_pbsel_{n} }}
+				zz_ef_pb_buy = {{ N = {n} }}
+			}}
+			else = {{
+				zz_ef_pb_no_seller = {{ N = {n} }}
+			}}
+			set_variable = {{ name = zz_ef_pbh_{n} value = var:ai_privat_bank_bond_value_{n} }}
+		}}
+		else_if = {{
+			limit = {{ var:zz_ef_pb_v < var:zz_ef_pbh_{n} }}
+			zz_ef_pb_drop = {{ N = {n} }}
+		}}
+		if = {{
+			limit = {{
+				var:zz_ef_pbh_{n} > 0
+				has_variable = zz_ef_pbs_{n}
+				exists = var:zz_ef_pbs_{n}
+				var:zz_ef_pbs_{n} = {{
+					is_country_type = recognized
+					has_variable = zz_ef_bl_ratio
+					var:zz_ef_bl_ratio < 1
+				}}
+			}}
+			zz_ef_pb_cutback = {{ N = {n} }}
+		}}
+		if = {{
+			limit = {{ var:zz_ef_pbh_{n} <= 0 has_variable = zz_ef_pbs_{n} }}
+			remove_variable = zz_ef_pbs_{n}
+		}}
 	}}
 }}
 """
