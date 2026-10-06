@@ -144,6 +144,7 @@ def main():
     ap.add_argument("b")
     ap.add_argument("--weeks", type=int, default=4)
     ap.add_argument("--top", type=int, default=25)
+    ap.add_argument("--top-b", type=int, default=0, help="сколько самых частых семейств B напечатать")
     ap.add_argument("--fork-only", action="store_true")
     a = ap.parse_args()
     for r in (a.a, a.b):
@@ -159,6 +160,9 @@ def main():
     print(f"новых семейств в B: {len(new)} (строк {sum(new.values())}); ушло: {len(gone)} (строк {sum(gone.values())})")
     print("\n### Новые в B (топ)")
     for k, v in new.most_common(a.top):
+        print(f"{v:6d}  {k[:300]}")
+    print("\n### Все семейства B (топ по числу строк)")
+    for k, v in eb.most_common(a.top_b):
         print(f"{v:6d}  {k[:300]}")
     print("\n### Ушли из A (топ)")
     for k, v in gone.most_common(a.top):
