@@ -11,6 +11,7 @@
 #     for countries without a CB (M.8); logged (EFM|...|cur_intro) and seen by tools/check_flows.py as a jump of the
 #     world metal. Accepted 5.10, check: the norm is still metal that nobody gave; with the pops' metal (В8.1,
 #     stage 3) it can be bought from them.
+#   * 6.10 (М, night of stage 2): the norm is gone -- a new CB starts with no metal and buys it (norm logged as 0).
 
 zz_ef_cur_intro_before = {
 	# 5.10 (run s1b): history can call it for a country with no capital yet
@@ -53,37 +54,9 @@ zz_ef_cur_intro_after = {
 				set_variable = { name = gold_state_1 value = var:zz_ef_cur_intro_gold }
 				set_variable = { name = silver_state_1 value = var:zz_ef_cur_intro_silver }
 			}
+			# М (the user, 6.10): a first currency got 40% of its M2 in metal from nothing (the norm) -- removed; its CB
+			# buys metal on the market like every CB (its building's input, zz_ef_cb_metal_purchase_step)
 			set_variable = { name = zz_ef_cur_intro_norm value = 0 }
-			if = {
-				limit = {
-					has_variable = zz_ef_cur_intro_first
-					has_variable = money_value_target_1
-					var:money_value_target_1 > 0
-					OR = {
-						has_law = law_type:law_gold_standard
-						has_law = law_type:law_silver_standard
-						has_law = law_type:law_bimetallism_standard
-					}
-				}
-				set_variable = { name = zz_ef_cur_intro_norm value = zz_ef_agg_m2 }
-				change_variable = { name = zz_ef_cur_intro_norm multiply = zz_ef_cover_normal }
-				change_variable = { name = zz_ef_cur_intro_norm multiply = var:money_value_target_1 }
-				if = {
-					limit = { var:zz_ef_cur_intro_norm < 0 }
-					set_variable = { name = zz_ef_cur_intro_norm value = 0 }
-				}
-				if = {
-					limit = { has_law = law_type:law_silver_standard }
-					capital = {
-						change_variable = { name = silver_state_1 add = owner.var:zz_ef_cur_intro_norm }
-					}
-				}
-				else = {
-					capital = {
-						change_variable = { name = gold_state_1 add = owner.var:zz_ef_cur_intro_norm }
-					}
-				}
-			}
 			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|cur_intro|first [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cur_intro_first_v')|0]|gold_ef [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_g_ef').GetValue|0]|gold_kept [THIS.GetCountry.GetCapital.MakeScope.Var('zz_ef_cur_intro_gold').GetValue|0]|norm [THIS.GetCountry.MakeScope.Var('zz_ef_cur_intro_norm').GetValue|0]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
 			capital = {
 				if = { limit = { has_variable = zz_ef_cur_intro_g_ef } remove_variable = zz_ef_cur_intro_g_ef }

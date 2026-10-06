@@ -6,6 +6,7 @@
 # to its owners, a share to the treasury -- zz_ef_mint_treasury_share) and
 # the gold is sold on the market in full -- the same ounce counted three
 # times. Issue goes through the central bank now.
+# 6.10 (М): the CB's coining is gone too -- the mines sell all their gold on the market.
 #
 # Counterweights, not REPLACE: repeated keys in a modifier block add up
 # (rules, section «Префиксы БД»), so -N cancels vanilla's N and the rest of

@@ -138,11 +138,9 @@ zz_ef_money_model_step = {
 		limit = { var:zz_ef_weeks_run < 100 }
 		change_variable = { name = zz_ef_weeks_run add = 1 }
 	}
-	# M.8 (4.10): subjects' and CB-less countries' E&F metal to 40% of their money, once at week 12
-	if = {
-		limit = { var:zz_ef_weeks_run >= 12 }
-		zz_ef_subject_metal_step = yes
-	}
+	# M.8 (4.10): subjects' and CB-less countries' E&F metal recounted to 40% of their money at week 12 -- removed
+	# (М, Д2.13, 6.10: a subject's metal is only what it bought); E&F's start metal of CB-less countries is taken
+	# off at the first step (zz_ef_metal_start_step), the overlord gets nothing from its subjects.
 
 	# Gold parity re-anchor, once per change of what the money supply counts.
 	# The money supply is the engine's money now (treasury + businesses' cash +
@@ -260,8 +258,11 @@ zz_ef_money_model_step = {
 	# EF.48 item 5 (business credit; repayment in money, 1.10 evening).
 	zz_ef_business_credit_step = yes
 
-	# The CB coins mined gold / silver (1.10 night).
-	zz_ef_mint_step = yes
+	# The CB coined half of the mined gold / silver (1.10 night) -- removed (М, the user 6.10): metal is taken from
+	# the market only; the mines sell all of it, and whoever needs metal buys it (CB, banks, pops). The mint's log
+	# keys (EFR mint / mint_tr) stay 0.
+	set_variable = { name = zz_ef_f_mint value = 0 }
+	set_variable = { name = zz_ef_f_mint_tr value = 0 }
 
 	# History rings (1.10, the user's M0..M3 -- var:zz_ef_agg0..3): a week ago
 	# (w1..4), 13 blocks of 4 weeks (q1..13, a year), 20 blocks of 13 weeks
@@ -1344,49 +1345,6 @@ zz_ef_business_credit_step = {
 			name = zz_ef_debt_service
 			multiplier = var:zz_ef_bc_svc
 		}
-	}
-}
-
-# The CB coins half of the week's mined gold / silver (values file,
-# zz_ef_mint_*): metal into every CB state's stock -- the first one, the
-# capital's -- and the same money into pops' savings (the mines' owners).
-zz_ef_mint_step = {
-	set_variable = { name = zz_ef_f_mint value = zz_ef_mint_gold_money }
-	change_variable = { name = zz_ef_f_mint add = zz_ef_mint_silver_money }
-	if = {
-		limit = { var:zz_ef_f_mint > 0 }
-		set_variable = { name = zz_ef_f_mint_gold value = zz_ef_mint_gold_metal }
-		set_variable = { name = zz_ef_f_mint_silver value = zz_ef_mint_silver_metal }
-		random_scope_state = {
-			limit = {
-				has_modifier = central_bank_historic_place
-				is_capital = yes
-			}
-			if = {
-				limit = { NOT = { has_variable = gold_state_1 } }
-				set_variable = { name = gold_state_1 value = 0 }
-			}
-			if = {
-				limit = { NOT = { has_variable = silver_state_1 } }
-				set_variable = { name = silver_state_1 value = 0 }
-			}
-			change_variable = { name = gold_state_1 add = owner.var:zz_ef_f_mint_gold }
-			change_variable = { name = silver_state_1 add = owner.var:zz_ef_f_mint_silver }
-		}
-		# В2.3 (2.10): who gets the coined money is a parameter
-		# (zz_ef_mint_treasury_share: the treasury's brassage, the rest to the
-		# owners -- pops' savings); decided after a run by the log's mint_tr
-		set_variable = { name = zz_ef_f_mint_tr value = var:zz_ef_f_mint }
-		change_variable = { name = zz_ef_f_mint_tr multiply = zz_ef_mint_treasury_share }
-		add_treasury = var:zz_ef_f_mint_tr
-		if = {
-			limit = { has_variable = zz_ef_pop_savings }
-			change_variable = { name = zz_ef_pop_savings add = var:zz_ef_f_mint }
-			change_variable = { name = zz_ef_pop_savings subtract = var:zz_ef_f_mint_tr }
-		}
-	}
-	else = {
-		set_variable = { name = zz_ef_f_mint_tr value = 0 }
 	}
 }
 
