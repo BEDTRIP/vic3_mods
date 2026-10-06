@@ -145,7 +145,7 @@ def main_text(lang, c):
     gold = "@gold!"
     ru = lang == "russian"
     # The user's aggregates (1.10 evening, run 12 -- as in real statistics): M0 = pops' cash at hand, M1 = +
-    # business cash, M2 = + pops' deposits, M3 = + claims on abroad. The treasury, the banks' own funds (the pool)
+    # business cash (without the Banks' cash -- the banks' own money, В2 7.10), M2 = + pops' deposits, M3 = + claims on abroad. The treasury, the banks' own funds (the pool)
     # and the CB's reserves are accounts outside the money supply. The currency's value and the inflation read M2.
     if ru:
         L = dict(title="Денежная масса", total="Всего (#b M3#!)", week="за неделю", wk="неделя", mo="мес.", yr="год", y5="5л.",
@@ -156,7 +156,7 @@ def main_text(lang, c):
                  abf="банки {0}, казна {1}",
                  abrf="облигации {0} + валюта в ЦБ {1} − наша валюта за рубежом {2}",
                  out="Вне денежной массы:", tr="Казна (счёт правительства)",
-                 bank="Резервы банков (пул)", bankf="банки должны вкладчикам {0} и ЦБ {1}, выдали кредитов {2}; капитал банков {3} {4}",
+                 bank="Резервы банков (пул)", bankf="банки должны вкладчикам {0} и ЦБ {1}, выдали кредитов {2}; капитал банков {3} {4}; касса зданий «Банк» {5} — деньги банков, не в M1",
                  cb="Резервы ЦБ — покрытие валюты, не деньги",
                  cbf="металл; с чужой валютой {3} (счёт «Заграница») покрытие M2 {0}, норма 40%",
                  circ="Курс и инфляция считаются по M2",
@@ -173,7 +173,7 @@ def main_text(lang, c):
                  abf="banks {0}, treasury {1}",
                  abrf="bonds {0} + currency in the CB {1} − our currency abroad {2}",
                  out="Outside the money supply:", tr="Treasury (the government's account)",
-                 bank="Bank reserves (the pool)", bankf="banks owe depositors {0} and the CB {1}, lent {2}; banks' capital {3} {4}",
+                 bank="Bank reserves (the pool)", bankf="banks owe depositors {0} and the CB {1}, lent {2}; banks' capital {3} {4}; the Bank buildings' cash {5} — the banks' own money, not in M1",
                  cb="CB reserves — the currency's cover, not money",
                  cbf="metal; with the foreign currency {3} (the 'Abroad' account) cover of M2 {0}, norm 40%",
                  circ="The value and the inflation read M2",
@@ -204,7 +204,8 @@ def main_text(lang, c):
         + L["cashf"].format(delta("zz_ef_v_d_savings"), delta("zz_ef_v_d_deposits_neg"), money("zz_ef_pop_savings"),
                             delta("zz_ef_v_d_agg0")),
         f"#b M1#! = {L['m1']}: #T {money('zz_ef_agg_m1')}#! — {ratio(1)} {dyn(1)}",
-        f"→   {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_building_cash')}#!{mark('eng', ru)} "
+        # В2 (7.10): without the Banks' cash (the banks' own money, below with the banks)
+        f"→   {tt('zz_ef_ms_tt_buildings', L['bld'])}: #T {money('zz_ef_circ_business_cash')}#!{mark('eng', ru)} "
         f"{delta('zz_ef_v_d_buildings')}",
         f"#b M2#! = {L['m2']}: #T {money('zz_ef_agg_m2')}#! — {ratio(2)} {dyn(2)}",
         f"→   {tt('zz_ef_ms_tt_deposits', L['dep'])}: #T {money('zz_ef_pop_deposits')}#!{mark('mod', ru)} "
@@ -216,7 +217,7 @@ def main_text(lang, c):
         f"→   {tt('zz_ef_ms_tt_treasury', L['tr'])}: #T {money('zz_ef_treasury')}#!{mark('eng', ru)} {delta('zz_ef_v_d_treasury')}",
         f"→   {tt('zz_ef_ms_tt_banks', L['bank'])}: #T {money('zz_ef_pool')}#!{mark('eng', ru)} {delta('zz_ef_v_d_pool')};\\n{ind}("
         + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt"), money("zz_ef_bank_loans"),
-                            sv("zz_ef_bank_capital", "D+="), cur) + ")",
+                            sv("zz_ef_bank_capital", "D+="), cur, money("zz_ef_bank_cash")) + ")",
         f"→   {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {sv('zz_ef_abroad_net', 'D+=')} {cur}#!{mark('mod', ru)} "
         f"{delta('zz_ef_v_d_abroad')};\\n{ind}(" + L["abrf"].format(money("zz_ef_foreign_assets"), money("zz_ef_fx_money"),
                                                                  money("zz_ef_fx_liab_all")) + ")",

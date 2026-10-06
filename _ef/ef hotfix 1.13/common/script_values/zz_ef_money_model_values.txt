@@ -2209,9 +2209,29 @@ zz_ef_v_w_clr_fx_in_money = {
 zz_ef_agg_m0 = {
 	value = zz_ef_pop_cash_held
 }
+# В2 (the user, 7.10): the Banks' cash (building_zz_ef_bank) is the banks' own money, not money in circulation -- out
+# of M1 / M2, shown with the banks (save 1842.1 of run r1006_141714: 38-47% of the business cash -- Britain 15.4M of 33.1M,
+# M2 ~1 GDP). The engine's money (zz_ef_m2, the leak) keeps the whole business cash.
+zz_ef_bank_cash_sum = {
+	value = 0
+	every_scope_building = {
+		limit = { is_building_type = building_zz_ef_bank }
+		add = cash_reserves_available
+	}
+}
+zz_ef_bank_cash = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_bkcash } value = var:zz_ef_bkcash }
+	min = 0
+}
+zz_ef_circ_business_cash = {
+	value = zz_ef_building_cash
+	subtract = zz_ef_bank_cash
+	min = 0
+}
 zz_ef_agg_m1 = {
 	value = zz_ef_agg_m0
-	add = zz_ef_building_cash
+	add = zz_ef_circ_business_cash
 }
 zz_ef_agg_m2 = {
 	value = zz_ef_agg_m1
