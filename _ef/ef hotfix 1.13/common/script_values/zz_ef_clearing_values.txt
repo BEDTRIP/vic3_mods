@@ -2,7 +2,7 @@
 # П.6 (4.10): the world clearing of payments with abroad -- see the generator's docstring.
 
 # В.3 (the user, 4.10): the payer's metal share by trust in its currency -- its strength against the reference
-# (zz_ef_currency_strength): 100% under 0.75, 30% at 1.25 and over, linear between.
+# (zz_ef_currency_strength): 100% under 0.75, 30% at 1.25 and over, linear between; the reference currency -- 30%.
 zz_ef_clr_metal_share_low = 0.75
 zz_ef_clr_metal_share_high = 1.25
 zz_ef_clr_metal_share_min = 0.3
@@ -21,6 +21,13 @@ zz_ef_clr_metal_share = {
 	add = 1
 	max = 1
 	min = zz_ef_clr_metal_share_min
+	# В1 (the user, 7.10): the reference currency is taken abroad as it is -- the world holds pounds without asking the
+	# Bank for gold at once: the reference pays the minimal metal share (its own strength is 1 by definition, it paid 65%,
+	# and Britain's metal ran out in 1838 in run r1006_141714)
+	if = {
+		limit = { has_modifier = global_monetary_reference }
+		value = zz_ef_clr_metal_share_min
+	}
 }
 # Gold a unit of the scope country's money pays / claims abroad: at the parity under a metal standard (as Hume
 # settled), else E&F's value of its currency in gold. В1.6 items 2-3 (5.10): a country that settles through a
