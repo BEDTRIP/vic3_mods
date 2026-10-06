@@ -306,16 +306,16 @@ zz_ef_bank_buy_silver_goods = {
 	divide = zz_ef_silver_units_per_good
 }
 # BUILDING scope: this bank's share of the country's purchase, by its levels (an inline value in the effect read
-# `level` as none, run r1006_132739)
+# `level` as none, run r1006_132739; owner.var: on a building -- none too, r1006_134435: the country via state.owner)
 zz_ef_bank_buy_g_bld = {
 	value = level
-	multiply = owner.var:zz_ef_mt_bank_g
-	divide = owner.var:zz_ef_mt_bank_levels
+	multiply = state.owner.var:zz_ef_mt_bank_g
+	divide = state.owner.var:zz_ef_mt_bank_levels
 }
 zz_ef_bank_buy_s_bld = {
 	value = level
-	multiply = owner.var:zz_ef_mt_bank_s
-	divide = owner.var:zz_ef_mt_bank_levels
+	multiply = state.owner.var:zz_ef_mt_bank_s
+	divide = state.owner.var:zz_ef_mt_bank_levels
 }
 
 # ---- step 7: the CB as an account (Д2.28 а) ----------------------------------------
