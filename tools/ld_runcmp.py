@@ -65,12 +65,54 @@ def eflog(run):
         return [l.rstrip("\n") for l in f if l.startswith("EF")]
 
 
+MONTHS = {"января": 1, "февраля": 2, "марта": 3, "апреля": 4, "мая": 5, "июня": 6, "июля": 7, "августа": 8,
+          "сентября": 9, "октября": 10, "ноября": 11, "декабря": 12, "january": 1, "february": 2, "march": 3,
+          "april": 4, "may": 5, "june": 6, "july": 7, "august": 8, "september": 9, "october": 10, "november": 11,
+          "december": 12}
+
+
 def ddate(s):
-    try:
-        y, m, d = (int(x) for x in s.split("."))
-        return (y, m, d)
-    except ValueError:
-        return None
+    """Дата лога: `1836.1.13` или локализованная `января 13, 1836` / `January 13, 1836`."""
+    s = s.strip()
+    m = re.match(r"(\d+)\.(\d+)\.(\d+)$", s)
+    if m:
+        return tuple(int(x) for x in m.groups())
+    m = re.match(r"([^\W\d_]+)\s+(\d+),\s*(\d+)$", s)
+    if m and m.group(1).lower() in MONTHS:
+        return (int(m.group(3)), MONTHS[m.group(1).lower()], int(m.group(2)))
+    return None
+
+
+def week_clock(run):
+    """Стенные часы недельного шага: метки [ЧЧ:ММ:СС] строк EFW одной страны (самой частой) в dbgparts/debug*.log.
+    Возвращает (страна, [(дата, секунды от первой строки)])."""
+    rx = re.compile(r"^\[(\d\d):(\d\d):(\d\d)\].*?EFW\|([^|]+)\|([^|]+)\|")
+    rows = []
+    files = sorted(glob.glob(os.path.join(run, "dbgparts", "*"))) + sorted(glob.glob(os.path.join(run, "debug*.log")))
+    seen = set()
+    for p in files:
+        try:
+            with open(p, encoding="utf-8", errors="replace") as f:
+                for l in f:
+                    m = rx.match(l)
+                    if m and (m.group(4), m.group(5)) not in seen:
+                        seen.add((m.group(4), m.group(5)))
+                        d = ddate(m.group(4))
+                        if d:
+                            rows.append((m.group(5), d, int(m.group(1)) * 3600 + int(m.group(2)) * 60 + int(m.group(3))))
+        except OSError:
+            pass
+    if not rows:
+        return None, []
+    who = Counter(r[0] for r in rows).most_common(1)[0][0]
+    pts = sorted((d, s) for c, d, s in rows if c == who)
+    out, base, prev, add = [], pts[0][1], pts[0][1], 0
+    for d, s in pts:
+        if s < prev:  # через полночь
+            add += 86400
+        prev = s
+        out.append((d, s + add - base))
+    return who, out
 
 
 def timing(run):
@@ -86,9 +128,9 @@ def timing(run):
             t = datetime.strptime(m.group(1), "%H:%M:%S")
             if t0 is None and m.group(2).startswith("advancing: True"):
                 t0 = t
-            if t0 and ("autosave" in m.group(2).lower() or m.group(2).startswith("closing the game")):
+            if t0 and (re.match(r"new autosaves: [1-9]", m.group(2)) or m.group(2).startswith("closing the game")):
                 t1 = t
-                if "autosave" in m.group(2).lower():
+                if m.group(2).startswith("new autosaves"):
                     break
     if t0 and t1:
         s = (t1 - t0).total_seconds()
@@ -143,7 +185,19 @@ def main():
             print("  B≠:", l[:400])
 
     ta, tb = timing(a.a), timing(a.b)
-    print(f"\n## Время до автосейва / конца\nA: {ta} с\nB: {tb} с")
+    print(f"\n## Время до автосейва / конца (run.log, точность ~1 мин)\nA: {ta} с\nB: {tb} с")
+    print("\n## Часы недельного шага (EFW одной страны: секунды от первой недели)")
+    for name, r in (("A", a.a), ("B", a.b)):
+        who, pts = week_clock(r)
+        if not pts:
+            print(f"{name}: нет строк EFW с метками")
+            continue
+        weeks = len(pts) - 1
+        tot = pts[-1][1]
+        steps = [pts[i + 1][1] - pts[i][1] for i in range(weeks)]
+        print(f"{name}: {who}, недель {weeks}, {pts[0][0]} → {pts[-1][0]}, {tot} с, {tot / max(weeks, 1):.1f} с/нед, "
+              f"макс. неделя {max(steps) if steps else 0} с")
+        print("   по неделям:", " ".join(str(x) for x in steps))
 
 
 if __name__ == "__main__":
