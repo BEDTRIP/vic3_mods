@@ -657,12 +657,7 @@ def values(cur):
 
 
 def sguis(cur):
-    out = [HEAD, "# П.8: the CB's foreign currencies for E&F's table (global list zz_ef_cbfx_list of E&F's currency scopes).\n"
-           "zz_ef_cbfx_update = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_cbfx_list\n"]
-    for c in cur:
-        out.append(f"\t\tif = {{ limit = {{ zz_ef_cbfx_{c} > 0 NOT = {{ has_law = law_type:law_{c}_currency }} }} "
-                   f"add_to_global_variable_list = {{ name = zz_ef_cbfx_list target = global_var:currency_import_export_value_{c}_03 }} }}\n")
-    out.append("\t}\n}\n")
+    out = [HEAD]
     # П.16: the same list sorted by the stock's value in gold, the biggest first (selection: the largest not yet
     # listed, again and again)
     out.append("\n# П.16 (4.10): E&F's table sorted by value in gold, the biggest first.\n"

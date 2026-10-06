@@ -252,9 +252,6 @@ VALUES = HEAD + """
 zz_ef_mp_pace_default = 2
 zz_ef_mp_pace_min = 1
 zz_ef_mp_pace_max = 5
-# The target the player can set, a share of the money supply.
-zz_ef_mp_target_min = 0.05
-zz_ef_mp_target_max = 3
 # The AI's rule (M.4, 4.10): two years under 25% / over 80% cover -> one parity step towards 40%,
 # at most 25%, then 5 years' pause (1825 days, in the effect). zz_ef_mp_ai_target stays for a law the AI might still get.
 zz_ef_mp_ai_target = 0.4
@@ -456,7 +453,7 @@ TARGET_MIN, TARGET_MAX = 0.05, 3.0
 
 def target_button(name, delta):
     sign = "add" if delta > 0 else "subtract"
-    # literal bounds: TARGET_MAX / TARGET_MIN as in zz_ef_mp_target_max / _min (values file)
+    # literal bounds: TARGET_MAX / TARGET_MIN
     lim = (f"var:zz_ef_mp_target <= {TARGET_MAX - abs(delta) / 100:.2f}" if delta > 0 else
            f"var:zz_ef_mp_target >= {TARGET_MIN + abs(delta) / 100:.2f}")
     key = "zz_ef_mp_tt_target_max" if delta > 0 else "zz_ef_mp_tt_target_min"

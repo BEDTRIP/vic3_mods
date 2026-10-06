@@ -144,10 +144,6 @@ RU = {
         f"{KR} ниже 6.5% увеличивает долю очков строительства частного сектора, выше — уменьшает: "
         "5 п.п. доли за каждый процент ставки, не больше ±30."
     ),
-    "zz_ef_business_cash": "Денежная масса: касса предприятий",
-    "zz_ef_business_cash_desc": (
-        "Устаревший: потолок кассы зданий теперь в базовых значениях страны. Снимается сам в начале месяца."
-    ),
     "zz_ef_debt_service": "Погашение кредитов бизнеса",
     "zz_ef_debt_service_desc": (
         "Взносы зданий в инвестиционный пул не покрывают недельный платёж по банковскому кредиту бизнеса "
@@ -253,10 +249,6 @@ EN = {
     "zz_ef_rate_private_construction_desc": (
         f"A {KR} below 6.5% raises the private sector's share of construction points, above it lowers it: "
         "5 pp of share per percent of rate, at most ±30."
-    ),
-    "zz_ef_business_cash": "Money supply: business cash",
-    "zz_ef_business_cash_desc": (
-        "Obsolete: the buildings' cash cap is in the country's base values now. Removed at the start of a month."
     ),
     "zz_ef_debt_service": "Business loan repayment",
     "zz_ef_debt_service_desc": (

@@ -268,8 +268,7 @@ def ledger():
 # Country scope, weekly (zz_ef_money_model_step): the seller's side first (roll last week's sums, the ratio of the
 # principal to the parts held), then this country's slots as a holder.
 zz_ef_bond_ledger_step = {{
-	# E&F's income modifier and our Д.2 expense line are gone (the holder is paid by the ledger)
-	if = {{ limit = {{ has_modifier = zz_ef_foreign_bond_interest }} remove_modifier = zz_ef_foreign_bond_interest }}
+	# E&F's income modifier is gone (the holder is paid by the ledger)
 	if = {{ limit = {{ has_modifier = interest_from_foreign_debt_investment }} remove_modifier = interest_from_foreign_debt_investment }}
 	set_variable = {{ name = zz_ef_f_bond_int value = 0 }}
 	# --- as a seller ---
