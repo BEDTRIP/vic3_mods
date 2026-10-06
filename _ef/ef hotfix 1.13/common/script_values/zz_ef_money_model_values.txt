@@ -672,13 +672,11 @@ zz_ef_tr_other_net = {
 # cash norm; over the norm they are deposits at once (zz_ef_pop_start_deposits), as the weekly step settles
 # them by the deposit rate. Was 15% of GDP with no deposits: the banks started empty and the first years went
 # to filling the norm (the user, 4.10: "население беднеет, вкладов нет").
+# Stage 2, night 6.10 (run r1006_132739): the savings start AT their norm (zz_ef_sav_norm, 0.3-0.6 GDP by the deposit
+# rate, Д2.22) -- was 45% of GDP minus the business cash (Britain 3.2M against a norm of 14.6M): the first year the
+# savings grew to the norm, M2 doubled (18 -> 38M) and the cover halved; the user: "in equilibrium from the first day".
 zz_ef_pop_start_savings = {
-	value = gdp
-	multiply = 0.45
-	subtract = {
-		value = zz_ef_building_cash
-		min = 0
-	}
+	value = zz_ef_sav_norm
 	min = zz_ef_pop_cash_norm
 	min = 0
 }
@@ -1019,10 +1017,12 @@ zz_ef_cb_cover = {
 zz_ef_rescale_money = {
 	value = money_supply
 	if = {
-		# the first rescale (the second one comes after the due var is gone)
+		# the first rescale (the second one comes after the due var is gone); 6.10: the savings' norm + ~0.33 GDP of
+		# business cash (the savings start at their norm, zz_ef_pop_start_savings)
 		limit = { has_variable = zz_ef_metal_rescale_due }
-		value = gdp
-		multiply = 0.45
+		value = zz_ef_sav_norm_gdp
+		add = 0.33
+		multiply = gdp
 		min = money_supply
 	}
 	min = 1
