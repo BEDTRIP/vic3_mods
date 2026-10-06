@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Д2.11 (night 6.10.2026) -- the switch of a company headquarters' ownership method, by company:
-scripted_effects/zz_ef_listing_switch.txt of the E&F hotfix.
+scripted_effects/ld_listing_switch.txt of the fork «E&F: Ledgerdemain» (via ld_gen: written by entry keys).
 
 In 1.13 every company has its own headquarters building type, building_company_<company key> (the save: company
 24 Rothschild_Bank_gbr -> building 13 = building_company_Rothschild_Bank_gbr, levels 33, dividends 9024 a week),
@@ -11,14 +11,14 @@ so the switch is a dispatcher over the company types: building scope ->
     zz_ef_listing_go_public  -- pm_company_headquarter_publicly_traded (EF.22)
     zz_ef_listing_go_private -- pm_company_headquarter_privately_owned (vanilla)
 in the building's state. Only the companies the method is for (category capitalist_owned, the default when a company
-type has none) of vanilla and E&F -- the hotfix's dependencies: a key of a mod that is not loaded would be an
+type has none) of vanilla and the fork -- its dependencies: a key of a mod that is not loaded would be an
 unknown building type. Companies of other mods are not switched (the megapack can extend the list).
 
-Reads vic3_mods_out (run on the PC: py_tool("regen_ef_listing", [])).
+Reads vic3_mods_out (vanilla) and the fork (run on the PC: py_tool("regen_ef_listing", [])).
 
 Usage:
     py tools/regen_ef_listing.py            # write
-    py tools/regen_ef_listing.py --check    # exit 1 if the file differs
+    py tools/regen_ef_listing.py --check    # exit 1 if the fork file differs
 """
 
 from __future__ import annotations
@@ -30,11 +30,13 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-HOTFIX = os.path.normpath(os.path.join(HERE, "..", "_ef", "ef hotfix 1.13"))
-OUT = os.path.join(HOTFIX, "common", "scripted_effects", "zz_ef_listing_switch.txt")
+sys.path.insert(0, HERE)
+import ld_gen  # noqa: E402
+
+OUT = "common/scripted_effects/zz_ef_listing_switch.txt"      # путь хотфикса; ld_gen пишет в форк ld_listing_switch.txt
 OUT_DIR = os.path.normpath(os.path.join(HERE, "..", "..", "vic3_mods_out"))
 SOURCES = [os.path.join(OUT_DIR, ".vanillaVIC3", "common", "company_types"),
-           os.path.join(OUT_DIR, "E&F", "common", "company_types")]
+           os.path.join(ld_gen.FORK, "common", "company_types")]
 
 PM_PUBLIC = "pm_company_headquarter_publicly_traded"
 PM_PRIVATE = "pm_company_headquarter_privately_owned"
@@ -108,16 +110,9 @@ def build() -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
-    a = ap.parse_args()
-    text = build()
-    if a.check:
-        old = open(OUT, encoding="utf-8-sig").read() if os.path.exists(OUT) else ""
-        if old != text:
-            print("differs"); sys.exit(1)
-        print("ok"); return
-    with open(OUT, "w", encoding="utf-8-sig", newline="\n") as f:
-        f.write(text)
-    print(f"wrote {OUT} ({text.count('else_if') // 2 + 1} companies)")
+    ap.parse_args()
+    ld_gen.emit(OUT, build())
+    ld_gen.report("regen_ef_listing")
 
 
 if __name__ == "__main__":
