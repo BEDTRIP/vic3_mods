@@ -23,7 +23,7 @@ Now one clearing house for the world (global variables), in gold:
 
 П.8 (В.5): E&F's table "currency in the trade balance" (its trade reserve, zeroed by В2.1 -- empty) shows the CB's
 foreign currency by currency instead: units, in money, in gold, the week's change (zz_ef_cbfx_*; the list is
-filled by our scripted GUI zz_ef_cbfx_update, the table re-issued by tools/regen_ef_economy_panel_gui.py).
+filled by our scripted GUI zz_ef_cbfx_update, the table re-issued by ld_economy_panel.gui форка, правится руками).
 
 Output (fork «E&F: Ledgerdemain», via ld_gen, by entry keys):
   common/scripted_effects/ld_clearing.txt, common/script_values/ld_clearing_values.txt,

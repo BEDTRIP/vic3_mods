@@ -89,7 +89,7 @@ def ctx(c):
 
 def bop_lines(ru, c):
     """Е.3–Е.4 (5.10, Д.1): the week's balance of payments in two groups -- green "+" received, red "−" paid out --
-    and one line of what it moves; shared by the 'external sector' card and Budget -> Economy (regen_ef_economy_panel_gui)."""
+    and one line of what it moves; shared by the 'external sector' card and Budget -> Economy (gui/ld_economy_panel.gui форка)."""
     cur, sv, money, delta, tt = ctx(c)
 
     def p(name, lab):
