@@ -23,6 +23,11 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 ## Перед запуском — обязательно
 
 1. **Игра закрыта** (`tasklist | grep -i victoria` пусто), иначе скрипт падает с «already running».
+1а. **Набор модов — `Documents/…/Victoria 3/content_load.json`**, а не активный плейсет лаунчера (6.10 вечер: флаг
+   `isActive` в `launcher-v2.sqlite` переключён на другой плейсет — игра всё равно пошла с мегапаком). Файл пишет лаунчер
+   при «Играть»: `{"enabledMods":[{"path":"<папка мода>"}…],"disabledDLC":[],"enabledUGC":[]}` в порядке загрузки. Для
+   прогона на другом наборе — записать свой (пути — `mods.dirPath` из `launcher-v2.sqlite` по `playsets_mods`, по
+   `position`), старый сохранить и вернуть после прогона.
 2. **Живая копия мода синхронизирована** (`Documents/…/Victoria 3/mod/E&F Hotfix` = репозиторий,
    `diff -rq` без расхождений, кроме `_to_delete`). **Пока игра идёт — НЕ синхронизировать**: в
    `-debug_mode` игра на лету перечитывает изменённые файлы, и error.log наполняется ложными ошибками
