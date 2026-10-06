@@ -164,21 +164,23 @@ zz_ef_cb_rule_risk = {
 	max = 0.08
 }
 # Metal standards: our cover (the metal at parity against M2, normal 40%):
-# +1 pp per 10 pp under the norm (up to +5), -0.5 pp per 10 pp over it (down
-# to -2).
+# +1 pp per 5 pp under the norm (up to +8; В1, 7.10), -0.5 pp per 10 pp over it
+# (down to -2).
+# В1 (the user, 7.10): +1 pp per 5 pp under the norm (was per 10 pp, at most +5): run r1006_141714 -- Britain's rate
+# stayed 6.5-7% while its cover went 0.39 -> 0.006; now up to +8 pp at no cover (the corridor's ceiling 12% holds).
 zz_ef_cb_rule_cover = {
 	value = 0
 	if = {
 		limit = { zz_ef_cb_rate_is_fiat = 0 }
 		value = zz_ef_cover_normal
 		subtract = zz_ef_cb_cover
-		multiply = 0.1
+		multiply = 0.2
 		if = {
 			limit = { zz_ef_cb_cover > zz_ef_cover_normal }
-			multiply = 0.5
+			multiply = 0.25
 		}
 		min = -0.02
-		max = 0.05
+		max = 0.08
 	}
 }
 
