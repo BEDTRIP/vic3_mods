@@ -40,12 +40,17 @@ DOCS = Path.home() / "Documents" / "Paradox Interactive" / "Victoria 3"
 GAME = Path(r"C:\games\steam\steamapps\common\Victoria 3")
 ORIG = REPO.parent / "vic3_mods_out"
 WORKSHOP = Path(r"C:\games\steam\steamapps\workshop\content\529340")
-ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "workshop": WORKSHOP}
+# the fork "E&F: Ledgerdemain" (stage 2а, 6.10): its own repo BEDTRIP/Economic-and-Financial-Ledgerdemain-Mod, branch
+# master. Its bridge worktree sits next to wt under the main checkout's name (next to vic3_mods), so the repo's tools
+# run from wt find it as ROOT / "Economic-and-Financial-Ledgerdemain-Mod".
+FORK_REPO = REPO.parent / "Economic-and-Financial-Ledgerdemain-Mod"
+FORK_WT = BRIDGE / "Economic-and-Financial-Ledgerdemain-Mod"
+ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "workshop": WORKSHOP, "fork": FORK_WT}
 PORT = int(os.environ.get("PC_BRIDGE_PORT", "8080"))
 PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/save_money_check.py",
             "save_ownership": "tools/save_ownership.py", "save_ownership_transfers": "tools/save_ownership_transfers.py",
             "save_construction_goods": "tools/save_construction_goods.py", "save_measure_ef": "tools/save_measure_ef.py"}
-PY_TOOL_GLOBS = ("regen_*.py", "build_addon*.py", "pair_matrix.py", "content_holes.py", "check_*.py", "scan_*.py",
+PY_TOOL_GLOBS = ("regen_*.py", "ld_*.py", "build_addon*.py", "pair_matrix.py", "content_holes.py", "check_*.py", "scan_*.py",
                  "stale_bodies.py", "replace_audit.py", "loc_dead_overrides.py", "list_lawgroups_diff.py")
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 
@@ -122,18 +127,24 @@ def checkout(branch: str = "main") -> str:
 
 
 @mcp.tool()
-def sync_mod(repo_folder: str = "_ef/ef hotfix 1.13", live_name: str = "E&F Hotfix") -> dict:
-    """Make the live mod Documents/.../Victoria 3/mod/<live_name> equal to <repo_folder> of the
-    worktree: changed and new files are copied, files gone from the repo are moved to
-    _to_delete/<date>/ inside the live mod (the project's rule). Refused while the game runs."""
-    if game_running():
-        raise RuntimeError("the game is running: the live copy is not synced during a run")
-    src = (WT / repo_folder).resolve()
-    dst = (DOCS / "mod" / live_name).resolve()
-    if WT.resolve() not in src.parents or not src.is_dir():
-        raise ValueError(f"no such folder in the worktree: {repo_folder}")
-    if dst.parent != (DOCS / "mod").resolve() or not dst.is_dir():
-        raise ValueError(f"no such live mod: {live_name}")
+def checkout_fork(branch: str = "master") -> str:
+    """Fetch a branch of the fork BEDTRIP/Economic-and-Financial-Ledgerdemain-Mod and check it out (detached) in
+    _bridge/Economic-and-Financial-Ledgerdemain-Mod (paths 'fork/...'); sync_fork and the repo's ld_* tools run from
+    wt use it. Returns the commit."""
+    if not re.fullmatch(r"[\w./-]+", branch) or ".." in branch or branch.startswith("-"):
+        raise ValueError(f"bad branch name: {branch}")
+    sh(["git", "-C", FORK_REPO, "fetch", "origin", f"+refs/heads/{branch}:refs/remotes/origin/{branch}"], timeout=1800)
+    if not (FORK_WT / ".git").exists():
+        sh(["git", "-C", FORK_REPO, "worktree", "add", "--detach", FORK_WT, f"origin/{branch}"], timeout=1800)
+    else:
+        sh(["git", "-C", FORK_WT, "checkout", "--detach", "--force", f"origin/{branch}"], timeout=1800)
+        sh(["git", "-C", FORK_WT, "clean", "-fdq"])
+    log(f"checkout_fork {branch}")
+    return sh(["git", "-C", FORK_WT, "log", "-1", "--format=%h %ad %s", "--date=iso"])
+
+
+def _sync(src, dst):
+    """dst = src: changed and new files copied, files gone from src moved to dst/_to_delete/<date>/."""
     skip = lambda rel: rel.parts[0] in ("_to_delete", ".git")
     copied, moved = [], []
     for f in src.rglob("*"):
@@ -151,16 +162,50 @@ def sync_mod(repo_folder: str = "_ef/ef hotfix 1.13", live_name: str = "E&F Hotf
             (bin_ / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.move(t, bin_ / rel)
             moved.append(str(rel))
+    return copied, moved
+
+
+@mcp.tool()
+def sync_mod(repo_folder: str = "_ef/ef hotfix 1.13", live_name: str = "E&F Hotfix") -> dict:
+    """Make the live mod Documents/.../Victoria 3/mod/<live_name> equal to <repo_folder> of the
+    worktree: changed and new files are copied, files gone from the repo are moved to
+    _to_delete/<date>/ inside the live mod (the project's rule). Refused while the game runs."""
+    if game_running():
+        raise RuntimeError("the game is running: the live copy is not synced during a run")
+    src = (WT / repo_folder).resolve()
+    dst = (DOCS / "mod" / live_name).resolve()
+    if WT.resolve() not in src.parents or not src.is_dir():
+        raise ValueError(f"no such folder in the worktree: {repo_folder}")
+    if dst.parent != (DOCS / "mod").resolve() or not dst.is_dir():
+        raise ValueError(f"no such live mod: {live_name}")
+    copied, moved = _sync(src, dst)
     log(f"sync {repo_folder} -> {live_name}: {len(copied)} copied, {len(moved)} moved")
+    return {"copied": copied, "moved_to_delete": moved}
+
+
+@mcp.tool()
+def sync_fork(live_name: str = "E&F Ledgerdemain") -> dict:
+    """Make the live mod Documents/.../Victoria 3/mod/<live_name> equal to the fork's bridge worktree (checkout_fork
+    first): changed and new files copied, files gone moved to _to_delete/<date>/. Refused while the game runs."""
+    if game_running():
+        raise RuntimeError("the game is running: the live copy is not synced during a run")
+    dst = (DOCS / "mod" / live_name).resolve()
+    if not (FORK_WT / ".git").exists():
+        raise ValueError("no fork worktree: checkout_fork() first")
+    if dst.parent != (DOCS / "mod").resolve() or not dst.is_dir():
+        raise ValueError(f"no such live mod: {live_name}")
+    copied, moved = _sync(FORK_WT, dst)
+    log(f"sync fork -> {live_name}: {len(copied)} copied, {len(moved)} moved")
     return {"copied": copied, "moved_to_delete": moved}
 
 
 @mcp.tool()
 def start_run(run_minutes: int = 10, new_game: bool = False, tag: str = "", start_save: str = "",
               autosaves: int = 0, ai_tag: str = "all", commands: str = "", shots: bool = False,
-              countries: str = "", load_wait_sec: int = 400) -> dict:
+              countries: str = "", load_wait_sec: int = 400, playset: str = "") -> dict:
     """Start tools/run_vic3_sandbox.ps1 of the worktree in the background (parameters as in the
-    skill vic3-sandbox). Returns the run id at once; poll run_status(id). Output: runs/<id>/."""
+    skill vic3-sandbox; playset -- the launcher playset's mods for this run, "Ledgerdemain" for the fork).
+    Returns the run id at once; poll run_status(id). Output: runs/<id>/."""
     if active_run() or game_running():
         raise RuntimeError("a run or the game is already going")
     rid = datetime.datetime.now().strftime("r%m%d_%H%M%S")
@@ -173,7 +218,8 @@ def start_run(run_minutes: int = 10, new_game: bool = False, tag: str = "", star
         args.append("-NewGame")
     if shots:
         args.append("-Shots")
-    for flag, val in (("-Tag", tag), ("-StartSave", start_save), ("-Commands", commands), ("-Countries", countries)):
+    for flag, val in (("-Tag", tag), ("-StartSave", start_save), ("-Commands", commands), ("-Countries", countries),
+                      ("-Playset", playset)):
         if val:
             args += [flag, val]
     stdout = open(out / "stdout.txt", "w", encoding="utf-8")
@@ -328,6 +374,14 @@ def wt_diff() -> str:
     """The worktree's changes made by generators, new files included, as a git patch for `git apply` in the cloud clone."""
     sh(["git", "-C", WT, "add", "-A", "-N"])
     return sh(["git", "-C", WT, "diff", "--binary"])
+
+@mcp.tool()
+def fork_diff() -> str:
+    """The fork worktree's changes made by tools (ld_*, generators), new files included, as a git patch for
+    `git apply` in the cloud clone of the fork."""
+    sh(["git", "-C", FORK_WT, "add", "-A", "-N"])
+    return sh(["git", "-C", FORK_WT, "diff", "--binary"])
+
 
 class BearerAuth:
     def __init__(self, app):

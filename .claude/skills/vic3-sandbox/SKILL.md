@@ -23,11 +23,14 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 ## Перед запуском — обязательно
 
 1. **Игра закрыта** (`tasklist | grep -i victoria` пусто), иначе скрипт падает с «already running».
-1а. **Набор модов — `Documents/…/Victoria 3/content_load.json`**, а не активный плейсет лаунчера (6.10 вечер: флаг
-   `isActive` в `launcher-v2.sqlite` переключён на другой плейсет — игра всё равно пошла с мегапаком). Файл пишет лаунчер
-   при «Играть»: `{"enabledMods":[{"path":"<папка мода>"}…],"disabledDLC":[],"enabledUGC":[]}` в порядке загрузки. Для
-   прогона на другом наборе — записать свой (пути — `mods.dirPath` из `launcher-v2.sqlite` по `playsets_mods`, по
-   `position`), старый сохранить и вернуть после прогона.
+1а. **Набор модов — `Documents/…/Victoria 3/content_load.json`**, а не активный плейсет лаунчера (6.10: игра шла с
+   мегапаком при переключённом `isActive`). Файл пишет лаунчер при «Играть». Прогон на другом наборе — **`-Playset
+   "<имя плейсета>"`**: скрипт пишет `content_load.json` из `launcher-v2.sqlite` (`tools/playset_content_load.py`,
+   `--list` — плейсеты) и возвращает прежний в конце и при сбое. Плейсеты: **«Ledgerdemain»** — форк (CMF, ETF,
+   E&F: Ledgerdemain), «база хотфикс» — CMF, ETF, PSC, E&F, E&F RUS, хотфикс (замороженная база ФК1).
+1б. **Форк «E&F: Ledgerdemain»** (этап 2а): живая копия `mod/E&F Ledgerdemain` = рабочее дерево репо форка —
+   локально `python tools/ld_sync_live.py` (пока игра идёт — отказывается); из облака — `checkout_fork("master")` +
+   `sync_fork()` моста (ниже), прогон — `start_run(…, playset="Ledgerdemain")`.
 2. **Живая копия мода синхронизирована** (`Documents/…/Victoria 3/mod/E&F Hotfix` = репозиторий,
    `diff -rq` без расхождений, кроме `_to_delete`). **Пока игра идёт — НЕ синхронизировать**: в
    `-debug_mode` игра на лету перечитывает изменённые файлы, и error.log наполняется ложными ошибками
@@ -57,9 +60,13 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 2. `checkout(branch)` → `_bridge/wt` на ПК; **сверить хеш** из ответа с `git log -1 --format=%h` своего клона — ngrok
    иногда отвечает ERR_NGROK_3004, и прогон ушёл на старом коде (r1005_104201, 5.10): ошибка или чужой хеш — повторить; `sync_mod()` (по умолчанию `_ef/ef hotfix 1.13` → `E&F Hotfix`;
    другие моды — `repo_folder`, `live_name`); при идущей игре отказывает.
-3. `start_run(run_minutes, new_game, tag, start_save, autosaves, shots, countries, …)` — те же параметры, что
+3. `start_run(run_minutes, new_game, tag, start_save, autosaves, shots, countries, playset, …)` — те же параметры, что
    у скрипта ниже; сразу отдаёт id. Дальше `run_status(id)` раз в 1–2 минуты (в облаке ждать фоновой
    командой Bash `sleep 120` с `run_in_background` — обычный `sleep` заблокирован), пока не «finished». Игра встала («Конец игры») — `stop_run(id)`, логи тогда в `docs/logs`.
+   **Форк** (6.10): правки форка — коммит и `git push` в `master` его репо (`BEDTRIP/Economic-and-Financial-Ledgerdemain-Mod`)
+   → `checkout_fork("master")` (worktree `_bridge/Economic-and-Financial-Ledgerdemain-Mod`, пути `fork/…`) → `sync_fork()`
+   → `start_run(…, playset="Ledgerdemain")`; инструменты `ld_*` через `py_tool` видят этот worktree, их правки форка —
+   `fork_diff()` патчем. Новые инструменты моста работают после перезапуска `start.ps1` (сервер — из основной копии).
 4. Чтение: `list_dir` / `read_text` (`from_end`) / `grep` по путям `runs/<id>/…`, `docs/logs/…`,
    `docs/crashes/…`, `game/game/…`; снимки — `get_image(path, crop=[x0,y0,x1,y1])` (доли, кадрировать
    подсказку, а не весь экран); `py_tool("parse_eflog" | "save_money_check", args)` — разбор на ПК.

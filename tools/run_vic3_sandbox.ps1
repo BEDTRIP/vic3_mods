@@ -39,6 +39,9 @@ Parameters:
     -NewGame      start a new game from 1836 instead of a save (start conditions, history files):
                   main menu -> New game -> Sandbox -> Random country -> Start, then the console
                   "tag <Tag>". Clicks are at fractions of the window, measured on 2560x1440 (16:9).
+    -Playset      run on this launcher playset's mods instead of the last ones the launcher started (the game
+                  reads content_load.json, not the active playset -- 6.10): the file is written from
+                  launcher-v2.sqlite (tools/playset_content_load.py) and put back after the run, failures too
     -Tag          the country to play in a new game (default GBR)
     -NoDumps      kept for old command lines; does nothing (1.10 night: debugcountrybudgets and
                   debugmarkets are strings in victoria3.exe, but the release console answers
@@ -61,6 +64,7 @@ param(
     [string]$StartSave = "",
     [switch]$NewGame,
     [string]$Tag = "BUG",
+    [string]$Playset = "",
     [switch]$NoDumps,
     [switch]$KeepOpen,
     [switch]$Shots,
@@ -91,6 +95,16 @@ if ($StartSave) {
     $j.title = "sandbox_start"
     [IO.File]::WriteAllText($cg, ($j | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
     Log "start save: $StartSave (copied to sandbox_start.v3)"
+}
+
+# -Playset: the game's mod list for this run; the previous one comes back at the end (and on a failure, by the trap)
+$ContentLoad = Join-Path $Docs "content_load.json"
+$ContentBackup = Join-Path $OutDir "content_load.before.json"
+if ($Playset) {
+    Copy-Item $ContentLoad $ContentBackup -Force
+    & python (Join-Path $PSScriptRoot "playset_content_load.py") --playset $Playset --out $ContentLoad | ForEach-Object { Log "playset $_" }
+    if ($LASTEXITCODE -ne 0) { Copy-Item $ContentBackup $ContentLoad -Force; throw "no playset '$Playset'" }
+    trap { if (Test-Path $ContentBackup) { Copy-Item $ContentBackup $ContentLoad -Force; Log "content_load.json restored (failure)" }; break }
 }
 
 if ($NewGame) {
@@ -220,5 +234,9 @@ if ($StartSave -and -not $KeepOpen) {
         [IO.File]::WriteAllText($cg, ($j | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
         Log "continue_game.json: back to '$prevTitle' (the run made no autosave)"
     }
+}
+if ($Playset -and (Test-Path $ContentBackup)) {
+    Copy-Item $ContentBackup $ContentLoad -Force
+    Log "content_load.json: back to the launcher's mods"
 }
 Log "done: $OutDir"
