@@ -7,7 +7,8 @@
 - запись есть в файле форка — заменяется на месте (в режиме `--check` только сравнивается, `ld_pdx.norm`);
 - записи в файле форка нет — она влита в тело E&F руками (ФК1) или удалена; генератор её больше не ведёт:
   пропускается и попадает в отчёт `absent`;
-- записи файла форка, которых генератор не выдал, не трогаются (рукописные).
+- записи файла форка, которых генератор не выдал, не трогаются (рукописные);
+- GUI-файл (`*.gui`) — целиком: файл генератора (`gui/ld_cb_rate_panel.gui`) рукописных записей не держит.
 
 Локализация (`*.yml`) — так же по ключам строк `ключ:N "…"`; пишутся только английский и русский, девять остальных
 языков — копия английского (`ld_loc_langs.py`, запускать после генераторов, которые меняют английский).
@@ -75,6 +76,16 @@ def emit(path, text):
         return
     src, bom, eol = ld_pdx.read(dst)
     gen = text.replace("\r\n", "\n").lstrip("﻿")
+    if rel.endswith(".gui"):
+        # GUI-файл генератора — целиком (`types X { … }` по записям не делится; ФК2, 7.10)
+        k = "<файл>"
+        if ld_pdx.norm(src) == ld_pdx.norm(gen):
+            _stats["same"].append(f"{rel} | {k}")
+        else:
+            _stats["changed"].append(f"{rel} | {k}")
+            if not CHECK:
+                ld_pdx.write(dst, gen, bom=bom, eol=eol)
+        return
     if lang:
         have, want = _loc_entries(src), _loc_entries(gen)
         pieces = {k: gen[s:e] for k, (s, e) in want.items()}
