@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Д2.4 (5.10.2026) -- the banks' seed: scripted_effects/zz_ef_bank_seed.txt of the E&F hotfix.
+Д2.4 (5.10.2026) -- the banks' seed: scripted_effects/ld_bank_seed.txt of the fork «E&F: Ledgerdemain» (via ld_gen:
+written by entry keys).
 
 Banks (building_zz_ef_bank) make the bank settlements (the former E&F currency good) that used to come from the
 central bank from day one. The user (5.10): enough banks to cover the initial demand; spread over the states with
@@ -22,11 +23,13 @@ How (once per market, by its owner, in the owner's first monthly pulse):
     The financial district cannot be the seed's owner: it needs a literal region -- `region = scope:...` is
     refused ("Failed to read key reference", run r1005_201105), and the state's region would take a dispatcher of
     ~700 regions x 98 companies x the ladder.
+Reads the fork: the bank companies are the ones of common/company_types/00_ef_companies.txt that list
+building_zz_ef_bank (the 98).
 Logged per state: EFK|date|country|state|want N|tc T|built B.
 
 Usage:
     py tools/regen_ef_bank_seed.py            # write
-    py tools/regen_ef_bank_seed.py --check    # exit 1 if the file differs
+    py tools/regen_ef_bank_seed.py --check    # exit 1 if the fork file differs
 """
 
 from __future__ import annotations
@@ -37,9 +40,112 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-HOTFIX = os.path.normpath(os.path.join(HERE, "..", "_ef", "ef hotfix 1.13"))
-OUT = os.path.join(HOTFIX, "common", "scripted_effects", "zz_ef_bank_seed.txt")
-COMPANIES = os.path.join(HOTFIX, "common", "company_types", "zz_ef_cm_companies.txt")
+sys.path.insert(0, HERE)
+import ld_gen  # noqa: E402
+
+OUT = "common/scripted_effects/zz_ef_bank_seed.txt"      # путь хотфикса; ld_gen пишет в форк ld_bank_seed.txt
+COMPANIES = os.path.join(ld_gen.FORK, "common", "company_types", "00_ef_companies.txt")
+
+BANKS = [
+    "company_BancoNacionArgentina",
+    "company_BancoProvincia",
+    "company_OesterreichischeNationalbank",
+    "company_BayerischeHypothekenUndWechselBank",
+    "company_BanqueNationaleDeBelgique",
+    "company_ImperialBankofIndia",
+    "company_BancoNacionalDeBolivia",
+    "company_BancoDoBrasil",
+    "company_CanadianImperialBankOfCommerce",
+    "company_DaQingBank",
+    "company_BankHSBC",
+    "company_BancoEstado",
+    "company_BancoDeValparaiso",
+    "company_BancoRepublicaColombia",
+    "company_BancoCentralDeCostaRica",
+    "company_BancoEspanolDeLaHabana",
+    "company_LandmandsBanken",
+    "company_BanqueEgyptienne",
+    "company_BanqueDeFrance",
+    "company_BankofEngland",
+    "company_Reichsbank",
+    "company_PreussischeSeehandlung",
+    "company_bankofgreec",
+    "company_BancoCentralDeGuatemala",
+    "company_BancoCentralDeHonduras",
+    "company_BancaDItalia",
+    "company_Rothschild_Bank_ita",
+    "company_BankOfJapan",
+    "company_Mitsubishiexchangehousebank",
+    "company_BancoDeMexico",
+    "company_DeNederlandscheBank",
+    "company_ChristianiaBank",
+    "company_ColonialBankOfAustralia",
+    "company_RoyalBankofCanada",
+    "company_BancoNacionalDePanama",
+    "company_BankMelliIran",
+    "company_ImperialBankofPersia",
+    "company_BancoDePortugal",
+    "company_BancoNacionalDelParaguay",
+    "company_BankOfMontreal",
+    "company_StateBankRussianEmpire",
+    "company_BankSBoBSA",
+    "company_CassaDiRisparmioDiTorino",
+    "company_BankofSpain",
+    "company_HandelsBanken",
+    "company_Bankenverein",
+    "company_OttomanBank",
+    "company_BancoCentralDelUruguay",
+    "company_BancoCentralDeVenezuela",
+    "company_BankJPMorgan",
+    "company_BankGoldmanSachs",
+    "company_ChaseBank",
+    "company_BankWellsFargo",
+    "company_BankAmericanExpress",
+    "company_amsterdamschebank",
+    "company_RotterdamscheBankvereeniging",
+    "company_SocieteGeneraledeBelgique",
+    "company_BanqueDeBruxelles",
+    "company_BancoDeBilbao",
+    "company_BancoHispanoColonial",
+    "company_BancoCommercialPortugues",
+    "company_Bank_Ultramarino",
+    "company_BancaCommercialeItaliana",
+    "company_LloydsBank",
+    "company_barclaysBank",
+    "company_NationalWestminsterBank",
+    "company_RoyalBankOfScotland",
+    "company_Rothschild_Bank_gbr",
+    "company_BankCreditLyonnais",
+    "company_SocieteGenerale",
+    "company_BanqueDeParisEtDesPaysBas",
+    "company_Rothschild_Bank_fra",
+    "saint_petersburg_international_commercial_bank",
+    "russo_chinese_bank",
+    "company_DeutscheBank",
+    "company_Rothschild_Bank_ger",
+    "company_OesterreichischeCreditAnstalt",
+    "company_WienerBankverein",
+    "company_Rothschild_Bank_aus",
+    "company_TurkishZiraatBankasi",
+    "company_BanqueImperialeOttomane",
+    "company_BankTejaratPersia",
+    "company_BankAngloPersian",
+    "company_ChohungBank",
+    "company_BankIBC",
+    "company_BankBOCOM",
+    "company_SumitomoBank",
+    "company_BankOfIndiaCompany",
+    "company_BankOfBombay",
+    "company_BankDesjardins",
+    "company_NationalBankOfAustralia",
+    "company_SouthAustralianBank",
+    "company_bancodelondresmexico",
+    "company_BancoMercantilMexicano",
+    "company_BancoMercantil",
+    "company_BancoCommercialDoBrasil",
+    "company_BancoHipotecarioNacional",
+    "company_BancoDeChile",
+]
 
 SIZES = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 22, 26, 30, 35, 40, 50, 60, 70, 80, 100, 120, 150, 200]
 COMPANY_SHARE = 0.4
@@ -57,10 +163,17 @@ HEADER = """\
 
 
 def banks() -> list[str]:
+    """BANKS (the order is the seed's: the first company the owner has gets the bank), checked against the fork's
+    00_ef_companies.txt: exactly its companies that list building_zz_ef_bank."""
     s = open(COMPANIES, encoding="utf-8-sig").read()
-    keys = re.findall(r"(?m)^INJECT:(\w+)\s*=", s)
-    assert len(keys) == 98, len(keys)
-    return keys
+    found = set()
+    for m in re.finditer(r"(?m)^(\w+)\s*=\s*\{", s):
+        nxt = re.search(r"(?m)^\S", s[m.end():])
+        body = s[m.end(): m.end() + nxt.start()] if nxt else s[m.end():]
+        if re.search(r"(?m)^\s*building_zz_ef_bank\b", body):
+            found.add(m.group(1))
+    assert found == set(BANKS) and len(BANKS) == 98, (found ^ set(BANKS))
+    return BANKS
 
 
 def split(size: int, with_company: bool) -> tuple[int, int]:
@@ -200,19 +313,11 @@ zz_ef_bank_seed_state = {
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
-    args = ap.parse_args()
+    ap.parse_args()
     text = build()
     assert text.count("{") == text.count("}")
-    old = open(OUT, encoding="utf-8-sig").read() if os.path.exists(OUT) else ""
-    if args.check:
-        if old != text:
-            print(f"DIFF: {OUT} is not what the generator writes")
-            return 1
-        print("ok")
-        return 0
-    with open(OUT, "w", encoding="utf-8-sig", newline="\n") as f:
-        f.write(text)
-    print(f"wrote {OUT} ({text.count(chr(10))} lines, {len(SIZES)} sizes, {len(banks())} companies)")
+    ld_gen.emit(OUT, text)
+    ld_gen.report("regen_ef_bank_seed")
     return 0
 
 

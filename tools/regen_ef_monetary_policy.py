@@ -36,22 +36,25 @@ Now the measure is the metal cover (zz_ef_cb_cover: reserves at parity / money s
   * E&F's 25/50/75% buttons (scripted guis devaluation_currency_* / revaluation_currency_*) are
     hidden; the scale is in the CB panel (tools/regen_ef_cb_rate_gui.py, mp_row).
 
-Writes (_ef/ef hotfix 1.13/): common/scripted_effects/zz_ef_monetary_policy.txt,
-common/script_values/zz_ef_monetary_policy_values.txt, common/scripted_triggers/zz_ef_monetary_policy_triggers.txt,
-common/scripted_guis/zz_ef_monetary_policy_buttons.txt, common/laws/zz_ef_monetary_policy_laws.txt,
-localization/<lang>/zz_ef_monetary_policy_l_<lang>.yml
+Writes (via ld_gen, by entry keys, into the fork «E&F: Ledgerdemain»): common/scripted_effects/ld_monetary_policy.txt,
+common/script_values/ld_monetary_policy_values.txt, common/scripted_triggers/ld_monetary_policy_triggers.txt,
+common/scripted_guis/ld_monetary_policy_buttons.txt, localization/<lang>/ld_monetary_policy_l_<lang>.yml (english,
+russian). Reads nothing: E&F's laws (law_devaluation / law_revaluation with ai_will_do = no), its three on_activate_*
+effects (zz_ef_mp_init / zz_ef_mp_clear calls) and the hidden 25/50/75% scripted guis are in E&F's own bodies.
 
 Usage:
-    py tools/regen_ef_monetary_policy.py
+    py tools/regen_ef_monetary_policy.py            # write
+    py tools/regen_ef_monetary_policy.py --check    # exit 1 if the fork files differ
 """
+import argparse
 import os
 import re
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-res = lambda p: os.path.normpath(os.path.join(HERE, p))
-EF_LAWS = res(r"..\..\vic3_mods_out\E&F\common\laws\01_ef_monetary_policy.txt")
-EF_EFFECTS = res(r"..\..\vic3_mods_out\E&F\common\scripted_effects\01_economic_scripted_effects.txt")
-HOTFIX = res(r"..\_ef\ef hotfix 1.13")
+sys.path.insert(0, HERE)
+import ld_gen  # noqa: E402
+
 LANGS = ["english", "russian", "braz_por", "french", "german", "japanese",
          "korean", "polish", "simp_chinese", "spanish", "turkish"]
 
@@ -64,72 +67,9 @@ EF_MODS = ["devaluation_currency_25", "devaluation_currency_50", "devaluation_cu
            "revaluation_currency_75"]
 
 
-def block(text, name):
-    m = re.search(rf"^{re.escape(name)} = \{{", text, re.M)
-    assert m, name
-    i = text.index("{", m.start())
-    d = 0
-    for j in range(i, len(text)):
-        d += {"{": 1, "}": -1}.get(text[j], 0)
-        if d == 0:
-            return text[i:j + 1]
-    raise AssertionError(name)
-
-
-def drop_block(body, key):
-    m = re.search(rf"\n\s*{key} = \{{", body)
-    if not m:
-        return body
-    i = body.index("{", m.start())
-    d = 0
-    for j in range(i, len(body)):
-        d += {"{": 1, "}": -1}.get(body[j], 0)
-        if d == 0:
-            return body[:m.start()] + body[j + 1:]
-    raise AssertionError(key)
-
-
-def laws():
-    text = open(EF_LAWS, encoding="utf-8-sig").read()
-    out = [HEAD, "# !! MAINTENANCE !! Full-body REPLACE of E&F's two laws: regenerate after an E&F update.\n"
-                 "# Changed: ai_enact_weight_modifier (E&F's petition) dropped, ai_will_do = no -- the AI takes\n"
-                 "# these laws only through zz_ef_mp_step (scripted_effects/zz_ef_monetary_policy.txt).\n\n"]
-    for name in ("law_revaluation", "law_devaluation"):
-        body = drop_block(drop_block(block(text, name), "ai_enact_weight_modifier"), "ai_will_do")
-        body = body[:body.rstrip().rfind("}")].rstrip() + "\n\n\tai_will_do = {\n\t\talways = no\n\t}\n}"
-        out.append(f"REPLACE:{name} = {body}\n\n")
-    return "".join(out)
-
-
 def effects():
-    ef = open(EF_EFFECTS, encoding="utf-8-sig").read()
-    # E&F's bodies, checked: the re-issue below keeps them and adds our init / clear
-    for name, must in (("on_activate_law_no_monetary_policy", "remove_modifier = devaluation_currency_25"),
-                       ("on_activate_law_revaluation", "name = revaluation_currency_25"),
-                       ("on_activate_law_devaluation", "name = devaluation_currency_25")):
-        assert must in block(ef, name), name
     clear_mods = "".join(f"\tremove_modifier = {m}\n" for m in EF_MODS)
-    return HEAD + "# !! MAINTENANCE !! Key-level REPLACE_OR_CREATE of E&F's three on_activate effects.\n\n" + f"""\
-REPLACE_OR_CREATE:on_activate_law_no_monetary_policy = {{
-	zz_ef_mp_clear = yes
-}}
-REPLACE_OR_CREATE:on_activate_law_revaluation = {{
-	remove_modifier = devaluation_currency_25
-	remove_modifier = revaluation_currency_25
-	add_modifier = {{
-		name = revaluation_currency_25
-	}}
-	zz_ef_mp_init = yes
-}}
-REPLACE_OR_CREATE:on_activate_law_devaluation = {{
-	remove_modifier = revaluation_currency_25
-	remove_modifier = devaluation_currency_25
-	add_modifier = {{
-		name = devaluation_currency_25
-	}}
-	zz_ef_mp_init = yes
-}}
-
+    return HEAD + "\n" + f"""\
 # The law came into force: start = target = today's cover. The AI arms it at once with its
 # target (zz_ef_mp_ai_target); the player arms it by moving the target (scripted guis).
 zz_ef_mp_init = {{
@@ -573,13 +513,6 @@ def guis():
         out.append(target_button(n, d))
     out.append(pace_button("zz_ef_mp_pace_minus", -1))
     out.append(pace_button("zz_ef_mp_pace_plus", 1))
-    out.append("\n# E&F's 25/50/75% buttons (gui/00_ef_deported_gui_1.gui, budget_panel_economy_panel_content)\n"
-               "# hidden: the scale replaces them. !! MAINTENANCE !! key-level REPLACE_OR_CREATE of E&F's guis.\n")
-    for m in EF_MODS:
-        if m.endswith("_100"):
-            continue
-        out.append(f"REPLACE_OR_CREATE:{m} = {{\n\tis_shown = {{ always = no }}\n\tis_valid = {{ always = no }}\n"
-                   "\teffect = { }\n}\n")
     return "".join(out)
 
 
@@ -655,20 +588,15 @@ EN = {
 assert set(RU) == set(EN)
 
 
-def write(path, text, bom=True):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8-sig" if bom else "utf-8", newline="\n") as f:
-        f.write(text)
-    print("ok", path)
-
-
 def main():
-    c = os.path.join(HOTFIX, "common")
-    write(os.path.join(c, "laws", "zz_ef_monetary_policy_laws.txt"), laws())
-    write(os.path.join(c, "scripted_effects", "zz_ef_monetary_policy.txt"), effects())
-    write(os.path.join(c, "script_values", "zz_ef_monetary_policy_values.txt"), VALUES)
-    write(os.path.join(c, "scripted_triggers", "zz_ef_monetary_policy_triggers.txt"), TRIGGERS)
-    write(os.path.join(c, "scripted_guis", "zz_ef_monetary_policy_buttons.txt"), guis())
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true")
+    ap.parse_args()
+    c = "common"
+    ld_gen.emit(f"{c}/scripted_effects/zz_ef_monetary_policy.txt", effects())
+    ld_gen.emit(f"{c}/script_values/zz_ef_monetary_policy_values.txt", VALUES)
+    ld_gen.emit(f"{c}/scripted_triggers/zz_ef_monetary_policy_triggers.txt", TRIGGERS)
+    ld_gen.emit(f"{c}/scripted_guis/zz_ef_monetary_policy_buttons.txt", guis())
     for lang in LANGS:
         d = RU if lang == "russian" else EN
         lines = [f"l_{lang}:\n", " # GENERATED by tools/regen_ef_monetary_policy.py -- do not edit by hand.\n"]
@@ -676,7 +604,8 @@ def main():
             lines.append(" # Not translated yet: English text.\n")
         for k, v in d.items():
             lines.append(f' {k}:0 "{v}"\n')
-        write(os.path.join(HOTFIX, "localization", lang, f"zz_ef_monetary_policy_l_{lang}.yml"), "".join(lines))
+        ld_gen.emit(f"localization/{lang}/zz_ef_monetary_policy_l_{lang}.yml", "".join(lines))
+    ld_gen.report("regen_ef_monetary_policy")
 
 
 if __name__ == "__main__":
