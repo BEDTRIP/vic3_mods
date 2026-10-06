@@ -141,7 +141,10 @@ zz_ef_nr_dep_step = {
 """ + trim_chain(cur, "zz_ef_nri_k") + """			set_variable = { name = zz_ef_nr_dep value = zz_ef_nr_dep_v }
 			change_variable = { name = zz_ef_nr_dep add = var:zz_ef_f_nr_int }
 		}
-		set_variable = { name = zz_ef_f_nr_dep value = zz_ef_fx_liab_all }
+		# the holders' stock is final for the week here (the interest above was its last change): one pass of
+		# zz_ef_fx_liab_all, read by the deposits below and by zz_ef_fx_holders_demand_m
+		set_variable = { name = zz_ef_t_liab_all value = zz_ef_fx_liab_all }
+		set_variable = { name = zz_ef_f_nr_dep value = var:zz_ef_t_liab_all }
 		change_variable = { name = zz_ef_f_nr_dep subtract = zz_ef_nr_dep_v }
 		# withdrawn: at most what the pool holds; the rest waits for next week
 		if = {
@@ -163,7 +166,10 @@ zz_ef_nr_dep_step = {
 		change_variable = { name = zz_ef_nr_dep add = var:zz_ef_f_nr_dep }
 	}
 	# Д2.33 (b): the holders' demand for the issuer's goods -- an export advantage by its currency held abroad
-	remove_modifier = zz_ef_fx_holders_demand
+	if = {
+		limit = { has_modifier = zz_ef_fx_holders_demand }
+		remove_modifier = zz_ef_fx_holders_demand
+	}
 	if = {
 		limit = {
 			zz_ef_nr_issuer = yes
@@ -211,11 +217,12 @@ zz_ef_v_f_nr_int = {
 	if = { limit = { has_variable = zz_ef_f_nr_int } value = var:zz_ef_f_nr_int }
 }
 # Д2.33 (b): the export advantage's multiplier, +1 (= +1%) per 3% of GDP held abroad, at most 20
+# (only inside zz_ef_nr_dep_step, after zz_ef_t_liab_all is set: the same guards as the step's second block)
 zz_ef_fx_holders_demand_m = {
 	value = 0
 	if = {
 		limit = { zz_ef_raw_gdp > 0 }
-		value = zz_ef_fx_liab_all
+		value = var:zz_ef_t_liab_all
 		divide = zz_ef_raw_gdp
 		multiply = 100
 		divide = 3
