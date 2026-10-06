@@ -40,10 +40,12 @@ zz_ef_cur_intro_before = {
 zz_ef_cur_intro_after = {
 	if = {
 		limit = { exists = capital }
+		# 6.10 (stage 2, run r1006_132739): from the country's first step on -- E&F's metal at an introduction in the first
+		# 13 weeks was left to the week-12 rescale, and the world line of metal read +370M gold and +4.4 bn silver from
+		# nothing in one week (17.2.1836); before the first step it is E&F's start, which the first step takes as stock
 		if = {
 			limit = {
-				has_variable = zz_ef_weeks_run
-				var:zz_ef_weeks_run >= 13
+				has_variable = zz_ef_metal_started
 			}
 			capital = {
 				set_variable = { name = zz_ef_cur_intro_g_ef value = 0 }
