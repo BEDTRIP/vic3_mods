@@ -145,7 +145,7 @@ def checkout_fork(branch: str = "master") -> str:
 
 def _sync(src, dst):
     """dst = src: changed and new files copied, files gone from src moved to dst/_to_delete/<date>/."""
-    skip = lambda rel: rel.parts[0] in ("_to_delete", ".git")
+    skip = lambda rel: rel.parts[0] in ("_to_delete", ".git", "docs", "CLAUDE.md")  # the fork's agent docs stay out
     copied, moved = [], []
     for f in src.rglob("*"):
         rel = f.relative_to(src)

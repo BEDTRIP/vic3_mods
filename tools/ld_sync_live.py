@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 FORK = ROOT / "Economic-and-Financial-Ledgerdemain-Mod"
 LIVE = Path(os.environ.get("USERPROFILE", "")) / "Documents" / "Paradox Interactive" / "Victoria 3" / "mod" / "E&F Ledgerdemain"
-SKIP = (".git", "_to_delete")
+SKIP = (".git", "_to_delete", "docs", "CLAUDE.md")         # docs/ и CLAUDE.md форка — агенту, не игре
 
 
 def game_running():
