@@ -14,6 +14,8 @@ metal neither appear nor vanish. This reads the money model's log lines (tools/r
       signed world sums of the flow's parts trade_m / abr_m / div_m / bond_m; sub -- members' flows settled by their
       heads (В1.7, gold); wexp / wimp / wfee / waint -- the world's exports, imports (base prices), the treasuries'
       market fees + tolls + piracy, additional income - expenses; kr / kp -- the world trade pool's ratios;
+  EFV (stage 2, night 6.10; weekly, the WHOLE world): the metal accounts -- cb / bank / pop -- against the start's
+      stock + bought - sold (cumulative), rest = the difference; gold and silver apart, reserve units;
   EFX (monthly, every country): gold / silver -- the central bank's metal (E&F's own scale), fxm -- foreign currency
       in the reserves (in metal), liab -- our currency held abroad; clr_in / clr_out / clr_pay / clr_pot -- the world
       clearing of the last window (the same numbers in every country's line).
@@ -35,7 +37,7 @@ Usage:  py tools/check_flows.py <run>/eflog.txt [more eflog.txt ...] [--tol 0.05
 import json, os, re, sys
 from collections import defaultdict
 
-TAG = re.compile(r"EF[RXG]\|")
+TAG = re.compile(r"EF[RXGV]\|")
 
 sys.stdout.reconfigure(encoding="utf-8")
 MON = {"января": 1, "февраля": 2, "марта": 3, "апреля": 4, "мая": 5, "июня": 6, "июля": 7, "августа": 8,
@@ -60,6 +62,7 @@ def read(paths):
     efr = defaultdict(lambda: defaultdict(lambda: defaultdict(float)))   # month -> country -> key -> sum
     efx = defaultdict(dict)                                              # month -> country -> last EFX record
     efg = defaultdict(lambda: defaultdict(float))                        # month -> key -> sum of the weeks
+    efv = {}                                                             # month -> the last EFV record (stage 2)
     seen = set()
     for path in paths:
         for line in open(path, encoding="utf-8-sig", errors="replace"):
@@ -68,7 +71,7 @@ def read(paths):
             if m and m.start():
                 line = line[m.start():]
             parts = line.strip().split("|")
-            if len(parts) < 4 or parts[0] not in ("EFR", "EFX", "EFG"):
+            if len(parts) < 4 or parts[0] not in ("EFR", "EFX", "EFG", "EFV"):
                 continue
             key = (parts[0], parts[1], parts[2])          # a line repeated in two eflogs (or parts) counts once
             if key in seen:
@@ -82,6 +85,9 @@ def read(paths):
                 if " " in p:
                     k, v = p.split(" ", 1)
                     rec[k] = num(v)
+            if parts[0] == "EFV":
+                efv[mon] = rec
+                continue
             if parts[0] == "EFG":
                 g = efg[mon]
                 for k, v in rec.items():
@@ -99,7 +105,34 @@ def read(paths):
                 acc["weeks"] += 1
             else:
                 efx[mon][parts[2]] = rec
-    return efr, efx, efg
+    return efr, efx, efg, efv
+
+
+def metal_table(efv, mtol):
+    """Stage 2, step 8 (night 6.10): the world line of metal -- every account (the CBs, the banks, the pops) against
+    the start's stock + bought on the market - sold to it; rest = what moved metal outside the market and the pairs."""
+    if not efv:
+        print("\nno EFV lines (the world line of metal, stage 2 night 6.10)")
+        return [], 0
+    flags = 0
+    out = []
+    print(f"\nMETAL (EFV, end of month; units: gold x100 a good, silver x775): {'month':8}")
+    for m in ("g", "s"):
+        print(f"  {'gold' if m == 'g' else 'silver'}: {'month':8} {'cb':>14} {'banks':>12} {'pops':>14} {'start':>14} "
+              f"{'bought':>12} {'sold':>10} {'rest':>12} {'rest%':>7}")
+        for mon in sorted(efv):
+            r = efv[mon]
+            tot = sum((r.get(k + "_" + m) or 0) for k in ("cb", "bank", "pop"))
+            rest = r.get("rest_" + m) or 0
+            share = rest / tot if tot else 0.0
+            flag = abs(share) > mtol
+            flags += flag
+            print(f"{'>>' if flag else '  '}        {mon:8} {r.get('cb_' + m) or 0:>14,.0f} {r.get('bank_' + m) or 0:>12,.0f} "
+                  f"{r.get('pop_' + m) or 0:>14,.0f} {r.get('start_' + m) or 0:>14,.0f} {r.get('buy_' + m) or 0:>12,.0f} "
+                  f"{r.get('sell_' + m) or 0:>10,.0f} {rest:>12,.0f} {share:>7.3%}")
+            out.append({"month": mon, "metal": m, **{k: r.get(k + "_" + m) for k in
+                        ("cb", "bank", "pop", "start", "buy", "sell", "rest")}, "flag": flag})
+    return out, flags
 
 
 def world_table(efg, tol):
@@ -161,7 +194,7 @@ def main():
     if not paths:
         print(__doc__)
         sys.exit(1)
-    efr, efx, efg = read(paths)
+    efr, efx, efg, efv = read(paths)
     months = sorted(set(efr) | set(efx))
     out = []
     prev = None
@@ -223,9 +256,11 @@ def main():
             prev = {"gold": gold, "silver": silv, "n": len(xs), "first": prev is None,
                     "by": {c: ((x.get("gold") or 0), (x.get("silver") or 0) * (x.get("s2g") or 0)) for c, x in xs.items()}}
     world, wflags = world_table(efg, tol)
-    print(f"\n{len(months)} months, {flags} flagged, {wflags} world months flagged (share without a counterpart > {tol}, or world metal off mining by > {mtol})")
+    metal, mflags = metal_table(efv, mtol)
+    print(f"\n{len(months)} months, {flags} flagged, {wflags} world months flagged (share without a counterpart > {tol}, or world metal off mining by > {mtol}), "
+          f"{mflags} metal months flagged (rest > {mtol} of the accounts)")
     if jout:
-        json.dump({"countries": out, "world": world}, open(jout, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        json.dump({"countries": out, "world": world, "metal": metal}, open(jout, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 
 if __name__ == "__main__":
