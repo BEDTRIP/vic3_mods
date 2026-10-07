@@ -9,6 +9,8 @@
   python tools/playset_content_load.py --playset vanilla --out <файл>   # без модов: база для сравнения
   python tools/playset_content_load.py --playset "Ledgerdemain без E&F: Ledgerdemain" --out <файл>
       # плейсет без модов, в имени которых есть строка после « без » (CMF + ETF без форка: база для сравнения)
+  python tools/playset_content_load.py --playset "Ledgerdemain + LD Profiler View" --out <файл>
+      # плейсет и в конце мод из Documents/…/Victoria 3/mod/<папка> (окно профилировщика для замеров)
 """
 import argparse
 import json
@@ -36,7 +38,8 @@ def main():
         for name, active in con.execute("select name, isActive from playsets order by name"):
             print(("* " if active else "  ") + name)
         return 0
-    name, _, drop = args.playset.partition(" без ")
+    name, _, extra = args.playset.partition(" + ")
+    name, _, drop = name.partition(" без ")
     row = con.execute("select id from playsets where name = ?", (name,)).fetchone()
     if not row:
         print(f"no playset {args.playset!r}; --list shows them", file=sys.stderr)
@@ -45,6 +48,8 @@ def main():
                        "where pm.playsetId = ? and pm.enabled = 1 order by pm.position", (row[0],)).fetchall()
     if drop:
         mods = [m for m in mods if drop not in m[0]]
+    if extra:
+        mods.append((extra, os.path.join(os.path.dirname(DB), "mod", extra)))
     data = {"enabledMods": [{"path": p} for _, p in mods], "disabledDLC": [], "enabledUGC": []}
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
