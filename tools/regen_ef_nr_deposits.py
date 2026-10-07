@@ -13,7 +13,9 @@ in our banks that comes only with a counter-posting; the register var:zz_ef_nr_d
   * the clearing -- our own currency paid out (var:zz_ef_f_clr_cur_out) less the one redeemed (var:zz_ef_f_clr_own_back):
     money the engine already took for the imports -- into / out of the issuer's pool as deposits (var:zz_ef_f_nr_dep,
     at most the pool on the way out);
-  * any other change of zz_ef_fx_liab_all (E&F's monthly stockpiling, E&F's forex, a crisis reset) -- no money moves:
+  * the player's forex buttons (R2, 8.10: var:zz_ef_nr_fx_pend of the issuer, scripted_effects/ld_fx_buttons.txt of
+    the fork) -- the same posting: a CB bought our currency from our CB, a deposit in our banks (sold back -- out);
+  * any other change of zz_ef_fx_liab_all (a crisis reset; E&F's monthly stockpiling and AI forex are archived, R2) -- no money moves:
     the register follows the stocks (var:zz_ef_f_nr_oth) and the reconciliation shows it as «прочее» (the pool less the
     book) until those writers post (R2, Ф9).
 
@@ -129,6 +131,12 @@ zz_ef_nr_dep_step = {
 		set_variable = { name = zz_ef_f_nr_dep value = 0 }
 		if = { limit = { has_variable = zz_ef_f_clr_cur_out } change_variable = { name = zz_ef_f_nr_dep add = var:zz_ef_f_clr_cur_out } }
 		if = { limit = { has_variable = zz_ef_f_clr_own_back } change_variable = { name = zz_ef_f_nr_dep subtract = var:zz_ef_f_clr_own_back } }
+		# R2 (8.10): the player's forex buttons since the last step -- bought from / sold back to our CB (ld_fx_buttons.txt)
+		if = {
+			limit = { has_variable = zz_ef_nr_fx_pend }
+			change_variable = { name = zz_ef_f_nr_dep add = var:zz_ef_nr_fx_pend }
+			remove_variable = zz_ef_nr_fx_pend
+		}
 		if = {
 			limit = { var:zz_ef_f_nr_dep < 0 }
 			set_variable = {
