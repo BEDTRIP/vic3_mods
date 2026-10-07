@@ -9,6 +9,7 @@
 """
 import argparse
 import glob
+import hashlib
 import os
 import re
 import sys
@@ -26,9 +27,19 @@ def family(msg):
 
 
 def files(d, kind):
+    """Части, снятые скриптом прогона (`dbgparts/`, `errparts/`), и `<вид>*.log` — вместе; одинаковые файлы
+    (часть = повёрнутый `debug.1.log`) — один раз. Только части теряли текущий `debug.log`."""
     sub = {"debug": "dbgparts", "error": "errparts"}.get(kind)
-    parts = sorted(glob.glob(os.path.join(d, sub, "*"))) if sub else []
-    return parts or sorted(glob.glob(os.path.join(d, f"{kind}*.log")))
+    out, seen = [], set()
+    cand = (sorted(glob.glob(os.path.join(d, sub, "*"))) if sub else []) + \
+        sorted(glob.glob(os.path.join(d, f"{kind}*.log")), key=lambda p: (len(p), p))
+    for p in cand:
+        with open(p, "rb") as f:
+            h = hashlib.sha1(f.read()).hexdigest()
+        if h not in seen:
+            seen.add(h)
+            out.append(p)
+    return out
 
 
 def main():
@@ -55,7 +66,7 @@ def main():
                     fam[k] += 1
                     src[m.group(1).split(":")[0]] += 1
                     ex.setdefault(k, m.group(2)[:300])
-                    u = re.match(r"(\w+) '([^']+)' is (?:set|used) but is never (?:used|set)", m.group(2))
+                    u = re.match(r"(\w+(?: target)?) '([^']+)' is (?:set|used) but is never (?:used|set)", m.group(2))
                     if u:
                         unused[(u.group(1), u.group(2), "set" if "is set" in m.group(2) else "used")] += 1
         print(f"\n# {kind}: файлов {len(fl)}, записей {n}, семейств {len(fam)}")

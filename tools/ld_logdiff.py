@@ -9,33 +9,16 @@ trigger 'a'» и «… 'b'» сливаются); общее семейство 
 `common/…: EF`) — отдельной строкой, они нужны и в семейства не идут. Ничего не меняет.
 """
 import argparse
-import glob
-import hashlib
 import os
 import re
 import sys
 from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from ld_logcats import HEAD, NUM, QUOTED  # noqa: E402
+from ld_logcats import HEAD, NUM, QUOTED, files  # noqa: E402
 
 MODLOG = re.compile(r"(^|: )EF[A-Z]{1,2}\|")
 
-
-def files(d, kind):
-    """Части, снятые скриптом прогона (`dbgparts/`, `errparts/`), и `<вид>*.log` — вместе; одинаковые файлы
-    (часть = повёрнутый `debug.1.log`) — один раз. Только части теряли текущий `debug.log`."""
-    sub = {"debug": "dbgparts", "error": "errparts"}.get(kind)
-    out, seen = [], set()
-    cand = (sorted(glob.glob(os.path.join(d, sub, "*"))) if sub else []) + \
-        sorted(glob.glob(os.path.join(d, f"{kind}*.log")), key=lambda p: (len(p), p))
-    for p in cand:
-        with open(p, "rb") as f:
-            h = hashlib.sha1(f.read()).hexdigest()
-        if h not in seen:
-            seen.add(h)
-            out.append(p)
-    return out
 
 
 def load(d, kind):
