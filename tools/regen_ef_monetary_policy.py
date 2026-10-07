@@ -68,7 +68,7 @@ EF_MODS = ["devaluation_currency_25", "devaluation_currency_50", "devaluation_cu
 
 
 def effects():
-    clear_mods = "".join(f"\tremove_modifier = {m}\n" for m in EF_MODS)
+    clear_mods = "".join(f"\tif = {{ limit = {{ has_modifier = {m} }} remove_modifier = {m} }}\n" for m in EF_MODS)
     return HEAD + "\n" + f"""\
 # The law came into force: start = target = today's cover. The AI arms it at once with its
 # target (zz_ef_mp_ai_target); the player arms it by moving the target (scripted guis).
