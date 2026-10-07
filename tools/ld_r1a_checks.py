@@ -17,7 +17,16 @@ from datetime import date
 sys.stdout.reconfigure(encoding='utf-8')
 
 
+MON = {"января": 1, "февраля": 2, "марта": 3, "апреля": 4, "мая": 5, "июня": 6, "июля": 7, "августа": 8,
+       "сентября": 9, "октября": 10, "ноября": 11, "декабря": 12, "January": 1, "February": 2, "March": 3, "April": 4,
+       "May": 5, "June": 6, "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12}
+
+
 def d(s):
+    """The game writes dates with month names of the user's language: 'января 8, 1836'."""
+    mm = re.match(r'(\w+) (\d+), (\d+)', s.strip())
+    if mm:
+        return date(int(mm.group(3)), MON[mm.group(1)], int(mm.group(2)))
     y, m, dd = (int(x) for x in s.split('.')[:3])
     return date(y, m, dd)
 
