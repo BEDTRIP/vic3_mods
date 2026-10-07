@@ -439,10 +439,6 @@ FLOWS = [
      svp("zz_ef_v_d_bonds"), None),
     (Z, B, "погашение облигаций других стран (E&F)", "foreign bonds run off (E&F)", svn("zz_ef_v_d_bonds"), None),
     # deposits: from the savings, not from the week's income -- banks' card only (window values)
-    (N, B, "вклады населения из накоплений (прошедшая неделя: пул отражает их неделей позже)",
-     "pops' deposits from their savings (the week just ended: the pool shows them a week later)",
-     sv_("zz_ef_v_w_dep_in"), B),
-    (B, N, "снятие вкладов (прошедшая неделя)", "deposits withdrawn (the week just ended)", sv_("zz_ef_v_w_dep_out"), B),
     (B, N, "проценты по вкладам (прошедшая неделя)", "interest on deposits (the week just ended)",
      sv_("zz_ef_v_w_dep_int"), B),
     # consumer credit (EF.48 item 4): pool <-> pops through the dependents' surcharge
@@ -763,7 +759,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
@@ -903,16 +899,12 @@ def pops_card(lang):
                                                                          if ru else "contributions to the pool by the engine (deposits) less construction paid from them"),
          # stage 2, night 6.10: the mint is gone (М); the CB's buy-back of the pops' metal and the savings over their norm
          f"  ← #P +{money('zz_ef_v_f_buyback_m')}#!{mark('mod', ru)} " + ("ЦБ выкупил металл населения (паритет + 2%, новые деньги)" if ru else "the CB bought the pops' metal (parity + 2%, new money)"),
-         "2 " + ("Вклады в банках" if ru else "Bank deposits"),
-         f"  → #N −{money('zz_ef_v_w_dep_in')}#!{mark('mod', ru)} " + ("внесено во вклады" if ru else "deposited"),
-         f"  ← #P +{money('zz_ef_v_w_dep_out')}#!{mark('mod', ru)} " + ("снято со вкладов" if ru else "withdrawn"),
          ]
     resid = v("zz_ef_v_d_agg0")
-    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_f_buyback_m", -1),
-                     ("zz_ef_v_w_dep_in", 1), ("zz_ef_v_w_dep_out", -1)):
+    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_f_buyback_m", -1)):
         resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
                  f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
-    L.append("3 " + ("Вне счетов" if ru else "Outside the accounts"))
+    L.append("2 " + ("Вне счетов" if ru else "Outside the accounts"))
     L.append(f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"))
     L.append("")
     L.append("#b " + ("Доходы и траты населения за неделю (транзит, оценка — в сумму не входят):" if ru else
@@ -925,14 +917,14 @@ def pops_card(lang):
         L.append(f"  ← #P +[{e}|D] {cur}#! {lab}" if dr == "in" else f"  → #N −[{e}|D] {cur}#! {lab}")
     L.append("")
     L.append((f"Накопления {money('zz_ef_pop_savings')}: во вкладах {money('zz_ef_pop_deposits')}, на руках "
-              f"{money('zz_ef_pop_cash')}; норма наличных {money('zz_ef_pop_cash_norm')} — сверх неё население несёт во "
-              f"вклады, ниже — снимает; норма накоплений {money('zz_ef_sav_norm')}. Потребкредит: долг {money('zz_ef_cc_debt')}, "
+              f"{money('zz_ef_pop_cash')} — банкноты, долг ЦБ населению (двигают только проводки: консоли, выкуп металла); "
+              f"норма накоплений {money('zz_ef_sav_norm')}. Потребкредит: долг {money('zz_ef_cc_debt')}, "
               f"ставка {sv('zz_ef_cc_rate', '%1')}. Металл населения: золото {sv('zz_ef_popm_gold', 'D')}, серебро "
               f"{sv('zz_ef_popm_silver', 'D')} ед. — по паритету {money('zz_ef_popm_money')}.")
              if ru else
              (f"Savings {money('zz_ef_pop_savings')}: in deposits {money('zz_ef_pop_deposits')}, at hand "
-              f"{money('zz_ef_pop_cash')}; cash norm {money('zz_ef_pop_cash_norm')} — over it pops deposit, under it "
-              f"they withdraw; savings norm {money('zz_ef_sav_norm')}. Consumer credit: debt {money('zz_ef_cc_debt')}, "
+              f"{money('zz_ef_pop_cash')} — banknotes, the CB's debt to pops (moved by postings only: consols, the metal "
+              f"buy-back); savings norm {money('zz_ef_sav_norm')}. Consumer credit: debt {money('zz_ef_cc_debt')}, "
               f"rate {sv('zz_ef_cc_rate', '%1')}. Pops' metal: gold {sv('zz_ef_popm_gold', 'D')}, silver "
               f"{sv('zz_ef_popm_silver', 'D')} units — {money('zz_ef_popm_money')} at parity."))
     return "\\n".join(L)
@@ -944,12 +936,10 @@ def deposits_card(lang):
     ru = lang == "russian"
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     resid = v("zz_ef_v_d_deposits")
-    for n_, sign in (("zz_ef_v_w_dep_in", -1), ("zz_ef_v_w_dep_out", 1), ("zz_ef_v_w_dep_int", -1)):
+    for n_, sign in (("zz_ef_v_w_dep_int", -1),):
         resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
                  f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
     L = [f"#b {'Вклады в банках за неделю' if ru else 'Bank deposits this week'}: {delta('zz_ef_v_d_deposits')}#!{mark('mod', ru)}",
-         f"  ← #P +{money('zz_ef_v_w_dep_in')}#!{mark('mod', ru)} " + ("внесено из наличных" if ru else "deposited from cash"),
-         f"  → #N −{money('zz_ef_v_w_dep_out')}#!{mark('mod', ru)} " + ("снято в наличные" if ru else "withdrawn to cash"),
          f"  ← #P +{money('zz_ef_v_w_dep_int')}#!{mark('mod', ru)} " + ("проценты (платят банки из пула)" if ru else "interest (the banks pay it from the pool)"),
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
          "",
