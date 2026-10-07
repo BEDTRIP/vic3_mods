@@ -160,6 +160,7 @@ zz_ef_mp_step = {{
 					else = {{
 						set_variable = {{ name = zz_ef_mp_flow value = zz_ef_mp_issue }}
 						add_treasury = var:zz_ef_mp_flow
+						zz_ef_tr_mark = {{ V = var:zz_ef_mp_flow }}
 						change_variable = {{ name = zz_ef_mp_cum add = var:zz_ef_mp_flow }}
 					}}
 				}}
@@ -180,6 +181,7 @@ zz_ef_mp_step = {{
 							value = var:zz_ef_mp_flow
 							multiply = -1
 						}}
+						zz_ef_tr_unmark = {{ V = var:zz_ef_mp_flow }}
 						change_variable = {{ name = zz_ef_mp_flow multiply = -1 }}
 					}}
 				}}

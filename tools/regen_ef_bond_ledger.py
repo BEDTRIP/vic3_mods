@@ -259,7 +259,7 @@ zz_ef_pb_cutback = {
 		scope:zz_ef_bl_seller = { zz_ef_bl_acc_add = { F = woff V = root.var:zz_ef_bl_x } }
 	}
 	else = {
-		zz_ef_bl_pay = { F = redeem TO = zz_ef_f_pb_back SHORT = zz_ef_f_bl_lost INTO = add_investment_pool }
+		zz_ef_bl_pay = { F = redeem TO = zz_ef_f_pb_back SHORT = zz_ef_f_bl_lost INTO = pool }
 	}
 	remove_variable = zz_ef_bl_x
 	remove_variable = zz_ef_bl_y
@@ -353,6 +353,7 @@ zz_ef_bl_register = {{
 		set_variable = {{ name = zz_ef_bl_y value = var:zz_ef_bh_$N$ }}
 		change_variable = {{ name = zz_ef_bl_y subtract = var:zz_ef_bl_x }}
 		add_treasury = var:zz_ef_bl_y
+		zz_ef_tr_mark = {{ V = var:zz_ef_bl_y }}
 		change_variable = {{ name = zz_ef_f_bl_refund add = var:zz_ef_bl_y }}
 		set_variable = {{ name = zz_ef_bh_$N$ value = var:zz_ef_bl_x }}
 	}}
@@ -388,14 +389,14 @@ zz_ef_bl_hold = {{
 			scope:zz_ef_bl_seller = {{ zz_ef_bl_acc_add = {{ F = woff V = root.var:zz_ef_bl_x }} }}
 		}}
 		else = {{
-			zz_ef_bl_pay = {{ F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost INTO = add_treasury }}
+			zz_ef_bl_pay = {{ F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost INTO = treasury }}
 		}}
 	}}
 	set_variable = {{ name = zz_ef_bl_x value = var:zz_ef_bh_$N$ }}
 	change_variable = {{ name = zz_ef_bl_x multiply = scope:zz_ef_bl_seller.zz_ef_bl_int_per_part }}
 	# R1а.4: a holder's step after a gap -- the interest of the weeks its step covers
 	change_variable = {{ name = zz_ef_bl_x multiply = zz_ef_step_weeks_v }}
-	zz_ef_bl_pay = {{ F = int_out TO = zz_ef_f_bl_int_in SHORT = zz_ef_f_bl_int_short INTO = add_treasury }}
+	zz_ef_bl_pay = {{ F = int_out TO = zz_ef_f_bl_int_in SHORT = zz_ef_f_bl_int_short INTO = treasury }}
 	remove_variable = zz_ef_bl_x
 }}
 
@@ -410,7 +411,7 @@ zz_ef_bl_end = {{
 		var:zz_ef_bs_$N$ = {{ save_scope_as = zz_ef_bl_seller }}
 		set_variable = {{ name = zz_ef_bl_x value = var:zz_ef_bh_$N$ }}
 		scope:zz_ef_bl_seller = {{ change_variable = {{ name = zz_ef_bl_held subtract = root.var:zz_ef_bl_x }} }}
-		zz_ef_bl_pay = {{ F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost INTO = add_treasury }}
+		zz_ef_bl_pay = {{ F = redeem TO = zz_ef_f_bl_back SHORT = zz_ef_f_bl_lost INTO = treasury }}
 		remove_variable = zz_ef_bl_x
 	}}
 	else = {{
@@ -420,8 +421,15 @@ zz_ef_bl_end = {{
 	if = {{ limit = {{ has_variable = zz_ef_bs_$N$ }} remove_variable = zz_ef_bs_$N$ }}
 }}
 
+# Holder scope: var:zz_ef_bl_x into our treasury (marked for the treasury's reconciliation, R1б В5) or our pool.
+zz_ef_bl_into_treasury = {{
+	add_treasury = var:zz_ef_bl_x
+	zz_ef_tr_mark = {{ V = var:zz_ef_bl_x }}
+}}
+zz_ef_bl_into_pool = {{ add_investment_pool = var:zz_ef_bl_x }}
+
 # Holder scope: var:zz_ef_bl_x from scope:zz_ef_bl_seller's pool (at most what it holds) to our treasury ($INTO$ =
-# add_treasury) or our pool (add_investment_pool, private banks);
+# treasury) or our pool (pool, private banks);
 # the seller sums it under $F$, we under var:$TO$; what its pool could not pay -- under var:$SHORT$.
 zz_ef_bl_pay = {{
 	change_variable = {{ name = $SHORT$ add = var:zz_ef_bl_x }}
@@ -443,7 +451,7 @@ zz_ef_bl_pay = {{
 		}}
 		zz_ef_bl_acc_add = {{ F = $F$ V = root.var:zz_ef_bl_x }}
 	}}
-	$INTO$ = var:zz_ef_bl_x
+	zz_ef_bl_into_$INTO$ = yes
 	change_variable = {{ name = $TO$ add = var:zz_ef_bl_x }}
 	change_variable = {{ name = $SHORT$ subtract = var:zz_ef_bl_x }}
 }}
