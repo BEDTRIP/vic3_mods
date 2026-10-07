@@ -221,7 +221,10 @@ zz_ef_v_f_nr_int = {
 zz_ef_fx_holders_demand_m = {
 	value = 0
 	if = {
-		limit = { zz_ef_raw_gdp > 0 }
+		limit = {
+			has_variable = zz_ef_t_liab_all
+			zz_ef_raw_gdp > 0
+		}
 		value = var:zz_ef_t_liab_all
 		divide = zz_ef_raw_gdp
 		multiply = 100
