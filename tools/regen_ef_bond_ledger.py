@@ -393,7 +393,7 @@ zz_ef_bl_hold = {{
 	}}
 	set_variable = {{ name = zz_ef_bl_x value = var:zz_ef_bh_$N$ }}
 	change_variable = {{ name = zz_ef_bl_x multiply = scope:zz_ef_bl_seller.zz_ef_bl_int_per_part }}
-	# R1а.4: a B holder steps every 4 weeks -- the interest of the weeks its step covers
+	# R1а.4: a holder's step after a gap -- the interest of the weeks its step covers
 	change_variable = {{ name = zz_ef_bl_x multiply = zz_ef_step_weeks_v }}
 	zz_ef_bl_pay = {{ F = int_out TO = zz_ef_f_bl_int_in SHORT = zz_ef_f_bl_int_short INTO = add_treasury }}
 	remove_variable = zz_ef_bl_x
