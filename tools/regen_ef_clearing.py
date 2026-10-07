@@ -17,7 +17,8 @@ Now one clearing house for the world (global variables), in gold:
     (stockpiling_<currency>_state_1 on the CB capital state); its own currency coming home is redeemed
     (taken out of the house, a debt abroad gone).
   * the ratio: the countries' weekly steps are spread over the month (no common weekly tick), so the house
-    works in windows of 7 days (global var zz_ef_clr_window, days = 7): at a window's start the ratio = what the
+    works in windows of 7 days (global var zz_ef_clr_window; R1а.4: the fork's scheduler opens each window at the
+    end of its week, the var lives 9 days as a fallback): at a window's start the ratio = what the
     house holds / the inflows claimed during the window before (at most 2); with world payments = world claims
     it is 1. Metal and currency only move between the CBs and the house: nothing appears from nowhere.
 
@@ -60,7 +61,7 @@ STEP = """
 zz_ef_clr_window_roll = {
 	if = {
 		limit = { NOT = { has_global_variable = zz_ef_clr_window } }
-		set_global_variable = { name = zz_ef_clr_window value = yes days = 7 }
+		set_global_variable = { name = zz_ef_clr_window value = yes days = 9 }
 		if = {
 			limit = { NOT = { has_global_variable = zz_ef_clr_in_acc } }
 			set_global_variable = { name = zz_ef_clr_in_acc value = 0 }
