@@ -15,9 +15,9 @@ deposits held. Every channel counts: the clearing, our currency coming home, E&F
 Д2.31 (the start): E&F's history gives CBs foreign currency in its own scale, and the start rescaled each holder's
 stock by the HOLDER's factor -- Belgian francs abroad 8.4M against Belgium's M2 3.2M (60M in week 1), the same for
 Sardinia, Sweden, Norway, Finland. Now the holders' factor is not applied (zz_ef_money_model.txt); the issuer cuts its
-currency held abroad to zz_ef_fx_start_cap (5%) of its money, every holder in proportion -- once, at its first step,
-against the money expected (zz_ef_start_money). What is kept starts as deposits in its banks out of their capital
-(R1б.1: the pool as it is).
+currency held abroad to zz_ef_fx_start_cap (5%) of its money, every holder in proportion -- at its first step, against
+the money expected (zz_ef_start_money), and when its deposits start (it becomes an issuer -- a currency law after the
+first step), against M2. What is kept starts as deposits in its banks out of their capital (R1б.1: the pool as it is).
 
 Д2.33 (the user, 6.10 day, after run r1006_162423: Britain's deficit 0.15 -> 0.6M a week, pounds abroad 66% of GDP,
 nothing closing it): (a) the issuer's banks pay the holders interest at the deposit rate -- weekly every holder's
@@ -105,8 +105,8 @@ zz_ef_fx_liab_trim = {
 	}
 }
 
-# COUNTRY scope, weekly at the receiver after the clearing (zz_ef_cb_hume_step). R1б.1 (8.10): the deposits start at
-# the first step (the stock was cut once there, zz_ef_fx_liab_trim) -- the stock as it is, out of the banks' capital
+# COUNTRY scope, weekly at the receiver after the clearing (zz_ef_cb_hume_step). R1б.1 (8.10): the deposits start once
+# the country is an issuer (from the first step on) -- the stock cut against M2, then as it is, out of the banks' capital
 # (the pool as it is, no money into it; was: the whole stock came into the pool as the first week's deposits).
 zz_ef_nr_dep_step = {
 	set_variable = { name = zz_ef_f_nr_dep value = 0 }
@@ -116,6 +116,9 @@ zz_ef_nr_dep_step = {
 			NOT = { has_variable = zz_ef_nr_started }
 			has_variable = zz_ef_parity_version
 		}
+		# the stock cut once more against M2: a currency whose law came after the first step was not cut there
+		# (r1007_203105: Hanover's thalers -- 8.8M in Britain's reserves, 8.2M in France's)
+		zz_ef_fx_liab_trim = { BASE = zz_ef_agg_m2 }
 		set_variable = { name = zz_ef_nr_started value = yes }
 		if = { limit = { NOT = { has_variable = zz_ef_nr_dep } } set_variable = { name = zz_ef_nr_dep value = 0 } }
 		set_variable = { name = zz_ef_t_liab_all value = zz_ef_fx_liab_all }
