@@ -103,7 +103,6 @@ def main():
         c = re.search(r'\n\tcountry=(\d+)', '\n' + rec)
         if c:
             state_owner[sid] = c.group(1)
-            state_owner[mm.group(1)] = c.group(1)
     bm, _ = block(s, 'building_manager')
     btypes = defaultdict(Counter)
     tc_cash = Counter()
@@ -124,7 +123,6 @@ def main():
         o = re.search(r'\n\towner=(\d+)', '\n' + rec)
         if o:
             market_owner[o.group(1)] = mid
-            market_owner[o.group(1)] = mm.group(1)
 
     rows = []
     for cid, (tag, rec) in countries.items():
