@@ -1,0 +1,12 @@
+{
+  "name": "LD Probe BuyPkg C",
+  "id": "com.github.BEDTRIP.LedgerdemainProbeBuyPkgC",
+  "version": "0.0.1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Measurement only: popneed_currency duplicate key, variant c. Not for play.",
+  "tags": [],
+  "relationships": [],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

@@ -1,0 +1,10 @@
+﻿namespace = zz_probe_bp
+
+# Проба R0.6: какое из двух значений popneed_currency в wealth_N берёт движок. Вызов из консоли: event zz_probe_bp.1
+zz_probe_bp.1 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		debug_log = "BPK|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|liq [THIS.GetCountry.MakeScope.ScriptValue('zz_probe_liq_buy')|2]|loc [THIS.GetCountry.MakeScope.ScriptValue('zz_probe_loc_buy')|2]"
+	}
+}

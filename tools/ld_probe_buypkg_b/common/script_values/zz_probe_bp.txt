@@ -1,0 +1,2 @@
+﻿zz_probe_liq_buy = { value = market.mg:liquidity_currency.market_goods_buy_orders }
+zz_probe_loc_buy = { value = market.mg:local_currency.market_goods_buy_orders }
