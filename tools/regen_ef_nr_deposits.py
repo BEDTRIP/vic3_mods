@@ -21,8 +21,8 @@ against M2). What is kept starts as deposits in its banks (the first week's chan
 
 Д2.33 (the user, 6.10 day, after run r1006_162423: Britain's deficit 0.15 -> 0.6M a week, pounds abroad 66% of GDP,
 nothing closing it): (a) the issuer's banks pay the holders interest at the deposit rate -- weekly every holder's
-stock x (1 + zz_ef_deposit_rate / 52), credited as more deposits (the pool unchanged, the banks' liabilities up:
-var:zz_ef_f_nr_int); (b) the holders spend the currency on the issuer's goods -- the engine's lever, an export
+stock x (1 + zz_ef_deposit_rate / 52), credited as more deposits (the pool unchanged, the banks' liabilities up, their capital down --
+R1б, В8: var:zz_ef_f_nr_int); (b) the holders spend the currency on the issuer's goods -- the engine's lever, an export
 advantage for the issuer by its currency held abroad: static modifier zz_ef_fx_holders_demand (+1% per unit),
 multiplier = zz_ef_fx_holders_demand_m (+1 per 3% of GDP held abroad, at most 20). More exports -> an inflow in the
 clearing -> the holders pay with its own currency coming home, the debt falls by itself.
@@ -125,7 +125,8 @@ zz_ef_nr_dep_step = {
 			zz_ef_nr_issuer = yes
 			has_variable = zz_ef_nr_started
 		}
-		# Д2.33 (a): interest to the holders at the deposit rate, credited as more deposits (the pool unchanged)
+		# Д2.33 (a): interest to the holders at the deposit rate, credited as more deposits (the pool unchanged);
+		# R1б (В8, 8.10): paid out of the banks' capital, like the pops' deposit interest (zz_ef_post)
 		set_variable = { name = zz_ef_f_nr_int value = 0 }
 		set_variable = { name = zz_ef_nri_liab value = zz_ef_fx_liab }
 		if = {
@@ -139,7 +140,7 @@ zz_ef_nr_dep_step = {
 			change_variable = { name = zz_ef_nri_k add = 1 }
 			save_scope_as = zz_fxt_issuer
 """ + trim_chain(cur, "zz_ef_nri_k") + """			set_variable = { name = zz_ef_nr_dep value = zz_ef_nr_dep_v }
-			change_variable = { name = zz_ef_nr_dep add = var:zz_ef_f_nr_int }
+			zz_ef_post = { FROM = zz_ef_bank_capital TO = zz_ef_nr_dep V = var:zz_ef_f_nr_int }
 		}
 		# the holders' stock is final for the week here (the interest above was its last change): one pass of
 		# zz_ef_fx_liab_all, read by the deposits below and by zz_ef_fx_holders_demand_m
