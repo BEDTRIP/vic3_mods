@@ -401,7 +401,42 @@ def build(src: str) -> tuple[str, str]:
     body, n = re.subn(r'(?m)^(\s*)text = "([^"]*[\[@#][^"]*)"', r'\1raw_text = "\2"', body)
     assert n > 50, f"{n} expression texts, expected 100+"
 
+    # 7. ФК2 (7.10): a scripted gui that no file defines (E&F's own leftovers: *_list_gerenation_ordered,
+    # gdpg_sort_by_country_gdp) -- "Promote 'GetScriptedGui' returned nullptr" on every click, and every frame
+    # for a datacontext. The line is commented out; under a dead datacontext the block's ScriptedGui.* lines too.
+    body = drop_missing_sguis(body)
+
     return body, orig_sha
+
+
+def defined_sguis() -> set:
+    names = set()
+    d = os.path.join(ld_gen.FORK, "common", "scripted_guis")
+    for fn in os.listdir(d):
+        if fn.endswith(".txt"):
+            text = open(os.path.join(d, fn), encoding="utf-8-sig").read()
+            names.update(re.findall(r"(?m)^\s*([A-Za-z_]\w*)\s*=\s*\{", text))
+    return names
+
+
+def drop_missing_sguis(body: str) -> str:
+    have = defined_sguis()
+    out, dead_depth, depth = [], None, 0
+    for line in body.split("\n"):
+        code = line.split("#", 1)[0] if not line.lstrip().startswith("#") else ""
+        names = re.findall(r"GetScriptedGui\('(\w+)'\)", code)
+        missing = [x for x in names if x not in have]
+        drop = bool(missing) or (dead_depth is not None and "ScriptedGui." in code)
+        if missing and re.match(r"\s*datacontext\s*=", code):
+            dead_depth = depth
+        if drop:
+            ind = line[: len(line) - len(line.lstrip())]
+            line = f"{ind}# {line.lstrip()}  # ФК2: scripted gui нет в моде"
+        depth += code.count("{") - code.count("}")
+        if dead_depth is not None and depth < dead_depth:
+            dead_depth = None
+        out.append(line)
+    return "\n".join(out)
 
 
 def bond_table(lst: str, pre: str, title: str, ind: str) -> str:
