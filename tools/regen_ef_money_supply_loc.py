@@ -519,14 +519,9 @@ FLOWS = [
      sv_("zz_ef_v_f_bl_int_out"), None),
     (B, Z, "погашение наших облигаций держателям за рубежом", "our bonds repaid to the holders abroad",
      sv_("zz_ef_v_f_bl_redeem"), None),
-    # the pool's unexplained loss (EF.48 item 2) = companies buying levels from aristocrats and capitalists at the
-    # privatization price (В1.2, 3.10): the engine pays the sellers nothing, the model puts it in their savings
-    (B, N, "компании выкупают уровни зданий у аристократов и капиталистов (цена приватизации, 15 000 за уровень) — "
-           "деньги продавцам",
-     "companies buy building levels from aristocrats and capitalists (the privatization price, 15 000 a level) — "
-     "money to the sellers", svn("zz_ef_v_f_pool_other"), None),
-    (N, X, "в накопления: выручка продавцов уровней", "into savings: the level sellers' proceeds",
-     sv_("zz_ef_v_f_buyout"), N),
+    # the pool's unexplained loss (EF.48 item 2): R1а, 8.10 -- «прочее», nobody's money (was: guessed to be companies
+    # buying levels and credited to the pops' savings, В1.2 -- archived, _archive/ld_pop_savings_guesses/)
+    (B, X, "необъяснённая убыль пула (прочее)", "the pool's unexplained loss (other)", svn("zz_ef_v_f_pool_other"), None),
     (X, B, "необъяснённый приход в пул", "the pool's unexplained gain", svp("zz_ef_v_f_pool_other"), None),
     # M.3 (4.10): the CB issues money for Hume's inflow of metal into the banks, withdraws it for an outflow
     (C, B, "Юм: ЦБ выпустил деньги под приток металла (прошлая неделя)",
@@ -771,7 +766,7 @@ SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
 SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_in", "zz_ef_v_w_dep_out", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
-SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_buyout", "zz_ef_v_f_cb_reval",
+SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
             "zz_ef_v_f_cb_rescale", "zz_ef_tr_to_cb"}
 SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_cbl_int", "zz_ef_v_f_cb_stock"}
 SRC_LAB = {"eng": ("дв", "eng"), "mod": ("мод", "mod"), "calc": ("расч", "calc"), "est": ("оц", "est"),
@@ -904,19 +899,17 @@ def pops_card(lang):
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     L = [f"#b {'Наличные на руках за неделю' if ru else 'Cash at hand this week'}: {delta('zz_ef_v_d_agg0')}#!{mark('calc', ru)}",
          "1 " + ("В накопления" if ru else "Into savings"),
-         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("остаток дохода — деньги, выпавшие из казны и касс предприятий"
-                                                                         if ru else "income left over — money that dropped out of the treasury and business cash"),
-         f"  ← #P +{money('zz_ef_v_w_buyout')}#!{mark('calc', ru)} " + ("выручка продавцов уровней зданий" if ru else "proceeds of the building levels sold"),
+         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку (вклады) за вычетом стройки из вкладов"
+                                                                         if ru else "contributions to the pool by the engine (deposits) less construction paid from them"),
          # stage 2, night 6.10: the mint is gone (М); the CB's buy-back of the pops' metal and the savings over their norm
          f"  ← #P +{money('zz_ef_v_f_buyback_m')}#!{mark('mod', ru)} " + ("ЦБ выкупил металл населения (паритет + 2%, новые деньги)" if ru else "the CB bought the pops' metal (parity + 2%, new money)"),
-         f"  → #N −{money('zz_ef_v_w_sav_wealth')}#!{mark('mod', ru)} " + ("сверх нормы накоплений — в богатство (из денег)" if ru else "over the savings' norm — into wealth (out of the money)"),
          "2 " + ("Вклады в банках" if ru else "Bank deposits"),
          f"  → #N −{money('zz_ef_v_w_dep_in')}#!{mark('mod', ru)} " + ("внесено во вклады" if ru else "deposited"),
          f"  ← #P +{money('zz_ef_v_w_dep_out')}#!{mark('mod', ru)} " + ("снято со вкладов" if ru else "withdrawn"),
          ]
     resid = v("zz_ef_v_d_agg0")
-    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_buyout", -1), ("zz_ef_v_f_buyback_m", -1),
-                     ("zz_ef_v_w_sav_wealth", 1), ("zz_ef_v_w_dep_in", 1), ("zz_ef_v_w_dep_out", -1)):
+    for n_, sign in (("zz_ef_v_w_inflow", -1), ("zz_ef_v_f_buyback_m", -1),
+                     ("zz_ef_v_w_dep_in", 1), ("zz_ef_v_w_dep_out", -1)):
         resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
                  f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
     L.append("3 " + ("Вне счетов" if ru else "Outside the accounts"))
