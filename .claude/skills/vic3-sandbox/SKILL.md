@@ -130,6 +130,9 @@ commands="Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.
 (`end:` — команда в конце прогона на паузе). `e_root` — корни по полному времени (on_action, события, GUI, ИИ),
 `e_edge` — листья по собственному времени. Щелчок по строке таблицы (y = 0.1275 + 0.0198·(k−1)) выбирает запись,
 но порядок строк от прогона к прогону плавает — спускаться по номеру строки ненадёжно.
+- Строка `on_actions @ <файл>:<строка>` — **весь хук** (все on_action на нём), приписанный первому файлу, который его
+  объявил: `PSC_on_actions.txt:89` = `on_production_method_changed`, `ld_stockpile_state_var_init.txt:48` =
+  `on_monthly_pulse_country` (7.10). Сравнивать захваты разной длины — на тик (`capture … ticks N` в шапке).
 - **Номера строк** профилировщика — как в `error.log` (без пустых и комментарных, отсчёт от определения верхнего
   уровня): переводить `tools/ld_errsites.py` → `real_lines(файл, N)`.
 - Время — сумма по потокам; база «CMF + ETF» — `playset="Ledgerdemain без E&F: Ledgerdemain + LD Profiler View"`.
