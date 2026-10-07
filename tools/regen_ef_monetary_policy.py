@@ -202,11 +202,10 @@ zz_ef_mp_step = {{
 			is_ai = yes
 			has_law = law_type:law_no_monetary_policy
 			zz_ef_mp_can_work = yes
-			# not before the CB's metal is in our scale (run 25: on day 1 E&F's metal gave a cover of
-			# 104 and nearly every AI took a revaluation before the rescale of week 12)
-			has_variable = zz_ef_weeks_run
-			var:zz_ef_weeks_run >= 13
-			NOT = {{ has_variable = zz_ef_metal_rescale_due }}
+			# not before the CB's start metal (R1б.1, Д.2: run 25 -- on day 1 E&F's metal gave a cover of 104 and
+			# nearly every AI took a revaluation)
+			has_variable = zz_ef_parity_version
+			NOT = {{ has_variable = zz_ef_cb_start_due }}
 		}}
 		if = {{
 			limit = {{ NOT = {{ has_variable = zz_ef_mp_low_months }} }}

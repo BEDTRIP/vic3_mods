@@ -264,7 +264,8 @@ zz_ef_clr_pay = {
 			value = {
 				value = var:zz_ef_f_clr_net
 				multiply = -1
-				multiply = var:money_value_target_1
+				# R1б.1 (Д.1): the engine's money into the standard's metal at the fixed rate, not at the parity
+				multiply = zz_ef_metal_per_money
 				multiply = zz_ef_clr_metal_share
 				multiply = zz_ef_clr_pay_ratio_v
 				max = zz_ef_cb_metal
@@ -524,11 +525,8 @@ zz_ef_clr_gpm_own = {
 			has_variable = money_value_target_1
 			var:money_value_target_1 > 0
 		}
-		value = var:money_value_target_1
-		if = {
-			limit = { has_law = law_type:law_silver_standard }
-			multiply = silver_to_gold_rate
-		}
+		# R1б.1 (Д.1): a metal standard's unit of the engine's money is 1 gold unit; the parity is not in it
+		value = 1
 	}
 	min = 0
 }
