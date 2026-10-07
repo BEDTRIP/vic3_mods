@@ -1,4 +1,4 @@
-<#
+﻿<#
 Sandbox run of Victoria 3 for the agent (EF.48, 2026-10-01).
 
 Launches the game with the last save (-continuelastsave -debug_mode), waits for
@@ -28,7 +28,9 @@ Parameters:
                   -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
     -Commands     extra console commands after loading, ';'-separated (e.g. "dump_data_types"); their
-                  output files in logs/ are copied with the other logs
+                  output files in logs/ are copied with the other logs. "end:<cmd>" -- entered at the end of
+                  the run, after the pause (profiler: "log_ticktask_performance;Script.Profiling.Start;
+                  end:Script.Profiling.Stop")
     -AiTag        console "enable_ai <tag>" after loading, so the AI plays the player's country
                   too (default "all"; "" to skip)
     -StartSave    start from this save instead of the last one: a file name in "save games" (e.g.
@@ -156,7 +158,10 @@ $p = Get-Game
 Shot $p "01_loaded.png"
 if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
 # a command "ui:<step>" is a step of tools/vic3_ui.ps1 (key, click, hover, shot, wait ...), the rest -- console commands
+# a command "end:<cmd>" is entered at the end of the run, after the pause (e.g. "end:Script.Profiling.Stop", 7.10)
+$EndCommands = @()
 foreach ($c in ($Commands -split ';' | ForEach-Object { $_.Trim() } | Where-Object { $_ })) {
+    if ($c.StartsWith("end:")) { $EndCommands += $c.Substring(4); continue }
     if ($c.StartsWith("ui:")) { & (Join-Path $PSScriptRoot "vic3_ui.ps1") -OutDir $OutDir -Do $c.Substring(3) }
     else { Console-Cmd $p $c; Start-Sleep 5; Log "console: $c" }
 }
@@ -200,6 +205,7 @@ else {
     if ($p) {
         # pause at once, even if the user is at the PC (the user, 5.10); the screens after it wait for the user
         Pause-Now $p; $script:WantPaused = $true; Start-Sleep 3; Shot $p "03_end.png"
+        foreach ($c in $EndCommands) { Console-Cmd $p $c; Start-Sleep 10; Log "console (end): $c" }
     }
 }
 
