@@ -6,6 +6,7 @@
 
   python tools/playset_content_load.py --playset "Ledgerdemain" --out <файл>
   python tools/playset_content_load.py --list
+  python tools/playset_content_load.py --playset vanilla --out <файл>   # без модов: база для сравнения
 """
 import argparse
 import json
@@ -23,6 +24,11 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--list", action="store_true")
     args = ap.parse_args()
+    if args.playset == "vanilla":
+        with open(args.out, "w", encoding="utf-8") as f:
+            json.dump({"enabledMods": [], "disabledDLC": [], "enabledUGC": []}, f, separators=(",", ":"))
+        print("vanilla: без модов")
+        return 0
     con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     if args.list:
         for name, active in con.execute("select name, isActive from playsets order by name"):
