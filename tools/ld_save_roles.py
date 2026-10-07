@@ -34,9 +34,9 @@ def block(s, key, start=0):
 
 
 def records(seg):
-    """Records N={ ... } of a manager block (one tab deep), as (id, body)."""
-    for mm in re.finditer(r'\n\t(\d+)=\{\n', seg):
-        end = seg.find('\n\t}\n', mm.start())
+    """Records N={ ... } of a manager's database (at column 0, fields one tab deep), as (id, body)."""
+    for mm in re.finditer(r'\n(\d+)=\{\n', seg):
+        end = seg.find('\n}\n', mm.start())
         yield mm.group(1), seg[mm.end():end]
 
 
@@ -69,25 +69,17 @@ def main():
 
     seg, _ = block(s, 'country_manager')
     countries = {}
-    for mm in re.finditer(r'\n\t\t(\d+)=\{\n', seg):
-        end = seg.find('\n\t\t}\n', mm.start())
-        rec = seg[mm.end():end]
-        d = re.search(r'\n\t\t\tdefinition="(\w+)"', '\n' + rec)
+    for cid, rec in records(seg):
+        d = re.search(r'\n\tdefinition="(\w+)"', '\n' + rec)
         if d:
-            countries[mm.group(1)] = (d.group(1), rec)
-    if not countries:
-        # one level less deep
-        for cid, rec in records(seg):
-            d = re.search(r'\n\t\tdefinition="(\w+)"', '\n' + rec)
-            if d:
-                countries[cid] = (d.group(1), rec)
+            countries[cid] = (d.group(1), rec)
 
     if keys_tag:
-        print('top-level managers:', ' '.join(managers))
+        print('top-level managers:', ' '.join(dict.fromkeys(managers)))
         for cid, (tag, rec) in countries.items():
             if tag == keys_tag:
                 print(f'country {tag} id {cid}, {len(rec)} chars; keys:')
-                print(' '.join(dict.fromkeys(top_keys(rec, 3) or top_keys(rec, 2))))
+                print(' '.join(dict.fromkeys(top_keys(rec, 1))))
                 for k in ('budget', 'market', 'trade', 'gdp', 'country_type', 'money', 'investment_pool'):
                     mm = re.search(r'\n\t+' + k + r'=(\{[^{}]{0,400}|[^\n]*)', '\n' + rec)
                     print(f'  {k}: {mm.group(1)[:300]!r}' if mm else f'  {k}: -')
@@ -98,39 +90,40 @@ def main():
                 print(f'\n{man}: none')
                 continue
             print(f'\n{man}: {len(mseg)} chars; head:')
-            print(mseg[:1500])
+            print(mseg[:600])
+            first = next(records(mseg), None)
+            if first:
+                print(f'  first record {first[0]} keys:', ' '.join(dict.fromkeys(top_keys(first[1], 1))))
         return
 
     # states -> owner country, buildings by owner
     states_seg, _ = block(s, 'states')
     state_owner = {}
-    for mm in re.finditer(r'\n\t\t(\d+)=\{\n', states_seg):
-        end = states_seg.find('\n\t\t}\n', mm.start())
-        rec = states_seg[mm.end():end]
-        c = re.search(r'\n\t\t\tcountry=(\d+)', '\n' + rec)
+    for sid, rec in records(states_seg):
+        c = re.search(r'\n\tcountry=(\d+)', '\n' + rec)
         if c:
+            state_owner[sid] = c.group(1)
             state_owner[mm.group(1)] = c.group(1)
     bm, _ = block(s, 'building_manager')
     btypes = defaultdict(Counter)
     tc_cash = Counter()
-    for mm in re.finditer(r'\n\t\t\d+=\{\n\t\t\tbuilding=(\w+)\n(.*?)\n\t\t\}', bm, re.S):
+    for mm in re.finditer(r'\n\d+=\{\n\tbuilding=(\w+)\n(.*?)\n\}', bm, re.S):
         body = mm.group(2)
-        st = re.search(r'\n\t\t\tstate=(\d+)', '\n' + body)
+        st = re.search(r'\n\tstate=(\d+)', '\n' + body)
         own = state_owner.get(st.group(1)) if st else None
         if own is None:
             continue
         btypes[own][mm.group(1)] += 1
         if mm.group(1) == 'building_trade_center':
-            tc_cash[own] += num(body, 'cash_reserves', 3)
+            tc_cash[own] += num(body, 'cash_reserves', 1)
 
     # markets: owner country -> market id
     mk, _ = block(s, 'market_manager')
     market_owner = {}
-    for mm in re.finditer(r'\n\t\t(\d+)=\{\n', mk):
-        end = mk.find('\n\t\t}\n', mm.start())
-        rec = mk[mm.end():end]
-        o = re.search(r'\n\t\t\towner=(\d+)', '\n' + rec)
+    for mid, rec in records(mk):
+        o = re.search(r'\n\towner=(\d+)', '\n' + rec)
         if o:
+            market_owner[o.group(1)] = mid
             market_owner[o.group(1)] = mm.group(1)
 
     rows = []
