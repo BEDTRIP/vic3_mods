@@ -129,7 +129,9 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 commands="Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.Gui;end:ui:wait 4;end:ui:click 0.028 0.067;end:ui:wait 2;end:ui:shot e_root;end:ui:click 0.064 0.067;end:ui:wait 3;end:ui:shot e_edge")`
 (`end:` — команда в конце прогона на паузе). `e_root` — корни по полному времени (on_action, события, GUI, ИИ),
 `e_edge` — листья по собственному времени. Щелчок по строке таблицы (y = 0.1275 + 0.0198·(k−1)) выбирает запись,
-но порядок строк от прогона к прогону плавает — спускаться по номеру строки ненадёжно.
+но порядок строк от прогона к прогону плавает — спускаться по номеру строки ненадёжно. Внутри одного прогона строки
+  отсортированы по полному времени: спуск по пути — шаг `end:ui:prof 1.1.1=q1 1.1.2=q2 …` (корень, щелчки по строкам
+  пути, снимок `<имя>.png`; 8.10 — ~15 шагов на снимок упирались в длину командной строки Windows, 32 767 знаков).
 - Строка `on_actions @ <файл>:<строка>` — **весь хук** (все on_action на нём), приписанный первому файлу, который его
   объявил: `PSC_on_actions.txt:89` = `on_production_method_changed`, `ld_stockpile_state_var_init.txt:48` =
   `on_monthly_pulse_country` (7.10). Сравнивать захваты разной длины — на тик (`capture … ticks N` в шапке).
