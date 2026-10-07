@@ -83,6 +83,9 @@ def gen():
         first = False
         out.append(f"\t\tlimit = {{")
         out.append(f"\t\t\thas_active_production_method = {pm_from}")
+        # the ownership share needs a built building (r1007_174149: 1159 errors from buildings under construction)
+        out.append(f"\t\t\tlevel > 0")
+        out.append(f"\t\t\tNOT = {{ is_under_construction = yes }}")
         out.append(f"\t\t\tprivate_ownership_fraction {op} 0.5")
         out.append(f"\t\t\tor = {{")
         out.extend(f"\t\t\t\tis_building_type = {bt}" for bt in bts)
