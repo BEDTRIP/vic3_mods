@@ -7,6 +7,8 @@
   python tools/playset_content_load.py --playset "Ledgerdemain" --out <файл>
   python tools/playset_content_load.py --list
   python tools/playset_content_load.py --playset vanilla --out <файл>   # без модов: база для сравнения
+  python tools/playset_content_load.py --playset "Ledgerdemain без E&F: Ledgerdemain" --out <файл>
+      # плейсет без модов, в имени которых есть строка после « без » (CMF + ETF без форка: база для сравнения)
 """
 import argparse
 import json
@@ -34,12 +36,15 @@ def main():
         for name, active in con.execute("select name, isActive from playsets order by name"):
             print(("* " if active else "  ") + name)
         return 0
-    row = con.execute("select id from playsets where name = ?", (args.playset,)).fetchone()
+    name, _, drop = args.playset.partition(" без ")
+    row = con.execute("select id from playsets where name = ?", (name,)).fetchone()
     if not row:
         print(f"no playset {args.playset!r}; --list shows them", file=sys.stderr)
         return 1
     mods = con.execute("select m.displayName, m.dirPath from playsets_mods pm join mods m on m.id = pm.modId "
                        "where pm.playsetId = ? and pm.enabled = 1 order by pm.position", (row[0],)).fetchall()
+    if drop:
+        mods = [m for m in mods if drop not in m[0]]
     data = {"enabledMods": [{"path": p} for _, p in mods], "disabledDLC": [], "enabledUGC": []}
     with open(args.out, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
