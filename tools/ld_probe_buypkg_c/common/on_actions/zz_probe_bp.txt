@@ -1,0 +1,14 @@
+﻿# Проба R0.6: строка BPK в каждый месячный пульс Швейцарии — даты у вариантов A/B/C совпадают
+on_monthly_pulse_country = {
+	on_actions = {
+		zz_probe_bp_monthly
+	}
+}
+zz_probe_bp_monthly = {
+	trigger = {
+		c:SWI ?= this
+	}
+	effect = {
+		trigger_event = zz_probe_bp.1
+	}
+}
