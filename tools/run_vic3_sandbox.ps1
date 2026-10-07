@@ -29,8 +29,9 @@ Parameters:
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
     -Commands     extra console commands after loading, ';'-separated (e.g. "dump_data_types"); their
                   output files in logs/ are copied with the other logs. "end:<cmd>" -- entered at the end of
-                  the run, after the pause (profiler: "log_ticktask_performance;Script.Profiling.Start;
-                  end:Script.Profiling.Stop")
+                  the run, after the pause; "end:ui:<step>" -- a vic3_ui.ps1 step there (script profiler:
+                  "Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.Gui;end:ui:wait 3;
+                  end:ui:shot prof_1"; ScriptProfiling.Dump crashes 1.13.11, vanilla too -- 7.10)
     -AiTag        console "enable_ai <tag>" after loading, so the AI plays the player's country
                   too (default "all"; "" to skip)
     -StartSave    start from this save instead of the last one: a file name in "save games" (e.g.
@@ -205,7 +206,10 @@ else {
     if ($p) {
         # pause at once, even if the user is at the PC (the user, 5.10); the screens after it wait for the user
         Pause-Now $p; $script:WantPaused = $true; Start-Sleep 3; Shot $p "03_end.png"
-        foreach ($c in $EndCommands) { Console-Cmd $p $c; Start-Sleep 10; Log "console (end): $c" }
+        foreach ($c in $EndCommands) {
+            if ($c.StartsWith("ui:")) { & (Join-Path $PSScriptRoot "vic3_ui.ps1") -OutDir $OutDir -Do $c.Substring(3) }
+            else { Console-Cmd $p $c; Start-Sleep 10; Log "console (end): $c" }
+        }
     }
 }
 
