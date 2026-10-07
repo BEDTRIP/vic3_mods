@@ -48,11 +48,30 @@ def apply(spec):
     return n
 
 
+def replace(spec):
+    """<путь>:<регулярное выражение>:<замена> — заменить в строках файла (для опыта)."""
+    rel, rx, rep = spec.split(":", 2)
+    p = os.path.join(ld_gen.FORK, rel)
+    with open(p, "rb") as f:
+        text = f.read().decode("utf-8")
+    new, n = re.subn(rx, rep, text, flags=re.M)
+    with open(p, "wb") as f:
+        f.write(new.encode("utf-8"))
+    print(f"{rel}: заменено {n}")
+    return n
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("specs", nargs="*")
     ap.add_argument("--preset", action="append", default=[])
+    ap.add_argument("--replace", action="append", default=[], help="<путь>:<regex>:<замена>")
     a = ap.parse_args()
+    if a.replace:
+        if sum(replace(s) for s in a.replace) == 0:
+            sys.exit("ни одной замены")
+        if not a.specs and not a.preset:
+            return
     specs = list(a.specs)
     for pr in a.preset:
         specs += PRESETS[pr]
