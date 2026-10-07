@@ -1,6 +1,6 @@
 """Ошибки прогона по местам в коде (ФК2, шаг 4): что чинить, где и сколько раз сработало.
 
-    python tools/ld_errsites.py <прогон> [--out <файл>] [--top N] [--all]
+    python tools/ld_errsites.py <прогон> [--out <файл>] [--top N] [--all] [--files error.1.log,error.log]
 
 Прогон — папка с `error.log` / `error.N.log` / `errparts/` (`runs/<id>` моста). Запись лога — строка с
 `[ЧЧ:ММ:СС][файл.cpp:N]:` и строки-продолжения без метки. Место — путь мода с номером строки из текста записи
@@ -47,9 +47,11 @@ def real_lines(rel, n):
     return _maps[rel].get(n, [])
 
 
-def entries(run):
+def entries(run, only=None):
     files = sorted(glob.glob(os.path.join(run, "errparts", "*"))) or \
         sorted(glob.glob(os.path.join(run, "error*.log")), key=lambda p: (-len(p), p), reverse=True)
+    if only:
+        files = [os.path.join(run, f) for f in only]
     cur = None
     for p in files:
         with open(p, encoding="utf-8", errors="replace") as f:
@@ -71,13 +73,14 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--top", type=int, default=400)
     ap.add_argument("--all", action="store_true")
+    ap.add_argument("--files", help="только эти файлы папки, через запятую по порядку (одна сессия игры из logs)")
     a = ap.parse_args()
     if a.out:
         sys.stdout = open(a.out, "w", encoding="utf-8")
     sites = Counter()
     per_file = Counter()
     total = located = 0
-    for e in entries(a.run):
+    for e in entries(a.run, a.files.split(",") if a.files else None):
         total += 1
         locs = [(m.group(1), m.group(2) or "?") for m in LOC.finditer(e)]
         msg = LOC.sub("<loc>", e.split("\n")[0])
