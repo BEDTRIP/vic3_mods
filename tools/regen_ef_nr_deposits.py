@@ -101,7 +101,7 @@ zz_ef_fx_liab_trim = {
 			set_variable = { name = zz_ef_fxt_k value = var:zz_ef_fxt_cap }
 			change_variable = { name = zz_ef_fxt_k divide = var:zz_ef_fxt_liab }
 """ + trim_chain(cur) + """		}
-		debug_log = "EFN|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|trim|liab [THIS.GetCountry.MakeScope.Var('zz_ef_fxt_liab').GetValue|0]|cap [THIS.GetCountry.MakeScope.Var('zz_ef_fxt_cap').GetValue|0]|k [THIS.GetCountry.MakeScope.Var('zz_ef_fxt_k').GetValue|4]|after [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_fx_liab')|0]"
+		if = { limit = { zz_ef_logs_on = yes } debug_log = "EFN|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|trim|liab [THIS.GetCountry.MakeScope.Var('zz_ef_fxt_liab').GetValue|0]|cap [THIS.GetCountry.MakeScope.Var('zz_ef_fxt_cap').GetValue|0]|k [THIS.GetCountry.MakeScope.Var('zz_ef_fxt_k').GetValue|4]|after [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_fx_liab')|0]" }
 	}
 }
 

@@ -122,7 +122,7 @@ zz_ef_mp_complete = {{
 		change_variable = {{ name = money_value_target_1 multiply = zz_ef_cb_cover }}
 		change_variable = {{ name = money_value_target_1 divide = var:zz_ef_mp_start }}
 	}}
-	debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|done|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|target [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_target_v')|3]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_cum_v')|0]|parity_before [THIS.GetCountry.MakeScope.Var('zz_ef_mp_parity_before').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
+	if = {{ limit = {{ zz_ef_logs_on = yes }} debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|done|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|target [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_target_v')|3]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_cum_v')|0]|parity_before [THIS.GetCountry.MakeScope.Var('zz_ef_mp_parity_before').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]" }}
 	set_variable = {{ name = zz_ef_mp_cooldown value = yes days = 730 }}
 	# EF.43 + В4.3 (5.10): a parity change raises the risk premium (scripted_effects/zz_ef_risk_premium.txt)
 	zz_ef_risk_parity_changed = yes
@@ -187,7 +187,7 @@ zz_ef_mp_step = {{
 		}}
 		if = {{
 			limit = {{ has_variable = zz_ef_mp_target }}
-			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|step|dev [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_dir')|0]|armed [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_armed_v')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|start [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_start_v')|3]|target [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_target_v')|3]|flow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_flow_v')|0]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_cum_v')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('money_supply')|0]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|ratio [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_value_ratio')|3]"
+			if = {{ limit = {{ zz_ef_logs_on = yes }} debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|step|dev [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_dir')|0]|armed [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_armed_v')|0]|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|start [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_start_v')|3]|target [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_target_v')|3]|flow [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_flow_v')|0]|cum [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_cum_v')|0]|m2 [THIS.GetCountry.MakeScope.ScriptValue('money_supply')|0]|trea [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury')|0]|ratio [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_mp_value_ratio')|3]" }}
 		}}
 	}}
 	# the AI's rule (M.4, the user 4.10): the parity is fixed; it moves only when the cover has been
@@ -236,7 +236,7 @@ zz_ef_mp_step = {{
 			}}
 			set_variable = {{ name = zz_ef_mp_parity_before value = var:money_value_target_1 }}
 			change_variable = {{ name = money_value_target_1 multiply = zz_ef_mp_ai_parity_step }}
-			debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ai_parity|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|low [THIS.GetCountry.MakeScope.Var('zz_ef_mp_low_months').GetValue|0]|high [THIS.GetCountry.MakeScope.Var('zz_ef_mp_high_months').GetValue|0]|parity_before [THIS.GetCountry.MakeScope.Var('zz_ef_mp_parity_before').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]"
+			if = {{ limit = {{ zz_ef_logs_on = yes }} debug_log = "EFM|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|ai_parity|cover [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_cb_cover')|3]|low [THIS.GetCountry.MakeScope.Var('zz_ef_mp_low_months').GetValue|0]|high [THIS.GetCountry.MakeScope.Var('zz_ef_mp_high_months').GetValue|0]|parity_before [THIS.GetCountry.MakeScope.Var('zz_ef_mp_parity_before').GetValue|4]|parity [THIS.GetCountry.MakeScope.Var('money_value_target_1').GetValue|4]" }}
 			set_variable = {{ name = zz_ef_mp_low_months value = 0 }}
 			set_variable = {{ name = zz_ef_mp_high_months value = 0 }}
 			set_variable = {{ name = zz_ef_mp_cooldown value = yes days = 1825 }}

@@ -195,7 +195,7 @@ zz_ef_pb_no_seller = {
 	change_variable = { name = zz_ef_bl_y subtract = var:zz_ef_pbh_$N$ }
 	add_investment_pool = var:zz_ef_bl_y
 	change_variable = { name = zz_ef_f_pb_refund add = var:zz_ef_bl_y }
-	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|slot $N$|no_seller [THIS.GetCountry.MakeScope.Var('zz_ef_bl_y').GetValue|0]"
+	if = { limit = { zz_ef_logs_on = yes } debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|slot $N$|no_seller [THIS.GetCountry.MakeScope.Var('zz_ef_bl_y').GetValue|0]" }
 	zz_ef_pb_cut = { N = $N$ }
 	remove_variable = zz_ef_bl_y
 }
@@ -279,7 +279,6 @@ def ledger():
 zz_ef_bond_ledger_step = {{
 	# E&F's income modifier is gone (the holder is paid by the ledger)
 	if = {{ limit = {{ has_modifier = interest_from_foreign_debt_investment }} remove_modifier = interest_from_foreign_debt_investment }}
-	set_variable = {{ name = zz_ef_f_bond_int value = 0 }}
 	# --- as a seller ---
 	zz_ef_bl_roll = {{ F = sold }}
 	zz_ef_bl_roll = {{ F = int_out }}
@@ -329,7 +328,7 @@ zz_ef_bond_ledger_step = {{
 				zz_ef_bank_bonds > 0
 			}}
 		}}
-		debug_log = "EFB|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|principal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_principal')|0]|held [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_held_v')|0]|ratio [THIS.GetCountry.MakeScope.Var('zz_ef_bl_ratio').GetValue|3]|ipay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_g_ipay')|0]|sold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_sold')|0]|int_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_int_out')|0]|redeem [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_redeem')|0]|woff [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_woff')|0]|parts [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury_bonds')|0]|buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_buy').GetValue|0]|refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_refund').GetValue|0]|int_in [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_int_in').GetValue|0]|back [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_back').GetValue|0]|lost [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_lost').GetValue|0]|pb_buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_buy').GetValue|0]|pb_refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_refund').GetValue|0]|pb_back [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_back').GetValue|0]|pbonds [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_bonds')|0]"
+		if = {{ limit = {{ zz_ef_logs_on = yes }} debug_log = "EFB|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|principal [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_principal')|0]|held [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bl_held_v')|0]|ratio [THIS.GetCountry.MakeScope.Var('zz_ef_bl_ratio').GetValue|3]|ipay [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_g_ipay')|0]|sold [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_sold')|0]|int_out [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_int_out')|0]|redeem [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_redeem')|0]|woff [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_v_f_bl_woff')|0]|parts [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_treasury_bonds')|0]|buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_buy').GetValue|0]|refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_refund').GetValue|0]|int_in [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_int_in').GetValue|0]|back [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_back').GetValue|0]|lost [THIS.GetCountry.MakeScope.Var('zz_ef_f_bl_lost').GetValue|0]|pb_buy [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_buy').GetValue|0]|pb_refund [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_refund').GetValue|0]|pb_back [THIS.GetCountry.MakeScope.Var('zz_ef_f_pb_back').GetValue|0]|pbonds [THIS.GetCountry.MakeScope.ScriptValue('zz_ef_bank_bonds')|0]" }}
 	}}
 }}
 

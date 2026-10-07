@@ -242,7 +242,7 @@ zz_ef_bank_seed_step = {
 				scope:zz_ef_bank_m = { change_variable = { name = zz_ef_bank_w add = prev.zz_ef_bank_tc_levels } }
 			}
 		}
-		debug_log = "EFK|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|market|levels [THIS.GetCountry.MakeScope.Var('zz_ef_bank_l').GetValue|1]|tc [THIS.GetCountry.MakeScope.Var('zz_ef_bank_w').GetValue|0]"
+		if = { limit = { zz_ef_logs_on = yes } debug_log = "EFK|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetCountry.GetNameNoFormatting]|market|levels [THIS.GetCountry.MakeScope.Var('zz_ef_bank_l').GetValue|1]|tc [THIS.GetCountry.MakeScope.Var('zz_ef_bank_w').GetValue|0]" }
 		if = {
 			limit = { var:zz_ef_bank_w > 0 }
 			every_country = {
@@ -296,7 +296,7 @@ zz_ef_bank_seed_state = {
 			limit = { NOT = { has_building = building_zz_ef_bank } }
 			zz_ef_bank_seed_state_owned = yes
 		}
-		debug_log = "EFK|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetState.GetOwner.GetNameNoFormatting]|[THIS.GetState.GetNameNoFormatting]|want [THIS.GetState.MakeScope.Var('zz_ef_bank_n').GetValue|1]|tc [THIS.GetState.MakeScope.ScriptValue('zz_ef_bank_tc_levels')|0]|built [THIS.GetState.MakeScope.ScriptValue('zz_ef_bank_levels')|0]"
+		if = { limit = { zz_ef_logs_on = yes } debug_log = "EFK|[TimeKeeper.GetCurrentDate.GetString]|[THIS.GetState.GetOwner.GetNameNoFormatting]|[THIS.GetState.GetNameNoFormatting]|want [THIS.GetState.MakeScope.Var('zz_ef_bank_n').GetValue|1]|tc [THIS.GetState.MakeScope.ScriptValue('zz_ef_bank_tc_levels')|0]|built [THIS.GetState.MakeScope.ScriptValue('zz_ef_bank_levels')|0]" }
 	}
 	remove_variable = zz_ef_bank_n
 }

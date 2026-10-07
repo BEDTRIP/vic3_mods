@@ -27,6 +27,8 @@ Parameters:
     -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
                   -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
+    -NoModLogs    do not send "event zz_ef_logs.1" (the fork's EF* debug logs stay off, as in a normal game);
+                  through the bridge: the word "nomodlogs" in -Commands
     -Commands     extra console commands after loading, ';'-separated (e.g. "dump_data_types"); their
                   output files in logs/ are copied with the other logs. "end:<cmd>" -- entered at the end of
                   the run, after the pause; "end:ui:<step>" -- a vic3_ui.ps1 step there (script profiler:
@@ -64,6 +66,7 @@ param(
     [int]$Autosaves = 0,
     [string]$AiTag = "all",
     [string]$Commands = "",
+    [switch]$NoModLogs,
     [string]$StartSave = "",
     [switch]$NewGame,
     [string]$Tag = "BUG",
@@ -158,6 +161,11 @@ if ($NewGame) {
 $p = Get-Game
 Shot $p "01_loaded.png"
 if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
+# Ledgerdemain's EF* debug logs are off by default (game rule, R0.2 7.10): switch them on for the run (in a game
+# without the fork the event is unknown -- a harmless console error)
+# the bridge passes only -Commands: the word "nomodlogs" there does the same as -NoModLogs
+if ($Commands -match '(^|;)\s*nomodlogs\s*(;|$)') { $NoModLogs = $true; $Commands = ($Commands -replace '(^|;)\s*nomodlogs\s*(?=;|$)', '') }
+if (-not $NoModLogs) { Console-Cmd $p "event zz_ef_logs.1"; Start-Sleep 2 }
 # a command "ui:<step>" is a step of tools/vic3_ui.ps1 (key, click, hover, shot, wait ...), the rest -- console commands
 # a command "end:<cmd>" is entered at the end of the run, after the pause (e.g. "end:Script.Profiling.Stop", 7.10)
 $EndCommands = @()

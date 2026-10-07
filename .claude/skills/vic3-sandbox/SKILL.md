@@ -115,6 +115,12 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
   совпал с клоном, `sync_mod` — `copied` пуст (живая копия = `main`), видны `docs` (logs, save games, mod, crashes),
   `orig`, `workshop`, `runs`; `save_money_check` и `parse_eflog` отработали, 49 снимков, `exit 0`, новых вылетов нет.
 
+## Логи форка (R0.2, 7.10)
+
+Строки `EF*` форка пишутся только при `zz_ef_logs_on` (правило игры, по умолчанию выкл.). Скрипт прогона сам шлёт
+`event zz_ef_logs.1` после `enable_ai` — логи в прогонах есть, как раньше. Замер скорости «как у игрока» (без логов) —
+`commands="nomodlogs"` (или `-NoModLogs` при запуске напрямую).
+
 ## Профилировщик скриптов (7.10)
 
 Встроенный, в `-debug_mode`. Через мост: `ld_install_mod(["tools/ld_profiler_view", "LD Profiler View"])` один раз
