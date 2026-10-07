@@ -29,6 +29,9 @@ Parameters:
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
     -NoModLogs    do not send "event zz_ef_logs.1" (the fork's EF* debug logs stay off, as in a normal game);
                   through the bridge: the word "nomodlogs" in -Commands
+    -Minimized    run with the game window minimized (R1а, Р8 7.10: does the GUI bridge live without drawing?);
+                  the date is not checked while minimized, the window comes back before the pause;
+                  through the bridge: the word "minimized" in -Commands
     -Commands     extra console commands after loading, ';'-separated (e.g. "dump_data_types"); their
                   output files in logs/ are copied with the other logs. "end:<cmd>" -- entered at the end of
                   the run, after the pause; "end:ui:<step>" -- a vic3_ui.ps1 step there (script profiler:
@@ -67,6 +70,7 @@ param(
     [string]$AiTag = "all",
     [string]$Commands = "",
     [switch]$NoModLogs,
+    [switch]$Minimized,
     [string]$StartSave = "",
     [switch]$NewGame,
     [string]$Tag = "BUG",
@@ -166,6 +170,7 @@ if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
 # the bridge passes only -Commands: the word "nomodlogs" there does the same as -NoModLogs
 if ($Commands -match '(^|;)\s*nomodlogs\s*(;|$)') { $NoModLogs = $true; $Commands = ($Commands -replace '(^|;)\s*nomodlogs\s*(?=;|$)', '') }
 if (-not $NoModLogs) { Console-Cmd $p "event zz_ef_logs.1"; Start-Sleep 2 }
+if ($Commands -match '(^|;)\s*minimized\s*(;|$)') { $Minimized = $true; $Commands = ($Commands -replace '(^|;)\s*minimized\s*(?=;|$)', '') }
 # a command "ui:<step>" is a step of tools/vic3_ui.ps1 (key, click, hover, shot, wait ...), the rest -- console commands
 # a command "end:<cmd>" is entered at the end of the run, after the pause (e.g. "end:Script.Profiling.Stop", 7.10)
 $EndCommands = @()
@@ -185,6 +190,8 @@ Log ("advancing: " + $ok)
 if (-not $ok) { Shot $p "02_not_running.png"; Log "the game does not advance - stopping"; }
 else {
     Log "running for $RunMinutes min (autosaves wanted: $Autosaves)"
+    # SW_MINIMIZE; Is-Advancing raises the window, so the date is not checked until the end
+    if ($Minimized) { [W]::ShowWindow($p.MainWindowHandle, 6) | Out-Null; Log "the game window is minimized" }
     $since = Get-Date
     $autoSeen = New-Object 'System.Collections.Generic.HashSet[long]'
     $end = (Get-Date).AddMinutes($RunMinutes)
@@ -202,6 +209,7 @@ else {
         }
         if (-not (Get-Game)) { Log "the game exited"; break }
         $p = Get-Game
+        if ($Minimized) { Log "minimized"; continue }
         if (-not (Is-Advancing $p 16)) {
             Log "date stands - unpausing"
             Shot $p ("stall_" + (Get-Date -Format "HHmmss") + ".png")
@@ -211,6 +219,7 @@ else {
         } else { Log "advancing" }
     }
     $p = Get-Game
+    if ($p -and $Minimized) { [W]::ShowWindow($p.MainWindowHandle, 9) | Out-Null; Start-Sleep 3; Raise-Game $p | Out-Null; Log "the game window is restored" }
     if ($p) {
         # pause at once, even if the user is at the PC (the user, 5.10); the screens after it wait for the user
         Pause-Now $p; $script:WantPaused = $true; Start-Sleep 3; Shot $p "03_end.png"

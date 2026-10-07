@@ -4,7 +4,7 @@ Usage:
     py tools/ld_r1a_checks.py <run>/eflog.txt [--top N]
 
 Р8  -- мост: на страну число недельных шагов (EFW, постановка в очередь моста) и приёмников (EFR); пропуски.
-Р10 -- бюджетный тик: строки зонда EFT|дата|страна|delta (диагностика R1а) -- в какие дни у стран меняется казна;
+Р10 -- бюджетный тик: строки зонда EFD|дата|страна|was|now (диагностика R1а) -- в какие дни у стран меняется казна;
        если все страны меняются в один день недели -- тик общий.
 Р2  -- торговля: за каждую неделю приёмника d_tc (изменение кассы торговых центров) против trade / tfin (торговля
        рынка по базовым ценам с масштабом) -- суммы и корреляция по странам.
@@ -38,7 +38,7 @@ def parse(path):
         if i < 0:
             continue
         parts = line[i:].rstrip('\n').split('|')
-        if len(parts) < 3 or parts[0] not in ('EFW', 'EFR', 'EFT'):
+        if len(parts) < 3 or parts[0] not in ('EFW', 'EFR', 'EFD'):
             continue
         kv = {}
         for p in parts[3:]:
@@ -67,13 +67,14 @@ def main():
     if '--top' in args:
         i = args.index('--top'); top = int(args[i + 1]); del args[i:i + 2]
     rows = parse(args[0])
-    efw, efr, eft = rows['EFW'], rows['EFR'], rows['EFT']
+    efw, efr, eft = rows['EFW'], rows['EFR'], rows['EFD']
     dates = sorted({d(x[0]) for x in efw + efr + eft})
-    print(f'lines: EFW {len(efw)}, EFR {len(efr)}, EFT {len(eft)}; dates {dates[0] if dates else "-"} .. {dates[-1] if dates else "-"}')
+    print(f'lines: EFW {len(efw)}, EFR {len(efr)}, EFD {len(eft)}; dates {dates[0] if dates else "-"} .. {dates[-1] if dates else "-"}')
 
     # Р8
     w, r = Counter(c for _, c, _ in efw), Counter(c for _, c, _ in efr)
-    miss = {c: w[c] - r.get(c, 0) for c in w}
+    # both lines are written for the player and GDP > 20M (EFR also for some more) -- compare where both are
+    miss = {c: w[c] - r.get(c, 0) for c in w if c in r or w[c] > 2}
     print('\nР8 -- steps (EFW) vs receivers (EFR):')
     print(f'  countries with steps {len(w)}, with receivers {len(r)}; steps {sum(w.values())}, receivers {sum(r.values())}')
     lost = sorted(((v, c) for c, v in miss.items() if v > 1), reverse=True)
@@ -86,7 +87,7 @@ def main():
 
     # Р10
     if eft:
-        print('\nР10 -- treasury changes (EFT) by weekday of the game calendar:')
+        print('\nР10 -- treasury changes (EFD) by weekday of the game calendar:')
         wd = defaultdict(Counter)
         for dt, c, kv in eft:
             wd[c][d(dt).toordinal() % 7] += 1
