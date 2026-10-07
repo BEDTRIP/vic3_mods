@@ -115,6 +115,24 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
   совпал с клоном, `sync_mod` — `copied` пуст (живая копия = `main`), видны `docs` (logs, save games, mod, crashes),
   `orig`, `workshop`, `runs`; `save_money_check` и `parse_eflog` отработали, 49 снимков, `exit 0`, новых вылетов нет.
 
+## Профилировщик скриптов (7.10)
+
+Встроенный, в `-debug_mode`. Через мост: `ld_install_mod(["tools/ld_profiler_view", "LD Profiler View"])` один раз
+(мод для замеров: окно профилировщика во весь экран — полное имя, файл:строка, полное / собственное время, вызовы;
+`tools/ld_profiler_view/README.md`), затем `start_run(..., playset="Ledgerdemain + LD Profiler View",
+commands="Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.Gui;end:ui:wait 4;end:ui:click 0.028 0.067;end:ui:wait 2;end:ui:shot e_root;end:ui:click 0.064 0.067;end:ui:wait 3;end:ui:shot e_edge")`
+(`end:` — команда в конце прогона на паузе). `e_root` — корни по полному времени (on_action, события, GUI, ИИ),
+`e_edge` — листья по собственному времени. Щелчок по строке таблицы (y = 0.1275 + 0.0198·(k−1)) выбирает запись,
+но порядок строк от прогона к прогону плавает — спускаться по номеру строки ненадёжно.
+- **Номера строк** профилировщика — как в `error.log` (без пустых и комментарных, отсчёт от определения верхнего
+  уровня): переводить `tools/ld_errsites.py` → `real_lines(файл, N)`.
+- Время — сумма по потокам; база «CMF + ETF» — `playset="Ledgerdemain без E&F: Ledgerdemain + LD Profiler View"`.
+- **`ScriptProfiling.Enable` / `ScriptProfiling.Dump` (файл `logs/script_profiling.txt`) роняют 1.13.11** при Dump —
+  и с модами, и на ванили (r1007_084040, r1007_084831, r1007_090408). `log_ticktask_performance` включается, но
+  файла `profiling.log` не пишет.
+- Скорость прогона без профилировщика — `tools/ld_speed.py <прогоны>` (с на игровой месяц по датированным строкам
+  `debug.log`, база без мода тоже).
+
 ## Три режима
 
 Запуск всегда в фоне (`run_in_background: true`), вывод — в `-OutDir` (scratchpad сессии):
