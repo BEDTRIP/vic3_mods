@@ -183,6 +183,8 @@ zz_ef_pb_buy = {
 		change_variable = { name = zz_ef_bl_held add = root.var:zz_ef_bl_x }
 		zz_ef_bl_acc_add = { F = sold V = root.var:zz_ef_bl_x }
 		add_investment_pool = root.var:zz_ef_bl_x
+		# R2, step 7 (8.10): the seller's banks sold a part of their claim on the engine's debt -- their capital
+		zz_ef_bl_seller_capital = { V = root.var:zz_ef_bl_x }
 	}
 	remove_variable = zz_ef_bl_x
 	remove_variable = zz_ef_bl_y
@@ -228,6 +230,8 @@ zz_ef_pb_drop = {
 	set_variable = { name = zz_ef_bl_x value = var:zz_ef_pbh_$N$ }
 	change_variable = { name = zz_ef_bl_x subtract = var:zz_ef_pb_v }
 	change_variable = { name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }
+	# R2, step 7: the part is in the banks' book (zz_ef_bank_bonds) -- gone with no money, out of their capital
+	change_variable = { name = zz_ef_bank_capital subtract = var:zz_ef_bl_x }
 	if = {
 		limit = {
 			has_variable = zz_ef_pbs_$N$
@@ -256,6 +260,8 @@ zz_ef_pb_cutback = {
 	if = {
 		limit = { scope:zz_ef_bl_seller = { has_variable = zz_ef_bl_woff_now } }
 		change_variable = { name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }
+		# R2, step 7: written off -- out of the banks' capital (the part was in their book)
+		change_variable = { name = zz_ef_bank_capital subtract = var:zz_ef_bl_x }
 		scope:zz_ef_bl_seller = { zz_ef_bl_acc_add = { F = woff V = root.var:zz_ef_bl_x } }
 	}
 	else = {
@@ -363,6 +369,7 @@ zz_ef_bl_register = {{
 		change_variable = {{ name = zz_ef_bl_held add = root.var:zz_ef_bh_$N$ }}
 		zz_ef_bl_acc_add = {{ F = sold V = root.var:zz_ef_bh_$N$ }}
 		add_investment_pool = root.var:zz_ef_bh_$N$
+		zz_ef_bl_seller_capital = {{ V = root.var:zz_ef_bh_$N$ }}
 	}}
 	remove_variable = zz_ef_bl_x
 	if = {{ limit = {{ has_variable = zz_ef_bl_y }} remove_variable = zz_ef_bl_y }}
@@ -432,6 +439,7 @@ zz_ef_bl_into_pool = {{ add_investment_pool = var:zz_ef_bl_x }}
 # treasury) or our pool (pool, private banks);
 # the seller sums it under $F$, we under var:$TO$; what its pool could not pay -- under var:$SHORT$.
 zz_ef_bl_pay = {{
+	set_variable = {{ name = zz_ef_bl_x0 value = var:zz_ef_bl_x }}
 	change_variable = {{ name = $SHORT$ add = var:zz_ef_bl_x }}
 	set_variable = {{
 		name = zz_ef_bl_x
@@ -449,12 +457,35 @@ zz_ef_bl_pay = {{
 			value = root.var:zz_ef_bl_x
 			multiply = -1
 		}}
+		# R2, step 7: paid by the seller's banks (their capital)
+		zz_ef_bl_seller_capital_out = {{ V = root.var:zz_ef_bl_x }}
 		zz_ef_bl_acc_add = {{ F = $F$ V = root.var:zz_ef_bl_x }}
 	}}
 	zz_ef_bl_into_$INTO$ = yes
 	change_variable = {{ name = $TO$ add = var:zz_ef_bl_x }}
 	change_variable = {{ name = $SHORT$ subtract = var:zz_ef_bl_x }}
+	# R2, step 7: the unpaid part
+	set_variable = {{ name = zz_ef_bl_s value = var:zz_ef_bl_x0 }}
+	change_variable = {{ name = zz_ef_bl_s subtract = var:zz_ef_bl_x }}
+	if = {{ limit = {{ var:zz_ef_bl_s > 0 }} zz_ef_bl_short_$INTO$ = yes }}
+	remove_variable = zz_ef_bl_s
+	remove_variable = zz_ef_bl_x0
 }}
+
+# R2, step 7 (8.10): the seller's pool moves for its bonds (a sale, interest and repayments to the holders) are its
+# banks' capital (the pool backs the engine's debt; the treasury pays the engine's interest as before) -- not «прочее».
+zz_ef_bl_seller_capital = {{
+	zz_ef_registry_init = yes
+	change_variable = {{ name = zz_ef_bank_capital add = $V$ }}
+}}
+zz_ef_bl_seller_capital_out = {{
+	zz_ef_registry_init = yes
+	change_variable = {{ name = zz_ef_bank_capital subtract = $V$ }}
+}}
+# Holder scope, what the seller could not pay (var:zz_ef_bl_s): the private banks' part is in their book -- a loss of
+# their capital; the treasury's parts are not in the banks' book.
+zz_ef_bl_short_pool = {{ change_variable = {{ name = zz_ef_bank_capital subtract = var:zz_ef_bl_s }} }}
+zz_ef_bl_short_treasury = {{ }}
 
 # Seller scope: var:zz_ef_bl_acc_$F$ += $V$.
 zz_ef_bl_acc_add = {{
