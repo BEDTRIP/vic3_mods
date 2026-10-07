@@ -1,0 +1,7 @@
+on_monthly_pulse_country = {
+	on_actions = { zz_ld_probe_rebuild_monthly }
+}
+zz_ld_probe_rebuild_monthly = {
+	trigger = { c:GBR ?= this }
+	effect = { zz_ld_probe_rebuild = yes }
+}

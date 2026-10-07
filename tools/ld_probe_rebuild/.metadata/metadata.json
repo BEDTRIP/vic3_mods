@@ -1,0 +1,10 @@
+{
+  "name": "LD Probe Rebuild",
+  "id": "com.github.BEDTRIP.LedgerdemainProbeRebuild",
+  "version": "0.0.1",
+  "supported_game_version": "1.13.*",
+  "short_description": "Measurement only: rebuilds a building with another owner and logs what is lost. Not for play.",
+  "tags": [],
+  "relationships": [],
+  "game_custom_data": { "multiplayer_synchronized": true }
+}

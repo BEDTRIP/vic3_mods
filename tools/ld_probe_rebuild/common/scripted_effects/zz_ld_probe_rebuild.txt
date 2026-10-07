@@ -1,0 +1,204 @@
+﻿zz_ld_probe_rebuild_log_before = {
+	set_variable = { name = zz_p_has value = 0 }
+	s:STATE_LANCASHIRE.region_state:GBR ?= {
+		b:building_textile_mill ?= {
+			root = { set_variable = { name = zz_p_occ value = prev.occupancy } }
+			root = { set_variable = { name = zz_p_cash value = prev.cash_reserves_available } }
+			root = { set_variable = { name = zz_p_cratio value = prev.cash_reserves_ratio } }
+			root = { set_variable = { name = zz_p_profit value = prev.weekly_profit } }
+			root = { set_variable = { name = zz_p_earn value = prev.earnings } }
+			root = { set_variable = { name = zz_p_fc value = prev.country_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fp value = prev.private_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fs value = prev.self_ownership_fraction } }
+			root = { set_variable = { name = zz_p_lc value = prev.levels_owned_by_country } }
+			if = { limit = { has_active_production_method = pm_dye_workshops } root = { set_variable = { name = zz_p_pm0 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm0 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_traditional_looms } root = { set_variable = { name = zz_p_pm1 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm1 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_no_luxury_clothes } root = { set_variable = { name = zz_p_pm2 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm2 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_handsewn_clothes } root = { set_variable = { name = zz_p_pm3 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm3 value = 0 } } }
+			if = { limit = { is_under_construction = yes } root = { set_variable = { name = zz_p_uc value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_uc value = 0 } } }
+			root = { set_variable = { name = zz_p_has value = 1 } }
+		}
+	}
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|rebuild|before|has [THIS.GetCountry.MakeScope.Var('zz_p_has').GetValue|3]|occ [THIS.GetCountry.MakeScope.Var('zz_p_occ').GetValue|3]|cash [THIS.GetCountry.MakeScope.Var('zz_p_cash').GetValue|3]|cratio [THIS.GetCountry.MakeScope.Var('zz_p_cratio').GetValue|3]|profit [THIS.GetCountry.MakeScope.Var('zz_p_profit').GetValue|3]|earn [THIS.GetCountry.MakeScope.Var('zz_p_earn').GetValue|3]|fc [THIS.GetCountry.MakeScope.Var('zz_p_fc').GetValue|3]|fp [THIS.GetCountry.MakeScope.Var('zz_p_fp').GetValue|3]|fs [THIS.GetCountry.MakeScope.Var('zz_p_fs').GetValue|3]|lc [THIS.GetCountry.MakeScope.Var('zz_p_lc').GetValue|3]|uc [THIS.GetCountry.MakeScope.Var('zz_p_uc').GetValue|3]|pm0 [THIS.GetCountry.MakeScope.Var('zz_p_pm0').GetValue|3]|pm1 [THIS.GetCountry.MakeScope.Var('zz_p_pm1').GetValue|3]|pm2 [THIS.GetCountry.MakeScope.Var('zz_p_pm2').GetValue|3]|pm3 [THIS.GetCountry.MakeScope.Var('zz_p_pm3').GetValue|3]"
+}
+zz_ld_probe_rebuild_log_after = {
+	set_variable = { name = zz_p_has value = 0 }
+	s:STATE_LANCASHIRE.region_state:GBR ?= {
+		b:building_textile_mill ?= {
+			root = { set_variable = { name = zz_p_occ value = prev.occupancy } }
+			root = { set_variable = { name = zz_p_cash value = prev.cash_reserves_available } }
+			root = { set_variable = { name = zz_p_cratio value = prev.cash_reserves_ratio } }
+			root = { set_variable = { name = zz_p_profit value = prev.weekly_profit } }
+			root = { set_variable = { name = zz_p_earn value = prev.earnings } }
+			root = { set_variable = { name = zz_p_fc value = prev.country_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fp value = prev.private_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fs value = prev.self_ownership_fraction } }
+			root = { set_variable = { name = zz_p_lc value = prev.levels_owned_by_country } }
+			if = { limit = { has_active_production_method = pm_dye_workshops } root = { set_variable = { name = zz_p_pm0 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm0 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_traditional_looms } root = { set_variable = { name = zz_p_pm1 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm1 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_no_luxury_clothes } root = { set_variable = { name = zz_p_pm2 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm2 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_handsewn_clothes } root = { set_variable = { name = zz_p_pm3 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm3 value = 0 } } }
+			if = { limit = { is_under_construction = yes } root = { set_variable = { name = zz_p_uc value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_uc value = 0 } } }
+			root = { set_variable = { name = zz_p_has value = 1 } }
+		}
+	}
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|rebuild|after|has [THIS.GetCountry.MakeScope.Var('zz_p_has').GetValue|3]|occ [THIS.GetCountry.MakeScope.Var('zz_p_occ').GetValue|3]|cash [THIS.GetCountry.MakeScope.Var('zz_p_cash').GetValue|3]|cratio [THIS.GetCountry.MakeScope.Var('zz_p_cratio').GetValue|3]|profit [THIS.GetCountry.MakeScope.Var('zz_p_profit').GetValue|3]|earn [THIS.GetCountry.MakeScope.Var('zz_p_earn').GetValue|3]|fc [THIS.GetCountry.MakeScope.Var('zz_p_fc').GetValue|3]|fp [THIS.GetCountry.MakeScope.Var('zz_p_fp').GetValue|3]|fs [THIS.GetCountry.MakeScope.Var('zz_p_fs').GetValue|3]|lc [THIS.GetCountry.MakeScope.Var('zz_p_lc').GetValue|3]|uc [THIS.GetCountry.MakeScope.Var('zz_p_uc').GetValue|3]|pm0 [THIS.GetCountry.MakeScope.Var('zz_p_pm0').GetValue|3]|pm1 [THIS.GetCountry.MakeScope.Var('zz_p_pm1').GetValue|3]|pm2 [THIS.GetCountry.MakeScope.Var('zz_p_pm2').GetValue|3]|pm3 [THIS.GetCountry.MakeScope.Var('zz_p_pm3').GetValue|3]"
+}
+zz_ld_probe_rebuild_log_m1 = {
+	set_variable = { name = zz_p_has value = 0 }
+	s:STATE_LANCASHIRE.region_state:GBR ?= {
+		b:building_textile_mill ?= {
+			root = { set_variable = { name = zz_p_occ value = prev.occupancy } }
+			root = { set_variable = { name = zz_p_cash value = prev.cash_reserves_available } }
+			root = { set_variable = { name = zz_p_cratio value = prev.cash_reserves_ratio } }
+			root = { set_variable = { name = zz_p_profit value = prev.weekly_profit } }
+			root = { set_variable = { name = zz_p_earn value = prev.earnings } }
+			root = { set_variable = { name = zz_p_fc value = prev.country_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fp value = prev.private_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fs value = prev.self_ownership_fraction } }
+			root = { set_variable = { name = zz_p_lc value = prev.levels_owned_by_country } }
+			if = { limit = { has_active_production_method = pm_dye_workshops } root = { set_variable = { name = zz_p_pm0 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm0 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_traditional_looms } root = { set_variable = { name = zz_p_pm1 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm1 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_no_luxury_clothes } root = { set_variable = { name = zz_p_pm2 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm2 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_handsewn_clothes } root = { set_variable = { name = zz_p_pm3 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm3 value = 0 } } }
+			if = { limit = { is_under_construction = yes } root = { set_variable = { name = zz_p_uc value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_uc value = 0 } } }
+			root = { set_variable = { name = zz_p_has value = 1 } }
+		}
+	}
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|rebuild|m1|has [THIS.GetCountry.MakeScope.Var('zz_p_has').GetValue|3]|occ [THIS.GetCountry.MakeScope.Var('zz_p_occ').GetValue|3]|cash [THIS.GetCountry.MakeScope.Var('zz_p_cash').GetValue|3]|cratio [THIS.GetCountry.MakeScope.Var('zz_p_cratio').GetValue|3]|profit [THIS.GetCountry.MakeScope.Var('zz_p_profit').GetValue|3]|earn [THIS.GetCountry.MakeScope.Var('zz_p_earn').GetValue|3]|fc [THIS.GetCountry.MakeScope.Var('zz_p_fc').GetValue|3]|fp [THIS.GetCountry.MakeScope.Var('zz_p_fp').GetValue|3]|fs [THIS.GetCountry.MakeScope.Var('zz_p_fs').GetValue|3]|lc [THIS.GetCountry.MakeScope.Var('zz_p_lc').GetValue|3]|uc [THIS.GetCountry.MakeScope.Var('zz_p_uc').GetValue|3]|pm0 [THIS.GetCountry.MakeScope.Var('zz_p_pm0').GetValue|3]|pm1 [THIS.GetCountry.MakeScope.Var('zz_p_pm1').GetValue|3]|pm2 [THIS.GetCountry.MakeScope.Var('zz_p_pm2').GetValue|3]|pm3 [THIS.GetCountry.MakeScope.Var('zz_p_pm3').GetValue|3]"
+}
+zz_ld_probe_rebuild_log_m2 = {
+	set_variable = { name = zz_p_has value = 0 }
+	s:STATE_LANCASHIRE.region_state:GBR ?= {
+		b:building_textile_mill ?= {
+			root = { set_variable = { name = zz_p_occ value = prev.occupancy } }
+			root = { set_variable = { name = zz_p_cash value = prev.cash_reserves_available } }
+			root = { set_variable = { name = zz_p_cratio value = prev.cash_reserves_ratio } }
+			root = { set_variable = { name = zz_p_profit value = prev.weekly_profit } }
+			root = { set_variable = { name = zz_p_earn value = prev.earnings } }
+			root = { set_variable = { name = zz_p_fc value = prev.country_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fp value = prev.private_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fs value = prev.self_ownership_fraction } }
+			root = { set_variable = { name = zz_p_lc value = prev.levels_owned_by_country } }
+			if = { limit = { has_active_production_method = pm_dye_workshops } root = { set_variable = { name = zz_p_pm0 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm0 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_traditional_looms } root = { set_variable = { name = zz_p_pm1 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm1 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_no_luxury_clothes } root = { set_variable = { name = zz_p_pm2 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm2 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_handsewn_clothes } root = { set_variable = { name = zz_p_pm3 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm3 value = 0 } } }
+			if = { limit = { is_under_construction = yes } root = { set_variable = { name = zz_p_uc value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_uc value = 0 } } }
+			root = { set_variable = { name = zz_p_has value = 1 } }
+		}
+	}
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|rebuild|m2|has [THIS.GetCountry.MakeScope.Var('zz_p_has').GetValue|3]|occ [THIS.GetCountry.MakeScope.Var('zz_p_occ').GetValue|3]|cash [THIS.GetCountry.MakeScope.Var('zz_p_cash').GetValue|3]|cratio [THIS.GetCountry.MakeScope.Var('zz_p_cratio').GetValue|3]|profit [THIS.GetCountry.MakeScope.Var('zz_p_profit').GetValue|3]|earn [THIS.GetCountry.MakeScope.Var('zz_p_earn').GetValue|3]|fc [THIS.GetCountry.MakeScope.Var('zz_p_fc').GetValue|3]|fp [THIS.GetCountry.MakeScope.Var('zz_p_fp').GetValue|3]|fs [THIS.GetCountry.MakeScope.Var('zz_p_fs').GetValue|3]|lc [THIS.GetCountry.MakeScope.Var('zz_p_lc').GetValue|3]|uc [THIS.GetCountry.MakeScope.Var('zz_p_uc').GetValue|3]|pm0 [THIS.GetCountry.MakeScope.Var('zz_p_pm0').GetValue|3]|pm1 [THIS.GetCountry.MakeScope.Var('zz_p_pm1').GetValue|3]|pm2 [THIS.GetCountry.MakeScope.Var('zz_p_pm2').GetValue|3]|pm3 [THIS.GetCountry.MakeScope.Var('zz_p_pm3').GetValue|3]"
+}
+zz_ld_probe_rebuild_log_m3 = {
+	set_variable = { name = zz_p_has value = 0 }
+	s:STATE_LANCASHIRE.region_state:GBR ?= {
+		b:building_textile_mill ?= {
+			root = { set_variable = { name = zz_p_occ value = prev.occupancy } }
+			root = { set_variable = { name = zz_p_cash value = prev.cash_reserves_available } }
+			root = { set_variable = { name = zz_p_cratio value = prev.cash_reserves_ratio } }
+			root = { set_variable = { name = zz_p_profit value = prev.weekly_profit } }
+			root = { set_variable = { name = zz_p_earn value = prev.earnings } }
+			root = { set_variable = { name = zz_p_fc value = prev.country_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fp value = prev.private_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fs value = prev.self_ownership_fraction } }
+			root = { set_variable = { name = zz_p_lc value = prev.levels_owned_by_country } }
+			if = { limit = { has_active_production_method = pm_dye_workshops } root = { set_variable = { name = zz_p_pm0 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm0 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_traditional_looms } root = { set_variable = { name = zz_p_pm1 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm1 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_no_luxury_clothes } root = { set_variable = { name = zz_p_pm2 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm2 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_handsewn_clothes } root = { set_variable = { name = zz_p_pm3 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm3 value = 0 } } }
+			if = { limit = { is_under_construction = yes } root = { set_variable = { name = zz_p_uc value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_uc value = 0 } } }
+			root = { set_variable = { name = zz_p_has value = 1 } }
+		}
+	}
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|rebuild|m3|has [THIS.GetCountry.MakeScope.Var('zz_p_has').GetValue|3]|occ [THIS.GetCountry.MakeScope.Var('zz_p_occ').GetValue|3]|cash [THIS.GetCountry.MakeScope.Var('zz_p_cash').GetValue|3]|cratio [THIS.GetCountry.MakeScope.Var('zz_p_cratio').GetValue|3]|profit [THIS.GetCountry.MakeScope.Var('zz_p_profit').GetValue|3]|earn [THIS.GetCountry.MakeScope.Var('zz_p_earn').GetValue|3]|fc [THIS.GetCountry.MakeScope.Var('zz_p_fc').GetValue|3]|fp [THIS.GetCountry.MakeScope.Var('zz_p_fp').GetValue|3]|fs [THIS.GetCountry.MakeScope.Var('zz_p_fs').GetValue|3]|lc [THIS.GetCountry.MakeScope.Var('zz_p_lc').GetValue|3]|uc [THIS.GetCountry.MakeScope.Var('zz_p_uc').GetValue|3]|pm0 [THIS.GetCountry.MakeScope.Var('zz_p_pm0').GetValue|3]|pm1 [THIS.GetCountry.MakeScope.Var('zz_p_pm1').GetValue|3]|pm2 [THIS.GetCountry.MakeScope.Var('zz_p_pm2').GetValue|3]|pm3 [THIS.GetCountry.MakeScope.Var('zz_p_pm3').GetValue|3]"
+}
+zz_ld_probe_rebuild_log_m4 = {
+	set_variable = { name = zz_p_has value = 0 }
+	s:STATE_LANCASHIRE.region_state:GBR ?= {
+		b:building_textile_mill ?= {
+			root = { set_variable = { name = zz_p_occ value = prev.occupancy } }
+			root = { set_variable = { name = zz_p_cash value = prev.cash_reserves_available } }
+			root = { set_variable = { name = zz_p_cratio value = prev.cash_reserves_ratio } }
+			root = { set_variable = { name = zz_p_profit value = prev.weekly_profit } }
+			root = { set_variable = { name = zz_p_earn value = prev.earnings } }
+			root = { set_variable = { name = zz_p_fc value = prev.country_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fp value = prev.private_ownership_fraction } }
+			root = { set_variable = { name = zz_p_fs value = prev.self_ownership_fraction } }
+			root = { set_variable = { name = zz_p_lc value = prev.levels_owned_by_country } }
+			if = { limit = { has_active_production_method = pm_dye_workshops } root = { set_variable = { name = zz_p_pm0 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm0 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_traditional_looms } root = { set_variable = { name = zz_p_pm1 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm1 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_no_luxury_clothes } root = { set_variable = { name = zz_p_pm2 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm2 value = 0 } } }
+			if = { limit = { has_active_production_method = pm_handsewn_clothes } root = { set_variable = { name = zz_p_pm3 value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_pm3 value = 0 } } }
+			if = { limit = { is_under_construction = yes } root = { set_variable = { name = zz_p_uc value = 1 } } }
+			else = { root = { set_variable = { name = zz_p_uc value = 0 } } }
+			root = { set_variable = { name = zz_p_has value = 1 } }
+		}
+	}
+	debug_log = "EFP|[TimeKeeper.GetCurrentDate.GetString]|rebuild|m4|has [THIS.GetCountry.MakeScope.Var('zz_p_has').GetValue|3]|occ [THIS.GetCountry.MakeScope.Var('zz_p_occ').GetValue|3]|cash [THIS.GetCountry.MakeScope.Var('zz_p_cash').GetValue|3]|cratio [THIS.GetCountry.MakeScope.Var('zz_p_cratio').GetValue|3]|profit [THIS.GetCountry.MakeScope.Var('zz_p_profit').GetValue|3]|earn [THIS.GetCountry.MakeScope.Var('zz_p_earn').GetValue|3]|fc [THIS.GetCountry.MakeScope.Var('zz_p_fc').GetValue|3]|fp [THIS.GetCountry.MakeScope.Var('zz_p_fp').GetValue|3]|fs [THIS.GetCountry.MakeScope.Var('zz_p_fs').GetValue|3]|lc [THIS.GetCountry.MakeScope.Var('zz_p_lc').GetValue|3]|uc [THIS.GetCountry.MakeScope.Var('zz_p_uc').GetValue|3]|pm0 [THIS.GetCountry.MakeScope.Var('zz_p_pm0').GetValue|3]|pm1 [THIS.GetCountry.MakeScope.Var('zz_p_pm1').GetValue|3]|pm2 [THIS.GetCountry.MakeScope.Var('zz_p_pm2').GetValue|3]|pm3 [THIS.GetCountry.MakeScope.Var('zz_p_pm3').GetValue|3]"
+}
+zz_ld_probe_rebuild = {
+	if = {
+		limit = {
+			game_date >= 1836.3.1
+			NOT = { has_global_variable = zz_p_phase }
+		}
+		set_global_variable = { name = zz_p_phase value = 0 }
+		zz_ld_probe_rebuild_log_before = yes
+		s:STATE_LANCASHIRE.region_state:GBR ?= {
+			remove_building = building_textile_mill
+			create_building = {
+				building = building_textile_mill
+				add_ownership = {
+					country = {
+						country = c:GBR
+						levels = 13
+					}
+				}
+				reserves = 1
+				activate_production_methods = { pm_dye_workshops pm_no_luxury_clothes pm_traditional_looms }
+			}
+		}
+		zz_ld_probe_rebuild_log_after = yes
+	}
+	else_if = {
+		limit = {
+			has_global_variable = zz_p_phase
+			global_var:zz_p_phase < 4
+		}
+		change_global_variable = { name = zz_p_phase add = 1 }
+		if = { limit = { global_var:zz_p_phase = 1 } zz_ld_probe_rebuild_log_m1 = yes }
+		else_if = { limit = { global_var:zz_p_phase = 2 } zz_ld_probe_rebuild_log_m2 = yes }
+		else_if = { limit = { global_var:zz_p_phase = 3 } zz_ld_probe_rebuild_log_m3 = yes }
+		else = { zz_ld_probe_rebuild_log_m4 = yes }
+	}
+}
