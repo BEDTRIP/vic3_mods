@@ -12,6 +12,7 @@ Steps (';'-separated, run in order):
     wait <sec>              sleep
     key <name>              esc | space | enter | f1..f9 | tilde (the console key) (scan codes for DirectInput)
     console <command>       a console command (debug_mode), e.g. "console tag GBR"
+    prof <path>=<name> ...  script profiler window: root, then the rows of the path (1.1.2), a screenshot each
     macro <name> <prefix>   a named step sequence from vic3_ui_points.ps1 ({P} = prefix)
     tips <set> <prefix>     every hover of the named set below, one screenshot each (<prefix>_<n>.png)
     country <TAG>           "tag <TAG>", then the currency tooltip, its account cards and the budget tabs (macros
@@ -88,6 +89,20 @@ foreach ($step in ($Do -split ';' | ForEach-Object { $_.Trim() } | Where-Object 
                 & $PSCommandPath -OutDir $OutDir -Do $sub
                 if (-not $global:Vic3Interrupted) { break }
                 Log "redo: the user came in - again ($k)"
+            }
+        }
+        # prof <path>=<name> ...: the script profiler window (tools/ld_profiler_view): for each item -- "root", then the
+        # rows of the path (1.1.2 = row 1, row 1, row 2; the rows are sorted by inclusive time), a screenshot <name>.png
+        # (8.10: one step instead of ~15 per shot -- the command line of the run has a length limit)
+        "prof"    {
+            Focus-Game $p
+            foreach ($it in ($rest -split '\s+')) {
+                $pn = $it -split '='
+                Click-Window $p 0.028 0.067; Start-Sleep -Milliseconds 500
+                foreach ($r in ($pn[0] -split '\.')) {
+                    Click-Window $p 0.5 (0.1275 + 0.0198 * ([int]$r - 1)); Start-Sleep -Milliseconds 400
+                }
+                Start-Sleep -Milliseconds 300; Shot $p ($pn[1] + ".png")
             }
         }
         "macro"   {
