@@ -1,9 +1,10 @@
 """R1а, проверки до начала (7.10.2026): роли стран и торговля по текстовому сейву.
 
 Usage:
-    py tools/ld_save_roles.py [save] [--keys TAG] [--top N]
+    py tools/ld_save_roles.py [save] [--keys TAG] [--market TAG] [--top N]
         save   -- имя в "save games" или полный путь (по умолчанию autosave.v3)
         --keys -- вывести ключи верхнего уровня записи страны TAG и первые записи менеджеров (разведка структуры)
+        --market -- запись рынка страны TAG (разведка торговли)
         --top  -- сколько стран показать в таблицах (по умолчанию 40)
 
 Печатает:
@@ -54,6 +55,9 @@ def num(rec, key, depth=None):
 def main():
     args = sys.argv[1:]
     keys_tag = None
+    market_tag = None
+    if '--market' in args:
+        i = args.index('--market'); market_tag = args[i + 1]; del args[i:i + 2]
     top = 40
     if '--keys' in args:
         i = args.index('--keys'); keys_tag = args[i + 1]; del args[i:i + 2]
@@ -73,6 +77,17 @@ def main():
         d = re.search(r'\n\tdefinition="(\w+)"', '\n' + rec)
         if d:
             countries[cid] = (d.group(1), rec)
+
+    if market_tag:
+        mk, _ = block(s, 'market_manager')
+        for cid, (tag, rec) in countries.items():
+            if tag == market_tag:
+                mid = re.search(r'\n\tmarket=(\d+)', '\n' + rec).group(1)
+                for rid, body in records(mk):
+                    if rid == mid:
+                        print(f'market {mid} of {tag}: {len(body)} chars; keys:', ' '.join(dict.fromkeys(top_keys(body, 1))))
+                        print(body[:4000])
+        return
 
     if keys_tag:
         print('top-level managers:', ' '.join(dict.fromkeys(managers)))
