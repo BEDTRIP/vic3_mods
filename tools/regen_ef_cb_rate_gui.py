@@ -278,7 +278,8 @@ def clean_ef_noise(body: str) -> tuple[str, list[int]]:
     E&F's own, none in our inserts). Returns the new body and the 0-based
     indices of the lines touched (for the check against the logs):
       - "nobaseline" / typo "nobaselin" in parentanchor ("Unknown anchor");
-      - align on icon / flag_icon ("Property 'align' not handled");
+      - align on icon / flag_icon ("Property 'align' not handled"), onclick there too ("Callback property
+        'onclick' not handled", ФК2 7.10: a flag is an icon, not a button);
       - ignoreinvisible on textbox, elide / default_format where the widget
         does not take them (per the log: widgets other than textbox);
       - a property repeated in the same block ("Duplicate property").
@@ -299,7 +300,7 @@ def clean_ef_noise(body: str) -> tuple[str, list[int]]:
                 touched.append(i)
                 seen.add(key)
                 continue
-            if key == "align" and widget in ("icon", "flag_icon"):
+            if key in ("align", "onclick") and widget in ("icon", "flag_icon"):
                 drop = True
             elif key == "ignoreinvisible" and widget == "textbox":
                 drop = True
