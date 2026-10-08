@@ -327,8 +327,7 @@ zz_ef_bond_ledger_step = {{
 	if = {{
 		limit = {{
 			OR = {{
-				is_player = yes
-				gdp > 20000000
+				zz_ef_log_country = yes
 				zz_ef_bl_held_v > 0
 				zz_ef_bl_parts > 0
 				zz_ef_bank_bonds > 0

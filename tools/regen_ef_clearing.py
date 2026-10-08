@@ -196,7 +196,7 @@ zz_ef_clr_step = {
 	else_if = {
 		limit = {
 			NOT = { has_modifier = has_central_bank }
-			zz_ef_rc_currency_value > 0.0002
+			zz_ef_has_currency_value = yes
 			var:zz_ef_f_clr_net < 0
 		}
 		zz_ef_clr_window_roll = yes
@@ -308,7 +308,7 @@ zz_ef_clr_pay = {
 	set_variable = { name = zz_ef_clr_units value = 0 }
 	if = {
 		limit = {
-			zz_ef_rc_currency_value > 0.0002
+			zz_ef_has_currency_value = yes
 			var:zz_ef_clr_due > var:zz_ef_clr_mgold
 		}
 		set_variable = { name = zz_ef_clr_units value = var:zz_ef_clr_due }
