@@ -28,6 +28,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ld_curdata  # noqa: E402
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
 from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN, NOUNS  # noqa: E402
@@ -68,8 +69,7 @@ def read(rel):
 
 
 def currencies():
-    src, _, _ = read(LAWS)
-    return re.findall(r"^law_([a-z_]+)_currency = \{", src, re.M)
+    return ld_curdata.currencies()
 
 
 def history():

@@ -13,13 +13,15 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ld_curdata  # noqa: E402
+
 FORK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "Economic-and-Financial-Ledgerdemain-Mod")
 DIRS = ("common", "gui", "events", "localization/english")
 
 
 def currencies():
-    s = open(os.path.join(FORK, "common/laws/01_ef_currency_type.txt"), encoding="utf-8-sig").read()
-    return sorted(set(re.findall(r"^law_(\w+?)_currency = \{", s, re.M)), key=len, reverse=True)
+    return ld_curdata.by_length()
 
 
 def kind(line, name):

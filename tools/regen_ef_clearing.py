@@ -29,7 +29,7 @@ filled by our scripted GUI zz_ef_cbfx_update, the table re-issued by ld_economy_
 Output (fork «E&F: Ledgerdemain», via ld_gen, by entry keys):
   common/scripted_effects/ld_clearing.txt, common/script_values/ld_clearing_values.txt,
   common/scripted_guis/ld_cbfx.txt, localization/{english,russian}/ld_cbfx_l_*.yml
-Reads the list of currencies through regen_ef_reserve_trade (the fork's E&F file).
+Reads the list of currencies from ld_curdata (the fork's currency laws).
 
 Usage:
     python3 tools/regen_ef_clearing.py [--check]
@@ -40,7 +40,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
-from regen_ef_reserve_trade import currencies, chain  # noqa: E402
+from ld_curdata import currencies  # noqa: E402
+from regen_ef_reserve_trade import chain  # noqa: E402
 
 # hotfix paths; ld_gen writes into the fork (ld_clearing.txt, ld_clearing_values.txt, ld_cbfx.txt, ld_cbfx_l_*.yml)
 OUT_EFF = "common/scripted_effects/zz_ef_clearing.txt"

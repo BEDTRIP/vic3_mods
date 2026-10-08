@@ -24,6 +24,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import ld_curdata  # noqa: E402
+
 sys.setrecursionlimit(100000)
 HERE = os.path.dirname(os.path.abspath(__file__))
 FORK = os.path.normpath(os.path.join(HERE, "..", "..", "Economic-and-Financial-Ledgerdemain-Mod"))
@@ -258,8 +261,7 @@ def owner(rel, line):
 # ---- сущности: валюты, банки E&F, теги, номера --------------------------------------------------------------
 
 def currencies():
-    s = read(os.path.join(FORK, "common/laws/01_ef_currency_type.txt"))
-    return sorted(set(re.findall(r"^law_(\w+?)_currency = \{", s, re.M)), key=len, reverse=True)
+    return ld_curdata.by_length()
 
 
 CURS = currencies()
