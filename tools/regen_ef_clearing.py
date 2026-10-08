@@ -47,10 +47,6 @@ from regen_ef_reserve_trade import chain  # noqa: E402
 OUT_EFF = "common/scripted_effects/zz_ef_clearing.txt"
 OUT_SV = "common/script_values/zz_ef_clearing_values.txt"
 OUT_SG = "common/scripted_guis/zz_ef_cbfx.txt"
-# Е.2: E&F's private banks with a currency stock (global_var:stockpiling_<currency>_company_<bank>_fixe)
-BANKS = ["BancaCommercialeItaliana", "BankHSBC", "BankIBC", "BankJPMorgan", "Bankenverein", "BanqueDeParisEtDesPaysBas",
-         "DeNederlandscheBank", "DeutscheBank", "Mitsubishiexchangehousebank", "Rothschild_Bank_aus", "Rothschild_Bank_fra",
-         "Rothschild_Bank_gbr", "Rothschild_Bank_ger", "Rothschild_Bank_ita", "RotterdamscheBankvereeniging", "amsterdamschebank"]
 LANGS = ["english", "russian", "braz_por", "french", "german", "japanese",
          "korean", "polish", "simp_chinese", "spanish", "turkish"]
 
@@ -640,13 +636,6 @@ def values(cur):
                "zz_ef_clr_own_in_pot = {\n\tvalue = 0\n")
     out.append(chain(cur, lambda c: f"if = {{ limit = {{ has_global_variable = zz_ef_clr_c_{c} }} value = global_var:zz_ef_clr_c_{c} }}"))
     out.append("\tmin = 0\n}\n")
-    out.append("\n# Е.2 (5.10): the scope country's currency held by each of E&F's private banks (its arbitrage stock,\n"
-               "# global_var:stockpiling_<currency>_company_<bank>_fixe), in units of the scope country's money.\n")
-    for b in BANKS:
-        out.append(f"zz_ef_bank_holds_{b} = {{\n\tvalue = 0\n")
-        out.append(chain(cur, lambda c: f"if = {{ limit = {{ has_global_variable = stockpiling_{c}_company_{b}_fixe }} "
-                                        f"value = global_var:stockpiling_{c}_company_{b}_fixe }}"))
-        out.append("\tmin = 0\n}\n")
     out.append("\n# П.8: the CB's stock of each foreign currency (the capital CB state, as the clearing and В2.1 keep it):\n"
                "# units, in gold (E&F's value), in the holder's money, the week's change.\n")
     for c in cur:
@@ -696,28 +685,6 @@ def sguis(cur):
                    f"var:stockpiling_{c}_state_1 > 0 }} }} set_variable = {{ name = zz_ef_holds_pc value = capital.var:stockpiling_{c}_state_1 }} }} }}\n")
     out.append("\t\tordered_country = { limit = { has_variable = zz_ef_holds_pc } order_by = zz_ef_holds_pc_v max = 1000 check_range_bounds = no "
                "add_to_global_variable_list = { name = zz_ef_holders_list target = this } }\n")
-    # Е.2: the private banks holding our currency (zz_ef_bank_holders_list of company scopes, var:zz_ef_bank_holds_pc on
-    # each), the biggest first -- the banks sit in different countries, so a selection like zz_ef_cbfx_update_sorted
-    out.append("\t\t# Е.2 (5.10): E&F's private banks holding our currency, the biggest first\n"
-               "\t\tclear_global_variable_list = zz_ef_bank_holders_list\n"
-               "\t\tset_variable = { name = zz_ef_bh_n value = 0 }\n")
-    for b in BANKS:
-        out.append(f"\t\tset_variable = {{ name = zz_ef_bh_{b} value = zz_ef_bank_holds_{b} }}\n"
-                   f"\t\tif = {{ limit = {{ var:zz_ef_bh_{b} > 0 }} change_variable = {{ name = zz_ef_bh_n add = 1 }} }}\n")
-    out.append("\t\twhile = {\n\t\t\tlimit = { var:zz_ef_bh_n > 0 }\n\t\t\tset_variable = { name = zz_ef_bh_max value = 0 }\n")
-    for b in BANKS:
-        out.append(f"\t\t\tif = {{ limit = {{ var:zz_ef_bh_{b} > var:zz_ef_bh_max }} set_variable = {{ name = zz_ef_bh_max value = var:zz_ef_bh_{b} }} }}\n")
-    out.append("\t\t\tset_variable = { name = zz_ef_bh_done value = no }\n")
-    for b in BANKS:
-        out.append(f"\t\t\tif = {{ limit = {{ var:zz_ef_bh_done = no var:zz_ef_bh_{b} > 0 var:zz_ef_bh_{b} >= var:zz_ef_bh_max }} "
-                   f"every_country = {{ limit = {{ has_company = company_type:company_{b} }} every_company = {{ limit = {{ "
-                   f"is_company_type = company_type:company_{b} }} set_variable = {{ name = zz_ef_bank_holds_pc value = scope:holders_root.var:zz_ef_bh_{b} }} "
-                   f"add_to_global_variable_list = {{ name = zz_ef_bank_holders_list target = this }} }} }} "
-                   f"set_variable = {{ name = zz_ef_bh_{b} value = 0 }} set_variable = {{ name = zz_ef_bh_done value = yes }} }}\n")
-    out.append("\t\t\tchange_variable = { name = zz_ef_bh_n subtract = 1 }\n\t\t}\n"
-               "\t\tremove_variable = zz_ef_bh_n\n\t\tremove_variable = zz_ef_bh_max\n\t\tremove_variable = zz_ef_bh_done\n")
-    for b in BANKS:
-        out.append(f"\t\tremove_variable = zz_ef_bh_{b}\n")
     out.append("\t}\n}\n")
     return "".join(out)
 
