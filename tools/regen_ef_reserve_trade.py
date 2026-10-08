@@ -7,7 +7,6 @@ The trade reserve currency as a real flow (E&F's trade_balance itself is edited 
 Generated:
   * zz_ef_fx_liab: the country's currency held by other CBs (its debt abroad), for the log and M3.
   * zz_ef_rc_currency_value: the scope country's currency at its parity in gold (clearing).
-  * zz_ef_v_rc_fx_in / _back / _metal_out: fields of the EFX log (0 while nothing sets the variables).
 The monthly trade-reserve step zz_ef_rc_step (its call was commented out) is in the fork's
 _archive/ef_reserve_trade_step/ (ФК2, 6.10).
 
@@ -52,20 +51,7 @@ def chain(cur, body):
     return "".join(out)
 
 
-VALUES = """# Log helpers (0 if unset).
-zz_ef_v_rc_fx_in = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_rc_fx_in } value = var:zz_ef_rc_fx_in }
-}
-zz_ef_v_rc_back = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_rc_back } value = var:zz_ef_rc_back }
-}
-zz_ef_v_rc_metal_out = {
-	value = 0
-	if = { limit = { has_variable = zz_ef_rc_metal_out } value = var:zz_ef_rc_metal_out }
-}
-"""
+VALUES = ""  # the EFX fields zz_ef_v_rc_* -- nothing set their variables (fork _archive/ld_dead_readers/, 8.10)
 
 
 def values(cur):
