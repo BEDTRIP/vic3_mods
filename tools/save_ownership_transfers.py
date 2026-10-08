@@ -1,10 +1,12 @@
 """Levels that changed owner without the building changing size: who sells to whom between saves (В1.2, 3.10).
 
-Usage:  py tools/save_ownership_transfers.py <save1> <save2> [...]   (oldest first; names inside 'save games' are fine)
+Usage:  py tools/save_ownership_transfers.py [--price N] <save1> <save2> [...]   (oldest first; names inside 'save games' are fine)
 
 The engine's company privatization: companies (and foreign owners) buy levels from manors, financial districts,
-the state at the privatization price -- 15 000 a level with VC (PRIVATIZATION_PER_LEVEL_COST 150 x
-MIN_FAKE_CONSTRUCTION_COST 100), paid from the buyer's investment pool. Per pair of saves: levels lost and gained
+the state at the privatization price -- PRIVATIZATION_PER_LEVEL_COST x the level's construction points (at least
+MIN_FAKE_CONSTRUCTION_COST 100), paid from the buyer's investment pool: 15 000 a level with VC (150 x 100); vanilla 250
+-- 25 000 and more, 50 000 for a 200-point building (8.10: the Ledgerdemain playset has no VC). --price N (default 15000)
+is only the estimate's price per level. Per pair of saves: levels lost and gained
 by owner class (classes as in save_ownership.py), world and the top countries by levels sold.
 """
 import sys, collections
@@ -21,8 +23,12 @@ def per_building(d, banks):
 
 
 def main():
+    args = sys.argv[1:]
+    price = 15000
+    if args and args[0] == "--price":
+        price = int(args[1]); args = args[2:]
     banks = so.bank_companies()
-    saves = [so.parse(p) for p in sys.argv[1:]]
+    saves = [so.parse(p) for p in args]
     for a, b in zip(saves, saves[1:]):
         A, B = per_building(a, banks), per_building(b, banks)
         lose, gain = collections.Counter(), collections.Counter()
@@ -38,7 +44,7 @@ def main():
                 elif dl > 0:
                     gain[cl] += dl
         print(f"{a['date']} -> {b['date']}: sold {sum(lose.values())} levels "
-              f"(~{sum(lose.values()) * 15000 / 1e6:.1f}M at 15 000)")
+              f"(~{sum(lose.values()) * price / 1e6:.1f}M at {price})")
         print('  sold by  ', dict(lose.most_common()))
         print('  bought by', dict(gain.most_common()))
         for c, v in sorted(by.items(), key=lambda x: -sum(x[1].values()))[:10]:
