@@ -220,11 +220,6 @@ def eff_text(gr):
 
 def loc_text(lang, gr):
     L = [f"l_{lang}:"]
-    # no word or issuer yet (before the country's zz_ef_cur_set) -- «<adjective> currency»
-    if lang == "russian":
-        L.append(' zz_ef_cur_nat_generic:0 "[ROOT.GetCountry.GetAdjectiveNoFormatting]ая валюта"')
-    else:
-        L.append(' zz_ef_cur_nat_generic:0 "[ROOT.GetCountry.GetAdjectiveNoFormatting] currency"')
     for n in nouns_used(gr):
         en, ru, g = NOUNS[n]
         if lang == "russian":

@@ -140,13 +140,19 @@ def var_text(curs):
         L.append(f"\telse_if = {{ limit = {{ currency_identifiers_{c} = 1 }} set_variable = {{ name = zz_ef_cur value = flag:{c} }} }}")
     L.append("\telse_if = { limit = { has_variable = zz_ef_cur } remove_variable = zz_ef_cur }")
     # R3а (8.10): no currency of its own -- a national one by the capital's region (ld_currency_national.txt)
-    L.append("\tif = { limit = { NOT = { has_variable = zz_ef_cur } } zz_ef_cur_noun_set = yes }")
-    L.append("\telse = { zz_ef_cur_name_set = yes }")
-    L.append("\tzz_ef_cur_issuer_set = yes")
+    L.append("\tzz_ef_cur_names = yes")
     L.append("\tif = { limit = { zz_ef_logs_on = yes } debug_log = \"EFM|[TimeKeeper.GetCurrentDate.GetString]|"
              "[THIS.GetCountry.GetNameNoFormatting]|cur_nat|[THIS.GetCountry.GetCustom('currency_name')]\" }")
     L.append("\tzz_ef_cur_par_update = yes")
     L.append("}")
+    L += ["",
+          "# The currency's name: its word and issuer. Every country at the game's load (on_game_started_after_lobby,",
+          "# on_actions/ld_currency_name_on_actions.txt), then with zz_ef_cur_set and the currency laws' on_activate.",
+          "zz_ef_cur_names = {",
+          "\tif = { limit = { NOT = { has_variable = zz_ef_cur } } zz_ef_cur_noun_set = yes }",
+          "\telse = { zz_ef_cur_name_set = yes }",
+          "\tzz_ef_cur_issuer_set = yes",
+          "}"]
     L += ["",
           "# The user (8.10): every currency is named «<the issuer's adjective> <word>» -- «Russian ruble, British pound».",
           "# The word of an E&F currency (var:zz_ef_cur_noun; a national one -- zz_ef_cur_noun_set, ld_currency_national.txt).",
@@ -224,9 +230,9 @@ def custom_text(curs):
              "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } NOT = { has_variable = zz_ef_cur_noun } }",
              f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
         if key == "currency_name":
-            # the user (8.10): E&F's names by default are gone -- no word / issuer: «<adjective> currency»
-            L[-3:-1] = ["\t\ttrigger = { OR = { NOT = { has_variable = zz_ef_cur_noun } NOT = { has_variable = zz_ef_cur_issuer } } }",
-                        "\t\tlocalization_key = zz_ef_cur_nat_generic"]
+            # the user (8.10): no defaults -- every country has its word and issuer from the game's load
+            # (zz_ef_cur_names, on_actions/ld_currency_name_on_actions.txt)
+            del L[-5:]
             # the user (8.10): every currency -- «<the issuer's adjective> <word>» (tools/regen_ld_currency_national.py)
             for n in _national_nouns(_national_groups()):
                 L += [f"\t#{n}", "\ttext = {",
