@@ -12,8 +12,9 @@
 Пишет в форк:
 - `common/scripted_effects/ld_currency_national.txt` — `zz_ef_cur_noun_set`: `var:zz_ef_cur_noun` = `flag:<слово>` по
   основной культуре: культура (`this = cu:X`), язык, наследие (`has_discrimination_trait`), первая подходящая группа; зовёт `zz_ef_cur_set`, когда своей валюты нет; лог `EFM|…|cur_nat`;
-- `localization/{english,russian}/ld_currency_national_l_*.yml` — `zz_ef_cur_nat_<слово>` (англ.: «Bavarian mark»,
-  рус.: «марка (Бавария)» — слово с прилагательным по роду не согласовать) и `zz_ef_cur_noun_<слово>`.
+- `localization/{english,russian}/ld_currency_national_l_*.yml` — `zz_ef_cur_nat_<слово>` для всех слов (национальных и
+  `LAW_NOUN` — валют законов E&F): «<прилагательное эмитента> <слово>» (англ. «British pound», рус. «Британский фунт»:
+  основа прилагательного игры + окончание по роду слова), и `zz_ef_cur_noun_<слово>`.
 Ветки `currency_name` — `tools/regen_ld_currency_data.py` (берёт `NOUNS` отсюда). После правки английского —
 `ld_loc_langs.py`. `--check` — только сравнить, код выхода 1 при расхождениях.
 """
@@ -33,21 +34,74 @@ EFF = "common/scripted_effects/ld_currency_national.txt"
 OLD = ("common/scripted_triggers/ld_currency_national_triggers.txt",)  # прежний вариант — по региону столицы
 LOC = "localization/{0}/ld_currency_national_l_{0}.yml"
 
+# слово: (англ., рус., род по-русски: m / f / n — окончание прилагательного страны «ий» / «ая» / «ое»; у прилагательного
+# страны в русской локализации игры — только основа: «Австрийск»)
 NOUNS = {
-    "pound": ("pound", "фунт"), "franc": ("franc", "франк"), "guilder": ("guilder", "гульден"),
-    "mark": ("mark", "марка"), "real": ("real", "реал"), "lira": ("lira", "лира"), "krona": ("krona", "крона"),
-    "ruble": ("ruble", "рубль"), "zloty": ("zloty", "злотый"), "dinar": ("dinar", "динар"), "leu": ("leu", "лей"),
-    "forint": ("forint", "форинт"), "drachma": ("drachma", "драхма"), "thaler": ("thaler", "талер"),
-    "piastre": ("piastre", "пиастр"), "dirham": ("dirham", "дирхам"), "riyal": ("riyal", "риал"),
-    "toman": ("toman", "туман"), "abazi": ("abazi", "абаз"), "dram": ("dram", "драм"), "tenge": ("tenge", "тенге"),
-    "tugrik": ("tugrik", "тугрик"), "tangka": ("tangka", "танка"), "rupee": ("rupee", "рупия"),
-    "kyat": ("kyat", "кьят"), "tical": ("tical", "тикаль"), "kip": ("kip", "кип"), "riel": ("riel", "риель"),
-    "dong": ("dong", "донг"), "tael": ("tael", "лян"), "yen": ("yen", "иена"), "won": ("won", "вона"),
-    "talari": ("talari", "талари"), "shilling": ("shilling", "шиллинг"), "cowrie": ("cowrie", "каури"),
-    "dollar": ("dollar", "доллар"), "peso": ("peso", "песо"),
-    "hryvnia": ("hryvnia", "гривна"), "koruna": ("koruna", "крона"), "litas": ("litas", "лит"), "lats": ("lats", "лат"),
-    "kroon": ("kroon", "крона"), "manat": ("manat", "манат"), "markka": ("markka", "марка"), "lev": ("lev", "лев"),
-    "lek": ("lek", "лек"), "taka": ("taka", "така"), "ringgit": ("ringgit", "ринггит"), "tolar": ("tolar", "толар"),
+    "pound": ("pound", "фунт", "m"), "franc": ("franc", "франк", "m"), "guilder": ("guilder", "гульден", "m"),
+    "gulden": ("gulden", "гульден", "m"), "florin": ("florin", "флорин", "m"),
+    "mark": ("mark", "марка", "f"), "real": ("real", "реал", "m"), "lira": ("lira", "лира", "f"),
+    "krona": ("krona", "крона", "f"), "krone": ("krone", "крона", "f"),
+    "ruble": ("ruble", "рубль", "m"), "zloty": ("zloty", "злотый", "m"), "dinar": ("dinar", "динар", "m"),
+    "leu": ("leu", "лей", "m"), "forint": ("forint", "форинт", "m"), "drachma": ("drachma", "драхма", "f"),
+    "thaler": ("thaler", "талер", "m"), "piastre": ("piastre", "пиастр", "m"), "dirham": ("dirham", "дирхам", "m"),
+    "riyal": ("riyal", "риал", "m"), "qiran": ("qiran", "киран", "m"), "toman": ("toman", "туман", "m"),
+    "abazi": ("abazi", "абаз", "m"), "dram": ("dram", "драм", "m"), "tenge": ("tenge", "тенге", "m"),
+    "tugrik": ("tugrik", "тугрик", "m"), "tangka": ("tangka", "танка", "f"), "rupee": ("rupee", "рупия", "f"),
+    "rupiah": ("rupiah", "рупия", "f"), "kyat": ("kyat", "кьят", "m"), "tical": ("tical", "тикаль", "m"),
+    "baht": ("baht", "бат", "m"), "kip": ("kip", "кип", "m"), "riel": ("riel", "риель", "m"),
+    "dong": ("dong", "донг", "m"), "tael": ("tael", "лян", "m"), "yuan": ("yuan", "юань", "m"),
+    "yen": ("yen", "иена", "f"), "won": ("won", "вона", "f"), "talari": ("talari", "талари", "m"),
+    "birr": ("birr", "быр", "m"), "shilling": ("shilling", "шиллинг", "m"), "cowrie": ("cowrie", "каури", "f"),
+    "rand": ("rand", "ранд", "m"), "naira": ("naira", "найра", "f"), "ariary": ("ariary", "ариари", "m"),
+    "ouguiya": ("ouguiya", "угия", "f"), "eco": ("eco", "эко", "m"),
+    "dollar": ("dollar", "доллар", "m"), "peso": ("peso", "песо", "n"), "colon": ("colon", "колон", "m"),
+    "quetzal": ("quetzal", "кетсаль", "m"), "lempira": ("lempira", "лемпира", "f"),
+    "cordoba": ("cordoba", "кордоба", "f"), "sol": ("sol", "соль", "m"), "peseta": ("peseta", "песета", "f"),
+    "ducat": ("ducat", "дукат", "m"), "scudo": ("scudo", "скудо", "m"),
+    "hryvnia": ("hryvnia", "гривна", "f"), "koruna": ("koruna", "крона", "f"), "litas": ("litas", "лит", "m"),
+    "lats": ("lats", "лат", "m"), "kroon": ("kroon", "крона", "f"), "manat": ("manat", "манат", "m"),
+    "markka": ("markka", "марка", "f"), "lev": ("lev", "лев", "m"), "lek": ("lek", "лек", "m"),
+    "taka": ("taka", "така", "f"), "ringgit": ("ringgit", "ринггит", "m"), "tolar": ("tolar", "толар", "m"),
+}
+RU_END = {"m": "ий", "f": "ая", "n": "ое"}
+# валюта закона E&F (var:zz_ef_cur = flag:<ключ>) → слово; название — «<прилагательное эмитента> <слово>» (пользователь
+# 8.10: «русский рубль, британский фунт» — для всех). spe_uni (условная «уни») — без слова, название E&F.
+LAW_NOUN = {
+    "dinar": "dinar", "dinar_algerian_dinar": "dinar", "dinar_iraqi_dinar": "dinar", "dinar_libyan_dinar": "dinar",
+    "dinar_moroccan_dirham": "dirham", "dinar_omanian_rial": "riyal", "dinar_qiran": "qiran",
+    "dinar_saudi_riyal": "riyal", "dinar_serbian_dinar": "dinar", "dinar_tunisian_dinar": "dinar",
+    "dinar_yugoslav_dinar": "dinar",
+    "dollar_australian_dollar": "dollar", "dollar_canadian_dollar": "dollar", "dollar_caribbean_dollar": "dollar",
+    "dollar_confederate_states_dollar": "dollar", "dollar_liberian_dollar": "dollar",
+    "dollar_new_zealand_dollar": "dollar", "dollar_sierra_leonean_dollar": "dollar",
+    "dollar_united_states_dollar": "dollar",
+    "eco_ariary": "ariary", "eco_central_african_eco": "eco", "eco_east_african_eco": "eco",
+    "eco_ethiopian_birr": "birr", "eco_ghanaian_pound": "pound", "eco_nigerian_naira": "naira",
+    "eco_south_african_rand": "rand", "eco_tuareg_ouguiya": "ouguiya", "eco_west_african_eco": "eco",
+    "franc_belgian_franc": "franc", "franc_french_franc": "franc", "franc_luxembourgish_franc": "franc",
+    "franc_swiss_franc": "franc",
+    "gulden": "gulden", "gulden_bavarian_gulden": "gulden", "gulden_florin": "florin",
+    "gulden_hungarian_forint": "forint", "gulden_indies_guilder": "guilder", "gulden_south_german_gulden": "gulden",
+    "krone_czech_koruna": "koruna", "krone_danish_krone": "krone", "krone_estonian_kroon": "kroon",
+    "krone_icelandic_krona": "krona", "krone_norwegian_krone": "krone", "krone_slovak_koruna": "koruna",
+    "krone_swedish_krona": "krona",
+    "leon_leu": "leu", "leon_lev": "lev",
+    "lira": "lira", "lira_ducato": "ducat", "lira_ottoman_lira": "lira", "lira_scudo_pontificio": "scudo",
+    "lira_scudo_sardo": "scudo", "lira_toscane_lira": "lira",
+    "mark": "mark", "mark_finnish_markka": "markka",
+    "peso": "peso", "peso_argentine_peso": "peso", "peso_bolivien_peso": "peso", "peso_chilean_peso": "peso",
+    "peso_colombian_peso": "peso", "peso_costa_rican_colon": "colon", "peso_cuban_peso": "peso",
+    "peso_ecuadorian_peso": "peso", "peso_el_salvador_colon": "colon", "peso_guatemalan_quetzal": "quetzal",
+    "peso_honduran_lempira": "lempira", "peso_mexican_peso": "peso", "peso_nicaraguan_cordoba": "cordoba",
+    "peso_paraguayan_peso": "peso", "peso_philippine_peso": "peso", "peso_sol_de_oro": "sol",
+    "peso_uruguayan_peso": "peso", "peso_venezuelan_peso": "peso",
+    "pound_egyptian_pound": "pound", "pound_irish_pound": "pound", "pound_sterling": "pound",
+    "real": "real", "real_brazilian_real": "real",
+    "rupee_indian_rupee": "rupee", "rupee_indonesian_rupiah": "rupiah",
+    "spe_baht": "baht", "spe_dong": "dong", "spe_drachma": "drachma", "spe_korean_won": "won",
+    "spe_latvian_lats": "lats", "spe_lithuanian_litas": "litas", "spe_peseta": "peseta", "spe_ruble": "ruble",
+    "spe_yen": "yen", "spe_yuan": "yuan", "spe_zloti": "zloty",
+    "thaler_hannoveraner_thaler": "thaler", "thaler_prussian_thaler": "thaler", "thaler_saxon_thaler": "thaler",
 }
 # сначала культура (у украинцев язык общий с русскими — гривну иначе не отличить), затем язык, затем наследие;
 # испанский и английский языки здесь не стоят — у Мексики и США решает наследие (песо, доллар)
@@ -94,6 +148,9 @@ HERITAGE = {
     "melanesian": "pound", "micronesian": "dollar", "polynesian": "dollar",
 }
 
+# прилагательное эмитента валюты (var:zz_ef_cur_issuer — zz_ef_cur_name_set, ld_currency_var.txt)
+ISSUER_ADJ = "ROOT.GetCountry.MakeScope.Var('zz_ef_cur_issuer').GetCountry.GetAdjectiveNoFormatting"
+
 _changed = []
 
 
@@ -117,7 +174,7 @@ def groups():
     missing = [h for h in names if h not in HERITAGE]
     extra = [h for h in HERITAGE if h not in names] + [c for c in CULTURE if c not in cul] + \
         [l for l in LANGUAGE if "language_" + l not in langs]
-    bad = [n for n in list(HERITAGE.values()) + list(CULTURE.values()) + list(LANGUAGE.values()) if n not in NOUNS]
+    bad = [n for n in list(HERITAGE.values()) + list(LAW_NOUN.values()) + list(CULTURE.values()) + list(LANGUAGE.values()) if n not in NOUNS]
     if missing or extra or bad:
         raise SystemExit(f"heritages without a word: {missing}; not in the game: {extra}; unknown words: {bad}")
     out = []
@@ -130,8 +187,9 @@ def groups():
 
 
 def nouns_used(gr):
+    """Слова по порядку: национальные (по группам), затем слова законов E&F."""
     seen = []
-    for _, n, _ in gr:
+    for n in [n for _, n, _ in gr] + list(LAW_NOUN.values()):
         if n not in seen:
             seen.append(n)
     return seen
@@ -156,8 +214,6 @@ def eff_text(gr):
                  f"set_variable = {{ name = zz_ef_cur_noun value = flag:{n} }} }}")
         first = False
     L.append("\telse_if = { limit = { has_variable = zz_ef_cur_noun } remove_variable = zz_ef_cur_noun }")
-    L.append("\tif = { limit = { zz_ef_logs_on = yes has_variable = zz_ef_cur_noun } debug_log = \"EFM|[TimeKeeper.GetCurrentDate.GetString]|"
-             "[THIS.GetCountry.GetNameNoFormatting]|cur_nat|[THIS.GetCountry.GetCustom('currency_name')]\" }")
     L.append("}")
     return "\n".join(L) + "\n"
 
@@ -165,12 +221,12 @@ def eff_text(gr):
 def loc_text(lang, gr):
     L = [f"l_{lang}:"]
     for n in nouns_used(gr):
-        en, ru = NOUNS[n]
+        en, ru, g = NOUNS[n]
         if lang == "russian":
-            L.append(f' zz_ef_cur_nat_{n}:0 "{ru} ([ROOT.GetCountry.GetNameNoFormatting])"')
+            L.append(f' zz_ef_cur_nat_{n}:0 "[{ISSUER_ADJ}]{RU_END[g]} {ru}"')
             L.append(f' zz_ef_cur_noun_{n}:0 "{ru}"')
         else:
-            L.append(f' zz_ef_cur_nat_{n}:0 "[ROOT.GetCountry.GetAdjectiveNoFormatting] {en}"')
+            L.append(f' zz_ef_cur_nat_{n}:0 "[{ISSUER_ADJ}] {en}"')
             L.append(f' zz_ef_cur_noun_{n}:0 "{en}"')
     return "\n".join(L) + "\n"
 

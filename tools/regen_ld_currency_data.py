@@ -30,7 +30,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
-from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns  # noqa: E402
+from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK
@@ -111,7 +111,8 @@ def laws_text(curs):
     for c in curs:
         pat = re.compile(r"(\nlaw_%s_currency = \{.*?\n    on_activate = \{)(.*?)(\n    \})" % re.escape(c), re.S)
         body = "\n        # R1б.2: the country's currency (zz_ef_cur, scripted_effects/ld_currency_var.txt)\n" \
-               f"        set_variable = {{ name = zz_ef_cur value = flag:{c} }}"
+               f"        set_variable = {{ name = zz_ef_cur value = flag:{c} }}\n" \
+               "        zz_ef_cur_name_set = yes\n        zz_ef_cur_issuer_set = yes"
         out, n = pat.subn(lambda m: m.group(1) + body + m.group(3), out, count=1)
         if n != 1:
             raise SystemExit(f"law_{c}_currency: no on_activate")
@@ -140,8 +141,35 @@ def var_text(curs):
     L.append("\telse_if = { limit = { has_variable = zz_ef_cur } remove_variable = zz_ef_cur }")
     # R3а (8.10): no currency of its own -- a national one by the capital's region (ld_currency_national.txt)
     L.append("\tif = { limit = { NOT = { has_variable = zz_ef_cur } } zz_ef_cur_noun_set = yes }")
-    L.append("\telse_if = { limit = { has_variable = zz_ef_cur_noun } remove_variable = zz_ef_cur_noun }")
+    L.append("\telse = { zz_ef_cur_name_set = yes }")
+    L.append("\tzz_ef_cur_issuer_set = yes")
+    L.append("\tif = { limit = { zz_ef_logs_on = yes } debug_log = \"EFM|[TimeKeeper.GetCurrentDate.GetString]|"
+             "[THIS.GetCountry.GetNameNoFormatting]|cur_nat|[THIS.GetCountry.GetCustom('currency_name')]\" }")
     L.append("\tzz_ef_cur_par_update = yes")
+    L.append("}")
+    L += ["",
+          "# The user (8.10): every currency is named «<the issuer's adjective> <word>» -- «Russian ruble, British pound».",
+          "# The word of an E&F currency (var:zz_ef_cur_noun; a national one -- zz_ef_cur_noun_set, ld_currency_national.txt).",
+          "zz_ef_cur_name_set = {"]
+    first = True
+    for c in curs:
+        if c not in LAW_NOUN:
+            continue
+        L.append(f"\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} "
+                 f"set_variable = {{ name = zz_ef_cur_noun value = flag:{LAW_NOUN[c]} }} }}")
+        first = False
+    L.append("\telse_if = { limit = { has_variable = zz_ef_cur_noun } remove_variable = zz_ef_cur_noun }")
+    L.append("}")
+    L += ["",
+          "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): the leading country of an E&F currency (its",
+          "# <cur>_leading_currency_type -- the largest national capacity among the law's holders, currency_law_list),",
+          "# else the country itself.",
+          "zz_ef_cur_issuer_set = {",
+          "\tset_variable = { name = zz_ef_cur_issuer value = this }"]
+    for c in curs:
+        L.append(f"\tif = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ has_modifier = {c}_leading_currency_type }} }} "
+                 f"random_country = {{ limit = {{ has_modifier = {c}_leading_currency_type }} save_temporary_scope_as = zz_ef_cur_iss }} "
+                 f"set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
     L.append("}")
     L += ["",
           "# R1б.1 (Д.1): the issuer's parity in gold, per currency (global_var:zz_ef_fxpar_<cur>), for the value of a currency",
@@ -192,10 +220,10 @@ def custom_text(curs):
              "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } NOT = { has_variable = zz_ef_cur_noun } }",
              f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
         if key == "currency_name":
-            # R3а (8.10): a national currency -- «<adjective> <word>» (tools/regen_ld_currency_national.py)
+            # the user (8.10): every currency -- «<the issuer's adjective> <word>» (tools/regen_ld_currency_national.py)
             for n in _national_nouns(_national_groups()):
-                L += [f"\t#national {n}", "\ttext = {",
-                      f"\t\ttrigger = {{ NOT = {{ has_variable = zz_ef_cur }} var:zz_ef_cur_noun ?= flag:{n} }}",
+                L += [f"\t#{n}", "\ttext = {",
+                      f"\t\ttrigger = {{ var:zz_ef_cur_noun ?= flag:{n} has_variable = zz_ef_cur_issuer }}",
                       f"\t\tlocalization_key = zz_ef_cur_nat_{n}", "\t}"]
         else:
             L += ["\ttext = {", "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } has_variable = zz_ef_cur_noun }",
