@@ -49,6 +49,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("run")
     ap.add_argument("--countries", default="Великобритания,США,Россия,Франция,Швейцария")
+    ap.add_argument("--series", help="страна: недели с наибольшим изменением «прочего» (d_other, пул, казна)")
     a = ap.parse_args()
     watch = a.countries.split(",")
 
@@ -71,6 +72,22 @@ def main():
         elif tag == "EFV":
             efv.append(line[i:].strip())
 
+    if a.series:
+        r = efj.get(a.series, [])
+        prev = None
+        rows = []
+        for dt, v in r:
+            if prev is not None:
+                rows.append((dt, (v.get("other") or 0) - (prev.get("other") or 0),
+                              (v.get("other_pool") or 0) - (prev.get("other_pool") or 0),
+                              (v.get("other_tr") or 0) - (prev.get("other_tr") or 0), v.get("weeks"), v.get("budget")))
+            prev = v
+        print(f"== {a.series}: шагов {len(rows)}; худшие 20 (дата, d_other, d_pool, d_tr, weeks, budget):")
+        for x in sorted(rows, key=lambda x: x[1])[:20]:
+            print("  ", x[0], *(round(y) if isinstance(y, float) else y for y in x[1:]))
+        neg = [x[1] for x in rows if x[1] < 0]
+        print("   сумма отриц.", round(sum(neg)), "полож.", round(sum(x[1] for x in rows if x[1] > 0)))
+        return
     print(f"== EFJ: стран {len(efj)}")
     neg = [(c, r[0][1].get("capital")) for c, r in efj.items()
            if isinstance(r[0][1].get("capital"), float) and r[0][1]["capital"] < 0]
