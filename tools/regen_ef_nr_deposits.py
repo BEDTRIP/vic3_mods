@@ -89,7 +89,7 @@ zz_ef_nr_dep_step = {
 		limit = {
 			zz_ef_nr_issuer = yes
 			NOT = { has_variable = zz_ef_nr_started }
-			has_variable = zz_ef_parity_version
+			has_variable = zz_ef_model_started
 		}
 		set_variable = { name = zz_ef_nr_started value = yes }
 		if = { limit = { NOT = { has_variable = zz_ef_nr_dep } } set_variable = { name = zz_ef_nr_dep value = 0 } }

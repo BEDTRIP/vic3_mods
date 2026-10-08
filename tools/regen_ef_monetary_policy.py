@@ -204,7 +204,7 @@ zz_ef_mp_step = {{
 			zz_ef_mp_can_work = yes
 			# not before the CB's start metal (R1б.1, Д.2: run 25 -- on day 1 E&F's metal gave a cover of 104 and
 			# nearly every AI took a revaluation)
-			has_variable = zz_ef_parity_version
+			has_variable = zz_ef_model_started
 			NOT = {{ has_variable = zz_ef_cb_start_due }}
 		}}
 		if = {{
