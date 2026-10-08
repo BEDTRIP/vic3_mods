@@ -17,6 +17,8 @@
 - `common/script_values/ld_currency_values.txt` — `zz_ef_fx_gold_<cur>`: единица валюты в резервах ЦБ в золоте по
   деньгам движка (стоимость E&F / паритет эмитента в золоте, `zz_ef_cur_par_update`); в
   `common/script_values/ld_fx_reserves_values.txt` (`zz_ef_fx_reserves_metal`) — `money_value_<cur>` → `zz_ef_fx_gold_<cur>`;
+- национальные валюты (страна без своей): `zz_ef_cur_set` зовёт `zz_ef_cur_noun_set`, `currency_name` — ветки
+  `zz_ef_cur_nat_<слово>` (`tools/regen_ld_currency_national.py`);
 - `docs/currency-table.md` — таблица: ключ, название (англ., рус.), символ, ISO, страны и паритет на 1836.
 
 ISO — справочник ниже (для исторических валют без кода — «—»). `--check` — только сравнить, код выхода 1 при расхождениях.
@@ -28,6 +30,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
+from regen_ld_currency_national import NOUNS as NATIONAL  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK
@@ -135,6 +138,9 @@ def var_text(curs):
     for c in curs:
         L.append(f"\telse_if = {{ limit = {{ currency_identifiers_{c} = 1 }} set_variable = {{ name = zz_ef_cur value = flag:{c} }} }}")
     L.append("\telse_if = { limit = { has_variable = zz_ef_cur } remove_variable = zz_ef_cur }")
+    # R3а (8.10): no currency of its own -- a national one by the capital's region (ld_currency_national.txt)
+    L.append("\tif = { limit = { NOT = { has_variable = zz_ef_cur } } zz_ef_cur_noun_set = yes }")
+    L.append("\telse_if = { limit = { has_variable = zz_ef_cur_noun } remove_variable = zz_ef_cur_noun }")
     L.append("\tzz_ef_cur_par_update = yes")
     L.append("}")
     L += ["",
@@ -183,7 +189,17 @@ def custom_text(curs):
         L = [f"{key} = {{", "\ttype = country", "\tlog_loc_errors = no", "",
              "\t# R1б.2: the country's currency from var:zz_ef_cur (scripted_effects/ld_currency_var.txt); was 95 checks of",
              "\t# E&F's currency by culture per call", "\t#generic", "\ttext = {",
-             "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } }", f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
+             "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } NOT = { has_variable = zz_ef_cur_noun } }",
+             f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
+        if key == "currency_name":
+            # R3а (8.10): a national currency -- «<adjective> <word>» (tools/regen_ld_currency_national.py)
+            for n in NATIONAL:
+                L += [f"\t#national {n}", "\ttext = {",
+                      f"\t\ttrigger = {{ NOT = {{ has_variable = zz_ef_cur }} var:zz_ef_cur_noun ?= flag:{n} }}",
+                      f"\t\tlocalization_key = zz_ef_cur_nat_{n}", "\t}"]
+        else:
+            L += ["\ttext = {", "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } has_variable = zz_ef_cur_noun }",
+                  f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
         for c in curs:
             L += [f"\t#{c}", "\ttext = {", f"\t\ttrigger = {{ var:zz_ef_cur ?= flag:{c} }}",
                   f"\t\tlocalization_key = {c}{suffix}", "\t}"]
