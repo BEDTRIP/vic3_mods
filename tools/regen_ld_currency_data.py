@@ -162,15 +162,18 @@ def var_text(curs):
     L.append("\telse = { zz_ef_cur_noun_set = yes }")
     L.append("}")
     L += ["",
-          "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): the leading country of an E&F currency (its",
-          "# <cur>_leading_currency_type -- the largest national capacity among the law's holders, currency_law_list),",
-          "# else the country itself.",
+          "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): of the holders of the currency's law, the",
+          "# largest by GDP (Britain for the pound, Prussia for the thaler); none -- the country itself. Not E&F's",
+          "# <cur>_leading_currency_type: it is per the pulsing country (its market is left out), several hold it at once",
+          "# (r1008_172513: Britain's pound named «New South Welsh» from December 1836).",
           "zz_ef_cur_issuer_set = {",
           "\tset_variable = { name = zz_ef_cur_issuer value = this }"]
+    first = True
     for c in [c for c in curs if c in LAW_NOUN]:
-        L.append(f"\tif = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ has_modifier = {c}_leading_currency_type }} }} "
-                 f"random_country = {{ limit = {{ has_modifier = {c}_leading_currency_type }} save_temporary_scope_as = zz_ef_cur_iss }} "
-                 f"set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
+        L.append(f"\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ has_law = law_type:law_{c}_currency }} }} "
+                 f"ordered_country = {{ limit = {{ has_law = law_type:law_{c}_currency }} order_by = gdp max = 1 check_range_bounds = no "
+                 f"save_temporary_scope_as = zz_ef_cur_iss }} set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
+        first = False
     L.append("}")
     L += ["",
           "# R1б.1 (Д.1): the issuer's parity in gold, per currency (global_var:zz_ef_fxpar_<cur>), for the value of a currency",
