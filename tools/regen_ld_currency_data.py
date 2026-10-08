@@ -112,7 +112,7 @@ def laws_text(curs):
         pat = re.compile(r"(\nlaw_%s_currency = \{.*?\n    on_activate = \{)(.*?)(\n    \})" % re.escape(c), re.S)
         body = "\n        # R1б.2: the country's currency (zz_ef_cur, scripted_effects/ld_currency_var.txt)\n" \
                f"        set_variable = {{ name = zz_ef_cur value = flag:{c} }}\n" \
-               "        zz_ef_cur_name_set = yes\n        zz_ef_cur_issuer_set = yes"
+               "        zz_ef_cur_name_set = yes"
         out, n = pat.subn(lambda m: m.group(1) + body + m.group(3), out, count=1)
         if n != 1:
             raise SystemExit(f"law_{c}_currency: no on_activate")
@@ -146,15 +146,15 @@ def var_text(curs):
     L.append("\tzz_ef_cur_par_update = yes")
     L.append("}")
     L += ["",
-          "# The currency's name: its word and issuer. Every country at the game's load (on_game_started_after_lobby,",
+          "# The currency's name: its word. Every country at the game's load (on_game_started_after_lobby,",
           "# on_actions/ld_currency_name_on_actions.txt), then with zz_ef_cur_set and the currency laws' on_activate.",
           "zz_ef_cur_names = {",
           "\tif = { limit = { NOT = { has_variable = zz_ef_cur } } zz_ef_cur_noun_set = yes }",
           "\telse = { zz_ef_cur_name_set = yes }",
-          "\tzz_ef_cur_issuer_set = yes",
           "}"]
     L += ["",
-          "# The user (8.10): every currency is named «<the issuer's adjective> <word>» -- «Russian ruble, British pound».",
+          "# The user (8.10): every currency is named «<the country's adjective> <word>» -- «Russian ruble, British pound»;",
+          "# the issuer of a country's currency is the country itself (Upper Canada on the pound -- «Upper Canadian pound»).",
           "# The word of an E&F currency (var:zz_ef_cur_noun; a national one -- zz_ef_cur_noun_set, ld_currency_national.txt).",
           "zz_ef_cur_name_set = {"]
     first = True
@@ -166,26 +166,6 @@ def var_text(curs):
         first = False
     # spe_uni (E&F's «Uni», no one at the start) has no word of its own -- the national one
     L.append("\telse = { zz_ef_cur_noun_set = yes }")
-    L.append("}")
-    L += ["",
-          "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): of the independent holders of the currency's",
-          "# law, the largest by GDP (Britain for the pound, Prussia for the thaler -- not British India, r1008_173326: «Indian",
-          "# pound»); only subjects hold it -- the largest of them; none -- the country itself. Not E&F's",
-          "# <cur>_leading_currency_type: it is per the pulsing country (its market is left out), several hold it at once",
-          "# (r1008_172513: Britain's pound named «New South Welsh» from December 1836).",
-          "zz_ef_cur_issuer_set = {",
-          "\tset_variable = { name = zz_ef_cur_issuer value = this }"]
-    first = True
-    for c in [c for c in curs if c in LAW_NOUN]:
-        law = f"has_law = law_type:law_{c}_currency"
-        top = f"{law} is_subject = no"
-        L.append(f"\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ {law} }} }} "
-                 f"if = {{ limit = {{ any_country = {{ {top} }} }} ordered_country = {{ limit = {{ {top} }} order_by = gdp max = 1 "
-                 f"check_range_bounds = no save_temporary_scope_as = zz_ef_cur_iss }} }} "
-                 f"else = {{ ordered_country = {{ limit = {{ {law} }} order_by = gdp max = 1 check_range_bounds = no "
-                 f"save_temporary_scope_as = zz_ef_cur_iss }} }} "
-                 f"set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
-        first = False
     L.append("}")
     L += ["",
           "# R1б.1 (Д.1): the issuer's parity in gold, per currency (global_var:zz_ef_fxpar_<cur>), for the value of a currency",
@@ -236,13 +216,13 @@ def custom_text(curs):
              "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } NOT = { has_variable = zz_ef_cur_noun } }",
              f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
         if key == "currency_name":
-            # the user (8.10): no defaults -- every country has its word and issuer from the game's load
+            # the user (8.10): no defaults -- every country has its word from the game's load
             # (zz_ef_cur_names, on_actions/ld_currency_name_on_actions.txt)
             del L[-5:]
-            # the user (8.10): every currency -- «<the issuer's adjective> <word>» (tools/regen_ld_currency_national.py)
+            # the user (8.10): every currency -- «<the country's adjective> <word>» (tools/regen_ld_currency_national.py)
             for n in _national_nouns(_national_groups()):
                 L += [f"\t#{n}", "\ttext = {",
-                      f"\t\ttrigger = {{ var:zz_ef_cur_noun ?= flag:{n} has_variable = zz_ef_cur_issuer }}",
+                      f"\t\ttrigger = {{ var:zz_ef_cur_noun ?= flag:{n} }}",
                       f"\t\tlocalization_key = zz_ef_cur_nat_{n}", "\t}"]
         else:
             L += ["\ttext = {", "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } has_variable = zz_ef_cur_noun }",

@@ -13,7 +13,7 @@
 - `common/scripted_effects/ld_currency_national.txt` — `zz_ef_cur_noun_set`: `var:zz_ef_cur_noun` = `flag:<слово>` по
   основной культуре: культура (`this = cu:X`), язык, наследие (`has_discrimination_trait`), первая подходящая группа; зовёт `zz_ef_cur_set`, когда своей валюты нет; лог `EFM|…|cur_nat`;
 - `localization/{english,russian}/ld_currency_national_l_*.yml` — `zz_ef_cur_nat_<слово>` для всех слов (национальных и
-  `LAW_NOUN` — валют законов E&F): «<прилагательное эмитента> <слово>» (англ. «British pound», рус. «Британский фунт»:
+  `LAW_NOUN` — валют законов E&F): «<прилагательное страны> <слово>» (эмитент — сама страна; англ. «British pound», рус. «Британский фунт»:
   основа прилагательного игры + окончание по роду слова), и `zz_ef_cur_noun_<слово>`.
 Ветки `currency_name` — `tools/regen_ld_currency_data.py` (берёт `NOUNS` отсюда). После правки английского —
 `ld_loc_langs.py`. `--check` — только сравнить, код выхода 1 при расхождениях.
@@ -148,8 +148,8 @@ HERITAGE = {
     "melanesian": "pound", "micronesian": "dollar", "polynesian": "dollar",
 }
 
-# прилагательное эмитента валюты (var:zz_ef_cur_issuer — zz_ef_cur_name_set, ld_currency_var.txt)
-ISSUER_ADJ = "ROOT.GetCountry.MakeScope.Var('zz_ef_cur_issuer').GetCountry.GetAdjectiveNoFormatting"
+# прилагательное эмитента — сама страна (пользователь 8.10: эмитент валюты страны — сама страна по тегу)
+ISSUER_ADJ = "ROOT.GetCountry.GetAdjectiveNoFormatting"
 
 _changed = []
 
