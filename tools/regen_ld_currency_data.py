@@ -168,17 +168,23 @@ def var_text(curs):
     L.append("\telse = { zz_ef_cur_noun_set = yes }")
     L.append("}")
     L += ["",
-          "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): of the holders of the currency's law, the",
-          "# largest by GDP (Britain for the pound, Prussia for the thaler); none -- the country itself. Not E&F's",
+          "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): of the independent holders of the currency's",
+          "# law, the largest by GDP (Britain for the pound, Prussia for the thaler -- not British India, r1008_173326: «Indian",
+          "# pound»); only subjects hold it -- the largest of them; none -- the country itself. Not E&F's",
           "# <cur>_leading_currency_type: it is per the pulsing country (its market is left out), several hold it at once",
           "# (r1008_172513: Britain's pound named «New South Welsh» from December 1836).",
           "zz_ef_cur_issuer_set = {",
           "\tset_variable = { name = zz_ef_cur_issuer value = this }"]
     first = True
     for c in [c for c in curs if c in LAW_NOUN]:
-        L.append(f"\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ has_law = law_type:law_{c}_currency }} }} "
-                 f"ordered_country = {{ limit = {{ has_law = law_type:law_{c}_currency }} order_by = gdp max = 1 check_range_bounds = no "
-                 f"save_temporary_scope_as = zz_ef_cur_iss }} set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
+        law = f"has_law = law_type:law_{c}_currency"
+        top = f"{law} is_subject = no"
+        L.append(f"\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ {law} }} }} "
+                 f"if = {{ limit = {{ any_country = {{ {top} }} }} ordered_country = {{ limit = {{ {top} }} order_by = gdp max = 1 "
+                 f"check_range_bounds = no save_temporary_scope_as = zz_ef_cur_iss }} }} "
+                 f"else = {{ ordered_country = {{ limit = {{ {law} }} order_by = gdp max = 1 check_range_bounds = no "
+                 f"save_temporary_scope_as = zz_ef_cur_iss }} }} "
+                 f"set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
         first = False
     L.append("}")
     L += ["",
