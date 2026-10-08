@@ -158,7 +158,8 @@ def var_text(curs):
         L.append(f"\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} "
                  f"set_variable = {{ name = zz_ef_cur_noun value = flag:{LAW_NOUN[c]} }} }}")
         first = False
-    L.append("\telse_if = { limit = { has_variable = zz_ef_cur_noun } remove_variable = zz_ef_cur_noun }")
+    # spe_uni (E&F's «Uni», no one at the start) has no word of its own -- the national one
+    L.append("\telse = { zz_ef_cur_noun_set = yes }")
     L.append("}")
     L += ["",
           "# The issuer (var:zz_ef_cur_issuer, read by the name's adjective): the leading country of an E&F currency (its",
@@ -166,7 +167,7 @@ def var_text(curs):
           "# else the country itself.",
           "zz_ef_cur_issuer_set = {",
           "\tset_variable = { name = zz_ef_cur_issuer value = this }"]
-    for c in curs:
+    for c in [c for c in curs if c in LAW_NOUN]:
         L.append(f"\tif = {{ limit = {{ var:zz_ef_cur ?= flag:{c} any_country = {{ has_modifier = {c}_leading_currency_type }} }} "
                  f"random_country = {{ limit = {{ has_modifier = {c}_leading_currency_type }} save_temporary_scope_as = zz_ef_cur_iss }} "
                  f"set_variable = {{ name = zz_ef_cur_issuer value = scope:zz_ef_cur_iss }} }}")
@@ -220,6 +221,9 @@ def custom_text(curs):
              "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } NOT = { has_variable = zz_ef_cur_noun } }",
              f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
         if key == "currency_name":
+            # the user (8.10): E&F's names by default are gone -- no word / issuer: «<adjective> currency»
+            L[-3:-1] = ["\t\ttrigger = { OR = { NOT = { has_variable = zz_ef_cur_noun } NOT = { has_variable = zz_ef_cur_issuer } } }",
+                        "\t\tlocalization_key = zz_ef_cur_nat_generic"]
             # the user (8.10): every currency -- «<the issuer's adjective> <word>» (tools/regen_ld_currency_national.py)
             for n in _national_nouns(_national_groups()):
                 L += [f"\t#{n}", "\ttext = {",
@@ -228,7 +232,7 @@ def custom_text(curs):
         else:
             L += ["\ttext = {", "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } has_variable = zz_ef_cur_noun }",
                   f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
-        for c in curs:
+        for c in (curs if key != "currency_name" else []):
             L += [f"\t#{c}", "\ttext = {", f"\t\ttrigger = {{ var:zz_ef_cur ?= flag:{c} }}",
                   f"\t\tlocalization_key = {c}{suffix}", "\t}"]
         L.append("}")
