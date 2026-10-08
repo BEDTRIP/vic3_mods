@@ -30,7 +30,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
-from regen_ld_currency_national import NOUNS as NATIONAL  # noqa: E402
+from regen_ld_currency_national import NOUNS as NATIONAL, groups as _national_groups  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK
@@ -193,7 +193,7 @@ def custom_text(curs):
              f"\t\tlocalization_key = spe_uni{suffix}", "\t}"]
         if key == "currency_name":
             # R3а (8.10): a national currency -- «<adjective> <word>» (tools/regen_ld_currency_national.py)
-            for n in NATIONAL:
+            for n in _national_groups():
                 L += [f"\t#national {n}", "\ttext = {",
                       f"\t\ttrigger = {{ NOT = {{ has_variable = zz_ef_cur }} var:zz_ef_cur_noun ?= flag:{n} }}",
                       f"\t\tlocalization_key = zz_ef_cur_nat_{n}", "\t}"]
