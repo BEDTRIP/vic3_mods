@@ -34,7 +34,7 @@ Now the measure is the metal cover (zz_ef_cb_cover: reserves at parity / money s
   * the law (the player) completed: the parity x cover now / cover at the start (M.2 holds the value
     at the parity while the cover is 25%+, so the value itself no longer shows the devaluation).
   * E&F's 25/50/75% buttons (scripted guis devaluation_currency_* / revaluation_currency_*) are
-    hidden; the scale is in the CB panel (tools/regen_ef_cb_rate_gui.py, mp_row).
+    hidden; the scale is in the CB panel (gui/ld_cb_rate_panel.gui, mp_row).
 
 Writes (via ld_gen, by entry keys, into the fork «E&F: Ledgerdemain»): common/scripted_effects/ld_monetary_policy.txt,
 common/script_values/ld_monetary_policy_values.txt, common/scripted_triggers/ld_monetary_policy_triggers.txt,

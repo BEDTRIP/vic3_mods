@@ -18,7 +18,7 @@ A scripted GUI zz_ef_bonds_update (root = the player) fills two global lists of 
   zz_ef_bt_out_list -- whose bonds WE hold: the sellers of our treasury's slots and of our banks' slots.
 Per row (variables on the listed country): treasury sum (engine money, as E&F's purchase price), its yearly
 rate and interest a week; banks' sum (in gold -- E&F values the banks' bonds in gold), rate, interest a week.
-regen_ef_cb_rate_gui.py puts a button and the two tables under E&F's headers.
+gui/ld_cb_rate_panel.gui (hand-written) puts a button and the two tables under E&F's headers.
 
 Output (fork «E&F: Ledgerdemain», via ld_gen, by entry keys): common/scripted_guis/ld_bond_tables.txt,
 common/script_values/ld_bond_tables_values.txt, localization/{english,russian}/ld_bond_tables_l_*.yml.
