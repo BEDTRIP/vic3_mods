@@ -183,7 +183,7 @@ zz_ef_pb_buy = {
 		change_variable = { name = zz_ef_bl_held add = root.var:zz_ef_bl_x }
 		zz_ef_bl_acc_add = { F = sold V = root.var:zz_ef_bl_x }
 		add_investment_pool = root.var:zz_ef_bl_x
-		# R2, step 7 (8.10): the seller's banks sold a part of their claim on the engine's debt -- their capital
+		# the seller's banks sold a part of their claim on the engine's debt -- their capital
 		zz_ef_bl_seller_capital = { V = root.var:zz_ef_bl_x }
 	}
 	remove_variable = zz_ef_bl_x
@@ -230,7 +230,7 @@ zz_ef_pb_drop = {
 	set_variable = { name = zz_ef_bl_x value = var:zz_ef_pbh_$N$ }
 	change_variable = { name = zz_ef_bl_x subtract = var:zz_ef_pb_v }
 	change_variable = { name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }
-	# R2, step 7: the part is in the banks' book (zz_ef_bank_bonds) -- gone with no money, out of their capital
+	# the part is in the banks' book (zz_ef_bank_bonds) -- gone with no money, out of their capital
 	change_variable = { name = zz_ef_bank_capital subtract = var:zz_ef_bl_x }
 	if = {
 		limit = {
@@ -260,7 +260,7 @@ zz_ef_pb_cutback = {
 	if = {
 		limit = { scope:zz_ef_bl_seller = { has_variable = zz_ef_bl_woff_now } }
 		change_variable = { name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }
-		# R2, step 7: written off -- out of the banks' capital (the part was in their book)
+		# written off -- out of the banks' capital (the part was in their book)
 		change_variable = { name = zz_ef_bank_capital subtract = var:zz_ef_bl_x }
 		scope:zz_ef_bl_seller = { zz_ef_bl_acc_add = { F = woff V = root.var:zz_ef_bl_x } }
 	}
