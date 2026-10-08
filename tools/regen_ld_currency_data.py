@@ -30,7 +30,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
-from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN  # noqa: E402
+from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN, NOUNS  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK
@@ -247,10 +247,14 @@ def table_text(curs, hist, en, ru):
          "Сгенерирована `../vic3_mods/tools/regen_ld_currency_data.py` из законов, истории и локализации форка — руками не",
          "править. Переменная валюты страны — `var:zz_ef_cur` (`flag:<ключ>`), `docs/currencies.md`. Паритет — металл на",
          "национальную единицу из истории E&F на 1.1.1836 (курс между валютами и подписи; в деньгах движка не участвует, Д.1).",
-         "", "| ключ | название | по-русски | символ | ISO | страны 1836: стандарт, паритет |", "| --- | --- | --- | --- | --- | --- |"]
+         "Название в игре — «<прилагательное страны> <слово>» (эмитент — сама страна; `currency_name`); столбцы «название» —",
+         "названия E&F по ключу (окна E&F).",
+         "", "| ключ | слово в игре | название E&F | по-русски E&F | символ | ISO | страны 1836: стандарт, паритет |",
+         "| --- | --- | --- | --- | --- | --- | --- |"]
     for c in curs:
         h = "; ".join(f"{t}: {s or '—'}, {p or '—'}" for t, s, p in hist.get(c, [])) or "—"
-        L.append(f"| `{c}` | {en.get(c, '—')} | {ru.get(c, '—')} | `{c}_texture` | {ISO.get(c, '—')} | {h} |")
+        w = f"{NOUNS[LAW_NOUN[c]][1]} / {NOUNS[LAW_NOUN[c]][0]}" if c in LAW_NOUN else "национальное"
+        L.append(f"| `{c}` | {w} | {en.get(c, '—')} | {ru.get(c, '—')} | `{c}_texture` | {ISO.get(c, '—')} | {h} |")
     return "\n".join(L) + "\n"
 
 
