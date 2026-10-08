@@ -1,0 +1,1273 @@
+{
+"source": "Victoria 3 1.13 game/common/cultures/00_cultures.txt",
+"cultures": {
+"north_german": {
+"heritage": "heritage_germanic",
+"language": "language_germanophone"
+},
+"south_german": {
+"heritage": "heritage_germanic",
+"language": "language_germanophone"
+},
+"ashkenazi": {
+"heritage": "heritage_ashkenazi",
+"language": "language_yiddish"
+},
+"dutch": {
+"heritage": "heritage_netherlandish",
+"language": "language_dutch"
+},
+"flemish": {
+"heritage": "heritage_netherlandish",
+"language": "language_dutch"
+},
+"wallonian": {
+"heritage": "heritage_netherlandish",
+"language": "language_francophone"
+},
+"boer": {
+"heritage": "heritage_african_settler",
+"language": "language_dutch"
+},
+"griqua": {
+"heritage": "heritage_southern_bantu",
+"language": "language_dutch"
+},
+"alemannic": {
+"heritage": "heritage_germanic",
+"language": "language_germanophone"
+},
+"swedish": {
+"heritage": "heritage_nordic",
+"language": "language_scandinavian"
+},
+"danish": {
+"heritage": "heritage_nordic",
+"language": "language_scandinavian"
+},
+"norwegian": {
+"heritage": "heritage_nordic",
+"language": "language_scandinavian"
+},
+"icelandic": {
+"heritage": "heritage_nordic",
+"language": "language_scandinavian"
+},
+"finnish": {
+"heritage": "heritage_nordic",
+"language": "language_finnic"
+},
+"sami": {
+"heritage": "heritage_sami",
+"language": "language_sami"
+},
+"british": {
+"heritage": "heritage_british",
+"language": "language_anglophone"
+},
+"irish": {
+"heritage": "heritage_british",
+"language": "language_gaelic"
+},
+"australian": {
+"heritage": "heritage_british",
+"language": "language_anglophone"
+},
+"north_italian": {
+"heritage": "heritage_italic",
+"language": "language_italian"
+},
+"south_italian": {
+"heritage": "heritage_italic",
+"language": "language_italian"
+},
+"maltese": {
+"heritage": "heritage_italic",
+"language": "language_arabic"
+},
+"basque": {
+"heritage": "heritage_iberian",
+"language": "language_basque"
+},
+"spanish": {
+"heritage": "heritage_iberian",
+"language": "language_hispanophone"
+},
+"catalan": {
+"heritage": "heritage_iberian",
+"language": "language_occitano_romance"
+},
+"portuguese": {
+"heritage": "heritage_iberian",
+"language": "language_lusophone"
+},
+"french": {
+"heritage": "heritage_gallic",
+"language": "language_francophone"
+},
+"occitan": {
+"heritage": "heritage_gallic",
+"language": "language_occitano_romance"
+},
+"breton": {
+"heritage": "heritage_gallic",
+"language": "language_brythonic"
+},
+"croat": {
+"heritage": "heritage_south_slavic",
+"language": "language_south_slavic"
+},
+"serb": {
+"heritage": "heritage_south_slavic",
+"language": "language_south_slavic"
+},
+"bulgarian": {
+"heritage": "heritage_south_slavic",
+"language": "language_bulgarian"
+},
+"albanian": {
+"heritage": "heritage_albanian",
+"language": "language_albanian"
+},
+"slovene": {
+"heritage": "heritage_south_slavic",
+"language": "language_slovene"
+},
+"bosniak": {
+"heritage": "heritage_south_slavic",
+"language": "language_south_slavic"
+},
+"romanian": {
+"heritage": "heritage_romanian",
+"language": "language_eastern_romance"
+},
+"hungarian": {
+"heritage": "heritage_magyar",
+"language": "language_hungarian"
+},
+"polish": {
+"heritage": "heritage_west_slavic",
+"language": "language_west_slavic"
+},
+"lithuanian": {
+"heritage": "heritage_baltic",
+"language": "language_baltic"
+},
+"czech": {
+"heritage": "heritage_west_slavic",
+"language": "language_west_slavic"
+},
+"slovak": {
+"heritage": "heritage_west_slavic",
+"language": "language_west_slavic"
+},
+"russian": {
+"heritage": "heritage_east_slavic",
+"language": "language_east_slavic"
+},
+"byelorussian": {
+"heritage": "heritage_east_slavic",
+"language": "language_east_slavic"
+},
+"ukrainian": {
+"heritage": "heritage_east_slavic",
+"language": "language_east_slavic"
+},
+"ugrian": {
+"heritage": "heritage_siberian",
+"language": "language_ugric"
+},
+"latvian": {
+"heritage": "heritage_baltic",
+"language": "language_baltic"
+},
+"estonian": {
+"heritage": "heritage_baltic",
+"language": "language_finnic"
+},
+"greek": {
+"heritage": "heritage_greek",
+"language": "language_greek"
+},
+"georgian": {
+"heritage": "heritage_georgian",
+"language": "language_georgian"
+},
+"armenian": {
+"heritage": "heritage_armenian",
+"language": "language_armenian"
+},
+"sephardic": {
+"heritage": "heritage_sephardic",
+"language": "language_ladino"
+},
+"turkish": {
+"heritage": "heritage_anatolian",
+"language": "language_oghuz"
+},
+"azerbaijani": {
+"heritage": "heritage_anatolian",
+"language": "language_oghuz"
+},
+"north_caucasian": {
+"heritage": "heritage_north_caucasian",
+"language": "language_avaric"
+},
+"maghrebi": {
+"heritage": "heritage_arab",
+"language": "language_arabic"
+},
+"misri": {
+"heritage": "heritage_arab",
+"language": "language_arabic"
+},
+"mashriqi": {
+"heritage": "heritage_arab",
+"language": "language_arabic"
+},
+"bedouin": {
+"heritage": "heritage_arab",
+"language": "language_arabic"
+},
+"berber": {
+"heritage": "heritage_berber",
+"language": "language_berber"
+},
+"persian": {
+"heritage": "heritage_iranian",
+"language": "language_persian"
+},
+"uzbek": {
+"heritage": "heritage_uzbek",
+"language": "language_karluk"
+},
+"kazak": {
+"heritage": "heritage_kipchak",
+"language": "language_kipchak"
+},
+"kirgiz": {
+"heritage": "heritage_kipchak",
+"language": "language_kipchak"
+},
+"tajik": {
+"heritage": "heritage_iranian",
+"language": "language_persian"
+},
+"uighur": {
+"heritage": "heritage_uighur",
+"language": "language_karluk"
+},
+"pashtun": {
+"heritage": "heritage_iranian",
+"language": "language_pashto"
+},
+"baluchi": {
+"heritage": "heritage_iranian",
+"language": "language_baluchi"
+},
+"hazara": {
+"heritage": "heritage_hazaran",
+"language": "language_persian"
+},
+"turkmen": {
+"heritage": "heritage_turkmen",
+"language": "language_oghuz"
+},
+"kurdish": {
+"heritage": "heritage_iranian",
+"language": "language_kurdish"
+},
+"tatar": {
+"heritage": "heritage_tatar",
+"language": "language_kipchak"
+},
+"mongol": {
+"heritage": "heritage_mongolian",
+"language": "language_mongolian"
+},
+"kalmyk": {
+"heritage": "heritage_mongolian",
+"language": "language_mongolian"
+},
+"siberian": {
+"heritage": "heritage_siberian",
+"language": "language_ewenic"
+},
+"yakut": {
+"heritage": "heritage_siberian",
+"language": "language_siberian"
+},
+"tibetan": {
+"heritage": "heritage_tibetan",
+"language": "language_tibetan"
+},
+"assamese": {
+"heritage": "heritage_assamese",
+"language": "language_eastern_hindi"
+},
+"bihari": {
+"heritage": "heritage_gangetic",
+"language": "language_magadhan"
+},
+"manipuri": {
+"heritage": "heritage_eastern_highlands",
+"language": "language_meitei"
+},
+"nepali": {
+"heritage": "heritage_himalayan",
+"language": "language_pahari"
+},
+"oriya": {
+"heritage": "heritage_gangetic",
+"language": "language_magadhan"
+},
+"sinhala": {
+"heritage": "heritage_insular",
+"language": "language_southern_indic"
+},
+"avadhi": {
+"heritage": "heritage_gangetic",
+"language": "language_hindustani"
+},
+"panjabi": {
+"heritage": "heritage_indusine",
+"language": "language_northwestern_indic"
+},
+"kashmiri": {
+"heritage": "heritage_kashmiri",
+"language": "language_dardic"
+},
+"sindi": {
+"heritage": "heritage_indusine",
+"language": "language_northwestern_indic"
+},
+"rajput": {
+"heritage": "heritage_rajasthani",
+"language": "language_western_indic"
+},
+"kannada": {
+"heritage": "heritage_deccani",
+"language": "language_tamil_tulu"
+},
+"malayalam": {
+"heritage": "heritage_carnatic",
+"language": "language_tamil_tulu"
+},
+"telegu": {
+"heritage": "heritage_deccani",
+"language": "language_south_central"
+},
+"vietnamese": {
+"heritage": "heritage_vietnamese",
+"language": "language_vietic"
+},
+"khmer": {
+"heritage": "heritage_cambodian",
+"language": "language_khmeric"
+},
+"batak": {
+"heritage": "heritage_insulindian",
+"language": "language_batak"
+},
+"dayak": {
+"heritage": "heritage_insulindian",
+"language": "language_dayak"
+},
+"malagasy": {
+"heritage": "heritage_east_african",
+"language": "language_malagasy"
+},
+"filipino": {
+"heritage": "heritage_insulindian",
+"language": "language_philippinic"
+},
+"filipino_hispanophone": {
+"heritage": "heritage_insulindian",
+"language": "language_hispanophone"
+},
+"filipino_mestizo": {
+"heritage": "heritage_insulindian",
+"language": "language_hispanophone"
+},
+"tagalog": {
+"heritage": "heritage_insulindian",
+"language": "language_philippinic"
+},
+"visayan": {
+"heritage": "heritage_insulindian",
+"language": "language_philippinic"
+},
+"ilocano": {
+"heritage": "heritage_insulindian",
+"language": "language_philippinic"
+},
+"lumad": {
+"heritage": "heritage_insulindian",
+"language": "language_philippinic"
+},
+"moro": {
+"heritage": "heritage_insulindian",
+"language": "language_philippinic"
+},
+"javan": {
+"heritage": "heritage_insulindian",
+"language": "language_malay"
+},
+"moluccan": {
+"heritage": "heritage_insulindian",
+"language": "language_moluccan"
+},
+"thai": {
+"heritage": "heritage_tai",
+"language": "language_siamese"
+},
+"mon": {
+"heritage": "heritage_burmese",
+"language": "language_monic"
+},
+"khmu": {
+"heritage": "heritage_khmu",
+"language": "language_khmuic"
+},
+"lao": {
+"heritage": "heritage_tai",
+"language": "language_laotian"
+},
+"shan": {
+"heritage": "heritage_tai",
+"language": "language_shan"
+},
+"burmese": {
+"heritage": "heritage_burmese",
+"language": "language_burmic"
+},
+"kachin": {
+"heritage": "heritage_burmese",
+"language": "language_kachinic"
+},
+"karen": {
+"heritage": "heritage_burmese",
+"language": "language_karenic"
+},
+"japanese": {
+"heritage": "heritage_japanese",
+"language": "language_japanese"
+},
+"manchu": {
+"heritage": "heritage_manchu",
+"language": "language_jurchenic"
+},
+"han": {
+"heritage": "heritage_han",
+"language": "language_mandarin"
+},
+"korean": {
+"heritage": "heritage_korean",
+"language": "language_korean"
+},
+"ainu": {
+"heritage": "heritage_ainu",
+"language": "language_ainu"
+},
+"hakka": {
+"heritage": "heritage_han",
+"language": "language_hakka"
+},
+"miao": {
+"heritage": "heritage_miao",
+"language": "language_hmong"
+},
+"min": {
+"heritage": "heritage_han",
+"language": "language_min"
+},
+"zhuang": {
+"heritage": "heritage_tai",
+"language": "language_zhuang"
+},
+"yi": {
+"heritage": "heritage_yi",
+"language": "language_yi"
+},
+"yue": {
+"heritage": "heritage_han",
+"language": "language_yue"
+},
+"polynesian": {
+"heritage": "heritage_polynesian",
+"language": "language_polynesian"
+},
+"hawaiian": {
+"heritage": "heritage_polynesian",
+"language": "language_polynesian"
+},
+"melanesian": {
+"heritage": "heritage_melanesian",
+"language": "language_melanesian"
+},
+"micronesian": {
+"heritage": "heritage_micronesian",
+"language": "language_micronesian"
+},
+"maori": {
+"heritage": "heritage_polynesian",
+"language": "language_polynesian"
+},
+"yuanzhumin": {
+"heritage": "heritage_formosan",
+"language": "language_formosan"
+},
+"aborigine": {
+"heritage": "heritage_australian",
+"language": "language_aboriginal"
+},
+"zapotec": {
+"heritage": "heritage_mesoamerican",
+"language": "language_zapotecan"
+},
+"mayan": {
+"heritage": "heritage_mesoamerican",
+"language": "language_mayan"
+},
+"nahua": {
+"heritage": "heritage_mesoamerican",
+"language": "language_nahuan"
+},
+"tarascan": {
+"heritage": "heritage_mesoamerican",
+"language": "language_tarascan"
+},
+"quechua": {
+"heritage": "heritage_andean",
+"language": "language_quechuan"
+},
+"guarani": {
+"heritage": "heritage_guarani",
+"language": "language_guarani"
+},
+"aimara": {
+"heritage": "heritage_andean",
+"language": "language_aymaran"
+},
+"amazonian": {
+"heritage": "heritage_amazonian",
+"language": "language_amazonian"
+},
+"patagonian": {
+"heritage": "heritage_patagonian",
+"language": "language_chonan"
+},
+"guajiro": {
+"heritage": "heritage_caribbean",
+"language": "language_guajiro"
+},
+"tupinamba": {
+"heritage": "heritage_atlantic",
+"language": "language_tupi"
+},
+"metis": {
+"heritage": "heritage_subarctic_indian",
+"language": "language_metis"
+},
+"dakota": {
+"heritage": "heritage_subarctic_indian",
+"language": "language_siouan"
+},
+"cherokee": {
+"heritage": "heritage_subarctic_indian",
+"language": "language_cherokee"
+},
+"muskogean": {
+"heritage": "heritage_subarctic_indian",
+"language": "language_creek"
+},
+"pueblo": {
+"heritage": "heritage_southwest_indian",
+"language": "language_hopi"
+},
+"inuit": {
+"heritage": "heritage_circumpolar",
+"language": "language_eskimoan"
+},
+"cree": {
+"heritage": "heritage_subarctic_indian",
+"language": "language_cree"
+},
+"navajo": {
+"heritage": "heritage_southwest_indian",
+"language": "language_apachean"
+},
+"athabaskan": {
+"heritage": "heritage_circumpolar",
+"language": "language_athabaskan"
+},
+"salish": {
+"heritage": "heritage_northwest_coast_indian",
+"language": "language_salish"
+},
+"nez_perce": {
+"heritage": "heritage_plateau_indian",
+"language": "language_sahaptian"
+},
+"siouan": {
+"heritage": "heritage_plains_indian",
+"language": "language_siouan"
+},
+"comanche": {
+"heritage": "heritage_plains_indian",
+"language": "language_numic"
+},
+"algonquian": {
+"heritage": "heritage_eastern_woodlands_indian",
+"language": "language_algonquian"
+},
+"iroquoian": {
+"heritage": "heritage_eastern_woodlands_indian",
+"language": "language_iroquoian"
+},
+"caddoan": {
+"heritage": "heritage_plains_indian",
+"language": "language_caddoan"
+},
+"paiute": {
+"heritage": "heritage_great_basin_indian",
+"language": "language_numic"
+},
+"hokan": {
+"heritage": "heritage_californian_indian",
+"language": "language_hokan"
+},
+"apache": {
+"heritage": "heritage_plains_indian",
+"language": "language_apachean"
+},
+"oodham": {
+"heritage": "heritage_eastern_woodlands_indian",
+"language": "language_piman"
+},
+"mixtec": {
+"heritage": "heritage_mesoamerican",
+"language": "language_mixtecan"
+},
+"muisca": {
+"heritage": "heritage_andean",
+"language": "language_muiscan"
+},
+"miskito": {
+"heritage": "heritage_caribbean",
+"language": "language_miskito"
+},
+"cariban": {
+"heritage": "heritage_caribbean",
+"language": "language_cariban"
+},
+"yankee": {
+"heritage": "heritage_north_american_settler",
+"language": "language_anglophone"
+},
+"dixie": {
+"heritage": "heritage_north_american_settler",
+"language": "language_anglophone"
+},
+"mexican": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"central_american": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"caribeno": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"north_andean": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"south_andean": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"peruvian": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"bolivian": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"ecuadorian": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"chilean": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"venezuelan": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"argentine": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"uruguayan": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"paraguayan": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"colombian": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"platinean": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_hispanophone"
+},
+"brazilian": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_lusophone"
+},
+"sulista": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_lusophone"
+},
+"nordestino": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_lusophone"
+},
+"amazonic": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_lusophone"
+},
+"paulista": {
+"heritage": "heritage_latin_american_settler",
+"language": "language_lusophone"
+},
+"afro_american": {
+"heritage": "heritage_african_diaspora",
+"language": "language_anglophone"
+},
+"afro_caribbean": {
+"heritage": "heritage_african_diaspora",
+"language": "language_patois"
+},
+"afro_caribeno": {
+"heritage": "heritage_african_diaspora",
+"language": "language_hispanophone"
+},
+"afro_brazilian": {
+"heritage": "heritage_african_diaspora",
+"language": "language_lusophone"
+},
+"afro_antillean": {
+"heritage": "heritage_african_diaspora",
+"language": "language_creole"
+},
+"akan": {
+"heritage": "heritage_guinean",
+"language": "language_akan"
+},
+"bambara": {
+"heritage": "heritage_sahelian",
+"language": "language_manding"
+},
+"bassa": {
+"heritage": "heritage_guinean",
+"language": "language_kru"
+},
+"dyula": {
+"heritage": "heritage_sahelian",
+"language": "language_manding"
+},
+"edo": {
+"heritage": "heritage_guinean",
+"language": "language_edo"
+},
+"ewe": {
+"heritage": "heritage_guinean",
+"language": "language_gbe"
+},
+"fon": {
+"heritage": "heritage_guinean",
+"language": "language_gbe"
+},
+"fulbe": {
+"heritage": "heritage_sahelian",
+"language": "language_fulani"
+},
+"haratin": {
+"heritage": "heritage_afro_arab",
+"language": "language_arabic"
+},
+"hausa": {
+"heritage": "heritage_sahelian",
+"language": "language_hausa"
+},
+"ibibio": {
+"heritage": "heritage_guinean",
+"language": "language_ibibio"
+},
+"ibo": {
+"heritage": "heritage_guinean",
+"language": "language_igbo"
+},
+"kissi": {
+"heritage": "heritage_guinean",
+"language": "language_kissi"
+},
+"kru": {
+"heritage": "heritage_guinean",
+"language": "language_kru"
+},
+"mande": {
+"heritage": "heritage_sahelian",
+"language": "language_mande"
+},
+"bidan": {
+"heritage": "heritage_berber",
+"language": "language_arabic"
+},
+"mossi": {
+"heritage": "heritage_guinean",
+"language": "language_mossi"
+},
+"senufo": {
+"heritage": "heritage_sahelian",
+"language": "language_senufo"
+},
+"songhai": {
+"heritage": "heritage_sahelian",
+"language": "language_songhai"
+},
+"tiv": {
+"heritage": "heritage_guinean",
+"language": "language_tiv"
+},
+"tuareg": {
+"heritage": "heritage_berber",
+"language": "language_berber"
+},
+"wolof": {
+"heritage": "heritage_sahelian",
+"language": "language_wolof"
+},
+"yoruba": {
+"heritage": "heritage_guinean",
+"language": "language_yoruba"
+},
+"bakongo": {
+"heritage": "heritage_congolese",
+"language": "language_kongo"
+},
+"baguirmi": {
+"heritage": "heritage_sahelian",
+"language": "language_bagirmi"
+},
+"fang": {
+"heritage": "heritage_guinean",
+"language": "language_beti"
+},
+"kanuri": {
+"heritage": "heritage_sahelian",
+"language": "language_kanuri"
+},
+"luba": {
+"heritage": "heritage_congolese",
+"language": "language_luba"
+},
+"lunda": {
+"heritage": "heritage_congolese",
+"language": "language_lunda"
+},
+"mongo": {
+"heritage": "heritage_congolese",
+"language": "language_mongo"
+},
+"sara": {
+"heritage": "heritage_sahelian",
+"language": "language_sara"
+},
+"teda": {
+"heritage": "heritage_sahelian",
+"language": "language_tebu"
+},
+"equatorial_bantu": {
+"heritage": "heritage_congolese",
+"language": "language_equatorial_bantu"
+},
+"fluvian_bantu": {
+"heritage": "heritage_congolese",
+"language": "language_fluvial_bantu"
+},
+"nilotic": {
+"heritage": "heritage_nilotic",
+"language": "language_nilotic"
+},
+"amhara": {
+"heritage": "heritage_abyssinian",
+"language": "language_amharic"
+},
+"afar": {
+"heritage": "heritage_abyssinian",
+"language": "language_afar"
+},
+"azande": {
+"heritage": "heritage_congolese",
+"language": "language_zande"
+},
+"baganda": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_lacustrine_bantu"
+},
+"beja": {
+"heritage": "heritage_abyssinian",
+"language": "language_beja"
+},
+"dinka": {
+"heritage": "heritage_nilotic",
+"language": "language_dinka"
+},
+"fur": {
+"heritage": "heritage_darfurian",
+"language": "language_fur"
+},
+"kikuyu": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_kikuyu"
+},
+"luo": {
+"heritage": "heritage_nilotic",
+"language": "language_luo"
+},
+"maasai": {
+"heritage": "heritage_nilotic",
+"language": "language_maa"
+},
+"nuer": {
+"heritage": "heritage_nilotic",
+"language": "language_nuer"
+},
+"nuba": {
+"heritage": "heritage_kordofanian",
+"language": "language_kordofanian"
+},
+"oromo": {
+"heritage": "heritage_abyssinian",
+"language": "language_galla"
+},
+"ruanda": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_lacustrine_bantu"
+},
+"rundi": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_lacustrine_bantu"
+},
+"sidama": {
+"heritage": "heritage_abyssinian",
+"language": "language_sidama"
+},
+"somali": {
+"heritage": "heritage_somali",
+"language": "language_somali"
+},
+"sudanese": {
+"heritage": "heritage_afro_arab",
+"language": "language_arabic"
+},
+"sukuma": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_takama"
+},
+"swahili": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_swahili"
+},
+"tigray": {
+"heritage": "heritage_abyssinian",
+"language": "language_tigrinya"
+},
+"nyamwezi": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_nyamwezi"
+},
+"lacustrine_bantu": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_lacustrine_bantu"
+},
+"chewa": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_nyasa"
+},
+"herero": {
+"heritage": "heritage_southwest_bantu",
+"language": "language_kavango"
+},
+"khoisan": {
+"heritage": "heritage_khoisan",
+"language": "language_khoisan"
+},
+"lomwe": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_makua"
+},
+"makua": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_makua"
+},
+"nguni": {
+"heritage": "heritage_southern_bantu",
+"language": "language_nguni"
+},
+"ovimbundu": {
+"heritage": "heritage_southwest_bantu",
+"language": "language_umbundu"
+},
+"sena": {
+"heritage": "heritage_southern_bantu",
+"language": "language_nyasa"
+},
+"shona": {
+"heritage": "heritage_southern_bantu",
+"language": "language_shona"
+},
+"sotho": {
+"heritage": "heritage_southern_bantu",
+"language": "language_sotho"
+},
+"tonga": {
+"heritage": "heritage_southern_bantu",
+"language": "language_tonga"
+},
+"tswana": {
+"heritage": "heritage_southern_bantu",
+"language": "language_sotho"
+},
+"xhosa": {
+"heritage": "heritage_southern_bantu",
+"language": "language_nguni"
+},
+"yao": {
+"heritage": "heritage_eastern_bantu",
+"language": "language_yao"
+},
+"zulu": {
+"heritage": "heritage_southern_bantu",
+"language": "language_nguni"
+},
+"kavango_bantu": {
+"heritage": "heritage_southwest_bantu",
+"language": "language_kavango"
+},
+"anglo_canadian": {
+"heritage": "heritage_north_american_settler",
+"language": "language_anglophone"
+},
+"franco_canadian": {
+"heritage": "heritage_north_american_settler",
+"language": "language_francophone"
+},
+"sorb": {
+"heritage": "heritage_west_slavic",
+"language": "language_west_slavic"
+},
+"tuvan": {
+"heritage": "heritage_siberian",
+"language": "language_siberian"
+},
+"corsican": {
+"heritage": "heritage_italic",
+"language": "language_italian"
+},
+"yemenite": {
+"heritage": "heritage_arab",
+"language": "language_arabic"
+},
+"szekely": {
+"heritage": "heritage_magyar",
+"language": "language_hungarian"
+},
+"hindustani": {
+"heritage": "heritage_gangetic",
+"language": "language_hindustani"
+},
+"lushai": {
+"heritage": "heritage_eastern_highlands",
+"language": "language_mizo"
+},
+"bundeli": {
+"heritage": "heritage_central",
+"language": "language_hindustani"
+},
+"pahari": {
+"heritage": "heritage_himalayan",
+"language": "language_pahari"
+},
+"gondi": {
+"heritage": "heritage_central",
+"language": "language_south_central"
+},
+"bageli": {
+"heritage": "heritage_central",
+"language": "language_hindustani"
+},
+"chhattisgarhi": {
+"heritage": "heritage_central",
+"language": "language_hindustani"
+},
+"naga": {
+"heritage": "heritage_eastern_highlands",
+"language": "language_naga"
+},
+"deccani": {
+"heritage": "heritage_deccani",
+"language": "language_hindustani"
+},
+"gujarati": {
+"heritage": "heritage_gujarati",
+"language": "language_western_indic"
+},
+"tamil": {
+"heritage": "heritage_carnatic",
+"language": "language_tamil_tulu"
+},
+"bengali": {
+"heritage": "heritage_gangetic",
+"language": "language_magadhan"
+},
+"marathi": {
+"heritage": "heritage_deccani",
+"language": "language_southern_indic"
+},
+"pathan": {
+"heritage": "heritage_iranian",
+"language": "language_hindustani"
+},
+"welsh": {
+"heritage": "heritage_british",
+"language": "language_brythonic"
+},
+"scottish_gaelic": {
+"heritage": "heritage_british",
+"language": "language_gaelic"
+},
+"scottish": {
+"heritage": "heritage_british",
+"language": "language_anglophone"
+},
+"galician": {
+"heritage": "heritage_iberian",
+"language": "language_lusophone"
+},
+"malay": {
+"heritage": "heritage_insulindian",
+"language": "language_malay"
+},
+"bornean": {
+"heritage": "heritage_insulindian",
+"language": "language_malay"
+},
+"sumatran": {
+"heritage": "heritage_insulindian",
+"language": "language_malay"
+},
+"balinese": {
+"heritage": "heritage_insulindian",
+"language": "language_malay"
+},
+"cajun": {
+"heritage": "heritage_north_american_settler",
+"language": "language_francophone"
+},
+"assyrian": {
+"heritage": "heritage_syriac",
+"language": "language_aramaic"
+},
+"circassian": {
+"heritage": "heritage_north_caucasian",
+"language": "language_adyghe"
+},
+"francoprovencal": {
+"heritage": "heritage_gallic",
+"language": "language_arpitan"
+},
+"chechen": {
+"heritage": "heritage_north_caucasian",
+"language": "language_vainakh"
+},
+"karelian": {
+"heritage": "heritage_nordic",
+"language": "language_finnic"
+},
+"bashkir": {
+"heritage": "heritage_tatar",
+"language": "language_kipchak"
+},
+"buryat": {
+"heritage": "heritage_mongolian",
+"language": "language_buryat"
+},
+"mordvin": {
+"heritage": "heritage_volga_uralic",
+"language": "language_mordvinic"
+},
+"chuvash": {
+"heritage": "heritage_tatar",
+"language": "language_oghuric"
+},
+"mari": {
+"heritage": "heritage_volga_uralic",
+"language": "language_mari"
+},
+"udmurt": {
+"heritage": "heritage_volga_uralic",
+"language": "language_permic"
+},
+"mazanderani": {
+"heritage": "heritage_iranian",
+"language": "language_tabari"
+},
+"luri": {
+"heritage": "heritage_iranian",
+"language": "language_persian"
+},
+"kho": {
+"heritage": "heritage_kashmiri",
+"language": "language_dardic"
+},
+"champa": {
+"heritage": "heritage_insulindian",
+"language": "language_cham"
+},
+"east_german": {
+"heritage": "heritage_germanic",
+"language": "language_germanophone"
+},
+"promethean": {
+"heritage": "heritage_promethean",
+"language": "language_promethean"
+},
+"asturleonese": {
+"heritage": "heritage_iberian",
+"language": "language_asturleonese"
+},
+"aragonese": {
+"heritage": "heritage_iberian",
+"language": "language_aragonese"
+},
+"iberian": {
+"heritage": "heritage_iberian",
+"language": "language_esperanto"
+},
+"ryukyuan": {
+"heritage": "heritage_japanese",
+"language": "language_ryukyuan"
+}
+}
+}
