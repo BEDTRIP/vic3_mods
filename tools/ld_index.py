@@ -39,7 +39,7 @@ def strip_comments(t):
 
 def walk(root):
     for dp, dn, fn in os.walk(root):
-        dn[:] = [d for d in dn if d not in (".git", "docs", "_archive", "понятия", "ваниль", "история")]  # _archive/ — мёртвое, игра не читает
+        dn[:] = [d for d in dn if d not in (".git", "docs", "_archive", "понятия", "ваниль", "этапы", "история")]  # _archive/ — мёртвое, игра не читает
         for f in fn:
             if f.endswith(TEXT_EXT):
                 yield os.path.join(dp, f)

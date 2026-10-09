@@ -16,10 +16,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 FORK = ROOT / "Economic-and-Financial-Ledgerdemain-Mod"
 LIVE = Path(os.environ.get("USERPROFILE", "")) / "Documents" / "Paradox Interactive" / "Victoria 3" / "mod" / "E&F Ledgerdemain"
-# документация и история форка — агенту и пользователю, не игре: docs/, понятия/, ваниль/, история/, _archive/, план,
-# решения, схема, CLAUDE.md, настройки Claude и Obsidian
-SKIP = (".git", "_to_delete", "docs", "_archive", "понятия", "ваниль", "история", ".claude", ".obsidian",
-        "CLAUDE.md", "план.md", "решения.md", "схема.md")
+# документация и история форка — агенту и пользователю, не игре: docs/, понятия/, ваниль/, этапы/, история/, _archive/,
+# план, решения, CLAUDE.md, настройки Claude и Obsidian
+SKIP = (".git", "_to_delete", "docs", "_archive", "понятия", "ваниль", "этапы", "история", ".claude", ".obsidian",
+        "CLAUDE.md", "план.md", "решения.md")
 
 
 def game_running():
