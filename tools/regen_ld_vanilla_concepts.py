@@ -59,6 +59,7 @@ class Gen:
         self.cset = set(concepts)
         self.loc, self.en = loc, en
         self.base_cache = {}
+        self.nolink = 0
         self.names = {}
         used = {}
         for c in concepts:
@@ -91,18 +92,37 @@ class Gen:
         self.base_cache[key] = best
         return best
 
-    def link(self, key, text=None):
+    @staticmethod
+    def low(s, fmt):
+        """`|l` in a game text call — lowercase first letter."""
+        return s[:1].lower() + s[1:] if fmt and "l" in fmt else s
+
+    def link(self, key, text=None, fmt=None):
         c = self.base(key)
         if not c:
             return text or self.loc.get(key, key)
         name = self.names[c]
         shown = text if text is not None else self.loc.get(key) or name
-        shown = self.clean_name(self.conv(shown, 3)) if shown else name
+        shown = self.clean_name(self.plain(shown) if self.nolink < 4 else shown) if shown else name
+        shown = self.low(shown, fmt)
+        if self.nolink:
+            return shown
         self.ph.append(f"[[{name}]]" if shown == name else f"[[{name}|{shown}]]")
         return f"\x00{len(self.ph) - 1}\x00"
 
-    def game_name(self, key):
-        return self.clean_name(self.loc.get(key) or self.en.get(key) or key)
+    def plain(self, s, depth=3):
+        """Game text without links — for link captions and names."""
+        self.nolink += 1
+        try:
+            return self.conv(s, depth)
+        finally:
+            self.nolink -= 1
+
+    def game_name(self, key, depth=3):
+        v = self.loc.get(key) or self.en.get(key)
+        if not v:
+            return key
+        return self.clean_name(self.plain(v, depth + 1) if depth < 6 else v)
 
     def conv(self, s, depth=0):
         """Game text -> markdown; links are kept as placeholders until the outermost call returns."""
@@ -112,33 +132,36 @@ class Gen:
         s = s.replace("\\n", "\n").replace('\\"', '"')
         s = re.sub(r"\n?\$EFFECT_LIST_BULLET\$", "\n- ", s)
         s = re.sub(r"\n?#indent_newline(:\d+)?\s*", "\n", s)
+        s = re.sub(r"#tooltip:\S*\s?", "", s)
         s = s.replace("[Nbsp]", " ")
         # [Concept('concept_x', 'text')|fmt]
         s = re.sub(r"\[Concept\(\s*'(concept_\w+)'\s*,\s*'([^']*)'\s*\)(\|[^\]]*)?\]",
-                   lambda m: self.link(m.group(1), m.group(2)), s)
-        s = re.sub(r"\[(concept_\w+)(\|(\w+))?\]",
-                   lambda m: self.link(m.group(1), (self.loc.get(m.group(1), "").lower() or None) if m.group(3) == "l" else None), s)
+                   lambda m: self.link(m.group(1), m.group(2), m.group(3)), s)
+        s = re.sub(r"\[(concept_\w+)(\|\w+)?\]", lambda m: self.link(m.group(1), None, m.group(2)), s)
         s = re.sub(r"\$(concept_\w+)(\|\w+)?\$", lambda m: self.link(m.group(1)), s)
         s = re.sub(r"\[GetDefine\('(\w+)',\s*'(\w+)'\)(\|[^\]]*)?\]", r"`\1.\2`", s)
         # [SelectLocalization(GetPlayer.IsValid, 'KEY_IF_PLAYER', 'key_or_text')|fmt] — the text without a player
         s = re.sub(r"\[SelectLocalization\([^,]+,\s*'\w+',\s*'([^']+)'\)(\|[^\]]*)?\]",
-                   lambda m: self.game_name(m.group(1)), s)
+                   lambda m: self.low(self.game_name(m.group(1), depth), m.group(2)), s)
         s = re.sub(r"\[AddLocalizationIf\([^,]+,\s*'(\w+)'\)\]",
-                   lambda m: self.conv(self.loc[m.group(1)], depth + 1) if depth < 4 and m.group(1) in self.loc else "", s)
-        s = re.sub(r"\[Get\w+\('(\w+)'[^\]]*\]", lambda m: self.game_name(m.group(1)), s)
+                   lambda m: self.conv(self.loc[m.group(1)], depth + 1) if depth < 6 and m.group(1) in self.loc else "",
+                   s)
+        s = re.sub(r"\[Get\w+\('(\w+)'[^\]|]*(\|[^\]]*)?\]",
+                   lambda m: self.low(self.game_name(m.group(1), depth), m.group(2)), s)
 
         def key(m):
             k = m.group(1)
-            if depth < 4 and k in self.loc:
+            if depth < 6 and k in self.loc:
                 return self.conv(self.loc[k], depth + 1)
             return k
         s = re.sub(r"\$([A-Za-z0-9_]+)(\|\w+)?\$", key, s)
         s = re.sub(r"\[[^\[\]]*\]", lambda m: f"`{m.group(0)[1:-1]}`", s)
         s = re.sub(r"#(v|b|bold|title) ([^#]*)#!", r"**\2**", s)
         s = re.sub(r"#(i|italic) ([^#]*)#!", r"*\2*", s)
-        s = re.sub(r"#\w+(:\d+)?(;\w+(:\d+)?)*\s?", "", s).replace("#!", "")
+        s = re.sub(r"#\w+([;:]\S*)?\s?", "", s).replace("#!", "")
         s = re.sub(r"@\w+!", "", s)
         s = re.sub(r"^\s*[•·]\s*", "- ", s, flags=re.M)
+        s = re.sub(r"(?<=\S) {2,}", " ", s)
         s = re.sub(r"[ \t]+$", "", s, flags=re.M)
         if outer:
             while "\x00" in s:
