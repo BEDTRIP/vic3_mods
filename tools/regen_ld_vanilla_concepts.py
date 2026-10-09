@@ -5,7 +5,8 @@
 Источник — ваниль: `common/game_concepts/*.txt` (ключи понятий) и вся локализация `localization/<язык>/` (текст, имена
 законов, зданий, типов населения, на которые ссылаются подсказки) плюс английская — для синонимов. Пишет по заметке на
 понятие: `ваниль/<имя понятия>.md` — имя, синонимы (формы имени, английское, ключ), описание из игры; ссылки
-`[Concept('concept_x', 'текст')]`, `[concept_x]`, `$concept_x$` — вики-ссылками `[[Имя|текст]]`. Формы одного понятия
+`[Concept('concept_x', 'текст')]`, `[concept_x]`, `$concept_x$` — вики-ссылками `[[Имя|текст]]` (подпись длиннее 80
+знаков — целое описание — идёт текстом: ссылка в markdown не переносится через строку). Формы одного понятия
 (`concept_radicals`, `concept_radicalism`) — синонимы заметки `concept_radical`. Имя, совпавшее с заметкой мода
 (`понятия/`), получает « (ваниль)». Плюс `ваниль/_Карта ванили.md`. Текст игры руками не править — правится генератор.
 
@@ -120,11 +121,14 @@ class Gen:
         if not c:
             return text or self.loc.get(key, key)
         name = self.names[c]
-        shown = text if text is not None else self.loc.get(key) or name
-        shown = self.clean_name(self.plain(shown) if self.nolink < 4 else shown) if shown else name
-        shown = self.low(" ".join(shown.split()), fmt)
+        raw = text if text is not None else self.loc.get(key) or name
+        shown = self.clean_name(self.plain(raw) if self.nolink < 4 else raw) if raw else name
+        # only line breaks and plain spaces: a non-breaking space stays, or the caption differs from the name by it
+        shown = self.low(re.sub(r"[ \t\r\n]+", " ", shown), fmt)
         if len(shown) > 80:
-            shown = name
+            # a whole description shown as a concept link (`$concept_x_desc$`, Concept('concept_x', '...')): a markdown
+            # link can't span lines, so the text goes in as text, with its own links
+            return self.low(self.conv(raw, 3) if self.nolink < 4 else raw, fmt)
         if self.nolink:
             return shown
         self.ph.append(f"[[{name}]]" if shown == name else f"[[{name}|{shown}]]")
