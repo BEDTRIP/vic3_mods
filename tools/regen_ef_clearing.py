@@ -438,7 +438,7 @@ zz_ef_clr_take_all = {
 					change_variable = { name = zz_ef_f_clr_own_back add = var:zz_ef_clr_u }
 				}
 				else = {
-					zz_ef_rq_add = { MAP = zz_ef_rq_cb_m K = m D = scope:zz_ef_clr_k V = var:zz_ef_clr_u }
+					zz_ef_rq_add = { H = cb K = m D = scope:zz_ef_clr_k V = var:zz_ef_clr_u }
 					change_variable = { name = zz_ef_f_clr_fx_in add = { value = var:zz_ef_clr_u multiply = scope:zz_ef_clr_k.zz_ef_rq_gpm_v } }
 				}
 			}
@@ -480,7 +480,7 @@ zz_ef_cbfx_week_step = {
 				zz_ef_rq_get = { MAP = zz_ef_rq_cb_m D = scope:zz_ef_cbfx_k }
 				change_variable = { name = zz_ef_cbfx_t subtract = var:zz_ef_rq_h }
 				change_variable = { name = zz_ef_cbfx_t multiply = -1 }
-				add_to_variable_map = { name = zz_ef_cbfx_d key = scope:zz_ef_cbfx_k value = var:zz_ef_cbfx_t }
+				add_to_variable_map = { name = zz_ef_cbfx_d key = scope:zz_ef_cbfx_k value = zz_ef_cbfx_t_v }
 			}
 		}
 	}
@@ -492,7 +492,7 @@ zz_ef_cbfx_week_step = {
 			save_temporary_scope_as = zz_ef_cbfx_k
 			scope:zz_ef_cbfx_h = {
 				zz_ef_rq_get = { MAP = zz_ef_rq_cb_m D = scope:zz_ef_cbfx_k }
-				add_to_variable_map = { name = zz_ef_cbfx_p key = scope:zz_ef_cbfx_k value = var:zz_ef_rq_h }
+				add_to_variable_map = { name = zz_ef_cbfx_p key = scope:zz_ef_cbfx_k value = zz_ef_rq_h_v }
 			}
 		}
 		clear_variable_list = zz_ef_rq_keys
