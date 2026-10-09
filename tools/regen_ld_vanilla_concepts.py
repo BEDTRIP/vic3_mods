@@ -7,10 +7,12 @@
 понятие: `ваниль/<имя понятия>.md` — имя, синонимы (формы имени, английское, ключ), описание из игры; ссылки
 `[Concept('concept_x', 'текст')]`, `[concept_x]`, `$concept_x$` — вики-ссылками `[[Имя|текст]]`. Формы одного понятия
 (`concept_radicals`, `concept_radicalism`) — синонимы заметки `concept_radical`. Имя, совпавшее с заметкой мода
-(`понятия/`), получает « (ваниль)». Плюс `ваниль/_Карта ванили.md`. Руками заметки не править — правится генератор.
+(`понятия/`), получает « (ваниль)». Плюс `ваниль/_Карта ванили.md`. Текст игры руками не править — правится генератор.
 
-Два графа заметок форка: `понятия/` (мод) и `ваниль/` (игра) — заметки мода ссылаются на ванильные там, где механика
-мода стоит на механике игры (принцип 14).
+Два графа заметок форка: `понятия/` (мод) и `ваниль/` (игра) — пересекаются ссылками. Как форк использует понятие игры,
+пишется руками в ванильной заметке под заголовком «### Как используется в форке» (до конца файла): генератор этот
+раздел сохраняет, в том числе при смене имени заметки (по ключу понятия из `source:`). Понятие игры в `понятия/` не
+переписывается.
 
 `--check` — только сравнить, код выхода 1 при расхождении. Ваниль по умолчанию — первая найденная: `vic3_mods_out/
 .vanillaVIC3(/game)` рядом с репо (на ПК и в worktree моста), установленная игра.
@@ -22,6 +24,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+FORK_HEAD = "### Как используется в форке"
+SOURCE = re.compile(r"^source: игра, `(concept_\w+)`", re.M)
 LOC_LINE = re.compile(r'^\s*([A-Za-z0-9_.\-]+):\d*\s*"(.*)"\s*(#.*)?$')
 BAD_NAME = re.compile(r'[\\/:*?"<>|#^\[\]]')
 
@@ -41,6 +45,19 @@ def load_loc(folder):
     return loc
 
 
+def fork_sections(folder):
+    """Hand-written part of the existing notes: concept key -> text from FORK_HEAD to the end of the file."""
+    out = {}
+    if folder.is_dir():
+        for f in sorted(os.listdir(folder)):
+            if f.endswith(".md"):
+                t = (folder / f).read_text(encoding="utf-8")
+                m, i = SOURCE.search(t), t.find("\n" + FORK_HEAD)
+                if m and i >= 0:
+                    out[m.group(1)] = t[i + 1:].rstrip() + "\n"
+    return out
+
+
 def load_concepts(folder):
     keys = []
     for f in sorted(os.listdir(folder)):
@@ -54,8 +71,9 @@ def load_concepts(folder):
 
 
 class Gen:
-    def __init__(self, concepts, loc, en, mod_names):
+    def __init__(self, concepts, loc, en, mod_names, fork=None):
         self.concepts = concepts
+        self.fork = fork or {}
         self.cset = set(concepts)
         self.loc, self.en = loc, en
         self.base_cache = {}
@@ -186,16 +204,20 @@ class Gen:
         desc = self.loc.get(c + "_desc") or self.en.get(c + "_desc") or ""
         al = ", ".join('"' + a.replace('"', "'") + '"' for a in self.aliases(c))
         body = self.conv(desc) if desc else "_Описания в игре нет._"
+        fork = "\n" + self.fork[c] if c in self.fork else ""
         return (f"---\naliases: [{al}]\ntags: [ваниль]\nsource: игра, `{c}` (tools/regen_ld_vanilla_concepts.py)\n---\n"
-                f"# {name}\n\n{body}\n")
+                f"# {name}\n\n{body}\n{fork}")
 
     def index(self):
         rows = sorted(self.concepts, key=lambda c: self.names[c].lower())
         out = ["---", "tags: [ваниль, карта]", "---", "# Карта ванили",
                "",
                "Понятия игры — подсказки-понятия Victoria 3 1.13 (`common/game_concepts`, локализация), по заметке на понятие.",
-               "Сгенерировано `../vic3_mods/tools/regen_ld_vanilla_concepts.py` — руками не править. Понятия мода — [[_Карта понятий]];",
-               "заметки мода ссылаются на ванильные там, где механика мода стоит на механике игры.", ""]
+               "Сгенерировано `../vic3_mods/tools/regen_ld_vanilla_concepts.py`: текст игры руками не править, раздел",
+               f"«{FORK_HEAD}» пишется руками и сохраняется. Понятия мода — [[_Карта понятий]].", ""]
+        used = sorted((c for c in self.concepts if c in self.fork), key=lambda c: self.names[c].lower())
+        if used:
+            out += ["## Используются в форке", ""] + [f"- [[{self.names[c]}]]" for c in used]
         letter = None
         for c in rows:
             n = self.names[c]
@@ -224,10 +246,10 @@ def main():
     en = load_loc(van / "localization" / "english")
     mod = fork / "понятия"
     mod_names = {f[:-3] for f in os.listdir(mod) if f.endswith(".md")} if mod.is_dir() else set()
-    g = Gen(concepts, loc, en, mod_names)
+    dst = fork / "ваниль"
+    g = Gen(concepts, loc, en, mod_names, fork_sections(dst))
     out = {f"{g.names[c]}.md": g.note(c) for c in concepts}
     out["_Карта ванили.md"] = g.index()
-    dst = fork / "ваниль"
     have = {f for f in os.listdir(dst) if f.endswith(".md")} if dst.is_dir() else set()
     changed = [f for f, t in out.items() if not (dst / f).is_file() or (dst / f).read_text(encoding="utf-8") != t]
     stale = sorted(have - set(out))

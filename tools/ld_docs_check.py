@@ -7,10 +7,13 @@
 3. Каждая вики-ссылка `[[Имя]]` / `[[Имя|подпись]]` в `docs/`, `понятия/`, `ваниль/`, `план.md`, `решения.md` ведёт
    на заметку `понятия/Имя.md` (или другой `.md` форка с таким именем); заметка понятия без входящих ссылок — тоже
    ошибка.
+4. Заметка понятия (`понятия/`, кроме `_*` и заметок с тегом `обзор`) — разделы «## Подсказка», «## Рабочее»,
+   «### Целевое значение», «### Что в коде» по порядку; подсказка не пустая, без кода в обратных кавычках и номеров
+   решений — она уйдёт в игру.
 
     python tools/ld_docs_check.py [--fork <путь>]
 
-Код выхода 1 — есть непокрытые файлы или битые ссылки. Ничего не меняет.
+Код выхода 1 — есть непокрытые файлы, битые ссылки или заметки не по формату. Ничего не меняет.
 """
 import argparse
 import fnmatch
@@ -79,7 +82,38 @@ def main():
         print("  битая вики-ссылка:", x)
     for x in orphans:
         print("  понятие без ссылок на него:", x)
-    sys.exit(1 if bad or uncovered or wbad or orphans else 0)
+    fbad = notes_format(a.fork)
+    for x in fbad:
+        print("  формат заметки:", x)
+    sys.exit(1 if bad or uncovered or wbad or orphans or fbad else 0)
+
+
+HEADS = ("## Подсказка", "## Рабочее", "### Целевое значение", "### Что в коде")
+
+
+def notes_format(fork):
+    """Заметки понятий: разделы по порядку; подсказка без кода и номеров решений."""
+    d = os.path.join(fork, "понятия")
+    bad, n = [], 0
+    for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if not f.endswith(".md") or f.startswith("_"):
+            continue
+        text = open(os.path.join(d, f), encoding="utf-8").read()
+        if re.search(r"^tags:.*\bобзор\b", text, re.M):
+            continue
+        n += 1
+        lines = text.split("\n")
+        pos = [lines.index(h) if h in lines else -1 for h in HEADS]
+        if -1 in pos or pos != sorted(pos):
+            bad.append(f"{f}: нужны разделы {' → '.join(HEADS)}")
+            continue
+        tip = "\n".join(lines[pos[0] + 1:pos[1]])
+        if not tip.strip():
+            bad.append(f"{f}: пустая подсказка")
+        elif "`" in tip or re.search(r"Д\.(?:R|П|Г|\d)", tip):
+            bad.append(f"{f}: в подсказке код или номер решения")
+    print(f"формат заметок понятий: проверено {n}, не по формату {len(bad)}")
+    return bad
 
 
 WIKI = re.compile(r"\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]")
