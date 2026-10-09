@@ -15,7 +15,7 @@
   `tools/regen_ld_currency_symbol.py`);
 - `common/script_values/ld_currency_values.txt` — `zz_ef_fx_gold_<cur>`: единица валюты в резервах ЦБ в золоте по
   деньгам движка (курс эмитента к паритету `zz_ef_value_to_parity`, `zz_ef_cur_par_update`, Д.R8а.4); в
-  `common/script_values/ld_fx_reserves_values.txt` (`zz_ef_fx_reserves_metal`) — `money_value_<cur>` → `zz_ef_fx_gold_<cur>`,
+  `common/script_values/ld_fx_reserves_values.txt` (`zz_ef_fx_reserves_metal`) — `money_value_<cur>` → `zz_ef_fx_cover_<cur>` (в покрытии — только обменоспособные эмитенты),
   закон валюты владельца → `var:zz_ef_cur`;
 - национальные валюты (страна без своей): `zz_ef_cur_set` зовёт `zz_ef_cur_noun_set`, `currency_name` — ветки
   `zz_ef_cur_nat_<слово>` (`tools/regen_ld_currency_national.py`);
@@ -171,13 +171,17 @@ def var_text(curs):
           "# the value of a currency held in other CBs' reserves in the engine's money (zz_ef_fx_gold_<cur>,",
           "# script_values/ld_currency_values.txt; zz_ef_value_to_parity, Д.R8а.4). The issuer -- a CB with the currency law, not",
           "# pegged to another's (the external exchange standard); monthly (zz_ef_money_model_monthly_step) and with zz_ef_cur_set.",
+          "# global_var:zz_ef_fxconv_<cur> -- 1 if the issuer redeems in metal (zz_ef_convertible_v): its currency then counts in an",
+          "# exchange standard's cover (zz_ef_fx_cover_<cur>, Д.R8а.5); last month's, so two issuers holding each other's money",
+          "# do not read each other in a loop.",
           "zz_ef_cur_par_update = {",
           "\tif = {",
           "\t\tlimit = { has_modifier = has_central_bank NOT = { has_law = law_type:law_external_exchange_standard } }"]
     first = True
     for c in curs:
         L.append(f"\t\t{'if' if first else 'else_if'} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} "
-                 f"set_global_variable = {{ name = zz_ef_fxvtp_{c} value = zz_ef_value_to_parity }} }}")
+                 f"set_global_variable = {{ name = zz_ef_fxvtp_{c} value = zz_ef_value_to_parity }} "
+                 f"set_global_variable = {{ name = zz_ef_fxconv_{c} value = zz_ef_convertible_v }} }}")
         first = False
     L += ["\t}", "}"]
     return "\n".join(L) + "\n"
@@ -196,6 +200,12 @@ def values_text(curs):
         L += [f"zz_ef_fx_gold_{c} = {{", "\tvalue = 1",
               f"\tif = {{ limit = {{ has_global_variable = zz_ef_fxvtp_{c} }} value = global_var:zz_ef_fxvtp_{c} }}",
               "}"]
+    L += ["# a unit of a currency in an exchange standard's cover: its value if the issuer redeems in metal (last month's",
+          "# global_var:zz_ef_fxconv_<cur>), else 0 (Д.R8а.5). Read by zz_ef_fx_reserves_metal (ld_fx_reserves_values.txt)."]
+    for c in curs:
+        L += [f"zz_ef_fx_cover_{c} = {{", f"\tvalue = zz_ef_fx_gold_{c}",
+              f"\tif = {{ limit = {{ global_var:zz_ef_fxconv_{c} ?= 0 }} value = 0 }}",
+              "}"]
     return "\n".join(L) + "\n"
 
 
@@ -203,7 +213,8 @@ def fx_text(curs):
     src, bom, eol = read(FX)
     out = src
     for c in curs:
-        out = out.replace(f"multiply = money_value_{c} min = 0", f"multiply = zz_ef_fx_gold_{c} min = 0")
+        out = out.replace(f"multiply = money_value_{c} min = 0", f"multiply = zz_ef_fx_cover_{c} min = 0")
+        out = out.replace(f"multiply = zz_ef_fx_gold_{c} min = 0", f"multiply = zz_ef_fx_cover_{c} min = 0")
         out = out.replace(f"owner = {{ has_law = law_type:law_{c}_currency }}", f"owner = {{ var:zz_ef_cur ?= flag:{c} }}")
     return src, out, bom, eol
 
