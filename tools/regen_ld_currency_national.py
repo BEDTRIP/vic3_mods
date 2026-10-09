@@ -220,6 +220,8 @@ def eff_text(gr):
 
 def loc_text(lang, gr):
     L = [f"l_{lang}:"]
+    # Д.R8а.2: no monetary system -- no currency of its own (currency_name)
+    L.append(' zz_ef_cur_none:0 "%s"' % ("металл по весу" if lang == "russian" else "metal by weight"))
     for n in nouns_used(gr):
         en, ru, g = NOUNS[n]
         if lang == "russian":

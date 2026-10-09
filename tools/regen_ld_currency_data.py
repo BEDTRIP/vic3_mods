@@ -219,6 +219,10 @@ def custom_text(curs):
             # the user (8.10): no defaults -- every country has its word from the game's load
             # (zz_ef_cur_names, on_actions/ld_currency_name_on_actions.txt)
             del L[-5:]
+            # Д.R8а.2: no monetary system -- no currency of its own: metal by weight (the name comes with a standard)
+            L += ["\t#no monetary system", "\ttext = {",
+                  "\t\ttrigger = { has_law = law_type:law_no_monetary_system }",
+                  "\t\tlocalization_key = zz_ef_cur_none", "\t}"]
             # the user (8.10): every currency -- «<the country's adjective> <word>» (tools/regen_ld_currency_national.py)
             for n in _national_nouns(_national_groups()):
                 L += [f"\t#{n}", "\ttext = {",
