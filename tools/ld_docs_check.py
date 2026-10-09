@@ -137,6 +137,9 @@ def wiki(fork):
         rel = os.path.relpath(src, fork)
         own = os.path.basename(src)[:-3]
         for m in WIKI.finditer(open(src, encoding="utf-8").read()):
+            if "\n" in m.group(0):
+                bad.append(f"{rel}: ссылка через перенос строки — {m.group(0)[:40]!r}")
+                continue
             n = m.group(1).strip()
             if n not in names:
                 bad.append(f"{rel}: [[{n}]]")

@@ -122,7 +122,9 @@ class Gen:
         name = self.names[c]
         shown = text if text is not None else self.loc.get(key) or name
         shown = self.clean_name(self.plain(shown) if self.nolink < 4 else shown) if shown else name
-        shown = self.low(shown, fmt)
+        shown = self.low(" ".join(shown.split()), fmt)
+        if len(shown) > 80:
+            shown = name
         if self.nolink:
             return shown
         self.ph.append(f"[[{name}]]" if shown == name else f"[[{name}|{shown}]]")
