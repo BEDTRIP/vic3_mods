@@ -10,7 +10,7 @@ Each name is classed by what the window pays for it:
            value = var:...), cheap;
   calc  -- any other script value: computed at every redraw of the window (loops over buildings, states, goods ...)
            -- to be moved behind a variable set at the step (R10, each stage keeps the vitrine alive).
---write puts the counts and the list into docs/interface.md between the markers <!-- vitrine --> / <!-- /vitrine -->;
+--write puts the counts and the list into docs/vitrine.md between the markers <!-- vitrine --> / <!-- /vitrine -->;
 --check exits 1 if the doc's block differs from what the scan gives.
 """
 import os
@@ -23,7 +23,7 @@ import ld_gen  # noqa: E402
 FORK = ld_gen.FORK
 REF = re.compile(r"(ScriptValue|Var|GetVariable)\('(zz_ef_[A-Za-z0-9_]+)'\)")
 DEF = re.compile(r"^(zz_ef_[A-Za-z0-9_]+)\s*=\s*\{", re.M)
-DOC = os.path.join(FORK, "docs", "interface.md")
+DOC = os.path.join(FORK, "docs", "vitrine.md")
 B, E = "<!-- vitrine -->", "<!-- /vitrine -->"
 
 
@@ -106,7 +106,7 @@ def main():
     print(f"names {len(rows)}: var {n['var']}, vit {n['vit']}, calc {n['calc']}")
     if "--write" in sys.argv:
         if cur is None:
-            doc = doc.rstrip("\n") + "\n\n## Витрина (R1а.9)\n" + blk + "\n"
+            doc = doc.rstrip("\n") + "\n\n" + blk + "\n"
         else:
             doc = doc.replace(cur, blk)
         open(DOC, "w", encoding="utf-8").write(doc)
