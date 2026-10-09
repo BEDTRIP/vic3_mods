@@ -10,26 +10,25 @@ exporters' metal for the importers' currency pair by pair on top of it.
 Now one clearing house for the world (global variables), in gold:
   * a country with a net OUTFLOW pays it in full into the clearing house: the share in metal by trust in its
     currency (zz_ef_clr_metal_share: 100% at strength to the reference < 0.75, 30% at >= 1.25, linear between),
-    at most the metal its CB holds; the rest in its own currency (units of its money, E&F's
-    stockpiling_<currency> scale). Fiat: currency only.
+    at most the metal its CB holds; the rest in its own money (units of its engine money) -- a claim on the payer
+    held by the house (global map zz_ef_clr_pot, the register of claims, R8б). Fiat: money only.
   * a country with a net INFLOW takes its inflow x the clearing ratio, at most what the house holds, as an equal
-    slice of everything in it: metal into its CB, each foreign currency into its CB's stock
-    (stockpiling_<currency>_state_1 on the CB capital state); its own currency coming home is redeemed
-    (taken out of the house, a debt abroad gone).
+    slice of everything in it: metal into its CB, each issuer's money into its CB's claims (map zz_ef_rq_cb_m,
+    common/scripted_effects/ld_claims.txt -- a deposit in the issuer's banks); its own money coming home is
+    redeemed (taken out of the house, a debt abroad gone).
   * the ratio: the countries' weekly steps are spread over the month (no common weekly tick), so the house
     works in windows of 7 days (global var zz_ef_clr_window; R1а.4: the fork's scheduler opens each window at the
     end of its week, the var lives 9 days as a fallback): at a window's start the ratio = what the
     house holds / the inflows claimed during the window before (at most 2); with world payments = world claims
     it is 1. Metal and currency only move between the CBs and the house: nothing appears from nowhere.
 
-П.8 (В.5): E&F's table "currency in the trade balance" (its trade reserve, zeroed by В2.1 -- empty) shows the CB's
-foreign currency by currency instead: units, in money, in gold, the week's change (zz_ef_cbfx_*; the list is
-filled by our scripted GUI zz_ef_cbfx_update, the table re-issued by ld_economy_panel.gui форка, правится руками).
+П.8 (В.5): the table of the CB's reserves shows its foreign money by issuer: units, in money, in gold, the week's
+change (zz_ef_cbfx_*; the list -- scripted GUI zz_ef_cbfx_update_sorted, the table -- gui/ld_economy_panel.gui of the
+fork, by hand).
 
 Output (fork «E&F: Ledgerdemain», via ld_gen, by entry keys):
   common/scripted_effects/ld_clearing.txt, common/script_values/ld_clearing_values.txt,
   common/scripted_guis/ld_cbfx.txt, localization/{english,russian}/ld_cbfx_l_*.yml
-Reads the list of currencies from ld_curdata (the fork's currency laws).
 
 Usage:
     python3 tools/regen_ef_clearing.py [--check]
@@ -41,7 +40,6 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
 from ld_curdata import currencies  # noqa: E402
-from regen_ef_reserve_trade import chain  # noqa: E402
 
 # hotfix paths; ld_gen writes into the fork (ld_clearing.txt, ld_clearing_values.txt, ld_cbfx.txt, ld_cbfx_l_*.yml)
 OUT_EFF = "common/scripted_effects/zz_ef_clearing.txt"
@@ -74,6 +72,7 @@ zz_ef_clr_window_roll = {
 		# ~0.8-0.9 of its inflow and the house stays bounded; was: receivers 20% (clr1), the house 187M (clr2).
 		set_global_variable = { name = zz_ef_clr_ratio value = 1 }
 		set_global_variable = { name = zz_ef_clr_pay_ratio value = 1 }
+		zz_ef_clr_pot_value_set = yes
 		if = {
 			limit = { global_var:zz_ef_clr_in_acc > 0 }
 			set_global_variable = {
@@ -331,6 +330,7 @@ zz_ef_clr_receive = {
 		}
 	}
 	change_global_variable = { name = zz_ef_clr_in_acc add = var:zz_ef_clr_claim }
+	zz_ef_clr_pot_value_set = yes
 	set_variable = { name = zz_ef_clr_pot value = zz_ef_clr_pot_value }
 	if = {
 		limit = { var:zz_ef_clr_pot > 0 }
@@ -399,47 +399,107 @@ zz_ef_clr_receive = {
 
 
 def effects(cur):
-    out = [HEAD, STEP]
-    out.append("\n# The payer's own currency into the house: var:zz_ef_clr_units of its money.\n"
-               "zz_ef_clr_put_own = {\n")
-    out.append(chain(cur, lambda c: (
-        f"if = {{ limit = {{ NOT = {{ has_global_variable = zz_ef_clr_c_{c} }} }} "
-        f"set_global_variable = {{ name = zz_ef_clr_c_{c} value = 0 }} }} "
-        f"change_global_variable = {{ name = zz_ef_clr_c_{c} add = var:zz_ef_clr_units }}")))
-    out.append("}\n")
-    out.append("\n# scope:clr_rcv (the receiver), var:zz_ef_clr_g = its slice: each currency of the house -- its own\n"
-               "# redeemed, a foreign one into its CB's stock (scope:clr_cb).\n"
-               "zz_ef_clr_take_all = {\n")
-    for c in cur:
-        out.append(
-            f"\tif = {{\n"
-            f"\t\tlimit = {{ has_global_variable = zz_ef_clr_c_{c} global_var:zz_ef_clr_c_{c} > 0 }}\n"
-            f"\t\tset_variable = {{ name = zz_ef_clr_u value = {{ value = global_var:zz_ef_clr_c_{c} multiply = var:zz_ef_clr_g }} }}\n"
-            f"\t\tchange_global_variable = {{ name = zz_ef_clr_c_{c} subtract = var:zz_ef_clr_u }}\n"
-            f"\t\tif = {{\n"
-            f"\t\t\tlimit = {{ var:zz_ef_cur ?= flag:{c} }}\n"
-            f"\t\t\tchange_variable = {{ name = zz_ef_f_clr_own_back add = var:zz_ef_clr_u }}\n"
-            f"\t\t}}\n"
-            f"\t\telse = {{\n"
-            f"\t\t\tscope:clr_cb = {{\n"
-            f"\t\t\t\tif = {{ limit = {{ NOT = {{ has_variable = stockpiling_{c}_state_1 }} }} set_variable = {{ name = stockpiling_{c}_state_1 value = 0 }} }}\n"
-            f"\t\t\t\tchange_variable = {{ name = stockpiling_{c}_state_1 add = scope:clr_rcv.var:zz_ef_clr_u }}\n"
-            f"\t\t\t}}\n"
-            f"\t\t\tchange_variable = {{ name = zz_ef_f_clr_fx_in add = {{ value = var:zz_ef_clr_u multiply = zz_ef_fx_gold_{c} }} }}\n"
-            f"\t\t}}\n"
-            f"\t\tremove_variable = zz_ef_clr_u\n"
-            f"\t}}\n")
-    out.append("}\n")
-    out.append("\n# the week's change of each foreign currency in the CB (country vars zz_ef_cbfx_d_<c>), from the\n"
-               "# money model's weekly step.\n"
-               "zz_ef_cbfx_week_step = {\n")
-    for c in cur:
-        out.append(f"\tif = {{ limit = {{ OR = {{ zz_ef_cbfx_{c} > 0 has_variable = zz_ef_cbfx_p_{c} }} }} "
-                   f"set_variable = {{ name = zz_ef_cbfx_d_{c} value = zz_ef_cbfx_{c} }} "
-                   f"if = {{ limit = {{ has_variable = zz_ef_cbfx_p_{c} }} change_variable = {{ name = zz_ef_cbfx_d_{c} subtract = var:zz_ef_cbfx_p_{c} }} }} "
-                   f"set_variable = {{ name = zz_ef_cbfx_p_{c} value = zz_ef_cbfx_{c} }} }}\n")
-    out.append("}\n")
-    return "".join(out)
+    return HEAD + STEP + EFFECTS_MAP
+
+
+EFFECTS_MAP = """
+# The payer's own money into the house: var:zz_ef_clr_units of its money -- a claim on the payer (the house's map
+# zz_ef_clr_pot, ld_claims.txt); its gold a unit kept for the house's value (var:zz_ef_rq_gpm).
+zz_ef_clr_put_own = {
+	save_temporary_scope_as = zz_ef_clr_payer
+	set_variable = { name = zz_ef_rq_gpm value = zz_ef_clr_gpm_own }
+	zz_ef_rq_pot_add = { D = scope:zz_ef_clr_payer V = var:zz_ef_clr_units }
+}
+# scope:clr_rcv (the receiver), var:zz_ef_clr_g = its slice: each issuer's money in the house -- its own redeemed, a
+# foreign one into its CB's claims (zz_ef_rq_cb_m). The house's keys are listed first (zz_ef_clr_keys), then taken.
+zz_ef_clr_take_all = {
+	clear_variable_list = zz_ef_clr_keys
+	every_key_in_global_variable_map = {
+		variable = zz_ef_clr_pot
+		save_temporary_scope_as = zz_ef_clr_k
+		scope:clr_rcv = { add_to_variable_list = { name = zz_ef_clr_keys target = scope:zz_ef_clr_k } }
+	}
+	every_in_list = {
+		variable = zz_ef_clr_keys
+		save_temporary_scope_as = zz_ef_clr_k
+		scope:clr_rcv = {
+			set_variable = {
+				name = zz_ef_clr_u
+				value = {
+					value = "global_variable_map(zz_ef_clr_pot|scope:zz_ef_clr_k)"
+					multiply = var:zz_ef_clr_g
+				}
+			}
+			if = {
+				limit = { var:zz_ef_clr_u > 0 }
+				zz_ef_rq_pot_add = { D = scope:zz_ef_clr_k V = { value = var:zz_ef_clr_u multiply = -1 } }
+				if = {
+					limit = { scope:zz_ef_clr_k = this }
+					change_variable = { name = zz_ef_f_clr_own_back add = var:zz_ef_clr_u }
+				}
+				else = {
+					zz_ef_rq_add = { MAP = zz_ef_rq_cb_m K = m D = scope:zz_ef_clr_k V = var:zz_ef_clr_u }
+					change_variable = { name = zz_ef_f_clr_fx_in add = { value = var:zz_ef_clr_u multiply = scope:zz_ef_clr_k.zz_ef_rq_gpm_v } }
+				}
+			}
+			remove_variable = zz_ef_clr_u
+		}
+	}
+	clear_variable_list = zz_ef_clr_keys
+}
+# The house's value in gold into global_var:zz_ef_clr_pot_g: each issuer's money at its gold a unit (zz_ef_rq_gpm_v).
+# Before the window's ratios and a receiver's slice.
+zz_ef_clr_pot_value_set = {
+	set_global_variable = { name = zz_ef_clr_pot_g value = 0 }
+	every_key_in_global_variable_map = {
+		variable = zz_ef_clr_pot
+		save_temporary_scope_as = zz_ef_clr_k
+		change_global_variable = {
+			name = zz_ef_clr_pot_g
+			add = {
+				value = "global_variable_map(zz_ef_clr_pot|scope:zz_ef_clr_k)"
+				multiply = scope:zz_ef_clr_k.zz_ef_rq_gpm_v
+			}
+		}
+	}
+}
+# PLAYER scope, weekly: the week's change of each foreign money the CB holds (map zz_ef_cbfx_d by issuer; last week's
+# holdings -- map zz_ef_cbfx_p), for the table of the CB's reserves.
+zz_ef_cbfx_week_step = {
+	if = { limit = { has_variable_map = zz_ef_cbfx_d } clear_variable_map = zz_ef_cbfx_d }
+	if = {
+		limit = { has_variable_map = zz_ef_rq_cb_m }
+		zz_ef_rq_keys_take = { MAP = zz_ef_rq_cb_m }
+		save_temporary_scope_as = zz_ef_cbfx_h
+		every_in_list = {
+			variable = zz_ef_rq_keys
+			save_temporary_scope_as = zz_ef_cbfx_k
+			scope:zz_ef_cbfx_h = {
+				zz_ef_rq_get = { MAP = zz_ef_cbfx_p D = scope:zz_ef_cbfx_k }
+				set_variable = { name = zz_ef_cbfx_t value = var:zz_ef_rq_h }
+				zz_ef_rq_get = { MAP = zz_ef_rq_cb_m D = scope:zz_ef_cbfx_k }
+				change_variable = { name = zz_ef_cbfx_t subtract = var:zz_ef_rq_h }
+				change_variable = { name = zz_ef_cbfx_t multiply = -1 }
+				add_to_variable_map = { name = zz_ef_cbfx_d key = scope:zz_ef_cbfx_k value = var:zz_ef_cbfx_t }
+			}
+		}
+	}
+	if = { limit = { has_variable_map = zz_ef_cbfx_p } clear_variable_map = zz_ef_cbfx_p }
+	if = {
+		limit = { has_variable_map = zz_ef_rq_cb_m }
+		every_in_list = {
+			variable = zz_ef_rq_keys
+			save_temporary_scope_as = zz_ef_cbfx_k
+			scope:zz_ef_cbfx_h = {
+				zz_ef_rq_get = { MAP = zz_ef_rq_cb_m D = scope:zz_ef_cbfx_k }
+				add_to_variable_map = { name = zz_ef_cbfx_p key = scope:zz_ef_cbfx_k value = var:zz_ef_rq_h }
+			}
+		}
+		clear_variable_list = zz_ef_rq_keys
+	}
+	remove_variable = zz_ef_cbfx_t
+}
+"""
 
 
 VALUES = """
@@ -616,69 +676,92 @@ zz_ef_clr_gold_v = {
 
 
 def values(cur):
-    out = [HEAD, VALUES]
-    out.append("# Everything the house holds, in gold: metal + each currency at its issuer's value (zz_ef_fx_gold_<cur>: the engine's\n"
-               "# money against the parity, as the clearing's own unit zz_ef_clr_gpm_own, Д.R8а.4).\n"
-               "zz_ef_clr_pot_value = {\n\tvalue = zz_ef_clr_gold_v\n")
-    for c in cur:
-        out.append(f"\tif = {{ limit = {{ has_global_variable = zz_ef_clr_c_{c} }} add = {{ value = global_var:zz_ef_clr_c_{c} "
-                   f"multiply = zz_ef_fx_gold_{c} min = 0 }} }}\n")
-    out.append("\tmin = 0\n}\n")
-    out.append("# The scope country's own currency waiting in the house (its money): a debt abroad, as zz_ef_fx_liab.\n"
-               "zz_ef_clr_own_in_pot = {\n\tvalue = 0\n")
-    out.append(chain(cur, lambda c: f"if = {{ limit = {{ has_global_variable = zz_ef_clr_c_{c} }} value = global_var:zz_ef_clr_c_{c} }}"))
-    out.append("\tmin = 0\n}\n")
-    out.append("\n# the CB's stock of each foreign currency (the capital CB state, as the clearing and В2.1 keep it):\n"
-               "# units, in gold (the issuer's value, zz_ef_fx_gold_<cur>), in the holder's money, the week's change.\n")
-    for c in cur:
-        out.append(f"zz_ef_cbfx_{c} = {{ value = 0 capital = {{ if = {{ limit = {{ has_variable = stockpiling_{c}_state_1 }} "
-                   f"add = var:stockpiling_{c}_state_1 }} }} min = 0 }}\n"
-                   f"zz_ef_cbfx_{c}_gold = {{ value = zz_ef_cbfx_{c} multiply = zz_ef_fx_gold_{c} }}\n"
-                   f"zz_ef_cbfx_{c}_money = {{ value = 0 if = {{ limit = {{ zz_ef_clr_gold_per_money > 0 }} "
-                   f"value = zz_ef_cbfx_{c}_gold divide = zz_ef_clr_gold_per_money }} }}\n"
-                   f"zz_ef_cbfx_{c}_d = {{ value = 0 if = {{ limit = {{ has_variable = zz_ef_cbfx_d_{c} }} value = var:zz_ef_cbfx_d_{c} }} }}\n")
-    return "".join(out)
+    return HEAD + VALUES + """# Everything the house holds, in gold: metal + the issuers' money (global_var:zz_ef_clr_pot_g, zz_ef_clr_pot_value_set).
+zz_ef_clr_pot_value = {
+	value = zz_ef_clr_gold_v
+	if = { limit = { has_global_variable = zz_ef_clr_pot_g } add = global_var:zz_ef_clr_pot_g }
+	min = 0
+}
+# a row of the CB's reserves table (zz_ef_cbfx_update_sorted; on the issuer): the holding in gold, for the order
+zz_ef_cbfx_g_v = {
+	value = 0
+	if = { limit = { has_variable = zz_ef_cbfx_g } value = var:zz_ef_cbfx_g }
+}
+"""
 
 
 def sguis(cur):
-    out = [HEAD]
-    # П.16: the same list sorted by the stock's value in gold, the biggest first (selection: the largest not yet
-    # listed, again and again)
-    out.append("\n# E&F's table sorted by value in gold, the biggest first.\n"
-               "zz_ef_cbfx_update_sorted = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_cbfx_list\n"
-               "\t\tset_variable = { name = zz_ef_cbfx_n value = 0 }\n")
-    for c in cur:
-        out.append(f"\t\tif = {{ limit = {{ zz_ef_cbfx_{c}_gold > 0 NOT = {{ var:zz_ef_cur ?= flag:{c} }} }} "
-                   f"change_variable = {{ name = zz_ef_cbfx_n add = 1 }} set_variable = {{ name = zz_ef_cbfx_left_{c} value = yes }} }}\n")
-    out.append("\t\twhile = {\n\t\t\tlimit = { var:zz_ef_cbfx_n > 0 }\n"
-               "\t\t\tset_variable = { name = zz_ef_cbfx_max value = -1 }\n")
-    for c in cur:
-        out.append(f"\t\t\tif = {{ limit = {{ has_variable = zz_ef_cbfx_left_{c} zz_ef_cbfx_{c}_gold > var:zz_ef_cbfx_max }} "
-                   f"set_variable = {{ name = zz_ef_cbfx_max value = zz_ef_cbfx_{c}_gold }} }}\n")
-    out.append("\t\t\tset_variable = { name = zz_ef_cbfx_done value = no }\n")
-    for c in cur:
-        out.append(f"\t\t\tif = {{ limit = {{ var:zz_ef_cbfx_done = no has_variable = zz_ef_cbfx_left_{c} zz_ef_cbfx_{c}_gold >= var:zz_ef_cbfx_max }} "
-                   f"add_to_global_variable_list = {{ name = zz_ef_cbfx_list target = global_var:currency_import_export_value_{c}_03 }} "
-                   f"remove_variable = zz_ef_cbfx_left_{c} set_variable = {{ name = zz_ef_cbfx_done value = yes }} }}\n")
-    out.append("\t\t\tchange_variable = { name = zz_ef_cbfx_n subtract = 1 }\n\t\t}\n"
-               "\t\tremove_variable = zz_ef_cbfx_n\n\t\tremove_variable = zz_ef_cbfx_max\n\t\tremove_variable = zz_ef_cbfx_done\n"
-               "\t}\n}\n")
-    # П.18: who holds our currency -- the other CBs' stocks of the player's currency, for a pie chart
-    out.append("\n# the other CBs holding the player's currency (global list zz_ef_holders_list; the amount\n"
-               "# in the player's money on each holder, var:zz_ef_holds_pc), for the pie chart in the trade balance.\n"
-               "# biggest holder first -- the amounts are set first, then ordered_country fills the list.\n"
-               "zz_ef_holders_update = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_holders_list\n"
-               "\t\tsave_scope_as = holders_root\n"
-               "\t\tevery_country = { limit = { has_variable = zz_ef_holds_pc } remove_variable = zz_ef_holds_pc }\n")
-    for i, c in enumerate(cur):
-        kw = "if" if i == 0 else "else_if"
-        out.append(f"\t\t{kw} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} every_country = {{ limit = {{ NOT = {{ this = scope:holders_root }} "
-                   f"NOT = {{ var:zz_ef_cur ?= flag:{c} }} has_modifier = has_central_bank capital = {{ has_variable = stockpiling_{c}_state_1 "
-                   f"var:stockpiling_{c}_state_1 > 0 }} }} set_variable = {{ name = zz_ef_holds_pc value = capital.var:stockpiling_{c}_state_1 }} }} }}\n")
-    out.append("\t\tordered_country = { limit = { has_variable = zz_ef_holds_pc } order_by = zz_ef_holds_pc_v max = 1000 check_range_bounds = no "
-               "add_to_global_variable_list = { name = zz_ef_holders_list target = this } }\n")
-    out.append("\t}\n}\n")
-    return "".join(out)
+    return HEAD + """
+# The CB's foreign money by issuer (map zz_ef_rq_cb_m), the biggest in gold first: global list zz_ef_cbfx_list of the
+# issuers; on each issuer the row -- units (var:zz_ef_cbfx_u), in gold (zz_ef_cbfx_g), in our money (zz_ef_cbfx_mn), the
+# week's change (zz_ef_cbfx_dd, zz_ef_cbfx_week_step).
+zz_ef_cbfx_update_sorted = {
+	effect = {
+		clear_global_variable_list = zz_ef_cbfx_list
+		save_scope_as = zz_ef_cbfx_h
+		set_variable = { name = zz_ef_cbfx_gpm value = zz_ef_clr_gold_per_money }
+		if = {
+			limit = { has_variable_map = zz_ef_rq_cb_m }
+			zz_ef_rq_keys_take = { MAP = zz_ef_rq_cb_m }
+			every_in_list = {
+				variable = zz_ef_rq_keys
+				save_temporary_scope_as = zz_ef_cbfx_k
+				scope:zz_ef_cbfx_h = {
+					zz_ef_rq_get = { MAP = zz_ef_rq_cb_m D = scope:zz_ef_cbfx_k }
+					set_variable = { name = zz_ef_cbfx_t value = var:zz_ef_rq_h }
+					zz_ef_rq_get = { MAP = zz_ef_cbfx_d D = scope:zz_ef_cbfx_k }
+				}
+				set_variable = { name = zz_ef_cbfx_u value = scope:zz_ef_cbfx_h.var:zz_ef_cbfx_t }
+				set_variable = { name = zz_ef_cbfx_dd value = scope:zz_ef_cbfx_h.var:zz_ef_rq_h }
+				set_variable = { name = zz_ef_cbfx_g value = { value = var:zz_ef_cbfx_u multiply = zz_ef_rq_gpm_v } }
+				set_variable = { name = zz_ef_cbfx_mn value = 0 }
+				if = {
+					limit = { scope:zz_ef_cbfx_h.var:zz_ef_cbfx_gpm > 0 }
+					set_variable = { name = zz_ef_cbfx_mn value = { value = var:zz_ef_cbfx_g divide = scope:zz_ef_cbfx_h.var:zz_ef_cbfx_gpm } }
+				}
+			}
+			ordered_in_list = {
+				variable = zz_ef_rq_keys
+				order_by = zz_ef_cbfx_g_v
+				max = 200
+				check_range_bounds = no
+				add_to_global_variable_list = { name = zz_ef_cbfx_list target = this }
+			}
+			clear_variable_list = zz_ef_rq_keys
+		}
+		remove_variable = zz_ef_cbfx_t
+	}
+}
+
+# the other CBs holding the player's money (global list zz_ef_holders_list; the amount in the player's money on each
+# holder, var:zz_ef_holds_pc), for the pie chart; the biggest holder first.
+zz_ef_holders_update = {
+	effect = {
+		clear_global_variable_list = zz_ef_holders_list
+		save_scope_as = holders_root
+		every_country = {
+			limit = { has_variable = zz_ef_holds_pc }
+			remove_variable = zz_ef_holds_pc
+		}
+		every_country = {
+			limit = {
+				NOT = { this = scope:holders_root }
+				has_variable_map = zz_ef_rq_cb_m
+				is_key_in_variable_map = { name = zz_ef_rq_cb_m target = scope:holders_root }
+			}
+			zz_ef_rq_get = { MAP = zz_ef_rq_cb_m D = scope:holders_root }
+			set_variable = { name = zz_ef_holds_pc value = var:zz_ef_rq_h }
+		}
+		ordered_country = {
+			limit = { has_variable = zz_ef_holds_pc }
+			order_by = zz_ef_holds_pc_v
+			max = 1000
+			check_range_bounds = no
+			add_to_global_variable_list = { name = zz_ef_holders_list target = this }
+		}
+	}
+}
+"""
 
 
 def write_loc(cur):
@@ -689,14 +772,13 @@ def write_loc(cur):
         lines = [f"l_{lang}:\n",
                  ' zz_ef_ep_cbfx_title:0 "%s"\n' % ("Резервы ЦБ по валютам" if ru else "CB reserves by currency"),
                  ' zz_ef_ep_cbfx_tt:0 "%s"\n' % (
-                     "Чужая валюта в резервах ЦБ (мировой клиринг): количество, в наших деньгах, в золоте и изменение "
-                     "за неделю. В подсказке денежной массы она в счёте «Заграница» и учтена в покрытии." if ru else
-                     "Foreign currency in the CB's reserves (the world clearing): units, in our money, in gold and the "
-                     "week's change. In the money supply tooltip it is in the 'Abroad' account and counts in the cover.")]
-        for c in cur:
-            lines.append(f' {c}_03_zz_cbfx_units:0 "#v {sv("zz_ef_cbfx_" + c)}|D]#! @{c}!"\n')
-            lines.append(f' {c}_03_zz_cbfx_money:0 "{sv("zz_ef_cbfx_" + c + "_money")}|D] [GetPlayer.GetCustom(\'currency_symbol\')]"\n')
-            lines.append(f' {c}_03_zz_cbfx_gold:0 "{sv("zz_ef_cbfx_" + c + "_gold")}|D] @gold! ({sv("zz_ef_cbfx_" + c + "_d")}|+D] {w})"\n')
+                     "Чужие деньги в резервах ЦБ — вклады в банках стран-эмитентов (мировой клиринг): количество, в наших "
+                     "деньгах, в золоте и изменение за неделю. В подсказке денежной массы они в счёте «Заграница», в "
+                     "покрытии — деньги эмитентов, разменивающих их на металл." if ru else
+                     "Foreign money in the CB's reserves -- deposits in the issuers' banks (the world clearing): units, in "
+                     "our money, in gold and the week's change. In the money supply tooltip it is in the 'Abroad' account; "
+                     "the money of issuers that redeem it in metal counts in the cover.")]
+        lines.append(' zz_ef_cbfx_week:0 "%s"\n' % w)
         ld_gen.emit(f"localization/{lang}/zz_ef_cbfx_l_{lang}.yml", "".join(lines))
 
 
