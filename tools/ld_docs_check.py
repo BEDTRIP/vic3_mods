@@ -4,6 +4,8 @@
    `PSC_*`, `<cur>`/`<lang>` — любое имя).
 2. Каждый путь в обратных кавычках в `docs/` (начинается с `common/`, `gui/`, `events/`, `localization/`) существует
    (маски — совпадают хотя бы с одним файлом), строка `путь:N` — не дальше конца файла.
+3. Каждая вики-ссылка `[[Имя]]` / `[[Имя|подпись]]` в `docs/`, `понятия/`, `план.md`, `решения.md` ведёт на заметку
+   `понятия/Имя.md` (или другой `.md` форка с таким именем); заметка понятия без входящих ссылок — тоже ошибка.
 
     python tools/ld_docs_check.py [--fork <путь>]
 
@@ -71,7 +73,47 @@ def main():
         print("  битая:", x)
     for x in uncovered:
         print("  не упомянут:", x)
-    sys.exit(1 if bad or uncovered else 0)
+    wbad, orphans = wiki(a.fork)
+    for x in wbad:
+        print("  битая вики-ссылка:", x)
+    for x in orphans:
+        print("  понятие без ссылок на него:", x)
+    sys.exit(1 if bad or uncovered or wbad or orphans else 0)
+
+
+WIKI = re.compile(r"\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]")
+
+
+def wiki(fork):
+    """Вики-ссылки документации форка: (битые, понятия без входящих ссылок)."""
+    names = set()
+    for dp, dn, fn in os.walk(fork):
+        dn[:] = [d for d in dn if d not in (".git", "common", "gui", "events", "localization", "gfx", "_archive")]
+        names.update(f[:-3] for f in fn if f.endswith(".md"))
+    srcs = [os.path.join(fork, "план.md"), os.path.join(fork, "решения.md")]
+    for d in ("docs", "понятия"):
+        dd = os.path.join(fork, d)
+        if os.path.isdir(dd):
+            srcs += [os.path.join(dd, f) for f in sorted(os.listdir(dd)) if f.endswith(".md")]
+    bad, seen = [], set()
+    for src in srcs:
+        if not os.path.exists(src):
+            continue
+        rel = os.path.relpath(src, fork)
+        own = os.path.basename(src)[:-3]
+        for m in WIKI.finditer(open(src, encoding="utf-8").read()):
+            n = m.group(1).strip()
+            if n not in names:
+                bad.append(f"{rel}: [[{n}]]")
+            elif n != own:
+                seen.add(n)
+    notes = os.path.join(fork, "понятия")
+    orphans = []
+    if os.path.isdir(notes):
+        orphans = [f[:-3] for f in sorted(os.listdir(notes))
+                   if f.endswith(".md") and f[:-3] not in seen and not f.startswith("_")]
+    print(f"вики-ссылки: битых {len(bad)}, понятий без входящих ссылок {len(orphans)}")
+    return bad, orphans
 
 
 if __name__ == "__main__":
