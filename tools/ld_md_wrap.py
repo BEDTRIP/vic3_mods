@@ -1,6 +1,7 @@
 """Перенос строк заметок форка (`понятия/`, разделы форка в `ваниль/`, `docs/`) по 120 знаков: абзацы и пункты
 списков; вики-ссылка `[[…]]` и код в обратных кавычках не разрываются — ссылка через перенос строки в Obsidian не
-работает. Таблицы, заголовки, frontmatter, блоки кода, пустые строки — как есть.
+работает. Таблицы, заголовки, frontmatter, блоки кода, пустые строки — как есть. В заметке `ваниль/` переносится
+только раздел «### Как используется в форке» — текст игры генератор держит одной строкой на абзац.
 
     py tools/ld_md_wrap.py <файл.md>...
 """
@@ -63,7 +64,14 @@ def flush(block, out):
 
 def main():
     for path in sys.argv[1:]:
-        lines = open(path, encoding="utf-8").read().split("\n")
+        text = open(path, encoding="utf-8").read()
+        keep = ""
+        if text.startswith("---\nalias") and "\nsource: игра," in text:
+            i = text.find("\n### Как используется в форке")
+            if i < 0:
+                continue
+            keep, text = text[:i + 1], text[i + 1:]
+        lines = text.split("\n")
         out, block, fm, fence = [], [], 0, False
         for i, l in enumerate(lines):
             if i == 0 and l == "---":
@@ -88,7 +96,7 @@ def main():
                 flush(block, out); block = []
             block.append(l)
         flush(block, out)
-        open(path, "w", encoding="utf-8", newline="\n").write("\n".join(out))
+        open(path, "w", encoding="utf-8", newline="\n").write(keep + "\n".join(out))
 
 
 if __name__ == "__main__":
