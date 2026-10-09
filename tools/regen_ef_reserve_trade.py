@@ -6,7 +6,6 @@ The trade reserve currency as a real flow (E&F's trade_balance itself is edited 
 
 Generated:
   * zz_ef_fx_liab: the country's currency held by other CBs (its debt abroad), for the log and M3.
-  * zz_ef_rc_currency_value: the scope country's currency at its parity in gold (clearing).
 The monthly trade-reserve step zz_ef_rc_step (its call was commented out) is in the fork's
 _archive/ef_reserve_trade_step/ (ФК2, 6.10).
 
@@ -52,11 +51,6 @@ VALUES = ""  # the EFX fields zz_ef_v_rc_* -- nothing set their variables (fork 
 
 def values(cur):
     out = [HEAD, VALUES]
-    out.append("# The scope country's currency at its parity in gold (E&F's money_value_<currency>: the leading\n"
-               "# country's money_value_target_real_in_gold).\n"
-               "zz_ef_rc_currency_value = {\n\tvalue = 0\n")
-    out.append(chain(cur, lambda c: f"value = money_value_{c}"))
-    out.append("}\n")
     out.append("# The scope country's currency held by the other countries' CBs (capital CB states), in its own\n"
                "# money: its debt abroad (В2.1). Countries on the same currency law are not foreigners here.\n"
                "zz_ef_fx_liab = {\n\tvalue = 0\n")

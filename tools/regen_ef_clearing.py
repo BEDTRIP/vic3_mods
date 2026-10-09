@@ -304,7 +304,7 @@ zz_ef_clr_pay = {
 		set_global_variable = { name = zz_ef_clr_gold value = 0 }
 	}
 	change_global_variable = { name = zz_ef_clr_gold add = var:zz_ef_clr_mgold }
-	# the rest in the own currency, units of its money at E&F's value in gold
+	# the rest in the own currency, units of its engine money at its gold per unit (zz_ef_clr_gpm_own)
 	set_variable = { name = zz_ef_clr_units value = 0 }
 	if = {
 		limit = {
@@ -313,7 +313,7 @@ zz_ef_clr_pay = {
 		}
 		set_variable = { name = zz_ef_clr_units value = var:zz_ef_clr_due }
 		change_variable = { name = zz_ef_clr_units subtract = var:zz_ef_clr_mgold }
-		change_variable = { name = zz_ef_clr_units divide = zz_ef_rc_currency_value }
+		change_variable = { name = zz_ef_clr_units divide = zz_ef_clr_gpm_own }
 		zz_ef_clr_put_own = yes
 	}
 	set_variable = { name = zz_ef_f_clr_cur_out value = var:zz_ef_clr_units }
@@ -511,21 +511,13 @@ zz_ef_clr_gpm_head = {
 }
 # ... the country's own
 zz_ef_clr_gpm_own = {
-	value = zz_ef_rc_currency_value
+	# gold per unit of the engine's money of the country: its money against the parity (Д.R8а.4; a metal standard -- 1);
+	# no monetary system -- no money of its own, 0 (the market's owner's then)
+	value = 0
 	if = {
-		limit = {
-			OR = {
-				has_law = law_type:law_gold_standard
-				has_law = law_type:law_silver_standard
-				has_law = law_type:law_bimetallism_standard
-			}
-			has_variable = money_value_target_1
-			var:money_value_target_1 > 0
-		}
-		# a metal standard's unit of the engine's money is 1 gold unit; the parity is not in it
-		value = 1
+		limit = { zz_ef_has_currency_value = yes }
+		value = zz_ef_value_to_parity
 	}
-	min = 0
 }
 # The week's results (0 if unset), for the cards and the log.
 zz_ef_v_f_clr_cur_out = {
