@@ -248,9 +248,9 @@ zz_ef_clr_pay = {
 		limit = {
 			has_modifier = has_central_bank
 			OR = {
-				has_law = law_type:law_gold_standard
-				has_law = law_type:law_silver_standard
-				has_law = law_type:law_bimetallism_standard
+				zz_ef_metal_gold = yes
+				zz_ef_metal_silver = yes
+				zz_ef_metal_bimet = yes
 			}
 			has_variable = money_value_target_1
 			var:money_value_target_1 > 0
@@ -275,7 +275,7 @@ zz_ef_clr_pay = {
 			is_capital = yes
 		}
 		if = {
-			limit = { owner = { has_law = law_type:law_silver_standard } }
+			limit = { owner = { zz_ef_metal_silver = yes } }
 			if = {
 				limit = { NOT = { has_variable = silver_state_1 } }
 				set_variable = { name = silver_state_1 value = 0 }
@@ -295,7 +295,7 @@ zz_ef_clr_pay = {
 	# the metal in gold into the house
 	set_variable = { name = zz_ef_clr_mgold value = var:zz_ef_clr_metal }
 	if = {
-		limit = { has_law = law_type:law_silver_standard }
+		limit = { zz_ef_metal_silver = yes }
 		change_variable = { name = zz_ef_clr_mgold multiply = silver_to_gold_rate }
 	}
 	if = {
@@ -361,7 +361,7 @@ zz_ef_clr_receive = {
 		}
 		set_variable = { name = zz_ef_f_hume value = var:zz_ef_clr_mgold }
 		if = {
-			limit = { has_law = law_type:law_silver_standard }
+			limit = { zz_ef_metal_silver = yes }
 			change_variable = { name = zz_ef_f_hume multiply = gold_to_silver_rate }
 		}
 		every_scope_state = {
@@ -370,7 +370,7 @@ zz_ef_clr_receive = {
 				is_capital = yes
 			}
 			if = {
-				limit = { owner = { has_law = law_type:law_silver_standard } }
+				limit = { owner = { zz_ef_metal_silver = yes } }
 				if = {
 					limit = { NOT = { has_variable = silver_state_1 } }
 					set_variable = { name = silver_state_1 value = 0 }
