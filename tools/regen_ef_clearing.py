@@ -417,7 +417,7 @@ def effects(cur):
             f"\t\tset_variable = {{ name = zz_ef_clr_u value = {{ value = global_var:zz_ef_clr_c_{c} multiply = var:zz_ef_clr_g }} }}\n"
             f"\t\tchange_global_variable = {{ name = zz_ef_clr_c_{c} subtract = var:zz_ef_clr_u }}\n"
             f"\t\tif = {{\n"
-            f"\t\t\tlimit = {{ has_law = law_type:law_{c}_currency }}\n"
+            f"\t\t\tlimit = {{ var:zz_ef_cur ?= flag:{c} }}\n"
             f"\t\t\tchange_variable = {{ name = zz_ef_f_clr_own_back add = var:zz_ef_clr_u }}\n"
             f"\t\t}}\n"
             f"\t\telse = {{\n"
@@ -648,7 +648,7 @@ def sguis(cur):
                "zz_ef_cbfx_update_sorted = {\n\teffect = {\n\t\tclear_global_variable_list = zz_ef_cbfx_list\n"
                "\t\tset_variable = { name = zz_ef_cbfx_n value = 0 }\n")
     for c in cur:
-        out.append(f"\t\tif = {{ limit = {{ zz_ef_cbfx_{c}_gold > 0 NOT = {{ has_law = law_type:law_{c}_currency }} }} "
+        out.append(f"\t\tif = {{ limit = {{ zz_ef_cbfx_{c}_gold > 0 NOT = {{ var:zz_ef_cur ?= flag:{c} }} }} "
                    f"change_variable = {{ name = zz_ef_cbfx_n add = 1 }} set_variable = {{ name = zz_ef_cbfx_left_{c} value = yes }} }}\n")
     out.append("\t\twhile = {\n\t\t\tlimit = { var:zz_ef_cbfx_n > 0 }\n"
                "\t\t\tset_variable = { name = zz_ef_cbfx_max value = -1 }\n")
@@ -672,8 +672,8 @@ def sguis(cur):
                "\t\tevery_country = { limit = { has_variable = zz_ef_holds_pc } remove_variable = zz_ef_holds_pc }\n")
     for i, c in enumerate(cur):
         kw = "if" if i == 0 else "else_if"
-        out.append(f"\t\t{kw} = {{ limit = {{ has_law = law_type:law_{c}_currency }} every_country = {{ limit = {{ NOT = {{ this = scope:holders_root }} "
-                   f"NOT = {{ has_law = law_type:law_{c}_currency }} has_modifier = has_central_bank capital = {{ has_variable = stockpiling_{c}_state_1 "
+        out.append(f"\t\t{kw} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} every_country = {{ limit = {{ NOT = {{ this = scope:holders_root }} "
+                   f"NOT = {{ var:zz_ef_cur ?= flag:{c} }} has_modifier = has_central_bank capital = {{ has_variable = stockpiling_{c}_state_1 "
                    f"var:stockpiling_{c}_state_1 > 0 }} }} set_variable = {{ name = zz_ef_holds_pc value = capital.var:stockpiling_{c}_state_1 }} }} }}\n")
     out.append("\t\tordered_country = { limit = { has_variable = zz_ef_holds_pc } order_by = zz_ef_holds_pc_v max = 1000 check_range_bounds = no "
                "add_to_global_variable_list = { name = zz_ef_holders_list target = this } }\n")

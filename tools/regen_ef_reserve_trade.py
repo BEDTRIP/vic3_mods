@@ -38,11 +38,11 @@ def currencies():
 
 
 def chain(cur, body):
-    """if / else_if over the currency laws of the scope country; body(c) is the branch's effect."""
+    """if / else_if over the scope country's currency (var:zz_ef_cur, its currency law); body(c) is the branch's effect."""
     out = []
     for i, c in enumerate(cur):
         kw = "if" if i == 0 else "else_if"
-        out.append(f"\t{kw} = {{ limit = {{ has_law = law_type:law_{c}_currency }} {body(c)} }}\n")
+        out.append(f"\t{kw} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} {body(c)} }}\n")
     return "".join(out)
 
 
@@ -52,9 +52,9 @@ VALUES = ""  # the EFX fields zz_ef_v_rc_* -- nothing set their variables (fork 
 def values(cur):
     out = [HEAD, VALUES]
     out.append("# The scope country's currency held by the other countries' CBs (capital CB states), in its own\n"
-               "# money: its debt abroad (В2.1). Countries on the same currency law are not foreigners here.\n"
+               "# money: its debt abroad (В2.1). Countries on the same currency (var:zz_ef_cur) are not foreigners here.\n"
                "zz_ef_fx_liab = {\n\tvalue = 0\n")
-    out.append(chain(cur, lambda c: f"every_country = {{ limit = {{ NOT = {{ this = root }} NOT = {{ has_law = law_type:law_{c}_currency }} "
+    out.append(chain(cur, lambda c: f"every_country = {{ limit = {{ NOT = {{ this = root }} NOT = {{ var:zz_ef_cur ?= flag:{c} }} "
                                     f"has_modifier = has_central_bank }} capital = {{ if = {{ limit = {{ has_variable = stockpiling_{c}_state_1 }} "
                                     f"add = {{ value = var:stockpiling_{c}_state_1 min = 0 }} }} }} }}"))
     out.append("\tmin = 0\n}\n")

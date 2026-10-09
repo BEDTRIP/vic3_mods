@@ -68,8 +68,8 @@ def trim_chain(cur, var="zz_ef_fxt_k"):
     for i, c in enumerate(cur):
         kw = "if" if i == 0 else "else_if"
         out.append(
-            f"\t\t\t{kw} = {{ limit = {{ has_law = law_type:law_{c}_currency }} every_country = {{ limit = {{ "
-            f"NOT = {{ this = scope:zz_fxt_issuer }} NOT = {{ has_law = law_type:law_{c}_currency }} "
+            f"\t\t\t{kw} = {{ limit = {{ var:zz_ef_cur ?= flag:{c} }} every_country = {{ limit = {{ "
+            f"NOT = {{ this = scope:zz_fxt_issuer }} NOT = {{ var:zz_ef_cur ?= flag:{c} }} "
             f"has_modifier = has_central_bank }} capital = {{ if = {{ limit = {{ has_variable = stockpiling_{c}_state_1 }} "
             f"change_variable = {{ name = stockpiling_{c}_state_1 multiply = scope:zz_fxt_issuer.var:{var} }} }} }} }} }}\n")
     return "".join(out)
