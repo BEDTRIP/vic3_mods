@@ -432,7 +432,8 @@ zz_ef_clr_take_all = {
 			}
 			if = {
 				limit = { var:zz_ef_clr_u > 0 }
-				zz_ef_rq_pot_add = { D = scope:zz_ef_clr_k V = { value = var:zz_ef_clr_u multiply = -1 } }
+				set_variable = { name = zz_ef_rq_neg value = { value = var:zz_ef_clr_u multiply = -1 } }
+				zz_ef_rq_pot_add = { D = scope:zz_ef_clr_k V = var:zz_ef_rq_neg }
 				if = {
 					limit = { scope:zz_ef_clr_k = this }
 					change_variable = { name = zz_ef_f_clr_own_back add = var:zz_ef_clr_u }

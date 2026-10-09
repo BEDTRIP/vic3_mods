@@ -260,13 +260,14 @@ zz_ef_bl_hold_map = {{
 #      bought back from its pool, or written off in its default;
 #   2. maturity -- the part is repaid evenly over zz_ef_bl_term_weeks (E&F's slots: 5 or 10 years), from its pool;
 #   3. the week's interest on what is left, at the seller's rate (zz_ef_bl_int_per_part), from its pool.
-# A seller no longer recognized (decentralized) -- the part written off.
+# A seller turned decentralized (no economy of its own) -- the part written off.
 zz_ef_bl_hold_one = {{
 	zz_ef_rq_get = {{ MAP = zz_ef_rq_$H$_b D = scope:zz_ef_bl_seller }}
 	if = {{
-		limit = {{ NOT = {{ scope:zz_ef_bl_seller = {{ is_country_type = recognized }} }} }}
+		limit = {{ scope:zz_ef_bl_seller = {{ is_country_type = decentralized }} }}
 		set_variable = {{ name = zz_ef_bl_x value = var:zz_ef_rq_h }}
-		zz_ef_rq_add = {{ H = $H$ K = b D = scope:zz_ef_bl_seller V = {{ value = var:zz_ef_bl_x multiply = -1 }} }}
+		set_variable = {{ name = zz_ef_rq_neg value = {{ value = var:zz_ef_bl_x multiply = -1 }} }}
+		zz_ef_rq_add = {{ H = $H$ K = b D = scope:zz_ef_bl_seller V = var:zz_ef_rq_neg }}
 		change_variable = {{ name = zz_ef_f_bl_lost add = var:zz_ef_bl_x }}
 		zz_ef_bl_woff_$INTO$ = yes
 	}}
@@ -279,7 +280,8 @@ zz_ef_bl_hold_one = {{
 				}}
 			}}
 			set_variable = {{ name = zz_ef_bl_x value = {{ value = var:zz_ef_rq_h multiply = {{ value = 1 subtract = scope:zz_ef_bl_seller.var:zz_ef_bl_ratio }} }} }}
-			zz_ef_rq_add = {{ H = $H$ K = b D = scope:zz_ef_bl_seller V = {{ value = var:zz_ef_bl_x multiply = -1 }} }}
+			set_variable = {{ name = zz_ef_rq_neg value = {{ value = var:zz_ef_bl_x multiply = -1 }} }}
+			zz_ef_rq_add = {{ H = $H$ K = b D = scope:zz_ef_bl_seller V = var:zz_ef_rq_neg }}
 			change_variable = {{ name = zz_ef_rq_h subtract = var:zz_ef_bl_x }}
 			if = {{
 				limit = {{ scope:zz_ef_bl_seller = {{ has_variable = zz_ef_bl_woff_now }} }}
@@ -302,7 +304,8 @@ zz_ef_bl_hold_one = {{
 		}}
 		if = {{
 			limit = {{ var:zz_ef_bl_x > 0 }}
-			zz_ef_rq_add = {{ H = $H$ K = b D = scope:zz_ef_bl_seller V = {{ value = var:zz_ef_bl_x multiply = -1 }} }}
+			set_variable = {{ name = zz_ef_rq_neg value = {{ value = var:zz_ef_bl_x multiply = -1 }} }}
+			zz_ef_rq_add = {{ H = $H$ K = b D = scope:zz_ef_bl_seller V = var:zz_ef_rq_neg }}
 			change_variable = {{ name = zz_ef_rq_h subtract = var:zz_ef_bl_x }}
 			zz_ef_bl_pay = {{ F = redeem TO = zz_ef_f_$FB$_back SHORT = zz_ef_f_bl_lost INTO = $INTO$ }}
 		}}
