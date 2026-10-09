@@ -129,7 +129,7 @@ zz_ef_clr_step = {
 	set_variable = { name = zz_ef_f_clr_sub value = 0 }
 	set_variable = { name = zz_ef_f_clr_sent value = 0 }
 	# the head's price of gold per unit, one pass of the 95-branch chain for the whole step (and zz_ef_clr_pay / _receive):
-	# nothing in the step changes its inputs (the laws, the parity, money_value_*, the zone, the world's average)
+	# nothing in the step changes its inputs (the laws, the parity, the currencies' values, the zone, the world's average)
 	set_variable = { name = zz_ef_t_gpm value = zz_ef_clr_gold_per_money }
 	# the members' flows sent since our last step
 	if = {
@@ -426,7 +426,7 @@ def effects(cur):
             f"\t\t\t\tif = {{ limit = {{ NOT = {{ has_variable = stockpiling_{c}_state_1 }} }} set_variable = {{ name = stockpiling_{c}_state_1 value = 0 }} }}\n"
             f"\t\t\t\tchange_variable = {{ name = stockpiling_{c}_state_1 add = scope:clr_rcv.var:zz_ef_clr_u }}\n"
             f"\t\t\t}}\n"
-            f"\t\t\tchange_variable = {{ name = zz_ef_f_clr_fx_in add = {{ value = var:zz_ef_clr_u multiply = money_value_{c} }} }}\n"
+            f"\t\t\tchange_variable = {{ name = zz_ef_f_clr_fx_in add = {{ value = var:zz_ef_clr_u multiply = zz_ef_fx_gold_{c} }} }}\n"
             f"\t\t}}\n"
             f"\t\tremove_variable = zz_ef_clr_u\n"
             f"\t}}\n")
@@ -472,8 +472,8 @@ zz_ef_clr_metal_share = {
 		value = zz_ef_clr_metal_share_min
 	}
 }
-# Gold a unit of the scope country's money pays / claims abroad: at the parity under a metal standard (as Hume
-# settled), else E&F's value of its currency in gold. В1.6 items 2-3 (5.10): a country that settles through a
+# Gold a unit of the scope country's money pays / claims abroad: its money against the parity (zz_ef_clr_gpm_own;
+# a metal standard -- 1, as Hume settled). В1.6 items 2-3 (5.10): a country that settles through a
 # head (zz_ef_clr_head_find) -- the head's: the zone's overlord, or, with no value of its own, its market's owner.
 # The rest -- no price of its own nor its head's (a market with no currency, 121 of 269 countries in run s1e): the world's
 # average, weighted by GDP.
@@ -618,22 +618,23 @@ zz_ef_clr_gold_v = {
 
 def values(cur):
     out = [HEAD, VALUES]
-    out.append("# Everything the house holds, in gold: metal + each currency at E&F's value.\n"
+    out.append("# Everything the house holds, in gold: metal + each currency at its issuer's value (zz_ef_fx_gold_<cur>: the engine's\n"
+               "# money against the parity, as the clearing's own unit zz_ef_clr_gpm_own, Д.R8а.4).\n"
                "zz_ef_clr_pot_value = {\n\tvalue = zz_ef_clr_gold_v\n")
     for c in cur:
         out.append(f"\tif = {{ limit = {{ has_global_variable = zz_ef_clr_c_{c} }} add = {{ value = global_var:zz_ef_clr_c_{c} "
-                   f"multiply = money_value_{c} min = 0 }} }}\n")
+                   f"multiply = zz_ef_fx_gold_{c} min = 0 }} }}\n")
     out.append("\tmin = 0\n}\n")
     out.append("# The scope country's own currency waiting in the house (its money): a debt abroad, as zz_ef_fx_liab.\n"
                "zz_ef_clr_own_in_pot = {\n\tvalue = 0\n")
     out.append(chain(cur, lambda c: f"if = {{ limit = {{ has_global_variable = zz_ef_clr_c_{c} }} value = global_var:zz_ef_clr_c_{c} }}"))
     out.append("\tmin = 0\n}\n")
     out.append("\n# the CB's stock of each foreign currency (the capital CB state, as the clearing and В2.1 keep it):\n"
-               "# units, in gold (E&F's value), in the holder's money, the week's change.\n")
+               "# units, in gold (the issuer's value, zz_ef_fx_gold_<cur>), in the holder's money, the week's change.\n")
     for c in cur:
         out.append(f"zz_ef_cbfx_{c} = {{ value = 0 capital = {{ if = {{ limit = {{ has_variable = stockpiling_{c}_state_1 }} "
                    f"add = var:stockpiling_{c}_state_1 }} }} min = 0 }}\n"
-                   f"zz_ef_cbfx_{c}_gold = {{ value = zz_ef_cbfx_{c} multiply = money_value_{c} }}\n"
+                   f"zz_ef_cbfx_{c}_gold = {{ value = zz_ef_cbfx_{c} multiply = zz_ef_fx_gold_{c} }}\n"
                    f"zz_ef_cbfx_{c}_money = {{ value = 0 if = {{ limit = {{ zz_ef_clr_gold_per_money > 0 }} "
                    f"value = zz_ef_cbfx_{c}_gold divide = zz_ef_clr_gold_per_money }} }}\n"
                    f"zz_ef_cbfx_{c}_d = {{ value = 0 if = {{ limit = {{ has_variable = zz_ef_cbfx_d_{c} }} value = var:zz_ef_cbfx_d_{c} }} }}\n")
