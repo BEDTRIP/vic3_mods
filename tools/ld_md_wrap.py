@@ -1,7 +1,9 @@
 """Перенос строк заметок форка (`понятия/`, разделы форка в `ваниль/`, `docs/`) по 120 знаков: абзацы и пункты
 списков; вики-ссылка `[[…]]` и код в обратных кавычках не разрываются — ссылка через перенос строки в Obsidian не
 работает. Таблицы, заголовки, frontmatter, блоки кода, пустые строки — как есть. В заметке `ваниль/` переносится
-только раздел «### Как используется в форке» — текст игры генератор держит одной строкой на абзац.
+только раздел «### Как используется в форке» — текст игры генератор держит одной строкой на абзац. Раздел
+«## Подсказка» заметки понятия не переносится, а склеивается: абзац и пункт списка — одной строкой, как текст
+подсказки в игре.
 
     py tools/ld_md_wrap.py <файл.md>...
 """
@@ -48,7 +50,7 @@ def wrap(words, first, rest):
     return out
 
 
-def flush(block, out):
+def flush(block, out, join=False):
     if not block:
         return
     m = ITEM.match(block[0])
@@ -59,7 +61,7 @@ def flush(block, out):
     else:
         first = rest = re.match(r"^\s*", block[0]).group(0)
         text = " ".join(l.strip() for l in block)
-    out += wrap(tokens(text), first, rest)
+    out += [first + text] if join else wrap(tokens(text), first, rest)
 
 
 def main():
@@ -72,7 +74,7 @@ def main():
                 continue
             keep, text = text[:i + 1], text[i + 1:]
         lines = text.split("\n")
-        out, block, fm, fence = [], [], 0, False
+        out, block, fm, fence, tip = [], [], 0, False, False
         for i, l in enumerate(lines):
             if i == 0 and l == "---":
                 fm = 1
@@ -89,13 +91,15 @@ def main():
                 out.append(l)
                 continue
             if fence or not l.strip() or l.lstrip().startswith(("|", "#")):
-                flush(block, out); block = []
+                flush(block, out, tip); block = []
+                if l.startswith("## "):
+                    tip = l == "## Подсказка"
                 out.append(l)
                 continue
             if ITEM.match(l):
-                flush(block, out); block = []
+                flush(block, out, tip); block = []
             block.append(l)
-        flush(block, out)
+        flush(block, out, tip)
         open(path, "w", encoding="utf-8", newline="\n").write(keep + "\n".join(out))
 
 
