@@ -12,8 +12,8 @@
 Два графа заметок форка: `понятия/` (мод) и `ваниль/` (игра) — заметки мода ссылаются на ванильные там, где механика
 мода стоит на механике игры (принцип 14).
 
-`--check` — только сравнить, код выхода 1 при расхождении. По умолчанию ваниль — `vic3_mods_out/.vanillaVIC3/game`
-рядом с репо (на ПК и в worktree моста).
+`--check` — только сравнить, код выхода 1 при расхождении. Ваниль по умолчанию — первая найденная: `vic3_mods_out/
+.vanillaVIC3(/game)` рядом с репо (на ПК и в worktree моста), установленная игра.
 """
 import argparse
 import os
@@ -178,12 +178,16 @@ class Gen:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--vanilla", default=str(ROOT / "vic3_mods_out" / ".vanillaVIC3" / "game"))
+    ap.add_argument("--vanilla", default=None)
     ap.add_argument("--fork", default=str(ROOT / "Economic-and-Financial-Ledgerdemain-Mod"))
     ap.add_argument("--lang", default="russian")
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
-    van, fork = Path(a.vanilla), Path(a.fork)
+    cands = [Path(a.vanilla)] if a.vanilla else [ROOT / "vic3_mods_out" / ".vanillaVIC3" / "game",
+                                                 ROOT / "vic3_mods_out" / ".vanillaVIC3",
+                                                 Path(r"C:\games\steam\steamapps\common\Victoria 3\game")]
+    van = next((c for c in cands if (c / "common" / "game_concepts").is_dir()), cands[0])
+    fork = Path(a.fork)
     concepts = load_concepts(van / "common" / "game_concepts")
     loc = load_loc(van / "localization" / a.lang)
     en = load_loc(van / "localization" / "english")
