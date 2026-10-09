@@ -4,8 +4,9 @@
    `PSC_*`, `<cur>`/`<lang>` — любое имя).
 2. Каждый путь в обратных кавычках в `docs/` (начинается с `common/`, `gui/`, `events/`, `localization/`) существует
    (маски — совпадают хотя бы с одним файлом), строка `путь:N` — не дальше конца файла.
-3. Каждая вики-ссылка `[[Имя]]` / `[[Имя|подпись]]` в `docs/`, `понятия/`, `план.md`, `решения.md` ведёт на заметку
-   `понятия/Имя.md` (или другой `.md` форка с таким именем); заметка понятия без входящих ссылок — тоже ошибка.
+3. Каждая вики-ссылка `[[Имя]]` / `[[Имя|подпись]]` в `docs/`, `понятия/`, `ваниль/`, `план.md`, `решения.md` ведёт
+   на заметку `понятия/Имя.md` (или другой `.md` форка с таким именем); заметка понятия без входящих ссылок — тоже
+   ошибка.
 
     python tools/ld_docs_check.py [--fork <путь>]
 
@@ -91,7 +92,7 @@ def wiki(fork):
         dn[:] = [d for d in dn if d not in (".git", "common", "gui", "events", "localization", "gfx", "_archive")]
         names.update(f[:-3] for f in fn if f.endswith(".md"))
     srcs = [os.path.join(fork, "план.md"), os.path.join(fork, "решения.md")]
-    for d in ("docs", "понятия"):
+    for d in ("docs", "понятия", "ваниль"):
         dd = os.path.join(fork, d)
         if os.path.isdir(dd):
             srcs += [os.path.join(dd, f) for f in sorted(os.listdir(dd)) if f.endswith(".md")]

@@ -111,15 +111,21 @@ class Gen:
             self.ph = []
         s = s.replace("\\n", "\n").replace('\\"', '"')
         s = re.sub(r"\n?\$EFFECT_LIST_BULLET\$", "\n- ", s)
+        s = re.sub(r"\n?#indent_newline(:\d+)?\s*", "\n", s)
+        s = s.replace("[Nbsp]", " ")
         # [Concept('concept_x', 'text')|fmt]
-        s = re.sub(r"\[Concept\('(concept_\w+)',\s*'([^']*)'\)(\|[^\]]*)?\]", lambda m: self.link(m.group(1), m.group(2)), s)
+        s = re.sub(r"\[Concept\(\s*'(concept_\w+)'\s*,\s*'([^']*)'\s*\)(\|[^\]]*)?\]",
+                   lambda m: self.link(m.group(1), m.group(2)), s)
         s = re.sub(r"\[(concept_\w+)(\|(\w+))?\]",
                    lambda m: self.link(m.group(1), (self.loc.get(m.group(1), "").lower() or None) if m.group(3) == "l" else None), s)
         s = re.sub(r"\$(concept_\w+)(\|\w+)?\$", lambda m: self.link(m.group(1)), s)
-        s = re.sub(r"\[GetDefine\('(\w+)',\s*'(\w+)'\)(\|\w+)?\]", r"`\1.\2`", s)
-        s = re.sub(r"\[SelectLocalization\([^,]+,\s*'\w+',\s*'(\w+)'\)\]", lambda m: self.game_name(m.group(1)), s)
-        s = re.sub(r"\[Get\w+\('(\w+)'\)\.Get\w*Name\w*(\|\w+)?\]", lambda m: self.game_name(m.group(1)), s)
-        s = re.sub(r"\[Get\w+\('(\w+)'\)[^\]]*\]", lambda m: self.game_name(m.group(1)), s)
+        s = re.sub(r"\[GetDefine\('(\w+)',\s*'(\w+)'\)(\|[^\]]*)?\]", r"`\1.\2`", s)
+        # [SelectLocalization(GetPlayer.IsValid, 'KEY_IF_PLAYER', 'key_or_text')|fmt] — the text without a player
+        s = re.sub(r"\[SelectLocalization\([^,]+,\s*'\w+',\s*'([^']+)'\)(\|[^\]]*)?\]",
+                   lambda m: self.game_name(m.group(1)), s)
+        s = re.sub(r"\[AddLocalizationIf\([^,]+,\s*'(\w+)'\)\]",
+                   lambda m: self.conv(self.loc[m.group(1)], depth + 1) if depth < 4 and m.group(1) in self.loc else "", s)
+        s = re.sub(r"\[Get\w+\('(\w+)'[^\]]*\]", lambda m: self.game_name(m.group(1)), s)
 
         def key(m):
             k = m.group(1)
@@ -128,10 +134,12 @@ class Gen:
             return k
         s = re.sub(r"\$([A-Za-z0-9_]+)(\|\w+)?\$", key, s)
         s = re.sub(r"\[[^\[\]]*\]", lambda m: f"`{m.group(0)[1:-1]}`", s)
-        s = re.sub(r"#(v|b|bold) ([^#]*)#!", r"**\2**", s)
-        s = re.sub(r"#\w+(;\w+)*\s?", "", s).replace("#!", "")
+        s = re.sub(r"#(v|b|bold|title) ([^#]*)#!", r"**\2**", s)
+        s = re.sub(r"#(i|italic) ([^#]*)#!", r"*\2*", s)
+        s = re.sub(r"#\w+(:\d+)?(;\w+(:\d+)?)*\s?", "", s).replace("#!", "")
         s = re.sub(r"@\w+!", "", s)
         s = re.sub(r"^\s*[•·]\s*", "- ", s, flags=re.M)
+        s = re.sub(r"[ \t]+$", "", s, flags=re.M)
         if outer:
             while "\x00" in s:
                 s = re.sub(r"\x00(\d+)\x00", lambda m: self.ph[int(m.group(1))], s)
