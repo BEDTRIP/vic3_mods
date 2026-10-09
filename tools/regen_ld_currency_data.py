@@ -171,10 +171,10 @@ def var_text(curs):
           "# the issuer's value of a unit of its money against its parity, per currency (global_var:zz_ef_fxvtp_<cur>), for",
           "# the value of a currency held in other CBs' reserves in the engine's money (zz_ef_fx_gold_<cur>,",
           "# script_values/ld_currency_values.txt; zz_ef_value_to_parity, Д.R8а.4). The issuer -- a CB with the currency law, not",
-          "# in another's zone; monthly (zz_ef_money_model_monthly_step) and with zz_ef_cur_set.",
+          "# pegged to another's (the external exchange standard); monthly (zz_ef_money_model_monthly_step) and with zz_ef_cur_set.",
           "zz_ef_cur_par_update = {",
           "\tif = {",
-          "\t\tlimit = { has_modifier = has_central_bank NOT = { has_variable = zz_ef_cur_zone } }"]
+          "\t\tlimit = { has_modifier = has_central_bank NOT = { has_law = law_type:law_external_exchange_standard } }"]
     first = True
     for c in curs:
         L.append(f"\t\t{'if' if first else 'else_if'} = {{ limit = {{ has_law = law_type:law_{c}_currency }} "

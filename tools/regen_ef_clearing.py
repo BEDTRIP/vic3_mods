@@ -112,13 +112,12 @@ zz_ef_clr_window_roll = {
 # Leaves var:zz_ef_f_hume (the CB's metal, native, + in / - out), var:zz_ef_f_clr_cur_out (own currency paid,
 # money), var:zz_ef_f_clr_fx_in (foreign currency received, gold), var:zz_ef_f_clr_own_back (own currency
 # redeemed, money).
-# В1.7 and В1.6 items 2-3: one position per currency zone / market. A subject in its
-# overlord's currency zone (var:zz_ef_cur_zone, В3.2), and a country with no value of its own money in gold that
+# В1.7 and В1.6 items 2-3: one position per pegged subject / market. A subject on the external exchange standard
+# (pegged to its overlord, Д.R8а.3), and a country with no value of its own money in gold that
 # does not own its market, do not settle themselves: the week's flow goes, in gold at the head's price
 # (zz_ef_clr_gold_per_money), to the head -- the overlord / the market owner (var:zz_ef_clr_head) -- which settles
-# it with its own next week (var:zz_ef_clr_sub_g, gold). Was (run s1b): the zone's subjects had no price (their
-# metal at the overlord, cover 0) and ~150 countries without a CB none either -- their flows were in neither the
-# world's sum nor the clearing; the subjects paid out 6-10M gold a month that nobody settled.
+# it with its own next week (var:zz_ef_clr_sub_g, gold); otherwise their flows would be in neither the world's sum
+# nor the clearing.
 # var:zz_ef_f_clr_net -- what this country settles (its flow + its members', money; 0 for a member).
 zz_ef_clr_step = {
 	set_variable = { name = zz_ef_f_hume value = 0 }
@@ -204,7 +203,7 @@ zz_ef_clr_step = {
 	}
 }
 
-# var:zz_ef_clr_head -- who settles for us (zz_ef_clr_step), or none: the overlord of the currency zone; else, with
+# var:zz_ef_clr_head -- who settles for us (zz_ef_clr_step), or none: the overlord of a pegged subject; else, with
 # no value of our money in gold, the market's owner if its money has one.
 zz_ef_clr_head_find = {
 	if = {
@@ -213,7 +212,7 @@ zz_ef_clr_head_find = {
 	}
 	if = {
 		limit = {
-			has_variable = zz_ef_cur_zone
+			has_law = law_type:law_external_exchange_standard
 			is_subject = yes
 		}
 		set_variable = { name = zz_ef_clr_head value = overlord }
@@ -492,7 +491,7 @@ zz_ef_clr_gpm_head = {
 	value = zz_ef_clr_gpm_own
 	if = {
 		limit = {
-			has_variable = zz_ef_cur_zone
+			has_law = law_type:law_external_exchange_standard
 			is_subject = yes
 		}
 		value = 0

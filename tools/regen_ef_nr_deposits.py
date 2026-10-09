@@ -28,8 +28,8 @@ advantage for the issuer by its currency held abroad: static modifier zz_ef_fx_h
 multiplier = zz_ef_fx_holders_demand_m (+1 per 3% of GDP held abroad, at most 20). More exports -> an inflow in the
 clearing -> the holders pay with its own currency coming home, the debt falls by itself.
 
-The issuer: a country with a CB outside an overlord's currency zone (zz_ef_nr_issuer) -- a zone member shares the
-overlord's zz_ef_fx_liab and must not count it twice.
+The issuer: a country with a CB not on the external exchange standard (zz_ef_nr_issuer) -- a pegged subject often
+shares its overlord's currency law and its zz_ef_fx_liab and must not count it twice.
 
 Output (fork «E&F: Ledgerdemain», via ld_gen, by entry keys): common/scripted_effects/ld_nr_deposits.txt,
 common/script_values/ld_nr_deposits_values.txt, common/scripted_triggers/ld_nr_deposits_triggers.txt,
@@ -220,10 +220,11 @@ zz_ef_fx_holders_demand_m = {
 
 def triggers():
     return HEAD + """
-# The issuer of its currency: a CB, not a member of an overlord's currency zone (В3.2)
+# The issuer of its currency: a CB not pegged to another's (the external exchange standard, Д.R8а.3) -- a pegged
+# subject often has its overlord's currency law and must not count the overlord's zz_ef_fx_liab twice
 zz_ef_nr_issuer = {
 	has_modifier = has_central_bank
-	NOT = { has_variable = zz_ef_cur_zone }
+	NOT = { has_law = law_type:law_external_exchange_standard }
 }
 """
 
