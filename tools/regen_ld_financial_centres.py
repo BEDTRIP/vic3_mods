@@ -93,7 +93,6 @@ def building(key, icon, region):
             "\t\tpmg_agricultural_stock_exchange\n"
             "\t\tpmg_mining_stock_exchange\n"
             "\t\tpmg_railroad_stock_exchange\n"
-            "\t\tpmg_bond_exchange\n"
             "\t}\n\n"
             f"{pot}"
             "\t# only the country's own exchange grows (ld_fc_types.txt)\n"
@@ -153,7 +152,8 @@ def effects():
     L.append("\telse_if = {\n\t\tlimit = { exists = capital }\n"
              "\t\tcapital = {\n\t\t\towner = { set_variable = { name = zz_ef_fc_state value = prev } }\n"
              "\t\t\tcreate_building = { building = building_financial_centre level = 1 }\n\t\t}\n\t}\n"
-             "\tif = { limit = { has_variable = zz_ef_fc_state } var:zz_ef_fc_state = { zz_ef_fc_variant_set = yes } }\n}\n")
+             "\tif = { limit = { has_variable = zz_ef_fc_state } var:zz_ef_fc_state = { zz_ef_fc_variant_set = yes } }\n"
+             "\t# the exchange's investment fund (scripted_effects/ld_investment_fund.txt)\n\tzz_ef_fund_found = yes\n}\n")
     return "".join(L)
 
 
