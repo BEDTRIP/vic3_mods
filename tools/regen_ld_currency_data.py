@@ -11,15 +11,14 @@
   `zz_ef_cur_set` (валюта по культуре);
 - `common/scripted_effects/ld_currency_var.txt` — `zz_ef_cur_set`: закон валюты → флаг, нет закона — валюта по культуре
   E&F (`currency_identifiers_<cur>`), нет и её — переменной нет (общий символ);
-- в `common/customizable_localization/00_ef_localization_ custom.txt` — тела `currency_name`, `currency_symbol`,
-  `currency_symbol_generic` и `currency_symbol_<cur>` (топбар): чтение `var:zz_ef_cur` вместо проверок культуры (было
-  5,3 с в профиле R0.7);
+- в `common/customizable_localization/00_ef_localization_ custom.txt` — тело `currency_name` (символ `currency_symbol` —
+  `tools/regen_ld_currency_symbol.py`);
 - `common/script_values/ld_currency_values.txt` — `zz_ef_fx_gold_<cur>`: единица валюты в резервах ЦБ в золоте по
   деньгам движка (курс эмитента к паритету `zz_ef_value_to_parity`, `zz_ef_cur_par_update`, Д.R8а.4); в
   `common/script_values/ld_fx_reserves_values.txt` (`zz_ef_fx_reserves_metal`) — `money_value_<cur>` → `zz_ef_fx_gold_<cur>`;
 - национальные валюты (страна без своей): `zz_ef_cur_set` зовёт `zz_ef_cur_noun_set`, `currency_name` — ветки
   `zz_ef_cur_nat_<слово>` (`tools/regen_ld_currency_national.py`);
-- `docs/currency-table.md` — таблица: ключ, название (англ., рус.), символ, ISO, страны и паритет на 1836.
+- `docs/currency-table.md` — таблица: ключ, название (англ., рус.), знак, ISO, страны и паритет на 1836.
 
 ISO — справочник ниже (для исторических валют без кода — «—»). `--check` — только сравнить, код выхода 1 при расхождениях.
 """
@@ -32,6 +31,7 @@ import ld_curdata  # noqa: E402
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
 from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN, NOUNS  # noqa: E402
+from regen_ld_currency_symbol import CUR_SIGN, sign_of  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK
@@ -236,14 +236,7 @@ def custom_text(curs):
                   f"\t\tlocalization_key = {c}{suffix}", "\t}"]
         L.append("}")
         return "\n".join(L)
-    # the top bar's symbol (currency_symbol_top_bar: 96 textboxes, one per definition, every frame)
-    T = ["currency_symbol_generic = {", "\ttype = country", "\tlog_loc_errors = no", "",
-         "\t# no var:zz_ef_cur -- the generic symbol", "\ttext = {",
-         "\t\ttrigger = { NOT = { has_variable = zz_ef_cur } }", "\t\tlocalization_key = spe_uni_texture", "\t}", "}"]
-    for c in curs:
-        T += [f"currency_symbol_{c} = {{", "\ttype = country", "\tlog_loc_errors = no", "", "\ttext = {",
-              f"\t\ttrigger = {{ var:zz_ef_cur ?= flag:{c} }}", f"\t\tlocalization_key = {c}_texture", "\t}", "}"]
-    return one("currency_name", "") + "\n" + one("currency_symbol", "_texture") + "\n" + "\n".join(T) + "\n"
+    return one("currency_name", "") + "\n"
 
 
 def table_text(curs, hist, en, ru):
@@ -253,12 +246,14 @@ def table_text(curs, hist, en, ru):
          "национальную единицу из истории E&F на 1.1.1836 (курс между валютами и подписи; в деньгах движка не участвует, Д.1).",
          "Название в игре — «<прилагательное страны> <слово>» (эмитент — сама страна; `currency_name`); столбцы «название» —",
          "названия E&F по ключу (окна E&F).",
-         "", "| ключ | слово в игре | название E&F | по-русски E&F | символ | ISO | страны 1836: стандарт, паритет |",
+         "Символ в игре — «<две буквы страны> <знак>» (`currency_symbol`, `tools/regen_ld_currency_symbol.py`).",
+         "", "| ключ | слово в игре | название E&F | по-русски E&F | знак | ISO | страны 1836: стандарт, паритет |",
          "| --- | --- | --- | --- | --- | --- | --- |"]
     for c in curs:
         h = "; ".join(f"{t}: {s or '—'}, {p or '—'}" for t, s, p in hist.get(c, [])) or "—"
         w = f"{NOUNS[LAW_NOUN[c]][1]} / {NOUNS[LAW_NOUN[c]][0]}" if c in LAW_NOUN else "национальное"
-        L.append(f"| `{c}` | {w} | {en.get(c, '—')} | {ru.get(c, '—')} | `{c}_texture` | {ISO.get(c, '—')} | {h} |")
+        sg = CUR_SIGN.get(c) or (sign_of(LAW_NOUN[c]) if c in LAW_NOUN else "¤")
+        L.append(f"| `{c}` | {w} | {en.get(c, '—')} | {ru.get(c, '—')} | {sg} | {ISO.get(c, '—')} | {h} |")
     return "\n".join(L) + "\n"
 
 
