@@ -11,7 +11,8 @@
 Карты на стране биржи (ключ — страна-должник, значение — объём в единицах требования):
 - `zz_ef_xs_<вид>_<i>` — продажа по цене шага i и ниже; `zz_ef_xb_<вид>_<i>` — покупка по цене шага i и выше;
 - итог сведения: `zz_ef_xr_<вид>_c` (шаг цены расчёта, 0 — нет), `_ps` / `_pb` (доля заявок продавцов / покупателей
-  крайнего шага, исполненная по цене расчёта), `_fs` / `_fb` (доля остатка, которую взял / отдал фонд).
+  крайнего шага, исполненная по цене расчёта), `_fs` / `_fb` (доля остатка, которую взял / отдал фонд);
+  `zz_ef_xbi_<вид>` — на активе были заявки на покупку (продавцы по справедливой цене и выше выходят только к ним).
 Заявки держателя (на его стране): `zz_ef_xa_<держатель>_<вид>` — объём, `zz_ef_xp_<держатель>_<вид>` — шаг (продажа —
 1..STEPS, покупка — 10 + шаг).
 """
@@ -48,6 +49,7 @@ def maps():
         for side in ("s", "b"):
             out += [f"zz_ef_xs_{k}_{i}" if side == "s" else f"zz_ef_xb_{k}_{i}" for i in range(1, STEPS + 1)]
         out += [f"zz_ef_xr_{k}_{r}" for r in RESULTS]
+        out.append(f"zz_ef_xbi_{k}")
     for h, k in ORDERS:
         out += [f"zz_ef_xa_{h}_{k}", f"zz_ef_xp_{h}_{k}"]
     return out
@@ -133,6 +135,7 @@ def clear_maps():
     for k in KINDS:
         for r in RESULTS:
             L.append(f"\tclear_variable_map = zz_ef_xr_{k}_{r}")
+        L.append(f"\tclear_variable_map = zz_ef_xbi_{k}")
     L.append("}")
     L.append("zz_ef_xch_orders_empty = {")
     for h, k in ORDERS:
