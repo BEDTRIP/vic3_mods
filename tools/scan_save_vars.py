@@ -1,6 +1,6 @@
 """A country's script variables and variable maps from a save, read as numbers.
 
-Usage:  py tools/save_vars.py <save> <TAG> [regex] [--raw REGEX] [--global]
+Usage:  py tools/scan_save_vars.py <save> <TAG> [regex] [--raw REGEX] [--global]
 
 <save>   a file in "save games" or a full path (text saves, as in -debug_mode)
 <TAG>    country tag (GBR); its variables and maps whose name matches [regex] (default: all)
@@ -41,7 +41,10 @@ def block(s, start):
 
 def val(kind, ident, tags):
     if kind == 'value':
-        return '%.5g' % (int(ident or 0) / DIV)
+        n = int(ident or 0)
+        if n >= 1 << 63:  # a negative value is written as its unsigned 64-bit form
+            n -= 1 << 64
+        return '%.5g' % (n / DIV)
     if kind == 'ctry':
         return tags.get(ident, 'ctry:' + str(ident))
     if kind == 'boolean':
