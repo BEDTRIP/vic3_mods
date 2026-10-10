@@ -7,7 +7,7 @@
 - `common/history/buildings/00_ef_building.txt` — ЦБ истории: страны (`c:TAG ?= this`) в условиях блоков с
   `initialize_historic_macro_facilities_bc` → `banking`, `currency_standards`, `central_banking`, `metalique_standard`;
 - `common/history/global/99_ef_history_global_variable.txt` — страны, которым история ставит металлический стандарт
-  (`law_gold_standard` / `law_silver_standard` / `law_bimetallism_standard`) и закон валюты, без ЦБ истории →
+  (`law_gold_standard` / `law_silver_standard` / `law_bimetallism_standard`) и валюту (`var:zz_ef_cur`), без ЦБ истории →
   `banking`, `currency_standards`, `metalique_standard`.
 
 Пишет (через ld_gen, по ключам записей): `common/history/countries/ld_start_technologies.txt` (`COUNTRIES`).
@@ -65,7 +65,7 @@ def standard_tags():
             continue
         own = body[body.index(lim[0]) + len(lim[0]):]
         if (re.search(r"activate_law = law_type:law_(gold|silver|bimetallism)_standard\b", own)
-                and re.search(r"activate_law = law_type:law_\w+_currency\b", own)):
+                and re.search(r"name = zz_ef_cur value = flag:\w+", own)):
             tags |= set(re.findall(r"c:([A-Z0-9]{3}) ?\?= this", lim[0]))
     return tags
 

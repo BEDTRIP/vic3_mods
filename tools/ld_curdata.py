@@ -1,31 +1,22 @@
 """Список валют форка — один источник для генераторов и анализаторов.
 
-Валюта — ключ закона `law_<cur>_currency` в `common/laws/01_ef_currency_type.txt` форка (95 законов). Порядок —
-порядок файла (по алфавиту); по нему идут цепочки `if / else_if` всех генераторов.
+Валюта — ключ `flag:<cur>` переменной `var:zz_ef_cur` страны (R8в, шаг 5); список — `tools/data/ld_currencies.txt`
+(ключи 95 законов валют E&F, законы — в архиве форка `_archive/ef_currency_laws/`). Порядок — порядок файла законов (по
+алфавиту); по нему идут цепочки `if / else_if` всех генераторов.
 
     import ld_curdata
     ld_curdata.currencies()   # ['dinar', 'dinar_algerian_dinar', ...]
-    ld_curdata.laws()         # [(cur, тело закона)] — для разбора can_enact, on_activate
     ld_curdata.by_length()    # длинные ключи раньше — для регулярного выражения по именам
 """
 import os
-import re
 
-FORK = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
-                                     "Economic-and-Financial-Ledgerdemain-Mod"))
-LAWS = os.path.join(FORK, "common", "laws", "01_ef_currency_type.txt")
-
-
-def laws():
-    """[(cur, тело закона)] в порядке файла."""
-    text = open(LAWS, encoding="utf-8-sig").read()
-    out = re.findall(r"^law_([a-z_]+)_currency = \{(.*?)^\}", text, re.M | re.S)
-    assert len(out) >= 90, len(out)
-    return out
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "ld_currencies.txt")
 
 
 def currencies():
-    return [c for c, _ in laws()]
+    out = [ln.strip() for ln in open(DATA, encoding="utf-8") if ln.strip() and not ln.startswith("#")]
+    assert len(out) >= 90, len(out)
+    return out
 
 
 def by_length():
