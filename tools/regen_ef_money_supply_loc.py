@@ -521,13 +521,12 @@ FLOWS = [
      "investment fund shares abroad: pops and banks paid out of the pool", sv_("zz_ef_v_f_fd_out"), None),
     (Z, B, "паи нашего инвестиционного фонда куплены из-за рубежа — во вклад фонда",
      "our investment fund's shares bought from abroad — into the fund's deposit", sv_("zz_ef_v_f_fd_in"), None),
-    # R8б.7: the exchange's deals -- the banks and the pops pay out of the pool / get into it; the treasury sells bonds
+    # R8б.7: the exchange's deals -- the banks and the pops pay out of the pool / get into it (the treasury's sales of
+    # bonds are not a row: a flow of the treasury with abroad would enter the bridge's sums, and ext_net counts it already)
     (B, Z, "биржа: банки и население купили требования — из пула", "exchange: banks and pops bought claims — out of the pool",
      svn("zz_ef_v_f_xch_pool"), None),
     (Z, B, "биржа: банки и население продали требования — в пул", "exchange: banks and pops sold claims — into the pool",
      svp("zz_ef_v_f_xch_pool"), None),
-    (Z, K, "биржа: казна продала облигации", "exchange: the treasury sold bonds", svp("zz_ef_v_f_xch_tr"), None),
-    (K, Z, "биржа: казна купила облигации", "exchange: the treasury bought bonds", svn("zz_ef_v_f_xch_tr"), None),
     # the pool's unexplained loss (EF.48 item 2): R1а, 8.10 -- «прочее», nobody's money (was: guessed to be companies
     # buying levels and credited to the pops' savings, В1.2 -- archived, _archive/ld_pop_savings_guesses/)
     (B, X, "необъяснённая убыль пула (прочее)", "the pool's unexplained loss (other)", svn("zz_ef_v_f_pool_other"), None),
@@ -772,7 +771,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_xch_tr", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
