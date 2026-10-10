@@ -1047,17 +1047,17 @@ def nested(lang):
                 # Е.3–Е.4 (5.10, Д.1): two groups and what it moves (bop_lines); the budget lines -- only here
                 L += bop_lines(True, "Country") + [
                       "#grey Статьи бюджета с заграницей сейчас (+ в страну, − за рубеж):#!"]
-                clr = [f"Клиринг: при оттоке металлом платится {sv('zz_ef_clr_metal_share', '%0')} — по доверию к валюте "
-                       f"(сила к эталону {sv('zz_ef_currency_strength', '2')}), остальное нашей валютой; мир: получатели берут "
-                       f"{sv('zz_ef_clr_ratio_v', '%0')} притока, плательщики платят {sv('zz_ef_clr_pay_ratio_v', '%0')}; "
-                       f"в клиринге {sv('zz_ef_clr_pot_value')} @gold!"]
+                clr = [f"Клиринг: платёж — набор: {sv('zz_ef_clr_own_share', '%0')} нашей валютой — по доверию к ней "
+                       f"(сила к эталону {sv('zz_ef_currency_strength', '2')}), остальное по стандарту получателя — "
+                       f"металлом, его валютой из наших резервов или нашим долгом; за неделю заплачено "
+                       f"{sv('zz_ef_v_f_clr_paid')} @gold!, получено {sv('zz_ef_v_f_clr_got')} @gold!"]
             else:
                 L += bop_lines(False, "Country") + [
                       "#grey Budget lines with abroad now (+ in, − out):#!"]
-                clr = [f"Clearing: on an outflow {sv('zz_ef_clr_metal_share', '%0')} is paid in metal — by trust in the "
-                       f"currency (strength to the reference {sv('zz_ef_currency_strength', '2')}), the rest in our currency; "
-                       f"world: receivers take {sv('zz_ef_clr_ratio_v', '%0')} of the inflow, payers pay "
-                       f"{sv('zz_ef_clr_pay_ratio_v', '%0')}; in the clearing house {sv('zz_ef_clr_pot_value')} @gold!"]
+                clr = [f"Clearing: a payment is a set: {sv('zz_ef_clr_own_share', '%0')} in our currency — by trust in "
+                       f"it (strength to the reference {sv('zz_ef_currency_strength', '2')}), the rest by the receiver's "
+                       f"standard — metal, its currency out of our reserves or our debt; this week paid "
+                       f"{sv('zz_ef_v_f_clr_paid')} @gold!, received {sv('zz_ef_v_f_clr_got')} @gold!"]
             for other, dr, f in pays:
                 if other != K:
                     continue
