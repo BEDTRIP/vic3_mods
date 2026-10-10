@@ -76,20 +76,20 @@ $Macros = @{
     # П.15: the inflation tooltip (the top bar's second row, "-8.03%")
     infl     = "hover 0.6 0.97; wait 1; hover 0.0575 0.0907; wait 2.5; shot {P}_inflation; hover 0.6 0.97; wait 1"
     budgettip = BudgetTipShots
-    # П.15: the budget's Economy, Finance and Stocks tabs whole -- every collapsed section expanded, page by page
+    # П.15: the budget's Economy and Finance tabs whole -- every collapsed section expanded, page by page
     # (the "browse" step: the scrollbar's thumb, stops at the end or when the panel changes)
-    budgetall = "hover 0.6 0.97; key f2; wait 2; hover 0.13 0.09; wait 0.8; click 0.13 0.214; wait 1.5; browse {P}_eco; hover 0.13 0.09; wait 0.8; click 0.1725 0.214; wait 1.5; browse {P}_fin; hover 0.13 0.09; wait 0.8; click 0.215 0.214; wait 1.5; browse {P}_stocks; click 0.2265 0.095; wait 1"
+    budgetall = "hover 0.6 0.97; key f2; wait 2; hover 0.13 0.09; wait 0.8; click 0.156 0.214; wait 1.5; browse {P}_eco; hover 0.13 0.09; wait 0.8; click 0.21 0.214; wait 1.5; browse {P}_fin; click 0.2265 0.095; wait 1"
     # the currency tooltip ("Денежная масса" and the money's value, all accounts in one): the top bar
     # expands on hover, the second row holds "CHF = 19.2" (the currency's value); its tooltip lists
     # M0..M3 and the accounts. F2 + the panel's X first: F2 opens the budget over any panel ("tag"
     # leaves a state panel open, its title tooltip took the hover), the X closes it.
     currency = "redo key f2|wait 1|click 0.2265 0.095|wait 1|hover 0.0975 0.0916|wait 3|shot {P}_currency|hover 0.6 0.97|wait 1"
     cards    = CardShots
-    # the budget panel (F2, the left column's second icon) and its five tabs, each by "browse": every collapsed
+    # the budget panel (F2, the left column's second icon) and its four tabs (the stocks tab is gone), each by "browse": every collapsed
     # section expanded, paged by the scrollbar to the end (5.10, the user: "you page the budget but do not open
     # the subheadings" -- the old fixed wheel pages left sections shut and cut long tabs). F2 opens it over any
     # other panel and does not toggle; the panel's X (0.2265 0.095) closes it at the end
-    budget   = "hover 0.6 0.97; key f2; wait 2" + (-join (@(@(0.045, "t1_overview"), @(0.0875, "t2_states"), @(0.13, "t3_economy"), @(0.1725, "t4_finance"), @(0.215, "t5_stocks")) | ForEach-Object { "; redo hover $Neutral|key f2|wait 2|hover $Neutral|wait 0.8|click $($_[0]) 0.214|wait 1.5|browse {P}_$($_[1])" })) + "; click 0.2265 0.095; wait 1"
+    budget   = "hover 0.6 0.97; key f2; wait 2" + (-join (@(@(0.0496, "t1_overview"), @(0.1035, "t2_states"), @(0.156, "t3_economy"), @(0.21, "t4_finance")) | ForEach-Object { "; redo hover $Neutral|key f2|wait 2|hover $Neutral|wait 0.8|click $($_[0]) 0.214|wait 1.5|browse {P}_$($_[1])" })) + "; click 0.2265 0.095; wait 1"
     # the old fixed pages (no expanding) -- kept for a quick look
-    budgetpages = "key f2; wait 2; " + (Pages 0.045 5 "t1_overview") + "; " + (Pages 0.0875 3 "t2_states") + "; " + (Pages 0.13 7 "t3_economy") + "; " + (Pages 0.1725 8 "t4_finance") + "; " + (Pages 0.215 3 "t5_stocks") + "; click 0.2265 0.095; wait 1"
+    budgetpages = "key f2; wait 2; " + (Pages 0.0496 5 "t1_overview") + "; " + (Pages 0.1035 3 "t2_states") + "; " + (Pages 0.156 7 "t3_economy") + "; " + (Pages 0.21 8 "t4_finance") + "; click 0.2265 0.095; wait 1"
 }
