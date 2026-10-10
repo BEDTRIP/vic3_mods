@@ -11,7 +11,10 @@
 Карты на стране биржи (ключ — страна-должник, значение — объём в единицах требования):
 - `zz_ef_xs_<вид>_<i>` — продажа по цене шага i и ниже; `zz_ef_xb_<вид>_<i>` — покупка по цене шага i и выше;
 - итог сведения: `zz_ef_xr_<вид>_c` (шаг цены расчёта, 0 — нет), `_ps` / `_pb` (доля заявок продавцов / покупателей
-  крайнего шага, исполненная по цене расчёта), `_fs` / `_fb` (доля остатка, которую взял / отдал фонд).
+  крайнего шага, исполненная по цене расчёта), `_fs` / `_fb` (доля остатка, которую взял / отдал фонд), `_is` / `_ib`
+  (доля остатка после фонда, которую взял / отдал ЦБ-эмитент в своих валютных точках, Д.R8б.34); `_ls` / `_lb` / `_lc`
+  — остаток по справедливой цене и ниже / и выше / по цене покупки фонда и ниже, `_xs` / `_xb` — доля остатка, сведённая
+  фондами с другими биржами, `_xf` — доля дешёвого остатка, которую выкупил фонд другой биржи (Д.R8б.36).
 Заявки держателя (на его стране): `zz_ef_xa_<держатель>_<вид>` — объём, `zz_ef_xp_<держатель>_<вид>` — шаг (продажа —
 1..STEPS, покупка — 10 + шаг).
 """
@@ -27,7 +30,7 @@ STEPS = 9
 MID = 5
 # (holder, kind) pairs that post orders: the maps of the register of claims (ld_claims.txt)
 ORDERS = (("cb", "m"), ("bk", "m"), ("pp", "m"), ("tr", "b"), ("bk", "b"))
-RESULTS = ("c", "ps", "pb", "fs", "fb")
+RESULTS = ("c", "ps", "pb", "fs", "fb", "is", "ib", "ls", "lb", "lc", "xs", "xb", "xf")
 # the clearing's tie-break: the step closer to the fair price first
 ORDER_OF_STEPS = sorted(range(1, STEPS + 1), key=lambda i: (abs(i - MID), i))
 
@@ -113,6 +116,32 @@ def clear_asset(k):
         L.append(f"\t\telse_if = {{ limit = {{ var:zz_ef_t_c = {i} }} change_variable = {{ name = zz_ef_t_rb add = {{ value = 1 subtract = var:zz_ef_t_pb multiply = var:zz_ef_t_b{i} }} }} }}")
         L.append("\t}")
     L.append(f"\tzz_ef_xch_fund_rest = {{ K = {k} }}")
+    # the issuer's CB at its currency points (Д.R8б.34): sells at or below the lower point, buys at or above the upper
+    # one not filled by the auction (zz_ef_xch_points_set: var:zz_ef_t_plo / _phi, 0 -- no points)
+    L.append(f"\tzz_ef_xch_points_set = {{ K = {k} }}")
+    L.append("\tset_variable = { name = zz_ef_t_r2s value = 0 }")
+    L.append("\tset_variable = { name = zz_ef_t_r2b value = 0 }")
+    for i in range(1, STEPS + 1):
+        L.append(f"\tif = {{ limit = {{ var:zz_ef_t_plo >= {i} }}")
+        L.append(f"\t\tif = {{ limit = {{ OR = {{ var:zz_ef_t_c = 0 var:zz_ef_t_c < {i} }} }} change_variable = {{ name = zz_ef_t_r2s add = var:zz_ef_t_s{i} }} }}")
+        L.append(f"\t\telse_if = {{ limit = {{ var:zz_ef_t_c = {i} }} change_variable = {{ name = zz_ef_t_r2s add = {{ value = 1 subtract = var:zz_ef_t_ps multiply = var:zz_ef_t_s{i} }} }} }}")
+        L.append("\t}")
+        L.append(f"\tif = {{ limit = {{ var:zz_ef_t_phi > 0 var:zz_ef_t_phi <= {i} }}")
+        L.append(f"\t\tif = {{ limit = {{ OR = {{ var:zz_ef_t_c = 0 var:zz_ef_t_c > {i} }} }} change_variable = {{ name = zz_ef_t_r2b add = var:zz_ef_t_b{i} }} }}")
+        L.append(f"\t\telse_if = {{ limit = {{ var:zz_ef_t_c = {i} }} change_variable = {{ name = zz_ef_t_r2b add = {{ value = 1 subtract = var:zz_ef_t_pb multiply = var:zz_ef_t_b{i} }} }} }}")
+        L.append("\t}")
+    # the rest at the fair price for the funds between the exchanges (Д.R8б.36): sells at or below it, buys at or above
+    L.append("\tset_variable = { name = zz_ef_t_r3s value = 0 }")
+    L.append("\tset_variable = { name = zz_ef_t_r3b value = 0 }")
+    for i in range(1, STEPS + 1):
+        if i <= MID:
+            L.append(f"\tif = {{ limit = {{ OR = {{ var:zz_ef_t_c = 0 var:zz_ef_t_c < {i} }} }} change_variable = {{ name = zz_ef_t_r3s add = var:zz_ef_t_s{i} }} }}")
+            L.append(f"\telse_if = {{ limit = {{ var:zz_ef_t_c = {i} }} change_variable = {{ name = zz_ef_t_r3s add = {{ value = 1 subtract = var:zz_ef_t_ps multiply = var:zz_ef_t_s{i} }} }} }}")
+        if i >= MID:
+            L.append(f"\tif = {{ limit = {{ OR = {{ var:zz_ef_t_c = 0 var:zz_ef_t_c > {i} }} }} change_variable = {{ name = zz_ef_t_r3b add = var:zz_ef_t_b{i} }} }}")
+            L.append(f"\telse_if = {{ limit = {{ var:zz_ef_t_c = {i} }} change_variable = {{ name = zz_ef_t_r3b add = {{ value = 1 subtract = var:zz_ef_t_pb multiply = var:zz_ef_t_b{i} }} }} }}")
+    L.append(f"\tzz_ef_xch_issuer_rest = {{ K = {k} }}")
+    L.append(f"\tzz_ef_xch_left_set = {{ K = {k} }}")
     L.append(f"\tzz_ef_xch_results_set = {{ K = {k} }}")
     for i in range(1, STEPS + 1):
         for v in (f"zz_ef_t_s{i}", f"zz_ef_t_b{i}", f"zz_ef_t_cs{i}", f"zz_ef_t_cb{i}"):
