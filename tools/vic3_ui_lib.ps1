@@ -365,6 +365,14 @@ function Is-Advancing($p, $sec) {
     return $false
 }
 
+# The same without raising the game and without waiting for the user (the run's loop while the user watches): the date
+# as the screen shows it -- with another window over it, it reads as standing.
+function Is-AdvancingPassive($p, $sec) {
+    $a = Date-Crop $p
+    for ($i = 0; $i -lt $sec; $i += 4) { Start-Sleep 4; if ((Date-Crop $p) -ne $a) { return $true } }
+    return $false
+}
+
 # The n-th (1-based, top down) underlined link of the tooltip at the window's top left (x 0..900, y 150..1300 of
 # 2560x1440): returns @(fx, fy) of the link's text, or $null when there are fewer links.
 function Find-Link($p, $n) {

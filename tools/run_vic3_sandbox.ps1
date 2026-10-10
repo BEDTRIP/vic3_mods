@@ -21,7 +21,8 @@ While it runs the game takes the keyboard focus: do not type or click.
 Usage (PowerShell):
     powershell -ExecutionPolicy Bypass -File tools\run_vic3_sandbox.ps1 -RunMinutes 5
 Parameters:
-    -RunMinutes   real minutes to let the game run at speed 5 (default 5)
+    -RunMinutes   minutes the game runs at speed 5 (default 5): the minutes it advanced, the user's pauses not
+                  counted (the wall clock's limit -- RunMinutes + 60)
     -LoadWaitSec  at most this many seconds for the save to load (default 400); the script goes on as
                   soon as the game's screen is up (Wait-Screen, by the colour of the left icon column)
     -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
@@ -194,8 +195,12 @@ else {
     if ($Minimized) { [W]::ShowWindow($p.MainWindowHandle, 6) | Out-Null; Log "the game window is minimized" }
     $since = Get-Date
     $autoSeen = New-Object 'System.Collections.Generic.HashSet[long]'
-    $end = (Get-Date).AddMinutes($RunMinutes)
-    while ((Get-Date) -lt $end) {
+    # -RunMinutes counts the minutes the game ran (the user, 10.10: watching, the user pauses, switches countries and comes
+    # back -- that time is not the run's); the wall clock's limit -- RunMinutes + 60
+    $ranSec = 0
+    $wallEnd = (Get-Date).AddMinutes($RunMinutes + 60)
+    $userMode = $false
+    while ($ranSec -lt $RunMinutes * 60 -and (Get-Date) -lt $wallEnd) {
         # every 15 s: in run 12 several parts rotated within one minute and a
         # game year was lost
         for ($k = 0; $k -lt 4; $k++) { Start-Sleep 15; Save-DebugParts }
@@ -210,13 +215,24 @@ else {
         if (-not (Get-Game)) { Log "the game exited"; break }
         $p = Get-Game
         if ($Minimized) { Log "minimized"; continue }
+        # the user touched the PC in the last 3 min: hands off -- nothing pressed, no panel closed, the date read without
+        # raising the game; a standing date is the user's pause, not counted and not undone
+        $ago = User-InputAgo
+        if ($ago -ge 0 -and $ago -lt 180000) {
+            if (-not $userMode) { $userMode = $true; Log "the user is watching - hands off" }
+            if (Is-AdvancingPassive $p 16) { $ranSec += 60; Log ("advancing (the user is watching), ran {0:N0} of {1} min" -f ($ranSec / 60), $RunMinutes) }
+            else { Log "paused by the user - not counted" }
+            continue
+        }
+        if ($userMode) { $userMode = $false; Log "the user has been away 3 min - the run goes on" }
         if (-not (Is-Advancing $p 16)) {
             Log "date stands - unpausing"
             Shot $p ("stall_" + (Get-Date -Format "HHmmss") + ".png")
             if (Is-Screen $p "console") { Log "the console is open"; Close-Console $p | Out-Null }
             Send-Key 0x20 0x39
             if (-not (Is-Advancing $p 16)) { Send-Key 0x20 0x39; Log "still standing after a toggle" }
-        } else { Log "advancing" }
+            else { $ranSec += 60 }
+        } else { $ranSec += 60; Log ("advancing, ran {0:N0} of {1} min" -f ($ranSec / 60), $RunMinutes) }
     }
     $p = Get-Game
     if ($p -and $Minimized) { [W]::ShowWindow($p.MainWindowHandle, 9) | Out-Null; Start-Sleep 3; Raise-Game $p | Out-Null; Log "the game window is restored" }
