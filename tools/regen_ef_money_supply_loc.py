@@ -515,6 +515,12 @@ FLOWS = [
      sv_("zz_ef_v_f_bl_int_out"), None),
     (B, Z, "погашение наших облигаций держателям за рубежом", "our bonds repaid to the holders abroad",
      sv_("zz_ef_v_f_bl_redeem"), None),
+    # Д.R8б.21: the investment fund's shares across the border -- our pops and banks pay a fund abroad out of the pool;
+    # buyers abroad pay into our fund's deposit, our pool
+    (B, Z, "паи инвестиционного фонда за рубежом: население и банки заплатили из пула",
+     "investment fund shares abroad: pops and banks paid out of the pool", sv_("zz_ef_v_f_fd_out"), None),
+    (Z, B, "паи нашего инвестиционного фонда куплены из-за рубежа — во вклад фонда",
+     "our investment fund's shares bought from abroad — into the fund's deposit", sv_("zz_ef_v_f_fd_in"), None),
     # the pool's unexplained loss (EF.48 item 2): R1а, 8.10 -- «прочее», nobody's money (was: guessed to be companies
     # buying levels and credited to the pops' savings, В1.2 -- archived, _archive/ld_pop_savings_guesses/)
     (B, X, "необъяснённая убыль пула (прочее)", "the pool's unexplained loss (other)", svn("zz_ef_v_f_pool_other"), None),
@@ -759,7 +765,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
@@ -936,11 +942,13 @@ def deposits_card(lang):
     ru = lang == "russian"
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     resid = v("zz_ef_v_d_deposits")
-    for n_, sign in (("zz_ef_v_w_dep_int", -1),):
+    for n_, sign in (("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_fd_pp", 1)):
         resid = (f"Subtract_CFixedPoint({resid}, {v(n_)})" if sign < 0 else
                  f"Subtract_CFixedPoint({resid}, Negate_CFixedPoint({v(n_)}))")
     L = [f"#b {'Вклады в банках за неделю' if ru else 'Bank deposits this week'}: {delta('zz_ef_v_d_deposits')}#!{mark('mod', ru)}",
          f"  ← #P +{money('zz_ef_v_w_dep_int')}#!{mark('mod', ru)} " + ("проценты (платят банки из пула)" if ru else "interest (the banks pay it from the pool)"),
+         f"  → #N −{money('zz_ef_v_f_fd_pp')}#!{mark('mod', ru)} " + ("паи инвестиционного фонда: население купило из вкладов"
+                                                                     if ru else "investment fund shares: pops bought them out of deposits"),
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
          "",
          (f"Вклады — долг банков населению; деньги лежат в резервах банков (пул) и в выданных кредитах. Ставка по "
@@ -1056,7 +1064,8 @@ def nested(lang):
                 L += [f"#b Баланс банков#!",
                       f"  активы {money('zz_ef_bank_assets')}: резервы (пул) {money('zz_ef_pool')}, кредит бизнесу "
                       f"{money('zz_ef_bc_debt')}, потребкредит {money('zz_ef_cc_debt')}, облигации {money('zz_ef_bank_bonds')}",
-                      f"  обязательства {money('zz_ef_bank_liabilities')}: вклады {money('zz_ef_pop_deposits')}, долг ЦБ "
+                      f"  обязательства {money('zz_ef_bank_liabilities')}: вклады {money('zz_ef_pop_deposits')}, вклад "
+                      f"инвестиционного фонда {money('zz_ef_fd_dep_v')}, долг ЦБ "
                       f"{money('zz_ef_bank_cb_debt')}, вклады чужих ЦБ {money('zz_ef_nr_dep_v')}",
                       f"  #b капитал банков {sv('zz_ef_bank_capital', 'D+=')} {cur}#! (меньше нуля — вклады не покрыты)",
                       f"#b Кредит бизнесу#! {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} ВВП): за неделю выдано "
@@ -1067,7 +1076,8 @@ def nested(lang):
                 L += [f"#b Banks' balance sheet#!",
                       f"  assets {money('zz_ef_bank_assets')}: reserves (the pool) {money('zz_ef_pool')}, business credit "
                       f"{money('zz_ef_bc_debt')}, consumer credit {money('zz_ef_cc_debt')}, bonds {money('zz_ef_bank_bonds')}",
-                      f"  liabilities {money('zz_ef_bank_liabilities')}: deposits {money('zz_ef_pop_deposits')}, CB debt "
+                      f"  liabilities {money('zz_ef_bank_liabilities')}: deposits {money('zz_ef_pop_deposits')}, the investment "
+                      f"fund's deposit {money('zz_ef_fd_dep_v')}, CB debt "
                       f"{money('zz_ef_bank_cb_debt')}, other CBs' deposits {money('zz_ef_nr_dep_v')}",
                       f"  #b banks' capital {sv('zz_ef_bank_capital', 'D+=')} {cur}#! (under zero — deposits not covered)",
                       f"#b Business credit#! {money('zz_ef_bc_debt')} ({sv('zz_ef_bc_debt_to_gdp', '%1')} of GDP): this week lent "
