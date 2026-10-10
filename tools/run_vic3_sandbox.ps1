@@ -28,7 +28,8 @@ Parameters:
     -Autosaves    stop as soon as this many new autosaves are written (0 = run -RunMinutes);
                   -RunMinutes stays the limit. Autosaves are half-yearly in this setup, so
                   the state to read from the save needs the run to pass 1 Jan / 1 Jul.
-    -NoModLogs    do not send "event zz_ef_logs.1" (the fork's EF* debug logs stay off, as in a normal game);
+    -NoModLogs    send "event zz_ef_logs.2" instead of "event zz_ef_logs.1": the fork's EF* debug logs stay off,
+                  as in a normal game (debug mode alone would switch them on, gui/ld_logs_hook.gui);
                   through the bridge: the word "nomodlogs" in -Commands
     -Minimized    run with the game window minimized (R1а, Р8 7.10: does the GUI bridge live without drawing?);
                   the date is not checked while minimized, the window comes back before the pause;
@@ -170,7 +171,7 @@ if ($AiTag) { Console-Cmd $p "enable_ai $AiTag"; Shot $p "01b_ai.png" }
 # without the fork the event is unknown -- a harmless console error)
 # the bridge passes only -Commands: the word "nomodlogs" there does the same as -NoModLogs
 if ($Commands -match '(^|;)\s*nomodlogs\s*(;|$)') { $NoModLogs = $true; $Commands = ($Commands -replace '(^|;)\s*nomodlogs\s*(?=;|$)', '') }
-if (-not $NoModLogs) { Console-Cmd $p "event zz_ef_logs.1"; Start-Sleep 2 }
+if ($NoModLogs) { Console-Cmd $p "event zz_ef_logs.2"; Start-Sleep 2 } else { Console-Cmd $p "event zz_ef_logs.1"; Start-Sleep 2 }
 if ($Commands -match '(^|;)\s*minimized\s*(;|$)') { $Minimized = $true; $Commands = ($Commands -replace '(^|;)\s*minimized\s*(?=;|$)', '') }
 # a command "ui:<step>" is a step of tools/vic3_ui.ps1 (key, click, hover, shot, wait ...), the rest -- console commands
 # a command "end:<cmd>" is entered at the end of the run, after the pause (e.g. "end:Script.Profiling.Stop", 7.10)
