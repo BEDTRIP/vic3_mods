@@ -35,16 +35,11 @@ E&F's / PSC's files by hand and are not generated.
 
 Reads vanilla (vic3_mods_out/.vanillaVIC3/common/production_methods/06_urban_center.txt): run --check on the PC.
 
-Calibration (2026-10-03, run 1 of night G, save 1837.1.1, world): the regulators burn ~9 800
-construction goods a week (wood 1 900 + iron 7 800), sectors make ~14 100. Households + ЖКХ at
-30% of the total => ~4 200 a week at the start, households ~2 800; subsistence makes ~45 000
-x SUBSISTENCE_WOOD a week. ЖКХ is held to ~15% of an urban centre's output value -- at a
-third of the households' figure it would cost urban centres more than they make in 1836
-(world urban centres make ~5 800 services a week); it grows with the cities instead.
-!! TUNING !! SUBSISTENCE_WOOD, URBAN -- check against runs (Д.7, Д.8).
-Run 2 (3.10, 1836 -> 1841.1, with 3% / 1.5% and 0.1): households took ~4 000 a week in 1837
-(~18% of construction goods with ЖКХ, under Д.5's 25-35%) and ~3 100 in 1841, when sectors had
-doubled (~9%); prices stayed near base (world 110). Raised x1.5: 4.5% / 2.25% and 0.15.
+Tuning: households + ЖКХ take ~2 800 construction goods a week in the late 1830s; SUBSISTENCE_WOOD
+puts the natural economies' output at about that (subsistence makes ~48 000 x SUBSISTENCE_WOOD a week) --
+more is a glut no one buys: the price falls to the floor and the construction sectors close (Д.Г.7). ЖКХ is held
+to ~15% of an urban centre's output value -- at a third of the households' figure it would cost urban centres more
+than they make in 1836; it grows with the cities instead. !! TUNING !! SUBSISTENCE_WOOD, URBAN -- check against runs.
 
 Usage:  python3 tools/regen_ef_household_construction.py [--check]
 """
@@ -63,7 +58,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parent
 
 NEED = "popneed_household_construction"
-SUBSISTENCE_WOOD = 0.15                   # wood_construction per workforce unit of a subsistence building
+SUBSISTENCE_WOOD = 0.06                   # wood_construction per workforce unit of a subsistence building
 SUBSISTENCE = ["farm", "orchard", "pasture", "fishing_village", "rice_farm"]
 # ЖКХ, decided by the user 2026-10-03 (after night G): one construction good per amenity tier, and the
 # raw materials the construction sector of that tier processes come OUT of the amenity method -- they
