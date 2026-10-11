@@ -134,7 +134,7 @@ def custom_text(iso, nouns, signs):
          "\ttext = {", "\t\ttrigger = { NOT = { zz_ef_mu_follower = yes } }",
          "\t\tlocalization_key = zz_ef_iso2_self", "\t}"]
     for tg in sorted(iso):
-        L += ["\ttext = {", f"\t\ttrigger = {{ var:zz_ef_mu_head ?= c:{tg} }}",
+        L += ["\ttext = {", f"\t\ttrigger = {{ c:{tg} ?= var:zz_ef_mu_head }}",
               f"\t\tlocalization_key = zz_ef_iso2_{tg}", "\t}"]
     L += ["\ttext = {", "\t\tlocalization_key = zz_ef_iso2_self", "\t}", "}", ""]
     L += ["currency_code = {", "\ttype = country", "\tlog_loc_errors = no", "",
@@ -152,7 +152,7 @@ def custom_text(iso, nouns, signs):
     for c, (tg, n, _) in signs.items():
         L += [f"\t#{c}", "\ttext = {", "\t\ttrigger = {", f"\t\t\tvar:zz_ef_cur_noun ?= flag:{n}",
               "\t\t\tOR = {", f"\t\t\t\tAND = {{ NOT = {{ zz_ef_mu_follower = yes }} c:{tg} ?= this }}",
-              f"\t\t\t\tvar:zz_ef_mu_head ?= c:{tg}", "\t\t\t}", "\t\t}",
+              f"\t\t\t\tAND = {{ has_variable = zz_ef_mu_head c:{tg} ?= var:zz_ef_mu_head }}", "\t\t\t}", "\t\t}",
               f"\t\tlocalization_key = zz_ef_sym_code_{c}", "\t}"]
     L += ["\t#the code", "\ttext = {", "\t\tlocalization_key = zz_ef_sym_code", "\t}", "}"]
     return "\n".join(L) + "\n"
