@@ -22,12 +22,12 @@ def main():
     s = open(path, 'rb').read().decode('utf-8', 'replace')
     d = so.parse(path)
     lv = collections.defaultdict(collections.Counter)
-    for m in re.finditer(r'\n(\d+)=\{\n\tbuilding=(building_bank|building_zz_ef_bank)\n(?:\t[^\n]*\n)*?\tstate=(\d+)\n'
-                         r'(?:\t[^\n]*\n)*?\tlevels=(\d+)', so.section(s, 'building_manager')):
+    for m in re.finditer(r'\n(\d+)=\{\n\tbuilding=(building_bank|building_zz_ef_bank)\n(?:\t[^\n]*\n)*?\tlevels=(\d+)\n',
+                         so.section(s, 'building_manager')):
         b = d['bld'].get(m.group(1))
         if not b:
             continue
-        lv[d['tag'].get(b[1], b[1])][m.group(2)] += int(m.group(4))
+        lv[d['tag'].get(b[1], b[1])][m.group(2)] += int(m.group(3))
     cb = sorted(c for c in lv if lv[c]['building_bank'] > 0)
     print(f"{d['date']}: стран с ЦБ {len(cb)}, из них без «Банков» "
           f"{sum(1 for c in cb if lv[c]['building_zz_ef_bank'] == 0)}")
