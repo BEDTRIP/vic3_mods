@@ -11,6 +11,7 @@ them and who uses them, per country and for the world, in units a week.
   pops      sectors + subsist - regul - urban: what households bought (СТР.3), ~ (unsold goods count here too)
   price     regulators' goods_cost / units bought -- average price paid for construction goods
   hh%       (pops + urban) / (sectors + subsist): households + ЖКХ share of all construction goods (Д.5: 25-35%)
+  reg_lv    regulators' levels; staff% -- the levels staffed (the record's staffing, in levels) of them
 Goods ids are read off the save: the outputs of construction sectors by production method.
 """
 import re, sys, json, collections, os
@@ -56,9 +57,10 @@ def main():
         lv = re.search(r'\n\tlevels=(\d+)', '\n' + body)
         pms = re.search(r'production_methods=\{([^}]*)\}', body)
         gc = re.search(r'\n\tgoods_cost=([\d.]+)', body)
+        sf = re.search(r'\n\tstaffing=([\d.]+)', body)
         recs.append(dict(bt=bt, cty=tag.get(st.get(stt.group(1) if stt else ''), '?'), lv=int(lv.group(1)) if lv else 0,
                          pms=pms.group(1) if pms else '', out=goods(body, 'output_goods'), inp=goods(body, 'input_goods'),
-                         cost=float(gc.group(1)) if gc else 0))
+                         cost=float(gc.group(1)) if gc else 0, staff=float(sf.group(1)) if sf else 0))
     # construction goods ids: per method, the outputs all its sectors share, minus what every sector
     # makes whatever its method (E&F's liquidity product); PSC defines the four in a row
     by_pm = collections.defaultdict(list)
@@ -89,6 +91,8 @@ def main():
                 u = sum(v for i, v in r['inp'].items() if i in CG)
                 t['regul'] += u
                 t['regul_cost'] += r['cost'] if u else 0
+                t['reg_lv'] += r['lv']
+                t['reg_staff'] += min(r['staff'], r['lv'])
             elif r['bt'] == 'building_urban_center':
                 t['urban'] += sum(v for i, v in r['inp'].items() if i in CG)
                 t['uc_lv'] += r['lv']
@@ -96,7 +100,7 @@ def main():
                 t['subsist'] += sum(v for i, v in r['out'].items() if i in CG)
     res = {'date': date, 'ids': ids, 'countries': {}}
     print(f"{date}  construction goods ids {ids}")
-    print('country  sect_lv  sectors  subsist    regul   points    urban     pops  price   hh%  uc_lv')
+    print('country  sect_lv  sectors  subsist    regul   points    urban     pops  price   hh%  uc_lv reg_lv staff%')
     order = sorted(T, key=lambda c: -T[c]['regul'])
     for c in order[:top + 1]:
         t = T[c]
@@ -105,7 +109,8 @@ def main():
         price = t['regul_cost'] / t['regul'] if t['regul'] else 0
         hh = 100 * (pops + t['urban']) / supply if supply else 0
         print(f"{c:7} {t['sect_lv']:8.0f} {t['sectors']:8.0f} {t['subsist']:8.0f} {t['regul']:8.0f} {t['regul'] / 10:8.0f} "
-              f"{t['urban']:8.0f} {pops:8.0f} {price:6.0f} {hh:5.1f} {t['uc_lv']:6.0f}")
+              f"{t['urban']:8.0f} {pops:8.0f} {price:6.0f} {hh:5.1f} {t['uc_lv']:6.0f} {t['reg_lv']:6.0f} "
+              f"{100 * t['reg_staff'] / t['reg_lv'] if t['reg_lv'] else 0:6.0f}")
     for c, t in T.items():
         res['countries'][c] = dict(t, pops=t['sectors'] + t['subsist'] - t['regul'] - t['urban'])
     if out:
