@@ -17,7 +17,7 @@
   на металл (`var:zz_ef_rq_conv`) для оценки требований (`ld_claims.txt`, Д.R8а.4, Д.R8а.5);
 - национальные валюты (страна без своей): `zz_ef_cur_set` зовёт `zz_ef_cur_noun_set`, `currency_name` — ветки
   `zz_ef_cur_nat_<слово>` (`tools/regen_ld_currency_national.py`);
-- `docs/currency-table.md` — таблица: ключ, название (англ., рус.), знак, ISO, страны и паритет на 1836.
+- `docs/currency-table.md` — таблица: ключ, название (англ., рус.), ISO, страны и паритет на 1836.
 
 ISO — справочник ниже (для исторических валют без кода — «—»). `--check` — только сравнить, код выхода 1 при расхождениях.
 """
@@ -30,7 +30,6 @@ import ld_curdata  # noqa: E402
 import ld_gen  # noqa: E402
 import ld_pdx  # noqa: E402
 from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN, NOUNS  # noqa: E402
-from regen_ld_currency_symbol import CUR_SIGN, sign_of  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK
@@ -112,7 +111,7 @@ def var_text(curs):
     # R3а (8.10): no currency of its own -- a national one by the capital's region (ld_currency_national.txt)
     L.append("\tzz_ef_cur_names = yes")
     L.append("\tif = { limit = { zz_ef_logs_on = yes } debug_log = \"EFM|[TimeKeeper.GetCurrentDate.GetString]|"
-             "[THIS.GetCountry.GetNameNoFormatting]|cur_nat|[THIS.GetCountry.GetCustom('currency_name')]\" }")
+             "[THIS.GetCountry.GetNameNoFormatting]|cur_nat|[THIS.GetCountry.GetCustom('currency_name')]|code [THIS.GetCountry.GetCustom('currency_code')]|sign [THIS.GetCountry.GetCustom('currency_symbol')]\" }")
     L.append("\tzz_ef_cur_par_update = yes")
     L.append("}")
     L += ["",
@@ -191,14 +190,14 @@ def table_text(curs, hist, en, ru):
          "национальную единицу из истории E&F на 1.1.1836 (курс между валютами и подписи; в деньгах движка не участвует, Д.R1б.1).",
          "Название в игре — «<прилагательное страны> <слово>» (эмитент — сама страна; `currency_name`); столбцы «название» —",
          "названия E&F по ключу (окна E&F).",
-         "Символ в игре — «<две буквы страны> <знак>» (`currency_symbol`, `tools/regen_ld_currency_symbol.py`).",
-         "", "| ключ | слово в игре | название E&F | по-русски E&F | знак | ISO | страны 1836: стандарт, паритет |",
-         "| --- | --- | --- | --- | --- | --- | --- |"]
+         "Код в игре — две буквы страны + первая буква слова (`GBP`, `CHF`; `currency_code`), в окнах — знак у выбранных кодов,",
+         "у остальных код (`currency_symbol`, `tools/regen_ld_currency_symbol.py`, Д.R8в.20). Столбец ISO — справочный.",
+         "", "| ключ | слово в игре | название E&F | по-русски E&F | ISO | страны 1836: стандарт, паритет |",
+         "| --- | --- | --- | --- | --- | --- |"]
     for c in curs:
         h = "; ".join(f"{t}: {s or '—'}, {p or '—'}" for t, s, p in hist.get(c, [])) or "—"
         w = f"{NOUNS[LAW_NOUN[c]][1]} / {NOUNS[LAW_NOUN[c]][0]}" if c in LAW_NOUN else "национальное"
-        sg = CUR_SIGN.get(c) or (sign_of(LAW_NOUN[c]) if c in LAW_NOUN else "¤")
-        L.append(f"| `{c}` | {w} | {en.get(c, '—')} | {ru.get(c, '—')} | {sg} | {ISO.get(c, '—')} | {h} |")
+        L.append(f"| `{c}` | {w} | {en.get(c, '—')} | {ru.get(c, '—')} | {ISO.get(c, '—')} | {h} |")
     return "\n".join(L) + "\n"
 
 

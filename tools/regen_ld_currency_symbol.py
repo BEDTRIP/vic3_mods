@@ -1,4 +1,6 @@
-"""Символ валюты форка «E&F: Ledgerdemain» (R8а.7, Д.R8а.8): две буквы страны + знак слова — `CH ₣`, `GB £`, `RU ₽`.
+"""Код и знак валюты форка «E&F: Ledgerdemain» (Д.R8в.20, заменяет Д.R8а.8): код — две буквы страны + первая буква
+слова валюты, как в ISO 4217 (`GBP`, `CHF`, `USD`, `RUR`); в окнах — знак у выбранных кодов (`GBP` → £, `USD` → $),
+у остальных — код.
 
     python3 tools/regen_ld_currency_symbol.py [--check]
 
@@ -6,17 +8,18 @@
 (пары букв тега, затем первая буква тега или названия с буквой названия, затем первая буква тега с любой, затем любая
 свободная пара, по кругу; сначала все страны с историей на 1836, потом остальные; ISO и выбранные раньше — заняты). Теги — снимок `tools/data/vic3_country_tags.json` (ваниль 1.13:
 `common/country_definitions` с английскими названиями, `history_1836` — теги файлов `common/history/countries`).
-Знак — по слову валюты (`var:zz_ef_cur_noun`, слова — `regen_ld_currency_national.py`): `SIGN`; нет знака — первые
-буквы слова. Валюта закона со своим знаком, отличным от знака слова (турецкая лира ₺, филиппинское песо ₱), — `CUR_SIGN`.
-Без денежной системы — `¤` (Д.R8а.2: своей валюты нет).
+Буква — первая буква слова валюты (`var:zz_ef_cur_noun`, слова — `regen_ld_currency_national.py`). Член валютного союза
+(Д.R8в.5) — буквы главы союза (`var:zz_ef_mu_head`). Знак — `CODE_SIGN` (один знак — один код). Без денежной системы —
+`¤` (Д.R8а.2: своей валюты нет).
 
 Движок (проба r1009_032419): `Country.GetTagName` — тег, `Localize(Concatenate('zz_ef_iso2_', тег))` — текст ключа; в тексте
-custom loc `ROOT.GetCountry` — страна, у которой спрошен символ.
+custom loc `ROOT.GetCountry` — страна, у которой спрошен код или знак.
 
 Пишет в форк:
-- `localization/{english,russian}/ld_currency_symbol_l_*.yml` — `zz_ef_iso2_<тег>` (две буквы), `zz_ef_sym_<слово>`,
-  `zz_ef_sym_cur_<валюта>`, `zz_ef_sym_none`, `zz_ef_sym_generic`: «[две буквы страны] <знак>»;
-- в `common/customizable_localization/00_ef_localization_ custom.txt` — тело `currency_symbol`.
+- `localization/{english,russian}/ld_currency_symbol_l_*.yml` — `zz_ef_iso2_<тег>` (две буквы), `zz_ef_iso2_self`,
+  `zz_ef_code_<слово>` (код), `zz_ef_sym_code_<код>` (знак), `zz_ef_sym_code` (код вместо знака), `zz_ef_sym_none`;
+- в `common/customizable_localization/00_ef_localization_ custom.txt` — тела `zz_ef_cur_iso2` (две буквы: свои или
+  главы союза), `currency_code`, `currency_symbol`.
 После правки английского — `ld_loc_langs.py`. `--check` — только сравнить, код выхода 1 при расхождениях.
 """
 import json
@@ -53,17 +56,13 @@ ISO = {
     "TNG": "TO", "TRC": "TM", "TUN": "TN", "TUR": "TR", "UKR": "UA", "URU": "UY", "USA": "US", "UZB": "UZ",
     "VNT": "VU", "VNZ": "VE", "YEM": "YE", "ZAN": "TZ", "ZIM": "ZW",
 }
-# слово → знак (нет здесь — первые буквы слова: SIGN.get(n) or n[:1].upper())
-SIGN = {
-    "pound": "£", "franc": "₣", "guilder": "ƒ", "gulden": "ƒ", "florin": "ƒ", "mark": "ℳ", "real": "R$", "lira": "₤",
-    "krona": "kr", "krone": "kr", "kroon": "kr", "ruble": "₽", "zloty": "zł", "forint": "Ft", "drachma": "₯",
-    "tenge": "₸", "tugrik": "₮", "rupee": "₹", "rupiah": "Rp", "baht": "฿", "tical": "฿", "kip": "₭", "dong": "₫",
-    "yuan": "¥", "yen": "¥", "won": "₩", "birr": "Br", "naira": "₦", "ariary": "Ar", "dollar": "$", "peso": "$",
-    "colon": "₡", "cordoba": "C$", "sol": "S/", "peseta": "₧", "hryvnia": "₴", "koruna": "Kč", "litas": "Lt",
-    "lats": "Ls", "manat": "₼", "markka": "mk", "lev": "лв", "ringgit": "RM", "taka": "Tk",
+# код → (слово, знак): только эти коды показываются знаком, остальные — кодом
+CODE_SIGN = {
+    "GBP": ("pound", "£"), "USD": ("dollar", "$"), "FRF": ("franc", "₣"), "RUR": ("ruble", "₽"), "JPY": ("yen", "¥"),
+    "INR": ("rupee", "₹"), "DEM": ("mark", "ℳ"), "TRL": ("lira", "₺"), "KRW": ("won", "₩"), "PHP": ("peso", "₱"),
+    "UAH": ("hryvnia", "₴"), "THB": ("baht", "฿"), "VND": ("dong", "₫"), "ESP": ("peseta", "₧"),
+    "GRD": ("drachma", "₯"),
 }
-# валюта закона E&F со своим знаком (у слова — другой)
-CUR_SIGN = {"lira_ottoman_lira": "₺", "peso_philippine_peso": "₱"}
 NONE_SIGN = "¤"
 ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -100,33 +99,62 @@ def codes():
     return out
 
 
-def sign_of(n):
-    return SIGN.get(n) or n[:1].upper()
+def letter_of(n):
+    return n[:1].upper()
 
 
-def loc_text(lang, iso, nouns):
-    pre = "[Localize(Concatenate('zz_ef_iso2_', ROOT.GetCountry.GetTagName))] "
-    L = [f"﻿l_{lang}:"]
+def sign_codes(iso):
+    """{код: (тег, слово, знак)} для CODE_SIGN; код без тега с этими буквами или не того слова -- ошибка таблицы."""
+    by_two = {c: tg for tg, c in iso.items()}
+    out = {}
+    for code, (n, sign) in sorted(CODE_SIGN.items()):
+        tg = by_two.get(code[:2])
+        if not tg or letter_of(n) != code[2]:
+            raise SystemExit(f"CODE_SIGN: {code} -- нет тега с буквами {code[:2]} или слово {n} не на {code[2]}")
+        out[code] = (tg, n, sign)
+    return out
+
+
+def loc_text(lang, iso, nouns, signs):
+    two = "[ROOT.GetCountry.GetCustom('zz_ef_cur_iso2')]"
+    L = [f"\ufeffl_{lang}:"]
     L += [f' zz_ef_iso2_{t}:0 "{c}"' for t, c in sorted(iso.items())]
-    L.append(f' zz_ef_sym_none:0 "{pre}{NONE_SIGN}"')
-    L.append(f' zz_ef_sym_generic:0 "{pre}{NONE_SIGN}"')
-    L += [f' zz_ef_sym_{n}:0 "{pre}{sign_of(n)}"' for n in nouns]
-    L += [f' zz_ef_sym_cur_{c}:0 "{pre}{s}"' for c, s in sorted(CUR_SIGN.items())]
+    L.append(' zz_ef_iso2_self:0 "[Localize(Concatenate(\'zz_ef_iso2_\', ROOT.GetCountry.GetTagName))]"')
+    L += [f' zz_ef_code_{n}:0 "{two}{letter_of(n)}"' for n in nouns]
+    L.append(f' zz_ef_sym_none:0 "{NONE_SIGN}"')
+    L.append(' zz_ef_sym_code:0 "[ROOT.GetCountry.GetCustom(\'currency_code\')]"')
+    L += [f' zz_ef_sym_code_{c}:0 "{s}"' for c, (_, _, s) in signs.items()]
     return "\n".join(L) + "\n"
 
 
-def custom_text(nouns):
-    L = ["currency_symbol = {", "\ttype = country", "\tlog_loc_errors = no", "",
-         "\t# «<two letters of the country> <the sign of its currency's word>» (Д.R8а.8, tools/regen_ld_currency_symbol.py)",
-         "\t#no monetary system", "\ttext = {", "\t\ttrigger = { has_law = law_type:law_no_monetary_system }",
-         "\t\tlocalization_key = zz_ef_sym_none", "\t}"]
-    for c in sorted(CUR_SIGN):
-        L += [f"\t#{c}", "\ttext = {", f"\t\ttrigger = {{ var:zz_ef_cur ?= flag:{c} }}",
-              f"\t\tlocalization_key = zz_ef_sym_cur_{c}", "\t}"]
+def custom_text(iso, nouns, signs):
+    L = ["zz_ef_cur_iso2 = {", "\ttype = country", "\tlog_loc_errors = no", "",
+         "\t# the two letters of the currency's code: the country's own, a currency union's follower -- its head's",
+         "\t# (Д.R8в.20, tools/regen_ld_currency_symbol.py)",
+         "\ttext = {", "\t\ttrigger = { NOT = { zz_ef_mu_follower = yes } }",
+         "\t\tlocalization_key = zz_ef_iso2_self", "\t}"]
+    for tg in sorted(iso):
+        L += ["\ttext = {", f"\t\ttrigger = {{ var:zz_ef_mu_head ?= c:{tg} }}",
+              f"\t\tlocalization_key = zz_ef_iso2_{tg}", "\t}"]
+    L += ["\ttext = {", "\t\tlocalization_key = zz_ef_iso2_self", "\t}", "}", ""]
+    L += ["currency_code = {", "\ttype = country", "\tlog_loc_errors = no", "",
+          "\t# «<two letters of the country> <the first letter of its currency's word>» (Д.R8в.20)",
+          "\t#no monetary system", "\ttext = {", "\t\ttrigger = { has_law = law_type:law_no_monetary_system }",
+          "\t\tlocalization_key = zz_ef_sym_none", "\t}"]
     for n in nouns:
         L += [f"\t#{n}", "\ttext = {", f"\t\ttrigger = {{ var:zz_ef_cur_noun ?= flag:{n} }}",
-              f"\t\tlocalization_key = zz_ef_sym_{n}", "\t}"]
-    L += ["\t#generic", "\ttext = {", "\t\tlocalization_key = zz_ef_sym_generic", "\t}", "}"]
+              f"\t\tlocalization_key = zz_ef_code_{n}", "\t}"]
+    L += ["\t#generic", "\ttext = {", "\t\tlocalization_key = zz_ef_sym_none", "\t}", "}", ""]
+    L += ["currency_symbol = {", "\ttype = country", "\tlog_loc_errors = no", "",
+          "\t# the sign of the codes that have one, else the code (Д.R8в.20)",
+          "\t#no monetary system", "\ttext = {", "\t\ttrigger = { has_law = law_type:law_no_monetary_system }",
+          "\t\tlocalization_key = zz_ef_sym_none", "\t}"]
+    for c, (tg, n, _) in signs.items():
+        L += [f"\t#{c}", "\ttext = {", "\t\ttrigger = {", f"\t\t\tvar:zz_ef_cur_noun ?= flag:{n}",
+              "\t\t\tOR = {", f"\t\t\t\tAND = {{ NOT = {{ zz_ef_mu_follower = yes }} c:{tg} ?= this }}",
+              f"\t\t\t\tvar:zz_ef_mu_head ?= c:{tg}", "\t\t\t}", "\t\t}",
+              f"\t\tlocalization_key = zz_ef_sym_code_{c}", "\t}"]
+    L += ["\t#the code", "\ttext = {", "\t\tlocalization_key = zz_ef_sym_code", "\t}", "}"]
     return "\n".join(L) + "\n"
 
 
@@ -145,9 +173,10 @@ def put(rel, text):
 def main():
     iso = codes()
     nouns = sorted(set(_national_nouns(_national_groups())) | set(LAW_NOUN.values()))
+    signs = sign_codes(iso)
     for lang in ("english", "russian"):
-        put(LOC.format(lang), loc_text(lang, iso, nouns))
-    ld_gen.emit(CUSTOM, custom_text(nouns))
+        put(LOC.format(lang), loc_text(lang, iso, nouns, signs))
+    ld_gen.emit(CUSTOM, custom_text(iso, nouns, signs))
     ld_gen.report("regen_ld_currency_symbol")
     if CHECK and ld_gen._stats["changed"]:
         sys.exit(1)
