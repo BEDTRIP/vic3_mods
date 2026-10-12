@@ -5,13 +5,14 @@
 
 Таблица `VARIANTS` — 38 вариантов E&F: суффикс типа, тег страны, чей это вариант, область (state region) и иконка;
 общий финцентр (`building_financial_centre`) — у остальных. Вариант — оформление (название, иконка, область), правило
-одно: здание финцентра можно расширять только в штате биржи своей страны (`zz_ef_fc_possible`, переменная страны
+одно: финцентр — здание государства (Д.R4б.5, Д.R4б.7: строит государство, метод `pmg_zz_ef_fc_exchange` — работники и
+«услуги», без «акций»), расширять его можно только в штате биржи своей страны (`zz_ef_fc_possible`, переменная страны
 `zz_ef_fc_state`); новую биржу учреждает запись дневника «Учреждение биржи» (`financial_center_je_1`).
 
 Пишет:
 - `common/buildings/ef_16_financial_centre.txt` — типы по одному шаблону (общий + 38 вариантов);
-- `common/scripted_effects/ld_fc_types.txt` — всё, что требует перечня типов: `zz_ef_fc_activate_pm` (метод во всех
-  финцентрах штата), `zz_ef_fc_remove` (снести финцентр штата), `zz_ef_fc_expand` (частная стройка уровней биржи),
+- `common/scripted_effects/ld_fc_types.txt` — всё, что требует перечня типов: `zz_ef_fc_remove` (снести финцентр
+  штата), `zz_ef_fc_expand` (государственная стройка уровней биржи, Д.R4б.5),
   `zz_ef_fc_variant_set` (вариант биржи страны — флаг `var:zz_ef_fc_variant`), `zz_ef_fc_found` (учредить биржу:
   вариант своей области или общий в столице);
 - в `common/customizable_localization/00_ef_localization_ custom.txt` — `stock_exchange_name` (название биржи по
@@ -89,19 +90,16 @@ def building(key, icon, region):
             "\tai_nationalization_desire = -1\n\n"
             f"{tech}"
             "\tproduction_method_groups = {\n"
-            "\t\tpmg_manufacture_stock_exchange\n"
-            "\t\tpmg_agricultural_stock_exchange\n"
-            "\t\tpmg_mining_stock_exchange\n"
-            "\t\tpmg_railroad_stock_exchange\n"
+            "\t\tpmg_zz_ef_fc_exchange\n"
             "\t}\n\n"
             f"{pot}"
             "\t# only the country's own exchange grows (ld_fc_types.txt)\n"
             "\tpossible = {\n\t\tzz_ef_fc_possible = yes\n\t}\n\n"
-            "\tcan_build_government = {\n\t\talways = no\n\t}\n"
-            "\tcan_build_private = {\n\t\talways = yes\n\t}\n"
+            "\t# the state's infrastructure (Д.R4б.5): the government builds it, the budget pays its costs\n"
+            "\tcan_build_government = {\n\t\talways = yes\n\t}\n"
+            "\tcan_build_private = {\n\t\talways = no\n\t}\n"
             "\thas_max_level = yes\n"
             "\tdownsizeable = no\n\n"
-            "\townership_type = self\n"
             "\tbackground = \"gfx/interface/icons/building_icons/backgrounds/building_panel_bg_monuments.dds\"\n"
             "}\n")
 
@@ -117,20 +115,16 @@ def buildings():
 
 def effects():
     L = [HEAD, "# What needs the list of the financial centre's types (R8б.4) -- see the generator's docstring.\n"]
-    L.append("\n# State scope: production method $PM$ in every financial centre of the state.\nzz_ef_fc_activate_pm = {\n")
-    for t in TYPES:
-        L.append(f"\tif = {{ limit = {{ has_building = {t} }} activate_production_method = {{ building_type = {t} production_method = $PM$ }} }}\n")
-    L.append("}\n")
     L.append("\n# State scope: the state's financial centre removed (a financial crash, E&F).\nzz_ef_fc_remove = {\n")
     for t in TYPES:
         L.append(f"\tif = {{ limit = {{ has_building = {t} }} remove_building = {t} }}\n")
     L.append("}\n")
-    L.append("\n# Country scope: $N$ levels of the country's exchange (var:zz_ef_fc_state), privately funded -- the journal's buttons\n"
-             "# speculative_share_5..8_button (scripted_buttons/00_ef_buttons.txt, scripted_guis/00_financial_scripted_guis.txt).\n"
+    L.append("\n# Country scope: $N$ levels of the country's exchange (var:zz_ef_fc_state), a government construction (Д.R4б.5) -- the journal's\n"
+             "# buttons speculative_share_5..8_button (scripted_buttons/00_ef_buttons.txt, scripted_guis/00_financial_scripted_guis.txt).\n"
              "zz_ef_fc_expand = {\n\tif = {\n\t\tlimit = { has_variable = zz_ef_fc_state }\n\t\tvar:zz_ef_fc_state = {\n")
     for t in TYPES:
         L.append(f"\t\t\tif = {{ limit = {{ has_building = {t} can_construct_building = {t} }} "
-                 f"while = {{ count = $N$ start_privately_funded_building_construction = {t} }} }}\n")
+                 f"while = {{ count = $N$ start_building_construction = {t} }} }}\n")
     L.append("\t\t}\n\t}\n}\n")
     L.append("\n# State scope (the exchange's state): its variant on the owner -- var:zz_ef_fc_variant = flag:<suffix>, none for the\n"
              "# common one (the name stock_exchange_name, the icon).\nzz_ef_fc_variant_set = {\n"
