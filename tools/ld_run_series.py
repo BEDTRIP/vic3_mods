@@ -14,6 +14,8 @@ line), into <out.json>, one series per line ("key": [[t, v], ...]) so read_text 
   acc.<TAG|WORLD>.* EFW|acc: every account of the money tooltip, gdp, exp, imp, surplus, other (monthly)
   lvl          EFJ|lvl: the steps that classified levels bought / sold, with the change of the government's levels
   metal.prod_* / cons_* / buyo_* / sello_* / price_*: the world's markets this week (goods)
+  xch.<exchange>.* EFD|xch_month: each exchange's month -- turnover, deals, foreign share, fee, capitalization at the
+               market and the base, overheat, members, assets, the year's turnover, its fund (Д.R4б.11)
 t is the year as a fraction (1836.5 = July 1836).
 """
 import json
@@ -90,6 +92,10 @@ def main():
             d = fields(p[4:])
             for k, v in d.items():
                 month[f'acc.{who}.{k}'][ym] = (round(t, 3), v)
+        elif pre == 'EFD' and len(p) > 4 and p[3] == 'xch_month':
+            d = fields(p[4:])
+            for k, v in d.items():
+                month[f'xch.{who}.{k}'][ym] = (round(t, 3), v)
         elif pre == 'EFJ' and p[3].startswith('other '):
             d = fields(p[3:])
             oth_last[who] = d.get('other', 0)
