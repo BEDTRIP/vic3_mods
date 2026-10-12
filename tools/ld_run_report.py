@@ -352,7 +352,8 @@ def summary(D):
         bonds = last_of(S.get('a.bonds_abroad'))
         out.append(('ok' if len(hi) < 10 else 'warn', 'Госдолг',
                     f'мира {fmt(debt or 0)} — {100 * (debt or 0) / gdp:.0f} % ВВП' +
-                    (f', облигациями у держателей {fmt(bonds)} ({100 * bonds / debt:.0f} % долга)' if bonds and debt else '') +
+                    (f': долг движка {fmt(debt - bonds)}, облигации у держателей {fmt(bonds)} ({100 * bonds / debt:.0f} %)'
+                     if bonds and debt else '') +
                     f'; больше половины предела у {len(hi)} стран.'))
     sp = S.get('spd') or []
     if sp:
@@ -423,6 +424,10 @@ def charts(D):
         v = (src or S).get(k) or []
         return [[x, round(y * scale, nd)] for x, y in zip(t, v) if y is not None]
 
+    def diff(k1, k2, scale=1, nd=3, src=None):
+        a, b = (src or S).get(k1) or [], (src or S).get(k2) or []
+        return [[x, round((y - (z or 0)) * scale, nd)] for x, y, z in zip(t, a, b + [None] * (len(a) - len(b))) if y is not None]
+
     def sm(k, n=3, nd=1):
         p = s(k, 1, 6)
         return [[p[i][0], round(sum(x[1] for x in p[max(0, i - n + 1):i + 1]) / len(p[max(0, i - n + 1):i + 1]), nd)]
@@ -459,8 +464,9 @@ def charts(D):
                                                                         ['сдано в банки за месяц', s('a.popm_bank', M * 4.3)]]),
         'pool': ('Пул мира и пул крупных стран, млн', 'млн', [['мир', s('a.pool', M)]] +
                  [[c, s('pool', M, 3, C[c])] for c in big[:6]]),
-        'debt': ('Госдолг мира, млн', 'млн', [['долг', s('a.debt', M)], ['предел кредита', s('a.credit', M)],
-                                              ['из него облигации у держателей', s('a.bonds_abroad', M)]]),
+        'debt': ('Госдолг мира, млн', 'млн', [['долг движка (без облигаций)', diff('a.debt', 'a.bonds_abroad', M)],
+                                              ['облигации у держателей', s('a.bonds_abroad', M)],
+                                              ['весь долг', s('a.debt', M)], ['предел кредита', s('a.credit', M)]]),
         'soc': ('Доля радикалов', '', [[c, s('radical', 1, 3, C[c])] for c in big[:8]]),
         'sol': ('Средний уровень жизни', '', [[c, s('sol', 1, 1, C[c])] for c in big[:8]]),
         'psc': ('Очки стройки в неделю', 'очков', [[c, s('psc_pts', 1, 1, C[c])] for c in big[:8]]),
@@ -478,9 +484,9 @@ def charts(D):
         B[c] = dict(budget=[['доходы', s('inc', 1e-3, 1, cc)], ['расходы', s('exp', 1e-3, 1, cc)],
                             ['фикс. расходы', s('fix_exp', 1e-3, 1, cc)], ['армия', s('mil', 1e-3, 1, cc)],
                             ['пул на стройку', s('pool_constr', 1e-3, 1, cc)]],
-                    debt=[['долг', s('debt', M, 2, cc)], ['предел кредита', s('credit', M, 2, cc)],
-                          ['облигации у держателей', s('bonds_abroad', M, 2, cc)], ['казна', s('treasury', M, 2, cc)],
-                          ['пул', s('pool', M, 2, cc)]],
+                    debt=[['долг движка (без облигаций)', diff('debt', 'bonds_abroad', M, 2, cc)],
+                          ['облигации у держателей', s('bonds_abroad', M, 2, cc)], ['весь долг', s('debt', M, 2, cc)],
+                          ['предел кредита', s('credit', M, 2, cc)], ['казна', s('treasury', M, 2, cc)]],
                     hoard=[['доля металла', s('popm_share', 1, 3, cc)], ['цель', s('popm_target', 1, 3, cc)],
                            ['радикалы', s('radical', 1, 3, cc)], ['лоялисты', s('loyalist', 1, 3, cc)]])
     return {k: dict(title=v[0], unit=v[1], series=v[2]) for k, v in ch.items()}, B
@@ -625,7 +631,7 @@ def render(D, out, base=None, title=None):
         if name == 'Бюджет и долг':
             h.append('<div class="sel" id="bsel" role="group" aria-label="Страна"></div>'
                      '<div class="ct">Бюджет недели, тыс.</div><div class="chart" id="c_cb"></div>'
-                     '<div class="ct">Долг, предел кредита, облигации у держателей, казна и пул, млн</div><div class="chart" id="c_cd"></div>'
+                     '<div class="ct">Долг движка и облигации, весь долг, предел кредита и казна, млн</div><div class="chart" id="c_cd"></div>'
                      '<div class="ct">Кубышка населения: доля металла, цель, радикалы, лоялисты</div><div class="chart" id="c_ch"></div>')
         for i in ids:
             h.append(f'<div class="ct">{esc(ch[i]["title"])}</div><div class="chart" id="c_{i}"></div>')
@@ -639,15 +645,15 @@ def render(D, out, base=None, title=None):
             h.append('</tbody></table></div>')
         if name == 'Бюджет и долг':
             h.append('<h3>Долг к концу: страны больше половины предела</h3><div class="tw"><table><thead><tr><th>Страна</th>'
-                     '<th class="n">Долг</th><th class="n">Облигации</th><th class="n">Предел</th><th class="n">Долг / ВВП</th><th class="n">Доходы / нед</th>'
+                     '<th class="n">Весь долг</th><th class="n">Долг движка</th><th class="n">Облигации</th><th class="n">Предел</th><th class="n">Долг / ВВП</th><th class="n">Доходы / нед</th>'
                      '<th class="n">Расходы / нед</th></tr></thead><tbody>')
             hi = [(c, d) for c, d in D['end'].items() if d.get('credit') and d.get('debt', 0) / d['credit'] > 0.5]
             for c, d in sorted(hi, key=lambda kv: -kv[1].get('debt', 0))[:20]:
-                h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(d.get("debt"))}</td><td class="n">{fmt(d.get("bonds_abroad"))}</td><td class="n">{fmt(d.get("credit"))}</td>'
+                h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(d.get("debt"))}</td><td class="n">{fmt(d.get("debt", 0) - d.get("bonds_abroad", 0))}</td><td class="n">{fmt(d.get("bonds_abroad"))}</td><td class="n">{fmt(d.get("credit"))}</td>'
                          f'<td class="n">{(d.get("debt", 0) / d["gdp"] if d.get("gdp") else 0):.2f}</td>'
                          f'<td class="n">{fmt(d.get("inc"))}</td><td class="n">{fmt(d.get("exp"))}</td></tr>')
             if not hi:
-                h.append('<tr><td colspan="7">нет</td></tr>')
+                h.append('<tr><td colspan="8">нет</td></tr>')
             h.append('</tbody></table></div>')
         if name == 'Нагрузка механик':
             oy = ops_year(S)
@@ -683,8 +689,8 @@ def render(D, out, base=None, title=None):
     # by year: this run (and the base)
     h.append('<h2>По годам</h2><p>Конец каждого года. С базой — второе число в ячейке.</p><div class="tw"><table><thead><tr><th>Год</th>')
     cols = [('M2', 'w.m2', 'last'), ('«Прочее»', 'w.other', 'last'), ('Пул', 'a.pool', 'last'),
-            ('Металл населения', 'a.popm', 'last'), ('Капитал банков', 'w.bkcap', 'last'), ('Долг мира', 'a.debt', 'last'),
-            ('Облигации', 'a.bonds_abroad', 'last')]
+            ('Металл населения', 'a.popm', 'last'), ('Капитал банков', 'w.bkcap', 'last'), ('Весь долг мира', 'a.debt', 'last'),
+            ('из него облигации', 'a.bonds_abroad', 'last')]
     ys = {k: yearly(t, S.get(k), f) for _, k, f in cols}
     yb = {k: yearly(base['S']['t'], base['S'].get(k), f) for _, k, f in cols} if base else {}
     def spd_year(SS):
