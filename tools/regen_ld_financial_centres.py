@@ -122,9 +122,10 @@ def effects():
     L.append("\n# Country scope: $N$ levels of the country's exchange (var:zz_ef_fc_state), a government construction (Д.R4б.5) -- the journal's\n"
              "# buttons speculative_share_5..8_button (scripted_buttons/00_ef_buttons.txt, scripted_guis/00_financial_scripted_guis.txt).\n"
              "zz_ef_fc_expand = {\n\tif = {\n\t\tlimit = { has_variable = zz_ef_fc_state }\n\t\tvar:zz_ef_fc_state = {\n")
+    # each level checked anew: the exchange at its maximum size took the rest of the count as errors (Bombay, r1012_233748)
     for t in TYPES:
-        L.append(f"\t\t\tif = {{ limit = {{ has_building = {t} can_construct_building = {t} }} "
-                 f"while = {{ count = $N$ start_building_construction = {t} }} }}\n")
+        L.append(f"\t\t\tif = {{ limit = {{ has_building = {t} }} while = {{ count = $N$ "
+                 f"if = {{ limit = {{ can_construct_building = {t} }} start_building_construction = {t} }} }} }}\n")
     L.append("\t\t}\n\t}\n}\n")
     L.append("\n# State scope (the exchange's state): its variant on the owner -- var:zz_ef_fc_variant = flag:<suffix>, none for the\n"
              "# common one (the name stock_exchange_name, the icon).\nzz_ef_fc_variant_set = {\n"
