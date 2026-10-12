@@ -102,6 +102,9 @@ def read_run(run, until):
     xtot = defaultdict(float)                     # exchange -> the run's turnover
     fills = defaultdict(lambda: defaultdict(list))  # month -> metal -> [(fill, buy orders)]
     bsub = defaultdict(float)                     # date -> the world's bank subjects that week
+    leak = {}                                     # country -> its «прочее»: first, last, parts, biggest week
+    week_top = defaultdict(list)                  # date -> the 3 countries with the biggest «прочее» of the week
+    world_week = []                               # (date, the world's «прочее» of the week)
     chk = dict(lines=0, efq=0, diff=0.0, mdiff=0.0, mdiff_at='', fails=[], last='')
     other = other_tr = 0.0
     items = {}
@@ -196,10 +199,27 @@ def read_run(run, until):
             d = fields(p[3:])
             other += d.get('other', 0)
             other_tr += d.get('other_tr', 0)
+            world_week.append((p[1], d.get('other', 0)))
             last['w.other'][mo] = other
             last['w.other_tr'][mo] = other_tr
         elif pre == 'EFJ' and k3.startswith('other '):
             d = fields(p[3:])
+            # leaks: «прочее» of the country -- at its first line, at its last, its biggest week; the week's biggest
+            lk = leak.setdefault(who, {'first': d.get('other', 0), 'first_at': p[1], 'jump': 0, 'jump_at': ''})
+            lk['last'] = d.get('other', 0)
+            lk['last_at'] = p[1]
+            for k in ('other_pool', 'other_tr', 'lvl_pool', 'lvl_tr', 'bk_woff', 'heir_debt'):
+                if k in d:
+                    lk[k] = d[k]
+            dw = d.get('d_other', 0)
+            if abs(dw) > abs(lk['jump']):
+                lk['jump'], lk['jump_at'] = dw, p[1]
+            if dw:
+                wk = week_top[p[1]]
+                wk.append((abs(dw), who, dw))
+                if len(wk) > 3:
+                    wk.sort(reverse=True)
+                    del wk[3:]
             for k in ('lvl_pool', 'lvl_tr'):
                 if k in d:
                     items[(k, who)] = d[k]
@@ -362,7 +382,10 @@ def read_run(run, until):
         S['spd_err'] = str(e)[:200]
     return dict(run=os.path.basename(os.path.normpath(run)), until=until, chk=chk, S=S, C=C, X=X, big=big,
                 end={c: dict(allc[c], _gdp0=gdp0.get(c, 0)) for c in sorted(allc, key=lambda c: -gdp_end[c])},
-                xend={c: xlast[c] for c in xs}, new=new, gone=gone, joined=joined, err=errors(run))
+                xend={c: xlast[c] for c in xs}, new=new, gone=gone, joined=joined, err=errors(run),
+                leak=dict(sorted(leak.items(), key=lambda kv: -abs(kv[1].get('last', 0)))[:25]),
+                wjumps=[(dt, v, [(c, round(dw)) for _, c, dw in sorted(week_top.get(dt, []), reverse=True)])
+                        for dt, v in sorted(world_week, key=lambda x: -abs(x[1]))[:15]])
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -524,6 +547,8 @@ def charts(D):
         'price': ('Индекс цен крупных стран', '', [[c, s('price', 1, 1, C[c])] for c in big[:8]]),
         'other': ('«Прочее» мира нарастающим итогом, млн', 'млн', [['всего', s('w.other', M)],
                                                                   ['в т. ч. казна', s('w.other_tr', M)]]),
+        'mrest': ('Остаток металла мира: счета − старт − куплено + продано (должен быть 0), тыс. товара', 'тыс.',
+                  [['золото', s('m.rest_g', 1e-5, 2)], ['серебро', s('m.rest_s', 1 / 775e3, 2)]]),
         'lvlst': ('Вынесено из «прочего» как выкуп уровней, млн', 'млн', [['пул', s('l.lvl_pool', M)],
                                                                          ['казна', s('l.lvl_tr', M)]]),
         'gold': ('Золото в неделю, товар', 'товар/нед', [['добыто', s('m.prod_g', 1, 1)],
@@ -585,6 +610,10 @@ SECTIONS = [
     ('«Прочее» и выкуп уровней', '«Прочее» — движение денег, которое сверка не объяснила проводками; естественный '
      'прирост — ноль. Выкуп уровней — недельные изменения пула, кратные цене уровня (25 000), которые сверка вынесла '
      'из «прочего»: если они не совпадают с изменением уровней государства, это не выкуп.', ['other', 'lvlst']),
+    ('Утечки', 'Где течёт. Металл: остаток мира — счета минус старт, плюс проданное, минус купленное; 0 — металл не '
+     'появляется и не исчезает. Деньги: «прочее» по странам (только страны, которые пишут строку сверки: игрок, крупные и '
+     'любая страна с большим «прочим» недели) — сколько к концу, сколько сразу при первой строке (рождение страны, '
+     'революция), самая большая неделя; ниже — недели с самым большим «прочим» мира и чьё оно.', ['mrest']),
     ('Металл', 'Металл на счетах должен расти вровень с добычей: на счета записывается только то, что рынок продал '
      '(заказы × доля исполнения). «Пришло на счета» выше «добыто» долго — металл берётся из ниоткуда. Доля исполнения '
      '1 — рынки продали весь заказ, ниже — нехватка.', ['gold', 'silver', 'mgold', 'msilver', 'fill']),
@@ -726,6 +755,21 @@ def render(D, out, base=None, title=None):
                      '<div class="ct">Кубышка населения: доля металла, цель, радикалы, лоялисты</div><div class="chart" id="c_ch"></div>')
         for i in ids:
             h.append(f'<div class="ct">{esc(ch[i]["title"])}</div><div class="chart" id="c_{i}"></div>')
+        if name == 'Утечки':
+            h.append('<h3>«Прочее» по странам</h3><div class="tw"><table><thead><tr><th>Страна</th><th class="n">К концу</th>'
+                     '<th class="n">При первой строке</th><th>Первая строка</th><th class="n">Пул</th><th class="n">Казна</th>'
+                     '<th class="n">Самая большая неделя</th><th>Когда</th></tr></thead><tbody>')
+            for c, d in (D.get('leak') or {}).items():
+                h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(d.get("last"))}</td><td class="n">{fmt(d.get("first"))}</td>'
+                         f'<td>{esc(d.get("first_at", ""))}</td><td class="n">{fmt(d.get("other_pool"))}</td>'
+                         f'<td class="n">{fmt(d.get("other_tr"))}</td><td class="n">{fmt(d.get("jump"))}</td>'
+                         f'<td>{esc(d.get("jump_at", ""))}</td></tr>')
+            h.append('</tbody></table></div><h3>Недели с самым большим «прочим» мира</h3><div class="tw"><table><thead><tr>'
+                     '<th>Неделя</th><th class="n">«Прочее» мира</th><th>Чьё (страна: за неделю)</th></tr></thead><tbody>')
+            for dt, v, top in D.get('wjumps') or []:
+                who = '; '.join(f'{c}: {fmt(x)}' for c, x in top) or '—'
+                h.append(f'<tr><td>{esc(dt)}</td><td class="n">{fmt(v)}</td><td>{esc(who)}</td></tr>')
+            h.append('</tbody></table></div>')
         if name == 'Пул':
             h.append('<h3>Крупнейшие пулы к концу</h3><div class="tw"><table><thead><tr><th>Страна</th><th class="n">Пул</th>'
                      '<th class="n">ВВП</th><th class="n">Пул / ВВП</th><th class="n">На стройку / нед</th></tr></thead><tbody>')
