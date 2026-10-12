@@ -72,6 +72,8 @@ def r4(v):
 
 def errors(run):
     files = sorted(glob.glob(os.path.join(run, 'errparts', '*'))) or sorted(glob.glob(os.path.join(run, 'error*.log')))
+    # the script errors of the running game also land in game.log (r1013_011039: 32 of the fork's, none in error.log)
+    files += sorted(glob.glob(os.path.join(run, 'game*.log')))
     cnt = defaultdict(int)
     seen = set()
     for p in files:
