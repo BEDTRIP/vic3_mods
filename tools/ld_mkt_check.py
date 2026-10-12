@@ -30,6 +30,7 @@ def corr(a, b):
 
 def main():
     brest = {}
+    allc = {}
     mkt = {}
     bal = {}
     gap = {}
@@ -42,6 +43,9 @@ def main():
                 brest[(p[2], p[1])] = float(d.get('b_rest', 0))
             except ValueError:
                 pass
+        elif ln.startswith('EFW|') and '|all|' in ln:
+            p = ln.rstrip('\n').split('|')
+            allc[p[2]] = kv(p[4:])
         elif ln.startswith('EFM|'):
             p = ln.rstrip('\n').split('|')
             d = kv(p[3:])
@@ -93,9 +97,19 @@ def main():
         a[1] += bal[(m, dt)] * sh
         a[2] += gap.get((m, dt), 0) * sh
         a[3] += 1
-    print(f'{"country":<28} {"weeks":>5} {"b_rest":>12} {"bal x msh_c":>12} {"gap x msh_c":>12} {"ratio":>6}')
+    print(f'{"country":<28} {"weeks":>5} {"b_rest":>12} {"bal x msh_c":>12} {"gap x msh_c":>12} {"ratio":>6}'
+          f'  sol  lit  m2/gdp  pool/gdp')
     for c, a in sorted(per.items(), key=lambda kv: kv[1][0])[:30]:
-        print(f'{c[:28]:<28} {a[3]:>5} {a[0]:>12.0f} {a[1]:>12.0f} {a[2]:>12.0f} {a[0] / a[1] if a[1] else 0:>6.2f}')
+        e = allc.get(c, {})
+
+        def f(k):
+            try:
+                return float(e.get(k, 0))
+            except ValueError:
+                return 0.0
+        g = f('gdp') or 1
+        print(f'{c[:28]:<28} {a[3]:>5} {a[0]:>12.0f} {a[1]:>12.0f} {a[2]:>12.0f} {a[0] / a[1] if a[1] else 0:>6.2f}'
+              f'  {f("sol"):>4.1f} {f("literacy"):>4.2f} {f("m2") / g:>6.2f} {f("pool") / g:>8.3f}')
     tot = [sum(a[i] for a in per.values()) for i in range(3)]
     print(f'all countries: b_rest {tot[0]:.0f}, bal x msh_c {tot[1]:.0f}, gap x msh_c {tot[2]:.0f}')
 
