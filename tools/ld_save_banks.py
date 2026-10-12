@@ -65,6 +65,12 @@ def main():
         cls[cty][cl] += lv
         if cl == 'company':
             comps[cty][name] += lv
+    other_types = collections.Counter()  # levels of other building types owned by companies that own bank levels
+    bank_owners = {o for (k, o, b) in d['own'] if k == 'building' and d['bld'].get(b, ('',))[0] == BANK and o in d['comp']}
+    for (kind, oid, bid), lv in d['own'].items():
+        b = d['bld'].get(bid)
+        if kind == 'building' and oid in bank_owners and b and b[0] != BANK:
+            other_types[b[0]] += lv
     rows = []
     for c, v in cls.items():
         tot = sum(v.values())
@@ -79,6 +85,8 @@ def main():
     for r in rows[:top]:
         cs = ', '.join(f'{k} {v}' for k, v in sorted(r['companies'].items(), key=lambda x: -x[1]))
         print(f"{r['country']:7} {r['total']:6d} {r['gov']:5d} {sum(r['companies'].values()):5d} {r['private']:5d}  {cs}")
+    print('other levels of bank-owning companies (company_owned_levels - bank levels): '
+          + (', '.join(f'{k} {v}' for k, v in other_types.most_common()) or 'none'))
     if out:
         json.dump(dict(date=d['date'], rows=rows), open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
