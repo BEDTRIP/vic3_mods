@@ -39,7 +39,7 @@ GENERIC = {'респу', 'корол', 'импер', 'восст', 'радик',
 RATIO_KEYS = {'price', 'cover', 'popm_share', 'popm_target', 'radical', 'loyalist', 'sol', 'legit', 'literacy', 'cb'}
 ALL_KEYS = ('gdp', 'm2', 'price', 'pool', 'pool_constr', 'treasury', 'debt', 'credit', 'inc', 'exp', 'savings',
             'deposits', 'loans', 'bkcap', 'popm', 'popm_share', 'popm_target', 'popm_cb', 'popm_bank', 'radical',
-            'loyalist', 'sol', 'legit', 'govlv', 'privlv', 'cover', 'bonds_abroad')
+            'loyalist', 'sol', 'legit', 'govlv', 'privlv', 'cover', 'bonds_abroad', 'cbm', 'trm', 'bankm')
 
 
 def ym(s):
@@ -166,7 +166,7 @@ def read_run(run, until):
                 if k in d:
                     cty[who][k][mo] = d[k]
             for k in ('pool', 'm2', 'gdp', 'debt', 'credit', 'popm', 'savings', 'treasury', 'bkcap', 'loans',
-                      'deposits', 'popm_cb', 'popm_bank', 'bonds_abroad'):
+                      'deposits', 'popm_cb', 'popm_bank', 'bonds_abroad', 'cbm', 'trm', 'bankm'):
                 if k in d:
                     summ['a.' + k][mo] += d[k]
             if 'popm_target' in d and 'savings' in d:
@@ -244,6 +244,19 @@ def read_run(run, until):
         S[f'k.fill_{metal}'] = ser({m: sum(f * b for f, b in fills[m][metal]) / sum(b for _, b in fills[m][metal])
                                     for m in fills if fills[m][metal]})
         S[f'k.short_{metal}'] = ser({m: sum(1 for f, _ in fills[m][metal] if f < 0.99) for m in fills if fills[m][metal]})
+    # months whose country lines were lost (the debug log's parts are copied while the game writes; a month with under 80 %
+    # of the usual lines): the world's sums of them are not shown, the months are listed in the checks
+    oc = [x for x in S.get('o.countries') or [] if x]
+    lost = []
+    if oc:
+        med = sorted(oc)[len(oc) // 2]
+        for i, x in enumerate(S['o.countries']):
+            if x is not None and x < 0.8 * med:
+                lost.append(S['t'][i])
+                for k in list(S):
+                    if k.startswith('a.') or k in ('o.countries', 'o.markets'):
+                        S[k][i] = None
+    chk['lost'] = [f'{int(x)}.{round((x - int(x)) * 12) + 1:02d}' for x in lost]
     # revolutions: a country that appears during the run (a civil war's rebels, a republic after a revolution) is joined
     # to the country of the start with the same stem of its name -- the logs name countries, not tags -- so that the
     # statistics of Britain and its radicals stay one line
@@ -520,6 +533,8 @@ def charts(D):
         'msilver': ('Серебро на счетах, тыс. товара', 'тыс.', holders(S, t, 's', 1 / 775e3)),
         'fill': ('Доля заказов металла, которую рынки исполнили', '', [['золото', s('k.fill_g', 1, 3)],
                                                                       ['серебро', s('k.fill_s', 1, 3)]]),
+        'smetal': ('Металл мира по держателям, млн (в деньгах стран)', 'млн', [['ЦБ', s('a.cbm', M)], ['кубышки казны', s('a.trm', M)],
+                                                                           ['банки', s('a.bankm', M)], ['население', s('a.popm', M)]]),
         'hoard': ('Кубышка населения мира: металл и цель, млн', 'млн', [['металл населения', s('a.popm', M)],
                                                                         ['цель', s('a.target_money', M)],
                                                                         ['сдано в ЦБ за месяц', s('a.popm_cb', M * 4.3)],
@@ -549,6 +564,8 @@ def charts(D):
                     debt=[['долг движка (без облигаций)', diff('debt', 'bonds_abroad', M, 2, cc)],
                           ['облигации у держателей', s('bonds_abroad', M, 2, cc)], ['весь долг', s('debt', M, 2, cc)],
                           ['предел кредита', s('credit', M, 2, cc)], ['казна', s('treasury', M, 2, cc)]],
+                    metal=[['металл ЦБ', s('cbm', M, 2, cc)], ['кубышка казны', s('trm', M, 2, cc)],
+                           ['металл банков', s('bankm', M, 2, cc)], ['металл населения', s('popm', M, 2, cc)]],
                     hoard=[['доля металла', s('popm_share', 1, 3, cc)], ['цель', s('popm_target', 1, 3, cc)],
                            ['радикалы', s('radical', 1, 3, cc)], ['лоялисты', s('loyalist', 1, 3, cc)]])
     return {k: dict(title=v[0], unit=v[1], series=v[2]) for k, v in ch.items()}, B
@@ -566,7 +583,8 @@ SECTIONS = [
      '1 — рынки продали весь заказ, ниже — нехватка.', ['gold', 'silver', 'mgold', 'msilver', 'fill']),
     ('Кубышка населения', 'Население держит в металле целевую долю всего, чем владеет: больше при радикалах, меньше '
      'при лоялистах. Сверх цели сдаёт излишек в ЦБ (металлический стандарт) или в банки вкладом. Металл населения '
-     'должен держаться около цели, а не расти без конца.', ['hoard']),
+     'должен держаться около цели, а не расти без конца. Ниже — металл по держателям в деньгах стран: ЦБ, кубышки '
+     'казны, банки, население (с прогонов, где кубышка казны пишется отдельно).', ['hoard', 'smetal']),
     ('Пул', 'Инвестиционный пул — деньги частного сектора на стройку. Если пул растёт, а стройка нет, деньги лежат без '
      'дела. Таблица внизу — крупнейшие пулы к концу прогона.', ['pool']),
     ('Бюджет и долг', 'Бюджет недели по движку и долг выбранной страны; ниже — кубышка населения той же страны и её '
@@ -646,7 +664,7 @@ function draw(id,cfg){const el=document.getElementById('c_'+id);if(!el)return;
 Object.keys(DATA.ch).forEach(k=>draw(k,DATA.ch[k]));
 const bsel=document.getElementById('bsel');
 function showB(c){[...bsel.children].forEach(b=>b.setAttribute('aria-pressed',b.textContent===c));const b=DATA.B[c];
- draw('cb',{title:'Бюджет '+c,unit:'тыс.',series:b.budget});draw('cd',{title:'Долг '+c,unit:'млн',series:b.debt});draw('ch',{title:'Кубышка '+c,unit:'',series:b.hoard})}
+ draw('cb',{title:'Бюджет '+c,unit:'тыс.',series:b.budget});draw('cd',{title:'Долг '+c,unit:'млн',series:b.debt});draw('ch',{title:'Кубышка '+c,unit:'',series:b.hoard});if(b.metal)draw('cm',{title:'Металл '+c,unit:'млн',series:b.metal})}
 Object.keys(DATA.B).forEach(c=>{const b=document.createElement('button');b.type='button';b.textContent=c;b.addEventListener('click',()=>showB(c));bsel.appendChild(b)});
 if(Object.keys(DATA.B).length)showB(Object.keys(DATA.B)[0]);
 """
@@ -678,6 +696,7 @@ def render(D, out, base=None, title=None):
             ('Банкротства банков', str(len(chk['fails']))),
             ('Новые страны за прогон', ', '.join(D['new'][:20]) or '—'),
             ('Исчезли за прогон', ', '.join(D['gone'][:20]) or '—'),
+            ('Месяцы с потерянными строками лога (их суммы по странам не показаны)', ', '.join(chk.get('lost') or []) or '—'),
             ('Объединено (революции: статистика новой страны — к стартовой)',
              '; '.join(f'{a} → {b}' for a, b in (D.get('joined') or {}).items()) or '—')]
     for a, b in rows:
@@ -696,6 +715,7 @@ def render(D, out, base=None, title=None):
             h.append('<div class="sel" id="bsel" role="group" aria-label="Страна"></div>'
                      '<div class="ct">Бюджет недели, тыс.</div><div class="chart" id="c_cb"></div>'
                      '<div class="ct">Долг движка и облигации, весь долг, предел кредита и казна, млн</div><div class="chart" id="c_cd"></div>'
+                     '<div class="ct">Металл страны по держателям, млн (в деньгах страны)</div><div class="chart" id="c_cm"></div>'
                      '<div class="ct">Кубышка населения: доля металла, цель, радикалы, лоялисты</div><div class="chart" id="c_ch"></div>')
         for i in ids:
             h.append(f'<div class="ct">{esc(ch[i]["title"])}</div><div class="chart" id="c_{i}"></div>')
