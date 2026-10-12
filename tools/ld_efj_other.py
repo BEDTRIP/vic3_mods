@@ -38,7 +38,7 @@ def main():
             jumps[p[2]].append((do, p[1]))
         else:
             drift[p[2]] += do
-    keys = ['other', 'other_pool', 'other_tr', 'lvl_pool', 'lvl_tr']
+    keys = ['other', 'other_pool', 'other_tr', 'lvl_pool', 'lvl_tr', 'bk_woff']
     w = defaultdict(float)
     print(f"{'страна':24} " + ' '.join(f'{k:>11}' for k in keys) + f" {'скачки':>11} {'n':>3} {'дрейф':>11}  крупнейшие")
     rows = sorted(last, key=lambda c: -abs(last[c].get('other', 0)))
