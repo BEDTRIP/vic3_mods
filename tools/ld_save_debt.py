@@ -1,6 +1,6 @@
 """Government debt of every country in a text save (форк, разбор R4б, В.R4б.14).
 
-Usage:  py tools/save_debt_table.py [save ...] [--top N]
+Usage:  py tools/ld_save_debt.py [save ...] [--top N]
         save -- names in "save games" or full paths (default autosave.v3)
 
 Per save: the date and a table of the N largest countries by GDP (default 25) -- GDP, treasury, investment pool,
