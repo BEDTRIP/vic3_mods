@@ -326,10 +326,12 @@ def summary(D):
         sh = pool / m2
         out.append(('ok' if sh < 0.25 else 'warn' if sh < 0.5 else 'bad', 'Пул',
                     f'{fmt(pool)} — {sh * 100:.0f} % M2 (пул, который не тратится, копится).'))
-    k0, k1 = first_of(S.get('w.bkcap')), last_of(S.get('w.bkcap'))
+    # the banks' capital from the end of the first year (the first months -- the start's setup)
+    ky = yearly(t, S.get('w.bkcap'))
+    k0, k1 = (ky[min(ky)], last_of(S.get('w.bkcap'))) if ky else (None, None)
     if k0 and k1:
         g = k1 / k0
-        out.append(('ok' if g < 5 else 'warn', 'Капитал банков', f'{fmt(k0)} → {fmt(k1)}, ×{g:.1f}.'))
+        out.append(('ok' if g < 5 else 'warn', 'Капитал банков', f'{fmt(k0)} в конце первого года → {fmt(k1)}, ×{g:.1f}.'))
     debt, gdp = last_of(S.get('a.debt')), last_of(S.get('a.gdp'))
     if gdp:
         hi = [c for c, d in D['end'].items() if d.get('credit') and d.get('debt', 0) / d['credit'] > 0.5]
