@@ -386,7 +386,8 @@ def read_run(run, until):
     # «прочее» of a renamed country (the same tag) continues its own running total: the new name's line is the
     # country's, the old one's -- its past (France and the French Republic were both shown, the total twice)
     for c, parent in joined.items():
-        if tags.get(c) and tags.get(c) == tags.get(parent) and c in leak:
+        renamed = parent in gone and months_apart(last_seen[parent], first_seen[c]) <= 2
+        if renamed and tags.get(c) and tags.get(c) == tags.get(parent) and c in leak:
             a, b = leak.setdefault(parent, dict(leak[c])), leak.pop(c)
             for k, v in b.items():
                 if k not in ('first', 'first_at', 'jump', 'jump_at'):
