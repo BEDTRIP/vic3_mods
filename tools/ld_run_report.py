@@ -559,9 +559,10 @@ def charts(D):
         return [[x, round((y - (z or 0)) * scale, nd)] for x, y, z in zip(t, a, b + [None] * (len(a) - len(b))) if y is not None]
 
     def cum(v, scale=1, nd=3):
+        # from the second month: the first is the start's setup (the CB's metal recount), not a leak
         out, acc = [], 0.0
         for x, y in zip(t, v or []):
-            if y is None:
+            if y is None or x < t[0] + 0.08:
                 continue
             acc += y
             out.append([x, round(acc * scale, nd)])
@@ -796,6 +797,8 @@ def render(D, out, base=None, title=None):
         for i in ids:
             h.append(f'<div class="ct">{esc(ch[i]["title"])}</div><div class="chart" id="c_{i}"></div>')
         if name == 'Утечки':
+            h.append('<p class="sub">Первый месяц игры не считается: в нём стартовая настройка счетов (металл ЦБ — 40 % M2), '
+                     'это не утечка; в таблицах стран — весь прогон.</p>')
             h.append('<h3>«Прочее» по странам</h3><div class="tw"><table><thead><tr><th>Страна</th><th class="n">К концу</th>'
                      '<th class="n">При первой строке</th><th>Первая строка</th><th class="n">Пул</th><th class="n">Казна</th>'
                      '<th class="n">Самая большая неделя</th><th>Когда</th></tr></thead><tbody>')
