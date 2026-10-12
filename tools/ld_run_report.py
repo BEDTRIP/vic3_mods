@@ -90,7 +90,8 @@ def read_run(run, until):
     xch = defaultdict(lambda: defaultdict(dict))
     xlast = {}
     allc = defaultdict(dict)                      # country -> last EFW|all fields
-    first_seen, last_seen = {}, {}
+    first_seen, last_seen, gdp0 = {}, {}, {}
+    xtot = defaultdict(float)                     # exchange -> the run's turnover
     fills = defaultdict(lambda: defaultdict(list))  # month -> metal -> [(fill, buy orders)]
     bsub = defaultdict(float)                     # date -> the world's bank subjects that week
     chk = dict(lines=0, efq=0, diff=0.0, mdiff=0.0, mdiff_at='', fails=[], last='')
@@ -149,7 +150,9 @@ def read_run(run, until):
         elif pre == 'EFW' and len(p) > 4 and k3 == 'all':
             d = fields(p[4:])
             allc[who] = dict(d, _date=p[1])
-            first_seen.setdefault(who, mo)
+            if who not in first_seen:
+                first_seen[who] = mo
+                gdp0[who] = d.get('gdp', 0)
             last_seen[who] = mo
             for k in ALL_KEYS:
                 if k in d:
@@ -195,10 +198,11 @@ def read_run(run, until):
                     last['l.' + k][mo] = sum(v for (kk, _), v in items.items() if kk == k)
         elif pre == 'EFD' and len(p) > 4 and k3 == 'xch_month':
             d = fields(p[4:])
-            for k in ('to_g', 'heat', 'cap_g'):
+            for k in ('to_g', 'heat', 'cap_g', 'members'):
                 if k in d:
                     xch[who][k][mo] = d[k]
-            xlast[who] = d
+            xtot[who] += d.get('to_g', 0)
+            xlast[who] = dict(d, _date=p[1])
     for dt, n in bsub.items():
         avg['o.banks'][ym(dt)].append(n)
     months = sorted({m for s in last.values() for m in s} | {m for s in avg.values() for m in s}
@@ -232,15 +236,25 @@ def read_run(run, until):
         S[f'k.fill_{metal}'] = ser({m: sum(f * b for f, b in fills[m][metal]) / sum(b for _, b in fills[m][metal])
                                     for m in fills if fills[m][metal]})
         S[f'k.short_{metal}'] = ser({m: sum(1 for f, _ in fills[m][metal] if f < 0.99) for m in fills if fills[m][metal]})
+    # the countries with monthly series: the largest by GDP at the start (the reference -- Britain -- among them, even
+    # if a revolution takes it apart) and at the end
     gdp_end = {c: d.get('gdp', 0) for c, d in allc.items()}
-    big = sorted(gdp_end, key=lambda c: -gdp_end[c])[:TOP]
+    big = sorted(gdp0, key=lambda c: -gdp0[c])[:6]
+    for c in sorted(gdp_end, key=lambda c: -gdp_end[c]):
+        if len(big) >= TOP:
+            break
+        if c not in big:
+            big.append(c)
     C = {}
     for c in big:
         C[c] = {k: ser(dm) for k, dm in cty[c].items()}
         for k, dm in cavg[c].items():
             C[c][k] = ser({m: sum(x) / len(x) for m, x in dm.items()})
-    xs = sorted(xlast, key=lambda c: -(xlast[c].get('year_to_g', 0) or xlast[c].get('to_g', 0) * 12))
+    # the exchanges by the run's turnover: one that died in a revolution stays in the charts
+    xs = sorted(xlast, key=lambda c: -xtot[c])
     X = {c: {k: ser(dm) for k, dm in xch[c].items()} for c in xs[:8]}
+    for c in xs:
+        xlast[c]['_total'] = xtot[c]
     t0 = months[0] if months else None
     new = [c for c, m in first_seen.items() if t0 and m > (t0[0], t0[1] + 2 if t0[1] <= 10 else 12)]
     gone = [c for c, m in last_seen.items() if months and m < months[-1]]
@@ -265,7 +279,7 @@ def read_run(run, until):
     except Exception as e:  # no debug logs here (the data built elsewhere) -- no speed
         S['spd_err'] = str(e)[:200]
     return dict(run=os.path.basename(os.path.normpath(run)), until=until, chk=chk, S=S, C=C, X=X, big=big,
-                end={c: allc[c] for c in sorted(allc, key=lambda c: -gdp_end[c])},
+                end={c: dict(allc[c], _gdp0=gdp0.get(c, 0)) for c in sorted(allc, key=lambda c: -gdp_end[c])},
                 xend={c: xlast[c] for c in xs}, new=new, gone=gone, err=errors(run))
 
 
@@ -386,6 +400,19 @@ def ops_index(S):
     return res
 
 
+def holders(S, t, m, scale):
+    # the state's metal: the CB's reserves and the treasury's hoard (cb_* is both; tr_* -- the hoard, logged since R4б)
+    def ser(k):
+        return [[x, round(y * scale, 1)] for x, y in zip(t, S.get(k) or []) if y is not None]
+    out = [['население', ser(f'm.pop_{m}')], ['банки', ser(f'm.bank_{m}')]]
+    if S.get(f'm.tr_{m}'):
+        cb = [[x, round((a - (b or 0)) * scale, 1)] for x, a, b in zip(t, S.get(f'm.cb_{m}') or [], S[f'm.tr_{m}']) if a is not None]
+        out += [['ЦБ', cb], ['кубышка казны', ser(f'm.tr_{m}')]]
+    else:
+        out += [['ЦБ и кубышка казны (вместе в этом прогоне)', ser(f'm.cb_{m}')]]
+    return out
+
+
 def charts(D):
     S, C, X = D['S'], D['C'], D['X']
     t = S['t']
@@ -420,11 +447,8 @@ def charts(D):
                                                             ['заказы рынков', s('m.buyo_s', 1, 0)],
                                                             ['продажи рынков', s('m.sello_s', 1, 0)],
                                                             ['ушло со счетов (3 мес.)', sm('m.sellw_s', 3, 0)]]),
-        'mgold': ('Золото на счетах, тыс. товара', 'тыс.', [['население', s('m.pop_g', 1e-5, 1)], ['ЦБ', s('m.cb_g', 1e-5, 1)],
-                                                            ['банки', s('m.bank_g', 1e-5, 1)]]),
-        'msilver': ('Серебро на счетах, тыс. товара', 'тыс.', [['население', s('m.pop_s', 1 / 775e3, 1)],
-                                                               ['ЦБ', s('m.cb_s', 1 / 775e3, 1)],
-                                                               ['банки', s('m.bank_s', 1 / 775e3, 1)]]),
+        'mgold': ('Золото на счетах, тыс. товара', 'тыс.', holders(S, t, 'g', 1e-5)),
+        'msilver': ('Серебро на счетах, тыс. товара', 'тыс.', holders(S, t, 's', 1 / 775e3)),
         'fill': ('Доля заказов металла, которую рынки исполнили', '', [['золото', s('k.fill_g', 1, 3)],
                                                                       ['серебро', s('k.fill_s', 1, 3)]]),
         'hoard': ('Кубышка населения мира: металл и цель, млн', 'млн', [['металл населения', s('a.popm', M)],
@@ -439,6 +463,7 @@ def charts(D):
         'psc': ('Очки стройки в неделю', 'очков', [[c, s('psc_pts', 1, 1, C[c])] for c in big[:8]]),
         'xto': ('Оборот бирж за месяц, тыс. в золоте', 'тыс.', [[c, s('to_g', 1e-3, 1, X[c])] for c in list(X)[:8]]),
         'xheat': ('Перегрев бирж', '×', [[c, s('heat', 1, 3, X[c])] for c in list(X)[:6]]),
+        'xmem': ('Участники бирж (страны, торгующие на бирже)', 'стран', [[c, s('members', 1, 0, X[c])] for c in list(X)[:8]]),
         'ops': ('Нагрузка механик по годам: во сколько раз больше, чем в первый год', '×', ops_index(S)),
         'spd': ('Скорость: секунд реального времени на игровой месяц, по кварталам', 'с', [['прогон', S.get('spd') or []]]),
         'bk': ('Банки мира, млн', 'млн', [['капитал', s('w.bkcap', M)], ['кредиты', s('w.loans', M)],
@@ -477,8 +502,9 @@ SECTIONS = [
     ('Люди', 'Радикалы и уровень жизни крупных стран. Рост радикалов и падение уровня жизни ведут к революциям; '
      'новые страны в списке «Проверки» — признак революций и распадов.', ['soc', 'sol']),
     ('Стройка', 'Очки стройки в неделю (PSC), среднее за месяц.', ['psc']),
-    ('Биржи', 'Оборот бирж за месяц в золоте и перегрев — рыночная цена требований к их стоимости без спроса (1 — '
-     'равно, ниже — дешевле).', ['xto', 'xheat']),
+    ('Биржи', 'Биржи выбраны по обороту за весь прогон: биржа, исчезнувшая в революции, остаётся на графиках. Оборот '
+     'за месяц в золоте, участники — страны, торгующие на бирже, перегрев — рыночная цена требований к их стоимости '
+     'без спроса (1 — равно, ниже — дешевле).', ['xto', 'xmem', 'xheat']),
     ('Банки', 'Капитал, кредиты и вклады банков мира; таблица банкротств — внизу.', ['bk']),
     ('Нагрузка механик', 'Сколько работы делает каждая механика за год, во сколько раз больше первого года: страны с '
      'моделью, записи в словаре требований, субъекты-банки, заявки, сделки и активы бирж, страны в клиринге, рынки, '
@@ -532,12 +558,14 @@ function draw(id,cfg){const el=document.getElementById('c_'+id);if(!el)return;
  for(let v=n.lo;v<=n.hi+1e-9;v+=n.step)s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" class="${Math.abs(v)<1e-9?'zl':'gl'}"/><text x="${L-6}" y="${Y(v)+4}" class="ax" text-anchor="end">${fx(v)}</text>`;
  const st=X1-X0>8?2:1;for(let y=X0;y<=X1;y+=st)s+=`<text x="${X(y)}" y="${H-8}" class="ax" text-anchor="middle">${y}</text>`;
  if(cfg.unit==='×')s+=`<line x1="${L}" x2="${W-R}" y1="${Y(1)}" y2="${Y(1)}" class="cut"/>`;
- ser.forEach(sr=>{const c=`var(${cols[cfg.series.indexOf(sr)%8]})`;let d='',prev=null;sr[1].forEach(p=>{d+=(prev!==null&&p[0]-prev<0.2?' L':' M')+X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1);prev=p[0]});s+=`<path class="ln" stroke="${c}" d="${d}"/>`});
+ ser.forEach(sr=>{const c=`var(${cols[cfg.series.indexOf(sr)%8]})`;const pts=sr[1];let st=1;for(let i=1;i<pts.length;i++)st=Math.min(st,pts[i][0]-pts[i-1][0]);sr.step=st;
+  let d='',prev=null;pts.forEach(p=>{d+=(prev!==null&&p[0]-prev<st*2.5?' L':' M')+X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1);prev=p[0]});s+=`<path class="ln" stroke="${c}" d="${d}"/>`;
+  if(pts.length<60)pts.forEach(p=>{s+=`<circle cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="3.5" fill="${c}" stroke="var(--bg)" stroke-width="1.5"/>`})});
  s+=`<line class="xl cut" y1="${T}" y2="${H-B}" x1="-10" x2="-10" style="stroke-dasharray:none;opacity:.5"/></svg>`;
  el.innerHTML=s+'<div class="leg">'+ser.map(x=>`<span><i style="background:var(${cols[cfg.series.indexOf(x)%8]})"></i>${x[0]}</span>`).join('')+'</div>';
  const svg=el.querySelector('svg'),tip=document.createElement('div');tip.className='tip';tip.hidden=true;el.appendChild(tip);
  svg.addEventListener('mousemove',e=>{const r=svg.getBoundingClientRect();const t=X0+((e.clientX-r.left)/r.width*W-L)/(W-L-R)*(X1-X0);if(t<X0||t>X1){tip.hidden=true;return}
-  const xl=svg.querySelector('.xl');const rows=ser.map(sr=>{const p=sr[1].reduce((a,b)=>Math.abs(b[0]-t)<Math.abs(a[0]-t)?b:a);if(Math.abs(p[0]-t)>0.1)return'';return `<span style="color:var(${cols[cfg.series.indexOf(sr)%8]})">■</span> ${sr[0]}: ${fx(p[1])}`}).filter(Boolean);
+  const xl=svg.querySelector('.xl');const rows=ser.map(sr=>{const p=sr[1].reduce((a,b)=>Math.abs(b[0]-t)<Math.abs(a[0]-t)?b:a);if(Math.abs(p[0]-t)>Math.max(0.1,(sr.step||0)*0.6))return'';return `<span style="color:var(${cols[cfg.series.indexOf(sr)%8]})">■</span> ${sr[0]}: ${fx(p[1])}`}).filter(Boolean);
   xl.setAttribute('x1',X(t));xl.setAttribute('x2',X(t));if(!rows.length){tip.hidden=true;return}
   const yr=Math.floor(t),mo=Math.floor((t-yr)*12)+1;tip.innerHTML=`${String(mo).padStart(2,'0')}.${yr}`+(cfg.unit?` · ${cfg.unit}`:'')+'<br>'+rows.join('<br>');tip.hidden=false;
   tip.style.left=Math.max(0,Math.min(e.clientX-r.left+12,r.width-tip.offsetWidth-4))+'px';tip.style.top='8px'});
@@ -625,14 +653,16 @@ def render(D, out, base=None, title=None):
                 h.append(f'<tr><td>{y}</td>' + ''.join(f'<td class="n">{fmt(oy[k].get(y))}</td>' for k, _ in OPS) + '</tr>')
             h.append('</tbody></table></div><p class="sub">Среднее за месяц; строки лога — за месяц.</p>')
         if name == 'Биржи':
-            h.append('<h3>Биржи, последний месяц (в золоте)</h3><div class="tw"><table><thead><tr><th>Биржа</th>'
-                     '<th class="n">Оборот за год</th><th class="n">Капитализация</th><th class="n">Перегрев</th>'
+            h.append('<h3>Биржи по обороту за весь прогон (в золоте; остальное — последний месяц биржи)</h3><div class="tw"><table><thead><tr><th>Биржа</th>'
+                     '<th class="n">Оборот за прогон</th><th class="n">За последний год</th><th>Последний месяц</th>'
+                     '<th class="n">Капитализация</th><th class="n">Перегрев</th>'
                      '<th class="n">Участники</th><th class="n">Из-за границы</th><th class="n">Купили ЦБ / банки / население / казна</th>'
                      '<th class="n">Продали ЦБ / банки / население / казна</th></tr></thead><tbody>')
             for c, d in list(D['xend'].items())[:15]:
                 bs = ' / '.join(fmt(d.get(f'b_{k}_g', 0)) for k in ('cb', 'bk', 'pp', 'tr'))
                 ss = ' / '.join(fmt(d.get(f's_{k}_g', 0)) for k in ('cb', 'bk', 'pp', 'tr'))
-                h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(d.get("year_to_g"))}</td><td class="n">{fmt(d.get("cap_g"))}</td>'
+                h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(d.get("_total"))}</td><td class="n">{fmt(d.get("year_to_g"))}</td>'
+                         f'<td>{esc(d.get("_date", ""))}</td><td class="n">{fmt(d.get("cap_g"))}</td>'
                          f'<td class="n">{d.get("heat", 0):.2f}</td><td class="n">{d.get("members", 0):.0f}</td>'
                          f'<td class="n">{100 * d.get("foreign", 0):.0f} %</td><td class="n">{bs}</td><td class="n">{ss}</td></tr>')
             h.append('</tbody></table></div>')
