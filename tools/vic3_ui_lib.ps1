@@ -411,15 +411,16 @@ function Close-And-Collect {
     Start-Sleep 2
     Get-ChildItem $Logs -File | Where-Object { $_.LastWriteTime -gt $t0 } | ForEach-Object { Copy-Item $_.FullName (Join-Path $OutDir $_.Name) }
     # debug.log rotates at ~512 KB and keeps only debug.1..5.log: the parts saved
-    # during the run (dbgparts) + the last ones, oldest first, each line once.
+    # during the run (dbgparts) + the last ones, oldest first, each part once (by its content: equal lines of different
+    # pops or weeks are kept)
     Save-DebugParts
     $parts = @(Get-ChildItem (Join-Path $OutDir "dbgparts") -Filter "*.log" -ErrorAction SilentlyContinue | Sort-Object Name) +
         @(Get-ChildItem $OutDir -Filter "debug.log")
     if ($parts) {
         $seen = New-Object 'System.Collections.Generic.HashSet[string]'
+        $parts = @($parts | Where-Object { $seen.Add((Get-FileHash $_.FullName -Algorithm MD5).Hash) })
         Select-String -Path ($parts | ForEach-Object FullName) -Pattern ': EF[A-Z]\|' |
             ForEach-Object { $_.Line -replace "^.*?: (EF[A-Z]\|)", '$1' } |
-            Where-Object { $seen.Add($_) } |
             Set-Content -Encoding utf8 (Join-Path $OutDir "eflog.txt")
     }
 }

@@ -202,9 +202,9 @@ else {
     $wallEnd = (Get-Date).AddMinutes($RunMinutes + 60)
     $userMode = $false
     while ($ranSec -lt $RunMinutes * 60 -and (Get-Date) -lt $wallEnd) {
-        # every 15 s: in run 12 several parts rotated within one minute and a
-        # game year was lost
-        for ($k = 0; $k -lt 4; $k++) { Start-Sleep 15; Save-DebugParts }
+        # every 2 s: the game keeps 5 parts of ~512 KB and fills one in 2-4 s with the fork's logs -- at 15 s whole
+        # parts were lost (r1012_200620: 6-19 October 1850, about 40 months with lines missing)
+        for ($k = 0; $k -lt 30; $k++) { Start-Sleep 2; Save-DebugParts }
         if ($Autosaves -gt 0) {
             # Count distinct write times, not files: the game keeps five rotating
             # autosave files, so a file count never got past 5 (3.10, night G).
