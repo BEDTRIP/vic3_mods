@@ -29,6 +29,13 @@ MON = {'января': 1, 'февраля': 2, 'марта': 3, 'апреля': 
 DATE = re.compile(r'(\w+) (\d+), (\d{4})')
 GOLD_U, SILVER_U = 100, 775          # account units a good of gold / silver
 TOP = 12                             # countries with monthly series (by GDP at the end)
+# words that name a form of state, not the country: not a stem to join a revolution's country by
+GENERIC = {'респу', 'корол', 'импер', 'восст', 'радик', 'народ', 'социа', 'федер', 'конфе', 'княже', 'герцо', 'султа',
+           'ханст', 'держа', 'госуд', 'компа', 'терри', 'колон', 'прови', 'союзн', 'объед', 'соеди', 'демок', 'совет',
+           'кommu', 'коммун', 'рабоч', 'вольн', 'свобо', 'север', 'южная', 'южный', 'запад', 'восто', 'верхн', 'нижня',
+           'вели', 'велик', 'новая', 'новый'}
+# the keys that are shares or indices: joined by GDP weights, not summed
+RATIO_KEYS = {'price', 'cover', 'popm_share', 'popm_target', 'radical', 'loyalist', 'sol', 'legit', 'literacy', 'cb'}
 ALL_KEYS = ('gdp', 'm2', 'price', 'pool', 'pool_constr', 'treasury', 'debt', 'credit', 'inc', 'exp', 'savings',
             'deposits', 'loans', 'bkcap', 'popm', 'popm_share', 'popm_target', 'popm_cb', 'popm_bank', 'radical',
             'loyalist', 'sol', 'legit', 'govlv', 'privlv', 'cover', 'bonds_abroad')
@@ -236,6 +243,63 @@ def read_run(run, until):
         S[f'k.fill_{metal}'] = ser({m: sum(f * b for f, b in fills[m][metal]) / sum(b for _, b in fills[m][metal])
                                     for m in fills if fills[m][metal]})
         S[f'k.short_{metal}'] = ser({m: sum(1 for f, _ in fills[m][metal] if f < 0.99) for m in fills if fills[m][metal]})
+    # revolutions: a country that appears during the run (a civil war's rebels, a republic after a revolution) is joined
+    # to the country of the start with the same stem of its name -- the logs name countries, not tags -- so that the
+    # statistics of Britain and its radicals stay one line
+    t0 = months[0] if months else None
+    new = [c for c, m in first_seen.items() if t0 and m > (t0[0], t0[1] + 2 if t0[1] <= 10 else 12)]
+    gone = [c for c, m in last_seen.items() if months and m < months[-1]]
+    start = [c for c in gdp0 if c not in new]
+    joined = {}
+    def stems(name):
+        return {w.lower()[:5] for w in re.findall(r'[А-Яа-яЁёA-Za-z]{5,}', name)} - GENERIC
+
+    def months_apart(a, b):
+        return abs((a[0] - b[0]) * 12 + a[1] - b[1])
+    for c in new:
+        best, best_score = None, 0
+        for p in start:
+            shared = sum(1 for st in stems(c) if st in p.lower())
+            if not shared:
+                continue
+            # a start country gone the month the new one comes -- the same country renamed (a republic, a company)
+            renamed = p in gone and months_apart(last_seen[p], first_seen[c]) <= 2
+            score = shared + (3 if renamed else 0) + gdp0.get(p, 0) * 1e-12
+            if score > best_score:
+                best, best_score = p, score
+        if best:
+            joined[c] = best
+    for c, parent in joined.items():
+        for k in set(cty[c]) | set(cty[parent]):
+            a, b = cty[parent].get(k, {}), cty[c].get(k, {})
+            ga, gb = cty[parent].get('gdp', {}), cty[c].get('gdp', {})
+            for m, v in b.items():
+                if k in RATIO_KEYS:
+                    wa, wb = ga.get(m, 0), gb.get(m, 0)
+                    if m in a and wa + wb > 0:
+                        a[m] = (a[m] * wa + v * wb) / (wa + wb)
+                    elif m not in a:
+                        a[m] = v
+                else:
+                    a[m] = a.get(m, 0) + v
+            cty[parent][k] = a
+        for k, dm in cavg[c].items():
+            for m, vs in dm.items():
+                pv = cavg[parent][k][m]
+                if pv and vs:
+                    tot = sum(pv) / len(pv) + sum(vs) / len(vs)
+                    cavg[parent][k][m] = [tot]
+                elif vs:
+                    cavg[parent][k][m] = list(vs)
+        for k, v in allc.get(c, {}).items():
+            if isinstance(v, float) and k not in RATIO_KEYS and last_seen.get(c) == last_seen.get(parent):
+                allc[parent][k] = allc[parent].get(k, 0) + v
+    for c in joined:
+        cty.pop(c, None)
+        cavg.pop(c, None)
+        gdp0.pop(c, None)
+        if c in allc and joined[c] in allc:
+            allc.pop(c)
     # the countries with monthly series: the largest by GDP at the start (the reference -- Britain -- among them, even
     # if a revolution takes it apart) and at the end
     gdp_end = {c: d.get('gdp', 0) for c, d in allc.items()}
@@ -255,9 +319,6 @@ def read_run(run, until):
     X = {c: {k: ser(dm) for k, dm in xch[c].items()} for c in xs[:8]}
     for c in xs:
         xlast[c]['_total'] = xtot[c]
-    t0 = months[0] if months else None
-    new = [c for c, m in first_seen.items() if t0 and m > (t0[0], t0[1] + 2 if t0[1] <= 10 else 12)]
-    gone = [c for c, m in last_seen.items() if months and m < months[-1]]
     # the speed: real seconds a game month, a quarter at a time (ld_speed: the real time [HH:MM:SS] of the debug lines
     # with a game date); the user's pauses at the PC count too
     S['spd'] = []
@@ -280,7 +341,7 @@ def read_run(run, until):
         S['spd_err'] = str(e)[:200]
     return dict(run=os.path.basename(os.path.normpath(run)), until=until, chk=chk, S=S, C=C, X=X, big=big,
                 end={c: dict(allc[c], _gdp0=gdp0.get(c, 0)) for c in sorted(allc, key=lambda c: -gdp_end[c])},
-                xend={c: xlast[c] for c in xs}, new=new, gone=gone, err=errors(run))
+                xend={c: xlast[c] for c in xs}, new=new, gone=gone, joined=joined, err=errors(run))
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -615,7 +676,9 @@ def render(D, out, base=None, title=None):
             ('Карты требований банков', f'max |map_diff| {chk["mdiff"]:.2f}' + (f' ({chk["mdiff_at"]})' if chk['mdiff_at'] else '')),
             ('Банкротства банков', str(len(chk['fails']))),
             ('Новые страны за прогон', ', '.join(D['new'][:20]) or '—'),
-            ('Исчезли за прогон', ', '.join(D['gone'][:20]) or '—')]
+            ('Исчезли за прогон', ', '.join(D['gone'][:20]) or '—'),
+            ('Объединено (революции: статистика новой страны — к стартовой)',
+             '; '.join(f'{a} → {b}' for a, b in (D.get('joined') or {}).items()) or '—')]
     for a, b in rows:
         h.append(f'<tr><td>{esc(a)}</td><td>{esc(b)}</td></tr>')
     h.append('</tbody></table></div><h3>Ошибки скрипта по файлам</h3>')
