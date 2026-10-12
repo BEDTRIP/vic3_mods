@@ -32,8 +32,9 @@ TOP = 12                             # countries with monthly series (by GDP at 
 # words that name a form of state, not the country: not a stem to join a revolution's country by
 GENERIC = {'респу', 'корол', 'импер', 'восст', 'радик', 'народ', 'социа', 'федер', 'конфе', 'княже', 'герцо', 'султа',
            'ханст', 'держа', 'госуд', 'компа', 'терри', 'колон', 'прови', 'союзн', 'объед', 'соеди', 'демок', 'совет',
-           'кommu', 'коммун', 'рабоч', 'вольн', 'свобо', 'север', 'южная', 'южный', 'запад', 'восто', 'верхн', 'нижня',
-           'вели', 'велик', 'новая', 'новый'}
+           'комму', 'рабоч', 'вольн', 'свобо', 'север', 'южная', 'южный', 'запад', 'восто', 'верхн', 'нижня',
+           'вели', 'велик', 'новая', 'новый', 'транс', 'либер', 'консе', 'крест', 'аболи', 'рабов', 'рабол', 'нацио',
+           'фунда', 'мятеж', 'анарх', 'монар', 'респу', 'теокр', 'клери', 'реакц', 'прогр', 'мусул'}
 # the keys that are shares or indices: joined by GDP weights, not summed
 RATIO_KEYS = {'price', 'cover', 'popm_share', 'popm_target', 'radical', 'loyalist', 'sol', 'legit', 'literacy', 'cb'}
 ALL_KEYS = ('gdp', 'm2', 'price', 'pool', 'pool_constr', 'treasury', 'debt', 'credit', 'inc', 'exp', 'savings',
