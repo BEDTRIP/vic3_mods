@@ -34,6 +34,7 @@ def main():
     mkt = {}
     bal = {}
     gap = {}
+    gapk = defaultdict(lambda: [0.0, 0.0])          # market -> the run's gap of the consumer goods, of the industrial
     msh = {}
     for ln in open(sys.argv[1], encoding='utf-8', errors='replace'):
         if ln.startswith('EFO|'):
@@ -57,6 +58,8 @@ def main():
             if 'gap' in d:
                 try:
                     gap[(d.get('mkt'), p[1])] = float(d['gap'])
+                    gapk[d.get('mkt')][0] += float(d.get('gap_cons', 0))
+                    gapk[d.get('mkt')][1] += float(d.get('gap_ind', 0))
                 except ValueError:
                     pass
             if 'bal' in d:
@@ -83,8 +86,9 @@ def main():
     print(f'{"market":<6} {"weeks":>5} {"sum b_rest":>12} {"sum balance":>12} {"ratio":>6} {"corr":>6}  members logged')
     for sb, m, n, sa, r, mem in sorted(rows):
         sg = sum(gap.get((m, dt), 0) for dt in weekly[m] if (m, dt) in bal)
-        print(f'{m:<6} {n:>5} {sa:>12.0f} {sb:>12.0f} {sa / sb if sb else 0:>6.2f} {r:>+6.2f}  gap {sg:>12.0f}  '
-              f'{", ".join(mem)[:60]}')
+        gc, gi = gapk[m]
+        print(f'{m:<6} {n:>5} {sa:>12.0f} {sb:>12.0f} {sa / sb if sb else 0:>6.2f} {r:>+6.2f}  cons {gc:>11.0f} '
+              f'({sa / gc if gc else 0:.2f})  ind {gi:>11.0f}  mod {sg - gc - gi:>11.0f}  {", ".join(mem)[:40]}')
     # per country: its b_rest against its market's balance / gap x its share of the market's consumption
     per = defaultdict(lambda: [0.0, 0.0, 0.0, 0])
     for (c, dt), v in brest.items():
