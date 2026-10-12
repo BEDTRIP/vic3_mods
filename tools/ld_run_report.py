@@ -92,6 +92,7 @@ def read_run(run, until):
     allc = defaultdict(dict)                      # country -> last EFW|all fields
     first_seen, last_seen = {}, {}
     fills = defaultdict(lambda: defaultdict(list))  # month -> metal -> [(fill, buy orders)]
+    bsub = defaultdict(float)                     # date -> the world's bank subjects that week
     chk = dict(lines=0, efq=0, diff=0.0, mdiff=0.0, mdiff_at='', fails=[], last='')
     other = other_tr = 0.0
     items = {}
@@ -108,6 +109,25 @@ def read_run(run, until):
         chk['lines'] += 1
         chk['last'] = p[1]
         pre, who, k3 = p[0], p[2], p[3]
+        summ['o.lines'][mo] += 1
+        if pre == 'EFI' and who == 'WORLD':
+            d = fields(p[3:])
+            last['o.claims'][mo] = d.get('n_m', 0) + d.get('n_b', 0) + d.get('n_f', 0)
+        elif pre == 'EFG' and who == 'WORLD':
+            avg['o.clearing'][mo].append(fields(p[3:]).get('n', 0))
+        elif pre == 'EFD' and who == 'WORLD':
+            d = fields(p[3:])
+            for k in ('orders', 'deals', 'assets'):
+                if k in d:
+                    last['o.' + k][mo] = d[k]
+        elif pre == 'EFJ' and k3 == 'bank_subj':
+            bsub[p[1]] += fields(p[4:]).get('n', 0)
+        elif pre == 'EFU':
+            summ['o.funds_l'][mo] += 1
+        elif pre == 'EFV' and k3 == 'mkt':
+            summ['o.markets'][mo] += 1
+        if pre == 'EFW' and k3 == 'all':
+            summ['o.countries'][mo] += 1
         if pre == 'EFQ':
             chk['efq'] += 1
         elif pre == 'EFK' and k3 == 'bank_fail':
@@ -179,6 +199,8 @@ def read_run(run, until):
                 if k in d:
                     xch[who][k][mo] = d[k]
             xlast[who] = d
+    for dt, n in bsub.items():
+        avg['o.banks'][ym(dt)].append(n)
     months = sorted({m for s in last.values() for m in s} | {m for s in avg.values() for m in s}
                     | {m for s in summ.values() for m in s})
     idx = {m: i for i, m in enumerate(months)}
@@ -338,6 +360,30 @@ def fmt(v):
     return s.replace('.', ',')
 
 
+OPS = [('o.countries', 'страны с моделью'), ('o.claims', 'записи требований'), ('o.banks', 'субъекты-банки'),
+       ('o.orders', 'заявки бирж'), ('o.deals', 'сделки бирж'), ('o.assets', 'активы в стаканах'),
+       ('o.clearing', 'страны в клиринге'), ('o.markets', 'рынки'), ('o.lines', 'строк лога')]
+
+
+def ops_year(S):
+    out = {}
+    t = S['t']
+    for k, name in OPS:
+        out[k] = yearly(t, S.get(k), 'avg')
+    return out
+
+
+def ops_index(S):
+    res = []
+    for k, name in OPS:
+        y = yearly(S['t'], S.get(k), 'avg')
+        ys = sorted(y)
+        if len(ys) < 2 or not y[ys[0]]:
+            continue
+        res.append([name, [[yy + 0.5, round(y[yy] / y[ys[0]], 3)] for yy in ys]])
+    return res
+
+
 def charts(D):
     S, C, X = D['S'], D['C'], D['X']
     t = S['t']
@@ -391,6 +437,7 @@ def charts(D):
         'psc': ('Очки стройки в неделю', 'очков', [[c, s('psc_pts', 1, 1, C[c])] for c in big[:8]]),
         'xto': ('Оборот бирж за месяц, тыс. в золоте', 'тыс.', [[c, s('to_g', 1e-3, 1, X[c])] for c in list(X)[:8]]),
         'xheat': ('Перегрев бирж', '×', [[c, s('heat', 1, 3, X[c])] for c in list(X)[:6]]),
+        'ops': ('Нагрузка механик по годам: во сколько раз больше, чем в первый год', '×', ops_index(S)),
         'spd': ('Скорость: секунд реального времени на игровой месяц, по кварталам', 'с', [['прогон', S.get('spd') or []]]),
         'bk': ('Банки мира, млн', 'млн', [['капитал', s('w.bkcap', M)], ['кредиты', s('w.loans', M)],
                                          ['вклады', s('w.deposits', M)]]),
@@ -431,6 +478,10 @@ SECTIONS = [
     ('Биржи', 'Оборот бирж за месяц в золоте и перегрев — рыночная цена требований к их стоимости без спроса (1 — '
      'равно, ниже — дешевле).', ['xto', 'xheat']),
     ('Банки', 'Капитал, кредиты и вклады банков мира; таблица банкротств — внизу.', ['bk']),
+    ('Нагрузка механик', 'Сколько работы делает каждая механика за год, во сколько раз больше первого года: страны с '
+     'моделью, записи в словаре требований, субъекты-банки, заявки, сделки и активы бирж, страны в клиринге, рынки, '
+     'строки лога. Это не время, а объём работы: если скорость падает вместе с ростом одной из линий, её механика и '
+     'дорожает. Числа по годам — таблица ниже.', ['ops']),
     ('Скорость', 'Секунды реального времени на игровой месяц (по строкам debug.log с реальным временем и игровой датой). '
      'Рост со временем — игра дорожает: больше стран, зданий, требований. Паузы пользователя за ПК тоже попадают сюда. '
      'Что именно ест время по механикам, показывает только профилировщик (навык vic3-sandbox, «Профилировщик») — '
@@ -563,6 +614,14 @@ def render(D, out, base=None, title=None):
             if not hi:
                 h.append('<tr><td colspan="6">нет</td></tr>')
             h.append('</tbody></table></div>')
+        if name == 'Нагрузка механик':
+            oy = ops_year(S)
+            yrs = sorted({y for v in oy.values() for y in v})
+            h.append('<div class="tw"><table><thead><tr><th>Год</th>' + ''.join(f'<th class="n">{esc(n)}</th>' for _, n in OPS)
+                     + '</tr></thead><tbody>')
+            for y in yrs:
+                h.append(f'<tr><td>{y}</td>' + ''.join(f'<td class="n">{fmt(oy[k].get(y))}</td>' for k, _ in OPS) + '</tr>')
+            h.append('</tbody></table></div><p class="sub">Среднее за месяц; строки лога — за месяц.</p>')
         if name == 'Биржи':
             h.append('<h3>Биржи, последний месяц (в золоте)</h3><div class="tw"><table><thead><tr><th>Биржа</th>'
                      '<th class="n">Оборот за год</th><th class="n">Капитализация</th><th class="n">Перегрев</th>'
