@@ -130,7 +130,7 @@ def ledger():
         "ai_selle_bond_maturity_yers_time", "ai_interest_calculated", "ai_total_bond_value",
         "ai_interest_at_term_calculated", "ai_interest_per_month_calculated", "ai_selle_bond_maturity_yers"))
     frees = frees.replace("name = ai_buy_bond_$N$ value", "name = ai_buy_bond_$N$_on value")
-    return HEAD + f"""# В5.5 (5.10), R8б.2: bonds as parts of the seller's engine debt, held in the register of claims -- see the
+    return HEAD + f"""# В5.5, R8б.2: bonds as parts of the seller's engine debt, held in the register of claims -- see the
 # generator's docstring. Values: script_values/ld_bond_ledger_values.txt (generated with this file).
 
 # Country scope, weekly (zz_ef_money_model_step): the seller's side first (roll last week's sums, the ratio of the
@@ -231,7 +231,7 @@ zz_ef_bl_register = {{
 zz_ef_bl_slot_free = {{
 {frees.replace(chr(9)*3, chr(9))}}}
 
-# Holder scope, a private banks' purchase with no seller in E&F's list (run s1g: Britain 1838.1, 1.95M): no debt to
+# Holder scope, a private banks' purchase with no seller in E&F's list (Britain 1838.1, 1.95M): no debt to
 # hold a part of -- back to our pool (only existing debt is bought).
 zz_ef_pb_no_seller = {{
 	add_investment_pool = var:zz_ef_bl_x
@@ -372,7 +372,7 @@ zz_ef_bl_pay = {{
 	remove_variable = zz_ef_bl_x0
 }}
 
-# R2, step 7 (8.10): the seller's pool moves for its bonds (a sale, interest and repayments to the holders) are its
+# R2, step 7: the seller's pool moves for its bonds (a sale, interest and repayments to the holders) are its
 # banks' capital (the pool backs the engine's debt; the treasury pays the engine's interest as before) -- not «прочее».
 zz_ef_bl_seller_capital = {{
 	zz_ef_registry_init = yes
@@ -400,7 +400,7 @@ def values():
                  for k in ("sold", "int_out", "redeem", "woff", "buy", "refund", "int_in", "back", "lost", "int_short"))
     vf += "".join(f"zz_ef_v_f_pb_{k} = {{\n\tvalue = 0\n\tif = {{ limit = {{ has_variable = zz_ef_f_pb_{k} }} value = var:zz_ef_f_pb_{k} }}\n}}\n"
                   for k in ("buy", "refund", "back", "int_in"))
-    return HEAD + f"""# В5.5 (5.10), R8б.2: values of the bond ledger (scripted_effects/ld_bond_ledger.txt) -- see the generator's docstring.
+    return HEAD + f"""# В5.5, R8б.2: values of the bond ledger (scripted_effects/ld_bond_ledger.txt) -- see the generator's docstring.
 
 # the engine's debt
 zz_ef_bl_principal = {{
