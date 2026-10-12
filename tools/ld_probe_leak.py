@@ -39,9 +39,15 @@ def main():
     order = []
     tags = {}
     for ln in open(sys.argv[1], encoding='utf-8', errors='replace'):
-        if not ln.startswith(('EFO|', 'EFR|', 'EFP|')):
+        if not ln.startswith(('EFO|', 'EFR|', 'EFP|', 'EFJ|')):
             continue
         p = ln.rstrip('\n').split('|')
+        if p[0] == 'EFJ':
+            if len(p) > 4 and p[3] == 'lvl':
+                d = fields(p[4:])
+                rows[(p[2], p[1])]['lvl_pool'] += d.get('pool', 0) if isinstance(d.get('pool'), float) else 0
+                rows[(p[2], p[1])]['lvl_tr'] += d.get('tr', 0) if isinstance(d.get('tr'), float) else 0
+            continue
         key = (p[2], p[1])
         r = rows[key]
         if p[0] == 'EFO':
@@ -59,6 +65,16 @@ def main():
                 if isinstance(d.get(k), float):
                     r[k] = d[k]
             r['probe'] = 1
+        elif p[3] == 'abr':
+            for k, v in fields(p[4:]).items():
+                if isinstance(v, float):
+                    r['a_' + k] = v
+        elif p[3] == 'inv':
+            for k, v in fields(p[4:]).items():
+                if isinstance(v, float):
+                    r['i_' + k] = v
+        elif p[3] == 'invdesc':
+            r['desc'] = '|'.join(p[4:])[:300]
         elif p[3] == 'bld':
             d = fields(p[4:])
             r['n_bld'] += 1
@@ -90,6 +106,39 @@ def main():
             if i % 4 == 0:
                 r = rows[k]
                 print(f'{k[1]:<18} ' + ' '.join(f'{r.get(x, 0):>11.0f}' for x in cols))
+        if any(rows[k].get('a_d_abroad') is not None and 'a_abroad' in rows[k] for k in keys):
+            ak = [k for k in keys if 'a_abroad' in rows[k]]
+            acols = ('abr_rest', 'a_d_abroad', 'd_fass', 'd_fxm', 'd_liab', 'd_blh', 'a_d_bonds', 'a_d_tbonds', 'a_fx_in',
+                     'a_fx_out', 'a_cur_out', 'a_own_back', 'a_w_nr_dep', 'a_fxm', 'a_liab', 'a_parity')
+            print('abroad: date      ' + ' '.join(f'{k:>10}' for k in acols))
+            prev = None
+            tot = defaultdict(float)
+            for k in ak:
+                r = rows[k]
+                if prev:
+                    for a, b in (('d_fass', 'a_fassets'), ('d_fxm', 'a_fxm'), ('d_liab', 'a_liab'), ('d_blh', 'a_blh')):
+                        r[a] = r.get(b, 0) - prev.get(b, 0)
+                prev = r
+                for x in acols:
+                    tot[x] += r.get(x, 0)
+            for i, k in enumerate(ak):
+                if i % 4 == 0:
+                    r = rows[k]
+                    print(f'{k[1]:<18} ' + ' '.join(f'{r.get(x, 0):>10.0f}' for x in acols))
+            print('abroad sums: ' + ', '.join(f'{x} {tot[x]:.0f}' for x in acols if not x.startswith(('a_fxm', 'a_liab', 'a_par'))))
+        if any('i_auto' in rows[k] for k in keys):
+            ik = [k for k in keys if 'i_auto' in rows[k]]
+            n = 0
+            for i in range(1, len(ik)):
+                a, b = rows[ik[i - 1]], rows[ik[i]]
+                if b.get('lvl_pool') or b['i_auto'] != a['i_auto'] or b.get('i_privlv') != a.get('i_privlv'):
+                    n += 1
+                    if n <= 25:
+                        print(f"inv {ik[i][1]:<18} auto {a['i_auto']:.0f}->{b['i_auto']:.0f} privlv {a.get('i_privlv', 0):.0f}->"
+                              f"{b.get('i_privlv', 0):.0f} govlv {a.get('i_govlv', 0):.0f}->{b.get('i_govlv', 0):.0f} "
+                              f"lvl_pool {b.get('lvl_pool', 0):.0f} lvl_tr {b.get('lvl_tr', 0):.0f} pool {b.get('i_pool', 0):.0f} "
+                              f"chg {b.get('i_chg', 0):.0f}")
+            print('last desc: ' + rows[ik[-1]].get('desc', '') if isinstance(rows[ik[-1]].get('desc'), str) else '')
         if any(rows[k].get('n_bld') for k in keys):
             bcols = ('b_rest', 'surplus', 'b_rev', 'b_mat', 'b_wage', 'b_inc', 'b_texp', 'b_wp', 'b_cash', 'b_maxc',
                      'b_trade', 'b_tax', 'b_gov', 'b_cg', 'b_full', 'n_bld')
