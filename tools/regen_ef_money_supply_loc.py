@@ -571,11 +571,11 @@ NOTES = {
               "business and consumer credit stay under metal / the reserve norm "
               "([Country.MakeScope.ScriptValue('zz_ef_reserve_norm')|%1]) × the cover multiplier: limit "
               "[Country.MakeScope.ScriptValue('zz_ef_credit_limit')|D], lent [Country.MakeScope.ScriptValue('zz_ef_credit_now')|D]."),
-    "abroad": ("Запас счёта — чистая международная позиция: облигации других стран и чужая валюта в ЦБ минус наша валюта у других ЦБ. "
+    "abroad": ("Запас счёта — чистая международная позиция: облигации других стран и чужая валюта в ЦБ и банках минус наша валюта у других ЦБ. "
                "Платежи с заграницей сводит мировой клиринг: отток оплачивается металлом ЦБ (доля — по доверию к "
                "валюте) и нашей валютой, приток — долей металла и валют, собранных с плательщиков. Наша валюта у чужих ЦБ лежит "
                "вкладами в наших банках ([Country.MakeScope.ScriptValue('zz_ef_nr_dep_v')|D]) — деньги работают дома.",
-               "The account's stock is the net international position: other countries' bonds and foreign currency in the CB minus our currency at "
+               "The account's stock is the net international position: other countries' bonds and foreign currency in the CB and the banks minus our currency at "
                "other CBs. Payments with abroad go through the world clearing: an outflow pays in the CB's metal (the "
                "share by trust in the currency) and in our currency, an inflow takes a share of the metal and "
                "currencies the payers brought. Our currency at other CBs lies as deposits in our banks "
