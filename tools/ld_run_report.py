@@ -102,6 +102,7 @@ def read_run(run, until):
     xlast = {}
     allc = defaultdict(dict)                      # country -> last EFW|all fields
     first_seen, last_seen, gdp0 = {}, {}, {}
+    tags = {}                                     # country name -> its tag (EFW|all 'tag')
     xtot = defaultdict(float)                     # exchange -> the run's turnover
     fills = defaultdict(lambda: defaultdict(list))  # month -> metal -> [(fill, buy orders)]
     bsub = defaultdict(float)                     # date -> the world's bank subjects that week
@@ -184,6 +185,9 @@ def read_run(run, until):
         elif pre == 'EFW' and len(p) > 4 and k3 == 'all':
             d = fields(p[4:])
             allc[who] = dict(d, _date=p[1])
+            for x in p[4:6]:
+                if x.startswith('tag '):
+                    tags[who] = x[4:].strip()
             if who not in first_seen:
                 first_seen[who] = mo
                 gdp0[who] = d.get('gdp', 0)
@@ -308,8 +312,9 @@ def read_run(run, until):
                         S[k][i] = None
     chk['lost'] = [f'{int(x)}.{round((x - int(x)) * 12) + 1:02d}' for x in lost]
     # revolutions: a country that appears during the run (a civil war's rebels, a republic after a revolution) is joined
-    # to the country of the start with the same stem of its name -- the logs name countries, not tags -- so that the
-    # statistics of Britain and its radicals stay one line
+    # to the country of the start -- by its tag first (a country renamed keeps it: France -> the French Republic), else by
+    # the same stem of its name (the rebels get a new tag) -- so that the statistics of Britain and its radicals stay one
+    # line
     t0 = months[0] if months else None
     new = [c for c, m in first_seen.items() if t0 and m > (t0[0], t0[1] + 2 if t0[1] <= 10 else 12)]
     gone = [c for c, m in last_seen.items() if months and m < months[-1]]
@@ -321,6 +326,10 @@ def read_run(run, until):
     def months_apart(a, b):
         return abs((a[0] - b[0]) * 12 + a[1] - b[1])
     for c in new:
+        same = [p for p in start if tags.get(c) and tags.get(p) == tags.get(c)]
+        if same:
+            joined[c] = same[0]
+            continue
         best, best_score = None, 0
         for p in start:
             shared = sum(1 for st in stems(c) if st in p.lower())
