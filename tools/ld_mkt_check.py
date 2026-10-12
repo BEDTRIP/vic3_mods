@@ -84,7 +84,7 @@ def main():
         b = [bal[(m, dt)] for dt in dts]
         rows.append((sum(b), m, len(dts), sum(a), corr(a, b), sorted(members[m])))
     print(f'{"market":<6} {"weeks":>5} {"sum b_rest":>12} {"sum balance":>12} {"ratio":>6} {"corr":>6}  members logged')
-    for sb, m, n, sa, r, mem in sorted(rows):
+    for sb, m, n, sa, r, mem in sorted(rows)[:25]:
         sg = sum(gap.get((m, dt), 0) for dt in weekly[m] if (m, dt) in bal)
         gc, gi = gapk[m]
         print(f'{m:<6} {n:>5} {sa:>12.0f} {sb:>12.0f} {sa / sb if sb else 0:>6.2f} {r:>+6.2f}  cons {gc:>11.0f} '
