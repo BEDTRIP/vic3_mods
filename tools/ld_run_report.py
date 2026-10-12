@@ -222,6 +222,26 @@ def read_run(run, until):
     t0 = months[0] if months else None
     new = [c for c, m in first_seen.items() if t0 and m > (t0[0], t0[1] + 2 if t0[1] <= 10 else 12)]
     gone = [c for c, m in last_seen.items() if months and m < months[-1]]
+    # the speed: real seconds a game month, a quarter at a time (ld_speed: the real time [HH:MM:SS] of the debug lines
+    # with a game date); the user's pauses at the PC count too
+    S['spd'] = []
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        from datetime import date
+        import ld_speed
+        pts = sorted(ld_speed.points(run))
+        g_lim = date(lim[0], lim[1], 28).toordinal()
+        pts = [x for x in pts if x[0] <= g_lim and x[0] >= date(1836, 2, 1).toordinal()]
+        by_q = defaultdict(list)
+        for g, sec in pts:
+            d = date.fromordinal(g)
+            by_q[(d.year, (d.month - 1) // 3)].append((g, sec))
+        for (y, q), qp in sorted(by_q.items()):
+            sl = ld_speed.slope(qp)
+            if sl is not None and sl > 0:
+                S['spd'].append([round(y + q / 4 + 0.125, 3), round(sl, 2)])
+    except Exception as e:  # no debug logs here (the data built elsewhere) -- no speed
+        S['spd_err'] = str(e)[:200]
     return dict(run=os.path.basename(os.path.normpath(run)), until=until, chk=chk, S=S, C=C, X=X, big=big,
                 end={c: allc[c] for c in sorted(allc, key=lambda c: -gdp_end[c])},
                 xend={c: xlast[c] for c in xs}, new=new, gone=gone, err=errors(run))
@@ -294,6 +314,12 @@ def summary(D):
         out.append(('ok' if len(hi) < 10 else 'warn', 'Госдолг',
                     f'мира {fmt(debt or 0)} — {100 * (debt or 0) / gdp:.0f} % ВВП; больше половины предела у '
                     f'{len(hi)} стран.'))
+    sp = S.get('spd') or []
+    if sp:
+        a0 = sum(v for _, v in sp[:4]) / len(sp[:4])
+        a1 = sum(v for _, v in sp[-4:]) / len(sp[-4:])
+        out.append(('ok' if a1 < 25 else 'warn', 'Скорость', f'{a0:.1f} с на игровой месяц в первый год, {a1:.1f} — в '
+                    f'последний.'))
     fe = sum(n for f, n in D['err'] if os.path.basename(f).startswith('ld_'))
     out.append(('ok' if fe == 0 else 'bad', 'Ошибки по файлам форка', f'{fe} (файлы ld_*), всего с местом в скрипте — '
                 f'{sum(n for _, n in D["err"])}.'))
@@ -365,6 +391,7 @@ def charts(D):
         'psc': ('Очки стройки в неделю', 'очков', [[c, s('psc_pts', 1, 1, C[c])] for c in big[:8]]),
         'xto': ('Оборот бирж за месяц, тыс. в золоте', 'тыс.', [[c, s('to_g', 1e-3, 1, X[c])] for c in list(X)[:8]]),
         'xheat': ('Перегрев бирж', '×', [[c, s('heat', 1, 3, X[c])] for c in list(X)[:6]]),
+        'spd': ('Скорость: секунд реального времени на игровой месяц, по кварталам', 'с', [['прогон', S.get('spd') or []]]),
         'bk': ('Банки мира, млн', 'млн', [['капитал', s('w.bkcap', M)], ['кредиты', s('w.loans', M)],
                                          ['вклады', s('w.deposits', M)]]),
     }
@@ -404,6 +431,10 @@ SECTIONS = [
     ('Биржи', 'Оборот бирж за месяц в золоте и перегрев — рыночная цена требований к их стоимости без спроса (1 — '
      'равно, ниже — дешевле).', ['xto', 'xheat']),
     ('Банки', 'Капитал, кредиты и вклады банков мира; таблица банкротств — внизу.', ['bk']),
+    ('Скорость', 'Секунды реального времени на игровой месяц (по строкам debug.log с реальным временем и игровой датой). '
+     'Рост со временем — игра дорожает: больше стран, зданий, требований. Паузы пользователя за ПК тоже попадают сюда. '
+     'Что именно ест время по механикам, показывает только профилировщик (навык vic3-sandbox, «Профилировщик») — '
+     'отдельным прогоном.', ['spd']),
 ]
 
 CSS = """:root{--bg:#fcfcfb;--fg:#0b0b0b;--mut:#52514e;--rule:#e2e1dc;--grid:#ecebe6;--chip:#f1f0ec;
@@ -557,9 +588,18 @@ def render(D, out, base=None, title=None):
     h.append('<h2>По годам</h2><p>Конец каждого года. С базой — второе число в ячейке.</p><div class="tw"><table><thead><tr><th>Год</th>')
     cols = [('M2', 'w.m2', 'last'), ('«Прочее»', 'w.other', 'last'), ('Пул', 'a.pool', 'last'),
             ('Металл населения', 'a.popm', 'last'), ('Капитал банков', 'w.bkcap', 'last'), ('Долг мира', 'a.debt', 'last')]
-    h.append(''.join(f'<th class="n">{esc(a)}</th>' for a, _, _ in cols) + '</tr></thead><tbody>')
     ys = {k: yearly(t, S.get(k), f) for _, k, f in cols}
     yb = {k: yearly(base['S']['t'], base['S'].get(k), f) for _, k, f in cols} if base else {}
+    def spd_year(SS):
+        out = {}
+        for x, v in SS.get('spd') or []:
+            out.setdefault(int(x), []).append(v)
+        return {y: sum(v) / len(v) for y, v in out.items()}
+    cols.append(('Секунд / мес.', 'spd', 'avg'))
+    ys['spd'] = spd_year(S)
+    if base:
+        yb['spd'] = spd_year(base['S'])
+    h.append(''.join(f'<th class="n">{esc(a)}</th>' for a, _, _ in cols) + '</tr></thead><tbody>')
     for y in sorted({y for v in ys.values() for y in v}):
         cells = []
         for _, k, _ in cols:
