@@ -250,8 +250,15 @@ def read_run(run, until):
     lost = []
     if oc:
         med = sorted(oc)[len(oc) // 2]
+        g = S.get('a.gdp') or []
+
+        def gdp_dip(i):
+            # the big countries' lines lost: the month's world GDP under 90 % of both neighbours'
+            if i <= 0 or i + 1 >= len(g) or not g[i] or not g[i - 1] or not g[i + 1]:
+                return False
+            return g[i] < 0.9 * min(g[i - 1], g[i + 1])
         for i, x in enumerate(S['o.countries']):
-            if x is not None and x < 0.8 * med:
+            if x is not None and (x < 0.8 * med or gdp_dip(i)):
                 lost.append(S['t'][i])
                 for k in list(S):
                     if k.startswith('a.') or k in ('o.countries', 'o.markets'):
