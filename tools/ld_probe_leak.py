@@ -59,6 +59,14 @@ def main():
                 if isinstance(d.get(k), float):
                     r[k] = d[k]
             r['probe'] = 1
+        elif p[3] == 'bld':
+            d = fields(p[4:])
+            r['n_bld'] += 1
+            for k in ('rev', 'mat', 'wage', 'inc', 'texp', 'cash', 'maxc', 'trade', 'tax', 'gov', 'cg', 'wp'):
+                if isinstance(d.get(k), float):
+                    r['b_' + k] += d[k]
+            r['b_full'] += 1 if isinstance(d.get('cash'), float) and isinstance(d.get('maxc'), float) and \
+                d['maxc'] > 0 and d['cash'] >= d['maxc'] * 0.999 else 0
         elif p[3] == 'pop':
             d = fields(p[4:])
             inc, exp, wexp = d.get('inc', 0), d.get('exp', 0), d.get('wexp', 0)
@@ -82,6 +90,21 @@ def main():
             if i % 4 == 0:
                 r = rows[k]
                 print(f'{k[1]:<18} ' + ' '.join(f'{r.get(x, 0):>11.0f}' for x in cols))
+        if any(rows[k].get('n_bld') for k in keys):
+            bcols = ('b_rest', 'surplus', 'b_rev', 'b_mat', 'b_wage', 'b_inc', 'b_texp', 'b_wp', 'b_cash', 'b_maxc',
+                     'b_trade', 'b_tax', 'b_gov', 'b_cg', 'b_full', 'n_bld')
+            print('buildings: date ' + ' '.join(f'{k:>11}' for k in bcols))
+            for i, k in enumerate(keys):
+                if i % 4 == 0 and rows[k].get('n_bld'):
+                    r = rows[k]
+                    print(f'{k[1]:<18} ' + ' '.join(f'{r.get(x, 0):>11.0f}' for x in bcols))
+            bk = [k for k in keys if rows[k].get('n_bld')]
+            dc = [0] + [rows[bk[i]]['b_cash'] - rows[bk[i - 1]]['b_cash'] for i in range(1, len(bk))]
+            for name, v in (('d_cash(sum bld)', dc),
+                            ('rev-mat-wage', [rows[k]['b_rev'] - rows[k]['b_mat'] - rows[k]['b_wage'] for k in bk]),
+                            ('inc', [rows[k]['b_inc'] for k in bk]), ('wp', [rows[k]['b_wp'] for k in bk])):
+                y = [rows[k]['b_rest'] for k in bk]
+                print(f'  {name}: mean {sum(v) / len(v):.0f}, corr with b_rest {corr(y[1:], v[1:]):+.2f}')
         tot = {x: sum(rows[k].get(x, 0) for k in keys) for x in ('b_rest', 'leak', 'abr_rest', 'surplus', 'surplus_w', 'bal', 'bprofit')}
         print('sums: ' + ', '.join(f'{x} {v:.0f}' for x, v in tot.items()))
         sell_buy = [rows[k].get('sell', 0) - rows[k].get('buy', 0) for k in keys]
