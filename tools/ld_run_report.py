@@ -383,6 +383,16 @@ def read_run(run, until):
         for k, v in allc.get(c, {}).items():
             if isinstance(v, float) and k not in RATIO_KEYS and last_seen.get(c) == last_seen.get(parent):
                 allc[parent][k] = allc[parent].get(k, 0) + v
+    # «прочее» of a renamed country (the same tag) continues its own running total: the new name's line is the
+    # country's, the old one's -- its past (France and the French Republic were both shown, the total twice)
+    for c, parent in joined.items():
+        if tags.get(c) and tags.get(c) == tags.get(parent) and c in leak:
+            a, b = leak.setdefault(parent, dict(leak[c])), leak.pop(c)
+            for k, v in b.items():
+                if k not in ('first', 'first_at', 'jump', 'jump_at'):
+                    a[k] = v
+            if abs(b.get('jump', 0)) > abs(a.get('jump', 0)):
+                a['jump'], a['jump_at'] = b['jump'], b['jump_at']
     for c in joined:
         cty.pop(c, None)
         cavg.pop(c, None)
