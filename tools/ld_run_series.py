@@ -11,6 +11,9 @@ line), into <out.json>, one series per line ("key": [[t, v], ...]) so read_text 
   item.*       EFJ by country, summed over the world each month: lvl_pool, lvl_tr, bk_woff (classified lines, stocks)
   money.<TAG>.* EFW: m0, m2, m3, gdp, cbm (CB metal), rate, infl for the logged countries (player and GDP > 20 M)
   flow.*       EFG WORLD: in, out, nocl (not cleared), trade_m, wexp, wimp
+  acc.<TAG|WORLD>.* EFW|acc: every account of the money tooltip, gdp, exp, imp, surplus, other (monthly)
+  lvl          EFJ|lvl: the steps that classified levels bought / sold, with the change of the government's levels
+  metal.prod_* / cons_* / buyo_* / sello_* / price_*: the world's markets this week (goods)
 t is the year as a fraction (1836.5 = July 1836).
 """
 import json
@@ -56,6 +59,7 @@ def main():
     item_cty = defaultdict(dict)     # item -> {country: value} (stock, last)
     item_month = defaultdict(dict)   # item -> {(y,m): (t, world sum)}
     cum = 0.0
+    lvl = []                         # EFJ|lvl: [t, country, pool multiple, treasury multiple, d_govlv]
     for ln in open(path, encoding='utf-8', errors='replace'):
         if len(ln) < 6 or ln[0] != 'E' or ln[3] != '|':
             continue
@@ -69,7 +73,8 @@ def main():
         if pre == 'EFV' and who == 'WORLD':
             d = fields(p[3:])
             for k in ('cb_g', 'bank_g', 'pop_g', 'buy_g', 'sell_g', 'cb_s', 'bank_s', 'pop_s', 'buy_s', 'sell_s',
-                      'total_ge', 's2g', 'rest_ge'):
+                      'total_ge', 's2g', 'rest_ge', 'prod_g', 'cons_g', 'buyo_g', 'sello_g', 'prod_s', 'cons_s',
+                      'buyo_s', 'sello_s', 'price_g', 'price_s'):
                 if k in d:
                     month['metal.' + k][ym] = (round(t, 3), d[k])
         elif pre == 'EFJ' and who == 'WORLD' and p[3].startswith('other '):
@@ -78,6 +83,13 @@ def main():
             month['other.cum'][ym] = (round(t, 3), round(cum))
             month['other.week'][ym] = (round(t, 3), d.get('other', 0))
             month['other.tr_week'][ym] = (round(t, 3), d.get('other_tr', 0))
+        elif pre == 'EFJ' and p[3] == 'lvl':
+            d = fields(p[4:])
+            lvl.append([round(t, 3), who, d.get('pool', 0), d.get('tr', 0), d.get('d_govlv', 0)])
+        elif pre == 'EFW' and len(p) > 4 and p[3] == 'acc':
+            d = fields(p[4:])
+            for k, v in d.items():
+                month[f'acc.{who}.{k}'][ym] = (round(t, 3), v)
         elif pre == 'EFJ' and p[3].startswith('other '):
             d = fields(p[3:])
             oth_last[who] = d.get('other', 0)
@@ -99,6 +111,7 @@ def main():
     res = {k: [v for _, v in sorted(m.items())] for k, m in month.items()}
     for k, m in item_month.items():
         res['item.' + k] = [v for _, v in sorted(m.items())]
+    res['lvl'] = lvl
     top = sorted(oth_last, key=lambda c: -abs(oth_last[c]))[:10]
     for c in top:
         res['oth_c.' + c] = [v for _, v in sorted(oth_month[c].items())]
