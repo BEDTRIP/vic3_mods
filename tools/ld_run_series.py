@@ -11,6 +11,7 @@ line), into <out.json>, one series per line ("key": [[t, v], ...]) so read_text 
   item.*       EFJ by country, summed over the world each month: lvl_pool, lvl_tr, bk_woff (classified lines, stocks)
   money.<TAG>.* EFW: m0, m2, m3, gdp, cbm (CB metal), rate, infl for the logged countries (player and GDP > 20 M)
   flow.*       EFG WORLD: in, out, nocl (not cleared), trade_m, wexp, wimp
+  bud.<TAG>.*  EFW|budget: income, expenses (all, fixed), army, debt, credit, pool and its transfer to construction
   acc.<TAG|WORLD>.* EFW|acc: every account of the money tooltip, gdp, exp, imp, surplus, other (monthly)
   lvl          EFJ|lvl: the steps that classified levels bought / sold, with the change of the government's levels
   metal.prod_* / cons_* / buyo_* / sello_* / price_*: the world's markets this week (goods)
@@ -88,6 +89,10 @@ def main():
         elif pre == 'EFJ' and p[3] == 'lvl':
             d = fields(p[4:])
             lvl.append([round(t, 3), who, d.get('pool', 0), d.get('tr', 0), d.get('d_govlv', 0)])
+        elif pre == 'EFW' and len(p) > 4 and p[3] == 'budget':
+            d = fields(p[4:])
+            for k, v in d.items():
+                month[f'bud.{who}.{k}'][ym] = (round(t, 3), v)
         elif pre == 'EFW' and len(p) > 4 and p[3] == 'acc':
             d = fields(p[4:])
             for k, v in d.items():
