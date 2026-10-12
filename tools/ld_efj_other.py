@@ -23,7 +23,7 @@ def main():
     drift = defaultdict(float)
     for ln in open(path, encoding='utf-8', errors='replace'):
         p = ln.rstrip('\n').split('|')
-        if len(p) < 5 or p[0] != 'EFJ' or not p[3].startswith('other '):
+        if len(p) < 5 or p[0] != 'EFJ' or not p[3].startswith('other ') or p[2] == 'WORLD':
             continue
         d = {}
         for x in p[3:]:
