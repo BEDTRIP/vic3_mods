@@ -25,6 +25,9 @@ def main():
     hist = Counter()
     big = Counter()
     n = 0
+    yr = {}
+    from collections import defaultdict
+    yr = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])   # year -> sum u, sum u<0, contrib, transfer
     for ln in open(sys.argv[1], encoding='utf-8', errors='replace'):
         if not ln.startswith('EFJ|'):
             continue
@@ -35,6 +38,11 @@ def main():
         if 'd_pool' not in d or d.get('weeks', 1) != 1:
             continue
         u = d['d_pool'] - d.get('contrib', 0) + d.get('transfer', 0)
+        y = yr[p[1][-4:]]
+        y[0] += u
+        y[1] += min(u, 0)
+        y[2] += d.get('contrib', 0)
+        y[3] += d.get('transfer', 0)
         if abs(u) < 20000:
             continue
         n += 1
@@ -42,6 +50,10 @@ def main():
         b = int((rest + 12500) // 2500)
         (big if abs(u) >= 100000 else hist)[b] += 1
     print(f'weeks with |u| >= 20 000: {n}')
+    for k in sorted(yr):
+        a = yr[k]
+        print(f'{k}: pool unexplained {a[0] / 1e6:+.2f}M (losses {a[1] / 1e6:+.2f}M), contributions {a[2] / 1e6:.2f}M, '
+              f'transfer to construction {a[3] / 1e6:.2f}M')
     for name, h in (('20k..100k', hist), ('>=100k', big)):
         print(f'{name}: rest bins of 2 500 from -12 500: ' + ' '.join(str(h.get(i, 0)) for i in range(10)))
 
