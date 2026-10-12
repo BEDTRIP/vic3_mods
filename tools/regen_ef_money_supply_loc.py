@@ -481,13 +481,6 @@ FLOWS = [
      "exchange: our currency came home from abroad (last week)", svn("zz_ef_v_w_nr_xch"), Z),
     (Z, X, "биржа: наша валюта ушла за рубеж (прошлая неделя)",
      "exchange: our currency went abroad (last week)", svp("zz_ef_v_w_nr_xch"), Z),
-    # the CB's and the banks' foreign money traded on the exchanges -- the stock moves (Britain ~-30K a week, r1012_231053)
-    (X, Z, "биржа: ЦБ и банки купили чужую валюту (прошлая неделя)",
-     "exchange: the CB and the banks bought foreign currency (last week)", svp("zz_ef_v_w_xch_abr"), Z),
-    (Z, X, "биржа: ЦБ и банки продали чужую валюту (прошлая неделя)",
-     "exchange: the CB and the banks sold foreign currency (last week)", svn("zz_ef_v_w_xch_abr"), Z),
-    (X, Z, "проценты по чужой валюте ЦБ и банков (прошлая неделя)",
-     "interest on the CB's and the banks' foreign currency (last week)", sv_("zz_ef_v_w_fxint_abr"), Z),
     (X, C, "добытый металл, отчеканенный ЦБ, — в резервы", "mined metal coined by the CB — into the reserves",
      sv_("zz_ef_v_f_mint"), C),
     # UI.11 (5.10): E&F's CB building stores the market's gold / silver sell orders once a month
@@ -779,7 +772,7 @@ OTHER_LAB = {
 }
 CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out",
                 "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money",
-                "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr"}
+                "zz_ef_v_w_nr_xch"}
 
 # UI.9 step 1 (3.10, the user: "I cannot check which information is true"): every number in a card gets
 # a grey mark of where it comes from.
@@ -789,7 +782,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
