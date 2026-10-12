@@ -108,15 +108,16 @@ def main():
                 print(f'{k[1]:<18} ' + ' '.join(f'{r.get(x, 0):>11.0f}' for x in cols))
         if any(rows[k].get('a_d_abroad') is not None and 'a_abroad' in rows[k] for k in keys):
             ak = [k for k in keys if 'a_abroad' in rows[k]]
-            acols = ('abr_rest', 'a_d_abroad', 'd_fass', 'd_fxm', 'd_liab', 'd_blh', 'a_d_bonds', 'a_d_tbonds', 'a_fx_in',
-                     'a_fx_out', 'a_cur_out', 'a_own_back', 'a_w_nr_dep', 'a_fxm', 'a_liab', 'a_parity')
+            acols = ('abr_rest', 'a_d_abroad', 'd_fxm', 'd_abr_rq', 'd_liab', 'a_fx_in', 'a_fx_out', 'a_cur_out',
+                     'a_own_back', 'a_nr_xch', 'a_xch_abr', 'a_fxint', 'a_abr_rq', 'a_liab')
             print('abroad: date      ' + ' '.join(f'{k:>10}' for k in acols))
             prev = None
             tot = defaultdict(float)
             for k in ak:
                 r = rows[k]
                 if prev:
-                    for a, b in (('d_fass', 'a_fassets'), ('d_fxm', 'a_fxm'), ('d_liab', 'a_liab'), ('d_blh', 'a_blh')):
+                    for a, b in (('d_fass', 'a_fassets'), ('d_fxm', 'a_fxm'), ('d_liab', 'a_liab'), ('d_blh', 'a_blh'),
+                                 ('d_abr_rq', 'a_abr_rq')):
                         r[a] = r.get(b, 0) - prev.get(b, 0)
                 prev = r
                 for x in acols:
@@ -125,7 +126,7 @@ def main():
                 if i % 4 == 0:
                     r = rows[k]
                     print(f'{k[1]:<18} ' + ' '.join(f'{r.get(x, 0):>10.0f}' for x in acols))
-            print('abroad sums: ' + ', '.join(f'{x} {tot[x]:.0f}' for x in acols if not x.startswith(('a_fxm', 'a_liab', 'a_par'))))
+            print('abroad sums: ' + ', '.join(f'{x} {tot[x]:.0f}' for x in acols if not x.startswith(('a_fxm', 'a_liab', 'a_par', 'a_abr_rq'))))
         if any('i_auto' in rows[k] for k in keys):
             ik = [k for k in keys if 'i_auto' in rows[k]]
             n = 0
