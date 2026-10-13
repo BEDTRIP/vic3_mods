@@ -231,7 +231,8 @@ def read_run(run, until):
             if isinstance(d.get('leak_cum'), float):
                 # the line «engine: the market gap» of every country (not only the logged ones) and its market's gap,
                 # summed since the start; January is the start's setup
-                rec = (str(d.get('mkt', '?')).strip(), d['leak_cum'],
+                mk = next((x[4:].strip() for x in p[4:] if x.startswith('mkt ')), '?')
+                rec = (mk, d['leak_cum'],
                        d['gap_cum'] if isinstance(d.get('gap_cum'), float) else None)
                 if who not in lk_first and mo != mo0:
                     lk_first[who] = rec
