@@ -770,6 +770,15 @@ PROBES = [
     ("tfees", "Subtract_CFixedPoint(Subtract_CFixedPoint(Abs_CFixedPoint(Country.GetMarketFeesIncome), "
               "Negate_CFixedPoint(Abs_CFixedPoint(Country.PredictTolls))), "
               "Negate_CFixedPoint(Abs_CFixedPoint(GetTrendValue(Country.GetPiracyIncomeTrend))))"),
+    # audit 13.10: the budget's own totals and its one-off lines (events, decrees) -- against the treasury's change,
+    # logged by the receiver (EFJ bud_chk); the script reads total_income / total_expenses only
+    ("winc", "Country.GetWeeklyIncome"),
+    ("wexp", "Country.GetWeeklyExpenses"),
+    ("wbal", "Country.GetWeeklyBalance"),
+    ("tmpi", "Country.GetWeeklyTemporaryIncome"),
+    ("tmpx", "Country.GetWeeklyTemporaryExpenses"),
+    ("tinc", "GetTrendValue(Country.GetTotalIncomeTrend)"),
+    ("texp", "GetTrendValue(Country.GetTotalExpensesTrend)"),
 ]
 
 
