@@ -943,7 +943,7 @@ def render(D, out, base=None, title=None):
                 allm = D.get('mkt_world') is not None
                 h.append('<h3>Статья «движок: разрыв рынка» против разрыва рынка движка</h3><p class="sub">Разрыв рынка — Σ по товарам '
                          '(продано − заказано) × цена; по группам товаров мода — финансовые (облигации, акции, валюты), '
-                         'стройматериалы PSC, металл, остальное — ванильные. Статья — '
+                         'стройматериалы PSC, металл (только рынки стран с логами), остальное — ванильные. Статья — '
                          + ('все страны рынка (с февраля 1836). ' if allm else 'только страны с логами (ВВП больше 20 млн). ')
                          + 'Доля около 1 — разрыв уничтожает деньги один к одному, около 0 — не уничтожает.</p>'
                          '<div class="tw"><table><thead><tr><th>Рынок</th><th class="n">Стран</th><th class="n">Статья стран рынка</th>'
@@ -952,8 +952,9 @@ def render(D, out, base=None, title=None):
                 for row in D['mkt']:
                     m, n, b, g, gr = row if len(row) == 5 else (row[0], 0, row[1], row[2], {})
                     h.append(f'<tr><td>{esc(m)}</td><td class="n">{n or "—"}</td><td class="n">{fmt(b)}</td><td class="n">{fmt(g)}</td>'
-                             f'<td class="n">{b / g if g else 0:.2f}</td><td class="n">{fmt(gr.get("fin", 0))}</td>'
-                             f'<td class="n">{fmt(gr.get("psc", 0))}</td><td class="n">{fmt(gr.get("metal", 0))}</td></tr>')
+                             f'<td class="n">{b / g if g else 0:.2f}</td>' +
+                             ''.join(f'<td class="n">{fmt(gr[k]) if k in gr else "—"}</td>' for k in ('fin', 'psc', 'metal')) +
+                             '</tr>')
                 if allm:
                     b, g = D['mkt_world']
                     h.append(f'<tr><td><b>мир</b></td><td></td><td class="n">{fmt(b)}</td><td class="n">{fmt(g)}</td>'
