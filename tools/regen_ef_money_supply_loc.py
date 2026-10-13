@@ -496,11 +496,6 @@ FLOWS = [
      "exchange: the CB and the banks sold foreign currency (last week)", svn("zz_ef_v_w_xch_abr"), Z),
     (X, Z, "проценты по чужой валюте ЦБ и банков (прошлая неделя)",
      "interest on the CB's and the banks' foreign currency (last week)", sv_("zz_ef_v_w_fxint_abr"), Z),
-    # the foreign money is held in gold: our currency's gold value moving revalues it (zz_ef_f_abr_reval) -- not a flow
-    (X, Z, "переоценка чужой валюты: наша валюта подешевела к золоту",
-     "revaluation of foreign money: our currency fell against gold", svp("zz_ef_v_f_abr_reval"), Z),
-    (Z, X, "переоценка чужой валюты: наша валюта подорожала к золоту",
-     "revaluation of foreign money: our currency rose against gold", svn("zz_ef_v_f_abr_reval"), Z),
     (X, C, "добытый металл, отчеканенный ЦБ, — в резервы", "mined metal coined by the CB — into the reserves",
      sv_("zz_ef_v_f_mint"), C),
     # UI.11 (5.10): E&F's CB building stores the market's gold / silver sell orders once a month
@@ -792,7 +787,7 @@ OTHER_LAB = {
 }
 CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out",
                 "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money",
-                "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_f_abr_reval"}
+                "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr"}
 
 # UI.9 step 1 (3.10, the user: "I cannot check which information is true"): every number in a card gets
 # a grey mark of where it comes from.
@@ -805,7 +800,7 @@ SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
 SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
-SRC_CALC = {"zz_ef_v_f_abr_reval", "zz_ef_v_f_inflow", "zz_ef_v_f_leak", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
+SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_leak", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
             "zz_ef_v_f_cb_rescale", "zz_ef_tr_to_cb"}
 SRC_EF = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_cbl_int", "zz_ef_v_f_cb_stock"}
 SRC_LAB = {"eng": ("дв", "eng"), "mod": ("мод", "mod"), "calc": ("расч", "calc"), "est": ("оц", "est"),
