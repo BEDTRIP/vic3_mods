@@ -105,7 +105,7 @@ def main():
             d = fields(p[3:])
             oth_last[who] = d.get('other', 0)
             oth_month[who][ym] = (round(t, 3), d.get('other', 0))
-            for k in ('lvl_pool', 'lvl_tr', 'bk_woff', 'heir_debt', 'other_pool', 'other_tr'):
+            for k in ('lvl_pool', 'lvl_tr', 'bk_woff', 'heir_debt', 'heir_tr', 'other_pool', 'other_tr'):
                 if k in d:
                     item_cty[k][who] = d[k]
                     item_month[k][ym] = (round(t, 3), round(sum(item_cty[k].values())))

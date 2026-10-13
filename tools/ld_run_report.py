@@ -288,7 +288,7 @@ def read_run(run, until):
             lk = leak.setdefault(who, {'first': d.get('other', 0), 'first_at': p[1], 'jump': 0, 'jump_at': ''})
             lk['last'] = d.get('other', 0)
             lk['last_at'] = p[1]
-            for k in ('other_pool', 'other_tr', 'lvl_pool', 'lvl_tr', 'bk_woff', 'heir_debt'):
+            for k in ('other_pool', 'other_tr', 'lvl_pool', 'lvl_tr', 'bk_woff', 'heir_debt', 'heir_tr'):
                 if k in d:
                     lk[k] = d[k]
             dw = d.get('d_other', 0)
