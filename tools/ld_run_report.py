@@ -190,7 +190,7 @@ def read_run(run, until):
                     if len(top) > 40:
                         top.sort(reverse=True)
                         del top[10:]
-        if pre == 'EFM':
+        if pre == 'EFM' and k3 != 'modg':
             # the engine's market gap (the owner's line: Σ goods (sold - bought by the orders) x price) and each logged
             # country's market -- against the business cash's remainder
             d = fields(p[3:])
