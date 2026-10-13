@@ -223,7 +223,7 @@ def main_text(lang, c):
         + L["bankf"].format(money("zz_ef_pop_deposits"), money("zz_ef_bank_cb_debt"), money("zz_ef_bank_loans"),
                             sv("zz_ef_bank_capital", "D+="), cur, money("zz_ef_bank_cash")) + ")",
         f"→   {tt('zz_ef_ms_tt_abroad', L['abroad'])}: #T {sv('zz_ef_abroad_net', 'D+=')} {cur}#!{mark('mod', ru)} "
-        f"{delta('zz_ef_v_d_abroad')};\\n{ind}(" + L["abrf"].format(money("zz_ef_foreign_assets"), money("zz_ef_fx_money"),
+        f"{delta('zz_ef_v_d_abroad')};\\n{ind}(" + L["abrf"].format(money("zz_ef_foreign_assets"), money("zz_ef_abr_fx_all_v"),
                                                                  money("zz_ef_fx_liab_all")) + ")",
         f"→   {tt('zz_ef_ms_tt_cb', L['cb'])}: #T {money('zz_ef_cb_money')}#!{mark('mod', ru)} {delta('zz_ef_v_d_cbm')};\\n{ind}("
         + L["cbf"].format(sv("zz_ef_cb_cover", "%0"), money("zz_ef_cb_money"), delta("zz_ef_v_d_cbm"), money("zz_ef_fx_money")) + ")",
