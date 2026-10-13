@@ -25,13 +25,15 @@ def fields(parts):
 
 
 def main():
-    leak, ex = {}, {}
+    leak, ex, tro = {}, {}, {}
     for ln in open(sys.argv[1], encoding='utf-8', errors='replace'):
         if ln.startswith('EFR|'):
             p = ln.rstrip('\n').split('|')
             for x in p[3:]:
                 if x.startswith('leak '):
                     leak[(p[2], p[1])] = float(x[5:])
+                elif x.startswith('tr_other '):
+                    tro[(p[2], p[1])] = float(x[9:])
         elif ln.startswith('EFP|') and '|extx|' in ln:
             p = ln.rstrip('\n').split('|')
             ex[(p[2], p[1])] = fields(p[4:])
@@ -61,6 +63,13 @@ def main():
     print('countries: sum leak logged / exact; additional income - expenses: trend / temporary (exact)')
     for c, r in sorted(per.items(), key=lambda kv: -abs(kv[1][2] - kv[1][3]))[:10]:
         print(f'  {c[:28]:28} {r[0] / 1e6:8.2f}M {r[1] / 1e6:8.2f}M   {r[2] / 1e6:8.2f}M {r[3] / 1e6:8.2f}M')
+    # do the one-off lines hold the script's writes to the treasury (already in the treasury's «прочее», tr_other)?
+    big = [(k, d) for k, d in ex.items() if abs(d.get('ai_x', 0)) + abs(d.get('ax_x', 0)) > 20000]
+    same = sum(1 for k, d in big if abs(tro.get(k, 0)) > 0.5 * (abs(d.get('ai_x', 0) - d.get('ax_x', 0))))
+    print(f'weeks with one-off lines > 20K: {len(big)}; of them with a treasury «прочее» at least half as big: {same}')
+    for k, d in sorted(big, key=lambda kd: -(abs(kd[1].get('ai_x', 0)) + abs(kd[1].get('ax_x', 0))))[:8]:
+        print(f'  {k[1]:18} {k[0][:22]:22} one-off in {d.get("ai_x", 0):10.0f} out {d.get("ax_x", 0):10.0f}  '
+              f'trend in {d.get("ai_t", 0):10.0f} out {d.get("ax_t", 0):10.0f}  tr_other {tro.get(k, 0):10.0f}')
     for x, v in sorted(diff.items(), key=lambda kv: -kv[1]):
         print(f'  {x}: sum|trend - exact| {v / 1e6:.3f}M')
 
