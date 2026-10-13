@@ -116,6 +116,8 @@ def read_run(run, until):
     tags = {}                                     # country name -> its tag (EFW|all 'tag')
     mkt_of = {}                                   # (country, date) -> its market's owner tag (EFM)
     mkt_gap = defaultdict(float)                  # market owner tag -> the run's market gap (EFM bal)
+    mkt_grp = defaultdict(lambda: defaultdict(float))  # market owner tag -> goods group -> the run's gap (EFM gap_*)
+    lk_first, lk_last = {}, {}                    # country -> (market, leak_cum, gap_cum): first after January, last
     gap_wk = {}                                   # (country, date) -> the week's line «engine: the market gap» (EFR leak)
     gap_cty = defaultdict(float)                  # country -> the line over the run
     cwk = []                                      # (day, country, its «прочее» of the week) -- for the world's weeks
@@ -197,6 +199,11 @@ def read_run(run, until):
             if 'bal' in d:
                 summ['r.mkt_gap'][mo] += d['bal']
                 mkt_gap[mk] += d['bal']
+                for g in ('fin', 'psc', 'metal'):
+                    v = d.get('gap_' + g)
+                    if isinstance(v, float):
+                        summ['r.gap_' + g][mo] += v
+                        mkt_grp[mk][g] += v
         if pre == 'EFQ':
             chk['efq'] += 1
             d = fields(p[3:])
@@ -221,6 +228,15 @@ def read_run(run, until):
         elif pre == 'EFW' and len(p) > 4 and k3 == 'all':
             d = fields(p[4:])
             allc[who] = dict(d, _date=p[1])
+            if isinstance(d.get('leak_cum'), float):
+                # the line «engine: the market gap» of every country (not only the logged ones) and its market's gap,
+                # summed since the start; January is the start's setup
+                rec = (str(d.get('mkt', '?')).strip(), d['leak_cum'],
+                       d['gap_cum'] if isinstance(d.get('gap_cum'), float) else None)
+                if who not in lk_first and mo != mo0:
+                    lk_first[who] = rec
+                if who in lk_first:
+                    lk_last[who] = rec
             for x in p[4:6]:
                 if x.startswith('tag '):
                     tags[who] = x[4:].strip()
@@ -307,6 +323,22 @@ def read_run(run, until):
     for key, v in gap_wk.items():
         if key in mkt_of:
             mkt_line[mkt_of[key]] += v
+    # every country of the market (EFW|all leak_cum) against the owner's gap (gap_cum), when the log has them
+    mkt_all, mkt_n, mkt_gcum = defaultdict(float), defaultdict(int), {}
+    for c, (mk, lc, gc) in lk_last.items():
+        f = lk_first[c]
+        mkt_all[mk] += lc - f[1]
+        mkt_n[mk] += 1
+        if gc is not None and tags.get(c) == mk:
+            mkt_gcum[mk] = gc - (f[2] or 0)
+    if mkt_gcum:
+        mkt_rows = [(m, mkt_n[m], round(mkt_all[m]), round(g), {k: round(v) for k, v in mkt_grp[m].items()})
+                    for m, g in sorted(mkt_gcum.items(), key=lambda kv: kv[1])[:20]]
+        mkt_world = (round(sum(mkt_all.values())), round(sum(mkt_gcum.values())))
+    else:
+        mkt_rows = [(m, 0, round(mkt_line.get(m, 0)), round(g), {k: round(v) for k, v in mkt_grp[m].items()})
+                    for m, g in sorted(mkt_gap.items(), key=lambda kv: kv[1])[:15]]
+        mkt_world = None
     for dt, n in bsub.items():
         avg['o.banks'][ym(dt)].append(n)
     months = sorted({m for s in last.values() for m in s} | {m for s in avg.values() for m in s}
@@ -478,7 +510,7 @@ def read_run(run, until):
                 leak=dict(sorted(leak.items(), key=lambda kv: -abs(kv[1].get('last', 0)))[:25]),
                 rest={k: dict(sorted(v.items(), key=lambda kv: -abs(kv[1]))[:12]) for k, v in rest_cty.items()},
                 rest_top={k: [(dt, c, round(v)) for _, dt, c, v in sorted(w, reverse=True)[:10]] for k, w in rest_week.items()},
-                mkt=[(m, round(mkt_line.get(m, 0)), round(g)) for m, g in sorted(mkt_gap.items(), key=lambda kv: kv[1])[:15]],
+                mkt=mkt_rows, mkt_world=mkt_world,
                 gap=dict(sorted(gap_cty.items(), key=lambda kv: kv[1])[:12]),
                 wjumps=[(dt, v, [(c, round(dw)) for _, c, dw in week_top.get(dt, [])])
                         for dt, v, _ in sorted(world_week, key=lambda x: -abs(x[1]))[:15]])
@@ -658,7 +690,10 @@ def charts(D):
                   [['«прочее» (пул + казна)', s('w.other', M)]]),
         'gap': ('Движок: разрыв рынка — статья кассы предприятий (страны с логами) и разрыв рынков движка, нарастающим итогом, млн',
                 'млн', [['статья «движок: разрыв рынка»', cum(S.get('r.eng_gap'), M)]] +
-                ([['разрыв рынков движка (рынки стран с логами)', cum(S.get('r.mkt_gap'), M)]] if S.get('r.mkt_gap') else [])),
+                ([['разрыв рынков движка (рынки стран с логами)', cum(S.get('r.mkt_gap'), M)]] if S.get('r.mkt_gap') else []) +
+                [[name, cum(S.get('r.gap_' + g), M)] for g, name in (('fin', 'в т. ч. финансовые товары'),
+                                                                     ('psc', 'в т. ч. стройматериалы PSC'),
+                                                                     ('metal', 'в т. ч. металл')) if S.get('r.gap_' + g)]),
         'mrest': ('Остаток металла мира: счета − старт − куплено + продано (должен быть 0), тыс. товара', 'тыс.',
                   [['золото', s('m.rest_g', 1e-5, 2)], ['серебро', s('m.rest_s', 1 / 775e3, 2)]]),
         'lvlst': ('Вынесено из «прочего» как выкуп уровней, млн', 'млн', [['пул', s('l.lvl_pool', M)],
@@ -904,14 +939,24 @@ def render(D, out, base=None, title=None):
                     h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(v)}</td></tr>')
                 h.append('</tbody></table></div>')
             if D.get('mkt'):
+                allm = D.get('mkt_world') is not None
                 h.append('<h3>Статья «движок: разрыв рынка» против разрыва рынка движка</h3><p class="sub">Разрыв рынка — Σ по товарам '
-                         '(продано − заказано) × цена: покупатели платят за все заказы, продавцы получают за проданное, '
-                         'разница исчезает. Статья — только страны с логами (ВВП больше 20 млн), по рынкам.</p>'
-                         '<div class="tw"><table><thead><tr><th>Рынок</th><th class="n">Статья стран рынка</th>'
-                         '<th class="n">Разрыв рынка</th><th class="n">Доля</th></tr></thead><tbody>')
-                for m, b, g in D['mkt']:
-                    h.append(f'<tr><td>{esc(m)}</td><td class="n">{fmt(b)}</td><td class="n">{fmt(g)}</td>'
-                             f'<td class="n">{b / g if g else 0:.2f}</td></tr>')
+                         '(продано − заказано) × цена; по группам товаров мода — финансовые (облигации, акции, валюты), '
+                         'стройматериалы PSC, металл, остальное — ванильные. Статья — '
+                         + ('все страны рынка (с февраля 1836). ' if allm else 'только страны с логами (ВВП больше 20 млн). ')
+                         + 'Доля около 1 — разрыв уничтожает деньги один к одному, около 0 — не уничтожает.</p>'
+                         '<div class="tw"><table><thead><tr><th>Рынок</th><th class="n">Стран</th><th class="n">Статья стран рынка</th>'
+                         '<th class="n">Разрыв рынка</th><th class="n">Доля</th><th class="n">Финансовые</th>'
+                         '<th class="n">PSC</th><th class="n">Металл</th></tr></thead><tbody>')
+                for row in D['mkt']:
+                    m, n, b, g, gr = row if len(row) == 5 else (row[0], 0, row[1], row[2], {})
+                    h.append(f'<tr><td>{esc(m)}</td><td class="n">{n or "—"}</td><td class="n">{fmt(b)}</td><td class="n">{fmt(g)}</td>'
+                             f'<td class="n">{b / g if g else 0:.2f}</td><td class="n">{fmt(gr.get("fin", 0))}</td>'
+                             f'<td class="n">{fmt(gr.get("psc", 0))}</td><td class="n">{fmt(gr.get("metal", 0))}</td></tr>')
+                if allm:
+                    b, g = D['mkt_world']
+                    h.append(f'<tr><td><b>мир</b></td><td></td><td class="n">{fmt(b)}</td><td class="n">{fmt(g)}</td>'
+                             f'<td class="n">{b / g if g else 0:.2f}</td><td></td><td></td><td></td></tr>')
                 h.append('</tbody></table></div>')
             h.append('<h3>Недели с самым большим «прочим» мира</h3><div class="tw"><table><thead><tr>'
                      '<th>Неделя</th><th class="n">«Прочее» мира</th><th>Чьё (страна: за неделю)</th></tr></thead><tbody>')
