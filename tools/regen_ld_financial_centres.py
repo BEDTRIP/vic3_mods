@@ -121,7 +121,7 @@ def effects():
     L.append("}\n")
     L.append("\n# Country scope: $N$ levels of the country's exchange (var:zz_ef_fc_state), a government construction (Д.R4б.5) -- the journal's\n"
              "# buttons speculative_share_5..8_button (scripted_buttons/00_ef_buttons.txt, scripted_guis/00_financial_scripted_guis.txt).\n"
-             "zz_ef_fc_expand = {\n\tif = {\n\t\tlimit = { has_variable = zz_ef_fc_state }\n\t\tvar:zz_ef_fc_state = {\n")
+             "zz_ef_fc_expand = {\n\tif = {\n\t\t# the exchange's state may be gone (split, merged): the variable then points at nothing\n\t\tlimit = { has_variable = zz_ef_fc_state exists = var:zz_ef_fc_state }\n\t\tvar:zz_ef_fc_state = {\n")
     # each level checked anew: the exchange at its maximum size took the rest of the count as errors (Bombay, r1012_233748)
     for t in TYPES:
         L.append(f"\t\t\tif = {{ limit = {{ has_building = {t} }} while = {{ count = $N$ "
@@ -147,7 +147,7 @@ def effects():
     L.append("\telse_if = {\n\t\tlimit = { exists = capital }\n"
              "\t\tcapital = {\n\t\t\towner = { set_variable = { name = zz_ef_fc_state value = prev } }\n"
              "\t\t\tcreate_building = { building = building_financial_centre level = 1 }\n\t\t}\n\t}\n"
-             "\tif = { limit = { has_variable = zz_ef_fc_state } var:zz_ef_fc_state = { zz_ef_fc_variant_set = yes } }\n"
+             "\tif = { limit = { has_variable = zz_ef_fc_state exists = var:zz_ef_fc_state } var:zz_ef_fc_state = { zz_ef_fc_variant_set = yes } }\n"
              "\t# the exchange's investment fund (scripted_effects/ld_investment_fund.txt)\n\tzz_ef_fund_found = yes\n}\n")
     return "".join(L)
 

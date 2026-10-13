@@ -35,6 +35,9 @@ CHECK = ld_gen.CHECK
 TAGS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "vic3_country_tags.json")
 CUSTOM = "common/customizable_localization/00_ef_localization_ custom.txt"
 LOC = "localization/{0}/ld_currency_symbol_l_{0}.yml"
+# vanilla tags the playset does not define: «c:TAG» in a trigger is a load error («Failed to find country»), and such a
+# country never heads a union -- left out of the triggers
+NO_TAG = {"CNG", "GAM", "GLC"}
 
 # тег ванили → ISO 3166-1 alpha-2 (страна, которая соответствует нынешней; у каждого кода — один тег)
 ISO = {
@@ -133,7 +136,7 @@ def custom_text(iso, nouns, signs):
          "\t# (Д.R8в.20, tools/regen_ld_currency_symbol.py)",
          "\ttext = {", "\t\ttrigger = { NOT = { zz_ef_mu_follower = yes } }",
          "\t\tlocalization_key = zz_ef_iso2_self", "\t}"]
-    for tg in sorted(iso):
+    for tg in sorted(set(iso) - NO_TAG):
         L += ["\ttext = {", f"\t\ttrigger = {{ c:{tg} ?= var:zz_ef_mu_head }}",
               f"\t\tlocalization_key = zz_ef_iso2_{tg}", "\t}"]
     L += ["\ttext = {", "\t\tlocalization_key = zz_ef_iso2_self", "\t}", "}", ""]
@@ -150,6 +153,8 @@ def custom_text(iso, nouns, signs):
           "\t#no monetary system", "\ttext = {", "\t\ttrigger = { has_law = law_type:law_no_monetary_system }",
           "\t\tlocalization_key = zz_ef_sym_none", "\t}"]
     for c, (tg, n, _) in signs.items():
+        if tg in NO_TAG:
+            continue
         L += [f"\t#{c}", "\ttext = {", "\t\ttrigger = {", f"\t\t\tvar:zz_ef_cur_noun ?= flag:{n}",
               "\t\t\tOR = {", f"\t\t\t\tAND = {{ NOT = {{ zz_ef_mu_follower = yes }} c:{tg} ?= this }}",
               f"\t\t\t\tAND = {{ has_variable = zz_ef_mu_head c:{tg} ?= var:zz_ef_mu_head }}", "\t\t\t}", "\t\t}",
