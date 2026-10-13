@@ -2,12 +2,16 @@
 
 Usage:  py tools/ld_probe_mkt.py <run>/eflog.txt
 
-EFP|bld lines (France, Britain, every 4th week): per building what it paid for its inputs (mat), the value of its
-consumption (cv), its input availability (av). If a buyer pays for the whole order, mat / cv grows as av falls (the
-value counts what it got) or mat ≈ cv / av; prints mat / cv by availability band, by building type, and the sums.
+EFP|bld lines (France, Britain, every 4th week): per building what it paid for its inputs (mat) and its input
+availability (av: 1 -- every input bought, lower -- a shortage). The value of what it got is not readable from script
+(GetTotalConsumptionValue wants the interface), so the test is in time: the same building (country, name, line order)
+from a sample with av = 1 to the next one with av < 1. If it pays for what it got, mat falls with av (mat ratio ≈ the
+share of the inputs it got); if it pays for the whole order, mat stays (ratio ≈ 1 whatever av). Prints the ratio by
+the drop of av, and the reverse step (a shortage ends) as the control.
 """
 import sys
 from collections import defaultdict
+from statistics import median
 
 
 def fields(parts):
@@ -22,49 +26,56 @@ def fields(parts):
 
 
 def main():
-    bands = defaultdict(lambda: [0, 0.0, 0.0, 0.0])      # (country, band) -> n, mat, cv, cv/av
-    types = defaultdict(lambda: [0, 0.0, 0.0, 0.0])
-    mkt = defaultdict(lambda: [0, 0.0, 0.0])
+    series = defaultdict(list)          # (country, name, k-th building of that name in the sample) -> [(date, mat, av)]
+    mkt = defaultdict(lambda: [0, 0.0])
+    seen = defaultdict(int)
+    last_date = None
     for ln in open(sys.argv[1], encoding='utf-8', errors='replace'):
         if not ln.startswith('EFP|'):
             continue
         p = ln.rstrip('\n').split('|')
         if len(p) < 5:
             continue
+        if p[1] != last_date:
+            seen.clear()
+            last_date = p[1]
         d = fields(p[4:])
         if p[3] == 'mkt':
-            m = mkt[p[2]]
-            m[0] += 1
-            m[1] += d.get('bal', 0)
-            m[2] += d.get('gap', 0)
+            mkt[p[2]][0] += 1
+            mkt[p[2]][1] += d.get('bal', 0)
             continue
         if p[3] != 'bld':
             continue
-        mat, cv, av = d.get('mat', 0), d.get('cv', 0), d.get('av', 1)
-        if not isinstance(mat, float) or not isinstance(cv, float) or (mat == 0 and cv == 0):
+        mat, av = d.get('mat'), d.get('av')
+        if not isinstance(mat, float) or not isinstance(av, float):
             continue
-        if not isinstance(av, float):
-            av = 1.0
-        band = 1.0 if av >= 0.999 else round(int(av * 10) / 10, 1)
-        for key, tab in (((p[2], band), bands), ((p[2], d.get('t', '?'), 'short' if av < 0.999 else 'full'), types)):
-            r = tab[key]
-            r[0] += 1
-            r[1] += mat
-            r[2] += cv
-            r[3] += cv / av if av > 0.01 else cv
-    print('market lines: country -> n, sum bal, sum gap')
+        key = (p[2], d.get('t', '?'))
+        seen[key] += 1
+        series[key + (seen[key],)].append((p[1], mat, av))
+    print('market lines: country -> samples, sum of the balance')
     for c, m in mkt.items():
-        print(f'  {c}: {m[0]}  {m[1]:.0f}  {m[2]:.0f}')
-    print('\nby availability: country, band -> n, mat, cv, mat/cv, mat/(cv/av)')
-    for (c, b), r in sorted(bands.items()):
-        print(f'  {c:16} {b:4}  n {r[0]:6}  mat {r[1]:14.0f}  cv {r[2]:14.0f}  mat/cv {r[1] / r[2] if r[2] else 0:6.3f}'
-              f'  mat/(cv/av) {r[1] / r[3] if r[3] else 0:6.3f}')
-    print('\nbuilding types with shortages (the 25 largest by mat): country, type -> n, mat, cv, mat/cv')
-    rows = [(k, r) for k, r in types.items() if k[2] == 'short']
-    for (c, t, _), r in sorted(rows, key=lambda kv: -kv[1][1])[:25]:
-        full = types.get((c, t, 'full'))
-        fr = f'  без нехватки mat/cv {full[1] / full[2]:.3f}' if full and full[2] else ''
-        print(f'  {c:16} {t[:40]:40} n {r[0]:5}  mat {r[1]:12.0f}  mat/cv {r[1] / r[2] if r[2] else 0:6.3f}{fr}')
+        print(f'  {c}: {m[0]}  {m[1]:.0f}')
+    into = defaultdict(list)            # av band after the drop -> mat ratios (full -> shortage)
+    out = defaultdict(list)             # shortage -> full
+    same = []                           # full -> full (the control: prices and size change alone)
+    for s in series.values():
+        for (d0, m0, a0), (d1, m1, a1) in zip(s, s[1:]):
+            if m0 < 100 or m1 < 0:
+                continue
+            r = m1 / m0
+            if a0 >= 0.999 and a1 >= 0.999:
+                same.append(r)
+            elif a0 >= 0.999 and a1 < 0.999:
+                into[round(int(a1 * 10) / 10, 1)].append(r)
+            elif a0 < 0.999 and a1 >= 0.999:
+                out[round(int(a0 * 10) / 10, 1)].append(r)
+    print(f'\ncontrol, av 1 -> 1: n {len(same)}, median mat ratio {median(same) if same else 0:.3f}')
+    print('a shortage begins, av 1 -> band: n, median mat ratio (paid for what it got ≈ av, for the order ≈ 1)')
+    for b in sorted(into):
+        print(f'  av {b:3}: n {len(into[b]):5}  median {median(into[b]):.3f}')
+    print('a shortage ends, band -> av 1: n, median mat ratio (paid for what it got ≈ 1 / av, for the order ≈ 1)')
+    for b in sorted(out):
+        print(f'  av {b:3}: n {len(out[b]):5}  median {median(out[b]):.3f}')
 
 
 if __name__ == '__main__':
