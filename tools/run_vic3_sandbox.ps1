@@ -52,7 +52,8 @@ Parameters:
     -Playset      run on this launcher playset's mods instead of the last ones the launcher started (the game
                   reads content_load.json, not the active playset -- 6.10): the file is written from
                   launcher-v2.sqlite (tools/playset_content_load.py) and put back after the run, failures too
-    -Tag          the country to play in a new game (default GBR)
+    -Tag          the country to play in a new game (default GBR); gone in the run («Конец игры») -- the run sits
+                  down as its heir by the fork's log (Sit-Heir) and goes on
     -NoDumps      kept for old command lines; does nothing (1.10 night: debugcountrybudgets and
                   debugmarkets are strings in victoria3.exe, but the release console answers
                   "Unknown command" -- developer-build commands)
@@ -117,6 +118,39 @@ if ($Playset) {
     & python (Join-Path $PSScriptRoot "playset_content_load.py") --playset $Playset --out $ContentLoad | ForEach-Object { Log "playset $_" }
     if ($LASTEXITCODE -ne 0) { Copy-Item $ContentBackup $ContentLoad -Force; throw "no playset '$Playset'" }
     trap { if (Test-Path $ContentBackup) { Copy-Item $ContentBackup $ContentLoad -Force; Log "content_load.json restored (failure)" }; break }
+}
+
+# «Конец игры»: the played country is gone (a revolution won, annexed). «Продолжить в режиме наблюдателя», then the
+# fork's world pass of the week logs the gone country and its heir (EFH|...|gone|tag <Tag>, next EFH|...|heir|tag <heir>,
+# ld_subject_metal.txt); console "tag <heir>" and the run goes on as the heir. No heir in 3 minutes -- $false (the run
+# stops). Without the fork's logs there is no heir line.
+function Sit-Heir($p) {
+    Shot $p ("gameover_" + (Get-Date -Format "HHmmss") + ".png")
+    Log "game over: $Tag is gone - observer mode, looking for its heir"
+    Click-Window $p 0.13 0.981; Start-Sleep 5
+    $p = Get-Game
+    if (-not $p) { return $false }
+    if (-not (Is-Advancing $p 16)) { Send-Key 0x20 0x39 }
+    $until = (Get-Date).AddMinutes(3)
+    while ((Get-Date) -lt $until) {
+        Start-Sleep 5; Save-DebugParts
+        $files = @(Get-ChildItem (Join-Path $OutDir "dbgparts") -Filter "*.log" -ErrorAction SilentlyContinue) + @(Get-ChildItem $Logs -Filter "debug*.log" -ErrorAction SilentlyContinue)
+        $hit = $files | Select-String -Pattern (': EFH\|[^|]*\|[^|]*\|gone\|tag ' + $Tag + '\s*$') -Context 0, 5 -ErrorAction SilentlyContinue | Select-Object -Last 1
+        if (-not $hit) { continue }
+        foreach ($l in $hit.Context.PostContext) {
+            if ($l -match ': EFH\|[^|]*\|([^|]*)\|heir\|tag (\S+)') {
+                $name = $Matches[1]; $heir = $Matches[2]
+                Console-Cmd (Get-Game) "tag $heir"; Start-Sleep 5
+                Log "the heir of $($Tag): $heir ($name) - playing it, the run goes on"
+                $script:Tag = $heir
+                $p = Get-Game; Focus-Game $p
+                if (-not (Is-Advancing $p 16)) { Send-Key 0x20 0x39 }
+                return $true
+            }
+        }
+    }
+    Log "game over: no heir of $Tag in the log in 3 min - stopping"
+    return $false
 }
 
 if ($NewGame) {
@@ -226,6 +260,11 @@ else {
             continue
         }
         if ($userMode) { $userMode = $false; Log "the user has been away 3 min - the run goes on" }
+        if (-not (Is-Advancing $p 16) -and (Is-Screen $p "gameover")) {
+            # the player's country is gone (Д.R4б.34): observer mode, the fork's log names the heir, sit down as it
+            if (-not (Sit-Heir $p)) { break }
+            continue
+        }
         if (-not (Is-Advancing $p 16)) {
             Log "date stands - unpausing"
             Shot $p ("stall_" + (Get-Date -Format "HHmmss") + ".png")

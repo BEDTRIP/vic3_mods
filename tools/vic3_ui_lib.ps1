@@ -289,6 +289,10 @@ $Screens = @{
     # the game menu (Escape with nothing open; "Вернуться к игре" ...): the HUD is gone -- the left icon column turns
     # dark (27, 26, 21), the backdrop under the buttons (39, 34, 29); the game (75, 68, 68) / (57..68), the console
     # (43, 48, 50) / (47, 49, 50) -- measured on r1005_104528 cal_esc1 (5.10)
+    # «Конец игры» (the player's country gone): the bottom row of four dark teal buttons, measured at their text-free
+    # left ends -- (23, 35, 32) and (22, 33, 29), flat (r1013_180405 stall_182947: the game (33, 36, 35) / (43, 45, 36),
+    # uneven; the lobby (41, 55, 51))
+    gameover = @{ box = @(40, 1398, 110, 1426); rgb = @(23, 35, 32); tol = 8; flat = 6; box2 = @(1295, 1398, 1340, 1426); rgb2 = @(22, 33, 29); tol2 = 8; flat2 = 6 }
     escmenu = @{ box = @(5, 210, 45, 595); rgb = @(27, 26, 21); tol = 10; box2 = @(40, 420, 360, 880); rgb2 = @(39, 34, 29); tol2 = 10 }
 }
 function Is-Screen($p, $name) {
