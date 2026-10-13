@@ -35,7 +35,8 @@ def main():
         elif ln.startswith('EFP|') and '|extx|' in ln:
             p = ln.rstrip('\n').split('|')
             ex[(p[2], p[1])] = fields(p[4:])
-    a0 = a1 = 0.0
+    a0 = a1 = s0 = s1 = 0.0
+    per = defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])
     diff = defaultdict(float)
     n = 0
     for k, v in leak.items():
@@ -46,9 +47,20 @@ def main():
         alt = v + sum(d.get(x + '_t', 0) - d.get(x + '_x', 0) for x in IN) - sum(d.get(x + '_t', 0) - d.get(x + '_x', 0) for x in OUT)
         a0 += abs(v)
         a1 += abs(alt)
+        s0 += v
+        s1 += alt
+        r = per[k[0]]
+        r[0] += v
+        r[1] += alt
+        r[2] += d.get('ai_t', 0) - d.get('ax_t', 0)
+        r[3] += d.get('ai_x', 0) - d.get('ax_x', 0)
         for x in IN + OUT:
             diff[x] += abs(d.get(x + '_t', 0) - d.get(x + '_x', 0))
     print(f'weeks {n}: sum|leak| as logged {a0 / 1e6:.2f}M, with the exact lines {a1 / 1e6:.2f}M')
+    print(f'sum leak as logged {s0 / 1e6:.2f}M, with the exact lines {s1 / 1e6:.2f}M')
+    print('countries: sum leak logged / exact; additional income - expenses: trend / temporary (exact)')
+    for c, r in sorted(per.items(), key=lambda kv: -abs(kv[1][2] - kv[1][3]))[:10]:
+        print(f'  {c[:28]:28} {r[0] / 1e6:8.2f}M {r[1] / 1e6:8.2f}M   {r[2] / 1e6:8.2f}M {r[3] / 1e6:8.2f}M')
     for x, v in sorted(diff.items(), key=lambda kv: -kv[1]):
         print(f'  {x}: sum|trend - exact| {v / 1e6:.3f}M')
 
