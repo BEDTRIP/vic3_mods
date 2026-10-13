@@ -935,12 +935,21 @@ def card_resid(head, rows):
     return resid
 
 
+# the rows of the pops' cards -- what moves each account in the code: the banknotes (M0) -- the CB's metal buy-back, the
+# pops' metal over their norm sold to the CB, the consols; the deposits -- the engine's contributions less construction
+# out of them (zz_ef_pop_deposits_step), the interest, the metal sold to the banks, a private CB's profit, the fund's
+# shares, the exchange
+POPS_ROWS = (("zz_ef_v_f_buyback_m", -1), ("zz_ef_v_f_popm_cb", -1), ("zz_ef_v_f_cons_int", -1), ("zz_ef_v_f_cons_buy", -1))
+DEP_ROWS = (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_popm_bank", -1), ("zz_ef_v_f_cb_int_dep", -1),
+            ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1))
+
+
 def pops_resid():
-    return card_resid("zz_ef_v_d_agg0", (("zz_ef_v_w_inflow", -1), ("zz_ef_v_f_buyback_m", -1)))
+    return card_resid("zz_ef_v_d_agg0", POPS_ROWS)
 
 
 def deposits_resid():
-    return card_resid("zz_ef_v_d_deposits", (("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1)))
+    return card_resid("zz_ef_v_d_deposits", DEP_ROWS)
 
 
 def pops_card(lang):
@@ -952,11 +961,13 @@ def pops_card(lang):
     k = 0 if ru else 1
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     L = [f"#b {'Наличные на руках за неделю' if ru else 'Cash at hand this week'}: {delta('zz_ef_v_d_agg0')}#!{mark('calc', ru)}",
-         "1 " + ("В накопления" if ru else "Into savings"),
-         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку (вклады) за вычетом стройки из вкладов"
-                                                                         if ru else "contributions to the pool by the engine (deposits) less construction paid from them"),
+         "1 " + ("Банкноты" if ru else "Banknotes"),
+         f"  ← #P +{money('zz_ef_v_f_popm_cb')}#!{mark('mod', ru)} " + ("население сдало металл сверх нормы в ЦБ — новые банкноты"
+                                                                       if ru else "pops sold their metal over the norm to the CB — new banknotes"),
          # stage 2, night 6.10: the mint is gone (М); the CB's buy-back of the pops' metal and the savings over their norm
          f"  ← #P +{money('zz_ef_v_f_buyback_m')}#!{mark('mod', ru)} " + ("ЦБ выкупил металл населения (паритет + 2%, новые деньги)" if ru else "the CB bought the pops' metal (parity + 2%, new money)"),
+         f"  ← #P +[Subtract_CFixedPoint({v('zz_ef_v_f_cons_int')}, Negate_CFixedPoint({v('zz_ef_v_f_cons_buy')}))|D]#!{mark('mod', ru)} "
+         + ("консоли: проценты и выкуп из казны" if ru else "consols: interest and buy-back from the treasury"),
          ]
     resid = pops_resid()
     L.append("2 " + ("Вне счетов" if ru else "Outside the accounts"))
@@ -992,7 +1003,13 @@ def deposits_card(lang):
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     resid = deposits_resid()
     L = [f"#b {'Вклады в банках за неделю' if ru else 'Bank deposits this week'}: {delta('zz_ef_v_d_deposits')}#!{mark('mod', ru)}",
+         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку за вычетом стройки из вкладов"
+                                                                         if ru else "contributions to the pool by the engine less construction paid from deposits"),
          f"  ← #P +{money('zz_ef_v_w_dep_int')}#!{mark('mod', ru)} " + ("проценты (платят банки из пула)" if ru else "interest (the banks pay it from the pool)"),
+         f"  ← #P +{money('zz_ef_v_f_popm_bank')}#!{mark('mod', ru)} " + ("население сдало металл сверх нормы в банки"
+                                                                         if ru else "pops sold their metal over the norm to the banks"),
+         f"  ← #P +{money('zz_ef_v_f_cb_int_dep')}#!{mark('mod', ru)} " + ("прибыль частного ЦБ — вкладами владельцев"
+                                                                          if ru else "a private CB's profit — its owners' deposits"),
          f"  → #N −{money('zz_ef_v_f_fd_pp')}#!{mark('mod', ru)} " + ("паи инвестиционного фонда: население купило из вкладов"
                                                                      if ru else "investment fund shares: pops bought them out of deposits"),
          f"  ↔ {sv('zz_ef_v_f_xch_pp', 'D+=')} {cur}{mark('mod', ru)} " + ("биржа: население продало (+) и купило (−) требования"
