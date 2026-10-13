@@ -263,11 +263,11 @@ def check_text(lang, c):
     lines.append("#b Сверка — сырые числа движка, в неделю:#!" if ru else "#b Reconciliation — engine raw numbers, weekly:#!")
     ext_now = ext_expr().replace("Country.", c + ".")
     lines.append((f"мост GUI → скрипт: внешние статьи бюджета записано {sv('zz_ef_v_f_ext')}, сейчас "
-                  f"[{ext_now}|D]; разрыв рынка движка за неделю {sv('zz_ef_v_f_leak', 'D+=')} (данные недели: "
+                  f"[{ext_now}|D]; оплачено сверх продаж рынка за неделю {sv('zz_ef_v_f_leak', 'D+=')} (данные недели: "
                   f"{sv('zz_ef_hook_ok', '0')}; в очереди [GetDataModelSize(GetGlobalList('zz_ef_hook_countries'))]; "
                   f"вызовов моста всего {sv('zz_ef_hook_calls', '0')}, пробных {sv('zz_ef_hook_probe_calls', '0')})") if ru else
                  (f"GUI → script bridge: budget lines outside the accounts recorded {sv('zz_ef_v_f_ext')}, now "
-                  f"[{ext_now}|D]; the engine's market gap this week {sv('zz_ef_v_f_leak', 'D+=')} (this week's data: "
+                  f"[{ext_now}|D]; paid beyond the market's sales this week {sv('zz_ef_v_f_leak', 'D+=')} (this week's data: "
                   f"{sv('zz_ef_hook_ok', '0')}; queued [GetDataModelSize(GetGlobalList('zz_ef_hook_countries'))]; "
                   f"bridge calls in total {sv('zz_ef_hook_calls', '0')}, probe {sv('zz_ef_hook_probe_calls', '0')})"))
     tx_t = f"[GetTrendValue({c}.GetTaxIncomeTrend)|D]"
@@ -422,13 +422,14 @@ FLOWS = [
      ("expr", "WAGES"), None),
     (N, P, "покупки товаров — остаток дохода (оценка)",
      "purchases of goods — the rest of the income (estimate)", ("closing",), None),
-    # Д.R4б.21: the money the engine loses inside the private sector -- the market's gap (buyers pay for all their
-    # orders, sellers get paid for what sold) and the pops' income left unspent; the week's residual by money
-    # conservation (zz_ef_f_leak: the script sees neither the pops' income nor a country's part of the gap)
-    (P, X, "движок: разрыв рынка и неистраченный доход — деньги исчезли (по сохранению денег)",
-     "engine: the market gap and unspent income — money gone (by money conservation)", svn("zz_ef_v_f_leak"), None),
-    (X, P, "движок: денег появилось больше, чем исчезло в разрыве рынка (по сохранению денег)",
-     "engine: more money appeared than the market gap took (by money conservation)", svp("zz_ef_v_f_leak"), None),
+    # Д.R4б.21, Д.R4б.27: the money the engine loses inside the private sector -- a buyer pays for its whole order, the
+    # sellers get paid for what sold: orders beyond the market's sell orders burn money (the mod's goods about one to
+    # one, vanilla goods much less -- the pops' shortage cuts their consumption); the week's residual by money
+    # conservation (zz_ef_f_leak: the script sees neither the orders by buyer nor a country's part of the market)
+    (P, X, "движок: оплачено сверх продаж рынка — деньги исчезли (по сохранению денег)",
+     "engine: paid beyond the market's sales — money gone (by money conservation)", svn("zz_ef_v_f_leak"), None),
+    (X, P, "движок: денег появилось больше, чем исчезло на заказах сверх продаж (по сохранению денег)",
+     "engine: more money appeared than orders beyond the sales took (by money conservation)", svp("zz_ef_v_f_leak"), None),
     # pops' savings: the money the engine lost this week, exact and merged (the bridge)
     (N, X, "в накопления: остаток дохода — деньги, выпавшие из казны и касс предприятий (точно, по сохранению "
            "денег)",
