@@ -31,7 +31,8 @@ GOLD_U, SILVER_U = 100, 775          # account units a good of gold / silver
 TOP = 12                             # countries with monthly series (by GDP at the end)
 # the unexplained remainders a week (EFO, EFR): key -> what account
 REST_KEYS = {'b_rest': 'касса предприятий', 'pool_rest': 'банки и пул', 'abr_rest': 'заграница', 'tr_rest': 'казна',
-             'cbm_rest': 'ЦБ', 'leak': 'накопления населения'}
+             'cbm_rest': 'ЦБ', 'pop_rest': 'наличные населения', 'dep_rest': 'вклады населения'}
+# the engine's market gap -- a line of the business cash's card (Д.R4б.21), not a remainder: EFR leak
 # words that name a form of state, not the country: not a stem to join a revolution's country by
 GENERIC = {'респу', 'корол', 'импер', 'восст', 'радик', 'народ', 'социа', 'федер', 'конфе', 'княже', 'герцо', 'султа',
            'ханст', 'держа', 'госуд', 'компа', 'терри', 'колон', 'прови', 'союзн', 'объед', 'соеди', 'демок', 'совет',
@@ -43,6 +44,14 @@ RATIO_KEYS = {'price', 'cover', 'popm_share', 'popm_target', 'radical', 'loyalis
 ALL_KEYS = ('gdp', 'm2', 'price', 'pool', 'pool_constr', 'treasury', 'debt', 'credit', 'inc', 'exp', 'savings',
             'deposits', 'loans', 'bkcap', 'popm', 'popm_share', 'popm_target', 'popm_cb', 'popm_bank', 'radical',
             'loyalist', 'sol', 'legit', 'govlv', 'privlv', 'cover', 'bonds_abroad', 'cbm', 'trm', 'bankm')
+
+
+def day(s):
+    """The game date as a day number (the world's week takes the countries' lines of the days before it)."""
+    m = DATE.match(s)
+    if not m or m.group(1) not in MON:
+        return 0
+    return int(m.group(3)) * 372 + MON[m.group(1)] * 31 + int(m.group(2))
 
 
 def ym(s):
@@ -107,7 +116,9 @@ def read_run(run, until):
     tags = {}                                     # country name -> its tag (EFW|all 'tag')
     mkt_of = {}                                   # (country, date) -> its market's owner tag (EFM)
     mkt_gap = defaultdict(float)                  # market owner tag -> the run's market gap (EFM bal)
-    mkt_brest = defaultdict(float)                # market owner tag -> its logged members' business cash remainder
+    gap_wk = {}                                   # (country, date) -> the week's line «engine: the market gap» (EFR leak)
+    gap_cty = defaultdict(float)                  # country -> the line over the run
+    cwk = []                                      # (day, country, its «прочее» of the week) -- for the world's weeks
     xtot = defaultdict(float)                     # exchange -> the run's turnover
     fills = defaultdict(lambda: defaultdict(list))  # month -> metal -> [(fill, buy orders)]
     bsub = defaultdict(float)                     # date -> the world's bank subjects that week
@@ -118,6 +129,7 @@ def read_run(run, until):
     world_week = []                               # (date, the world's «прочее» of the week)
     chk = dict(lines=0, efq=0, diff=0.0, mdiff=0.0, mdiff_at='', fails=[], last='')
     other = other_tr = 0.0
+    mo0 = None
     items = {}
     path = os.path.join(run, 'eflog.txt')
     for ln in open(path, encoding='utf-8', errors='replace'):
@@ -131,6 +143,8 @@ def read_run(run, until):
             continue
         chk['lines'] += 1
         chk['last'] = p[1]
+        if chk['lines'] == 1:
+            mo0 = mo                              # the first month: the start's setup, not a remainder
         pre, who, k3 = p[0], p[2], p[3]
         summ['o.lines'][mo] += 1
         if pre == 'EFI' and who == 'WORLD':
@@ -151,16 +165,22 @@ def read_run(run, until):
             summ['o.markets'][mo] += 1
         if pre == 'EFW' and k3 == 'all':
             summ['o.countries'][mo] += 1
-        if pre == 'EFO' or (pre == 'EFR' and 'leak ' in ln):
-            # the unexplained remainder of each account a week: the change less every known item (EFO: business
-            # cash, banks, abroad, treasury, CB; EFR: the pops' savings)
+        if pre == 'EFR' and 'leak ' in ln:
+            v = fields(p[3:]).get('leak', 0)
+            summ['r.eng_gap'][mo] += v
+            if mo != mo0:
+                gap_wk[(who, p[1])] = v
+                gap_cty[who] += v
+        if pre == 'EFO':
+            # the unexplained remainder of each account a week: the change less every known item (business cash,
+            # banks, abroad, treasury, CB, the pops' cash and deposits)
             d = fields(p[3:])
             for k in REST_KEYS:
                 if k in d and d[k]:
                     v = d[k]
                     summ['r.' + k][mo] += v
-                    if k == 'b_rest' and (who, p[1]) in mkt_of:
-                        mkt_brest[mkt_of[(who, p[1])]] += v
+                    if mo == mo0:
+                        continue
                     rc = rest_cty.setdefault(k, defaultdict(float))
                     rc[who] += v
                     top = rest_week[k]
@@ -242,7 +262,7 @@ def read_run(run, until):
             d = fields(p[3:])
             other += d.get('other', 0)
             other_tr += d.get('other_tr', 0)
-            world_week.append((p[1], d.get('other', 0)))
+            world_week.append((p[1], d.get('other', 0), day(p[1])))
             last['w.other'][mo] = other
             last['w.other_tr'][mo] = other_tr
         elif pre == 'EFJ' and k3.startswith('other '):
@@ -258,11 +278,7 @@ def read_run(run, until):
             if abs(dw) > abs(lk['jump']):
                 lk['jump'], lk['jump_at'] = dw, p[1]
             if dw:
-                wk = week_top[p[1]]
-                wk.append((abs(dw), who, dw))
-                if len(wk) > 3:
-                    wk.sort(reverse=True)
-                    del wk[3:]
+                cwk.append((day(p[1]), who, dw))
             for k in ('lvl_pool', 'lvl_tr'):
                 if k in d:
                     items[(k, who)] = d[k]
@@ -274,6 +290,23 @@ def read_run(run, until):
                     xch[who][k][mo] = d[k]
             xtot[who] += d.get('to_g', 0)
             xlast[who] = dict(d, _date=p[1])
+    # the world's week (the world pass) takes the countries' lines since the last world line: the countries step on
+    # their own days of the week
+    cwk.sort()
+    i = 0
+    prev = -1
+    for dt, _, dd in sorted(world_week, key=lambda x: x[2]):
+        while i < len(cwk) and cwk[i][0] <= dd:
+            if cwk[i][0] > prev:
+                week_top[dt].append((abs(cwk[i][2]), cwk[i][1], cwk[i][2]))
+            i += 1
+        week_top[dt] = sorted(week_top[dt], reverse=True)[:3]
+        prev = dd
+    # the engine's market gap by market against the line of its logged members (the EFM line comes after EFO / EFR)
+    mkt_line = defaultdict(float)
+    for key, v in gap_wk.items():
+        if key in mkt_of:
+            mkt_line[mkt_of[key]] += v
     for dt, n in bsub.items():
         avg['o.banks'][ym(dt)].append(n)
     months = sorted({m for s in last.values() for m in s} | {m for s in avg.values() for m in s}
@@ -445,9 +478,10 @@ def read_run(run, until):
                 leak=dict(sorted(leak.items(), key=lambda kv: -abs(kv[1].get('last', 0)))[:25]),
                 rest={k: dict(sorted(v.items(), key=lambda kv: -abs(kv[1]))[:12]) for k, v in rest_cty.items()},
                 rest_top={k: [(dt, c, round(v)) for _, dt, c, v in sorted(w, reverse=True)[:10]] for k, w in rest_week.items()},
-                mkt=[(m, round(mkt_brest.get(m, 0)), round(g)) for m, g in sorted(mkt_gap.items(), key=lambda kv: kv[1])[:15]],
-                wjumps=[(dt, v, [(c, round(dw)) for _, c, dw in sorted(week_top.get(dt, []), reverse=True)])
-                        for dt, v in sorted(world_week, key=lambda x: -abs(x[1]))[:15]])
+                mkt=[(m, round(mkt_line.get(m, 0)), round(g)) for m, g in sorted(mkt_gap.items(), key=lambda kv: kv[1])[:15]],
+                gap=dict(sorted(gap_cty.items(), key=lambda kv: kv[1])[:12]),
+                wjumps=[(dt, v, [(c, round(dw)) for _, c, dw in week_top.get(dt, [])])
+                        for dt, v, _ in sorted(world_week, key=lambda x: -abs(x[1]))[:15]])
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -621,8 +655,10 @@ def charts(D):
                                                                   ['в т. ч. казна', s('w.other_tr', M)]]),
         'rests': ('Необъяснённые остатки счетов мира нарастающим итогом, млн (должны быть около 0)', 'млн',
                   [[name, cum(S.get('r.' + k), M)] for k, name in REST_KEYS.items() if S.get('r.' + k)] +
-                  [['«прочее» (пул + казна)', s('w.other', M)]] +
-                  ([['разрыв рынков движка (рынки стран с логами)', cum(S.get('r.mkt_gap'), M)]] if S.get('r.mkt_gap') else [])),
+                  [['«прочее» (пул + казна)', s('w.other', M)]]),
+        'gap': ('Движок: разрыв рынка — статья кассы предприятий (страны с логами) и разрыв рынков движка, нарастающим итогом, млн',
+                'млн', [['статья «движок: разрыв рынка»', cum(S.get('r.eng_gap'), M)]] +
+                ([['разрыв рынков движка (рынки стран с логами)', cum(S.get('r.mkt_gap'), M)]] if S.get('r.mkt_gap') else [])),
         'mrest': ('Остаток металла мира: счета − старт − куплено + продано (должен быть 0), тыс. товара', 'тыс.',
                   [['золото', s('m.rest_g', 1e-5, 2)], ['серебро', s('m.rest_s', 1 / 775e3, 2)]]),
         'lvlst': ('Вынесено из «прочего» как выкуп уровней, млн', 'млн', [['пул', s('l.lvl_pool', M)],
@@ -691,8 +727,10 @@ SECTIONS = [
      'любая страна с большим «прочим» недели) — сколько к концу, сколько сразу при первой строке (рождение страны, '
      'революция), самая большая неделя; ниже — недели с самым большим «прочим» мира и чьё оно. Остатки счетов — '
      'изменение каждого счёта подсказки денег минус все известные статьи за неделю: касса предприятий, банки и пул, '
-     'заграница, казна, ЦБ, накопления населения (только страны, которые пишут эти строки: игрок и крупные); любой '
-     'устойчивый рост — утечка, её счёт и страна — в таблицах.', ['rests', 'mrest']),
+     'заграница, казна, ЦБ, наличные и вклады населения (только страны, которые пишут эти строки: игрок и крупные); любой '
+     'устойчивый рост — утечка, её счёт и страна — в таблицах. Деньги, которые движок теряет в частном секторе (разрыв '
+     'рынка, неистраченный доход населения), — статья кассы предприятий, не утечка: её график и таблица — рядом с '
+     'разрывом рынков движка.', ['rests', 'mrest', 'gap']),
     ('Металл', 'Металл на счетах должен расти вровень с добычей: на счета записывается только то, что рынок продал '
      '(заказы × доля исполнения). «Пришло на счета» выше «добыто» долго — металл берётся из ниоткуда. Доля исполнения '
      '1 — рынки продали весь заказ, ниже — нехватка.', ['gold', 'silver', 'mgold', 'msilver', 'fill']),
@@ -835,8 +873,8 @@ def render(D, out, base=None, title=None):
         for i in ids:
             h.append(f'<div class="ct">{esc(ch[i]["title"])}</div><div class="chart" id="c_{i}"></div>')
         if name == 'Утечки':
-            h.append('<p class="sub">Первый месяц игры не считается: в нём стартовая настройка счетов (металл ЦБ — 40 % M2), '
-                     'это не утечка; в таблицах стран — весь прогон.</p>')
+            h.append('<p class="sub">Первый месяц игры не считается — ни в графиках, ни в таблицах остатков: в нём стартовая '
+                     'настройка счетов (металл ЦБ — 40 % M2), это не утечка.</p>')
             h.append('<h3>«Прочее» по странам</h3><div class="tw"><table><thead><tr><th>Страна</th><th class="n">К концу</th>'
                      '<th class="n">При первой строке</th><th>Первая строка</th><th class="n">Пул</th><th class="n">Казна</th>'
                      '<th class="n">Самая большая неделя</th><th>Когда</th></tr></thead><tbody>')
@@ -859,11 +897,17 @@ def render(D, out, base=None, title=None):
                 for dt, c, v in (D.get('rest_top') or {}).get(k, [])[:6]:
                     h.append(f'<tr><td>{esc(dt)}</td><td>{esc(c)}</td><td class="n">{fmt(v)}</td></tr>')
                 h.append('</tbody></table></div>')
+            if D.get('gap'):
+                h.append('<h3>Статья «движок: разрыв рынка» по странам за прогон</h3><div class="tw"><table><thead><tr>'
+                         '<th>Страна</th><th class="n">Статья</th></tr></thead><tbody>')
+                for c, v in D['gap'].items():
+                    h.append(f'<tr><td>{esc(c)}</td><td class="n">{fmt(v)}</td></tr>')
+                h.append('</tbody></table></div>')
             if D.get('mkt'):
-                h.append('<h3>Касса предприятий против разрыва рынка движка</h3><p class="sub">Разрыв рынка — Σ по товарам '
+                h.append('<h3>Статья «движок: разрыв рынка» против разрыва рынка движка</h3><p class="sub">Разрыв рынка — Σ по товарам '
                          '(продано − заказано) × цена: покупатели платят за все заказы, продавцы получают за проданное, '
-                         'разница исчезает. Остаток кассы предприятий — только страны с логами (ВВП больше 20 млн).</p>'
-                         '<div class="tw"><table><thead><tr><th>Рынок</th><th class="n">Остаток кассы предприятий</th>'
+                         'разница исчезает. Статья — только страны с логами (ВВП больше 20 млн), по рынкам.</p>'
+                         '<div class="tw"><table><thead><tr><th>Рынок</th><th class="n">Статья стран рынка</th>'
                          '<th class="n">Разрыв рынка</th><th class="n">Доля</th></tr></thead><tbody>')
                 for m, b, g in D['mkt']:
                     h.append(f'<tr><td>{esc(m)}</td><td class="n">{fmt(b)}</td><td class="n">{fmt(g)}</td>'
