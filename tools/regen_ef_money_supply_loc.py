@@ -567,6 +567,12 @@ FLOWS = [
      "other CBs' deposits: our currency they hold lies in our banks (last week)", svp("zz_ef_v_w_nr_dep"), B),
     (B, X, "вклады чужих ЦБ сняты: наша валюта вернулась домой (прошлая неделя)",
      "other CBs' deposits withdrawn: our currency came home (last week)", svn("zz_ef_v_w_nr_dep"), B),
+    # Д.R4б.33: the line «оплачено сверх продаж рынка» goes back to the pool as the deposits of those who lost it
+    # (ld_leak_back.txt форка): the pops' and the companies'
+    (X, B, "возврат сгоревшего движком: вклады населения и компаний (прошлая неделя)",
+     "the engine's burnt money returned: deposits of pops and companies (last week)", svp("zz_ef_v_w_leak_back"), B),
+    (B, X, "сгоревшее движком сверх: снято с вкладов населения и компаний (прошлая неделя)",
+     "the engine made money: taken out of the deposits of pops and companies (last week)", svn("zz_ef_v_w_leak_back"), B),
     # Д4.5 (4.10): the treasury's surplus over its limit buys the banks' bonds
     (K, B, "излишек казны сверх потолка — покупка облигаций банков", "the treasury's surplus over its limit — banks' bonds bought",
      sv_("zz_ef_v_f_tr_pool"), None),
@@ -798,7 +804,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_leak", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
