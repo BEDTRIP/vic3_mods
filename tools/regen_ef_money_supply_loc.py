@@ -340,28 +340,29 @@ CBL_INT = ("sv", "zz_ef_v_cbl_int")
 
 # (from, to, ru, en, value, only) -- only: the one card to show it in, or None.
 FLOWS = [
-    # --- budget, exact (GUI), a week ---
+    # --- budget, exact (GUI), a week --- the buildings' lines by the GUI's weekly numbers, not the trends (GetTrendValue
+    # is not the week's number: the business cash card's weekly remainder ~3x smaller with these, audit 13.10)
     (N, K, "[concept_budget_income_taxes]", "[concept_budget_income_taxes]", gt("GetTaxIncomeTrend"), None),
     (N, K, "[concept_budget_poll_taxes]", "[concept_budget_poll_taxes]", gt("GetPollTaxTrend"), None),
     (N, K, "[concept_budget_consumption_taxes]", "[concept_budget_consumption_taxes]", gt("GetConsumptionTaxTrend"), None),
     (N, K, "[concept_budget_dividends_taxes]", "[concept_budget_dividends_taxes]", gt("GetDividendsTaxTrend"), None),
-    (P, K, "[concept_tariffs] (платят импортёры)", "[concept_tariffs] (paid by importers)", gt("GetTariffTrend"), None),
-    (P, K, "государственные дивиденды", "government dividends", gt("GetGovernmentShareDividendsTrend"), None),
+    (P, K, "[concept_tariffs] (платят импортёры)", "[concept_tariffs] (paid by importers)", gv("PredictTariffs"), None),
+    (P, K, "государственные дивиденды", "government dividends", gv("PredictGovernmentShareDividends"), None),
     (K, P, "убытки государственных предприятий", "losses of state-owned businesses", gt("GetGovernmentShareLossesTrend"), None),
     (K, N, "[concept_budget_government_wages]", "[concept_budget_government_wages]", gt("GetGovernmentWagesExpenseTrend"), None),
     (K, N, "[concept_budget_military_wages]", "[concept_budget_military_wages]", gt("GetMilitaryWagesExpenseTrend"), None),
     (K, N, "[concept_welfare_payments]", "[concept_welfare_payments]", gt("GetWelfarePaymentsTrend"), None),
     (K, P, "[concept_budget_goods_for_government_buildings]", "[concept_budget_goods_for_government_buildings]",
-     gt("GetGovernmentGoodsExpenseTrend"), None),
+     gv("GetGovernmentGoodsExpenses"), None),
     (K, P, "[concept_budget_goods_for_military_upkeep]", "[concept_budget_goods_for_military_upkeep]",
-     gt("GetMilitaryGoodsExpenseTrend"), None),
+     gv("GetMilitaryGoodsExpenses"), None),
     (K, P, "[concept_budget_construction_goods]", "[concept_budget_construction_goods]",
-     gt("GetConstructionGoodsExpenseTrend"), None),
-    (K, P, "[concept_subsidies]", "[concept_subsidies]", gt("GetSubsidiesExpenseTrend"), None),
-    (K, P, "[concept_subventions]", "[concept_subventions]", gt("GetSubventionsExpenseTrend"), None),
+     gv("GetConstructionGoodsExpenses"), None),
+    (K, P, "[concept_subsidies]", "[concept_subsidies]", gv("GetSubsidiesExpenses"), None),
+    (K, P, "[concept_subventions]", "[concept_subventions]", gv("GetSubventionsExpenses"), None),
     (K, P, "[concept_budget_government_slaves]", "[concept_budget_government_slaves]",
-     gt("GetGovernmentSlavesExpenseTrend"), None),
-    (K, P, "[concept_budget_military_slaves]", "[concept_budget_military_slaves]", gt("GetMilitarySlavesExpenseTrend"), None),
+     gv("GetGovernmentSlavesExpenses"), None),
+    (K, P, "[concept_budget_military_slaves]", "[concept_budget_military_slaves]", gv("GetMilitarySlavesExpenses"), None),
     (K, P, "постройка кораблей снабжения", "supply ship construction", gv("GetSupplyShipConstructionGoodsExpenses"), None),
     (K, P, "содержание кораблей снабжения", "supply ship upkeep", gv("GetSupplyShipMaintenanceExpenses"), None),
     (K, P, "постройка военных кораблей", "warship construction", gv("GetMilitaryShipConstructionGoodsExpenses"), None),
@@ -580,8 +581,8 @@ NOTES = {
     # 4.10 (the user: the cards are useful but too long): one or two sentences each
     "treasury": ("Статьи бюджета — точно, за неделю, как в бюджете игры.",
                  "Budget lines are exact, a week, as in the game's budget."),
-    "buildings": ("Деньги всех зданий. Прочее — сглаженные тренды бюджета против точного недельного изменения.",
-                  "The cash of all buildings. Other: smoothed budget trends against the exact weekly change."),
+    "buildings": ("Деньги всех зданий. Прочее — оценки зарплат и покупок населения против точного недельного изменения.",
+                  "The cash of all buildings. Other: the estimates of wages and of the pops' purchases against the exact weekly change."),
     "banks": ("Резервы банков (инвестиционный пул). Частная стройка идёт через казну: пул → казна → предприятия. "
               "Металл банков (покупает здание «Банк») по паритету — [Country.MakeScope.ScriptValue('zz_ef_bankm_money')|D]; "
               "кредит бизнесу и потребкредит — не больше металл / норма резерва "
@@ -782,8 +783,8 @@ OTHER_LAB = {
            "other — E&F's currency deals, E&F's other metal edits"),
     "abroad": ("прочее — переоценка валют, валютные сделки E&F, наша валюта у других ЦБ",
                "other — currencies revalued, E&F's currency deals, our currency at other CBs"),
-    "buildings": ("прочее — сглаженные тренды бюджета против недельного изменения кассы",
-                  "other — smoothed budget trends against the weekly change of the cash"),
+    "buildings": ("прочее — оценки зарплат и покупок населения против недельного изменения кассы",
+                  "other — the estimates of wages and of the pops' purchases against the weekly change of the cash"),
 }
 CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out",
                 "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money",
