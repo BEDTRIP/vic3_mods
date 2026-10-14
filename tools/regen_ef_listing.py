@@ -10,6 +10,7 @@ that sets a method, activate_production_method, takes the building type as a lit
 so the switch is a dispatcher over the company types: building scope ->
     zz_ef_listing_go_public  -- pm_company_headquarter_publicly_traded (EF.22)
     zz_ef_listing_go_private -- pm_company_headquarter_privately_owned (vanilla)
+    zz_ef_listing_mark       -- the headquarters' company marked listed / not (S = public | private; Д.R6.10)
 in the building's state. Only the companies the method is for (category capitalist_owned, the default when a company
 type has none) of vanilla and the fork -- its dependencies: a key of a mod that is not loaded would be an
 unknown building type. Companies of other mods are not switched (the megapack can extend the list).
@@ -101,10 +102,23 @@ def dispatcher(name: str, pm: str, keys: list[str]) -> str:
     return "".join(out)
 
 
+def marker(keys: list[str]) -> str:
+    """BUILDING scope (a headquarters), S = public | private: its company (company_<key> of the building's owner) is
+    marked listed or not (zz_ef_co_go_public / _private, ld_company_shares.txt; Д.R6.10)."""
+    out = ["zz_ef_listing_mark = {\n"]
+    for i, k in enumerate(keys):
+        kw = "if" if i == 0 else "else_if"
+        out.append(f"\t{kw} = {{\n\t\tlimit = {{ is_building_type = building_{k} }}\n"
+                   f"\t\towner = {{ if = {{ limit = {{ has_company = company_type:{k} }} company:{k} = {{ zz_ef_co_go_$S$ = yes }} }} }}\n"
+                   f"\t}}\n")
+    out.append("}\n")
+    return "".join(out)
+
+
 def build() -> str:
     keys = companies()
     return HEADER + f"# {len(keys)} companies\n\n" + dispatcher("zz_ef_listing_go_public", PM_PUBLIC, keys) + "\n" + \
-        dispatcher("zz_ef_listing_go_private", PM_PRIVATE, keys)
+        dispatcher("zz_ef_listing_go_private", PM_PRIVATE, keys) + "\n" + marker(keys)
 
 
 def main() -> None:

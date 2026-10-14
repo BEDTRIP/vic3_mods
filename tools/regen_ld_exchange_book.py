@@ -8,7 +8,7 @@
 расчёта сделок и логов — рукописная, `common/scripted_effects/ld_exchange_trade.txt`.
 
 Цена — доля справедливой: шаг i = 1..STEPS, цена = 1 + (i − MID) × ширина шага (`zz_ef_xq_w`); MID — справедливая.
-Карты на стране биржи (ключ — страна-должник, значение — объём в единицах требования):
+Карты на стране биржи (ключ — должник: страна, у акций — компания; значение — объём в единицах требования):
 - `zz_ef_xs_<вид>_<i>` — продажа по цене шага i и ниже; `zz_ef_xb_<вид>_<i>` — покупка по цене шага i и выше;
 - итог сведения: `zz_ef_xr_<вид>_c` (шаг цены расчёта, 0 — нет), `_ps` / `_pb` (доля заявок продавцов / покупателей
   крайнего шага, исполненная по цене расчёта), `_fs` / `_fb` (доля остатка, которую взял / отдал фонд), `_is` / `_ib`
@@ -25,11 +25,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
 
 OUT = "common/scripted_effects/ld_exchange_book.txt"
-KINDS = ("m", "b")
+KINDS = ("m", "b", "s")
 STEPS = 9
 MID = 5
-# (holder, kind) pairs that post orders: the maps of the register of claims (ld_claims.txt)
-ORDERS = (("cb", "m"), ("bk", "m"), ("pp", "m"), ("tr", "b"), ("bk", "b"))
+# (holder, kind) pairs that post orders: the maps of the register of claims (ld_claims.txt); s -- the companies' shares
+# (co -- the shares a company offers at its IPO, ld_company_shares.txt)
+ORDERS = (("cb", "m"), ("bk", "m"), ("pp", "m"), ("tr", "b"), ("bk", "b"), ("pp", "s"), ("bk", "s"), ("co", "s"))
 RESULTS = ("c", "ps", "pb", "fs", "fb", "is", "ib", "ls", "lb", "lc", "xs", "xb", "xf")
 # the clearing's tie-break: the step closer to the fair price first
 ORDER_OF_STEPS = sorted(range(1, STEPS + 1), key=lambda i: (abs(i - MID), i))
