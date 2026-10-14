@@ -573,6 +573,11 @@ FLOWS = [
      svn("zz_ef_v_f_gl_pool"), None),
     (X, B, "долг государства: погашение и проценты банкам", "the government's debt: repayment and interest to the banks",
      svp("zz_ef_v_f_gl_pool"), None),
+    # Д.R7.3: the pops' banknotes <-> deposits to their target of cash (ld_pop_cash.txt форка)
+    (N, B, "население сдало наличные во вклады (прошлая неделя)", "pops brought cash into deposits (last week)",
+     svp("zz_ef_v_w_cash_dep"), B),
+    (B, N, "население сняло вклады наличными (прошлая неделя)", "pops drew deposits as cash (last week)",
+     svn("zz_ef_v_w_cash_dep"), B),
     # Д.R6.1: the price of levels the pool bought from private owners -- paid to the sellers as their deposits
     (X, B, "выкуп уровней у частных владельцев: цена — во вклады населения (прошлая неделя)",
      "levels bought from private owners: the price into the pops' deposits (last week)", svp("zz_ef_v_w_lvl_post"), B),
@@ -813,7 +818,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_w_leak_back_pop", "zz_ef_v_w_lvl_post", "zz_ef_v_f_gl_pool", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_w_leak_back_pop", "zz_ef_v_w_lvl_post", "zz_ef_v_w_cash_dep", "zz_ef_v_f_gl_pool", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_leak", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
@@ -956,10 +961,11 @@ def card_resid(head, rows):
 # pops' metal over their norm sold to the CB, the consols; the deposits -- the engine's contributions less construction
 # out of them (zz_ef_pop_deposits_step), the interest, the metal sold to the banks, a private CB's profit, the fund's
 # shares, the exchange
-POPS_ROWS = (("zz_ef_v_f_buyback_m", -1), ("zz_ef_v_f_popm_cb", -1), ("zz_ef_v_f_cons_int", -1), ("zz_ef_v_f_cons_buy", -1))
+POPS_ROWS = (("zz_ef_v_f_buyback_m", -1), ("zz_ef_v_f_popm_cb", -1), ("zz_ef_v_f_cons_int", -1), ("zz_ef_v_f_cons_buy", -1),
+             ("zz_ef_v_w_cash_dep", 1))
 DEP_ROWS = (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_popm_bank", -1), ("zz_ef_v_f_cb_int_dep", -1),
             ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1), ("zz_ef_v_w_leak_back_pop", -1), ("zz_ef_v_w_lvl_post", -1),
-            ("zz_ef_v_w_co_div", -1))
+            ("zz_ef_v_w_co_div", -1), ("zz_ef_v_w_cash_dep", -1))
 
 
 def pops_resid():
@@ -986,6 +992,9 @@ def pops_card(lang):
          f"  ← #P +{money('zz_ef_v_f_buyback_m')}#!{mark('mod', ru)} " + ("ЦБ выкупил металл населения (паритет + 2%, новые деньги)" if ru else "the CB bought the pops' metal (parity + 2%, new money)"),
          f"  ← #P +[Subtract_CFixedPoint({v('zz_ef_v_f_cons_int')}, Negate_CFixedPoint({v('zz_ef_v_f_cons_buy')}))|D]#!{mark('mod', ru)} "
          + ("консоли: проценты и выкуп из казны" if ru else "consols: interest and buy-back from the treasury"),
+         f"  ↔ [Negate_CFixedPoint({v('zz_ef_v_w_cash_dep')})|D+=] {cur}{mark('mod', ru)} "
+         + ("к цели наличных: сняли с вкладов (+), сдали во вклады (−) — прошлая неделя" if ru else
+            "towards the cash target: drawn from deposits (+), brought into deposits (−) — last week"),
          ]
     resid = pops_resid()
     L.append("2 " + ("Вне счетов" if ru else "Outside the accounts"))
@@ -1038,6 +1047,8 @@ def deposits_card(lang):
                                                                        if ru else "levels bought from private owners: the price to the sellers (last week)"),
          f"  ← #P +{money('zz_ef_v_w_co_div')}#!{mark('mod', ru)} " + ("дивиденды компаний владельцам — со счетов сверх нормы (прошлая неделя)"
                                                                       if ru else "the companies' dividends to their owners — out of the accounts over their norm (last week)"),
+         f"  ↔ {sv('zz_ef_v_w_cash_dep', 'D+=')} {cur}{mark('mod', ru)} " + ("наличные к цели: сдали во вклады (+), сняли (−) — прошлая неделя"
+                                                                          if ru else "cash towards its target: brought into deposits (+), drawn (−) — last week"),
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
          "",
          (f"Вклады — долг банков населению; деньги лежат в резервах банков (пул) и в выданных кредитах. Ставка по "
