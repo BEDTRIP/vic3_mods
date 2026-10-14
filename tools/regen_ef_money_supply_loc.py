@@ -587,6 +587,9 @@ FLOWS = [
      "the engine's burnt money returned: deposits of pops and companies (last week)", svp("zz_ef_v_w_leak_back"), B),
     (B, X, "сгоревшее движком сверх: снято с вкладов населения и компаний (прошлая неделя)",
      "the engine made money: taken out of the deposits of pops and companies (last week)", svn("zz_ef_v_w_leak_back"), B),
+    # Д.R9.3: «госбанки» -- the banks' capital over its norm to the treasury out of the pool (ld_bank_subjects.txt форка)
+    (B, K, "госбанки: капитал банков сверх норматива — в казну (прошлая неделя)",
+     "state banks: the banks' capital over its norm — to the treasury (last week)", svp("zz_ef_v_w_bk_div_tr"), None),
     # Д4.5 (4.10): the treasury's surplus over its limit buys the banks' bonds
     (K, B, "излишек казны сверх потолка — покупка облигаций банков", "the treasury's surplus over its limit — banks' bonds bought",
      sv_("zz_ef_v_f_tr_pool"), None),
@@ -818,7 +821,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_w_leak_back_pop", "zz_ef_v_w_lvl_post", "zz_ef_v_w_cash_dep", "zz_ef_v_f_gl_pool", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_w_bk_div_tr", "zz_ef_v_w_bk_div_pop", "zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_w_leak_back_pop", "zz_ef_v_w_lvl_post", "zz_ef_v_w_cash_dep", "zz_ef_v_f_gl_pool", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_leak", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
@@ -965,7 +968,7 @@ POPS_ROWS = (("zz_ef_v_f_buyback_m", -1), ("zz_ef_v_f_popm_cb", -1), ("zz_ef_v_f
              ("zz_ef_v_w_cash_dep", 1))
 DEP_ROWS = (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_popm_bank", -1), ("zz_ef_v_f_cb_int_dep", -1),
             ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1), ("zz_ef_v_w_leak_back_pop", -1), ("zz_ef_v_w_lvl_post", -1),
-            ("zz_ef_v_w_co_div", -1), ("zz_ef_v_w_cash_dep", -1))
+            ("zz_ef_v_w_co_div", -1), ("zz_ef_v_w_bk_div_pop", -1), ("zz_ef_v_w_cash_dep", -1))
 
 
 def pops_resid():
@@ -1047,6 +1050,8 @@ def deposits_card(lang):
                                                                        if ru else "levels bought from private owners: the price to the sellers (last week)"),
          f"  ← #P +{money('zz_ef_v_w_co_div')}#!{mark('mod', ru)} " + ("дивиденды компаний владельцам — со счетов сверх нормы (прошлая неделя)"
                                                                       if ru else "the companies' dividends to their owners — out of the accounts over their norm (last week)"),
+         f"  ← #P +{money('zz_ef_v_w_bk_div_pop')}#!{mark('mod', ru)} " + ("частные банкиры: капитал банков сверх норматива — владельцам (прошлая неделя)"
+                                                                          if ru else "private bankers: the banks' capital over its norm — to the owners (last week)"),
          f"  ↔ {sv('zz_ef_v_w_cash_dep', 'D+=')} {cur}{mark('mod', ru)} " + ("наличные к цели: сдали во вклады (+), сняли (−) — прошлая неделя"
                                                                           if ru else "cash towards its target: brought into deposits (+), drawn (−) — last week"),
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
