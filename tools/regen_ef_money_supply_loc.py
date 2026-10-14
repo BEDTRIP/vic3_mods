@@ -1020,8 +1020,8 @@ def deposits_card(lang):
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     resid = deposits_resid()
     L = [f"#b {'Вклады в банках за неделю' if ru else 'Bank deposits this week'}: {delta('zz_ef_v_d_deposits')}#!{mark('mod', ru)}",
-         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку — доля населения (доля компаний по их уровням — на счета компаний) за вычетом стройки из вкладов"
-                                                                         if ru else "contributions to the pool by the engine — the pops' part (the companies' part by their levels goes to their accounts) less construction paid from deposits"),
+         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку — доля населения за вычетом его части обслуживания делового кредита (доля компаний по уровням — на их счета)"
+                                                                         if ru else "contributions to the pool by the engine — the pops' part less their part of the business credit's service (the companies' part by their levels goes to their accounts)"),
          f"  ← #P +{money('zz_ef_v_w_dep_int')}#!{mark('mod', ru)} " + ("проценты (платят банки из пула)" if ru else "interest (the banks pay it from the pool)"),
          f"  ← #P +{money('zz_ef_v_f_popm_bank')}#!{mark('mod', ru)} " + ("население сдало металл сверх нормы в банки"
                                                                          if ru else "pops sold their metal over the norm to the banks"),
