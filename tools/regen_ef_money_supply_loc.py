@@ -1020,8 +1020,8 @@ def deposits_card(lang):
     v = lambda n: f"Country.MakeScope.ScriptValue('{n}')"
     resid = deposits_resid()
     L = [f"#b {'Вклады в банках за неделю' if ru else 'Bank deposits this week'}: {delta('zz_ef_v_d_deposits')}#!{mark('mod', ru)}",
-         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку за вычетом стройки из вкладов"
-                                                                         if ru else "contributions to the pool by the engine less construction paid from deposits"),
+         f"  ↔ {sv('zz_ef_v_w_inflow', 'D+=')} {cur}{mark('calc', ru)} " + ("взносы в пул по движку — доля населения (доля компаний по их уровням — на счета компаний) за вычетом стройки из вкладов"
+                                                                         if ru else "contributions to the pool by the engine — the pops' part (the companies' part by their levels goes to their accounts) less construction paid from deposits"),
          f"  ← #P +{money('zz_ef_v_w_dep_int')}#!{mark('mod', ru)} " + ("проценты (платят банки из пула)" if ru else "interest (the banks pay it from the pool)"),
          f"  ← #P +{money('zz_ef_v_f_popm_bank')}#!{mark('mod', ru)} " + ("население сдало металл сверх нормы в банки"
                                                                          if ru else "pops sold their metal over the norm to the banks"),
@@ -1038,10 +1038,16 @@ def deposits_card(lang):
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
          "",
          (f"Вклады — долг банков населению; деньги лежат в резервах банков (пул) и в выданных кредитах. Ставка по "
-          f"вкладам {sv('zz_ef_deposit_rate', '%1')} = ключевая − маржа банков {sv('zz_ef_deposit_margin', '%1')}.")
+          f"вкладам {sv('zz_ef_deposit_rate', '%1')} = ключевая − маржа банков {sv('zz_ef_deposit_margin', '%1')}. Вклады "
+          f"компаний {money('zz_ef_comp_dep_v')} (счета компаний {money('zz_ef_co_acc_sum_v')}, прочий частный сектор "
+          f"{money('zz_ef_co_rest_v')}); за неделю им — {money('zz_ef_v_f_co_contrib')} взносов, доля компаний в частных уровнях "
+          f"{sv('zz_ef_co_share_v', '%0')}.")
          if ru else
          (f"Deposits are the banks' debt to pops; the money is in the banks' reserves (the pool) and in their loans. "
-          f"Deposit rate {sv('zz_ef_deposit_rate', '%1')} = key − the banks' margin {sv('zz_ef_deposit_margin', '%1')}.")]
+          f"Deposit rate {sv('zz_ef_deposit_rate', '%1')} = key − the banks' margin {sv('zz_ef_deposit_margin', '%1')}. The "
+          f"companies' deposits {money('zz_ef_comp_dep_v')} (company accounts {money('zz_ef_co_acc_sum_v')}, the rest of the "
+          f"private sector {money('zz_ef_co_rest_v')}); this week {money('zz_ef_v_f_co_contrib')} of contributions went to them, "
+          f"the companies' share of private levels {sv('zz_ef_co_share_v', '%0')}.")]
     return "\\n".join(L)
 
 
