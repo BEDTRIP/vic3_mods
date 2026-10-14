@@ -66,12 +66,14 @@ def main():
     for c, ws in wk.items():
         for i, (dt, d) in enumerate(ws):
             do = d.get('d_other', 0)
-            if abs(do) < jump or i == 0:
+            if abs(do) < jump:
                 continue
-            pd = ws[i - 1][1]
+            # a country's first line (a new country, a rename): its own week against nothing
+            pd = ws[i - 1][1] if i else {}
             nxt = ws[i + 1][1].get('d_other', 0) if i + 1 < len(ws) else 0
-            r, rp = efr.get((c, dt), {}), efr.get((c, ws[i - 1][0]), {})
-            b, bp = efb.get((c, dt), {}), efb.get((c, ws[i - 1][0]), {})
+            prev_dt = ws[i - 1][0] if i else dt
+            r, rp = efr.get((c, dt), {}), (efr.get((c, prev_dt), {}) if i else {})
+            b, bp = efb.get((c, dt), {}), (efb.get((c, prev_dt), {}) if i else {})
 
             def dd(k, cur=d, prev=pd):
                 return cur.get(k, 0) - prev.get(k, 0)
@@ -79,7 +81,7 @@ def main():
                          dd('nr_dep', r, rp), r.get('f_nr_dep', 0), dd('cc_debt', r, rp) + dd('bc_debt', r, rp),
                          dd('pbonds', b, bp), d.get('d_other_tr', 0),
                          dd('lvl_pool') + dd('lvl_tr') + dd('bk_woff') + dd('heir_debt') + dd('heir_tr'),
-                         (day(dt) - day(ws[i - 1][0])).days,
+                         (day(dt) - day(prev_dt)).days,
                          sorted(((k[2:], dd(k)) for k in BOOK if k in d), key=lambda kv: -abs(kv[1]))[:3]))
     rows.sort(reverse=True)
     hdr = ['страна', 'дата', 'd_other', 'след.', 'd_pool', 'd_book', 'd_dep', 'd_cap', 'd_nr_dep', 'f_nr_dep',
