@@ -29,8 +29,8 @@ KINDS = ("m", "b", "s")
 STEPS = 9
 MID = 5
 # (holder, kind) pairs that post orders: the maps of the register of claims (ld_claims.txt); s -- the companies' shares
-# (co -- the shares a company offers at its IPO, ld_company_shares.txt)
-ORDERS = (("cb", "m"), ("bk", "m"), ("pp", "m"), ("tr", "b"), ("bk", "b"), ("pp", "s"), ("bk", "s"), ("co", "s"))
+# (co -- the shares a company offers at its IPO, ld_company_shares.txt; ob -- the banks' part of our own debt, Д.R6.6)
+ORDERS = (("cb", "m"), ("bk", "m"), ("pp", "m"), ("tr", "b"), ("bk", "b"), ("pp", "s"), ("bk", "s"), ("co", "s"), ("ob", "b"))
 RESULTS = ("c", "ps", "pb", "fs", "fb", "is", "ib", "ls", "lb", "lc", "xs", "xb", "xf")
 # the clearing's tie-break: the step closer to the fair price first
 ORDER_OF_STEPS = sorted(range(1, STEPS + 1), key=lambda i: (abs(i - MID), i))
