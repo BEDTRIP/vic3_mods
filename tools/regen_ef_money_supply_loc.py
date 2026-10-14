@@ -958,7 +958,8 @@ def card_resid(head, rows):
 # shares, the exchange
 POPS_ROWS = (("zz_ef_v_f_buyback_m", -1), ("zz_ef_v_f_popm_cb", -1), ("zz_ef_v_f_cons_int", -1), ("zz_ef_v_f_cons_buy", -1))
 DEP_ROWS = (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_popm_bank", -1), ("zz_ef_v_f_cb_int_dep", -1),
-            ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1), ("zz_ef_v_w_leak_back_pop", -1), ("zz_ef_v_w_lvl_post", -1))
+            ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1), ("zz_ef_v_w_leak_back_pop", -1), ("zz_ef_v_w_lvl_post", -1),
+            ("zz_ef_v_w_co_div", -1))
 
 
 def pops_resid():
@@ -1035,6 +1036,8 @@ def deposits_card(lang):
                                                                                if ru else "the engine's burnt money returned: the pops' part (last week)"),
          f"  ← #P +{money('zz_ef_v_w_lvl_post')}#!{mark('mod', ru)} " + ("выкуп уровней у частных владельцев: цена продавцам (прошлая неделя)"
                                                                        if ru else "levels bought from private owners: the price to the sellers (last week)"),
+         f"  ← #P +{money('zz_ef_v_w_co_div')}#!{mark('mod', ru)} " + ("дивиденды компаний владельцам — со счетов сверх нормы (прошлая неделя)"
+                                                                      if ru else "the companies' dividends to their owners — out of the accounts over their norm (last week)"),
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
          "",
          (f"Вклады — долг банков населению; деньги лежат в резервах банков (пул) и в выданных кредитах. Ставка по "
