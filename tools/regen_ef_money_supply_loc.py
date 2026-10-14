@@ -573,6 +573,9 @@ FLOWS = [
      svn("zz_ef_v_f_gl_pool"), None),
     (X, B, "долг государства: погашение и проценты банкам", "the government's debt: repayment and interest to the banks",
      svp("zz_ef_v_f_gl_pool"), None),
+    # Д.R6.1: the price of levels the pool bought from private owners -- paid to the sellers as their deposits
+    (X, B, "выкуп уровней у частных владельцев: цена — во вклады населения (прошлая неделя)",
+     "levels bought from private owners: the price into the pops' deposits (last week)", svp("zz_ef_v_w_lvl_post"), B),
     # Д.R4б.33: the line «оплачено сверх продаж рынка» goes back to the pool as the deposits of those who lost it
     # (ld_leak_back.txt форка): the pops' and the companies'
     (X, B, "возврат сгоревшего движком: вклады населения и компаний (прошлая неделя)",
@@ -810,7 +813,7 @@ CLAIM_VALUES = {"zz_ef_v_d_bonds", "zz_ef_v_d_tbonds", "zz_ef_v_w_clr_fx_in_mone
 #   est  -- an estimate (wages = GDP / 52, purchases closing the pops' card);
 #   ef   -- an E&F variable (its bonds).
 SRC_ENGINE = {"zz_ef_v_d_tc", "zz_ef_v_f_contrib", "zz_ef_v_f_transfer"}
-SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_w_leak_back_pop", "zz_ef_v_f_gl_pool", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
+SRC_MOD = {"zz_ef_v_f_cons_int", "zz_ef_v_f_cons_buy", "zz_ef_v_f_fd_out", "zz_ef_v_f_fd_in", "zz_ef_v_f_xch_pool", "zz_ef_v_f_bl_int_in", "zz_ef_v_f_bl_sold", "zz_ef_v_f_bl_int_out", "zz_ef_v_f_bl_redeem", "zz_ef_v_w_clr_fx_in_money", "zz_ef_v_w_clr_cur_out", "zz_ef_v_w_clr_own_back", "zz_ef_v_w_clr_fx_out_money", "zz_ef_v_w_nr_xch", "zz_ef_v_w_xch_abr", "zz_ef_v_w_fxint_abr", "zz_ef_v_w_hume_money", "zz_ef_v_w_nr_dep", "zz_ef_v_w_leak_back", "zz_ef_v_w_leak_back_pop", "zz_ef_v_w_lvl_post", "zz_ef_v_f_gl_pool", "zz_ef_v_f_tr_pool", "zz_ef_v_w_dep_int", "zz_ef_v_w_cc_issue", "zz_ef_v_w_cc_repay",
            "zz_ef_v_w_cc_int", "zz_ef_v_f_cb_borrow", "zz_ef_v_f_cb_repay", "zz_ef_v_f_cb_interest", "zz_ef_v_f_mint",
            "zz_ef_v_f_mint_own", "zz_ef_v_f_mint_tr", "zz_ef_v_f_cb_hume_m"}
 SRC_CALC = {"zz_ef_v_f_inflow", "zz_ef_v_f_leak", "zz_ef_v_f_pool_other", "zz_ef_v_f_cb_reval",
@@ -955,7 +958,7 @@ def card_resid(head, rows):
 # shares, the exchange
 POPS_ROWS = (("zz_ef_v_f_buyback_m", -1), ("zz_ef_v_f_popm_cb", -1), ("zz_ef_v_f_cons_int", -1), ("zz_ef_v_f_cons_buy", -1))
 DEP_ROWS = (("zz_ef_v_w_inflow", -1), ("zz_ef_v_w_dep_int", -1), ("zz_ef_v_f_popm_bank", -1), ("zz_ef_v_f_cb_int_dep", -1),
-            ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1), ("zz_ef_v_w_leak_back_pop", -1))
+            ("zz_ef_v_f_fd_pp", 1), ("zz_ef_v_f_xch_pp", -1), ("zz_ef_v_w_leak_back_pop", -1), ("zz_ef_v_w_lvl_post", -1))
 
 
 def pops_resid():
@@ -1030,6 +1033,8 @@ def deposits_card(lang):
                                                                        if ru else "exchange: pops sold (+) and bought (−) claims"),
          f"  ↔ {sv('zz_ef_v_w_leak_back_pop', 'D+=')} {cur}{mark('mod', ru)} " + ("возврат сгоревшего движком: доля населения (прошлая неделя)"
                                                                                if ru else "the engine's burnt money returned: the pops' part (last week)"),
+         f"  ← #P +{money('zz_ef_v_w_lvl_post')}#!{mark('mod', ru)} " + ("выкуп уровней у частных владельцев: цена продавцам (прошлая неделя)"
+                                                                       if ru else "levels bought from private owners: the price to the sellers (last week)"),
          f"  ↔ [{resid}|D+=] {cur}{mark('calc', ru)} " + ("прочее" if ru else "other"),
          "",
          (f"Вклады — долг банков населению; деньги лежат в резервах банков (пул) и в выданных кредитах. Ставка по "
