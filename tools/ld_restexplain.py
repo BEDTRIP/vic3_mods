@@ -2,7 +2,8 @@
 
 Usage:  py tools/ld_restexplain.py <run>/eflog.txt <rest> [--lag 0|1] [--top 12]
 
-<rest> -- a key of the weekly EFO line (b_rest, pool_rest, abr_rest, ...). Candidates -- every numeric field of the
+<rest> -- a key of the weekly EFO line (b_rest, pool_rest, abr_rest, ...), or efj:<key> -- of the reconciliation's EFJ
+other line (efj:d_other_tr -- the treasury part's «прочее» of the week). Candidates -- every numeric field of the
 same country's EFR line (of the same week, or of the week before with --lag 1) and of its EFF card lines (named
 <card>.<key>). For each candidate and sign s = +1 / -1: sum over countries and weeks of |rest - s x field| against
 sum |rest|. The best few name the flow the card misses (or counts twice).
@@ -39,14 +40,19 @@ def main():
     rest = {}
     cand = defaultdict(dict)
     for ln in open(sys.argv[1], encoding='utf-8', errors='replace'):
-        if not ln.startswith(('EFO|', 'EFR|', 'EFF|')):
+        if not ln.startswith(('EFO|', 'EFR|', 'EFF|', 'EFJ|')):
             continue
         p = ln.rstrip('\n').split('|')
         try:
             k = (p[2], day(p[1]))
         except (ValueError, KeyError, IndexError):
             continue
-        if p[0] == 'EFO':
+        if p[0] == 'EFJ':
+            if key.startswith('efj:') and len(p) > 3 and p[3].startswith('other '):
+                v = fields(p[3:]).get(key[4:])
+                if v is not None:
+                    rest[k] = v
+        elif p[0] == 'EFO':
             v = fields(p[3:]).get(key)
             if v is not None:
                 rest[k] = v
