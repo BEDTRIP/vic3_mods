@@ -104,7 +104,7 @@ def ps(script, timeout=120):
 
 def in_vm(script, timeout=120):
     """A PowerShell command inside the sandbox VM (PowerShell Direct, the credential saved by the VM setup)."""
-    cred = '(Import-Clixml (Join-Path $env:LOCALAPPDATA "vic3tools\vm-cred.xml"))'
+    cred = '(Import-Clixml (Join-Path $env:LOCALAPPDATA "vic3tools/vm-cred.xml"))'
     return ps(f"Invoke-Command -VMName '{VM_NAME}' -Credential {cred} -ScriptBlock {{ {script} }}", timeout)
 
 
