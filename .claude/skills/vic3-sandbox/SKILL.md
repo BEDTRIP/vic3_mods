@@ -81,6 +81,21 @@ ngrok, `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инст�
 `ERR_NGROK_334`); `run_status` после этого — «unknown», снятое до обрыва лежит в `runs/<id>`. Новые инструменты и правка
 `ROOTS` в `server.py` работают после перезапуска `start.ps1` (сервер — из основной копии ПК, не из `wt`).
 
+## Песочница — ВМ Hyper-V `vic3-sandbox` (15.10)
+
+Прогон идёт **в виртуальной машине**, экран, мышь и клавиатура ПК свободны; пользователя предупреждать не нужно.
+Мост в этом режиме — `start.ps1 -Vm` (в `run_status` строки `vm: …`); локально —
+`vic3_tools/bridge/vm/Invoke-SandboxRun.ps1 -ScriptDir tools -OutDir <папка> -ParamsJson <файл.json>` (параметры
+скрипта прогона JSON-объектом в файле, `-ContentLoad <content_load.json>` — набор модов, иначе текущий ПК; `-StartSave`,
+`-FetchSaves`). Он копирует в ВМ скрипты, моды набора и `pdx_settings.json` ПК, после прогона кладёт `runs/<id>` на ПК,
+сейвы прогона — в `runs/<id>/saves` (не в `docs/save games`: `docs/` — это ПК).
+
+- Вход в ВМ: `Invoke-Command -VMName vic3-sandbox -Credential (Import-Clixml "$env:LOCALAPPDATA\vic3tools\vm-cred.xml")`;
+  настройка ВМ — `vic3_tools/bridge/vm/Initialize-SandboxGuest.ps1`. Пользователь разрешил с ВМ всё (15.10).
+- **Перезагружать только изнутри** (`Restart-Computer -Force`), не `Restart-VM -Force` — теряются правки реестра.
+- Синхронизация живой копии мода при идущем прогоне в ВМ разрешена: у ВМ своя копия.
+- В ВМ игра ~20 % медленнее на игровой месяц, чем на ПК; `-Countries`/`vic3_ui.ps1` в ВМ не проверены.
+
 ## Логи форка
 
 Строки `EF*` форка пишутся только при `zz_ef_logs_on`: правило игры (по умолчанию выкл.), игра в режиме отладки
