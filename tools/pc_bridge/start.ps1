@@ -5,11 +5,15 @@ close the ngrok window to cut the tunnel.
 
 Run from the user's desktop session (not a service, not over RDP): the game script needs the screen.
     powershell -ExecutionPolicy Bypass -File tools\pc_bridge\start.ps1
+    powershell -ExecutionPolicy Bypass -File tools\pc_bridge\start.ps1 -Vm   (runs go to the sandbox VM, the screen stays free)
 First time: creates the venv _bridge\venv (mcp<2, pillow, uvicorn) and the token _bridge\token.txt.
 #>
 param(
     [string]$Domain = "untimed-diploma-creation.ngrok-free.dev",
-    [int]$Port = 8080
+    [int]$Port = 8080,
+    # runs in the Hyper-V sandbox VM (vic3_tools/bridge/vm) instead of on this screen
+    [switch]$Vm,
+    [string]$VmName = "vic3-sandbox"
 )
 $ErrorActionPreference = "Stop"
 $repo = Split-Path (Split-Path $PSScriptRoot)
@@ -24,7 +28,9 @@ if (-not (Get-Process ngrok -ErrorAction SilentlyContinue)) {
     Start-Process ngrok -ArgumentList "http", "--url=$Domain", "$Port"
 }
 $env:PC_BRIDGE_PORT = "$Port"
-Write-Host "bridge: https://$Domain/mcp -> 127.0.0.1:$Port; token in $bridge\token.txt"
+$env:PC_BRIDGE_TARGET = if ($Vm) { "vm" } else { "pc" }
+$env:PC_BRIDGE_VM = $VmName
+Write-Host "bridge: https://$Domain/mcp -> 127.0.0.1:$Port; token in $bridge\token.txt; runs: $(if ($Vm) { "VM $VmName" } else { "this screen" })"
 foreach ($d in "vic3_mods_out", "_tmp_analysis") {
     $link = Join-Path $bridge $d; $target = Join-Path (Split-Path $repo) $d
     if ((Test-Path $target) -and -not (Test-Path $link)) { New-Item -ItemType Junction -Path $link -Target $target | Out-Null }

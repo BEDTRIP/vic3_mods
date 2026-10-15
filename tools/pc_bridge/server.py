@@ -12,6 +12,11 @@ Every request must carry "Authorization: Bearer <token>", the token being _bridg
 lives in session 0 and the game script cannot see the screen from there.
 
     _bridge/venv/Scripts/python.exe tools/pc_bridge/server.py      (start.ps1 also starts ngrok)
+
+PC_BRIDGE_TARGET=vm (start.ps1 -Vm): the game runs in the Hyper-V sandbox VM instead of on the PC's screen
+(vic3_tools/bridge/vm/Invoke-SandboxRun.ps1 copies the run scripts and the run's mods into the VM, starts the run
+there and brings runs/<id> back, the saves the run wrote in runs/<id>/saves). The live mods, the worktrees and the
+tools stay on the PC; syncing a live mod is allowed while a VM run goes (the VM has its own copy).
 """
 import collections
 import datetime
@@ -53,6 +58,9 @@ PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/sa
 PY_TOOL_GLOBS = ("regen_*.py", "ld_*.py", "build_addon*.py", "pair_matrix.py", "content_holes.py", "check_*.py", "scan_*.py",
                  "stale_bodies.py", "replace_audit.py", "loc_dead_overrides.py", "list_lawgroups_diff.py")
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+VM = os.environ.get("PC_BRIDGE_TARGET", "pc") == "vm"
+VM_NAME = os.environ.get("PC_BRIDGE_VM", "vic3-sandbox")
+VM_RUN = REPO.parent / "vic3_tools" / "bridge" / "vm" / "Invoke-SandboxRun.ps1"
 
 BRIDGE.mkdir(exist_ok=True)
 RUNS.mkdir(exist_ok=True)
@@ -89,7 +97,20 @@ def resolve(path):
     raise ValueError(f"outside the allowed roots {', '.join(f'{k}={v}' for k, v in ROOTS.items())}: {path}")
 
 
+def ps(script, timeout=120):
+    """A PowerShell command on the PC; its output."""
+    return sh(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script], timeout=timeout)
+
+
+def in_vm(script, timeout=120):
+    """A PowerShell command inside the sandbox VM (PowerShell Direct, the credential saved by the VM setup)."""
+    cred = '(Import-Clixml (Join-Path $env:LOCALAPPDATA "vic3tools\vm-cred.xml"))'
+    return ps(f"Invoke-Command -VMName '{VM_NAME}' -Credential {cred} -ScriptBlock {{ {script} }}", timeout)
+
+
 def game_running():
+    if VM:
+        return in_vm("[bool](Get-Process victoria3 -ErrorAction SilentlyContinue)").strip() == "True"
     out = subprocess.run(["tasklist", "/FI", "IMAGENAME eq victoria3.exe", "/NH"], capture_output=True,
                          text=True, errors="replace", creationflags=NO_WINDOW).stdout
     return "victoria3.exe" in out.lower()
@@ -170,7 +191,7 @@ def sync_mod(repo_folder: str = "_ef/ef hotfix 1.13", live_name: str = "E&F Hotf
     """Make the live mod Documents/.../Victoria 3/mod/<live_name> equal to <repo_folder> of the
     worktree: changed and new files are copied, files gone from the repo are moved to
     _to_delete/<date>/ inside the live mod (the project's rule). Refused while the game runs."""
-    if game_running():
+    if not VM and game_running():
         raise RuntimeError("the game is running: the live copy is not synced during a run")
     src = (WT / repo_folder).resolve()
     dst = (DOCS / "mod" / live_name).resolve()
@@ -187,7 +208,7 @@ def sync_mod(repo_folder: str = "_ef/ef hotfix 1.13", live_name: str = "E&F Hotf
 def sync_fork(live_name: str = "E&F Ledgerdemain") -> dict:
     """Make the live mod Documents/.../Victoria 3/mod/<live_name> equal to the fork's bridge worktree (checkout_fork
     first): changed and new files copied, files gone moved to _to_delete/<date>/. Refused while the game runs."""
-    if game_running():
+    if not VM and game_running():
         raise RuntimeError("the game is running: the live copy is not synced during a run")
     dst = (DOCS / "mod" / live_name).resolve()
     if not (FORK_WT / ".git").exists():
@@ -211,17 +232,30 @@ def start_run(run_minutes: int = 10, new_game: bool = False, tag: str = "", star
     rid = datetime.datetime.now().strftime("r%m%d_%H%M%S")
     out = RUNS / rid
     out.mkdir()
-    args = ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(WT / "tools" / "run_vic3_sandbox.ps1"),
-            "-RunMinutes", str(int(run_minutes)), "-LoadWaitSec", str(int(load_wait_sec)),
-            "-Autosaves", str(int(autosaves)), "-AiTag", ai_tag, "-OutDir", str(out)]
-    if new_game:
-        args.append("-NewGame")
-    if shots:
-        args.append("-Shots")
-    for flag, val in (("-Tag", tag), ("-StartSave", start_save), ("-Commands", commands), ("-Countries", countries),
-                      ("-Playset", playset)):
-        if val:
-            args += [flag, val]
+    if VM:
+        params = {"RunMinutes": int(run_minutes), "LoadWaitSec": int(load_wait_sec), "Autosaves": int(autosaves),
+                  "AiTag": ai_tag, "NewGame": bool(new_game), "Shots": bool(shots)}
+        params.update({k: v for k, v in (("Tag", tag), ("Commands", commands), ("Countries", countries)) if v})
+        args = ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(VM_RUN), "-Name", VM_NAME,
+                "-ScriptDir", str(WT / "tools"), "-OutDir", str(out), "-ParamsJson", json.dumps(params), "-FetchSaves"]
+        if playset:      # the playset's mod list from the PC's launcher; the VM gets those mods
+            cl = out / "content_load.json"
+            sh(["py", str(WT / "tools" / "playset_content_load.py"), "--playset", playset, "--out", str(cl)], cwd=WT)
+            args += ["-ContentLoad", str(cl)]
+        if start_save:   # from the PC's "save games"
+            args += ["-StartSave", start_save]
+    else:
+        args = ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(WT / "tools" / "run_vic3_sandbox.ps1"),
+                "-RunMinutes", str(int(run_minutes)), "-LoadWaitSec", str(int(load_wait_sec)),
+                "-Autosaves", str(int(autosaves)), "-AiTag", ai_tag, "-OutDir", str(out)]
+        if new_game:
+            args.append("-NewGame")
+        if shots:
+            args.append("-Shots")
+        for flag, val in (("-Tag", tag), ("-StartSave", start_save), ("-Commands", commands), ("-Countries", countries),
+                          ("-Playset", playset)):
+            if val:
+                args += [flag, val]
     stdout = open(out / "stdout.txt", "w", encoding="utf-8")
     p = subprocess.Popen(args, cwd=WT, stdout=stdout, stderr=subprocess.STDOUT, creationflags=NO_WINDOW)
     (out / "args.json").write_text(json.dumps(args[5:], ensure_ascii=False), encoding="utf-8")
@@ -271,7 +305,11 @@ def stop_run(run_id: str = "") -> str:
         p = _runs.get(run_id) if run_id else None
     if p and p.poll() is None:
         subprocess.run(["taskkill", "/T", "/F", "/PID", str(p.pid)], capture_output=True, creationflags=NO_WINDOW)
-    subprocess.run(["taskkill", "/F", "/IM", "victoria3.exe"], capture_output=True, creationflags=NO_WINDOW)
+    if VM:
+        in_vm('Stop-ScheduledTask "vic3_run" -ErrorAction SilentlyContinue; '
+              'Get-Process victoria3 -ErrorAction SilentlyContinue | Stop-Process -Force')
+    else:
+        subprocess.run(["taskkill", "/F", "/IM", "victoria3.exe"], capture_output=True, creationflags=NO_WINDOW)
     log(f"stop {run_id}")
     return f"game running: {game_running()}"
 
@@ -398,5 +436,5 @@ class BearerAuth:
 
 
 if __name__ == "__main__":
-    log(f"bridge up on 127.0.0.1:{PORT}")
+    log(f"bridge up on 127.0.0.1:{PORT}" + (f", runs in the VM {VM_NAME}" if VM else ""))
     uvicorn.run(BearerAuth(mcp.streamable_http_app()), host="127.0.0.1", port=PORT, log_level="warning")

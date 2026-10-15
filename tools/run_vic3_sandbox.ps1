@@ -86,7 +86,15 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+# The game in the Steam library that has it (the PC: C:\games\steam; the sandbox VM: Program Files)
 $Exe = "C:\games\steam\steamapps\common\Victoria 3\binaries\victoria3.exe"
+if (-not (Test-Path $Exe)) {
+    $steam = (Get-ItemProperty "HKCU:\Software\Valve\Steam").SteamPath -replace "/", "\"
+    $libs = @($steam) + @(Select-String -Path (Join-Path $steam "steamapps\libraryfolders.vdf") -Pattern '"path"\s+"(.+)"' |
+        ForEach-Object { $_.Matches[0].Groups[1].Value -replace '\\\\', '\' })
+    $Exe = $libs | ForEach-Object { Join-Path $_ "steamapps\common\Victoria 3\binaries\victoria3.exe" } | Where-Object { Test-Path $_ } | Select-Object -First 1
+    if (-not $Exe) { throw "victoria3.exe not found in the Steam libraries" }
+}
 $Docs = Join-Path $env:USERPROFILE "Documents\Paradox Interactive\Victoria 3"
 $Logs = Join-Path $Docs "logs"
 if (-not $OutDir) { $OutDir = Join-Path $env:TEMP ("vic3_sandbox\" + (Get-Date -Format "yyyyMMdd_HHmmss")) }

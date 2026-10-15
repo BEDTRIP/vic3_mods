@@ -3,10 +3,10 @@
     python3 tools/pc_bridge/pc_call.py list
     python3 tools/pc_bridge/pc_call.py call <инструмент> '<аргументы JSON>'
 
-Адрес — из .mcp.json, токен — переменная окружения PC_BRIDGE_TOKEN. Таймаут вызова — PC_TIMEOUT (с, по умолчанию 900).
+Адрес — из .mcp.json (другой — переменная PC_BRIDGE_URL, напр. http://127.0.0.1:8080/mcp на самом ПК), токен — переменная окружения PC_BRIDGE_TOKEN. Таймаут вызова — PC_TIMEOUT (с, по умолчанию 900).
 """
 import json,os,sys,urllib.request
-URL="https://untimed-diploma-creation.ngrok-free.dev/mcp"
+URL=os.environ.get("PC_BRIDGE_URL","https://untimed-diploma-creation.ngrok-free.dev/mcp")
 H={"Authorization":"Bearer "+os.environ["PC_BRIDGE_TOKEN"],"Accept":"application/json, text/event-stream","Content-Type":"application/json"}
 def post(body,sid=None,timeout=900):
     h=dict(H)
