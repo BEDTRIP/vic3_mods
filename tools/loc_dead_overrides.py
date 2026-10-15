@@ -1,61 +1,28 @@
-"""Localization overrides that can never show.
+"""Ключи локализации наших модов, которые никогда не покажутся — обёртка над `v3 audit loc-dead`.
 
-Localization is first-come: the first file that defines a key wins, whatever
-the mod order. A key in our mod OUTSIDE localization/<lang>/replace/ that
-vanilla or an earlier mod already defines under a different path is dead.
-Fix: move it to localization/<lang>/replace/. Written 2026-09-24.
+Локализация — «первый определивший побеждает»: ключ нашего файла вне `localization/<язык>/replace/`, который раньше
+определяет ваниль или мод выше по списку под другим путём, мёртв. Исправление — перенести в `replace/`.
 
-EARLIER lists the mods that load before ours (check content_load.json);
-OURS the folders to scan. Run: py tools/loc_dead_overrides.py
+EARLIER — моды, которые грузятся раньше наших компачей (порядок content_load.json); OURS — что проверять.
+    py tools/loc_dead_overrides.py
 """
-import os, re, glob
+import os
+import sys
+
+from v3run import v3
+
 W = r'C:\Games\Steam\steamapps\workshop\content\529340'
-VAN = r'C:\Games\Steam\steamapps\common\Victoria 3\game'
-EARLIER = {  # mods that load before our compatches (content_load.json order), plus vanilla
-    'vanilla': VAN,
-    'E&F': os.path.join(W, '3143591632'),
-    'E&F RUS': os.path.join(W, '3520140574'),
-    'PSC': r'C:\Users\Andrey\Projects\vic3\vic3_mods_out\PSC',
-    'TGR': r'C:\Users\Andrey\Projects\vic3\vic3_mods_out\TheGreatRevision',
-}
-KEY = re.compile(r'^\s*([^\s:#][^:#\s]*)\s*:\s*\d*\s*"')
-
-def keys_in(path, lang):
-    out = {}
-    base = os.path.join(path, 'localization')
-    for p in glob.glob(os.path.join(base, '**', f'*_l_{lang}.yml'), recursive=True):
-        if os.sep + 'replace' + os.sep in p:
-            continue
-        rel = os.path.relpath(p, base)
-        for l in open(p, encoding='utf-8-sig', errors='replace'):
-            m = KEY.match(l)
-            if m:
-                out.setdefault(m.group(1), rel)
-    return out
-
-OURS = {
-    'hotfix': r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef hotfix 1.13',
-    # ef+psc lives inside the hotfix since 2026-10-02 (STR.6)
-    'ef+tgr': r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef+tgr done',
-}
-for lang in ('english', 'russian'):
-    earlier = {}
-    for name, path in EARLIER.items():
-        for k, rel in keys_in(path, lang).items():
-            earlier.setdefault(k, (name, rel))
-    for oname, opath in OURS.items():
-        base = os.path.join(opath, 'localization')
-        for p in glob.glob(os.path.join(base, lang, '*.yml')):
-            rel = os.path.relpath(p, base)
-            dead = []
-            for l in open(p, encoding='utf-8-sig', errors='replace'):
-                m = KEY.match(l)
-                if m and m.group(1) in earlier:
-                    src = earlier[m.group(1)]
-                    same_path = src[1] == rel
-                    if not same_path:
-                        dead.append((m.group(1), src[0], src[1]))
-            if dead:
-                print(f'[{lang}] {oname}: {rel} -- {len(dead)} keys defined earlier elsewhere')
-                for d in dead[:6]:
-                    print('     ', d)
+EARLIER = [  # без ванили: её `v3` ставит первой сам
+    os.path.join(W, '3143591632'),  # E&F
+    os.path.join(W, '3520140574'),  # E&F RUS
+    r'C:\Users\Andrey\Projects\vic3\vic3_mods_out\PSC',
+    r'C:\Users\Andrey\Projects\vic3\vic3_mods_out\TheGreatRevision',
+]
+OURS = [
+    r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef hotfix 1.13',  # ef+psc внутри хотфикса с 02.10 (STR.6)
+    r'C:\Users\Andrey\Projects\vic3\vic3_mods\_ef\ef+tgr done',
+]
+worst = 0
+for ours in OURS:
+    worst = max(worst, v3("audit", "loc-dead", ours, "--mods", *EARLIER, ours))
+sys.exit(worst)

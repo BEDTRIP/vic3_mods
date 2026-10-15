@@ -1,0 +1,53 @@
+# Намеренные пропуски полей в наших REPLACE: / TRY_REPLACE: (МП.7, 25.09.2026) — для `v3 audit replace --declared`.
+# Строка совпадает, только если набор пропущенных полей ровно такой (fields не указан — любой); новый пропуск
+# покажется снова. Ветка T&R (_tr/ и варианты мегапака с T&R) не разбиралась — не поддерживается с 05.09.
+
+[[declared]]
+folder = "common/static_modifiers"
+key = "speculative_bubble_modifier"
+fields = ["state_construction_mult"]
+why = "EF.29: the bubble does not cut construction"
+
+[[declared]]
+folder = "common/static_modifiers"
+key = "no_money_production"
+fields = ["state_sell_orders_local_currency_add"]
+why = "hotfix: E&F's flat 2500 currency per state removed at the source"
+
+[[declared]]
+folder = "common/buildings"
+key = "building_construction_sector"
+fields = ["has_max_level"]
+why = "PSC's own body (no level cap); greys+psc states has_max_level = no explicitly"
+
+[[declared]]
+folder = "common/buildings"
+key = "building_ef_private_construction"
+fields = ["required_construction"]
+why = "E&F building disabled under PSC (potential = always no)"
+
+[[declared]]
+folder = "common/building_groups"
+key = "bg_construction"
+fields = ["is_government_funded", "lens", "urbanization"]
+why = "PSC's own body, verbatim: construction is private under PSC"
+
+[[declared]]
+folder = "common/production_methods"
+key = "pm_wooden_buildings"
+why = "PSC's model: construction comes from goods through the regulator, not country_construction_add; VC's state_modifiers layer is restored in greys+vc"
+
+[[declared]]
+folder = "common/production_methods"
+key = "pm_iron_frame_buildings"
+why = "PSC's model: construction comes from goods through the regulator, not country_construction_add; VC's state_modifiers layer is restored in greys+vc"
+
+[[declared]]
+folder = "common/production_methods"
+key = "pm_steel_frame_buildings"
+why = "PSC's model: construction comes from goods through the regulator, not country_construction_add; VC's state_modifiers layer is restored in greys+vc"
+
+[[declared]]
+folder = "common/production_methods"
+key = "pm_arc_welded_buildings"
+why = "PSC's model: construction comes from goods through the regulator, not country_construction_add; VC's state_modifiers layer is restored in greys+vc"
