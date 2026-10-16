@@ -120,6 +120,12 @@ zz_ef_logs.1` после `enable_ai`. Замер скорости «как у и
 
 ## Профилировщик скриптов
 
+**Таблицей, а не картинками (с 16.10.2026):** стенд с модом окна в наборе — `v3 bench start --mods <CMF> <ETF>
+../Economic-and-Financial-Ledgerdemain-Mod ../vic3_tools/mods/profiler_view`, затем `v3 bench profile --seconds 60
+--by-file`: захват на скорости 5, виды root и edge прочитаны OCR Windows — файл:строка, полное / собственное время,
+вызовы, мс на тик (~2,5 мин). Снимки прошлых прогонов — `v3 log profile <снимки> [--compare <снимки другого прогона>]`.
+Последние 2–3 строки в ВМ закрывает водяной знак «Activate Windows» — они в «не прочитано». Ниже — ручной путь.
+
 Встроенный, в `-debug_mode`. Через мост: `install_mod("tools:mods/profiler_view", "LD Profiler View")` один раз
 (окно профилировщика во весь экран — полное имя, файл:строка, полное / собственное время, вызовы;
 `vic3_tools/mods/profiler_view/README.md`), затем `start_run(..., playset="Ledgerdemain + LD Profiler View",
