@@ -50,7 +50,10 @@ WORKSHOP = Path(r"C:\games\steam\steamapps\workshop\content\529340")
 # run from wt find it as ROOT / "Economic-and-Financial-Ledgerdemain-Mod".
 FORK_REPO = REPO.parent / "Economic-and-Financial-Ledgerdemain-Mod"
 FORK_WT = BRIDGE / "Economic-and-Financial-Ledgerdemain-Mod"
-ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "workshop": WORKSHOP, "fork": FORK_WT}
+TOOLS_REPO = REPO.parent / "vic3_tools"               # the v3 package (vic3tools): its checkout on the PC
+BENCH = Path(os.environ.get("LOCALAPPDATA", Path.home())) / "vic3tools" / "cache" / "bench"   # `v3 bench` shots
+ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "workshop": WORKSHOP, "fork": FORK_WT,
+         "bench": BENCH}
 PORT = int(os.environ.get("PC_BRIDGE_PORT", "8080"))
 PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/save_money_check.py",
             "save_ownership": "tools/save_ownership.py", "save_ownership_transfers": "tools/save_ownership_transfers.py",
@@ -123,9 +126,12 @@ def active_run():
 
 mcp = FastMCP(
     "vic3-pc",
-    instructions="The user's Windows PC with Victoria 3. Flow: checkout(branch) -> sync_mod() -> "
-                 "start_run(...) -> run_status(id) every minute or two until finished -> read_text / grep / "
-                 "get_image on runs/<id>/... and docs/... . See .claude/skills/vic3-sandbox/SKILL.md.",
+    instructions="The user's Windows PC with Victoria 3. Questions about game and mod files: v3(args) -- the "
+                 "same `v3` commands as on the PC (def, refs, loc, outline, winner, gui resolve/fit, lint...), "
+                 "read-only. GUI test bench: v3(['bench','start']) then v3(['bench','shot',name,'--crop',...]) "
+                 "after each push+sync -> get_image('bench/<step>/<name>_crop.png'). Runs: checkout(branch) -> "
+                 "sync_mod() -> start_run(...) -> run_status(id) until finished -> read_text / grep / get_image on "
+                 "runs/<id>/... and docs/... . See .claude/skills/vic3-sandbox/SKILL.md.",
     stateless_http=True, json_response=True, host="127.0.0.1", port=PORT,
     transport_security=TransportSecuritySettings(enable_dns_rebinding_protection=False),
 )
@@ -406,6 +412,26 @@ def py_tool(name: str, args: list[str]) -> str:
                        errors="replace", timeout=1200, creationflags=NO_WINDOW, env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     log(f"py_tool {name} {real} -> {p.returncode}")
     return f"exit {p.returncode}\n{(p.stdout + p.stderr)[-20000:]}"
+
+@mcp.tool()
+def v3(args: list[str], timeout: int = 1800) -> str:
+    """Run a `v3` command (vic3_tools) on the PC and return its output, exit code first. The set is the PC's active
+    launcher playset; the fork is read from the bridge's worktree once checkout_fork(branch) made it (your pushed
+    branch), else from the PC's own checkout. Read-only: def, refs, loc, outline, winner, conflicts, matrix, audit,
+    mods, gui (set only with --dry), lint (not --baseline), bench (start / do / shot / diff / stop -- shots under
+    bench/). Example: v3(["refs", "my_var", "--limit", "20"]), v3(["gui", "resolve", "gui/x.gui:120", "--prop",
+    "fontsize"]); a GUI loop: push -> checkout_fork -> v3(["bench", "shot", "after", "--crop", "0,0.1,0.5,0.6"])."""
+    sys.path.insert(0, str(TOOLS_REPO))
+    from vic3tools import bridge as v3bridge
+    conf = BRIDGE / "vic3tools.toml"   # the project config `v3` finds from cwd: the fork -> the pushed branch
+    if (FORK_WT / ".git").exists():
+        conf.write_text(f"[mod_paths]\n'E&F: Ledgerdemain' = '{FORK_WT}'\n", encoding="utf-8")
+    elif conf.exists():
+        conf.unlink()
+    out = v3bridge.run([str(a) for a in args], timeout=timeout, cwd=str(BRIDGE))
+    log(f"v3 {args} -> {out.splitlines()[0] if out else ''}")
+    return out
+
 
 @mcp.tool()
 def wt_diff() -> str:
