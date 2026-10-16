@@ -3,6 +3,8 @@
 # the agent need -- pillow (reading screenshots of runs), openpyxl (regen_vc_tgr.py / regen_hc_vc.py: ideology
 # stances), vic3tools (the parser behind ld_pdx.py / vic3lib.py and the v3 command; from the sibling checkout if
 # there is one, else from GitHub). Local and Remote Control sessions run on the user's PC and do not use this hook.
+# The vic3tools plugin (skills, hooks) cannot be enabled from here or from .claude/settings.json in the cloud: the
+# environment's setup script installs it -- vic3_tools/claude-plugin/cloud-setup.sh, its README "Cloud sessions".
 set -euo pipefail
 
 if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
