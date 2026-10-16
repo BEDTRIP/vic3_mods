@@ -491,8 +491,8 @@ def read_run(run, until):
     try:
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         from datetime import date
-        import ld_speed
-        pts = sorted(ld_speed.points(run))
+        from vic3tools import logs as ld_speed
+        pts = sorted(ld_speed.speed_points(run))
         g_lim = date(lim[0], lim[1], 28).toordinal()
         pts = [x for x in pts if x[0] <= g_lim and x[0] >= date(1836, 2, 1).toordinal()]
         by_q = defaultdict(list)

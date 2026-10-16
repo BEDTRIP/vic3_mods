@@ -56,10 +56,10 @@ ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "work
          "bench": BENCH}
 PORT = int(os.environ.get("PC_BRIDGE_PORT", "8080"))
 PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/save_money_check.py",
-            "save_ownership": "tools/save_ownership.py", "save_ownership_transfers": "tools/save_ownership_transfers.py",
+            "save_ownership": "tools/save_ownership.py",
             "save_construction_goods": "tools/save_construction_goods.py", "save_measure_ef": "tools/save_measure_ef.py"}
-PY_TOOL_GLOBS = ("regen_*.py", "ld_*.py", "build_addon*.py", "pair_matrix.py", "content_holes.py", "check_*.py", "scan_*.py",
-                 "stale_bodies.py", "replace_audit.py", "loc_dead_overrides.py", "list_lawgroups_diff.py")
+# the general checks (matrix, conflicts, audits, saves, logs) are `v3` commands now: the v3(args) tool
+PY_TOOL_GLOBS = ("regen_*.py", "ld_*.py", "build_addon*.py", "check_*.py", "scan_*.py")
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 VM = os.environ.get("PC_BRIDGE_TARGET", "pc") == "vm"
 VM_NAME = os.environ.get("PC_BRIDGE_VM", "vic3-sandbox")
@@ -246,7 +246,7 @@ def start_run(run_minutes: int = 10, new_game: bool = False, tag: str = "", star
                 "-ScriptDir", str(WT / "tools"), "-OutDir", str(out), "-ParamsJson", json.dumps(params), "-FetchSaves"]
         if playset:      # the playset's mod list from the PC's launcher; the VM gets those mods
             cl = out / "content_load.json"
-            sh(["py", str(WT / "tools" / "playset_content_load.py"), "--playset", playset, "--out", str(cl)], cwd=WT)
+            sh(["v3", "playsets", "--content-load", playset, "--out", str(cl)], cwd=WT)
             args += ["-ContentLoad", str(cl)]
         if start_save:   # from the PC's "save games"
             args += ["-StartSave", start_save]

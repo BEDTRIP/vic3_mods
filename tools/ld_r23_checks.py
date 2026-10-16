@@ -21,7 +21,7 @@ from collections import Counter, defaultdict
 from statistics import median
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from ld_logcats import files  # noqa: E402
+from vic3tools.logs import files  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8")
 V4 = ("Ганновер", "Финляндия", "Нижняя Канада", "Верхняя Канада", "Саксония")

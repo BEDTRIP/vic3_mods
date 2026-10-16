@@ -51,7 +51,7 @@ Parameters:
                   "tag <Tag>". Clicks are at fractions of the window, measured on 2560x1440 (16:9).
     -Playset      run on this launcher playset's mods instead of the last ones the launcher started (the game
                   reads content_load.json, not the active playset -- 6.10): the file is written from
-                  launcher-v2.sqlite (tools/playset_content_load.py) and put back after the run, failures too
+                  launcher-v2.sqlite (`v3 playsets --content-load`) and put back after the run, failures too
     -Tag          the country to play in a new game (default GBR); gone in the run («Конец игры») -- the run sits
                   down as its heir by the fork's log (Sit-Heir) and goes on
     -NoDumps      kept for old command lines; does nothing (1.10 night: debugcountrybudgets and
@@ -123,7 +123,7 @@ $ContentLoad = Join-Path $Docs "content_load.json"
 $ContentBackup = Join-Path $OutDir "content_load.before.json"
 if ($Playset) {
     Copy-Item $ContentLoad $ContentBackup -Force
-    & python (Join-Path $PSScriptRoot "playset_content_load.py") --playset $Playset --out $ContentLoad | ForEach-Object { Log "playset $_" }
+    & v3 playsets --content-load $Playset --out $ContentLoad | ForEach-Object { Log "playset $_" }
     if ($LASTEXITCODE -ne 0) { Copy-Item $ContentBackup $ContentLoad -Force; throw "no playset '$Playset'" }
     trap { if (Test-Path $ContentBackup) { Copy-Item $ContentBackup $ContentLoad -Force; Log "content_load.json restored (failure)" }; break }
 }
