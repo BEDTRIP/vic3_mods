@@ -3,9 +3,16 @@ name: vic3-sandbox
 description: Run Victoria 3 yourself for a test — a new game from 1836 (start conditions, history files) or continuing the last/a chosen save — with the AI playing, then read the weekly money log, error.log and crash dumps. Use whenever a mod change needs checking in the game, a run's numbers are needed, or the user says "прогон", "песочница", "запусти игру", "проверь в игре".
 ---
 
-# Прогон игры в песочнице (`tools/run_vic3_sandbox.ps1`)
+# Прогон игры в песочнице (`vic3_tools/bridge/game/run_vic3_sandbox.ps1` + хуки форка)
 
-Общее (ВМ, стенд `v3 bench`, чтение вылетов и логов, правила ВМ) — навык `vic3-sandbox` плагина vic3tools; здесь — скрипт прогона этого репо, его параметры и логи форка.
+Общее (ВМ, стенд `v3 bench`, чтение вылетов и логов, правила ВМ) — навык `vic3-sandbox` плагина vic3tools; здесь — как
+этот проект запускает прогон, его параметры и логи форка.
+
+С 16.10.2026 скрипты игры (`run_vic3_sandbox.ps1`, `vic3_ui.ps1`, `vic3_ui_lib.ps1`) — в `vic3_tools/bridge/game/`;
+своё у форка — его `tools/vic3_hooks.ps1` (строки `EF*` → `eflog.txt`, `event zz_ef_logs.1` после загрузки, наследник
+пропавшей страны, снимки `-Shots`) и `tools/vic3_ui_points.ps1` (точки и макросы). Локально хуки указывает
+`$env:VIC3_HOOKS` (иначе ищется `vic3_hooks.ps1` рядом со скриптами); в ВМ их копирует `Invoke-SandboxRun.ps1
+-HooksDir`; мост берёт их из `bridge.toml` (`hooks = "fork:tools"`). Ниже `<game>` = `..\vic3_tools\bridge\game`.
 
 Агент сам запускает Victoria 3 на ПК пользователя, ИИ играет за все страны (и за игрока), скрипт крутит время на
 скорости 5, закрывает игру и собирает логи. Локально и через Remote Control скрипт запускается напрямую; из облака —
@@ -24,10 +31,10 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 
 1. **Игра закрыта** (`tasklist | grep -i victoria` пусто), иначе скрипт падает с «already running».
 2. **Набор модов — `Documents/…/Victoria 3/content_load.json`**, а не активный плейсет лаунчера. Другой набор —
-   **`-Playset "<имя>"`**: скрипт пишет `content_load.json` из `launcher-v2.sqlite` (`tools/playset_content_load.py`,
-   `--list` — плейсеты) и возвращает прежний в конце и при сбое. Плейсеты: **«Ledgerdemain»** — форк (CMF, ETF,
+   **`-Playset "<имя>"`**: скрипт пишет `content_load.json` из `launcher-v2.sqlite` (`v3 playsets --content-load`,
+   `v3 playsets` — плейсеты) и возвращает прежний в конце и при сбое. Плейсеты: **«Ledgerdemain»** — форк (CMF, ETF,
    E&F: Ledgerdemain); «база хотфикс» — CMF, ETF, PSC, E&F, E&F RUS, хотфикс (замороженная база).
-3. **Живая копия мода = репозиторий.** Форк: `mod/E&F Ledgerdemain` — локально `python tools/ld_sync_live.py`, из
+3. **Живая копия мода = репозиторий.** Форк: `mod/E&F Ledgerdemain` — локально `py ../Economic-and-Financial-Ledgerdemain-Mod/tools/ld_sync_live.py`, из
    облака — `checkout_fork("master")` + `sync_fork()`. Хотфикс: `mod/E&F Hotfix` = `_ef/ef hotfix 1.13` (`diff -rq` без
    расхождений, кроме `_to_delete`). **Пока игра идёт — не синхронизировать:** в `-debug_mode` игра на лету перечитывает
    изменённые файлы, и `error.log` наполняется ложными ошибками.
@@ -48,8 +55,8 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 
 ## Из облачной сессии — через мост `vic3-pc`
 
-Игра, `Documents/…` и PowerShell есть только у MCP-сервера `vic3-pc` на ПК (`tools/pc_bridge/server.py`, туннель
-ngrok, `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инструментов `mcp__vic3-pc__*` — **сначала проверить сам
+Игра, `Documents/…` и PowerShell есть только у MCP-сервера `vic3-pc` на ПК (`vic3_tools/bridge/pc/server.py` с
+`bridge.toml` этого репо, туннель ngrok, `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инструментов `mcp__vic3-pc__*` — **сначала проверить сам
 мост**: сессия не в корне `vic3_mods` `.mcp.json` не читает. Без MCP-клиента: `python3 tools/pc_bridge/pc_call.py list` /
 `call <инструмент> '<JSON>'` (токен — `PC_BRIDGE_TOKEN`). Не отвечает (`ERR_NGROK_*`, отказ) — попросить пользователя
 запустить `start.ps1`.
@@ -66,10 +73,10 @@ ngrok, `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инст�
 4. **Чтение:** `list_dir` / `read_text` (`from_end`) / `grep` по путям `runs/<id>/…`, `docs/logs/…`, `docs/crashes/…`,
    `docs/save games/…`, `game/game/…`, `orig/…` (= `vic3_mods_out`), `workshop/…` (мастерская Steam); снимки —
    `get_image(path, crop=[x0,y0,x1,y1])` (доли; кадрировать подсказку, а не весь экран).
-5. **Скрипты на ПК** — `py_tool(name, args)`, `name` без `.py`, запуск из `wt`: разбор сейвов и логов (`parse_eflog`,
+5. **Скрипты на ПК** — `py_tool(name, args)`, `name` без `.py`, ищется в `tools/` `vic3_mods` и форка (список и маски — `[tools]` в `bridge.toml`): разбор сейвов и логов (`parse_eflog`,
    `save_money_check` — ~1 мин на 450 МБ, `save_ownership`, `save_ownership_transfers`, `save_construction_goods`,
-   `save_measure_ef`), по маске — `regen_*`, `ld_*`, `build_addon*`, `pair_matrix`, `content_holes`, `check_*`, `scan_*`
-   и др. Пути `docs/…`, `runs/…`, `orig/…` в `args` переводятся в пути ПК; `vic3_mods_out` и `_tmp_analysis` видны через
+   `save_measure_ef`), по маске — `regen_*`, `ld_*`, `build_addon*`, `check_*`, `scan_*`;
+   команды пакета — `v3(args)` (`v3 save`, `v3 log`, `v3 audit`, …). Пути `docs/…`, `runs/…`, `orig/…` в `args` переводятся в пути ПК; `vic3_mods_out` и `_tmp_analysis` видны через
    junction-ссылки `_bridge/…`.
 6. **Генератор на ПК → коммит в облаке:** правка генератора здесь, коммит и push → `checkout` / `checkout_fork` →
    `py_tool("regen_…", [])` → `wt_diff()` (форк — `fork_diff()`) отдаёт изменения патчем (новые файлы тоже) → файлом в
@@ -80,16 +87,17 @@ ngrok, `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инст�
 **Известное о мосте:** `sync_mod` сравнивает побайтно, а worktree и живая копия расходятся концами строк — первая
 синхронизация переписывает все файлы (безвредно, но `copied` не говорит, что изменилось). `ERR_NGROK_8012` (туннель жив,
 `localhost:8080` не отвечает) — сервер упал: пользователь перезапускает `start.ps1` (ngrok заново не запускать —
-`ERR_NGROK_334`); `run_status` после этого — «unknown», снятое до обрыва лежит в `runs/<id>`. Новые инструменты и правка
-`ROOTS` в `server.py` работают после перезапуска `start.ps1` (сервер — из основной копии ПК, не из `wt`).
+`ERR_NGROK_334`); `run_status` после этого — «unknown», снятое до обрыва лежит в `runs/<id>`. Правка `server.py`
+(`vic3_tools`) и `bridge.toml` (пути, репо, списки скриптов) работают после перезапуска `start.ps1` (сервер — из
+основной копии ПК, не из `wt`).
 
 ## Песочница — ВМ Hyper-V `vic3-sandbox` (15.10)
 
 Прогон идёт **в виртуальной машине**, экран, мышь и клавиатура ПК свободны; пользователя предупреждать не нужно.
 Мост в этом режиме — `start.ps1 -Vm` (в `run_status` строки `vm: …`); локально —
-`vic3_tools/bridge/vm/Invoke-SandboxRun.ps1 -ScriptDir tools -OutDir <папка> -ParamsJson <файл.json>` (параметры
+`vic3_tools/bridge/vm/Invoke-SandboxRun.ps1 -HooksDir ..\Economic-and-Financial-Ledgerdemain-Mod\tools -OutDir <папка> -ParamsJson <файл.json>` (параметры
 скрипта прогона JSON-объектом в файле, `-ContentLoad <content_load.json>` — набор модов, иначе текущий ПК; `-StartSave`,
-`-FetchSaves`). Он копирует в ВМ скрипты, моды набора и `pdx_settings.json` ПК, после прогона кладёт `runs/<id>` на ПК,
+`-FetchSaves`). Он копирует в ВМ скрипты игры (по умолчанию `bridge/game`) и хуки, моды набора и `pdx_settings.json` ПК, после прогона кладёт `runs/<id>` на ПК,
 сейвы прогона — в `runs/<id>/saves` (не в `docs/save games`: `docs/` — это ПК).
 
 - Вход в ВМ: `Invoke-Command -VMName vic3-sandbox -Credential (Import-Clixml "$env:LOCALAPPDATA\vic3tools\vm-cred.xml")`;
@@ -112,9 +120,9 @@ zz_ef_logs.1` после `enable_ai`. Замер скорости «как у и
 
 ## Профилировщик скриптов
 
-Встроенный, в `-debug_mode`. Через мост: `ld_install_mod(["tools/ld_profiler_view", "LD Profiler View"])` один раз
+Встроенный, в `-debug_mode`. Через мост: `install_mod("tools:mods/profiler_view", "LD Profiler View")` один раз
 (окно профилировщика во весь экран — полное имя, файл:строка, полное / собственное время, вызовы;
-`tools/ld_profiler_view/README.md`), затем `start_run(..., playset="Ledgerdemain + LD Profiler View",
+`vic3_tools/mods/profiler_view/README.md`), затем `start_run(..., playset="Ledgerdemain + LD Profiler View",
 commands="Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.Gui;end:ui:wait 4;end:ui:click 0.028 0.067;end:ui:wait 2;end:ui:shot e_root;end:ui:click 0.064 0.067;end:ui:wait 3;end:ui:shot e_edge")`
 (`end:` — команда в конце прогона на паузе). `e_root` — корни по полному времени (on_action, события, GUI, ИИ),
 `e_edge` — листья по собственному времени. Щелчок по строке (y = 0,1275 + 0,0198·(k−1)) выбирает запись, но порядок
@@ -122,26 +130,29 @@ commands="Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.
 1.1.2=q2 …` (~15 шагов на снимок — предел командной строки Windows, 32 767 знаков).
 - Строка `on_actions @ <файл>:<строка>` — **весь хук** (все on_action на нём), приписанный первому объявившему файлу.
   Сравнивать захваты разной длины — на тик (`capture … ticks N` в шапке).
-- Номера строк — как в `error.log` (без пустых и комментарных, от определения верхнего уровня): `tools/ld_errsites.py`
-  → `real_lines(файл, N)`.
+- Номера строк — как в `error.log` (без пустых и комментарных, от определения верхнего уровня): `vic3tools.logs`
+  (`v3 log sites`).
 - Время — сумма по потокам; база «CMF + ETF» — `playset="Ledgerdemain без E&F: Ledgerdemain + LD Profiler View"`.
 - `ScriptProfiling.Enable` / `ScriptProfiling.Dump` **роняют 1.13.11** при Dump (и на ванили); `log_ticktask_performance`
   файла не пишет.
-- Скорость без профилировщика — `tools/ld_speed.py <прогоны>` (с на игровой месяц по датированным строкам `debug.log`).
+- Скорость без профилировщика — `v3 log speed <прогоны>` (с на игровой месяц по датированным строкам `debug.log`).
 
 ## Три режима
 
 Запуск всегда в фоне (`run_in_background: true`), вывод — в `-OutDir` (scratchpad сессии):
 
 ```bash
+# хуки форка — один раз на оболочку (PowerShell: $env:VIC3_HOOKS = "…")
+export VIC3_HOOKS="C:\Users\Andrey\Projects\vic3\Economic-and-Financial-Ledgerdemain-Mod\tools\vic3_hooks.ps1"
+
 # 1) новая игра с 1 января 1836 — когда менялись условия старта (история, законы, здания):
-powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -NewGame -Tag SWI -RunMinutes 10 -OutDir "<scratch>\runN"
+powershell -ExecutionPolicy Bypass -File <game>/run_vic3_sandbox.ps1 -NewGame -Tag SWI -RunMinutes 10 -OutDir "<scratch>\runN"
 
 # 2) продолжение последнего сейва (continue_game.json):
-powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -RunMinutes 10 -OutDir "<scratch>\runN"
+powershell -ExecutionPolicy Bypass -File <game>/run_vic3_sandbox.ps1 -RunMinutes 10 -OutDir "<scratch>\runN"
 
 # 3) старт с выбранного сейва (копия в sandbox_start.v3, оригинал не меняется):
-powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -StartSave "<сейв>.v3" -Tag SWI -RunMinutes 10 -OutDir "<scratch>\runN"
+powershell -ExecutionPolicy Bypass -File <game>/run_vic3_sandbox.ps1 -StartSave "<сейв>.v3" -Tag SWI -RunMinutes 10 -OutDir "<scratch>\runN"
 ```
 
 Окончание ждать фоновым `until grep -q "\] done: C:\|stopping\|not in front" <OutDir>/stdout.txt; do sleep 10; done`
@@ -166,9 +177,9 @@ powershell -ExecutionPolicy Bypass -File tools/run_vic3_sandbox.ps1 -StartSave "
 игра на паузе). Подсказка валюты и карточки — только у стран с ЦБ; пользователь может сам пересесть посреди снимков —
 сверять флаг на снимках.
 
-Руками по открытой игре — `tools/vic3_ui.ps1 -OutDir <dir> -Do "shot x; hover 0.1 0.09; macro cards GBR; close"`
-(`-KeepOpen` оставляет игру; `close` закрывает и собирает логи). Точки — `tools/vic3_ui_points.ps1` (доли окна
-2560×1440, русский интерфейс), функции — `tools/vic3_ui_lib.ps1`. Бюджет открывается **F2** (закрывать крестиком
+Руками по открытой игре — `<game>/vic3_ui.ps1 -OutDir <dir> -Do "shot x; hover 0.1 0.09; macro cards GBR; close"`
+(`-KeepOpen` оставляет игру; `close` закрывает и собирает логи). Точки — `tools/vic3_ui_points.ps1` форка (доли окна
+2560×1440, русский интерфейс), функции — `<game>/vic3_ui_lib.ps1`. Бюджет открывается **F2** (закрывать крестиком
 панели); колонка значков слева при наведении разворачивает подписи поверх вкладок — перед щелчком увести мышь;
 подсказка закрепляется через ~2 с; колесо над картой меняет масштаб карты. Разовые шаги после загрузки —
 `-Commands "ui:shot x; ui:key esc"`. Изменить другую страну до старта — `-Commands "tag FRA; money -40000000; tag SWI;
@@ -189,18 +200,18 @@ ui:key tilde"` (консольной `effect` нет; в конце — `ui:key 
 
 ## Что читать после прогона
 
-- **Отчёт — навык `run-report`** (`tools/ld_run_report.py`): одинаковая HTML-страница на каждый прогон форка, с базой —
+- **Отчёт — навык `run-report`** (`tools/ld_run_report.py` форка): одинаковая HTML-страница на каждый прогон форка, с базой —
   сравнение по годам. Делать после каждого прогона, до разбора.
 
 - `run.log` — ход прогона; «the game exited» до конца = **вылет**: `Documents/…/Victoria 3/crashes/victoria3_<дата>/`
   (`exception.txt`, `logs/debug.log`, `logs/error.log` — последние строки перед вылетом).
 - `eflog.txt` — недельные строки модели (`EFW|дата|страна|ключ значение|…`, приёмник моста — `EFR|…`); разбор —
-  `py tools/parse_eflog.py <run>/eflog.txt <out.json>`.
+  `py ../Economic-and-Financial-Ledgerdemain-Mod/tools/parse_eflog.py <run>/eflog.txt <out.json>`.
 - `error.log` — `grep "zz_ef"` и файлы форка, ошибки перед вылетом. **Не наше:** 16 «Event target used but never set»
   `g_*` (их передаёт мост GUI, игра этого не видит); ваниль и CMF — русская локализация революционных стран
   («Революцион[AddTextIf…»), `MISSING_DLC_ENTRY`, дубли локализации CMF `com_*`.
 - Скриншоты `00*` (меню / лобби), `01_loaded`, `01b_ai`, `03_end`.
-- **Сверка счетов с сейвом:** `py tools/save_money_check.py [сейв] [TAG …]` — казна, касса предприятий, пул, недельный
+- **Сверка счетов с сейвом:** `py ../Economic-and-Financial-Ledgerdemain-Mod/tools/save_money_check.py [сейв] [TAG …]` — казна, касса предприятий, пул, недельный
   бюджет игры, переменные модели и её последний шаг (`zz_ef_prev_*`); сравнивать с подсказкой денег той же даты. Сейвы —
   текстовые, ~450 МБ (переменные: `flag=<имя>` + `identity=<значение×1e5>`, отрицательные — uint64).
 - Находки — сразу в файл этапа форка (компачи — `План проекта.md`), а не только в ответ.

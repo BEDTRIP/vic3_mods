@@ -1,0 +1,27 @@
+# The PC bridge vic3-pc for this project (the server is vic3_tools/bridge/pc/server.py; start: tools/pc_bridge/start.ps1).
+
+[bridge]
+domain = "untimed-diploma-creation.ngrok-free.dev"
+port = 8080
+home = "../_bridge"
+vm = "vic3-sandbox"
+hooks = "fork:tools"            # the fork's vic3_hooks.ps1: eflog.txt, zz_ef_logs after loading, heirs, screens
+links = { vic3_mods_out = "../vic3_mods_out", _tmp_analysis = "../_tmp_analysis" }
+
+[repos.main]
+path = "."
+branch = "main"
+
+[repos.fork]
+path = "../Economic-and-Financial-Ledgerdemain-Mod"
+branch = "master"
+mod_name = "E&F: Ledgerdemain"
+live = "E&F Ledgerdemain"
+
+[tools]
+repos = ["main", "fork"]
+names = ["parse_eflog", "save_money_check", "save_ownership", "save_construction_goods", "save_measure_ef"]
+globs = ["regen_*.py", "ld_*.py", "build_addon*.py", "check_*.py", "scan_*.py"]
+
+[roots]
+orig = "../vic3_mods_out"

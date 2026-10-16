@@ -1,38 +1,8 @@
 <#
-Starts the PC bridge for a Claude Code cloud session (5.10.2026): the ngrok tunnel in its own
-window and the MCP server (tools/pc_bridge/server.py) in this one. Ctrl+C here stops the server;
-close the ngrok window to cut the tunnel.
-
-Run from the user's desktop session (not a service, not over RDP): the game script needs the screen.
-    powershell -ExecutionPolicy Bypass -File tools\pc_bridge\start.ps1
-    powershell -ExecutionPolicy Bypass -File tools\pc_bridge\start.ps1 -Vm   (runs go to the sandbox VM, the screen stays free)
-First time: creates the venv _bridge\venv (mcp<2, pillow, uvicorn) and the token _bridge\token.txt.
+The PC bridge vic3-pc of this project: vic3_tools/bridge/pc/start.ps1 with bridge.toml of this repo.
+    powershell -ExecutionPolicy Bypass -File tools\pc_bridge\start.ps1        (runs on this screen)
+    powershell -ExecutionPolicy Bypass -File tools\pc_bridge\start.ps1 -Vm    (runs in the sandbox VM)
 #>
-param(
-    [string]$Domain = "untimed-diploma-creation.ngrok-free.dev",
-    [int]$Port = 8080,
-    # runs in the Hyper-V sandbox VM (vic3_tools/bridge/vm) instead of on this screen
-    [switch]$Vm,
-    [string]$VmName = "vic3-sandbox"
-)
-$ErrorActionPreference = "Stop"
+param([switch]$Vm)
 $repo = Split-Path (Split-Path $PSScriptRoot)
-$bridge = Join-Path (Split-Path $repo) "_bridge"
-$py = Join-Path $bridge "venv\Scripts\python.exe"
-if (-not (Test-Path $py)) {
-    New-Item -ItemType Directory -Force $bridge | Out-Null
-    python -m venv (Join-Path $bridge "venv")
-    & $py -m pip install --quiet "mcp<2" pillow uvicorn
-}
-if (-not (Get-Process ngrok -ErrorAction SilentlyContinue)) {
-    Start-Process ngrok -ArgumentList "http", "--url=$Domain", "$Port"
-}
-$env:PC_BRIDGE_PORT = "$Port"
-$env:PC_BRIDGE_TARGET = if ($Vm) { "vm" } else { "pc" }
-$env:PC_BRIDGE_VM = $VmName
-Write-Host "bridge: https://$Domain/mcp -> 127.0.0.1:$Port; token in $bridge\token.txt; runs: $(if ($Vm) { "VM $VmName" } else { "this screen" })"
-foreach ($d in "vic3_mods_out", "_tmp_analysis") {
-    $link = Join-Path $bridge $d; $target = Join-Path (Split-Path $repo) $d
-    if ((Test-Path $target) -and -not (Test-Path $link)) { New-Item -ItemType Junction -Path $link -Target $target | Out-Null }
-}
-& $py (Join-Path $PSScriptRoot "server.py")
+& (Join-Path (Split-Path $repo) "vic3_tools\bridge\pc\start.ps1") -Config (Join-Path $repo "bridge.toml") -Vm:$Vm
