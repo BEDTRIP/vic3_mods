@@ -14,7 +14,7 @@ Usage:
 import argparse, os, shutil, filecmp, sys, re, json, collections
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, brace_balance
+from vic3tools.legacy.vic3lib import read, brace_balance
 
 PAIRS = ['_HC+GoB+MoH/hc+morg done',
          '_HC+GoB+MoH/hc+tgr done',

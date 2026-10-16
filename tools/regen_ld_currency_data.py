@@ -28,7 +28,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_curdata  # noqa: E402
 import ld_gen  # noqa: E402
-import ld_pdx  # noqa: E402
+from vic3tools.legacy import ld_pdx  # noqa: E402
 from regen_ld_currency_national import groups as _national_groups, nouns_used as _national_nouns, LAW_NOUN, NOUNS  # noqa: E402
 
 FORK = ld_gen.FORK

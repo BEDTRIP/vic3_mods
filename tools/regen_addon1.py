@@ -27,7 +27,7 @@ Usage:
 import argparse, os, sys, re, subprocess, tempfile, filecmp
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, write, entry, sub, sub_span, sub_names, replace_sub, brace_balance
+from vic3tools.legacy.vic3lib import read, write, entry, sub, sub_span, sub_names, replace_sub, brace_balance
 import tgr_default_strategy as tgrds
 
 NOTES = []          # human-readable log of what this run merged

@@ -16,7 +16,7 @@ import sys
 from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import ld_pdx  # noqa: E402
+from vic3tools.legacy import ld_pdx  # noqa: E402
 
 FORK = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
                                      "Economic-and-Financial-Ledgerdemain-Mod"))

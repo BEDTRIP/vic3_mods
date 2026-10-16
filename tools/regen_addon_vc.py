@@ -31,7 +31,7 @@ Usage:
 import argparse, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, write, sub, _depth0_iter, brace_balance
+from vic3tools.legacy.vic3lib import read, write, sub, _depth0_iter, brace_balance
 
 TGR_SRC = '_vc/tgr+vc done/common/buy_packages/zz_vc_tgr_buy_packages.txt'
 EF_SRC = '_vc/ef+vc done/common/buy_packages/zz_vc_ef_buy_packages.txt'

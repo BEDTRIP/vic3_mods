@@ -43,7 +43,7 @@ Usage:
 import argparse, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import vic3lib as V
+from vic3tools.legacy import vic3lib as V
 
 EF_SRC = '_greys/greys+ef done/common/buildings/zz_greys_ef_buildings_inject.txt'
 TGR_FOOD_SRC = '_greys/greys+tgr done/common/buildings/zz_greys_tgr_food_industry.txt'

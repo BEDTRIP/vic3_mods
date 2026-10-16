@@ -180,7 +180,7 @@ _changed = []
 
 def _put(rel, text):
     """A whole generated file (every entry is the generator's)."""
-    import ld_pdx
+    from vic3tools.legacy import ld_pdx
     dst = os.path.join(ld_gen.FORK, rel)
     old, bom, eol = ld_pdx.read(dst) if os.path.exists(dst) else (None, True, "\n")
     if old is not None and old.replace("\r\n", "\n").lstrip("﻿") == text:

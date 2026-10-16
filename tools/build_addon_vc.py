@@ -35,7 +35,7 @@ Usage:
 import argparse, os, shutil, filecmp, sys, re, json, collections
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, brace_balance
+from vic3tools.legacy.vic3lib import read, brace_balance
 import regen_addon_vc
 
 PAIRS = ['_vc/tgr+vc done',
@@ -116,7 +116,7 @@ def main(argv=None):
     merge_text, merge_n, merge_ef, merge_morg = regen_addon_vc.build(a.repo)
     merge_out = os.path.join(a.repo, regen_addon_vc.OUT)
     if not a.check:
-        from vic3lib import write as _write
+        from vic3tools.legacy.vic3lib import write as _write
         _write(merge_out, merge_text)
         print('regenerated %s (%d records, E&F on %d, Morgenrote on %d)'
               % (regen_addon_vc.OUT, merge_n, merge_ef, merge_morg))

@@ -20,7 +20,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import ld_pdx  # noqa: E402
+from vic3tools.legacy import ld_pdx  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FORK = os.path.normpath(os.path.join(HERE, "..", "..", "Economic-and-Financial-Ledgerdemain-Mod"))

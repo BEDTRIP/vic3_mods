@@ -6,7 +6,7 @@ wins every hard overwrite -- 172 shared keys and 14 shared file paths. Full
 analysis: `_vc/tgr+vc done/conflicts_tgr_vs_vc_report.md`.
 
 Vanilla is the common ancestor of both mods for every record here, so the merge
-is three-way (see vic3merge3.py) rather than hand-written bodies. What the two
+is three-way (see vic3tools.core.merge3) rather than hand-written bodies. What the two
 authors did to different lines is kept from both; what they did to the SAME lines
 is a conflict, and every conflict is either resolved by a declared winner below
 or printed for a human. Nothing is resolved silently.
@@ -34,7 +34,7 @@ import shutil
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3merge3 import brace_balance, merge3, needs_bom, read_lines  # noqa: E402
+from vic3tools.core.merge3 import brace_balance, merge3, needs_bom, read_lines  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 res = lambda p: os.path.normpath(os.path.join(HERE, p))

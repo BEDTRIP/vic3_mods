@@ -28,7 +28,7 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import ld_pdx  # noqa: E402
+from vic3tools.legacy import ld_pdx  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "vic3_mods_out"

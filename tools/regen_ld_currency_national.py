@@ -24,7 +24,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import ld_gen  # noqa: E402
-import ld_pdx  # noqa: E402
+from vic3tools.legacy import ld_pdx  # noqa: E402
 
 FORK = ld_gen.FORK
 CHECK = ld_gen.CHECK

@@ -117,7 +117,7 @@ from __future__ import annotations
 import argparse, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import vic3lib as V  # noqa: E402
+from vic3tools.legacy import vic3lib as V  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 res = lambda p: os.path.normpath(os.path.join(HERE, p))

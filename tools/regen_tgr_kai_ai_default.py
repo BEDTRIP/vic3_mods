@@ -27,7 +27,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, write, entry, brace_balance
+from vic3tools.legacy.vic3lib import read, write, entry, brace_balance
 import tgr_default_strategy as tgrds
 
 REL = '_tgr/tgr+kai done/common/ai_strategies/zz_kai_tgr_ai_default_strategy.txt'

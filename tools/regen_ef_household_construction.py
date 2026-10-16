@@ -51,7 +51,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import vic3lib as V  # noqa: E402
+from vic3tools.legacy import vic3lib as V  # noqa: E402
 import ld_gen  # noqa: E402
 
 HERE = Path(__file__).resolve().parent

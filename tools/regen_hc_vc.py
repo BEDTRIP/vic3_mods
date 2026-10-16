@@ -53,7 +53,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, write, entry, sub, sub_names, sub_span, replace_sub, brace_balance
+from vic3tools.legacy.vic3lib import read, write, entry, sub, sub_names, sub_span, replace_sub, brace_balance
 import regen_addon1 as ra1
 
 HERE = os.path.dirname(os.path.abspath(__file__))

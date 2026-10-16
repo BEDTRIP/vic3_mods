@@ -37,7 +37,7 @@ Usage:
 import argparse, os, shutil, filecmp, sys, re, collections
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from vic3lib import read, brace_balance
+from vic3tools.legacy.vic3lib import read, brace_balance
 import regen_addon_greys
 
 PAIRS = ['_greys/greys+psc done',
@@ -142,7 +142,7 @@ def main(argv=None):
     merge_text, merge_n, merge_ef_only = regen_addon_greys.build(a.repo)
     merge_out = os.path.join(a.repo, regen_addon_greys.OUT)
     if not a.check:
-        from vic3lib import write as _write
+        from vic3tools.legacy.vic3lib import write as _write
         _write(merge_out, merge_text)
         print('regenerated %s (%d merged, %d E&F-only carried over)'
               % (regen_addon_greys.OUT, merge_n, merge_ef_only))

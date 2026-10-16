@@ -69,7 +69,7 @@ below has to restate the winning body rather than only append to it.
 import os
 import re
 
-from vic3lib import read, entry, sub, sub_span, sub_names
+from vic3tools.legacy.vic3lib import read, entry, sub, sub_span, sub_names
 
 GERMAN_MARK = '### German Leadership War'
 AFTER_GERMAN_MARK = '### Schleswig War'

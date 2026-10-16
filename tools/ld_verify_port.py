@@ -19,7 +19,7 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import ld_pdx  # noqa: E402
+from vic3tools.legacy import ld_pdx  # noqa: E402
 import re  # noqa: E402
 from ld_port_hotfix import (ADDITIVE, FIRST_WINS, FORK, GUI_TYPE, HF, INJECTS, OUT, REPLACES, ROOT,  # noqa: E402
                             SKIP_DIRS, TR, gui_block_end, inject_merge, ld_name)
