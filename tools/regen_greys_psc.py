@@ -257,6 +257,7 @@ def build_household_construction():
     which load after the hotfix with REPLACE_OR_CREATE and would drop its vanilla-based ones.
     """
     sys.path.insert(0, HERE)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "Economic-and-Financial-Ledgerdemain-Mod", "tools"))  # the fork's tools (its household and settlement rules)
     import regen_ef_household_construction as hc
     usu = V.read(USU_URBAN_PM)
     for pm, _good, _base in hc.URBAN + [hc.URBAN_USU]:

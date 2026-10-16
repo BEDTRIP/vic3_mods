@@ -55,9 +55,8 @@ BENCH = Path(os.environ.get("LOCALAPPDATA", Path.home())) / "vic3tools" / "cache
 ROOTS = {"docs": DOCS, "game": GAME, "runs": RUNS, "wt": WT, "orig": ORIG, "workshop": WORKSHOP, "fork": FORK_WT,
          "bench": BENCH}
 PORT = int(os.environ.get("PC_BRIDGE_PORT", "8080"))
-PY_TOOLS = {"parse_eflog": "tools/parse_eflog.py", "save_money_check": "tools/save_money_check.py",
-            "save_ownership": "tools/save_ownership.py",
-            "save_construction_goods": "tools/save_construction_goods.py", "save_measure_ef": "tools/save_measure_ef.py"}
+# the fork's analyses live in its own repo since 16.10 (tools/ of the fork); py_tool finds a name in either
+PY_TOOLS = {"parse_eflog", "save_money_check", "save_ownership", "save_construction_goods", "save_measure_ef"}
 # the general checks (matrix, conflicts, audits, saves, logs) are `v3` commands now: the v3(args) tool
 PY_TOOL_GLOBS = ("regen_*.py", "ld_*.py", "build_addon*.py", "check_*.py", "scan_*.py")
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
@@ -400,15 +399,19 @@ def get_image(path: str, crop: list[float] | None = None, max_width: int = 1600)
 
 @mcp.tool()
 def py_tool(name: str, args: list[str]) -> str:
-    """Run a repo tool of the worktree on the PC's files (saves are 450 MB, too big to fetch):
-    parse_eflog (args: <run>/eflog.txt <out.json>) or save_money_check (args: [save] [TAG ...]).
+    """Run a repo tool on the PC's files (saves are 450 MB, too big to fetch): tools/<name>.py of the vic3_mods
+    worktree, else of the fork (its bridge worktree after checkout_fork, else the PC's checkout) -- the fork's
+    analyses: parse_eflog (args: <run>/eflog.txt <out.json>), save_money_check (args: [save] [TAG ...]), ld_*.
     Paths in args may be 'runs/...' or 'docs/...'. Returns the output (tail)."""
-    script = PY_TOOLS.get(name) or f"tools/{name}.py"
-    if name not in PY_TOOLS and not (re.fullmatch(r"\w+", name) and any(fnmatch.fnmatch(f"{name}.py", g) for g in PY_TOOL_GLOBS)
-                                     and (WT / script).is_file()):
-        raise ValueError(f"tools: {', '.join(PY_TOOLS)} and {', '.join(PY_TOOL_GLOBS)}")
+    allowed = name in PY_TOOLS or (re.fullmatch(r"\w+", name) and any(fnmatch.fnmatch(f"{name}.py", g)
+                                                                       for g in PY_TOOL_GLOBS))
+    fork = FORK_WT if (FORK_WT / ".git").exists() else FORK_REPO
+    home = next((d for d in (WT, fork) if (d / "tools" / f"{name}.py").is_file()), None)
+    if not allowed or home is None:
+        raise ValueError(f"tools: {', '.join(sorted(PY_TOOLS))} and {', '.join(PY_TOOL_GLOBS)}, in vic3_mods or the fork")
+    script = f"tools/{name}.py"
     real = [str(resolve(a)) if a.split("/")[0] in ROOTS else a for a in args]
-    p = subprocess.run(["py", script, *real], cwd=WT, capture_output=True, text=True, encoding="utf-8",
+    p = subprocess.run(["py", script, *real], cwd=home, capture_output=True, text=True, encoding="utf-8",
                        errors="replace", timeout=1200, creationflags=NO_WINDOW, env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     log(f"py_tool {name} {real} -> {p.returncode}")
     return f"exit {p.returncode}\n{(p.stdout + p.stderr)[-20000:]}"
