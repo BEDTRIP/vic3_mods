@@ -66,8 +66,10 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
    отвечает `ERR_NGROK_3004` — повторить). Форк — `checkout_fork("master")` (worktree `_bridge/Economic-and-Financial-
    Ledgerdemain-Mod`) → `sync_fork()`; хотфикс и другие моды — `sync_mod(repo_folder, live_name)`. При идущей игре
    синхронизация отказывает.
-3. `start_run(run_minutes, new_game, tag, start_save, autosaves, shots, countries, playset, commands, …)` — параметры
-   скрипта (ниже), сразу отдаёт id. Дальше `run_status(id)` раз в 1–2 минуты (ждать фоновой командой
+3. `start_run(run_minutes, new_game, tag, start_save, autosaves, shots, countries, playset, commands, …,
+   target="vm")` — параметры скрипта (ниже), сразу отдаёт id. **Всегда `target="vm"`**: у ВМ экран 2560×1440, на
+   котором мерены точки скриптов; экран ПК бывает любым (17.10 — 1920×1080: лобби, консоль, «Конец игры» и
+   профилировщик не распознаются — ночь потеряла три прогона). `target="pc"` — только по просьбе пользователя. Дальше `run_status(id)` раз в 1–2 минуты (ждать фоновой командой
    `sleep 120` с `run_in_background`), пока не «finished». Игра встала («Конец игры») — `stop_run(id)`, логи — в
    `docs/logs`.
 4. **Чтение:** `list_dir` / `read_text` (`from_end`) / `grep` по путям `runs/<id>/…`, `docs/logs/…`, `docs/crashes/…`,
