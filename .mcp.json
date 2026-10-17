@@ -2,7 +2,7 @@
   "mcpServers": {
     "vic3-pc": {
       "type": "http",
-      "url": "https://untimed-diploma-creation.ngrok-free.dev/mcp",
+      "url": "https://peka.tailca8cce.ts.net/mcp",
       "headers": {
         "Authorization": "Bearer ${PC_BRIDGE_TOKEN}"
       }
