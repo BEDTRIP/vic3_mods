@@ -56,7 +56,7 @@ description: Run Victoria 3 yourself for a test — a new game from 1836 (start 
 ## Из облачной сессии — через мост `vic3-pc`
 
 Игра, `Documents/…` и PowerShell есть только у MCP-сервера `vic3-pc` на ПК (`vic3_tools/bridge/pc/server.py` с
-`bridge.toml` этого репо, туннель ngrok, `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инструментов `mcp__vic3-pc__*` — **сначала проверить сам
+`bridge.toml` этого репо, туннель Tailscale Funnel (`tunnel`; ngrok — запасной, у бесплатного месячный лимит трафика), `.mcp.json`; на ПК — `tools/pc_bridge/start.ps1`). Нет инструментов `mcp__vic3-pc__*` — **сначала проверить сам
 мост**: сессия не в корне `vic3_mods` `.mcp.json` не читает. Без MCP-клиента: `python3 tools/pc_bridge/pc_call.py list` /
 `call <инструмент> '<JSON>'` (токен — `PC_BRIDGE_TOKEN`). Не отвечает (`ERR_NGROK_*`, отказ) — попросить пользователя
 запустить `start.ps1`.

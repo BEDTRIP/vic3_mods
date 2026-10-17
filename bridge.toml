@@ -1,6 +1,7 @@
 # The PC bridge vic3-pc for this project (the server is vic3_tools/bridge/pc/server.py; start: tools/pc_bridge/start.ps1).
 
 [bridge]
+tunnel = "tailscale"             # Funnel: https://<PC>.<tailnet>.ts.net; ngrok (free plan) ran out of monthly traffic
 domain = "untimed-diploma-creation.ngrok-free.dev"
 port = 8080
 home = "../_bridge"
