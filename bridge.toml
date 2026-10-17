@@ -28,4 +28,5 @@ globs = ["regen_*.py", "ld_*.py", "build_addon*.py", "check_*.py", "scan_*.py"]
 orig = "../vic3_mods_out"
 
 [comfy]
-url = "http://127.0.0.1:8000"   # ComfyUI Desktop on this PC; the folder comes from the running ComfyUI
+url = "http://127.0.0.1:8188"   # ComfyUI Desktop on this PC (its About: Port)
+base = "C:/Users/Andrey/AppData/Local/Comfy-Desktop/ComfyUI-Installs/ComfyUI"
