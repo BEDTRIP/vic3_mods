@@ -151,7 +151,7 @@ commands="Script.Profiling.Start;end:Script.Profiling.Stop;end:Script.Profiling.
 
 ```bash
 # хуки форка — один раз на оболочку (PowerShell: $env:VIC3_HOOKS = "…")
-export VIC3_HOOKS="C:\Users\Andrey\Projects\vic3\Economic-and-Financial-Ledgerdemain-Mod\tools\vic3_hooks.ps1"
+export VIC3_HOOKS="C:\ProjectData\vic3\Economic-and-Financial-Ledgerdemain-Mod\tools\vic3_hooks.ps1"
 
 # 1) новая игра с 1 января 1836 — когда менялись условия старта (история, законы, здания):
 powershell -ExecutionPolicy Bypass -File <game>/run_vic3_sandbox.ps1 -NewGame -Tag SWI -RunMinutes 10 -OutDir "<scratch>\runN"
