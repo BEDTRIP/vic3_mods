@@ -42,7 +42,7 @@
 `mutual_funds` (все шесть — `INJECT:`) плюс `joint_stock_companies`, `investment_banks`,
 `corporate_management`, `macroeconomics` (`REPLACE_OR_CREATE:`), все в
 `TGR_TRADE_society.txt`. Это, по нашей же сводке, «становой хребет trade rework».
-*(В `сводки по модам/сводка_tgr.md` названо шесть — сводку поправить, техов десять.)*
+*(В `vic3_mods_out/docs/tgr/Сводка TGR.md` названо шесть — сводку поправить, техов десять.)*
 
 **Чего мы НЕ знаем и знать пока не можем.** Наши собственные правила
 (`Правила работы с модами Victoria 3.md`, «Компании, здания, товары») говорят про пару

@@ -33,7 +33,7 @@ Victoria 3.md» и «Правила — сборка.md» удалены). В к
 | Как игра грузит моды, что значат префиксы, факты 1.13, диагностика | навык `vic3-modding` плагина vic3tools ([`../vic3_tools/claude-plugin/skills/vic3-modding`](../vic3_tools/claude-plugin/skills/vic3-modding/SKILL.md): ядро + справочники по темам) |
 | Как собрать мегапак или аддон, нужен ли компач, мердж, генераторы | навык `vic3-compat` плагина vic3tools ([`../vic3_tools/claude-plugin/skills/vic3-compat`](../vic3_tools/claude-plugin/skills/vic3-compat/SKILL.md)); статусы пар — `План проекта.md` |
 | Интерфейс: файл стиля, проходы audit / critique / polish | навык `vic3-gui` плагина vic3tools |
-| Что делает конкретный чужой мод | `сводки по модам/` |
+| Что делает конкретный чужой мод | `../vic3_mods_out/docs/<источник>/` (репо `vic3_out_docs`): сводки и граф источника |
 | Как проверить правку в игре: прогон агентом (новая игра с 1836 / продолжение сейва), логи, вылеты | навык [`.claude/skills/vic3-sandbox`](.claude/skills/vic3-sandbox/SKILL.md), скрипты `vic3_tools/bridge/game` + хуки форка |
 | Режимы запуска (локально, Remote Control, облако) и как из облака достать ПК: игра, сейвы, оригиналы модов, генераторы | мост `vic3-pc` (сервер `vic3_tools/bridge/pc`, конфиг `bridge.toml`, запуск `tools/pc_bridge/start.ps1`), навык `vic3-sandbox`, «Из облачной сессии»; `Правила — проект.md`, раздел 8 |
 | Как отдать этап форка на ночь: вопросы днём, работа отдельной сессией | навык [`.claude/skills/night-run`](.claude/skills/night-run/SKILL.md) |

@@ -50,7 +50,7 @@
 ### Verification note (2026-08-21)
 
 Re-checked T&R 1.6 (build 13.05.2026) + Kuromi AI 7.5 vs PBE (renamed `kates_*` -> `vokaes_*`,
-`common/buildings/` removed in 1.13 -- see `сводки по модам/сводка_pbe.md`).
+`common/buildings/` removed in 1.13 -- see `vic3_mods_out/docs/pbe/Сводка PBE.md`).
 
 `scan_conflicts.py` T&R vs PBE and KAI vs PBE separately (reports: `conflicts_tr_vs_pbe_report.md`,
 `conflicts_kai_vs_pbe_report.md`):
