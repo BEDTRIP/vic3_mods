@@ -17,7 +17,7 @@ README, правила, навыки) истории не держат** — т�
 ## Хронология
 
 История форка «E&F: Ledgerdemain» (с 24.09.2026: разведка E&F, блоки А–Г, этапы, ночи, R0–R8а) — в репо форка,
-`../Economic-and-Financial-Ledgerdemain-Mod/история/` ([хронология](../../Economic-and-Financial-Ledgerdemain-Mod/история/README.md)).
+`../Economic-and-Financial-Ledgerdemain-Mod/история/` ([хронология](../../../Economic-and-Financial-Ledgerdemain-Mod/docs/история/README.md)).
 
 | дата | что было | подробно |
 | --- | --- | --- |
